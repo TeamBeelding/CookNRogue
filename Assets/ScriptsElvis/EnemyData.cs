@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [CreateAssetMenu(fileName = "EnemyData", menuName = "Enemy")]
 public class EnemyData : ScriptableObject
@@ -8,11 +9,23 @@ public class EnemyData : ScriptableObject
     [SerializeField]
     private float health = 3;
     [SerializeField]
-    public float speed = 5;
+    private float speed = 5;
     [SerializeField]
-    public float range = 4;
+    private float rangeDetection = 6;
     [SerializeField]
-    public float attackSpeed = 0.5f;
+    private float attackRange = 4;
     [SerializeField]
-    public float damage = 1;
+    private float attackSpeed = 0.5f;
+    [SerializeField]
+    private float damage = 1;
+    [SerializeField]
+    private bool focusInstantlyPlayer = false;
+
+    public float GetHealth() => health;
+    public float GetSpeed() => speed;
+    public float GetRangeDetection() => rangeDetection;
+    public float GetAttackRange() => attackRange;
+    public float GetAttackSpeed() => attackSpeed;
+    public float GetDamage() => damage;
+    public bool GetFocusPlayer() => focusInstantlyPlayer;
 }
