@@ -19,30 +19,37 @@ public class EnemyController : MonoBehaviour
     private GameObject player;
     [SerializeField] 
     private EnemyData data;
-    
-    private NavMeshAgent agent;
-    private bool focusPlayer = false;
+
+    private Renderer _rend;    
+    private NavMeshAgent _agent;
+    private bool _focusPlayer = false;
 
     private void Awake()
     {
-        agent = GetComponent<NavMeshAgent>();
-        agent.speed = data.GetSpeed();
-        agent.stoppingDistance = data.GetAttackRange();
-        focusPlayer = data.GetFocusPlayer();
+        _rend = GetComponent<Renderer>();
+        
+        _agent = GetComponent<NavMeshAgent>();
+        _agent.speed = data.GetSpeed();
+        _agent.stoppingDistance = data.GetAttackRange();
+        _focusPlayer = data.GetFocusPlayer();
     }
 
     // Start is called before the first frame update
     protected void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        _rend.material.color = Color.white;
 
-        if (focusPlayer)
+        if (_focusPlayer)
             state = State.Chase;
     }
 
     // Update is called once per frame
     protected void Update()
     {
+        if (Input.GetKeyDown(KeyCode.A))
+            TakeDamage();
+        
         StateManagement();
     }
 
@@ -61,7 +68,7 @@ public class EnemyController : MonoBehaviour
         switch (state)
         {
             case State.Chase:
-                agent.SetDestination(player.transform.position);
+                _agent.SetDestination(player.transform.position);
                 break;
             case State.Attack:
                 Attack();
@@ -73,7 +80,7 @@ public class EnemyController : MonoBehaviour
 
     private void AreaDetection()
     {
-        if (!focusPlayer)
+        if (!_focusPlayer)
         {
             Collider[] col = Physics.OverlapSphere(transform.position, data.GetRangeDetection(), 
                 LayerMask.NameToLayer("Player"));
@@ -82,7 +89,7 @@ public class EnemyController : MonoBehaviour
             {
                 if (c.gameObject.CompareTag("Player"))
                 {
-                    focusPlayer = true;
+                    _focusPlayer = true;
                     state = State.Chase;
                 }
             }
@@ -96,5 +103,22 @@ public class EnemyController : MonoBehaviour
     protected void Attack()
     {
         Debug.Log("Attack");
+    }
+
+    private void TakeDamage()
+    {
+        StartCoroutine(ColorationFeedback());
+    }
+
+    private IEnumerator ColorationFeedback()
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            _rend.material.color = Color.red;
+            yield return new WaitForSeconds(0.2f);
+            _rend.material.color = Color.white;
+            yield return new WaitForSeconds(0.2f);
+
+        }
     }
 }
