@@ -15,6 +15,7 @@ public class ProjectileData : ScriptableObject
     public FOODTYPE food;
     public float mass;
     public float speed;
+    public float drag;
     public float damage;
     public Color color;
 }
