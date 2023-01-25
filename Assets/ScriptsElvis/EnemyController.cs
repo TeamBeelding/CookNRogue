@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -24,6 +25,8 @@ public class EnemyController : MonoBehaviour
     private NavMeshAgent _agent;
     private bool _focusPlayer = false;
 
+    private float healthpoint;
+
     private void Awake()
     {
         _rend = GetComponent<Renderer>();
@@ -32,6 +35,8 @@ public class EnemyController : MonoBehaviour
         _agent.speed = data.GetSpeed();
         _agent.stoppingDistance = data.GetAttackRange();
         _focusPlayer = data.GetFocusPlayer();
+
+        healthpoint = data.GetHealth();
     }
 
     // Start is called before the first frame update
@@ -111,9 +116,30 @@ public class EnemyController : MonoBehaviour
         Debug.Log("Attack");
     }
 
-    private void TakeDamage()
+    public void TakeDamage()
     {
         StartCoroutine(ColorationFeedback());
+    }
+
+    private void ReduiceHealth(float damage)
+    {
+        damage = Mathf.Abs(damage);
+        healthpoint -= damage;
+
+        if (healthpoint <= 0)
+        {
+            KillEnemy();
+        }
+    }
+
+    public void ColorFeedback()
+    {
+        StartCoroutine(ColorationFeedback());
+    }
+
+    public void KillEnemy()
+    {
+        Debug.Log("Enemy Death");
     }
 
     private IEnumerator ColorationFeedback()
@@ -126,5 +152,13 @@ public class EnemyController : MonoBehaviour
             yield return new WaitForSeconds(0.2f);
 
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, data.GetRangeDetection());
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, data.GetAttackRange());
     }
 }
