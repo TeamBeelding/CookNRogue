@@ -24,8 +24,14 @@ public class EnemyController : MonoBehaviour
     private Renderer _rend;
     private MeshRenderer _meshRenderer;
     private NavMeshAgent _agent;
+    
+    [SerializeField]
+    private GameObject gun;
+    [SerializeField]
+    private GameObject bullet;
+    
     private bool _focusPlayer = false;
-
+    private bool _canAttack = true;
     private float healthpoint;
 
     private void Awake()
@@ -112,9 +118,15 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    protected void Attack()
+    public void Attack()
     {
-        Debug.Log("Attack");
+        if (_canAttack)
+        {
+            GameObject shot = Instantiate(bullet, gun.transform.position, Quaternion.identity);
+            shot.GetComponent<BulletController>().SetDirection(player.transform);
+            _canAttack = false;
+            StartCoroutine(AttackTimer());
+        }
     }
 
     public void TakeDamage()
@@ -140,7 +152,7 @@ public class EnemyController : MonoBehaviour
 
     public void KillEnemy()
     {
-        Debug.Log("Enemy Death");
+        Destroy(gameObject);
     }
 
     private IEnumerator ColorationFeedback()
@@ -151,8 +163,13 @@ public class EnemyController : MonoBehaviour
             yield return new WaitForSeconds(0.2f);
             _meshRenderer.enabled = true;
             yield return new WaitForSeconds(0.2f);
-
         }
+    }
+
+    private IEnumerator AttackTimer()
+    {
+        yield return new WaitForSeconds(data.GetAttackSpeed());
+        _canAttack = true;
     }
 
     private void OnDrawGizmos()

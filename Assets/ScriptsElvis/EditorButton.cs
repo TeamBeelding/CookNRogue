@@ -11,6 +11,11 @@ public class EditorButton : Editor
         Enemy enemyScript = (Enemy)target;
         DrawDefaultInspector();
 
+        if (GUILayout.Button("Attack"))
+        {
+            enemyScript.Attack();
+        }
+        
         if (GUILayout.Button("Take hit"))
         {
             enemyScript.TakeDamage();
