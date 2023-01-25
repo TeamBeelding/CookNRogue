@@ -2,20 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum FOODTYPE
+public enum PLAT
 {
-    VIANDE,
-    POISSON,
-    LEGUME
+    PLAT1,
+    PLAT2,
+    PLAT3
 }
 
 [CreateAssetMenu(fileName = "ProjectileData", menuName = "Player/Projectile Data")]
 public class ProjectileData : ScriptableObject
 {
-    public FOODTYPE food;
+    [Header("Composition")]
+    public PLAT plat;
+    public IngredientData[] ingredients;
+    public Sprite sprite;
+    [Space(20)]
+
+    [Header("RigidBody")]
     public float mass;
+    public float size;
     public float speed;
     public float drag;
-    public float damage;
+    [Space(20)]
+
+    [Header("Attack")]
+    public float heavyAttackDelay;
+    public float heavyDamage;
+    public float lightAttackDelay;
+    public float lightDamage;
     public Color color;
 }
