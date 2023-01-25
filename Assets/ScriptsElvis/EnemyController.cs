@@ -69,11 +69,17 @@ public class EnemyController : MonoBehaviour
         {
             case State.Chase:
                 _agent.SetDestination(player.transform.position);
+                _rend.material.color = Color.yellow;
                 break;
             case State.Attack:
+                _rend.material.color = Color.red;
                 Attack();
                 break;
+            case State.Neutral:
+                _rend.material.color = Color.green;
+                break;
             default:
+                _rend.material.color = Color.white;
                 break;
         }
     }
