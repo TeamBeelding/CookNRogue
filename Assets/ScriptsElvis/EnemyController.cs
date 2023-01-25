@@ -21,7 +21,8 @@ public class EnemyController : MonoBehaviour
     [SerializeField] 
     private EnemyData data;
 
-    private Renderer _rend;    
+    private Renderer _rend;
+    private MeshRenderer _meshRenderer;
     private NavMeshAgent _agent;
     private bool _focusPlayer = false;
 
@@ -30,7 +31,7 @@ public class EnemyController : MonoBehaviour
     private void Awake()
     {
         _rend = GetComponent<Renderer>();
-        
+        _meshRenderer = GetComponent<MeshRenderer>();
         _agent = GetComponent<NavMeshAgent>();
         _agent.speed = data.GetSpeed();
         _agent.stoppingDistance = data.GetAttackRange();
@@ -146,9 +147,9 @@ public class EnemyController : MonoBehaviour
     {
         for (int i = 0; i < 5; i++)
         {
-            _rend.material.color = Color.red;
+            _meshRenderer.enabled = false;
             yield return new WaitForSeconds(0.2f);
-            _rend.material.color = Color.white;
+            _meshRenderer.enabled = true;
             yield return new WaitForSeconds(0.2f);
 
         }
