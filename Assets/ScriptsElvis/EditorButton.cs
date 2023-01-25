@@ -23,7 +23,7 @@ public class EditorButton : Editor
 
         if (GUILayout.Button("Recoil"))
         {
-            
+            enemyScript.KnockBack();
         }
 
         if (GUILayout.Button("Color Feedback"))

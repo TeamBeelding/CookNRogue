@@ -22,6 +22,7 @@ public class EnemyController : MonoBehaviour
     private EnemyData data;
 
     private Renderer _rend;
+    private Rigidbody _rigidbody;
     private MeshRenderer _meshRenderer;
     private NavMeshAgent _agent;
     
@@ -38,6 +39,7 @@ public class EnemyController : MonoBehaviour
     {
         _rend = GetComponent<Renderer>();
         _meshRenderer = GetComponent<MeshRenderer>();
+        _rigidbody = GetComponent<Rigidbody>();
         _agent = GetComponent<NavMeshAgent>();
         _agent.speed = data.GetSpeed();
         _agent.stoppingDistance = data.GetAttackRange();
@@ -131,6 +133,11 @@ public class EnemyController : MonoBehaviour
 
     public void TakeDamage()
     {
+        if (state == State.Neutral)
+            state = State.Chase;
+        
+        ReduiceHealth(1);
+        KnockBack();
         StartCoroutine(ColorationFeedback());
     }
 
@@ -143,6 +150,17 @@ public class EnemyController : MonoBehaviour
         {
             KillEnemy();
         }
+    }
+
+    public void KnockBack()
+    {
+        StopCoroutine(StoppingForce());
+        
+        Vector3 force = transform.position - player.transform.position;
+        force.Normalize();
+        
+        _rigidbody.AddForce(force, ForceMode.Impulse);
+        StartCoroutine(StoppingForce());
     }
 
     public void ColorFeedback()
@@ -170,6 +188,12 @@ public class EnemyController : MonoBehaviour
     {
         yield return new WaitForSeconds(data.GetAttackSpeed());
         _canAttack = true;
+    }
+
+    private IEnumerator StoppingForce()
+    {
+        yield return new WaitForSeconds(.5f);
+        _rigidbody.Sleep();
     }
 
     private void OnDrawGizmos()
