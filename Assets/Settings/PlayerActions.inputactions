@@ -1,0 +1,85 @@
+{
+    "name": "PlayerActions",
+    "maps": [
+        {
+            "name": "Default_PlayerActions",
+            "id": "f0cff418-85af-4d0e-b16c-dc0d41f2fb47",
+            "actions": [
+                {
+                    "name": "Move",
+                    "type": "Value",
+                    "id": "97c6c1c9-859b-4d48-b695-d3f7dbaec194",
+                    "expectedControlType": "Stick",
+                    "processors": "StickDeadzone(max=0.925)",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Aim",
+                    "type": "Value",
+                    "id": "0927c105-0bce-4051-af1c-a8425fedc92c",
+                    "expectedControlType": "Stick",
+                    "processors": "StickDeadzone(max=0.925)",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Shoot",
+                    "type": "Button",
+                    "id": "722de3b6-2b24-467e-a29d-708b1e2a404b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "418d99dd-d61b-4e53-84d9-88c4270f0de0",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8340a0ba-b8e3-4d6e-8cb4-1428e0fe559c",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Shoot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9672cad4-051e-44b5-9514-cd0920091675",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Shoot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "897e9c88-50be-46aa-a681-5559876a2d68",
+                    "path": "<Gamepad>/rightStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Aim",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
