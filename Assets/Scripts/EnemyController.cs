@@ -56,6 +56,9 @@ public class EnemyController : MonoBehaviour
 
         if (_focusPlayer)
             state = State.Chase;
+        
+        // TODO : demander au prof une autre solution
+        _rigidbody.constraints = RigidbodyConstraints.FreezeAll;
     }
 
     // Update is called once per frame
@@ -154,10 +157,14 @@ public class EnemyController : MonoBehaviour
 
     public void KnockBack()
     {
+        _rigidbody.constraints = RigidbodyConstraints.None;
+        
         StopCoroutine(StoppingForce());
         
         Vector3 direction = transform.position - player.transform.position;
         direction.Normalize();
+        
+        // transform.Translate(direction * data.GetRecoilForce() * Time.deltaTime);
         
         _rigidbody.AddForce(direction * data.GetRecoilForce(), ForceMode.Impulse);
         StartCoroutine(StoppingForce());
@@ -193,7 +200,7 @@ public class EnemyController : MonoBehaviour
     private IEnumerator StoppingForce()
     {
         yield return new WaitForSeconds(.5f);
-        _rigidbody.Sleep();
+        _rigidbody.velocity = Vector3.zero;
     }
 
     private void OnDrawGizmos()
