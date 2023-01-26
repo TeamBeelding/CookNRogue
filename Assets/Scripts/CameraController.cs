@@ -8,11 +8,21 @@ using UnityEngine.Rendering.Universal;
 
 public class CameraController : MonoBehaviour
 {
+    //UI
+
+    enum CameraOptions // your custom enumeration
+    {
+        Collisions,
+        Transparency
+    };
+
+    [SerializeField]
+    private CameraOptions cameraOptions;
 
     [SerializeField]
     private Transform TransformCamera;
     [SerializeField]
-    private float clipingDistance = 0.1f;
+    private float clipingDistance = 1f;
 
     private RaycastHit hit;
     private Vector3 cameraOffset;
@@ -23,7 +33,6 @@ public class CameraController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        clipingDistance += 1;
 
         cameraOffset = TransformCamera.localPosition;
         transform.position += new Vector3(-clipingDistance, clipingDistance, -clipingDistance);
@@ -35,10 +44,14 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        CameraCollision();
-        //CameraTransparent();
-
-
+        if (cameraOptions.Equals(CameraOptions.Collisions))
+        {
+            CameraCollision();
+        }
+        else 
+        {
+            CameraTransparent();
+        }
     }
 
     private void CameraCollision() 
@@ -49,7 +62,7 @@ public class CameraController : MonoBehaviour
         {
             if (!hit.collider.gameObject.tag.Equals("Player") && hit.collider.gameObject.tag.Equals("Wall"))
             {
-                Debug.Log("HELLLLO");
+                
                 TransformCamera.localPosition = Vector3.Lerp(TransformCamera.localPosition, new Vector3(
                                                         hit.point.x + clipingDistance - WallCheck.position.x,
                                                         hit.point.y - clipingDistance - WallCheck.position.y, 
@@ -71,29 +84,30 @@ public class CameraController : MonoBehaviour
 
     private void CameraTransparent()
     {
-        RaycastHit hit;
 
-        Debug.DrawRay(WallCheck.position, transform.position, Color.red, 0.1f);
+        Debug.DrawLine(WallCheck.position, transform.position, Color.green);
 
-        if (Physics.Raycast(WallCheck.position, transform.position, out hit))
+        if (Physics.Linecast(WallCheck.position, transform.position, out hit))
         {
-            //transform = hit.collider.gameObject;
-            Obstruction.gameObject.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+            Obstruction = hit.collider.gameObject.GetComponent<MeshRenderer>();
+            Obstruction.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
 
-            if (hit.collider.gameObject.tag == "Wall")
+            if (!hit.collider.gameObject.tag.Equals("Player") && hit.collider.gameObject.tag.Equals("Wall"))
             {
-
-                Debug.DrawLine(WallCheck.position, new Vector3(
-                                        hit.point.x,
-                                        hit.point.y,
-                                        hit.point.z), Color.red);
-
                 Obstruction.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
-
             }
 
         }
-        TransformCamera.localPosition = cameraOffset;
+        else
+        {
+            Obstruction.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+        }
+
+
+
+        Debug.Log(Obstruction.name);
     }
+
+
 
 }
