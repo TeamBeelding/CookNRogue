@@ -20,19 +20,48 @@ public class AttackTest : MonoBehaviour
     public float lightAttackDelay;
     public float lightDamage;
 
+    bool _shootOnCooldown;
+    float _shootCooldown;
+    Coroutine _curShootDelay;
 
-   
-    // Update is called once per frame
-    void Update()
+
+
+    public void Shoot()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            GameObject Bullet = Instantiate(Projectile, muzzle.position, Quaternion.identity);
-            projectileBehaviour = Bullet.GetComponent<ProjectileBehaviour>();
-            projectileBehaviour.speed = speed;
-            projectileBehaviour.drag = drag;
+        GameObject Bullet = Instantiate(Projectile, muzzle.position, Quaternion.identity);
+        projectileBehaviour = Bullet.GetComponent<ProjectileBehaviour>();
+        projectileBehaviour.speed = speed;
+        projectileBehaviour.drag = drag;
+        //Shoot Cooldown
+        _shootCooldown = 1f; //To get from coocked bullet 
 
+        //Cooldown Check
+        if (!_shootOnCooldown)
+        {
+            //Shoot Bullet
+            _shootOnCooldown = true;
+            _curShootDelay = StartCoroutine(ShootDelay(_shootCooldown));
         }
+
+    }
+  
+
+    IEnumerator ShootDelay(float delay)
+    {
+        float curTime = 0;
+        while (curTime < delay)
+        {
+            curTime += Time.deltaTime;
+            yield return new WaitForSeconds(Time.deltaTime);
+        }
+
+        _shootOnCooldown = false;
+    }
+    void OnAmmunitionChange()
+    {
+        StopCoroutine(_curShootDelay);
+        _shootOnCooldown = false;
+        _shootCooldown = 1f;
     }
     public void ResetParameters()
     {

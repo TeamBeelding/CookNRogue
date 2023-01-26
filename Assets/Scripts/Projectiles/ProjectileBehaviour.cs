@@ -15,11 +15,13 @@ public class ProjectileBehaviour : MonoBehaviour
    
     private void Start()
     {
+        PlayerController pc = GetComponent<PlayerController>();
+        Vector3 direction = pc.PlayerAimDirection;
         //ParticleSystem.MainModule part = GetComponentInChildren<ParticleSystem>().main;
         //part.startColor = color;
         rb = GetComponent<Rigidbody>();
         rb.drag = drag;
-        rb.velocity =  new Vector3(speed, 0, 0);
+        rb.velocity = direction * speed;
         Destroy(gameObject, 5f);
     }
 

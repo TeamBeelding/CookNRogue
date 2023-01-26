@@ -136,35 +136,12 @@ public class PlayerController : MonoBehaviour
 
     void Shoot(InputAction.CallbackContext context)
     {
-        //Shoot Cooldown
-        _shootCooldown = 1f; //To get from coocked bullet 
 
         //Cooldown Check
-        if (!_shootOnCooldown && context.performed)
+        if (context.performed)
         {
-            //Shoot Bullet
-            _shootOnCooldown = true;
-            _curShootDelay = StartCoroutine(ShootDelay(_shootCooldown));
+            GetComponent<AttackTest>().Shoot();
         }
-    }
-
-    IEnumerator ShootDelay (float delay)
-    {
-        float curTime = 0;
-        while(curTime < delay)
-        {
-            curTime += Time.deltaTime;
-            yield return new WaitForSeconds(Time.deltaTime);
-        }
-
-        _shootOnCooldown = false;
-    }
-
-    void OnAmmunitionChange()
-    {
-        StopCoroutine(_curShootDelay);
-        _shootOnCooldown = false;
-        _shootCooldown = 1f;
     }
 
     private void OnDrawGizmos()
