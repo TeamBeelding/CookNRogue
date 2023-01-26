@@ -18,6 +18,8 @@ public class EnemyData : ScriptableObject
     private float attackSpeed = 0.5f;
     [SerializeField]
     private float damage = 1;
+    [SerializeField] 
+    private float forceRecoil = 2;
     [SerializeField]
     private bool focusInstantlyPlayer = false;
 
@@ -27,5 +29,6 @@ public class EnemyData : ScriptableObject
     public float GetAttackRange() => attackRange;
     public float GetAttackSpeed() => attackSpeed;
     public float GetDamage() => damage;
+    public float GetRecoilForce() => forceRecoil;
     public bool GetFocusPlayer() => focusInstantlyPlayer;
 }

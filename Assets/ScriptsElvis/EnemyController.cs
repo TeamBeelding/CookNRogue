@@ -156,10 +156,10 @@ public class EnemyController : MonoBehaviour
     {
         StopCoroutine(StoppingForce());
         
-        Vector3 force = transform.position - player.transform.position;
-        force.Normalize();
+        Vector3 direction = transform.position - player.transform.position;
+        direction.Normalize();
         
-        _rigidbody.AddForce(force, ForceMode.Impulse);
+        _rigidbody.AddForce(direction * data.GetRecoilForce(), ForceMode.Impulse);
         StartCoroutine(StoppingForce());
     }
 
