@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour
     {
         //Reset Aim Check
         _isAiming = false;
-
+        
         //Inputs relative to camera
         Vector3 relativeForward = _relativeTransform.forward + _relativeTransform.up;
         Vector3 relativeRight = _relativeTransform.right;
