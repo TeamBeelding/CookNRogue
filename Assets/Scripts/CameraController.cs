@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using static UnityEditor.Experimental.GraphView.Port;
 
 public class CameraController : MonoBehaviour
 {
@@ -23,6 +24,8 @@ public class CameraController : MonoBehaviour
     private Transform TransformCamera;
     [SerializeField]
     private float clipingDistance = 1f;
+    [SerializeField]
+    private float opacity = 0.5f;
 
     private RaycastHit hit;
     private Vector3 cameraOffset;
@@ -90,22 +93,21 @@ public class CameraController : MonoBehaviour
         if (Physics.Linecast(WallCheck.position, transform.position, out hit))
         {
             Obstruction = hit.collider.gameObject.GetComponent<MeshRenderer>();
-            Obstruction.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+            Obstruction.material.SetFloat("_Opacity", 1f);
+
 
             if (!hit.collider.gameObject.tag.Equals("Player") && hit.collider.gameObject.tag.Equals("Wall"))
             {
-                Obstruction.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+                Obstruction.material.SetFloat("_Opacity", opacity);
             }
 
         }
         else
         {
-            Obstruction.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+            Obstruction.material.SetFloat("_Opacity", 1f);
         }
 
-
-
-        Debug.Log(Obstruction.name);
+        Debug.Log(Obstruction.material.name + " Color: " + Obstruction.material.GetFloat("_Opacity"));
     }
 
 
