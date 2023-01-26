@@ -26,6 +26,7 @@ public class CameraController : MonoBehaviour
         clipingDistance += 1;
 
         cameraOffset = TransformCamera.localPosition;
+        transform.position += new Vector3(-clipingDistance, clipingDistance, -clipingDistance);
 
         Obstruction = WallCheck.gameObject.GetComponent<MeshRenderer>();
         Obstruction.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
@@ -34,25 +35,25 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //CameraCollision();
-        CameraTransparent();
+        CameraCollision();
+        //CameraTransparent();
 
 
     }
 
     private void CameraCollision() 
     {
-        Debug.DrawLine(WallCheck.position, transform.position * clipingDistance, Color.green);
+        Debug.DrawLine(WallCheck.position, transform.position, Color.green);
 
-        if (Physics.Linecast(WallCheck.position, transform.position * clipingDistance, out hit))
+        if (Physics.Linecast(WallCheck.position, transform.position, out hit))
         {
             if (!hit.collider.gameObject.tag.Equals("Player") && hit.collider.gameObject.tag.Equals("Wall"))
             {
                 Debug.Log("HELLLLO");
-                TransformCamera.localPosition = new Vector3(
-                                                        hit.point.x - WallCheck.position.x,
-                                                        hit.point.y - WallCheck.position.y, 
-                                                        hit.point.z - WallCheck.position.z) + Vector3.up * 2;
+                TransformCamera.localPosition = Vector3.Lerp(TransformCamera.localPosition, new Vector3(
+                                                        hit.point.x + clipingDistance - WallCheck.position.x,
+                                                        hit.point.y - clipingDistance - WallCheck.position.y, 
+                                                        hit.point.z + clipingDistance - WallCheck.position.z) + Vector3.up * 2, Time.deltaTime * 10); ;
 
                 Debug.DrawLine(WallCheck.position, new Vector3(
                                                         hit.point.x,
@@ -63,7 +64,7 @@ public class CameraController : MonoBehaviour
         }
         else
         {
-            TransformCamera.localPosition = Vector3.Lerp(TransformCamera.localPosition, cameraOffset, Time.deltaTime);
+            TransformCamera.localPosition = Vector3.Lerp(TransformCamera.localPosition, cameraOffset, Time.deltaTime * 10);
         }
     }
 
