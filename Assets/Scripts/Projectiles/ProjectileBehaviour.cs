@@ -11,11 +11,12 @@ public class ProjectileBehaviour : MonoBehaviour
     Rigidbody rb;
     Sprite sprite;
     public Vector3 gravity;
-   
-   
+    public PlayerController pc;
+
+
     private void Start()
     {
-        PlayerController pc = GetComponent<PlayerController>();
+       
         Vector3 direction = pc.PlayerAimDirection;
         //ParticleSystem.MainModule part = GetComponentInChildren<ParticleSystem>().main;
         //part.startColor = color;

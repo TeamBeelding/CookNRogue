@@ -32,6 +32,7 @@ public class AttackTest : MonoBehaviour
         projectileBehaviour = Bullet.GetComponent<ProjectileBehaviour>();
         projectileBehaviour.speed = speed;
         projectileBehaviour.drag = drag;
+        projectileBehaviour.pc = GetComponent<PlayerController>();
         //Shoot Cooldown
         _shootCooldown = 1f; //To get from coocked bullet 
 
