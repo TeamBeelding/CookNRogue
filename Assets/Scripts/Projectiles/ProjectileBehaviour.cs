@@ -5,23 +5,32 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class ProjectileBehaviour : MonoBehaviour
 {
-    [SerializeField]
-    ProjectileData data;
+
+    public float speed;
+    public float drag;
     Rigidbody rb;
+    Sprite sprite;
+    public Vector3 gravity;
+   
+   
     private void Start()
     {
-        
-        ParticleSystem.MainModule part = GetComponentInChildren<ParticleSystem>().main;
-        part.startColor = data.color;
+        //ParticleSystem.MainModule part = GetComponentInChildren<ParticleSystem>().main;
+        //part.startColor = color;
         rb = GetComponent<Rigidbody>();
-        rb.drag = data.drag;
-        rb.mass = data.mass;
-        rb.velocity = new Vector3(data.speed, 0, 0);
+        rb.drag = drag;
+        rb.velocity =  new Vector3(speed, 0, 0);
+        Destroy(gameObject, 5f);
     }
-    
 
-    private void OnCollisionEnter(Collision collision)
+    void FixedUpdate()
     {
-        Destroy(gameObject,1f);
+        rb.AddForce(gravity * rb.mass);
+    }
+
+    void ResetStats()
+    {
+        rb.drag = 0;
+        gameObject.transform.localScale = new Vector3(1,1,1);
     }
 }

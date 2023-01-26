@@ -1,25 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-public enum PLAT
+public enum INGREDIENT
 {
-    PLAT1,
-    PLAT2,
-    PLAT3
+    SALADE,
+    VIANDE,
+    POISSON
 }
 
 [CreateAssetMenu(fileName = "ProjectileData", menuName = "Player/Projectile Data")]
 public class ProjectileData : ScriptableObject
 {
     [Header("Composition")]
-    public PLAT plat;
-    public IngredientData[] ingredients;
-    public Sprite sprite;
+    public INGREDIENT plat;
     [Space(20)]
 
-    [Header("RigidBody")]
-    public float mass;
+    [Header("Inventory")]
+    [FormerlySerializedAs("sprite")]
+    public Sprite inventorySprite;
+    [Space(20)]
+
+    [Header("Physic and Movements")]
     public float size;
     public float speed;
     public float drag;
@@ -30,5 +33,8 @@ public class ProjectileData : ScriptableObject
     public float heavyDamage;
     public float lightAttackDelay;
     public float lightDamage;
+    [Space(20)]
+
+    [Header("Debug")]
     public Color color;
 }
