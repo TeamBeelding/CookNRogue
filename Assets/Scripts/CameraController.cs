@@ -11,6 +11,7 @@ public class CameraController : MonoBehaviour
 
     [SerializeField]
     private Transform TransformCamera;
+    [SerializeField]
     private float clipingDistance = 0.1f;
 
     private RaycastHit hit;
@@ -45,19 +46,24 @@ public class CameraController : MonoBehaviour
 
         if (Physics.Linecast(WallCheck.position, transform.position * clipingDistance, out hit))
         {
-            Debug.Log("HELLLLO");
-            if (!hit.collider.gameObject.tag.Equals("Player"))
+            if (!hit.collider.gameObject.tag.Equals("Player") && hit.collider.gameObject.tag.Equals("Wall"))
             {
+                Debug.Log("HELLLLO");
                 TransformCamera.localPosition = new Vector3(
-                                                        hit.point.x + clipingDistance - WallCheck.position.x,
-                                                        hit.point.y + clipingDistance - WallCheck.position.y, 
-                                                        hit.point.z + clipingDistance - WallCheck.position.z );
-                //TransformCamera.localPosition = transform.position - hit.point.normalized;
+                                                        hit.point.x - WallCheck.position.x,
+                                                        hit.point.y - WallCheck.position.y, 
+                                                        hit.point.z - WallCheck.position.z) + Vector3.up * 2;
+
+                Debug.DrawLine(WallCheck.position, new Vector3(
+                                                        hit.point.x,
+                                                        hit.point.y,
+                                                        hit.point.z), Color.red);
+
             }
         }
         else
         {
-            TransformCamera.localPosition = cameraOffset;
+            TransformCamera.localPosition = Vector3.Lerp(TransformCamera.localPosition, cameraOffset, Time.deltaTime);
         }
     }
 
@@ -75,6 +81,12 @@ public class CameraController : MonoBehaviour
 
             if (hit.collider.gameObject.tag == "Wall")
             {
+
+                Debug.DrawLine(WallCheck.position, new Vector3(
+                                        hit.point.x,
+                                        hit.point.y,
+                                        hit.point.z), Color.red);
+
                 Obstruction.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
 
             }
