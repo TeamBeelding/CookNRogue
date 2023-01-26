@@ -32,7 +32,7 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                     ""type"": ""Value"",
                     ""id"": ""97c6c1c9-859b-4d48-b695-d3f7dbaec194"",
                     ""expectedControlType"": ""Stick"",
-                    ""processors"": ""StickDeadzone(max=0.925)"",
+                    ""processors"": ""StickDeadzone"",
                     ""interactions"": """",
                     ""initialStateCheck"": true
                 },
@@ -41,7 +41,7 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                     ""type"": ""Value"",
                     ""id"": ""0927c105-0bce-4051-af1c-a8425fedc92c"",
                     ""expectedControlType"": ""Stick"",
-                    ""processors"": ""StickDeadzone(max=0.925)"",
+                    ""processors"": ""StickDeadzone"",
                     ""interactions"": """",
                     ""initialStateCheck"": true
                 },
