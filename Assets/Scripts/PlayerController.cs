@@ -59,7 +59,7 @@ public class PlayerController : MonoBehaviour
             Vector3 InputDir = relativeForward * inputValue.y + relativeRight * inputValue.x;
             InputDir = InputDir.normalized;
 
-            Debug.Log(inputValue);
+            //Debug.Log(inputValue);
 
             float speed = m_moveSpeed * inputValue.sqrMagnitude;
 
