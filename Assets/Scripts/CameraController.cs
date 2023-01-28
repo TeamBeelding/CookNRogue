@@ -13,7 +13,7 @@ public class CameraController : MonoBehaviour
 
     enum CameraOptions // your custom enumeration
     {
-        Collisions,
+        Default,
         Transparency
     };
 
@@ -22,8 +22,8 @@ public class CameraController : MonoBehaviour
 
     [SerializeField]
     private Transform TransformCamera;
-    [SerializeField]
-    private float clipingDistance = 1f;
+    //[SerializeField]
+    //=private float clipingDistance = 1f;
     [SerializeField]
     private float opacity = 0.5f;
 
@@ -33,12 +33,23 @@ public class CameraController : MonoBehaviour
     public MeshRenderer Obstruction;
     public Transform WallCheck;
 
+    
+
+    [SerializeField]
+    private float ShakeDuration = 1f;
+
+    [SerializeField]
+    private AnimationCurve ShakeCurve;
+
+    [SerializeField]
+    private bool Shake = false;
+
     // Start is called before the first frame update
     void Start()
     {
 
-        cameraOffset = TransformCamera.localPosition;
-        transform.position += new Vector3(-clipingDistance, clipingDistance, -clipingDistance);
+        //cameraOffset = TransformCamera.localPosition;
+        //transform.position += new Vector3(-clipingDistance, clipingDistance, -clipingDistance);
 
         Obstruction = WallCheck.gameObject.GetComponent<MeshRenderer>();
         Obstruction.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
@@ -47,42 +58,69 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (cameraOptions.Equals(CameraOptions.Collisions))
+        if (cameraOptions.Equals(CameraOptions.Default))
         {
-            CameraCollision();
+            //CameraCollision();
         }
         else 
         {
             CameraTransparent();
         }
+
+        if (Shake) 
+        {
+            Shake = false;
+            StartCoroutine(CameraShake());
+        }
+
     }
 
-    private void CameraCollision() 
-    {
-        Debug.DrawLine(WallCheck.position, transform.position, Color.green);
 
-        if (Physics.Linecast(WallCheck.position, transform.position, out hit))
+    IEnumerator CameraShake() 
+    { 
+        Vector3 startPosition = transform.position;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < ShakeDuration) 
         {
-            if (!hit.collider.gameObject.tag.Equals("Player") && hit.collider.gameObject.tag.Equals("Wall"))
-            {
+            elapsedTime += Time.deltaTime;
+            float strength = ShakeCurve.Evaluate(elapsedTime / ShakeDuration);
+            transform.position = startPosition + Random.insideUnitSphere * strength;
+            yield return null;
+        }
+
+        transform.localPosition = startPosition;
+    }
+
+
+
+    //// Not needed just keeping it in case
+    //private void CameraCollision() 
+    //{
+    //    Debug.DrawLine(WallCheck.position, transform.position, Color.green);
+
+    //    if (Physics.Linecast(WallCheck.position, transform.position, out hit))
+    //    {
+    //        if (!hit.collider.gameObject.tag.Equals("Player") && hit.collider.gameObject.tag.Equals("Wall"))
+    //        {
                 
-                TransformCamera.localPosition = Vector3.Lerp(TransformCamera.localPosition, new Vector3(
-                                                        hit.point.x + clipingDistance - WallCheck.position.x,
-                                                        hit.point.y - clipingDistance - WallCheck.position.y, 
-                                                        hit.point.z + clipingDistance - WallCheck.position.z) + Vector3.up * 2, Time.deltaTime * 10); ;
+    //            TransformCamera.localPosition = Vector3.Lerp(TransformCamera.localPosition, new Vector3(
+    //                                                    hit.point.x + clipingDistance - WallCheck.position.x,
+    //                                                    hit.point.y - clipingDistance - WallCheck.position.y, 
+    //                                                    hit.point.z + clipingDistance - WallCheck.position.z) + Vector3.up * 2, Time.deltaTime * 10); ;
 
-                Debug.DrawLine(WallCheck.position, new Vector3(
-                                                        hit.point.x,
-                                                        hit.point.y,
-                                                        hit.point.z), Color.red);
+    //            Debug.DrawLine(WallCheck.position, new Vector3(
+    //                                                    hit.point.x,
+    //                                                    hit.point.y,
+    //                                                    hit.point.z), Color.red);
 
-            }
-        }
-        else
-        {
-            TransformCamera.localPosition = Vector3.Lerp(TransformCamera.localPosition, cameraOffset, Time.deltaTime * 10);
-        }
-    }
+    //        }
+    //    }
+    //    else
+    //    {
+    //        TransformCamera.localPosition = Vector3.Lerp(TransformCamera.localPosition, cameraOffset, Time.deltaTime * 10);
+    //    }
+    //}
 
 
     private void CameraTransparent()
@@ -107,7 +145,9 @@ public class CameraController : MonoBehaviour
             Obstruction.material.SetFloat("_Opacity", 1f);
         }
 
-        Debug.Log(Obstruction.material.name + " Color: " + Obstruction.material.GetFloat("_Opacity"));
+        //Debug.Log(Obstruction.material.name + " Color: " + Obstruction.material.GetFloat("_Opacity"));
+
+        // Old wall is not equall to new wall then make old wall opaque again
     }
 
 
