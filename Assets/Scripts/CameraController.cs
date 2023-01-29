@@ -33,23 +33,9 @@ public class CameraController : MonoBehaviour
     public MeshRenderer Obstruction;
     public Transform WallCheck;
 
-    
-
-    [SerializeField]
-    private float ShakeDuration = 1f;
-
-    [SerializeField]
-    private AnimationCurve ShakeCurve;
-
-    [SerializeField]
-    private bool Shake = false;
-
     // Start is called before the first frame update
     void Start()
     {
-
-        //cameraOffset = TransformCamera.localPosition;
-        //transform.position += new Vector3(-clipingDistance, clipingDistance, -clipingDistance);
 
         Obstruction = WallCheck.gameObject.GetComponent<MeshRenderer>();
         Obstruction.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
@@ -67,29 +53,6 @@ public class CameraController : MonoBehaviour
             CameraTransparent();
         }
 
-        if (Shake) 
-        {
-            Shake = false;
-            StartCoroutine(CameraShake());
-        }
-
-    }
-
-
-    IEnumerator CameraShake() 
-    { 
-        Vector3 startPosition = transform.position;
-        float elapsedTime = 0f;
-
-        while (elapsedTime < ShakeDuration) 
-        {
-            elapsedTime += Time.deltaTime;
-            float strength = ShakeCurve.Evaluate(elapsedTime / ShakeDuration);
-            transform.position = startPosition + Random.insideUnitSphere * strength;
-            yield return null;
-        }
-
-        transform.localPosition = startPosition;
     }
 
 
