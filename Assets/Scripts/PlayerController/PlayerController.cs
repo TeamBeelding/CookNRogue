@@ -35,9 +35,6 @@ public class PlayerController : MonoBehaviour
     Vector3 _aimDirection;
 
     bool _isAiming;
-    bool _shootOnCooldown;
-    float _shootCooldown;
-    Coroutine _curShootDelay;
 
     void Start()
     {
@@ -55,7 +52,7 @@ public class PlayerController : MonoBehaviour
     {
         //Reset Aim Check
         _isAiming = false;
-        
+
         //Inputs relative to camera
         Vector3 relativeForward = _relativeTransform.forward + _relativeTransform.up;
         Vector3 relativeRight = _relativeTransform.right;
@@ -140,7 +137,7 @@ public class PlayerController : MonoBehaviour
         //Cooldown Check
         if (context.performed)
         {
-            GetComponent<AttackTest>().Shoot();
+            GetComponent<PlayerAttack>().Shoot();
         }
     }
 
