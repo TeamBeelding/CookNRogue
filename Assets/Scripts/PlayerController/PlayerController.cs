@@ -6,6 +6,7 @@ using Unity.VisualScripting;
 
 public class PlayerController : MonoBehaviour
 {
+    #region Variables
     [Header("Character Properties")]
     [SerializeField]
     float m_rotationSpeed = 3f;
@@ -32,9 +33,13 @@ public class PlayerController : MonoBehaviour
     Rigidbody _rb;
     Transform _relativeTransform;
 
-    Vector3 _aimDirection;
+    Vector2 moveInputValue;
+    Vector2 aimInputValue;
 
-    bool _isAiming;
+    bool _isAiming = false;
+    bool _isAimingOnMouse = false;
+    Vector3 _aimDirection;
+    #endregion
 
     void Start()
     {
@@ -45,14 +50,16 @@ public class PlayerController : MonoBehaviour
         //Set Input Actions Map
         _playerActions = new PlayerActions();
         _playerActions.Default_PlayerActions.Enable();
+        //Set Events
         _playerActions.Default_PlayerActions.Shoot.performed += Shoot;
+        _playerActions.Default_PlayerActions.Move.performed += Move_Performed;
+        _playerActions.Default_PlayerActions.Move.canceled += Move_Canceled;
+        _playerActions.Default_PlayerActions.Aim.performed += Aim_Performed;
+        _playerActions.Default_PlayerActions.Aim.canceled+= Aim_Canceled;
     }
 
     private void Update()
     {
-        //Reset Aim Check
-        _isAiming = false;
-
         //Inputs relative to camera
         Vector3 relativeForward = _relativeTransform.forward + _relativeTransform.up;
         Vector3 relativeRight = _relativeTransform.right;
@@ -62,9 +69,13 @@ public class PlayerController : MonoBehaviour
         relativeRight.Normalize();
 
         #region Aim
-        //Movement Inputs
-        Vector2 aimInputValue = _playerActions.Default_PlayerActions.Aim.ReadValue<Vector2>();
+        //Mouse Inputs Check
+        if (_isAimingOnMouse)
+        {
+            aimInputValue = Input.mousePosition - m_mainCamera.WorldToScreenPoint(transform.position);
+        }
 
+        //Null Input Check
         if (aimInputValue.magnitude > 0)
         {
             //Rotate Player Model
@@ -75,15 +86,12 @@ public class PlayerController : MonoBehaviour
             Rotate(aimInputDir);
 
             //Set Aim Variables
-            _isAiming = true;
             _aimDirection = aimInputDir;
         }
         #endregion
 
         #region Movement
-        //Movement Inputs
-        Vector2 moveInputValue = _playerActions.Default_PlayerActions.Move.ReadValue<Vector2>();
-
+        //Null Input Check
         if (moveInputValue.magnitude <= 0)
         {
             //Stop if input is null
@@ -120,6 +128,17 @@ public class PlayerController : MonoBehaviour
         m_model.transform.forward = new Vector3 (newX, 0, newZ);
     }
 
+    #region Movement
+    void Move_Performed(InputAction.CallbackContext context)
+    {
+        moveInputValue = context.ReadValue<Vector2>();
+    }
+
+    void Move_Canceled(InputAction.CallbackContext context)
+    {
+        moveInputValue = Vector2.zero;
+    }
+
     void Move(Vector3 direction, float speed)
     {
         _rb.AddForce(100f * speed * Time.deltaTime * direction, ForceMode.Force);
@@ -130,11 +149,43 @@ public class PlayerController : MonoBehaviour
             _rb.velocity = new Vector3(direction.x, _rb.velocity.y, direction.z) * m_maxMoveSpeed;
         }
     }
+    #endregion
+
+    #region Aim
+    void Aim_Performed(InputAction.CallbackContext context)
+    {
+        _isAiming = true;
+        var inputType = context.control.layout;
+
+        //Check Input Device
+        switch(inputType)
+        {
+            //M&K
+            case ("Button"):
+                {
+                    _isAimingOnMouse = true;
+                    return;
+                }
+            //Gamepad
+            case ("Stick"):
+                {
+                    aimInputValue = context.ReadValue<Vector2>();
+                    return;
+                }
+        }
+    }
+
+    void Aim_Canceled(InputAction.CallbackContext context)
+    {
+        //Reset
+        _isAiming = false;
+        _isAimingOnMouse = false;
+        aimInputValue = Vector2.zero;
+    }
+    #endregion 
 
     void Shoot(InputAction.CallbackContext context)
     {
-
-        //Cooldown Check
         if (context.performed)
         {
             GetComponent<PlayerAttack>().Shoot();
