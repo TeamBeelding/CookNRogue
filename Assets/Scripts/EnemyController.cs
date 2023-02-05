@@ -31,6 +31,9 @@ public class EnemyController : MonoBehaviour
     [SerializeField]
     private GameObject bullet;
     
+    [SerializeField] 
+    private Transform[] paths;
+    
     private bool _focusPlayer = false;
     private bool _canAttack = true;
     private float healthpoint;
@@ -103,6 +106,7 @@ public class EnemyController : MonoBehaviour
 
     private void AreaDetection()
     {
+        // If the enemy is not focused on the player, it will detect the player if he is in the detection range
         if (!_focusPlayer)
         {
             Collider[] col = Physics.OverlapSphere(transform.position, data.GetRangeDetection(), 
@@ -119,16 +123,18 @@ public class EnemyController : MonoBehaviour
         }
         else
         {
+            // Switch between chase and attack state depending on the distance between the enemy and the player 
             state = Vector3.Distance(transform.position, player.transform.position) <= data.GetAttackRange() ? State.Attack : State.Chase;
         }
     }
 
+    // ReSharper disable Unity.PerformanceAnalysis
     public void Attack()
     {
         if (_canAttack)
         {
             GameObject shot = Instantiate(bullet, gun.transform.position, Quaternion.identity);
-            shot.GetComponent<BulletController>().SetDirection(player.transform);
+            shot.GetComponent<BulletControllerTest>().SetDirection(player.transform);
             _canAttack = false;
             StartCoroutine(AttackTimer());
         }
@@ -179,7 +185,8 @@ public class EnemyController : MonoBehaviour
     {
         Destroy(gameObject);
     }
-
+    
+    // Color the enemy red for a short time to indicate that he has been hit
     private IEnumerator ColorationFeedback()
     {
         for (int i = 0; i < 5; i++)
@@ -197,6 +204,7 @@ public class EnemyController : MonoBehaviour
         _canAttack = true;
     }
 
+    // Stop the enemy from moving after receiving a recoil force
     private IEnumerator StoppingForce()
     {
         yield return new WaitForSeconds(.5f);
