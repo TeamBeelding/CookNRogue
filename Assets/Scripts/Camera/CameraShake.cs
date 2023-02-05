@@ -30,6 +30,7 @@ public class CameraShake : MonoBehaviour
     {
 
         transform.position = CameraTransform.position;
+        transform.rotation = CameraTransform.rotation;
 
         if (shake)
         {

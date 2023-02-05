@@ -9,7 +9,7 @@ public class TransitionController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyUp(KeyCode.Escape)) 
+        if (Input.GetKeyUp(KeyCode.T)) 
         {
             LoadTransition();
         }
@@ -17,7 +17,9 @@ public class TransitionController : MonoBehaviour
 
     public void LoadTransition()
     {
-        Transition.ResetTrigger("Start");
+        Transition.SetTrigger("Start");
+        //if(Transition.GetBool("Start"))
+            //Transition.ResetTrigger("Start");
     }
 
 }
