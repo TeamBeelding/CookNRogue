@@ -23,7 +23,7 @@ public class RoomManager : MonoBehaviour
     void Awake()
     {
         if (instance != null && instance != this)
-            Destroy(gameObject);    // Suppression d'une instance précédente (sécurité...sécurité...)
+            Destroy(gameObject);    // Suppression d'une instance prï¿½cï¿½dente (sï¿½curitï¿½...sï¿½curitï¿½...)
 
         instance = this;
     }
