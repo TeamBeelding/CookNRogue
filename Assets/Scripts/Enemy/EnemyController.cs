@@ -138,18 +138,18 @@ public class EnemyController : MonoBehaviour
         if (_canAttack)
         {
             GameObject shot = Instantiate(bullet, gun.transform.position, Quaternion.identity);
-            shot.GetComponent<BulletControllerTest>().SetDirection(player.transform);
+            shot.GetComponent<EnemyBulletController>().SetDirection(player.transform);
             _canAttack = false;
             StartCoroutine(AttackTimer());
         }
     }
 
-    public void TakeDamage()
+    public void TakeDamage(int damage = 1)
     {
         if (state == State.Neutral)
             state = State.Chase;
-        
-        ReduiceHealth(1);
+
+        ReduiceHealth(damage);
         KnockBack();
         StartCoroutine(ColorationFeedback());
     }
