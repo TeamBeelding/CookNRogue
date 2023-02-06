@@ -1,8 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletController : MonoBehaviour
+public class BulletControllerTest : MonoBehaviour
 {
     [SerializeField]
     private BulletData _data;
@@ -33,5 +34,13 @@ public class BulletController : MonoBehaviour
     private void Move()
     {
         transform.position += direction * (_data.GetSpeed() * Time.deltaTime);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            Destroy(gameObject);
+        }
     }
 }

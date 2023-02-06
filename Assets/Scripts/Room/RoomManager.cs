@@ -23,7 +23,7 @@ public class RoomManager : MonoBehaviour
     void Awake()
     {
         if (instance != null && instance != this)
-            Destroy(gameObject);    // Suppression d'une instance précédente (sécurité...sécurité...)
+            Destroy(gameObject);    // Suppression d'une instance prï¿½cï¿½dente (sï¿½curitï¿½...sï¿½curitï¿½...)
 
         instance = this;
     }
@@ -36,16 +36,15 @@ public class RoomManager : MonoBehaviour
         LoadRandomLevel();
     }
 
-    //public void RemoveEnemyCount()
-    //{
-    //    EnemyLeft--;
-    //    if (EnemyLeft <= 0)
-    //    {
-    //        GameObject.Find("Porte").SetActive(false);
-
-    //    }
-    //    Debug.Log(EnemyLeft);
-    //}
+    public void RemoveEnemyCount()
+    {
+        EnemyLeft--;
+        if (EnemyLeft <= 0)
+        {
+            GameObject.Find("Porte").SetActive(false);
+        }
+        Debug.Log(EnemyLeft);
+    }
 
     // Update is called once per frame
     public void LoadRandomLevel()
@@ -61,6 +60,6 @@ public class RoomManager : MonoBehaviour
         CurrentLevel = Instantiate(Levels[rand], Vector3.zero, Quaternion.identity);
 
         Player.transform.position = SpawnPoint.position;
-        EnemyLeft = GameObject.FindGameObjectsWithTag("Enemy").Length;
+        //EnemyLeft = GameObject.FindGameObjectsWithTag("Enemy").Length;
     }
 }
