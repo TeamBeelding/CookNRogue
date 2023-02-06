@@ -5,7 +5,7 @@ using UnityEngine;
 public class InventoryScript : MonoBehaviour
 {
     [SerializeField]
-    AttackTest attack;
+    PlayerAttack attack;
     public List<ProjectileData> projectilesData;
     public GameObject UI_Inventory;
     public GameObject SlotsContainer;
