@@ -33,6 +33,7 @@ public class PlayerAttack : MonoBehaviour
 
     public void Shoot()
     {
+        //BulletInstantiate
         GameObject Bullet = Instantiate(Projectile, muzzle.position, Quaternion.identity);
         projectileBehaviour = Bullet.GetComponent<ProjectileBehaviour>();
         projectileBehaviour.speed = speed;
