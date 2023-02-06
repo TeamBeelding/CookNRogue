@@ -5,7 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class ProjectileBehaviour : MonoBehaviour
 {
-
+    public float heavyDamage;
+    public float lightDamage;
     public float speed;
     public float drag;
     Rigidbody rb;
@@ -33,5 +34,13 @@ public class ProjectileBehaviour : MonoBehaviour
     {
         rb.drag = 0;
         gameObject.transform.localScale = new Vector3(1,1,1);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            other.GetComponent<Enemy>().TakeDamage(heavyDamage);
+        }
     }
 }

@@ -38,6 +38,8 @@ public class PlayerAttack : MonoBehaviour
         projectileBehaviour = Bullet.GetComponent<ProjectileBehaviour>();
         projectileBehaviour.speed = speed;
         projectileBehaviour.drag = drag;
+        projectileBehaviour.lightDamage = lightDamage;
+        projectileBehaviour.heavyDamage = heavyDamage;
         projectileBehaviour.direction = _playerController.PlayerAimDirection; 
 
         //Shoot Cooldown
