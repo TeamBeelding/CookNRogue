@@ -39,14 +39,21 @@ public class InventoryScript : MonoBehaviour
     }
     void Craft()
     {
+        //Clear la Liste d'ingredients precedente
         recipe.Clear();
+
+        //Fusionne les proprietes des differents ingredients
         for (int i = 0;i < numberOfIngredients; i++)
         {
             int rand = Random.Range(0, projectilesData.Count);
             recipe.Add(projectilesData[rand]);
             projectilesData.RemoveAt(rand);
         }
+
+        //Reinitialise les parametres de l'attaque precedente
         attack.ResetParameters();
+
+        //Fusionne les effets et stats des differents ingredients
         foreach (ProjectileData ingredient in recipe)
         {
             attack.size += ingredient.size;
