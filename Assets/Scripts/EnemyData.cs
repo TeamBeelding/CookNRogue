@@ -6,10 +6,13 @@ using UnityEngine.Serialization;
 [CreateAssetMenu(fileName = "EnemyData", menuName = "Enemy")]
 public class EnemyData : ScriptableObject
 {
+    [Header("Statistics")]
     [SerializeField]
     private float health = 3;
     [SerializeField]
     private float speed = 5;
+    
+    [Header("Attack")]
     [SerializeField]
     private float rangeDetection = 6;
     [SerializeField]
@@ -18,10 +21,18 @@ public class EnemyData : ScriptableObject
     private float attackSpeed = 0.5f;
     [SerializeField]
     private float damage = 1;
+    
+    [Header("Physics")]
     [SerializeField] 
     private float forceRecoil = 2;
+    
+    [Header("State")]
     [SerializeField]
     private bool focusInstantlyPlayer = false;
+    
+    [Header("Path")]
+    [SerializeField]
+    private GameObject[] path;
 
     public float GetHealth() => health;
     public float GetSpeed() => speed;
