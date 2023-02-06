@@ -131,7 +131,25 @@ public class EnemyController : MonoBehaviour
     }
     
     #endregion
+    
+    // #region NeutralState
+    //
+    // private void Pathing()
+    // {
+    //     if (paths.Length == 0)
+    //         return;
+    //
+    //     _agent.SetPath(paths[0].GetComponent<NavMeshPath>());
+    // }
+    // private void GoToNextPoint()
+    // {
+    //     
+    // }
+    //
+    // #endregion
 
+    #region AttackState
+    
     // ReSharper disable Unity.PerformanceAnalysis
     public void Attack()
     {
@@ -143,8 +161,12 @@ public class EnemyController : MonoBehaviour
             StartCoroutine(AttackTimer());
         }
     }
+    
+    #endregion
+    
+    #region TakeDamage
 
-    public void TakeDamage(int damage = 1)
+    public void TakeDamage(float damage = 1)
     {
         if (state == State.Neutral)
             state = State.Chase;
@@ -207,6 +229,8 @@ public class EnemyController : MonoBehaviour
         yield return new WaitForSeconds(data.GetAttackSpeed());
         _canAttack = true;
     }
+    
+    #endregion
 
     // Stop the enemy from moving after receiving a recoil force
     private IEnumerator StoppingForce()
