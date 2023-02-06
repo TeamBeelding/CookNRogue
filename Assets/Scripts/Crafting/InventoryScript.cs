@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class InventoryScript : MonoBehaviour
 {
+    public static InventoryScript instance;
     [SerializeField]
     PlayerAttack attack;
     public List<ProjectileData> projectilesData;
@@ -14,6 +15,13 @@ public class InventoryScript : MonoBehaviour
     [SerializeField]
     int numberOfIngredients;
 
+    void Awake()
+    {
+        if (instance != null && instance != this)
+            Destroy(gameObject);    // Suppression d'une instance précédente (sécurité...sécurité...)
+
+        instance = this;
+    }
     private void Start()
     {
         recipe = new List<ProjectileData>();
@@ -50,6 +58,9 @@ public class InventoryScript : MonoBehaviour
             projectilesData.RemoveAt(rand);
         }
 
+        //Rafraichit l'affichage de l'inventaire
+        RefreshInventoryUI();
+
         //Reinitialise les parametres de l'attaque precedente
         attack.ResetParameters();
 
@@ -64,5 +75,15 @@ public class InventoryScript : MonoBehaviour
             attack.lightAttackDelay += ingredient.lightAttackDelay;
             attack.lightDamage += ingredient.lightDamage;
         }
+    }
+    public void AddIngredientToList(ProjectileData data)
+    {
+        projectilesData.Add(data);
+        RefreshInventoryUI();
+    }
+
+    public void RefreshInventoryUI()
+    {
+        //Rafraichit l'affichage de l'inventaire
     }
 }
