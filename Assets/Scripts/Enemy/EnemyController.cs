@@ -33,6 +33,8 @@ public class EnemyController : MonoBehaviour
     
     [SerializeField] 
     private Transform[] paths;
+
+    private int _destPoint = 0;
     
     private bool _focusPlayer = false;
     private bool _canAttack = true;
@@ -49,6 +51,7 @@ public class EnemyController : MonoBehaviour
         _focusPlayer = data.GetFocusPlayer();
 
         healthpoint = data.GetHealth();
+
     }
 
     // Start is called before the first frame update
@@ -99,6 +102,7 @@ public class EnemyController : MonoBehaviour
                 break;
             case State.Neutral:
                 _rend.material.color = Color.green;
+                Pathing();
                 break;
             default:
                 _rend.material.color = Color.white;
@@ -132,21 +136,29 @@ public class EnemyController : MonoBehaviour
     
     #endregion
     
-    // #region NeutralState
-    //
-    // private void Pathing()
-    // {
-    //     if (paths.Length == 0)
-    //         return;
-    //
-    //     _agent.SetPath(paths[0].GetComponent<NavMeshPath>());
-    // }
-    // private void GoToNextPoint()
-    // {
-    //     
-    // }
-    //
-    // #endregion
+    #region NeutralState
+    
+    private void Pathing()
+    {
+        // If path is empty, do nothing
+        if (paths.Length == 0)
+            return;
+        
+        // If the enemy is close enough to the current point, go to the next point
+        if (Vector3.Distance(transform.position, paths[_destPoint].position) < _agent.stoppingDistance)
+            GoToNextPoint();
+        
+        // Set the destination of the enemy to the current point
+        _agent.SetDestination(paths[_destPoint].position);
+    }
+    
+    private void GoToNextPoint()
+    {
+        // If there is no more point, go back to the first point
+        _destPoint = (_destPoint + 1) % paths.Length;
+    }
+    
+    #endregion
 
     #region AttackState
     
