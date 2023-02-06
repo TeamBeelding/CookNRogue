@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "BulletData", menuName = "Bullet")]
-public class BulletData : ScriptableObject
+[CreateAssetMenu(fileName = "EnemyBulletData", menuName = "Bullet")]
+public class EnemyBulletData : ScriptableObject
 {
     [SerializeField] 
     private float speed;
