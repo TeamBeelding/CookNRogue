@@ -17,11 +17,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     float m_moveDrag = 1f;
 
+    [SerializeField]
+    float m_interactionRange = 0.5f;
+
     [Header("Init")]
     [SerializeField]
     Camera m_mainCamera;
     [SerializeField]
     GameObject m_model;
+    [SerializeField]
+    LayerMask m_interactionMask;
 
     public Vector3 PlayerAimDirection
     {
@@ -39,6 +44,8 @@ public class PlayerController : MonoBehaviour
     bool _isAiming = false;
     bool _isAimingOnMouse = false;
     Vector3 _aimDirection;
+
+    Collider _curInteractCollider = null;
     #endregion
 
     void Start()
@@ -55,7 +62,7 @@ public class PlayerController : MonoBehaviour
         _playerActions.Default_PlayerActions.Move.performed += Move_Performed;
         _playerActions.Default_PlayerActions.Move.canceled += Move_Canceled;
         _playerActions.Default_PlayerActions.Aim.performed += Aim_Performed;
-        _playerActions.Default_PlayerActions.Aim.canceled+= Aim_Canceled;
+        _playerActions.Default_PlayerActions.Aim.canceled += Aim_Canceled;
     }
 
     private void Update()
@@ -118,6 +125,63 @@ public class PlayerController : MonoBehaviour
         }
 
 
+        #endregion
+
+        #region Interact
+        Collider[] interactableColliders = new Collider[3];
+
+        //Get interactable objects in range
+        int foundObjects = Physics.OverlapSphereNonAlloc(transform.position + m_model.transform.forward * 0.5f, m_interactionRange, interactableColliders, m_interactionMask);
+        if (foundObjects > 0)
+        {
+            //Get closest object
+            float shortestDistance = Mathf.Infinity;
+            int shortestIndex = 0;
+            for (int index = 0; index < interactableColliders.Length; index++)
+            {
+                if (interactableColliders[index] == null)
+                {
+                    break;
+                }
+
+                float distance = Vector3.Distance(transform.position, interactableColliders[index].transform.position);
+                if (distance < shortestDistance)
+                {
+                    shortestDistance = distance;
+                    shortestIndex = index;
+                }
+            }
+
+            //Reset current interactable object if it is not the closest
+            if (_curInteractCollider != null && _curInteractCollider != interactableColliders[shortestIndex])
+            {
+                var curInteractable = _curInteractCollider.GetComponent<IInteractable>();
+                curInteractable.Interactable(false);
+            }
+
+            //Set new current interactable object
+            _curInteractCollider = interactableColliders[shortestIndex];        
+            if (interactableColliders[shortestIndex].TryGetComponent<IInteractable>(out var interactable))
+            {
+                interactable.Interactable(true);
+
+                //Interact if button is pressed
+                if (_playerActions.Default_PlayerActions.Interact.triggered)
+                {
+                    interactable.Interact("Default");
+                }
+            }
+        }
+        else
+        {
+            //If not in range, reset current interactable object
+            if (_curInteractCollider != null)
+            {
+                var curInteractable = _curInteractCollider.GetComponent<IInteractable>();
+                curInteractable.Interactable(false);
+                _curInteractCollider = null;
+            }
+        }
         #endregion
     }
 
