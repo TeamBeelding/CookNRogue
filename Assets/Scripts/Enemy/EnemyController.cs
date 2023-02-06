@@ -132,21 +132,21 @@ public class EnemyController : MonoBehaviour
     
     #endregion
     
-    // #region NeutralState
-    //
-    // private void Pathing()
-    // {
-    //     if (paths.Length == 0)
-    //         return;
-    //
-    //     _agent.SetPath(paths[0].GetComponent<NavMeshPath>());
-    // }
-    // private void GoToNextPoint()
-    // {
-    //     
-    // }
-    //
-    // #endregion
+    #region NeutralState
+    
+    private void Pathing()
+    {
+        if (paths.Length == 0)
+            return;
+    
+        _agent.SetPath(paths[0].GetComponent<NavMeshPath>());
+    }
+    private void GoToNextPoint()
+    {
+        
+    }
+    
+    #endregion
 
     #region AttackState
     
