@@ -83,8 +83,10 @@ public class EnemyController : MonoBehaviour
         return state;
     }
 
+    #region State
     private void StateManagement()
     {
+        // Change the state of the enemy and call the corresponding function or colorize the enemy
         switch (state)
         {
             case State.Chase:
@@ -127,6 +129,8 @@ public class EnemyController : MonoBehaviour
             state = Vector3.Distance(transform.position, player.transform.position) <= data.GetAttackRange() ? State.Attack : State.Chase;
         }
     }
+    
+    #endregion
 
     // ReSharper disable Unity.PerformanceAnalysis
     public void Attack()
