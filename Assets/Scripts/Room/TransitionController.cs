@@ -17,9 +17,15 @@ public class TransitionController : MonoBehaviour
 
     public void LoadTransition()
     {
-        Transition.SetTrigger("Start");
-        //if(Transition.GetBool("Start"))
-            //Transition.ResetTrigger("Start");
+        Transition.SetBool("Start", true);
+
+        StartCoroutine(Countdown(2));
+    }
+
+    IEnumerator Countdown(int seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        Transition.SetBool("Start", false);
     }
 
 }

@@ -6,7 +6,13 @@ public class RoomManager : MonoBehaviour
 {
     public static RoomManager instance;
     [SerializeField]
-    GameObject[] Levels;
+    private GameObject[] EasyLevels;
+    [SerializeField]
+    private GameObject[] HardLevels;
+
+    [SerializeField]
+    private bool isHard;
+
     private int EnemyLeft;
 
     GameObject CurrentLevel;
@@ -18,6 +24,8 @@ public class RoomManager : MonoBehaviour
     [SerializeField]
     Transform SpawnPoint;
 
+    [SerializeField]
+    TransitionController Transition;
 
 
     void Awake()
@@ -49,17 +57,26 @@ public class RoomManager : MonoBehaviour
     // Update is called once per frame
     public void LoadRandomLevel()
     {
+        Transition.LoadTransition();
 
         if (CurrentLevel != null)
         {
             Destroy(CurrentLevel);
         }
 
-        int rand = Random.Range(0, Levels.Length);
+        if (!isHard) 
+        {
+            int rand = Random.Range(0, EasyLevels.Length);
+            CurrentLevel = Instantiate(EasyLevels[rand], Vector3.zero, Quaternion.identity);
+            Player.transform.position = SpawnPoint.position;
+        }
+        else
+        {
+            int rand = Random.Range(0, HardLevels.Length);
+            CurrentLevel = Instantiate(EasyLevels[rand], Vector3.zero, Quaternion.identity);
+            Player.transform.position = SpawnPoint.position;
+        }
 
-        CurrentLevel = Instantiate(Levels[rand], Vector3.zero, Quaternion.identity);
-
-        Player.transform.position = SpawnPoint.position;
         //EnemyLeft = GameObject.FindGameObjectsWithTag("Enemy").Length;
     }
 }
