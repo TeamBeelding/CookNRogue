@@ -18,7 +18,7 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     private Transform ShakeGimble;
     [SerializeField]
-    private Transform CameraGimble;
+    private Transform CameraPlayerTarget;
 
 
     //Obstructions
@@ -60,7 +60,7 @@ public class CameraController : MonoBehaviour
     {
         if (Target == null)
         {
-            MainCamera.position = Vector3.Lerp(MainCamera.position, CameraGimble.position, smoothSpeed * Time.deltaTime);
+            MainCamera.position = Vector3.Lerp(MainCamera.position, CameraPlayerTarget.position, smoothSpeed * Time.deltaTime);
         }
         else 
         {
@@ -86,9 +86,9 @@ public class CameraController : MonoBehaviour
 
     private void CameraTransparent()
     {
-        Debug.DrawLine(CameraGimble.position, TransformHead.position, Color.green);
+        Debug.DrawLine(CameraPlayerTarget.position, TransformHead.position, Color.green);
 
-        if (Physics.Linecast(CameraGimble.position, TransformHead.position, out Hit))
+        if (Physics.Linecast(CameraPlayerTarget.position, TransformHead.position, out Hit))
         {
             ObstructionMesh.material.SetFloat("_Opacity", 1f);
             if (Hit.collider.CompareTag("Obstruction"))
