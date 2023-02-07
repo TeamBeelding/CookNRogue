@@ -20,6 +20,8 @@ public class PlayerAttack : MonoBehaviour
     public float lightAttackDelay;
     public float lightDamage;
 
+    public List<IEffects> effects = new List<IEffects>();
+
     bool _shootOnCooldown;
     float _shootCooldown;
     Coroutine _curShootDelay;
@@ -41,6 +43,11 @@ public class PlayerAttack : MonoBehaviour
         projectileBehaviour.lightDamage = lightDamage;
         projectileBehaviour.heavyDamage = heavyDamage;
         projectileBehaviour.direction = _playerController.PlayerAimDirection; 
+
+        foreach(IEffects effect in effects)
+        {
+            effect.EffectOnShoot();
+        }
 
         //Shoot Cooldown
         _shootCooldown = 1f; //To get from coocked bullet 

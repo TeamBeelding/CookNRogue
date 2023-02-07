@@ -13,6 +13,8 @@ public enum INGREDIENT
 [CreateAssetMenu(fileName = "ProjectileData", menuName = "Player/Projectile Data")]
 public class ProjectileData : ScriptableObject
 {
+    public List<IEffects>effects = new List<IEffects>() { new Knockback() };
+
     [Header("Composition")]
     public INGREDIENT plat;
     [Space(20)]
@@ -33,6 +35,43 @@ public class ProjectileData : ScriptableObject
     public float heavyDamage;
     public float lightAttackDelay;
     public float lightDamage;
+    [Space(20)]
+
+    [Header("Dot")]
+    public bool Dot;
+    public float DotDamage;
+    public float DotDuration;
+
+    [Header("BlindEffect")]
+    public bool BlindEffect;
+    public float BlindEffectDuration;
+
+    [Header("ArmorReduction")]
+    public bool ArmorReduction;
+    public float ArmorReductionForce;
+
+    [Header("SlowDown")]
+    public bool SlowDown;
+    public float SlowDownDuration;
+    public float SlowDownPercent;
+
+    [Header("Explosion")]
+    public bool Explosion;
+    public float ExplosionDamage;
+    public float ExplosionRadius;
+
+    [Header("Boomerang")]
+    public bool BoomerangEffect;
+
+    [Header("Sandwich")]
+    public bool SandwichEffect;
+
+    [Header("Sandwich")]
+    public bool AOE;
+    public float AOERadius;
+    public float AOEDuration;
+    public float AOEDamage;
+    public float AOETick;
     [Space(20)]
 
     [Header("Debug")]
