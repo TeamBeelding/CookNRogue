@@ -15,6 +15,7 @@ public class InventoryScript : MonoBehaviour
     [SerializeField]
     int numberOfIngredients;
 
+    
     void Awake()
     {
         if (instance != null && instance != this)
@@ -74,6 +75,12 @@ public class InventoryScript : MonoBehaviour
             attack.heavyDamage += ingredient.heavyDamage;
             attack.lightAttackDelay += ingredient.lightAttackDelay;
             attack.lightDamage += ingredient.lightDamage;
+
+            //AJOUT DES EFFETS DANS LE SCRIPT D'ATTAQUE
+            foreach(IEffects effect in ingredient.effects)
+            {
+                attack.effects.Add(effect);
+            }
         }
     }
     public void AddIngredientToList(ProjectileData data)
