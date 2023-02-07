@@ -16,6 +16,8 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     private Transform MainCamera;
     [SerializeField]
+    private Transform ShakeGimble;
+    [SerializeField]
     private Transform CameraGimble;
 
 
@@ -50,6 +52,7 @@ public class CameraController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        ShakeGimble = MainCamera.GetChild(0).GetComponent<Transform>();
     }
 
 
@@ -57,11 +60,11 @@ public class CameraController : MonoBehaviour
     {
         if (Target == null)
         {
-            MainCamera.position = Vector3.Lerp(MainCamera.position, CameraGimble.position, smoothSpeed);
+            MainCamera.position = Vector3.Lerp(MainCamera.position, CameraGimble.position, smoothSpeed * Time.deltaTime);
         }
         else 
         {
-            MainCamera.position = Vector3.Lerp(MainCamera.position, Target.position, smoothSpeed);
+            MainCamera.position = Vector3.Lerp(MainCamera.position, Target.position, smoothSpeed * Time.deltaTime);
         }
     }
 
@@ -69,7 +72,7 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //MainCamera.transform.position = CameraGimble.position;
+
 
 
         CameraTransparent();
@@ -104,15 +107,15 @@ public class CameraController : MonoBehaviour
     IEnumerator Shake()
     {
         float elapsedTime = 0f;
-        Vector3 startPosition = MainCamera.transform.position;
+        Vector3 startPosition = ShakeGimble.localPosition;
         while (elapsedTime < ShakeDuration)
         {
             elapsedTime += Time.deltaTime;
             float strength = ShakeCurve.Evaluate(elapsedTime / ShakeDuration);
-            MainCamera.transform.position = MainCamera.transform.position + Random.insideUnitSphere * strength;
+            ShakeGimble.localPosition = startPosition + Random.insideUnitSphere * strength;
             yield return null;
         }
-        MainCamera.transform.position = startPosition;
+        ShakeGimble.localPosition = startPosition;
     }
 }
 
