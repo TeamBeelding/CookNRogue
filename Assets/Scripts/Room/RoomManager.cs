@@ -12,7 +12,9 @@ public class RoomManager : MonoBehaviour
     private GameObject[] HardLevels;
 
     [SerializeField]
-    private bool isHard;
+    private List<GameObject> EnemiesInLevel;
+
+    public bool isHard;
 
     private int EnemyLeft;
 
@@ -44,6 +46,16 @@ public class RoomManager : MonoBehaviour
     {
         Player = GameObject.FindGameObjectWithTag("Player");
         LoadRandomLevel();
+
+        foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
+        {
+            EnemiesInLevel.Add(enemy);
+        }
+    }
+
+    private void Update()
+    {
+        
     }
 
     public void RemoveEnemyCount()
@@ -59,7 +71,16 @@ public class RoomManager : MonoBehaviour
     // Update is called once per frame
     public void LoadRandomLevel()
     {
-        
+
+        //for (int i = 0; i < EnemiesInLevel.Count; i++)
+        //{
+        //    if (EnemiesInLevel[i] != null)
+        //    {
+        //        Destroy(EnemiesInLevel[i]);
+        //    }
+        //}
+
+
         Transition.LoadTransition();
 
         if (CurrentLevel != null)
@@ -77,6 +98,11 @@ public class RoomManager : MonoBehaviour
         }
 
         StartCoroutine(Timer());
+
+        foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
+        {
+            EnemiesInLevel.Add(enemy);
+        }
     }
 
     private void LoadLevel(GameObject[] levels) 
