@@ -9,6 +9,9 @@ public class EnemyBulletData : ScriptableObject
     private float speed;
     [SerializeField] 
     private float damage;
+    [SerializeField]
+    private float lifeTime = 1.0f;
 
     public float GetSpeed() => speed;
+    public float GetLifeTime() => lifeTime;
 }
