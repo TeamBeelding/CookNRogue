@@ -70,8 +70,6 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     protected void Update()
     {
-        if (Input.GetKeyDown(KeyCode.A))
-            TakeDamage();
         
         StateManagement();
     }

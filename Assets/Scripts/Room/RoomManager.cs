@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor.AI; //"Editor" not "Engine"
 
 public class RoomManager : MonoBehaviour
 {
@@ -34,6 +35,7 @@ public class RoomManager : MonoBehaviour
             Destroy(gameObject);    // Suppression d'une instance pr�c�dente (s�curit�...s�curit�...)
 
         instance = this;
+        NavMeshBuilder.ClearAllNavMeshes();
     }
 
 
@@ -57,6 +59,7 @@ public class RoomManager : MonoBehaviour
     // Update is called once per frame
     public void LoadRandomLevel()
     {
+        
         Transition.LoadTransition();
 
         if (CurrentLevel != null)
@@ -64,19 +67,29 @@ public class RoomManager : MonoBehaviour
             Destroy(CurrentLevel);
         }
 
-        if (!isHard) 
+        if (!isHard)
         {
-            int rand = Random.Range(0, EasyLevels.Length);
-            CurrentLevel = Instantiate(EasyLevels[rand], Vector3.zero, Quaternion.identity);
-            Player.transform.position = SpawnPoint.position;
+            LoadLevel(EasyLevels);
         }
         else
         {
-            int rand = Random.Range(0, HardLevels.Length);
-            CurrentLevel = Instantiate(EasyLevels[rand], Vector3.zero, Quaternion.identity);
-            Player.transform.position = SpawnPoint.position;
+            LoadLevel(HardLevels);
         }
 
-        //EnemyLeft = GameObject.FindGameObjectsWithTag("Enemy").Length;
+        StartCoroutine(Timer());
+    }
+
+    private void LoadLevel(GameObject[] levels) 
+    {
+        int rand = Random.Range(0, levels.Length);
+        CurrentLevel = Instantiate(levels[rand], Vector3.zero, Quaternion.identity);
+        Player.transform.position = SpawnPoint.position;
+    }
+
+    private IEnumerator Timer ()
+    {
+        yield return new WaitForSeconds(2);
+        NavMeshBuilder.ClearAllNavMeshes();
+        NavMeshBuilder.BuildNavMesh();
     }
 }
