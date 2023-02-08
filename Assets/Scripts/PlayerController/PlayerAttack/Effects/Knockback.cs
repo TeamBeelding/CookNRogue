@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Knockback : MonoBehaviour, IEffects
+public class Knockback : IEffects
 {
     [Header("knockback")]
     public bool knockback;
     public float KnockbackForce;
-   
+
     //EFFET LORS DU SHOOT
     public void EffectOnShoot()
     {
@@ -19,5 +19,5 @@ public class Knockback : MonoBehaviour, IEffects
     {
         Debug.Log("KnockbackTouchEffect");
     }
-    
+
 }

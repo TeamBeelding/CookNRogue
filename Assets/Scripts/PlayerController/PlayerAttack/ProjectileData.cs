@@ -13,7 +13,7 @@ public enum INGREDIENT
 [CreateAssetMenu(fileName = "ProjectileData", menuName = "Player/Projectile Data")]
 public class ProjectileData : ScriptableObject
 {
-    public List<IEffects>effects = new List<IEffects>() { new Knockback() };
+    public IEffects effect;
 
     [Header("Composition")]
     public INGREDIENT plat;
