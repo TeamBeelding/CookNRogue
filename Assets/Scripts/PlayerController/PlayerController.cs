@@ -9,16 +9,16 @@ public class PlayerController : MonoBehaviour
     #region Variables
     [Header("Character Properties")]
     [SerializeField]
-    float m_rotationSpeed = 3f;
+    internal float m_rotationSpeed = 3f;
     [SerializeField]
-    float m_moveSpeed = 5f;
+    internal float m_moveSpeed = 5f;
     [SerializeField]
-    float m_maxMoveSpeed = 5f;
+    internal float m_maxMoveSpeed = 5f;
     [SerializeField]
-    float m_moveDrag = 1f;
+    internal float m_moveDrag = 1f;
 
     [SerializeField]
-    float m_interactionRange = 0.5f;
+    internal float m_interactionRange = 0.5f;
 
     [Header("Init")]
     [SerializeField]
