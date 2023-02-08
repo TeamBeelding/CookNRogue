@@ -11,9 +11,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     float m_currentHealthValue = 10f;
     [SerializeField]
-    float m_maxHealthValue = 10f;
+    internal float m_maxHealthValue = 10f;
     [SerializeField]
-    float m_rotationSpeed = 3f;
+    internal float m_rotationSpeed = 3f;
     [SerializeField]
     internal float m_moveSpeed = 5f;
     [SerializeField]
