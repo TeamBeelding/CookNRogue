@@ -9,6 +9,10 @@ public class PlayerController : MonoBehaviour
     #region Variables
     [Header("Character Properties")]
     [SerializeField]
+    float m_currentHealthValue = 10f;
+    [SerializeField]
+    float m_maxHealthValue = 10f;
+    [SerializeField]
     float m_rotationSpeed = 3f;
     [SerializeField]
     float m_moveSpeed = 5f;
@@ -63,6 +67,8 @@ public class PlayerController : MonoBehaviour
         _playerActions.Default_PlayerActions.Move.canceled += Move_Canceled;
         _playerActions.Default_PlayerActions.Aim.performed += Aim_Performed;
         _playerActions.Default_PlayerActions.Aim.canceled += Aim_Canceled;
+
+        m_currentHealthValue = m_maxHealthValue;
     }
 
     private void Update()
@@ -256,6 +262,16 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void TakeDamage(float damage) 
+    {
+        m_currentHealthValue -= Mathf.Abs(damage);
+        if(m_currentHealthValue <= 0)
+        {
+            m_currentHealthValue = m_maxHealthValue;
+            RoomManager.instance.LoadRandomLevel();
+        }
+    }
+
     private void OnDrawGizmos()
     {
         if (_isAiming)
@@ -266,4 +282,6 @@ public class PlayerController : MonoBehaviour
         Vector3 target = transform.position + _aimDirection * 2f;
         Gizmos.DrawLine(transform.position, target);
     }
+
+
 }

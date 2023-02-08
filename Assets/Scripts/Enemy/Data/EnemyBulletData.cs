@@ -14,4 +14,5 @@ public class EnemyBulletData : ScriptableObject
 
     public float GetSpeed() => speed;
     public float GetLifeTime() => lifeTime;
+    public float GetDamage() => damage;
 }
