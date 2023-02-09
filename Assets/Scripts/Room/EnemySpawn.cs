@@ -12,7 +12,7 @@ public class EnemySpawn : MonoBehaviour
     [SerializeField]
     private GameObject CurrentEnemy;
     [SerializeField] 
-    private float enemySpawnerDelai = 3f;
+    private float enemySpawnerDelai = 0.3f;
     
     void Start()
     {
