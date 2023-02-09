@@ -43,7 +43,7 @@ public class ProjectileBehaviour : MonoBehaviour
     {
         if(HasHit)
         {
-            playerAttack.ApplyOnHitEffects(hitObject.transform.position, this.gameObject);
+            playerAttack.ApplyOnHitEffects(transform.position, hitObject, direction);
         }
         else
         {
@@ -57,8 +57,13 @@ public class ProjectileBehaviour : MonoBehaviour
         {
             HasHit= true;
             hitObject = other.gameObject;
+
+            if (other.GetComponent<Enemy>())
+                other.GetComponent<Enemy>().TakeDamage(heavyDamage);
+
+
             Destroy(gameObject);
-            other.GetComponent<Enemy>().TakeDamage(heavyDamage);
+
         }
     }
 
