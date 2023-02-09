@@ -1,7 +1,7 @@
 using UnityEngine;
 
-public interface IEffects
+public interface IIngredientEffects
 {
     public void EffectOnShoot();
-    public void EffectOnTouch();
+    public void EffectOnHit();
 }

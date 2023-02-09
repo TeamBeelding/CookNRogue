@@ -2,20 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Knockback : IIngredientEffects
+public class SlowDown : IIngredientEffects
 {
-    [Header("knockback")]
-    public float KnockbackForce;
+    [Header("SlowDown")]
+    public float SlowDownDuration;
+    public float SlowDownPercent;
 
     //EFFET LORS DU SHOOT
     public void EffectOnShoot()
     {
-        Debug.Log("KnockbackShootEffect");
+        Debug.Log("SlowDownShootEffect");
     }
 
     //EFFET LORS DE LA COLLISION
     public void EffectOnHit()
     {
-        Debug.Log("KnockbackHitEffect");
+        Debug.Log("SlowDownHitEffect");
     }
 }

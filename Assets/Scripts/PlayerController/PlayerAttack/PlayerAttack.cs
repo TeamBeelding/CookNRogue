@@ -20,7 +20,7 @@ public class PlayerAttack : MonoBehaviour
     public float lightAttackDelay;
     public float lightDamage;
 
-    public List<IEffects> effects = new List<IEffects>();
+    public List<IIngredientEffects> effects = new List<IIngredientEffects>();
 
     bool _shootOnCooldown;
     float _shootCooldown;
@@ -34,18 +34,23 @@ public class PlayerAttack : MonoBehaviour
         _playerController = GetComponent<PlayerController>();
     }
 
+    
     public void Shoot()
     {
+        if (_shootOnCooldown)
+            return;
+        
         //BulletInstantiate
         GameObject Bullet = Instantiate(Projectile, muzzle.position, Quaternion.identity);
         projectileBehaviour = Bullet.GetComponent<ProjectileBehaviour>();
+        projectileBehaviour.playerAttack = this;
         projectileBehaviour.speed = speed;
         projectileBehaviour.drag = drag;
         projectileBehaviour.lightDamage = lightDamage;
         projectileBehaviour.heavyDamage = heavyDamage;
         projectileBehaviour.direction = _playerController.PlayerAimDirection;
 
-        foreach (IEffects effect in effects)
+        foreach (IIngredientEffects effect in effects)
         {
             effect.EffectOnShoot();
         }
@@ -62,6 +67,22 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
+    #region OnHitEffects
+    public void ApplyOnHitEffects(Vector3 Position)
+    {
+        foreach (IIngredientEffects effect in effects)
+        {
+            effect.EffectOnHit();
+        }
+    }
+    public void ApplyOnHitEffects(Vector3 Position,GameObject HitObject)
+    {
+        foreach (IIngredientEffects effect in effects)
+        {
+            effect.EffectOnHit();
+        }
+    }
+    #endregion
     IEnumerator ShootDelay(float delay)
     {
         float curTime = 0;

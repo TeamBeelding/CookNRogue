@@ -84,6 +84,7 @@ public class InventoryScript : MonoBehaviour
     public void AddIngredientToList(ProjectileData data)
     {
         projectilesData.Add(data);
+
         RefreshInventoryUI();
     }
 

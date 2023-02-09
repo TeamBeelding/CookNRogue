@@ -2,20 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Knockback : IIngredientEffects
+public class Explosion : IIngredientEffects
 {
-    [Header("knockback")]
-    public float KnockbackForce;
+    [Header(" Explosion")]
+    public float ExplosionDamage;
+    public float ExplosionRadius;
 
     //EFFET LORS DU SHOOT
     public void EffectOnShoot()
     {
-        Debug.Log("KnockbackShootEffect");
+        Debug.Log("ExplosionShootEffect");
     }
 
     //EFFET LORS DE LA COLLISION
     public void EffectOnHit()
     {
-        Debug.Log("KnockbackHitEffect");
+        Debug.Log("ExplosionHitEffect");
     }
 }
