@@ -30,7 +30,8 @@ public class PlayerAttack : MonoBehaviour
 
     private void Start()
     {
-        _playerController= GetComponent<PlayerController>();
+
+        _playerController = GetComponent<PlayerController>();
     }
 
     public void Shoot()
@@ -42,9 +43,9 @@ public class PlayerAttack : MonoBehaviour
         projectileBehaviour.drag = drag;
         projectileBehaviour.lightDamage = lightDamage;
         projectileBehaviour.heavyDamage = heavyDamage;
-        projectileBehaviour.direction = _playerController.PlayerAimDirection; 
+        projectileBehaviour.direction = _playerController.PlayerAimDirection;
 
-        foreach(IEffects effect in effects)
+        foreach (IEffects effect in effects)
         {
             effect.EffectOnShoot();
         }
@@ -82,6 +83,7 @@ public class PlayerAttack : MonoBehaviour
 
     public void ResetParameters()
     {
+        effects.Clear();
         size = 0;
         speed = 0;
         drag = 0;

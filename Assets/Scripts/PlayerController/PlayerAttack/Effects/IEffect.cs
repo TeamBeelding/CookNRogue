@@ -2,8 +2,6 @@ using UnityEngine;
 
 public interface IEffects
 {
-    void EffectOnShoot();
-    void EffectOnTouch();
-   
-
+    public void EffectOnShoot();
+    public void EffectOnTouch();
 }

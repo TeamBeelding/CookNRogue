@@ -7,14 +7,14 @@ public class EnemyBulletController : MonoBehaviour
 {
     [SerializeField]
     private EnemyBulletData _data;
-    
     private bool isDirectionSet = false;
-    private float speed;
-    private Vector3 direction;
+    private float _speed;
+    private Vector3 _direction;
     
     private void Start()
     {
-        speed = _data.GetSpeed();
+        _speed = _data.GetSpeed();
+        Destroy(gameObject, _data.GetLifeTime());
     }
     
     // Update is called once per frame
@@ -27,15 +27,15 @@ public class EnemyBulletController : MonoBehaviour
     // Set direction of bullet
     public void SetDirection(Transform dir)
     {
-        direction = dir.position - transform.position;
-        direction.Normalize();
+        _direction = new Vector3(dir.position.x - transform.position.x, 0, dir.position.z - transform.position.z);
+        _direction.Normalize();
         isDirectionSet = true;
     }
 
     // Move bullet
     private void Move()
     {
-        transform.position += direction * (_data.GetSpeed() * Time.deltaTime);
+        transform.position += _direction * (_data.GetSpeed() * Time.deltaTime);
     }
 
     // Destroy bullet when it hits player
@@ -43,6 +43,7 @@ public class EnemyBulletController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
+            other.GetComponent<PlayerController>().TakeDamage(_data.GetDamage());
             Destroy(gameObject);
         }
     }

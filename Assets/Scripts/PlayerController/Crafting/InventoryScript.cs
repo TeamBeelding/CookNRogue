@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,11 +15,11 @@ public class InventoryScript : MonoBehaviour
     [SerializeField]
     int numberOfIngredients;
 
-    
+
     void Awake()
     {
         if (instance != null && instance != this)
-            Destroy(gameObject);    // Suppression d'une instance précédente (sécurité...sécurité...)
+            Destroy(gameObject);    // Suppression d'une instance prï¿½cï¿½dente (sï¿½curitï¿½...sï¿½curitï¿½...)
 
         instance = this;
     }
@@ -52,7 +52,7 @@ public class InventoryScript : MonoBehaviour
         recipe.Clear();
 
         //Fusionne les proprietes des differents ingredients
-        for (int i = 0;i < numberOfIngredients; i++)
+        for (int i = 0; i < numberOfIngredients; i++)
         {
             int rand = Random.Range(0, projectilesData.Count);
             recipe.Add(projectilesData[rand]);
@@ -77,10 +77,8 @@ public class InventoryScript : MonoBehaviour
             attack.lightDamage += ingredient.lightDamage;
 
             //AJOUT DES EFFETS DANS LE SCRIPT D'ATTAQUE
-            foreach(IEffects effect in ingredient.effects)
-            {
-                attack.effects.Add(effect);
-            }
+            attack.effects.Add(ingredient.effect);
+
         }
     }
     public void AddIngredientToList(ProjectileData data)

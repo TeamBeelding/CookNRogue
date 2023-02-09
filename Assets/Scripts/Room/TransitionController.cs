@@ -18,7 +18,6 @@ public class TransitionController : MonoBehaviour
     public void LoadTransition()
     {
         Transition.SetBool("Start", true);
-
         StartCoroutine(Countdown(2));
     }
 
