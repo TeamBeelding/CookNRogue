@@ -30,7 +30,9 @@ public class RoomManager : MonoBehaviour
     [SerializeField]
     TransitionController Transition;
 
-
+    [SerializeField] 
+    private float delaiBeforeCreateNavMesh = 0.2f;
+    
     void Awake()
     {
         if (instance != null && instance != this)
@@ -114,7 +116,7 @@ public class RoomManager : MonoBehaviour
 
     private IEnumerator Timer ()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(delaiBeforeCreateNavMesh);
         NavMeshBuilder.ClearAllNavMeshes();
         NavMeshBuilder.BuildNavMesh();
     }

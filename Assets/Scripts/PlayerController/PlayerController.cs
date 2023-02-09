@@ -1,8 +1,5 @@
 using UnityEngine.InputSystem;
 using UnityEngine;
-using UnityEditor.Rendering.LookDev;
-using System.Collections;
-using Unity.VisualScripting;
 
 public class PlayerController : MonoBehaviour
 {
@@ -49,6 +46,8 @@ public class PlayerController : MonoBehaviour
     bool _isAimingOnMouse = false;
     Vector3 _aimDirection;
 
+    bool _isLocked = false;
+
     Collider _curInteractCollider = null;
     #endregion
 
@@ -73,6 +72,12 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        //Block player actions
+        if(_isLocked)
+        {
+            return;
+        }
+
         //Inputs relative to camera
         Vector3 relativeForward = _relativeTransform.forward + _relativeTransform.up;
         Vector3 relativeRight = _relativeTransform.right;
@@ -256,10 +261,21 @@ public class PlayerController : MonoBehaviour
 
     void Shoot(InputAction.CallbackContext context)
     {
+        //Block player actions
+        if (_isLocked)
+        {
+            return;
+        }
+
         if (context.performed)
         {
             GetComponent<PlayerAttack>().Shoot();
         }
+    }
+
+    public void Lock(bool isLocked)
+    {
+        _isLocked = isLocked;
     }
 
     public void TakeDamage(float damage) 

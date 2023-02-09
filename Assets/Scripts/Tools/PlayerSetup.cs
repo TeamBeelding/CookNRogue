@@ -1,3 +1,5 @@
+#if UNITY_EDITOR
+
 using UnityEditor;
 using UnityEngine;
 
@@ -57,3 +59,5 @@ public class PlayerSetup : EditorWindow
         GUILayout.EndVertical();
     }
 }
+
+#endif
