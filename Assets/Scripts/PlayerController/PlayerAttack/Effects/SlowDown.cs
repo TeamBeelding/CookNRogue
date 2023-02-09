@@ -15,7 +15,7 @@ public class SlowDown : IIngredientEffects
     }
 
     //EFFET LORS DE LA COLLISION
-    public void EffectOnHit()
+    public void EffectOnHit(Vector3 Position, GameObject HitObject, Vector3 direction)
     {
         Debug.Log("SlowDownHitEffect");
     }

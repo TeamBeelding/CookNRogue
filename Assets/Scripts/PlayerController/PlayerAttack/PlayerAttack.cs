@@ -23,7 +23,10 @@ public class PlayerAttack : MonoBehaviour
     public List<IIngredientEffects> effects = new List<IIngredientEffects>();
 
     bool _shootOnCooldown;
+
+    [SerializeField]
     float _shootCooldown;
+
     Coroutine _curShootDelay;
 
     PlayerController _playerController;
@@ -55,16 +58,12 @@ public class PlayerAttack : MonoBehaviour
             effect.EffectOnShoot();
         }
 
-        //Shoot Cooldown
-        _shootCooldown = 1f; //To get from coocked bullet 
 
-        //Cooldown Check
-        if (!_shootOnCooldown)
-        {
-            //Shoot Bullet
-            _shootOnCooldown = true;
-            _curShootDelay = StartCoroutine(ShootDelay(_shootCooldown));
-        }
+
+         //Shoot Bullet
+         _shootOnCooldown = true;
+         _curShootDelay = StartCoroutine(ShootDelay(_shootCooldown));
+        
     }
 
     #region OnHitEffects
@@ -72,14 +71,14 @@ public class PlayerAttack : MonoBehaviour
     {
         foreach (IIngredientEffects effect in effects)
         {
-            effect.EffectOnHit();
+            effect.EffectOnHit(Position, null,Vector3.zero);
         }
     }
-    public void ApplyOnHitEffects(Vector3 Position,GameObject HitObject)
+    public void ApplyOnHitEffects(Vector3 Position,GameObject HitObject, Vector3 direction)
     {
         foreach (IIngredientEffects effect in effects)
         {
-            effect.EffectOnHit();
+            effect.EffectOnHit(Position, HitObject, direction);
         }
     }
     #endregion

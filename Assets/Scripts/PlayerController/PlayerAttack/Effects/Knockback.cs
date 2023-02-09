@@ -14,8 +14,16 @@ public class Knockback : IIngredientEffects
     }
 
     //EFFET LORS DE LA COLLISION
-    public void EffectOnHit()
+    public void EffectOnHit(Vector3 Position,GameObject HitObject, Vector3 direction)
     {
+        if(HitObject != null) {
+            if (HitObject.GetComponent<Rigidbody>())
+            {
+                
+                HitObject.GetComponent<Rigidbody>().AddForce((direction.normalized + Vector3.up)* KnockbackForce, ForceMode.Impulse);
+            }
+        }
+        
         Debug.Log("KnockbackHitEffect");
     }
 }

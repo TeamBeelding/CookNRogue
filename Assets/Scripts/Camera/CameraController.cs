@@ -1,12 +1,5 @@
-using JetBrains.Annotations;
-using Mono.Cecil.Cil;
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Rendering;
-using UnityEngine.Rendering.Universal;
-using static UnityEditor.Experimental.GraphView.Port;
 
 public class CameraController : MonoBehaviour
 {
