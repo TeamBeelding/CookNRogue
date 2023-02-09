@@ -11,9 +11,15 @@ public class EnemySpawn : MonoBehaviour
     [Header("If you want to specify an enemy put it here:")]
     [SerializeField]
     private GameObject CurrentEnemy;
-    
+    [SerializeField] 
+    private float enemySpawnerDelai = 3f;
     
     void Start()
+    {
+        Invoke("EnemyDifficulty", enemySpawnerDelai);
+    }
+
+    private void EnemyDifficulty()
     {
         if (CurrentEnemy)
         {

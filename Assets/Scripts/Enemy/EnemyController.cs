@@ -182,7 +182,6 @@ public class EnemyController : MonoBehaviour
             state = State.Chase;
 
         ReduiceHealth(damage);
-        KnockBack();
         StartCoroutine(ColorationFeedback());
     }
 
@@ -205,8 +204,6 @@ public class EnemyController : MonoBehaviour
         
         Vector3 direction = transform.position - player.transform.position;
         direction.Normalize();
-        
-        // transform.Translate(direction * data.GetRecoilForce() * Time.deltaTime);
         
         _rigidbody.AddForce(direction * data.GetRecoilForce(), ForceMode.Impulse);
         StartCoroutine(StoppingForce());
