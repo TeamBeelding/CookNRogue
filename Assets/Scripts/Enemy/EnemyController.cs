@@ -16,7 +16,6 @@ public class EnemyController : MonoBehaviour
 
     public State state;
     
-    [SerializeField]
     private GameObject player;
     [SerializeField] 
     private EnemyData data;
@@ -38,6 +37,8 @@ public class EnemyController : MonoBehaviour
     
     private bool _focusPlayer = false;
     private bool _canAttack = true;
+    
+    [SerializeField]
     private float healthpoint;
 
     private void Awake()
