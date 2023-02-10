@@ -12,6 +12,7 @@ public class ProjectileBehaviour : MonoBehaviour
     private bool HasHit = false;
     private GameObject hitObject;
     public PlayerAttack playerAttack;
+    [SerializeField]
     Rigidbody rb;
     Sprite sprite;
     public Vector3 gravity;
@@ -22,7 +23,7 @@ public class ProjectileBehaviour : MonoBehaviour
     {
         //ParticleSystem.MainModule part = GetComponentInChildren<ParticleSystem>().main;
         //part.startColor = color;
-        rb = GetComponent<Rigidbody>();
+       
         rb.drag = drag;
         rb.velocity = direction * speed;
         Destroy(gameObject, 5f);
@@ -33,9 +34,10 @@ public class ProjectileBehaviour : MonoBehaviour
         rb.AddForce(gravity * rb.mass);
     }
 
-    void ResetStats()
+    public void ResetStats()
     {
         rb.drag = 0;
+        heavyDamage = 1;
         gameObject.transform.localScale = new Vector3(1,1,1);
     }
 
@@ -47,7 +49,7 @@ public class ProjectileBehaviour : MonoBehaviour
         }
         else
         {
-            playerAttack.ApplyOnHitEffects(transform.position);
+            //playerAttack.ApplyOnHitEffects(transform.position);
         }
     }
 

@@ -718,6 +718,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1270660378}
   - component: {fileID: 1270660377}
+  - component: {fileID: 1270660380}
+  - component: {fileID: 1270660379}
   m_Layer: 0
   m_Name: LevelManager
   m_TagString: Untagged
@@ -766,6 +768,48 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1270660379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1270660376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac28d7dcda6b7494ba5606fb5920172b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.16666667
+  m_BuildHeightMesh: 0
+  m_NavMeshData: {fileID: 0}
+--- !u!114 &1270660380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1270660376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 132e21fd665e423479f8dd2c7d06a56e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _data: {fileID: 0}
 --- !u!1 &1276025252
 GameObject:
   m_ObjectHideFlags: 0
@@ -2048,13 +2092,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attack: {fileID: 6518352297035687740}
-  projectilesData:
-  - {fileID: 11400000, guid: 496a317e0266cc5489a052a83227a782, type: 2}
-  - {fileID: 11400000, guid: 8883ec5033ec73546969892fce674344, type: 2}
-  - {fileID: 11400000, guid: c249b6e3405390948a8c59b5a9344853, type: 2}
-  - {fileID: 11400000, guid: 496a317e0266cc5489a052a83227a782, type: 2}
-  - {fileID: 11400000, guid: 8883ec5033ec73546969892fce674344, type: 2}
-  - {fileID: 11400000, guid: c249b6e3405390948a8c59b5a9344853, type: 2}
+  projectilesData: []
   UI_Inventory: {fileID: 0}
   SlotsContainer: {fileID: 0}
   numberOfIngredients: 3

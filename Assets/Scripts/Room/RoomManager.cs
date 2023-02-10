@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+// using UnityEngine.AI;
+
 public class RoomManager : MonoBehaviour
 {
     public static RoomManager instance;
@@ -22,30 +24,32 @@ public class RoomManager : MonoBehaviour
 
     [SerializeField]
     GameObject Player;
-
-
+    
     [SerializeField]
     Transform SpawnPoint;
 
     [SerializeField]
     TransitionController Transition;
 
+    private NavMeshSurface _navMeshSurface;
+
     [SerializeField] 
     private float delaiBeforeCreateNavMesh = 0.2f;
-    
+
     void Awake()
     {
         if (instance != null && instance != this)
             Destroy(gameObject);    // Suppression d'une instance pr�c�dente (s�curit�...s�curit�...)
 
         instance = this;
-        UnityEditor.AI.NavMeshBuilder.ClearAllNavMeshes();
     }
 
 
     // Start is called before the first frame update
     private void Start()
-    {
+    {        
+        _navMeshSurface = GetComponent<NavMeshSurface>();
+
         Player = GameObject.FindGameObjectWithTag("Player");
         LoadRandomLevel();
 
@@ -53,6 +57,7 @@ public class RoomManager : MonoBehaviour
         {
             EnemiesInLevel.Add(enemy);
         }
+
     }
 
     private void Update()
@@ -99,8 +104,6 @@ public class RoomManager : MonoBehaviour
             LoadLevel(HardLevels);
         }
 
-        StartCoroutine(Timer());
-
         foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
         {
             EnemiesInLevel.Add(enemy);
@@ -111,13 +114,17 @@ public class RoomManager : MonoBehaviour
     {
         int rand = Random.Range(0, levels.Length);
         CurrentLevel = Instantiate(levels[rand], Vector3.zero, Quaternion.identity);
+        LoadMeshData();
         Player.transform.position = SpawnPoint.position;
     }
 
-    private IEnumerator Timer ()
+    private void LoadMeshData()
     {
-        yield return new WaitForSeconds(delaiBeforeCreateNavMesh);
-        UnityEditor.AI.NavMeshBuilder.ClearAllNavMeshes();
-        UnityEditor.AI.NavMeshBuilder.BuildNavMesh();
+        NavMeshData navMeshData = CurrentLevel.GetComponent<NavMeshRoom>()._data;
+        _navMeshSurface.UpdateNavMesh(navMeshData);
+        
+        // Do we need to Build everytime or only once?
+        _navMeshSurface.BuildNavMesh();
     }
+
 }
