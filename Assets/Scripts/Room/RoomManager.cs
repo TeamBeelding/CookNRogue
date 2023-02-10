@@ -14,6 +14,8 @@ public class RoomManager : MonoBehaviour
     private GameObject[] HardLevels;
 
     [SerializeField]
+    private EnemyManager EnemyManagerScript;  
+    [SerializeField]
     private List<GameObject> EnemiesInLevel;
 
     public bool isHard;
@@ -79,14 +81,7 @@ public class RoomManager : MonoBehaviour
     public void LoadRandomLevel()
     {
 
-        //for (int i = 0; i < EnemiesInLevel.Count; i++)
-        //{
-        //    if (EnemiesInLevel[i] != null)
-        //    {
-        //        Destroy(EnemiesInLevel[i]);
-        //    }
-        //}
-
+        EnemyManagerScript.DestroyAll();
 
         Transition.LoadTransition();
 

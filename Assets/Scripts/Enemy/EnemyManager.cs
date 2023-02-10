@@ -30,6 +30,18 @@ public class EnemyManager : MonoBehaviour
         }
     }
 
+    public void DestroyAll()
+    {
+        if (EnemiesInLevel != null) 
+        {
+            Debug.Log("Enemey Delete");
+            for (int i = 0; i < EnemiesInLevel.Length; i++)
+            {
+                Destroy(EnemiesInLevel[i]);
+            }
+        }
+    }
+
     void Countdown()
     {
         //yield return new WaitForSeconds(seconds);
