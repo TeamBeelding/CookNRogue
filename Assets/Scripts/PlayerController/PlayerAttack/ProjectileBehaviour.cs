@@ -9,6 +9,9 @@ public class ProjectileBehaviour : MonoBehaviour
     public float lightDamage;
     public float speed;
     public float drag;
+    private bool HasHit = false;
+    private GameObject hitObject;
+    public PlayerAttack playerAttack;
     Rigidbody rb;
     Sprite sprite;
     public Vector3 gravity;
@@ -36,11 +39,33 @@ public class ProjectileBehaviour : MonoBehaviour
         gameObject.transform.localScale = new Vector3(1,1,1);
     }
 
+    private void OnDestroy()
+    {
+        if(HasHit)
+        {
+            playerAttack.ApplyOnHitEffects(transform.position, hitObject, direction);
+        }
+        else
+        {
+            playerAttack.ApplyOnHitEffects(transform.position);
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Enemy"))
         {
-            other.GetComponent<Enemy>().TakeDamage(heavyDamage);
+            HasHit= true;
+            hitObject = other.gameObject;
+
+            if (other.GetComponent<Enemy>())
+                other.GetComponent<Enemy>().TakeDamage(heavyDamage);
+
+
+            Destroy(gameObject);
+
         }
     }
+
+    
 }

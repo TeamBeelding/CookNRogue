@@ -12,11 +12,11 @@ public class EnemySpawn : MonoBehaviour
     [SerializeField]
     private GameObject CurrentEnemy;
     [SerializeField] 
-    private float enemySpawnerDelai = 0.3f;
+    private float enemySpawnerDelay = 0.3f;
     
     void Start()
     {
-        Invoke("EnemyDifficulty", enemySpawnerDelai);
+        Invoke("EnemyDifficulty", enemySpawnerDelay);
     }
 
     private void EnemyDifficulty()

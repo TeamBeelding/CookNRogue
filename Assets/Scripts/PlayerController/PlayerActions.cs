@@ -62,6 +62,15 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Craft"",
+                    ""type"": ""Button"",
+                    ""id"": ""2968a975-66e5-4109-b8e3-cd5cd6e71647"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -207,6 +216,28 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                     ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b2f4dd92-9071-4509-a70e-5499c599b803"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""GamePad"",
+                    ""action"": ""Craft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""19400ea6-aaf5-40db-baff-b3283281265c"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Craft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -247,6 +278,7 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
         m_Default_PlayerActions_Aim = m_Default_PlayerActions.FindAction("Aim", throwIfNotFound: true);
         m_Default_PlayerActions_Shoot = m_Default_PlayerActions.FindAction("Shoot", throwIfNotFound: true);
         m_Default_PlayerActions_Interact = m_Default_PlayerActions.FindAction("Interact", throwIfNotFound: true);
+        m_Default_PlayerActions_Craft = m_Default_PlayerActions.FindAction("Craft", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -310,6 +342,7 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Default_PlayerActions_Aim;
     private readonly InputAction m_Default_PlayerActions_Shoot;
     private readonly InputAction m_Default_PlayerActions_Interact;
+    private readonly InputAction m_Default_PlayerActions_Craft;
     public struct Default_PlayerActionsActions
     {
         private @PlayerActions m_Wrapper;
@@ -318,6 +351,7 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
         public InputAction @Aim => m_Wrapper.m_Default_PlayerActions_Aim;
         public InputAction @Shoot => m_Wrapper.m_Default_PlayerActions_Shoot;
         public InputAction @Interact => m_Wrapper.m_Default_PlayerActions_Interact;
+        public InputAction @Craft => m_Wrapper.m_Default_PlayerActions_Craft;
         public InputActionMap Get() { return m_Wrapper.m_Default_PlayerActions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -339,6 +373,9 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                 @Interact.started -= m_Wrapper.m_Default_PlayerActionsActionsCallbackInterface.OnInteract;
                 @Interact.performed -= m_Wrapper.m_Default_PlayerActionsActionsCallbackInterface.OnInteract;
                 @Interact.canceled -= m_Wrapper.m_Default_PlayerActionsActionsCallbackInterface.OnInteract;
+                @Craft.started -= m_Wrapper.m_Default_PlayerActionsActionsCallbackInterface.OnCraft;
+                @Craft.performed -= m_Wrapper.m_Default_PlayerActionsActionsCallbackInterface.OnCraft;
+                @Craft.canceled -= m_Wrapper.m_Default_PlayerActionsActionsCallbackInterface.OnCraft;
             }
             m_Wrapper.m_Default_PlayerActionsActionsCallbackInterface = instance;
             if (instance != null)
@@ -355,6 +392,9 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                 @Interact.started += instance.OnInteract;
                 @Interact.performed += instance.OnInteract;
                 @Interact.canceled += instance.OnInteract;
+                @Craft.started += instance.OnCraft;
+                @Craft.performed += instance.OnCraft;
+                @Craft.canceled += instance.OnCraft;
             }
         }
     }
@@ -383,5 +423,6 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
         void OnAim(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
+        void OnCraft(InputAction.CallbackContext context);
     }
 }

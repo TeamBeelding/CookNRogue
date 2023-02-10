@@ -63,9 +63,9 @@ public class EnemyController : MonoBehaviour
 
         if (_focusPlayer)
             state = State.Chase;
-        
+
         // TODO : demander au prof une autre solution
-        _rigidbody.constraints = RigidbodyConstraints.FreezeAll;
+        //_rigidbody.constraints = RigidbodyConstraints.FreezeAll;
     }
 
     // Update is called once per frame

@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor.AI; //"Editor" not "Engine"
+using UnityEngine.AI;
 
 public class RoomManager : MonoBehaviour
 {
@@ -39,7 +39,7 @@ public class RoomManager : MonoBehaviour
             Destroy(gameObject);    // Suppression d'une instance pr�c�dente (s�curit�...s�curit�...)
 
         instance = this;
-        NavMeshBuilder.ClearAllNavMeshes();
+        UnityEditor.AI.NavMeshBuilder.ClearAllNavMeshes();
     }
 
 
@@ -117,7 +117,7 @@ public class RoomManager : MonoBehaviour
     private IEnumerator Timer ()
     {
         yield return new WaitForSeconds(delaiBeforeCreateNavMesh);
-        NavMeshBuilder.ClearAllNavMeshes();
-        NavMeshBuilder.BuildNavMesh();
+        UnityEditor.AI.NavMeshBuilder.ClearAllNavMeshes();
+        UnityEditor.AI.NavMeshBuilder.BuildNavMesh();
     }
 }

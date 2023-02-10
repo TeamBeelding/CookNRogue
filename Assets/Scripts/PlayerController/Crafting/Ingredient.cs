@@ -7,7 +7,7 @@ using TNRD;
 public class Ingredient : MonoBehaviour, IInteractable
 {
     public ProjectileData projectileData;
-    [SerializeField] private SerializableInterface<IEffects> effect;
+    [SerializeField] private SerializableInterface<IIngredientEffects> effect;
 
     public void Interactable(bool isInteractable)
     {

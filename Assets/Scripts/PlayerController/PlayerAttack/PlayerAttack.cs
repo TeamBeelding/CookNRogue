@@ -20,10 +20,13 @@ public class PlayerAttack : MonoBehaviour
     public float lightAttackDelay;
     public float lightDamage;
 
-    public List<IEffects> effects = new List<IEffects>();
+    public List<IIngredientEffects> effects = new List<IIngredientEffects>();
 
     bool _shootOnCooldown;
+
+    [SerializeField]
     float _shootCooldown;
+
     Coroutine _curShootDelay;
 
     PlayerController _playerController;
@@ -34,34 +37,51 @@ public class PlayerAttack : MonoBehaviour
         _playerController = GetComponent<PlayerController>();
     }
 
+    
     public void Shoot()
     {
+        if (_shootOnCooldown)
+            return;
+        
         //BulletInstantiate
         GameObject Bullet = Instantiate(Projectile, muzzle.position, Quaternion.identity);
         projectileBehaviour = Bullet.GetComponent<ProjectileBehaviour>();
+        projectileBehaviour.playerAttack = this;
         projectileBehaviour.speed = speed;
         projectileBehaviour.drag = drag;
         projectileBehaviour.lightDamage = lightDamage;
         projectileBehaviour.heavyDamage = heavyDamage;
         projectileBehaviour.direction = _playerController.PlayerAimDirection;
 
-        foreach (IEffects effect in effects)
+        foreach (IIngredientEffects effect in effects)
         {
             effect.EffectOnShoot();
         }
 
-        //Shoot Cooldown
-        _shootCooldown = 1f; //To get from coocked bullet 
 
-        //Cooldown Check
-        if (!_shootOnCooldown)
-        {
-            //Shoot Bullet
-            _shootOnCooldown = true;
-            _curShootDelay = StartCoroutine(ShootDelay(_shootCooldown));
-        }
+
+         //Shoot Bullet
+         _shootOnCooldown = true;
+         _curShootDelay = StartCoroutine(ShootDelay(_shootCooldown));
+        
     }
 
+    #region OnHitEffects
+    public void ApplyOnHitEffects(Vector3 Position)
+    {
+        foreach (IIngredientEffects effect in effects)
+        {
+            effect.EffectOnHit(Position, null,Vector3.zero);
+        }
+    }
+    public void ApplyOnHitEffects(Vector3 Position,GameObject HitObject, Vector3 direction)
+    {
+        foreach (IIngredientEffects effect in effects)
+        {
+            effect.EffectOnHit(Position, HitObject, direction);
+        }
+    }
+    #endregion
     IEnumerator ShootDelay(float delay)
     {
         float curTime = 0;

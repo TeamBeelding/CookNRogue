@@ -2,10 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Knockback : IEffects
+public class Knockback : IIngredientEffects
 {
     [Header("knockback")]
-    public bool knockback;
     public float KnockbackForce;
 
     //EFFET LORS DU SHOOT
@@ -15,9 +14,16 @@ public class Knockback : IEffects
     }
 
     //EFFET LORS DE LA COLLISION
-    public void EffectOnTouch()
+    public void EffectOnHit(Vector3 Position,GameObject HitObject, Vector3 direction)
     {
-        Debug.Log("KnockbackTouchEffect");
+        if(HitObject != null) {
+            if (HitObject.GetComponent<Rigidbody>())
+            {
+                
+                HitObject.GetComponent<Rigidbody>().AddForce((direction.normalized + Vector3.up)* KnockbackForce, ForceMode.Impulse);
+            }
+        }
+        
+        Debug.Log("KnockbackHitEffect");
     }
-
 }
