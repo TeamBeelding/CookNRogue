@@ -46,16 +46,18 @@ public class PlayerAttack : MonoBehaviour
         //BulletInstantiate
         GameObject Bullet = Instantiate(Projectile, muzzle.position, Quaternion.identity);
         projectileBehaviour = Bullet.GetComponent<ProjectileBehaviour>();
+        projectileBehaviour.ResetStats();
         projectileBehaviour.playerAttack = this;
-        projectileBehaviour.speed = speed;
-        projectileBehaviour.drag = drag;
-        projectileBehaviour.lightDamage = lightDamage;
-        projectileBehaviour.heavyDamage = heavyDamage;
+        projectileBehaviour.speed += speed;
+        projectileBehaviour.drag += drag;
+        projectileBehaviour.lightDamage += lightDamage;
+        projectileBehaviour.heavyDamage += heavyDamage;
         projectileBehaviour.direction = _playerController.PlayerAimDirection;
 
         foreach (IIngredientEffects effect in effects)
         {
-            effect.EffectOnShoot();
+            if(effect != null)
+                effect.EffectOnShoot();
         }
 
 
@@ -78,7 +80,8 @@ public class PlayerAttack : MonoBehaviour
     {
         foreach (IIngredientEffects effect in effects)
         {
-            effect.EffectOnHit(Position, HitObject, direction);
+            if(effect != null)
+                effect.EffectOnHit(Position, HitObject, direction);
         }
     }
     #endregion
