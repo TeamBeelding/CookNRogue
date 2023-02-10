@@ -290,9 +290,11 @@ public class PlayerController : MonoBehaviour
     public void TakeDamage(float damage) 
     {
         m_currentHealthValue -= Mathf.Abs(damage);
-        if(m_currentHealthValue <= 0)
+        CameraController.instance.ScreenShake();
+        if (m_currentHealthValue <= 0)
         {
             m_currentHealthValue = m_maxHealthValue;
+            
             RoomManager.instance.LoadRandomLevel();
         }
     }
