@@ -49,7 +49,7 @@ public class ProjectileBehaviour : MonoBehaviour
         }
         else
         {
-            //playerAttack.ApplyOnHitEffects(transform.position);
+            playerAttack.ApplyOnHitEffects(transform.position);
         }
     }
 

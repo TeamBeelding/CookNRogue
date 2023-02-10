@@ -138,7 +138,7 @@ PrefabInstance:
     - target: {fileID: 382403513612129913, guid: 6730f6bc8dd19d942955042587efc09e,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 382403513612129913, guid: 6730f6bc8dd19d942955042587efc09e,
         type: 3}
@@ -481,6 +481,7 @@ MonoBehaviour:
   m_interactionMask:
     serializedVersion: 2
     m_Bits: 0
+  takeDamageTransition: {fileID: 0}
 --- !u!4 &598772331
 Transform:
   m_ObjectHideFlags: 0
@@ -496,7 +497,7 @@ Transform:
   - {fileID: 2057798635}
   - {fileID: 1683444646}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &598772332
 MonoBehaviour:
@@ -1004,7 +1005,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1121963305
 GameObject:
@@ -1417,6 +1418,36 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: FoodItem
+      objectReference: {fileID: 0}
+    - target: {fileID: 382403513612129912, guid: 6730f6bc8dd19d942955042587efc09e,
+        type: 3}
+      propertyPath: effect.rawReference
+      value: 7209131842689826816
+      objectReference: {fileID: 0}
+    - target: {fileID: 382403513612129912, guid: 6730f6bc8dd19d942955042587efc09e,
+        type: 3}
+      propertyPath: managedReferences[7209131842689826816]
+      value: Assembly-CSharp AOE
+      objectReference: {fileID: 0}
+    - target: {fileID: 382403513612129912, guid: 6730f6bc8dd19d942955042587efc09e,
+        type: 3}
+      propertyPath: managedReferences[7209131842689826816].AOETick
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 382403513612129912, guid: 6730f6bc8dd19d942955042587efc09e,
+        type: 3}
+      propertyPath: managedReferences[7209131842689826816].AOEDamage
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 382403513612129912, guid: 6730f6bc8dd19d942955042587efc09e,
+        type: 3}
+      propertyPath: managedReferences[7209131842689826816].AOERadius
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 382403513612129912, guid: 6730f6bc8dd19d942955042587efc09e,
+        type: 3}
+      propertyPath: managedReferences[7209131842689826816].AOEDuration
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 382403513612129913, guid: 6730f6bc8dd19d942955042587efc09e,
         type: 3}
