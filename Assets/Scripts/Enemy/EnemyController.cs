@@ -38,12 +38,11 @@ public class EnemyController : MonoBehaviour
     private bool _focusPlayer = false;
     private bool _canAttack = true;
     
-    [SerializeField]
     private float healthpoint;
 
     private void Awake()
     {
-        _rend = GetComponent<Renderer>();
+        _rend = GetComponentInChildren<Renderer>();
         _meshRenderer = GetComponent<MeshRenderer>();
         _rigidbody = GetComponent<Rigidbody>();
         _agent = GetComponent<NavMeshAgent>();
@@ -52,7 +51,6 @@ public class EnemyController : MonoBehaviour
         _focusPlayer = data.GetFocusPlayer();
 
         healthpoint = data.GetHealth();
-
     }
 
     // Start is called before the first frame update
