@@ -46,8 +46,13 @@ public class InventoryScript : MonoBehaviour
             Craft();
         }
     }
-    void Craft()
+    public void Craft()
     {
+        if(projectilesData.Count < numberOfIngredients)
+        {
+            return;
+        }
+
         //Clear la Liste d'ingredients precedente
         recipe.Clear();
 

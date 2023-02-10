@@ -46,6 +46,8 @@ public class PlayerController : MonoBehaviour
     bool _isAimingOnMouse = false;
     Vector3 _aimDirection;
 
+    InventoryScript _scriptInventory;
+
     bool _isLocked = false;
 
     Collider _curInteractCollider = null;
@@ -56,6 +58,7 @@ public class PlayerController : MonoBehaviour
         //Set Varialbes
         _rb = GetComponent<Rigidbody>();
         _relativeTransform = m_mainCamera.transform;
+        _scriptInventory = InventoryScript.instance;
 
         //Set Input Actions Map
         _playerActions = new PlayerActions();
@@ -66,6 +69,7 @@ public class PlayerController : MonoBehaviour
         _playerActions.Default_PlayerActions.Move.canceled += Move_Canceled;
         _playerActions.Default_PlayerActions.Aim.performed += Aim_Performed;
         _playerActions.Default_PlayerActions.Aim.canceled += Aim_Canceled;
+        _playerActions.Default_PlayerActions.Craft.performed += Craft;
 
         m_currentHealthValue = m_maxHealthValue;
     }
@@ -271,6 +275,11 @@ public class PlayerController : MonoBehaviour
         {
             GetComponent<PlayerAttack>().Shoot();
         }
+    }
+
+    void Craft(InputAction.CallbackContext context)
+    {
+        _scriptInventory.Craft();
     }
 
     public void Lock(bool isLocked)
