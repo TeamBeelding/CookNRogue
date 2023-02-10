@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+
+    public static CameraController instance;
+
     //Controler
     [Header("Camera Controller")]
     [Header("==========================================================================================================================================================================================================================")]
@@ -42,8 +45,7 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     private AnimationCurve ShakeCurve;
     // Whether it is currently shaking or not
-    [SerializeField]
-    private bool shake = false;
+    public bool shake = false;
 
     //Smooth
     [Header("Camera Smooth")]
@@ -57,6 +59,7 @@ public class CameraController : MonoBehaviour
 
     void Start()
     {
+        instance = this;
         // To get the child transform of the camera for the shake
         ShakeGimble = MainCamera.GetChild(0).GetComponent<Transform>();
         // Making sure the obstruction is initied and not null at the start for erros.
@@ -122,6 +125,11 @@ public class CameraController : MonoBehaviour
             //else turn it back to what it was.
             ObstructionMesh.material.SetFloat("_Opacity", 1f);
         }
+    }
+
+    public void ScreenShake() 
+    {
+        StartCoroutine(Shake());
     }
 
     IEnumerator Shake()
