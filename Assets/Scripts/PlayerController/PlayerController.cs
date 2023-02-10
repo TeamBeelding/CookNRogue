@@ -28,6 +28,8 @@ public class PlayerController : MonoBehaviour
     GameObject m_model;
     [SerializeField]
     LayerMask m_interactionMask;
+    [SerializeField]
+    TransitionController takeDamageTransition;
 
     public Vector3 PlayerAimDirection
     {
@@ -290,9 +292,12 @@ public class PlayerController : MonoBehaviour
     public void TakeDamage(float damage) 
     {
         m_currentHealthValue -= Mathf.Abs(damage);
-        if(m_currentHealthValue <= 0)
+        CameraController.instance.ScreenShake();
+        takeDamageTransition.LoadTransition();
+        if (m_currentHealthValue <= 0)
         {
             m_currentHealthValue = m_maxHealthValue;
+            
             RoomManager.instance.LoadRandomLevel();
         }
     }

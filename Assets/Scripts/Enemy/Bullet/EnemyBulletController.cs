@@ -10,7 +10,7 @@ public class EnemyBulletController : MonoBehaviour
     private bool isDirectionSet = false;
     private float _speed;
     private Vector3 _direction;
-    
+
     private void Start()
     {
         _speed = _data.GetSpeed();
@@ -44,7 +44,6 @@ public class EnemyBulletController : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             other.GetComponent<PlayerController>().TakeDamage(_data.GetDamage());
-            
             Destroy(gameObject);
         }
     }
