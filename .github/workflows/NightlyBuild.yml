@@ -64,7 +64,7 @@ jobs:
             
             Status: `${{ job.status }}`
             Repo: [`${{ github.repository }}`](https://github.com/${{ github.repository }})
-            Head Commit: [`${{ github.sha }}`](https://github.com/TeamBeelding/TestRepo/commit/${{ github.sha }})
+            Head Commit: [`${{ github.sha }}`](https://github.com/${{ github.repository }}/commit/${{ github.sha }})
           color: 0x6726eb
-          url: https://github.com/TeamBeelding/TestRepo/actions/runs/${{ github.run_id }}#artifacts
+          url: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}#artifacts
           nodetail: true
