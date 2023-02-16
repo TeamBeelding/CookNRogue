@@ -53,6 +53,24 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""88238274-356a-4186-b180-f3f39ea19244"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Craft"",
+                    ""type"": ""Button"",
+                    ""id"": ""2968a975-66e5-4109-b8e3-cd5cd6e71647"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -136,7 +154,7 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""9672cad4-051e-44b5-9514-cd0920091675"",
-                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""path"": ""<Gamepad>/buttonEast"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""GamePad"",
@@ -174,6 +192,50 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
                     ""action"": ""Aim"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e0d49950-ee36-40c8-b3bf-fbd41e6e9bee"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9e33f304-7631-4934-8c79-ff01d7137413"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""GamePad"",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b2f4dd92-9071-4509-a70e-5499c599b803"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""GamePad"",
+                    ""action"": ""Craft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""19400ea6-aaf5-40db-baff-b3283281265c"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Craft"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -215,6 +277,8 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
         m_Default_PlayerActions_Move = m_Default_PlayerActions.FindAction("Move", throwIfNotFound: true);
         m_Default_PlayerActions_Aim = m_Default_PlayerActions.FindAction("Aim", throwIfNotFound: true);
         m_Default_PlayerActions_Shoot = m_Default_PlayerActions.FindAction("Shoot", throwIfNotFound: true);
+        m_Default_PlayerActions_Interact = m_Default_PlayerActions.FindAction("Interact", throwIfNotFound: true);
+        m_Default_PlayerActions_Craft = m_Default_PlayerActions.FindAction("Craft", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -277,6 +341,8 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Default_PlayerActions_Move;
     private readonly InputAction m_Default_PlayerActions_Aim;
     private readonly InputAction m_Default_PlayerActions_Shoot;
+    private readonly InputAction m_Default_PlayerActions_Interact;
+    private readonly InputAction m_Default_PlayerActions_Craft;
     public struct Default_PlayerActionsActions
     {
         private @PlayerActions m_Wrapper;
@@ -284,6 +350,8 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_Default_PlayerActions_Move;
         public InputAction @Aim => m_Wrapper.m_Default_PlayerActions_Aim;
         public InputAction @Shoot => m_Wrapper.m_Default_PlayerActions_Shoot;
+        public InputAction @Interact => m_Wrapper.m_Default_PlayerActions_Interact;
+        public InputAction @Craft => m_Wrapper.m_Default_PlayerActions_Craft;
         public InputActionMap Get() { return m_Wrapper.m_Default_PlayerActions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -302,6 +370,12 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                 @Shoot.started -= m_Wrapper.m_Default_PlayerActionsActionsCallbackInterface.OnShoot;
                 @Shoot.performed -= m_Wrapper.m_Default_PlayerActionsActionsCallbackInterface.OnShoot;
                 @Shoot.canceled -= m_Wrapper.m_Default_PlayerActionsActionsCallbackInterface.OnShoot;
+                @Interact.started -= m_Wrapper.m_Default_PlayerActionsActionsCallbackInterface.OnInteract;
+                @Interact.performed -= m_Wrapper.m_Default_PlayerActionsActionsCallbackInterface.OnInteract;
+                @Interact.canceled -= m_Wrapper.m_Default_PlayerActionsActionsCallbackInterface.OnInteract;
+                @Craft.started -= m_Wrapper.m_Default_PlayerActionsActionsCallbackInterface.OnCraft;
+                @Craft.performed -= m_Wrapper.m_Default_PlayerActionsActionsCallbackInterface.OnCraft;
+                @Craft.canceled -= m_Wrapper.m_Default_PlayerActionsActionsCallbackInterface.OnCraft;
             }
             m_Wrapper.m_Default_PlayerActionsActionsCallbackInterface = instance;
             if (instance != null)
@@ -315,6 +389,12 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                 @Shoot.started += instance.OnShoot;
                 @Shoot.performed += instance.OnShoot;
                 @Shoot.canceled += instance.OnShoot;
+                @Interact.started += instance.OnInteract;
+                @Interact.performed += instance.OnInteract;
+                @Interact.canceled += instance.OnInteract;
+                @Craft.started += instance.OnCraft;
+                @Craft.performed += instance.OnCraft;
+                @Craft.canceled += instance.OnCraft;
             }
         }
     }
@@ -342,5 +422,7 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnAim(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
+        void OnCraft(InputAction.CallbackContext context);
     }
 }

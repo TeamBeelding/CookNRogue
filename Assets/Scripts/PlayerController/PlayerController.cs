@@ -1,27 +1,35 @@
 using UnityEngine.InputSystem;
 using UnityEngine;
-using UnityEditor.Rendering.LookDev;
-using System.Collections;
-using Unity.VisualScripting;
 
 public class PlayerController : MonoBehaviour
 {
     #region Variables
     [Header("Character Properties")]
     [SerializeField]
-    float m_rotationSpeed = 3f;
+    float m_currentHealthValue = 10f;
     [SerializeField]
-    float m_moveSpeed = 5f;
+    internal float m_maxHealthValue = 10f;
     [SerializeField]
-    float m_maxMoveSpeed = 5f;
+    internal float m_rotationSpeed = 3f;
     [SerializeField]
-    float m_moveDrag = 1f;
+    internal float m_moveSpeed = 5f;
+    [SerializeField]
+    internal float m_maxMoveSpeed = 5f;
+    [SerializeField]
+    internal float m_moveDrag = 1f;
+
+    [SerializeField]
+    internal float m_interactionRange = 0.5f;
 
     [Header("Init")]
     [SerializeField]
     Camera m_mainCamera;
     [SerializeField]
     GameObject m_model;
+    [SerializeField]
+    LayerMask m_interactionMask;
+    [SerializeField]
+    TransitionController takeDamageTransition;
 
     public Vector3 PlayerAimDirection
     {
@@ -39,6 +47,12 @@ public class PlayerController : MonoBehaviour
     bool _isAiming = false;
     bool _isAimingOnMouse = false;
     Vector3 _aimDirection;
+
+    InventoryScript _scriptInventory;
+
+    bool _isLocked = false;
+
+    Collider _curInteractCollider = null;
     #endregion
 
     void Start()
@@ -46,6 +60,7 @@ public class PlayerController : MonoBehaviour
         //Set Varialbes
         _rb = GetComponent<Rigidbody>();
         _relativeTransform = m_mainCamera.transform;
+        _scriptInventory = InventoryScript.instance;
 
         //Set Input Actions Map
         _playerActions = new PlayerActions();
@@ -55,11 +70,20 @@ public class PlayerController : MonoBehaviour
         _playerActions.Default_PlayerActions.Move.performed += Move_Performed;
         _playerActions.Default_PlayerActions.Move.canceled += Move_Canceled;
         _playerActions.Default_PlayerActions.Aim.performed += Aim_Performed;
-        _playerActions.Default_PlayerActions.Aim.canceled+= Aim_Canceled;
+        _playerActions.Default_PlayerActions.Aim.canceled += Aim_Canceled;
+        _playerActions.Default_PlayerActions.Craft.performed += Craft;
+
+        m_currentHealthValue = m_maxHealthValue;
     }
 
     private void Update()
     {
+        //Block player actions
+        if(_isLocked)
+        {
+            return;
+        }
+
         //Inputs relative to camera
         Vector3 relativeForward = _relativeTransform.forward + _relativeTransform.up;
         Vector3 relativeRight = _relativeTransform.right;
@@ -118,6 +142,63 @@ public class PlayerController : MonoBehaviour
         }
 
 
+        #endregion
+
+        #region Interact
+        Collider[] interactableColliders = new Collider[3];
+
+        //Get interactable objects in range
+        int foundObjects = Physics.OverlapSphereNonAlloc(transform.position + m_model.transform.forward * 0.5f, m_interactionRange, interactableColliders, m_interactionMask);
+        if (foundObjects > 0)
+        {
+            //Get closest object
+            float shortestDistance = Mathf.Infinity;
+            int shortestIndex = 0;
+            for (int index = 0; index < interactableColliders.Length; index++)
+            {
+                if (interactableColliders[index] == null)
+                {
+                    break;
+                }
+
+                float distance = Vector3.Distance(transform.position, interactableColliders[index].transform.position);
+                if (distance < shortestDistance)
+                {
+                    shortestDistance = distance;
+                    shortestIndex = index;
+                }
+            }
+
+            //Reset current interactable object if it is not the closest
+            if (_curInteractCollider != null && _curInteractCollider != interactableColliders[shortestIndex])
+            {
+                var curInteractable = _curInteractCollider.GetComponent<IInteractable>();
+                curInteractable.Interactable(false);
+            }
+
+            //Set new current interactable object
+            _curInteractCollider = interactableColliders[shortestIndex];        
+            if (interactableColliders[shortestIndex].TryGetComponent<IInteractable>(out var interactable))
+            {
+                interactable.Interactable(true);
+
+                //Interact if button is pressed
+                if (_playerActions.Default_PlayerActions.Interact.triggered)
+                {
+                    interactable.Interact("Default");
+                }
+            }
+        }
+        else
+        {
+            //If not in range, reset current interactable object
+            if (_curInteractCollider != null)
+            {
+                var curInteractable = _curInteractCollider.GetComponent<IInteractable>();
+                curInteractable.Interactable(false);
+                _curInteractCollider = null;
+            }
+        }
         #endregion
     }
 
@@ -186,9 +267,37 @@ public class PlayerController : MonoBehaviour
 
     void Shoot(InputAction.CallbackContext context)
     {
+        //Block player actions
+        if (_isLocked)
+        {
+            return;
+        }
+
         if (context.performed)
         {
             GetComponent<PlayerAttack>().Shoot();
+        }
+    }
+
+    void Craft(InputAction.CallbackContext context)
+    {
+        _scriptInventory.Craft();
+    }
+
+    public void Lock(bool isLocked)
+    {
+        _isLocked = isLocked;
+    }
+
+    public void TakeDamage(float damage) 
+    {
+        m_currentHealthValue -= Mathf.Abs(damage);
+        CameraController.instance.ScreenShake();
+        takeDamageTransition.LoadTransition();
+        if (m_currentHealthValue <= 0)
+        {
+            m_currentHealthValue = m_maxHealthValue;
+            RoomManager.instance.LoadRandomLevel();
         }
     }
 
@@ -202,4 +311,6 @@ public class PlayerController : MonoBehaviour
         Vector3 target = transform.position + _aimDirection * 2f;
         Gizmos.DrawLine(transform.position, target);
     }
+
+
 }

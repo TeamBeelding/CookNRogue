@@ -1,6 +1,7 @@
 name: Nightly Build
 
-on:
+on:   
+  workflow_dispatch: {}
   schedule:
     - cron: "0 4 * * *"
 
@@ -23,7 +24,7 @@ jobs:
       
       - uses: actions/checkout@v3
         with:
-          ref: ${{ github.ref }}
+          ref: refs/heads/develop
           lfs: false
           
       - uses: actions/cache@v3
@@ -45,11 +46,11 @@ jobs:
         run: echo ${{ secrets.USER_PASSWORD }} | sudo -S chown -R user:user .
         
       - name: Create info file
-        run: touch build/${{ matrix.targetPlatform }}/${{ github.event.repository.name }}-nightly-${{ github.ref_name }}-${{ matrix.targetPlatform }}
+        run: touch build/${{ matrix.targetPlatform }}/${{ github.event.repository.name }}-nightly-develop-${{ matrix.targetPlatform }}
         
       - uses: actions/upload-artifact@v3
         with:
-          name: ${{ github.event.repository.name }}-nightly-${{ github.ref_name }}-${{ matrix.targetPlatform }}
+          name: ${{ github.event.repository.name }}-nightly-develop-${{ matrix.targetPlatform }}
           path: build/${{ matrix.targetPlatform }}
           retention-days: 7
       
@@ -61,8 +62,9 @@ jobs:
           description: |
             Daily automatic & untested project build
             
-            Repo [`${{ github.repository }}`](https://github.com/${{ github.repository }})
-            Head Commit [`${{ github.sha }}`](https://github.com/TeamBeelding/TestRepo/commit/${{ github.sha }})
+            Status: `${{ job.status }}`
+            Repo: [`${{ github.repository }}`](https://github.com/${{ github.repository }})
+            Head Commit: [`${{ github.sha }}`](https://github.com/TeamBeelding/TestRepo/commit/${{ github.sha }})
           color: 0x6726eb
           url: https://github.com/TeamBeelding/TestRepo/actions/runs/${{ github.run_id }}#artifacts
           nodetail: true
