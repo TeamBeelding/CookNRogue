@@ -15,12 +15,8 @@ public class RoomManager : MonoBehaviour
 
     [SerializeField]
     private EnemyManager EnemyManagerScript;  
-    [SerializeField]
-    private List<GameObject> EnemiesInLevel;
 
     public bool isHard;
-
-    private int EnemyLeft;
 
     GameObject CurrentLevel;
 
@@ -54,30 +50,8 @@ public class RoomManager : MonoBehaviour
 
         Player = GameObject.FindGameObjectWithTag("Player");
         LoadRandomLevel();
-
-        foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
-        {
-            EnemiesInLevel.Add(enemy);
-        }
-
     }
 
-    private void Update()
-    {
-        
-    }
-
-    public void RemoveEnemyCount()
-    {
-        EnemyLeft--;
-        if (EnemyLeft <= 0)
-        {
-            GameObject.Find("Porte").SetActive(false);
-        }
-        Debug.Log(EnemyLeft);
-    }
-
-    // Update is called once per frame
     public void LoadRandomLevel()
     {
 
@@ -97,11 +71,6 @@ public class RoomManager : MonoBehaviour
         else
         {
             LoadLevel(HardLevels);
-        }
-
-        foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
-        {
-            EnemiesInLevel.Add(enemy);
         }
     }
 
