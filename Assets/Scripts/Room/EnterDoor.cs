@@ -8,7 +8,7 @@ public class EnterDoor : MonoBehaviour
 
     private void Start()
     {
-        EnemyManager.Instance.onAllEnnemiesKilled += OpenDoor;
+        EnemyManager.Instance.OnAllEnnemiesKilled += OpenDoor;
     }
 
     private void OpenDoor()
