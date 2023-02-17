@@ -19,6 +19,7 @@ public class ProjectileBehaviour : MonoBehaviour
     public Vector3 direction;
 
 
+
     private void Start()
     {
         //ParticleSystem.MainModule part = GetComponentInChildren<ParticleSystem>().main;
@@ -26,7 +27,7 @@ public class ProjectileBehaviour : MonoBehaviour
        
         rb.drag = drag;
         rb.velocity = direction * speed;
-        Destroy(gameObject, 5f);
+        Destroy(gameObject, 1f);
     }
 
     void FixedUpdate()
@@ -49,7 +50,7 @@ public class ProjectileBehaviour : MonoBehaviour
         }
         else
         {
-            //playerAttack.ApplyOnHitEffects(transform.position);
+            playerAttack.ApplyOnHitEffects(transform.position);
         }
     }
 
@@ -59,7 +60,6 @@ public class ProjectileBehaviour : MonoBehaviour
         {
             HasHit= true;
             hitObject = other.gameObject;
-
             if (other.GetComponent<Enemy>())
                 other.GetComponent<Enemy>().TakeDamage(heavyDamage);
 

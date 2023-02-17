@@ -1,11 +1,14 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
+    private static EnemyManager _instance;
+
     [SerializeField]
-    private GameObject[] EnemiesInLevel;
+    private List<Enemy> EnemiesInLevel;
 
     public int numOfEnemies;
 
@@ -15,39 +18,51 @@ public class EnemyManager : MonoBehaviour
     [SerializeField]
     private float time;
 
-    void Start()
+    public event Action onAllEnnemiesKilled;
+
+    public static EnemyManager Instance
     {
-        time = timeEnemyDeathCheck;
+        get { return _instance; }
     }
 
-    void Update()
+    private void Awake()
     {
-        time -= Time.deltaTime;
-        if (time <= 0)
+        if (_instance != null && _instance != this)
         {
-            time = timeEnemyDeathCheck;
-            Countdown();
+            Destroy(this);
+        }
+
+        _instance = this;
+    }
+
+    public void AddEnemyToLevel(Enemy enemy)
+    {
+        EnemiesInLevel.Add(enemy);
+        numOfEnemies++;
+    }
+
+    public void RemoveEnemyFromLevel(Enemy enemy)
+    {
+        EnemiesInLevel.Remove(enemy);
+        numOfEnemies--;
+
+        if(numOfEnemies <= 0 && onAllEnnemiesKilled != null)
+        {
+            onAllEnnemiesKilled();
         }
     }
 
-    void Countdown()
+    public void DestroyAll()
     {
-        //yield return new WaitForSeconds(seconds);
-        if (GameObject.FindGameObjectWithTag("Enemy"))
+        if (EnemiesInLevel != null) 
         {
-            EnemiesInLevel = GameObject.FindGameObjectsWithTag("Enemy");
-        }
-
-        numOfEnemies = EnemiesInLevel.Length;
-
-        if (!EnemiesInLevel[0])
-        {
-            if (GameObject.Find("Porte")) 
+            Debug.Log("Enemy Delete");
+            for (int i = 0; i < EnemiesInLevel.Count; i++)
             {
-                GameObject.Find("Porte").SetActive(false);
+                Enemy current = EnemiesInLevel[i];
+                RemoveEnemyFromLevel(current);
+                Destroy(current.gameObject);
             }
         }
-
-        Debug.Log("Enemy");
     }
 }
