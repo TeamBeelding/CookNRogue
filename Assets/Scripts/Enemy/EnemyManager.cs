@@ -8,7 +8,7 @@ public class EnemyManager : MonoBehaviour
     private static EnemyManager _instance;
 
     [SerializeField]
-    private List<Enemy> EnemiesInLevel;
+    private List<Enemy> _enemiesInLevel;
 
     public int numOfEnemies;
 
@@ -18,11 +18,16 @@ public class EnemyManager : MonoBehaviour
     [SerializeField]
     private float time;
 
-    public event Action onAllEnnemiesKilled;
+    public event Action OnAllEnnemiesKilled;
 
     public static EnemyManager Instance
     {
         get { return _instance; }
+    }
+   
+    public Enemy[] EnemiesInLevel
+    {
+        get { return _enemiesInLevel.ToArray(); }
     }
 
     private void Awake()
@@ -37,29 +42,29 @@ public class EnemyManager : MonoBehaviour
 
     public void AddEnemyToLevel(Enemy enemy)
     {
-        EnemiesInLevel.Add(enemy);
+        _enemiesInLevel.Add(enemy);
         numOfEnemies++;
     }
 
     public void RemoveEnemyFromLevel(Enemy enemy)
     {
-        EnemiesInLevel.Remove(enemy);
+        _enemiesInLevel.Remove(enemy);
         numOfEnemies--;
 
-        if(numOfEnemies <= 0 && onAllEnnemiesKilled != null)
+        if(numOfEnemies <= 0 && OnAllEnnemiesKilled != null)
         {
-            onAllEnnemiesKilled();
+            OnAllEnnemiesKilled();
         }
     }
 
     public void DestroyAll()
     {
-        if (EnemiesInLevel != null) 
+        if (_enemiesInLevel != null) 
         {
             Debug.Log("Enemy Delete");
-            for (int i = 0; i < EnemiesInLevel.Count; i++)
+            for (int i = 0; i < _enemiesInLevel.Count; i++)
             {
-                Enemy current = EnemiesInLevel[i];
+                Enemy current = _enemiesInLevel[i];
                 RemoveEnemyFromLevel(current);
                 Destroy(current.gameObject);
             }

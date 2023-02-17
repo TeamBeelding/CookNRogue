@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,8 +24,7 @@ public class RoomManager : MonoBehaviour
     [SerializeField]
     GameObject Player;
     
-    [SerializeField]
-    Transform SpawnPoint;
+    public Transform SpawnPoint;
 
     [SerializeField]
     TransitionController Transition;
@@ -33,6 +33,8 @@ public class RoomManager : MonoBehaviour
 
     [SerializeField] 
     private float delaiBeforeCreateNavMesh = 0.2f;
+
+    public event Action OnRoomStart;
 
     void Awake()
     {
@@ -76,9 +78,11 @@ public class RoomManager : MonoBehaviour
 
     private void LoadLevel(GameObject[] levels) 
     {
-        int rand = Random.Range(0, levels.Length);
+        int rand = UnityEngine.Random.Range(0, levels.Length);
         CurrentLevel = Instantiate(levels[rand], Vector3.zero, Quaternion.identity);
         LoadMeshData();
+
+        OnRoomStart();
         Player.transform.position = SpawnPoint.position;
     }
 
