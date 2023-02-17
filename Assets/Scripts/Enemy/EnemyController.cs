@@ -43,7 +43,7 @@ public class EnemyController : MonoBehaviour
     private void Awake()
     {
         _rend = GetComponentInChildren<Renderer>();
-        _meshRenderer = GetComponent<MeshRenderer>();
+        _meshRenderer = GetComponentInChildren<MeshRenderer>();
         _rigidbody = GetComponent<Rigidbody>();
         _agent = GetComponent<NavMeshAgent>();
         _agent.speed = data.GetSpeed();
@@ -245,7 +245,7 @@ public class EnemyController : MonoBehaviour
         _rigidbody.velocity = Vector3.zero;
     }
 
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, data.GetRangeDetection());
