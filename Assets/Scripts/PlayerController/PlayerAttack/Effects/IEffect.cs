@@ -2,6 +2,6 @@ using UnityEngine;
 
 public interface IIngredientEffects
 {
-    public void EffectOnShoot();
+    public void EffectOnShoot(Vector3 Position);
     public void EffectOnHit(Vector3 Position, GameObject HitObject,Vector3 direction);
 }

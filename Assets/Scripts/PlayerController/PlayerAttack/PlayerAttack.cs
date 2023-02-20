@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerAttack : MonoBehaviour
 {
     public GameObject Projectile;
-    ProjectileBehaviour projectileBehaviour;
+    PlayerBulletBehaviour projectileBehaviour;
     public Transform muzzle;
 
     [Header("Physic and Movements")]
@@ -45,11 +45,11 @@ public class PlayerAttack : MonoBehaviour
         
         //BulletInstantiate
         GameObject Bullet = Instantiate(Projectile, muzzle.position, Quaternion.identity);
-        projectileBehaviour = Bullet.GetComponent<ProjectileBehaviour>();
+        projectileBehaviour = Bullet.GetComponent<PlayerBulletBehaviour>();
         projectileBehaviour.ResetStats();
         projectileBehaviour.playerAttack = this;
         projectileBehaviour.speed += speed;
-        projectileBehaviour.drag += drag;
+        projectileBehaviour.drag -= drag;
         projectileBehaviour.lightDamage += lightDamage;
         projectileBehaviour.heavyDamage += heavyDamage;
         projectileBehaviour.direction = _playerController.PlayerAimDirection;
@@ -57,7 +57,7 @@ public class PlayerAttack : MonoBehaviour
         foreach (IIngredientEffects effect in effects)
         {
             if(effect != null)
-                effect.EffectOnShoot();
+                effect.EffectOnShoot(transform.position);
         }
 
 

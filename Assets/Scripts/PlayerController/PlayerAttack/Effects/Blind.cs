@@ -8,7 +8,7 @@ public class Blind : IIngredientEffects
     public float BlindEffectDuration;
 
     //EFFET LORS DU SHOOT
-    public void EffectOnShoot()
+    public void EffectOnShoot(Vector3 Position)
     {
         Debug.Log("BlindShootEffect");
     }

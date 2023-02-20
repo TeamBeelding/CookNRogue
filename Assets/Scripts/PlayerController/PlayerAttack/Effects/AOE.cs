@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class AOE : IIngredientEffects
 {
@@ -12,7 +13,7 @@ public class AOE : IIngredientEffects
     public float AOETick;
 
     //EFFET LORS DU SHOOT
-    public void EffectOnShoot()
+    public void EffectOnShoot(Vector3 Position)
     {
         Debug.Log("AOEShootEffect");
     }

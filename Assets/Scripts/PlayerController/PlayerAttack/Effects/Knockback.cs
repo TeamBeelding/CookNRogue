@@ -8,7 +8,7 @@ public class Knockback : IIngredientEffects
     public float KnockbackForce;
 
     //EFFET LORS DU SHOOT
-    public void EffectOnShoot()
+    public void EffectOnShoot(Vector3 Position)
     {
         Debug.Log("KnockbackShootEffect");
     }
@@ -20,7 +20,7 @@ public class Knockback : IIngredientEffects
             if (HitObject.GetComponent<Rigidbody>())
             {
                 
-                HitObject.GetComponent<Rigidbody>().AddForce((direction.normalized + Vector3.up)* KnockbackForce, ForceMode.Impulse);
+                HitObject.GetComponent<Rigidbody>().AddForce((direction.normalized)* KnockbackForce, ForceMode.Impulse);
             }
         }
         
