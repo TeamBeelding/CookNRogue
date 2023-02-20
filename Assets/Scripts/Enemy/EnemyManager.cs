@@ -8,7 +8,7 @@ public class EnemyManager : MonoBehaviour
     private static EnemyManager _instance;
 
     [SerializeField]
-    private List<Enemy> _enemiesInLevel;
+    private List<EnemyController> _enemiesInLevel;
 
     public int numOfEnemies;
 
@@ -25,7 +25,7 @@ public class EnemyManager : MonoBehaviour
         get { return _instance; }
     }
    
-    public Enemy[] EnemiesInLevel
+    public EnemyController[] EnemiesInLevel
     {
         get { return _enemiesInLevel.ToArray(); }
     }
@@ -40,13 +40,13 @@ public class EnemyManager : MonoBehaviour
         _instance = this;
     }
 
-    public void AddEnemyToLevel(Enemy enemy)
+    public void AddEnemyToLevel(EnemyController enemy)
     {
         _enemiesInLevel.Add(enemy);
         numOfEnemies++;
     }
 
-    public void RemoveEnemyFromLevel(Enemy enemy)
+    public void RemoveEnemyFromLevel(EnemyController enemy)
     {
         _enemiesInLevel.Remove(enemy);
         numOfEnemies--;
@@ -64,7 +64,7 @@ public class EnemyManager : MonoBehaviour
             Debug.Log("Enemy Delete");
             for (int i = 0; i < _enemiesInLevel.Count; i++)
             {
-                Enemy current = _enemiesInLevel[i];
+                EnemyController current = _enemiesInLevel[i];
                 RemoveEnemyFromLevel(current);
                 Destroy(current.gameObject);
             }
