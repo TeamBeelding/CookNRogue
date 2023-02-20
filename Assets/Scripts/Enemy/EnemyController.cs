@@ -54,7 +54,7 @@ public class EnemyController : MonoBehaviour
 
         healthpoint = data.GetHealth();
 
-        RoomManager.instance.OnRoomStart += AddToEnemyManager;
+        AddToEnemyManager();
     }
 
     // Start is called before the first frame update
