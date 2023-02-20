@@ -40,6 +40,8 @@ public class EnemyController : MonoBehaviour
     
     private float healthpoint;
 
+    
+
     private void Awake()
     {
         _rend = GetComponentInChildren<Renderer>();

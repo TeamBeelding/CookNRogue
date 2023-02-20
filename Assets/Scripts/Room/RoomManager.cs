@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Unity.AI.Navigation;
 
 // using UnityEngine.AI;
 
@@ -13,6 +14,11 @@ public class RoomManager : MonoBehaviour
     private GameObject[] EasyLevels;
     [SerializeField]
     private GameObject[] HardLevels;
+    //private NavMeshBuilder ;
+    [SerializeField]
+    private NavMeshSurface navMeshSurface;
+    [SerializeField]
+    private bool loadSurface = false;
 
     [SerializeField]
     private EnemyManager EnemyManagerScript;  
@@ -29,7 +35,7 @@ public class RoomManager : MonoBehaviour
     [SerializeField]
     TransitionController Transition;
 
-    private NavMeshSurface _navMeshSurface;
+    //private NavMeshSurface _navMeshSurface;
 
     [SerializeField] 
     private float delaiBeforeCreateNavMesh = 0.2f;
@@ -48,10 +54,22 @@ public class RoomManager : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {        
-        _navMeshSurface = GetComponent<NavMeshSurface>();
+        //_navMeshSurface = GetComponent<NavMeshSurface>();
 
         Player = GameObject.FindGameObjectWithTag("Player");
         LoadRandomLevel();
+
+        navMeshSurface.BuildNavMesh();
+    }
+
+    private void Update()
+    {
+        if (loadSurface) 
+        {
+            navMeshSurface.BuildNavMesh();
+            loadSurface = false;
+        }
+        //navMeshSurface.BuildNavMesh();
     }
 
     public void LoadRandomLevel()
@@ -80,22 +98,22 @@ public class RoomManager : MonoBehaviour
     {
         int rand = UnityEngine.Random.Range(0, levels.Length);
         CurrentLevel = Instantiate(levels[rand], Vector3.zero, Quaternion.identity);
-        LoadMeshData();
 
-        if(OnRoomStart!= null)
+        if (OnRoomStart!= null)
         {
             OnRoomStart();
         }
         Player.transform.position = SpawnPoint.position;
+        loadSurface = true;
     }
 
     private void LoadMeshData()
     {
         NavMeshData navMeshData = CurrentLevel.GetComponent<NavMeshRoom>()._data;
-        _navMeshSurface.UpdateNavMesh(navMeshData);
+        //_navMeshSurface.UpdateNavMesh(navMeshData);
         
         // Do we need to Build everytime or only once?
-        _navMeshSurface.BuildNavMesh();
+        //_navMeshSurface.BuildNavMesh();
     }
 
 }
