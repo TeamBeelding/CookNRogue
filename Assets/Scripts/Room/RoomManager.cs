@@ -82,7 +82,10 @@ public class RoomManager : MonoBehaviour
         CurrentLevel = Instantiate(levels[rand], Vector3.zero, Quaternion.identity);
         LoadMeshData();
 
-        OnRoomStart();
+        if(OnRoomStart!= null)
+        {
+            OnRoomStart();
+        }
         Player.transform.position = SpawnPoint.position;
     }
 
