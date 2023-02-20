@@ -1,11 +1,14 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
+    private static EnemyManager _instance;
+
     [SerializeField]
-    private GameObject[] EnemiesInLevel;
+    private List<Enemy> _enemiesInLevel;
 
     public int numOfEnemies;
 
@@ -15,51 +18,56 @@ public class EnemyManager : MonoBehaviour
     [SerializeField]
     private float time;
 
-    void Start()
+    public event Action OnAllEnnemiesKilled;
+
+    public static EnemyManager Instance
     {
-        time = timeEnemyDeathCheck;
+        get { return _instance; }
+    }
+   
+    public Enemy[] EnemiesInLevel
+    {
+        get { return _enemiesInLevel.ToArray(); }
     }
 
-    void Update()
+    private void Awake()
     {
-        time -= Time.deltaTime;
-        if (time <= 0)
+        if (_instance != null && _instance != this)
         {
-            time = timeEnemyDeathCheck;
-            Countdown();
+            Destroy(this);
+        }
+
+        _instance = this;
+    }
+
+    public void AddEnemyToLevel(Enemy enemy)
+    {
+        _enemiesInLevel.Add(enemy);
+        numOfEnemies++;
+    }
+
+    public void RemoveEnemyFromLevel(Enemy enemy)
+    {
+        _enemiesInLevel.Remove(enemy);
+        numOfEnemies--;
+
+        if(numOfEnemies <= 0 && OnAllEnnemiesKilled != null)
+        {
+            OnAllEnnemiesKilled();
         }
     }
 
     public void DestroyAll()
     {
-        if (EnemiesInLevel != null) 
+        if (_enemiesInLevel != null) 
         {
-            Debug.Log("Enemey Delete");
-            for (int i = 0; i < EnemiesInLevel.Length; i++)
+            Debug.Log("Enemy Delete");
+            for (int i = 0; i < _enemiesInLevel.Count; i++)
             {
-                Destroy(EnemiesInLevel[i]);
+                Enemy current = _enemiesInLevel[i];
+                RemoveEnemyFromLevel(current);
+                Destroy(current.gameObject);
             }
         }
-    }
-
-    void Countdown()
-    {
-        //yield return new WaitForSeconds(seconds);
-        if (GameObject.FindGameObjectWithTag("Enemy"))
-        {
-            EnemiesInLevel = GameObject.FindGameObjectsWithTag("Enemy");
-        }
-
-        numOfEnemies = EnemiesInLevel.Length;
-
-        if (!EnemiesInLevel[0])
-        {
-            if (GameObject.Find("Porte")) 
-            {
-                GameObject.Find("Porte").SetActive(false);
-            }
-        }
-
-        Debug.Log("Enemy");
     }
 }
