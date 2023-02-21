@@ -9,74 +9,200 @@ using static UnityEditor.Progress;
 public class LeoScrolling : MonoBehaviour
 {
     public RectTransform container;
-    private RectTransform[] Items;
+    public Sprite Defaultsprite;
+    public List <RectTransform> Items;
     bool m_LerpRight = false;
     bool m_LerpLeft = false;
     private float m_padding;
-    
-    private Vector3[] targets;
+    private Animator animator;
+
+    public int Pointerindex0;
+    public int Pointerindex1;
+    public int Pointerindex2;
+    public int Pointerindex3;
+    public int Pointerindex4;
 
     // Start is called before the first frame update
     void Start()
     {
-        Items = new RectTransform[container.childCount];
-        for (int i = 0; i < Items.Length; i++)
-        {
-            Items[i] = container.GetChild(i).GetComponent<RectTransform>();
-        }
-        m_padding = container.GetComponent<HorizontalLayoutGroup>().spacing;
+        InitPointors();
 
-        targets = new Vector3[container.childCount];
-        for (int i = 0; i < targets.Length; i++)
+        animator = container.GetComponent<Animator>();
+
+        ReloadUI();
+        //Items = new List<RectTransform>();
+        /*
+        for (int i = 0; i < Items.Count; i++)
         {
-            targets[i] = Items[i].GetComponent<RectTransform>().localPosition;
-            Debug.Log(targets[i]);
+            Items.Add(container.GetChild(i).GetComponent<RectTransform>());
         }
+        */
+      
+
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("switchRight") && !animator.GetCurrentAnimatorStateInfo(0).IsName("switchLeft"))
         {
-            Debug.Log("right");
-            StartCoroutine(lerpRight(0.5f));
-            for (int i = 0; i < targets.Length; i++)
+            if (Input.GetKey(KeyCode.RightArrow))
             {
-                targets[i] += new Vector3(m_padding,0,0); 
+                IncrementPointors(1);
+                animator.Play("switchRight");
+           
+
             }
-
-        }
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            Debug.Log("left");
-            StartCoroutine(lerpLeft(0.5f));
-            for (int i = 0; i < targets.Length; i++)
+            if (Input.GetKey(KeyCode.LeftArrow))
             {
-                targets[i] -= new Vector3(m_padding, 0, 0);
+                IncrementPointors(-1);
+                animator.Play("switchLeft");
+     
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.V) && InventoryScript.instance.recipe.Count < 3)
+        {
+            SelectIngredient();
+        }
+
+
     }
 
-    private void FixedUpdate()
+
+    void SelectIngredient()
     {
-        for (int i = 0; i < Items.Length; i++)
+        InventoryScript.instance.recipe.Add(InventoryScript.instance.projectilesData[Pointerindex2]);
+        InventoryScript.instance.projectilesData.RemoveAt(Pointerindex2);
+        ReloadUI();
+    }
+
+    public void ReloadUI()
+    {
+        if (InventoryScript.instance.projectilesData.Count > 0)
         {
-            Items[i].localPosition = Vector3.Lerp(Items[i].localPosition, targets[i],0.5f);
+           
+            if (Pointerindex0 < InventoryScript.instance.projectilesData.Count)
+            {
+              
+                Items[0].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[Pointerindex0].inventorySprite;
+            }
+            else
+            {
+                Items[0].GetComponentInChildren<Image>().sprite = Defaultsprite;
+            }
+
+            if (Pointerindex1 < InventoryScript.instance.projectilesData.Count)
+            {
+                Items[1].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[Pointerindex1].inventorySprite;
+               
+            }
+            else
+            {
+                Items[1].GetComponentInChildren<Image>().sprite = Defaultsprite;
+            }
+            
+
+            if (Pointerindex2 < InventoryScript.instance.projectilesData.Count)
+            {
+                Items[2].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[Pointerindex2].inventorySprite;
+                
+            }
+            else
+            {
+                Items[2].GetComponentInChildren<Image>().sprite = Defaultsprite;
+            }
+
+            if (Pointerindex3 < InventoryScript.instance.projectilesData.Count)
+            {
+                Items[3].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[Pointerindex3].inventorySprite;
+            }
+            else
+            {
+                Items[3].GetComponentInChildren<Image>().sprite = Defaultsprite;
+            }
+
+            if (Pointerindex4 < InventoryScript.instance.projectilesData.Count)
+            {
+                Items[4].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[Pointerindex4].inventorySprite;
+            }
+            else
+            {
+                Items[4].GetComponentInChildren<Image>().sprite = Defaultsprite;
+            }
         }
-       
+        else
+        {
+            Items[0].GetComponentInChildren<Image>().sprite = Defaultsprite;
+            Items[1].GetComponentInChildren<Image>().sprite = Defaultsprite;
+            Items[2].GetComponentInChildren<Image>().sprite = Defaultsprite;
+            Items[3].GetComponentInChildren<Image>().sprite = Defaultsprite;
+            Items[4].GetComponentInChildren<Image>().sprite = Defaultsprite;
+        }
+           
+             
     }
-    IEnumerator lerpRight(float time)
+
+    void InitPointors()
     {
-        m_LerpRight = true;
-        yield return new WaitForSeconds(time);
-        m_LerpRight = false;
+        Pointerindex0 = 3;
+        Pointerindex1 = 4;
+        Pointerindex2 = 0;
+        Pointerindex3 = 1;
+        Pointerindex4 = 2;
     }
-    IEnumerator lerpLeft(float time)
+
+    void IncrementPointors(int factor)
     {
-        m_LerpLeft = true;
-        yield return new WaitForSeconds(time);
-        m_LerpLeft = false;
+        Pointerindex0 += factor;
+        if(Pointerindex0 > 4)
+        {
+            Pointerindex0 = 0;
+        }
+        else if(Pointerindex0 < 0)
+        {
+            Pointerindex0 = 4;
+        }
+
+        Pointerindex1 += factor;
+        if (Pointerindex1 > 4)
+        {
+            Pointerindex1 = 0;
+        }
+        else if (Pointerindex1 < 0)
+        {
+            Pointerindex1 = 4;
+        }
+
+        Pointerindex2 += factor;
+        if (Pointerindex2 > 4)
+        {
+            Pointerindex2 = 0;
+        }
+        else if (Pointerindex2 < 0)
+        {
+            Pointerindex2 = 4;
+        }
+
+        Pointerindex3 += factor;
+        if (Pointerindex3 > 4)
+        {
+            Pointerindex3 = 0;
+        }
+        else if (Pointerindex3 < 0)
+        {
+            Pointerindex3 = 4;
+        }
+
+        Pointerindex4 += factor;
+        if (Pointerindex4 > 4)
+        {
+            Pointerindex4 = 0;
+        }
+        else if (Pointerindex4 < 0)
+        {
+            Pointerindex4 = 4;
+        }
     }
+
 }

@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
 public class PlayerBulletBehaviour : MonoBehaviour
 {
     public float heavyDamage;
@@ -12,10 +11,8 @@ public class PlayerBulletBehaviour : MonoBehaviour
     private bool HasHit = false;
     private GameObject hitObject;
     public PlayerAttack playerAttack;
-    [SerializeField]
-    Rigidbody rb;
     Sprite sprite;
-    public Vector3 gravity;
+    //public Vector3 gravity;
     public Vector3 direction;
 
 

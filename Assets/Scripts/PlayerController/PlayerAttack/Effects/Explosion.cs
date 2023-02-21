@@ -32,16 +32,19 @@ public class Explosion : IIngredientEffects
 
         foreach(Collider hitCollider in hitColliders)
         {
-            if (hitCollider.GetComponent<Rigidbody>())
-            {
+           
                 //float distance = (Position - hitCollider.transform.position).magnitude;
                 
                 
                 Rigidbody rb = hitCollider.GetComponent<Rigidbody>();
 
-                if (rb != null && hitCollider.CompareTag("Player"))
-                    rb.AddExplosionForce(ExplosionForce, Position, ExplosionRadius, 10.0F);
-            }
+                if (!hitCollider.CompareTag("Player") && rb != null)
+                {
+                Debug.Log("kaboom");
+                rb.AddExplosionForce(ExplosionForce, Position, ExplosionRadius);
+                }
+
+            
             
         }
 

@@ -60,7 +60,7 @@ public class PlayerAttack : MonoBehaviour
                 effect.EffectOnShoot(transform.position);
         }
 
-
+        
 
          //Shoot Bullet
          _shootOnCooldown = true;
