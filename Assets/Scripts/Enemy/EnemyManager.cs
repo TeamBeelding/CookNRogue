@@ -55,9 +55,12 @@ public class EnemyManager : MonoBehaviour
     {
         if (_enemiesInLevel != null) 
         {
-            Debug.Log("Enemy Delete");
-            for (int i = 0; i < _enemiesInLevel.Count; i++)
+            int StartCount = _enemiesInLevel.Count;
+            Debug.Log(StartCount);
+            for (int i = StartCount - 1; i >= 0; i--)
             {
+                Debug.Log(StartCount);
+                Debug.Log(i);
                 EnemyController current = _enemiesInLevel[i];
                 RemoveEnemyFromLevel(current);
                 Destroy(current.gameObject);

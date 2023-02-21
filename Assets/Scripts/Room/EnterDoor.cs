@@ -13,7 +13,10 @@ public class EnterDoor : MonoBehaviour
 
     private void OpenDoor()
     {
-        door.SetActive(false);
+        if (door != null) 
+        {
+            door.SetActive(false);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
