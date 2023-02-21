@@ -56,8 +56,6 @@ public class RoomManager : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        
-
         Player = GameObject.FindGameObjectWithTag("Player");
         LoadRandomLevel();
 
@@ -68,7 +66,8 @@ public class RoomManager : MonoBehaviour
     {
         if (loadSurface) 
         {
-            navMeshSurface.BuildNavMesh();
+            Debug.Log("It has been built");
+            navMeshSurface.UpdateNavMesh(navMeshSurface.navMeshData);
             loadSurface = false;
         }
     }
@@ -97,11 +96,13 @@ public class RoomManager : MonoBehaviour
         {
             isHard = false;
             CurrentLevel = Instantiate(EasyLevels[i], Vector3.zero, Quaternion.identity);
+            loadSurface = true;
         }
         else
         {
             isHard = true;
             CurrentLevel = Instantiate(HardLevels[i - EasyLevels.Length], Vector3.zero, Quaternion.identity);
+            loadSurface = true;
         }
     }
 
@@ -113,6 +114,7 @@ public class RoomManager : MonoBehaviour
 
         if (CurrentLevel != null)
         {
+            //navMeshSurface.RemoveData();
             Destroy(CurrentLevel);
         }
     }
@@ -135,7 +137,7 @@ public class RoomManager : MonoBehaviour
         InitLevelNames();
     }
 
-    private void InitLevelNames()
+    public void InitLevelNames()
     {
         LevelNames = new string[EasyLevels.Length + HardLevels.Length];
 
@@ -156,11 +158,13 @@ public class RoomManager : MonoBehaviour
 public class Buttons : Editor 
 {
     private int selected = 0;
+
     public override void OnInspectorGUI() 
     {
 
         DrawDefaultInspector();
         RoomManager room = (RoomManager)target;
+        //room.InitLevelNames();
 
         EditorGUILayout.Separator();
 

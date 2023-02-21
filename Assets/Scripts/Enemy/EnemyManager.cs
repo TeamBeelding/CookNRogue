@@ -12,12 +12,6 @@ public class EnemyManager : MonoBehaviour
 
     public int numOfEnemies;
 
-    [SerializeField] 
-    private float timeEnemyDeathCheck;
-
-    [SerializeField]
-    private float time;
-
     public event Action OnAllEnnemiesKilled;
 
     public static EnemyManager Instance
