@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
@@ -56,15 +57,43 @@ public class EnemyManager : MonoBehaviour
         if (_enemiesInLevel != null) 
         {
             int StartCount = _enemiesInLevel.Count;
-            Debug.Log(StartCount);
             for (int i = StartCount - 1; i >= 0; i--)
             {
-                Debug.Log(StartCount);
-                Debug.Log(i);
                 EnemyController current = _enemiesInLevel[i];
                 RemoveEnemyFromLevel(current);
                 Destroy(current.gameObject);
             }
         }
+    }
+}
+
+[CustomEditor(typeof(EnemyManager))]
+public class EnemyManagerEditor : Editor
+{
+    public override void OnInspectorGUI()
+    {
+
+        DrawDefaultInspector();
+        //EnemyManager enemies = (EnemyManager)target;
+
+        EditorGUILayout.Separator();
+
+        EditorGUILayout.LabelField("TOOLS: ", "");
+        GuiLine(1);
+
+        if (GUILayout.Button("Kill All Enemies In Level"))
+        {
+            EnemyManager.Instance.DestroyAll();
+        }
+
+        EditorGUILayout.Separator();
+    }
+
+    void GuiLine(int i_height = 1)
+    {
+        Rect rect = EditorGUILayout.GetControlRect(false, i_height);
+        rect.height = i_height;
+        EditorGUI.DrawRect(rect, new Color(0.5f, 0.5f, 0.5f, 1));
+        EditorGUILayout.Separator();
     }
 }

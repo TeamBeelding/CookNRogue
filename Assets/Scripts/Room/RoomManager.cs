@@ -68,6 +68,7 @@ public class RoomManager : MonoBehaviour
         {
             Debug.Log("It has been built");
             navMeshSurface.UpdateNavMesh(navMeshSurface.navMeshData);
+            navMeshSurface.BuildNavMesh();
             loadSurface = false;
         }
     }
@@ -114,7 +115,6 @@ public class RoomManager : MonoBehaviour
 
         if (CurrentLevel != null)
         {
-            //navMeshSurface.RemoveData();
             Destroy(CurrentLevel);
         }
     }
@@ -155,7 +155,7 @@ public class RoomManager : MonoBehaviour
 }
 
 [CustomEditor(typeof(RoomManager))]
-public class Buttons : Editor 
+public class RoomManagerEditor : Editor 
 {
     private int selected = 0;
 
@@ -164,7 +164,7 @@ public class Buttons : Editor
 
         DrawDefaultInspector();
         RoomManager room = (RoomManager)target;
-        //room.InitLevelNames();
+
 
         EditorGUILayout.Separator();
 

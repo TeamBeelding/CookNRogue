@@ -1,4 +1,5 @@
 using System.Collections;
+using UnityEditor;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
@@ -150,6 +151,34 @@ public class CameraController : MonoBehaviour
         }
         // reseting shakegimble to original position.
         ShakeGimble.localPosition = startPosition;
+    }
+}
+
+[CustomEditor(typeof(CameraController))]
+public class CameraControllerEditor : Editor
+{
+    public override void OnInspectorGUI()
+    {
+        DrawDefaultInspector();
+        //CameraController camera = (CameraController)target;
+
+        EditorGUILayout.Separator();
+
+        EditorGUILayout.LabelField("TOOLS: ", "");
+        GuiLine(1);
+
+        if (GUILayout.Button("Shake"))
+        {
+            CameraController.instance.shake = true;
+        }
+    }
+
+    void GuiLine(int i_height = 1)
+    {
+        Rect rect = EditorGUILayout.GetControlRect(false, i_height);
+        rect.height = i_height;
+        EditorGUI.DrawRect(rect, new Color(0.5f, 0.5f, 0.5f, 1));
+        EditorGUILayout.Separator();
     }
 }
 
