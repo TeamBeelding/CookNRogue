@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -16,16 +17,13 @@ public class LeoScrolling : MonoBehaviour
     private float m_padding;
     private Animator animator;
 
-    public int Pointerindex0;
-    public int Pointerindex1;
-    public int Pointerindex2;
-    public int Pointerindex3;
-    public int Pointerindex4;
+    public int Pointerindex;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        InitPointors();
+      
 
         animator = container.GetComponent<Animator>();
 
@@ -48,15 +46,16 @@ public class LeoScrolling : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.RightArrow))
             {
-                IncrementPointors(1);
+               
                 animator.Play("switchRight");
-           
+                IncrementPointor(1);
 
             }
             if (Input.GetKey(KeyCode.LeftArrow))
             {
-                IncrementPointors(-1);
+              
                 animator.Play("switchLeft");
+                IncrementPointor(-1);
      
             }
         }
@@ -72,137 +71,156 @@ public class LeoScrolling : MonoBehaviour
 
     void SelectIngredient()
     {
-        InventoryScript.instance.recipe.Add(InventoryScript.instance.projectilesData[Pointerindex2]);
-        InventoryScript.instance.projectilesData.RemoveAt(Pointerindex2);
+        bool increment = false;
+        if (InventoryScript.instance.projectilesData[Pointerindex] == InventoryScript.instance.projectilesData[InventoryScript.instance.projectilesData.Count - 1])
+            increment = true;
+
+
+        InventoryScript.instance.recipe.Add(InventoryScript.instance.projectilesData[Pointerindex]);
+
+
+
+        InventoryScript.instance.projectilesData.RemoveAt(Pointerindex);
+
+        if (increment)
+            IncrementPointor(1);
+
         ReloadUI();
+    }
+
+    private void IncrementPointor(int v)
+    {
+        Pointerindex += v;
+        if (Pointerindex < 0)
+        {
+            Pointerindex = InventoryScript.instance.projectilesData.Count - 1;
+        }
+        if(Pointerindex> InventoryScript.instance.projectilesData.Count - 1)
+        {
+            Pointerindex = 0;
+        }
     }
 
     public void ReloadUI()
     {
-        if (InventoryScript.instance.projectilesData.Count > 0)
-        {
-           
-            if (Pointerindex0 < InventoryScript.instance.projectilesData.Count)
-            {
-              
-                Items[0].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[Pointerindex0].inventorySprite;
-            }
-            else
-            {
-                Items[0].GetComponentInChildren<Image>().sprite = Defaultsprite;
-            }
-
-            if (Pointerindex1 < InventoryScript.instance.projectilesData.Count)
-            {
-                Items[1].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[Pointerindex1].inventorySprite;
-               
-            }
-            else
-            {
-                Items[1].GetComponentInChildren<Image>().sprite = Defaultsprite;
-            }
-            
-
-            if (Pointerindex2 < InventoryScript.instance.projectilesData.Count)
-            {
-                Items[2].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[Pointerindex2].inventorySprite;
-                
-            }
-            else
-            {
-                Items[2].GetComponentInChildren<Image>().sprite = Defaultsprite;
-            }
-
-            if (Pointerindex3 < InventoryScript.instance.projectilesData.Count)
-            {
-                Items[3].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[Pointerindex3].inventorySprite;
-            }
-            else
-            {
-                Items[3].GetComponentInChildren<Image>().sprite = Defaultsprite;
-            }
-
-            if (Pointerindex4 < InventoryScript.instance.projectilesData.Count)
-            {
-                Items[4].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[Pointerindex4].inventorySprite;
-            }
-            else
-            {
-                Items[4].GetComponentInChildren<Image>().sprite = Defaultsprite;
-            }
-        }
-        else
+        if (InventoryScript.instance.projectilesData.Count == 0)
         {
             Items[0].GetComponentInChildren<Image>().sprite = Defaultsprite;
             Items[1].GetComponentInChildren<Image>().sprite = Defaultsprite;
             Items[2].GetComponentInChildren<Image>().sprite = Defaultsprite;
             Items[3].GetComponentInChildren<Image>().sprite = Defaultsprite;
             Items[4].GetComponentInChildren<Image>().sprite = Defaultsprite;
+            return;
+            
+        }
+        else
+        {
+            Items[2].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[Pointerindex].inventorySprite;
+
+            switch (InventoryScript.instance.projectilesData.Count)
+            {
+
+                case 1:
+                    break;
+                case 2:
+                    if (Pointerindex == 0)
+                    {
+                        Items[0].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[0].inventorySprite;
+                        Items[1].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[1].inventorySprite;
+                        Items[3].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[1].inventorySprite;
+                        Items[4].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[0].inventorySprite;
+                    }
+                    else if (Pointerindex == 1)
+                    {
+                        Items[0].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[0].inventorySprite;
+                        Items[1].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[1].inventorySprite;
+                        Items[3].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[0].inventorySprite;
+                        Items[4].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[0].inventorySprite;
+                    }
+                    else if (Pointerindex == 2)
+                    {
+                        Items[0].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[0].inventorySprite;
+                        Items[1].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[1].inventorySprite;
+                        Items[3].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[0].inventorySprite;
+                        Items[4].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[1].inventorySprite;
+                    }
+
+                    break;
+                case 3:
+                    if (Pointerindex == 0)
+                    {
+                        Items[0].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[1].inventorySprite;
+                        Items[1].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[2].inventorySprite;
+                        Items[3].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[1].inventorySprite;
+                        Items[4].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[2].inventorySprite;
+                    }
+                    else if (Pointerindex == 1)
+                    {
+                        Items[0].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[2].inventorySprite;
+                        Items[1].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[0].inventorySprite;
+                        Items[3].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[2].inventorySprite;
+                        Items[4].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[0].inventorySprite;
+                    }
+                    else if (Pointerindex == 2)
+                    {
+                        Items[0].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[3].inventorySprite;
+                        Items[1].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[2].inventorySprite;
+                        Items[3].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[3].inventorySprite;
+                        Items[4].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[2].inventorySprite;
+                    }
+         
+                       
+                        break;
+
+                default:
+                        if (Pointerindex == 0)
+                        {
+                            Items[0].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[InventoryScript.instance.projectilesData.Count - 2].inventorySprite;
+                            Items[1].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[InventoryScript.instance.projectilesData.Count - 1].inventorySprite;
+                            Items[3].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[1].inventorySprite;
+                            Items[4].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[2].inventorySprite;
+                        }
+                        else if (Pointerindex == 1)
+                        {
+                            Items[0].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[InventoryScript.instance.projectilesData.Count - 1].inventorySprite;
+                            Items[1].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[0].inventorySprite;
+                            Items[3].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[2].inventorySprite;
+                            Items[4].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[3].inventorySprite;
+                        }
+                        else if (Pointerindex == InventoryScript.instance.projectilesData.Count-2)
+                        {
+                            Items[0].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[InventoryScript.instance.projectilesData.Count - 4].inventorySprite;
+                            Items[1].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[InventoryScript.instance.projectilesData.Count - 3].inventorySprite;
+                            Items[3].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[InventoryScript.instance.projectilesData.Count - 1].inventorySprite;
+                            Items[4].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[0].inventorySprite;
+                        }
+                        else if (Pointerindex == InventoryScript.instance.projectilesData.Count - 1)
+                        {
+                            Items[0].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[InventoryScript.instance.projectilesData.Count - 3].inventorySprite;
+                            Items[1].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[InventoryScript.instance.projectilesData.Count - 2].inventorySprite;
+                            Items[3].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[0].inventorySprite;
+                            Items[4].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[1].inventorySprite;
+                        }
+                        else
+                        {
+                            Items[0].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[Pointerindex - 2].inventorySprite;
+                            Items[1].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[Pointerindex - 1].inventorySprite;
+                            Items[3].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[Pointerindex + 1].inventorySprite;
+                            Items[4].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[Pointerindex + 2].inventorySprite;
+                        }
+
+                    break;
+            }
+            
         }
            
+    }
+           
              
-    }
-
-    void InitPointors()
-    {
-        Pointerindex0 = 3;
-        Pointerindex1 = 4;
-        Pointerindex2 = 0;
-        Pointerindex3 = 1;
-        Pointerindex4 = 2;
-    }
-
-    void IncrementPointors(int factor)
-    {
-        Pointerindex0 += factor;
-        if(Pointerindex0 > 4)
-        {
-            Pointerindex0 = 0;
-        }
-        else if(Pointerindex0 < 0)
-        {
-            Pointerindex0 = 4;
-        }
-
-        Pointerindex1 += factor;
-        if (Pointerindex1 > 4)
-        {
-            Pointerindex1 = 0;
-        }
-        else if (Pointerindex1 < 0)
-        {
-            Pointerindex1 = 4;
-        }
-
-        Pointerindex2 += factor;
-        if (Pointerindex2 > 4)
-        {
-            Pointerindex2 = 0;
-        }
-        else if (Pointerindex2 < 0)
-        {
-            Pointerindex2 = 4;
-        }
-
-        Pointerindex3 += factor;
-        if (Pointerindex3 > 4)
-        {
-            Pointerindex3 = 0;
-        }
-        else if (Pointerindex3 < 0)
-        {
-            Pointerindex3 = 4;
-        }
-
-        Pointerindex4 += factor;
-        if (Pointerindex4 > 4)
-        {
-            Pointerindex4 = 0;
-        }
-        else if (Pointerindex4 < 0)
-        {
-            Pointerindex4 = 4;
-        }
-    }
-
 }
+
+    
+
+    
+
+
