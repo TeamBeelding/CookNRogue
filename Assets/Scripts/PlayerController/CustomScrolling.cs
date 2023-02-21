@@ -48,7 +48,7 @@ public class CustomScrolling : MonoBehaviour
         m_ScrollRect.horizontalNormalizedPosition = (float)(StartingScreen - 1) / (float)(Screens - 1);
     }
 
-
+    
     private void Update()
     {
       
