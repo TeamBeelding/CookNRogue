@@ -12,6 +12,7 @@ public class LeoScrolling : MonoBehaviour
     public RectTransform container;
     public Sprite Defaultsprite;
     public List <RectTransform> Items;
+    public List<Image> ItemImages;
     bool m_LerpRight = false;
     bool m_LerpLeft = false;
     private float m_padding;
@@ -27,15 +28,16 @@ public class LeoScrolling : MonoBehaviour
 
         animator = container.GetComponent<Animator>();
 
-        ReloadUI();
-        //Items = new List<RectTransform>();
-        /*
+        
+        
+        ItemImages = new List<Image>();
+
         for (int i = 0; i < Items.Count; i++)
         {
-            Items.Add(container.GetChild(i).GetComponent<RectTransform>());
+            ItemImages.Add(Items[i].GetComponentInChildren<Image>());
         }
-        */
-      
+
+        ReloadUI();
 
     }
 
@@ -60,7 +62,7 @@ public class LeoScrolling : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.V) && InventoryScript.instance.recipe.Count < 3)
+        if (Input.GetKeyDown(KeyCode.V) && InventoryScript.instance.recipe.Count < 3 && InventoryScript.instance.projectilesData.Count>0)
         {
             SelectIngredient();
         }
@@ -71,10 +73,11 @@ public class LeoScrolling : MonoBehaviour
 
     void SelectIngredient()
     {
+        /*
         bool increment = false;
         if (InventoryScript.instance.projectilesData[Pointerindex] == InventoryScript.instance.projectilesData[InventoryScript.instance.projectilesData.Count - 1])
             increment = true;
-
+        */
 
         InventoryScript.instance.recipe.Add(InventoryScript.instance.projectilesData[Pointerindex]);
 
@@ -82,9 +85,10 @@ public class LeoScrolling : MonoBehaviour
 
         InventoryScript.instance.projectilesData.RemoveAt(Pointerindex);
 
+        /*
         if (increment)
             IncrementPointor(1);
-
+        */
         ReloadUI();
     }
 
@@ -105,11 +109,11 @@ public class LeoScrolling : MonoBehaviour
     {
         if (InventoryScript.instance.projectilesData.Count == 0)
         {
-            Items[0].GetComponentInChildren<Image>().sprite = Defaultsprite;
-            Items[1].GetComponentInChildren<Image>().sprite = Defaultsprite;
-            Items[2].GetComponentInChildren<Image>().sprite = Defaultsprite;
-            Items[3].GetComponentInChildren<Image>().sprite = Defaultsprite;
-            Items[4].GetComponentInChildren<Image>().sprite = Defaultsprite;
+            ItemImages[0].sprite = Defaultsprite;
+            ItemImages[1].sprite = Defaultsprite;
+            ItemImages[2].sprite = Defaultsprite;
+            ItemImages[3].sprite = Defaultsprite;
+            ItemImages[4].sprite = Defaultsprite;
             return;
             
         }
@@ -125,48 +129,48 @@ public class LeoScrolling : MonoBehaviour
                 case 2:
                     if (Pointerindex == 0)
                     {
-                        Items[0].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[0].inventorySprite;
-                        Items[1].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[1].inventorySprite;
-                        Items[3].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[1].inventorySprite;
-                        Items[4].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[0].inventorySprite;
+                        ItemImages[0].sprite = InventoryScript.instance.projectilesData[0].inventorySprite;
+                        ItemImages[1].sprite = InventoryScript.instance.projectilesData[1].inventorySprite;
+                        ItemImages[3].sprite = InventoryScript.instance.projectilesData[1].inventorySprite;
+                        ItemImages[4].sprite = InventoryScript.instance.projectilesData[0].inventorySprite;
                     }
                     else if (Pointerindex == 1)
                     {
-                        Items[0].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[0].inventorySprite;
-                        Items[1].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[1].inventorySprite;
-                        Items[3].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[0].inventorySprite;
-                        Items[4].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[0].inventorySprite;
+                        ItemImages[0].sprite = InventoryScript.instance.projectilesData[0].inventorySprite;
+                        ItemImages[1].sprite = InventoryScript.instance.projectilesData[1].inventorySprite;
+                        ItemImages[3].sprite = InventoryScript.instance.projectilesData[0].inventorySprite;
+                        ItemImages[4].sprite = InventoryScript.instance.projectilesData[0].inventorySprite;
                     }
                     else if (Pointerindex == 2)
                     {
-                        Items[0].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[0].inventorySprite;
-                        Items[1].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[1].inventorySprite;
-                        Items[3].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[0].inventorySprite;
-                        Items[4].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[1].inventorySprite;
+                        ItemImages[0].sprite = InventoryScript.instance.projectilesData[0].inventorySprite;
+                        ItemImages[1].sprite = InventoryScript.instance.projectilesData[1].inventorySprite;
+                        ItemImages[3].sprite = InventoryScript.instance.projectilesData[0].inventorySprite;
+                        ItemImages[4].sprite = InventoryScript.instance.projectilesData[1].inventorySprite;
                     }
 
                     break;
                 case 3:
                     if (Pointerindex == 0)
                     {
-                        Items[0].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[1].inventorySprite;
-                        Items[1].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[2].inventorySprite;
-                        Items[3].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[1].inventorySprite;
-                        Items[4].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[2].inventorySprite;
+                        ItemImages[0].sprite = InventoryScript.instance.projectilesData[1].inventorySprite;
+                        ItemImages[1].sprite = InventoryScript.instance.projectilesData[2].inventorySprite;
+                        ItemImages[3].sprite = InventoryScript.instance.projectilesData[1].inventorySprite;
+                        ItemImages[4].sprite = InventoryScript.instance.projectilesData[2].inventorySprite;
                     }
                     else if (Pointerindex == 1)
                     {
-                        Items[0].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[2].inventorySprite;
-                        Items[1].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[0].inventorySprite;
-                        Items[3].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[2].inventorySprite;
-                        Items[4].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[0].inventorySprite;
+                        ItemImages[0].sprite = InventoryScript.instance.projectilesData[2].inventorySprite;
+                        ItemImages[1].sprite = InventoryScript.instance.projectilesData[0].inventorySprite;
+                        ItemImages[3].sprite = InventoryScript.instance.projectilesData[2].inventorySprite;
+                        ItemImages[4].sprite = InventoryScript.instance.projectilesData[0].inventorySprite;
                     }
                     else if (Pointerindex == 2)
                     {
-                        Items[0].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[3].inventorySprite;
-                        Items[1].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[2].inventorySprite;
-                        Items[3].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[3].inventorySprite;
-                        Items[4].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[2].inventorySprite;
+                        ItemImages[0].sprite = InventoryScript.instance.projectilesData[3].inventorySprite;
+                        ItemImages[1].sprite = InventoryScript.instance.projectilesData[2].inventorySprite;
+                        ItemImages[3].sprite = InventoryScript.instance.projectilesData[3].inventorySprite;
+                        ItemImages[4].sprite = InventoryScript.instance.projectilesData[2].inventorySprite;
                     }
          
                        
@@ -175,38 +179,38 @@ public class LeoScrolling : MonoBehaviour
                 default:
                         if (Pointerindex == 0)
                         {
-                            Items[0].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[InventoryScript.instance.projectilesData.Count - 2].inventorySprite;
-                            Items[1].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[InventoryScript.instance.projectilesData.Count - 1].inventorySprite;
-                            Items[3].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[1].inventorySprite;
-                            Items[4].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[2].inventorySprite;
+                        ItemImages[0].sprite = InventoryScript.instance.projectilesData[InventoryScript.instance.projectilesData.Count - 2].inventorySprite;
+                        ItemImages[1].sprite = InventoryScript.instance.projectilesData[InventoryScript.instance.projectilesData.Count - 1].inventorySprite;
+                        ItemImages[3].sprite = InventoryScript.instance.projectilesData[1].inventorySprite;
+                        ItemImages[4].sprite = InventoryScript.instance.projectilesData[2].inventorySprite;
                         }
                         else if (Pointerindex == 1)
                         {
-                            Items[0].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[InventoryScript.instance.projectilesData.Count - 1].inventorySprite;
-                            Items[1].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[0].inventorySprite;
-                            Items[3].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[2].inventorySprite;
-                            Items[4].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[3].inventorySprite;
+                        ItemImages[0].sprite = InventoryScript.instance.projectilesData[InventoryScript.instance.projectilesData.Count - 1].inventorySprite;
+                        ItemImages[1].sprite = InventoryScript.instance.projectilesData[0].inventorySprite;
+                        ItemImages[3].sprite = InventoryScript.instance.projectilesData[2].inventorySprite;
+                        ItemImages[4].sprite = InventoryScript.instance.projectilesData[3].inventorySprite;
                         }
                         else if (Pointerindex == InventoryScript.instance.projectilesData.Count-2)
                         {
-                            Items[0].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[InventoryScript.instance.projectilesData.Count - 4].inventorySprite;
-                            Items[1].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[InventoryScript.instance.projectilesData.Count - 3].inventorySprite;
-                            Items[3].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[InventoryScript.instance.projectilesData.Count - 1].inventorySprite;
-                            Items[4].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[0].inventorySprite;
+                        ItemImages[0].sprite = InventoryScript.instance.projectilesData[InventoryScript.instance.projectilesData.Count - 4].inventorySprite;
+                        ItemImages[1].sprite = InventoryScript.instance.projectilesData[InventoryScript.instance.projectilesData.Count - 3].inventorySprite;
+                        ItemImages[3].sprite = InventoryScript.instance.projectilesData[InventoryScript.instance.projectilesData.Count - 1].inventorySprite;
+                        ItemImages[4].sprite = InventoryScript.instance.projectilesData[0].inventorySprite;
                         }
                         else if (Pointerindex == InventoryScript.instance.projectilesData.Count - 1)
                         {
-                            Items[0].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[InventoryScript.instance.projectilesData.Count - 3].inventorySprite;
-                            Items[1].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[InventoryScript.instance.projectilesData.Count - 2].inventorySprite;
-                            Items[3].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[0].inventorySprite;
-                            Items[4].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[1].inventorySprite;
+                        ItemImages[0].sprite = InventoryScript.instance.projectilesData[InventoryScript.instance.projectilesData.Count - 3].inventorySprite;
+                        ItemImages[1].sprite = InventoryScript.instance.projectilesData[InventoryScript.instance.projectilesData.Count - 2].inventorySprite;
+                        ItemImages[3].sprite = InventoryScript.instance.projectilesData[0].inventorySprite;
+                        ItemImages[4].sprite = InventoryScript.instance.projectilesData[1].inventorySprite;
                         }
                         else
                         {
-                            Items[0].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[Pointerindex - 2].inventorySprite;
-                            Items[1].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[Pointerindex - 1].inventorySprite;
-                            Items[3].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[Pointerindex + 1].inventorySprite;
-                            Items[4].GetComponentInChildren<Image>().sprite = InventoryScript.instance.projectilesData[Pointerindex + 2].inventorySprite;
+                        ItemImages[0].sprite = InventoryScript.instance.projectilesData[Pointerindex - 2].inventorySprite;
+                        ItemImages[1].sprite = InventoryScript.instance.projectilesData[Pointerindex - 1].inventorySprite;
+                        ItemImages[3].sprite = InventoryScript.instance.projectilesData[Pointerindex + 1].inventorySprite;
+                        ItemImages[4].sprite = InventoryScript.instance.projectilesData[Pointerindex + 2].inventorySprite;
                         }
 
                     break;
