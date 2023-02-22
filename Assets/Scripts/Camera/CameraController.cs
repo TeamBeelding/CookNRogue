@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-
     public static CameraController instance;
 
     //Controler
@@ -19,7 +18,6 @@ public class CameraController : MonoBehaviour
     //Player target is initialised as the camera lock, it is the MAIN object (Player) which the camera follows.
     [SerializeField]
     private Transform CameraPlayerTarget;
-
 
     //Obstructions
     [Header("Obstructions")]
@@ -48,11 +46,27 @@ public class CameraController : MonoBehaviour
     // Whether it is currently shaking or not
     public bool shake = false;
 
+    //Shake
+    [Header("Camera Zoom")]
+    [Header("==========================================================================================================================================================================================================================")]
+    // How long will the shake last
+    [SerializeField]
+    private float zoomDuration = 1f;
+    [SerializeField]
+    [Range(1f,10f)]
+    private float zoomFactor = 2f;
+    // This decides the amount of shake over time
+    [SerializeField]
+    private AnimationCurve ZoomCurve;
+    // Whether it is currently shaking or not
+    public bool zoom = false;
+
     //Smooth
     [Header("Camera Smooth")]
     // How fast dose the camera follow the player
     [SerializeField]
     private float smoothSpeed = 2.5f;
+    float initialZoom;
     // If needed an addtional target can be added, in that case the camera make its way to that the target transform in a smooth way.
     // This can be usfull for bosses, special items in the room ect..
     [SerializeField]
@@ -65,6 +79,7 @@ public class CameraController : MonoBehaviour
         ShakeGimble = MainCamera.GetChild(0).GetComponent<Transform>();
         // Making sure the obstruction is initied and not null at the start for erros.
         PlaceHolderMesh = TransformHead.gameObject.GetComponent<MeshRenderer>();
+        initialZoom = ShakeGimble.GetChild(0).GetComponent<Camera>().orthographicSize;
         ObstructionMesh = PlaceHolderMesh;
     }
 
@@ -96,6 +111,12 @@ public class CameraController : MonoBehaviour
         {
             shake = false;
             StartCoroutine(Shake());
+        }
+
+        if (zoom)
+        {
+            zoom = false;
+            StartCoroutine(Zoom());
         }
     }
 
@@ -144,7 +165,7 @@ public class CameraController : MonoBehaviour
             // adding time to counter
             elapsedTime += Time.deltaTime;
             // strength of the curve at specific time. So strength over time (The y axis being strength, and x being time)
-            float strength = ShakeCurve.Evaluate(elapsedTime / ShakeDuration);
+            float strength = ZoomCurve.Evaluate(elapsedTime / ShakeDuration);
             // changing the local postion of shake gimble inside the unit circle, so random position in a circle and adding the start position.
             ShakeGimble.localPosition = startPosition + Random.insideUnitSphere * strength;
             yield return null;
@@ -152,8 +173,38 @@ public class CameraController : MonoBehaviour
         // reseting shakegimble to original position.
         ShakeGimble.localPosition = startPosition;
     }
+
+
+    public void ScreenZoom()
+    {
+        StartCoroutine(Zoom());
+    }
+
+    IEnumerator Zoom()
+    {
+        // set a variable for the elapse
+        float elapsedTime = 0f;
+        //float normalZoom = ShakeGimble.GetChild(0).GetComponent<Camera>().orthographicSize;
+        // Getting start position of shake gimble in local space
+        //Vector3 startPosition = ShakeGimble.localPosition;
+        while (elapsedTime < ShakeDuration)
+        {
+            // adding time to counter
+            elapsedTime += Time.deltaTime;
+            // strength of the curve at specific time. So strength over time (The y axis being strength, and x being time)
+            float zoomspeed = ZoomCurve.Evaluate(elapsedTime / ShakeDuration);
+            Debug.Log(zoomspeed);
+            // changing the local postion of shake gimble inside the unit circle, so random position in a circle and adding the start position.
+
+            ShakeGimble.GetChild(0).GetComponent<Camera>().orthographicSize = initialZoom * zoomspeed;
+            yield return null;
+        }
+        // reseting shakegimble to original position.
+        //ShakeGimble.localPosition = startPosition;
+    }
 }
 
+#if UNITY_EDITOR
 [CustomEditor(typeof(CameraController))]
 public class CameraControllerEditor : Editor
 {
@@ -171,6 +222,11 @@ public class CameraControllerEditor : Editor
         {
             CameraController.instance.shake = true;
         }
+
+        if (GUILayout.Button("Zoom"))
+        {
+            CameraController.instance.zoom = true;
+        }
     }
 
     void GuiLine(int i_height = 1)
@@ -181,4 +237,4 @@ public class CameraControllerEditor : Editor
         EditorGUILayout.Separator();
     }
 }
-
+#endif

@@ -154,6 +154,8 @@ public class RoomManager : MonoBehaviour
 
 }
 
+
+#if UNITY_EDITOR
 [CustomEditor(typeof(RoomManager))]
 public class RoomManagerEditor : Editor 
 {
@@ -194,3 +196,4 @@ public class RoomManagerEditor : Editor
         EditorGUILayout.Separator();
     }
 }
+#endif
