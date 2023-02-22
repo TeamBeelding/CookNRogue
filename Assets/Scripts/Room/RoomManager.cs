@@ -66,7 +66,6 @@ public class RoomManager : MonoBehaviour
     {
         if (loadSurface) 
         {
-            Debug.Log("It has been built");
             navMeshSurface.UpdateNavMesh(navMeshSurface.navMeshData);
             navMeshSurface.BuildNavMesh();
             loadSurface = false;
