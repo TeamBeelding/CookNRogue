@@ -46,6 +46,11 @@ public class EditorButton : Editor
         {
             enemyScript.ColorFeedback();
         }
+        
+        if (GUILayout.Button("Destroy Effect"))
+        {
+            enemyScript.DestroyEffect();
+        }
     }
 }
 #endif

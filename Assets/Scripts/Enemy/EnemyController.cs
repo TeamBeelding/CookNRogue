@@ -26,11 +26,14 @@ public class EnemyController : MonoBehaviour
     private MeshRenderer _meshRenderer;
     private NavMeshAgent _agent;
     
+    private ParticleSystem _particleSystem;
+    
     [SerializeField]
     private GameObject gun;
     [SerializeField]
+    private GameObject visual;
+    [SerializeField]
     private GameObject bullet;
-    
     [SerializeField] 
     private Transform[] paths;
 
@@ -56,6 +59,7 @@ public class EnemyController : MonoBehaviour
     {
         _rend = GetComponentInChildren<Renderer>();
         _meshRenderer = GetComponentInChildren<MeshRenderer>();
+        _particleSystem = GetComponentInChildren<ParticleSystem>();
         _rigidbody = GetComponent<Rigidbody>();
         _agent = GetComponent<NavMeshAgent>();
         _agent.speed = data.GetSpeed();
@@ -83,7 +87,6 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     protected void Update()
     {
-        
         StateManagement();
     }
 
@@ -232,7 +235,10 @@ public class EnemyController : MonoBehaviour
     public void KillEnemy()
     {
         EnemyManager.Instance.RemoveEnemyFromLevel(this);
-        Destroy(gameObject);
+        
+        visual.SetActive(false);
+        DestroyEffect();
+        Destroy(gameObject, 5);
     }
     
     // Color the enemy red for a short time to indicate that he has been hit
@@ -266,6 +272,11 @@ public class EnemyController : MonoBehaviour
     private void AddToEnemyManager()
     {
         EnemyManager.Instance.AddEnemyToLevel(this);
+    }
+
+    public void DestroyEffect()
+    {
+        _particleSystem.Play();
     }
 
     public void Shake()
