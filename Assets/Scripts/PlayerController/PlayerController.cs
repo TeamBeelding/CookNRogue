@@ -42,7 +42,7 @@ public class PlayerController : MonoBehaviour
         {
             if (_isAiming)
             {
-                return _aimDirection;
+                return _correctedAimDirection;
             }
             else
             {
@@ -361,6 +361,7 @@ public class PlayerController : MonoBehaviour
 
     #endregion
 
+#if UNITY_EDITOR
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
@@ -373,4 +374,5 @@ public class PlayerController : MonoBehaviour
         //Draw base Aim
         Gizmos.DrawLine(transform.position, target);
     }
+#endif
 }
