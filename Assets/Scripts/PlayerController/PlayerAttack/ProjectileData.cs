@@ -37,29 +37,6 @@ public class ProjectileData : ScriptableObject
     public float lightDamage;
     [Space(20)]
 
-    [Header("Dot")]
-    public bool Dot;
-    public float DotDamage;
-    public float DotDuration;
-
-    [Header("ArmorReduction")]
-    public bool ArmorReduction;
-    public float ArmorReductionForce;
-
-    [Header("Boomerang")]
-    public bool BoomerangEffect;
-
-    [Header("Sandwich")]
-    public bool SandwichEffect;
-
-    [Header("AOE")]
-    public bool AOE;
-    public float AOERadius;
-    public float AOEDuration;
-    public float AOEDamage;
-    public float AOETick;
-    [Space(20)]
-
     [Header("Debug")]
     public Color color;
 }

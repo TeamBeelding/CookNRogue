@@ -11,9 +11,11 @@ public class AOE : IIngredientEffects
     public float AOEDuration;
     public float AOEDamage;
     public float AOETick;
+    public float AOESlowEnnemies;
+    public float AOESSpeedPlayer;
 
     //EFFET LORS DU SHOOT
-    public void EffectOnShoot(Vector3 Position)
+    public void EffectOnShoot(Vector3 Position, GameObject bullet)
     {
         Debug.Log("AOEShootEffect");
     }

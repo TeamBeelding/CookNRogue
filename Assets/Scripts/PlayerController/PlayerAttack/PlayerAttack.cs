@@ -1,10 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
     public GameObject Projectile;
+    [HideInInspector]
+    public int ProjectileNbr;
+    [HideInInspector]
+    public float TimeBtwShotsRafale;
     PlayerBulletBehaviour projectileBehaviour;
     public Transform muzzle;
 
@@ -42,23 +47,14 @@ public class PlayerAttack : MonoBehaviour
     {
         if (_shootOnCooldown)
             return;
-        
-        //BulletInstantiate
-        GameObject Bullet = Instantiate(Projectile, muzzle.position, Quaternion.identity);
-        projectileBehaviour = Bullet.GetComponent<PlayerBulletBehaviour>();
-        projectileBehaviour.ResetStats();
-        projectileBehaviour.playerAttack = this;
-        projectileBehaviour.speed += speed;
-        projectileBehaviour.drag -= drag;
-        projectileBehaviour.lightDamage += lightDamage;
-        projectileBehaviour.heavyDamage += heavyDamage;
-        projectileBehaviour.direction = _playerController.PlayerAimDirection;
 
-        foreach (IIngredientEffects effect in effects)
-        {
-            if(effect != null)
-                effect.EffectOnShoot(transform.position);
-        }
+
+
+        //BulletInstantiate
+        StartCoroutine(shootbullets(TimeBtwShotsRafale));
+        
+
+
 
         
 
@@ -95,6 +91,29 @@ public class PlayerAttack : MonoBehaviour
         }
 
         _shootOnCooldown = false;
+    }
+
+    IEnumerator shootbullets(float time)
+    {
+        for(int i = 0; i< ProjectileNbr; i++)
+        {
+            GameObject Bullet = Instantiate(Projectile, muzzle.position, Quaternion.identity);
+            projectileBehaviour = Bullet.GetComponent<PlayerBulletBehaviour>();
+            projectileBehaviour.ResetStats();
+            projectileBehaviour.playerAttack = this;
+            projectileBehaviour.speed += speed;
+            projectileBehaviour.drag -= drag;
+            projectileBehaviour.lightDamage += lightDamage;
+            projectileBehaviour.heavyDamage += heavyDamage;
+            projectileBehaviour.direction = _playerController.PlayerAimDirection;
+            foreach (IIngredientEffects effect in effects)
+            {
+                if (effect != null)
+                    effect.EffectOnShoot(transform.position, Bullet);
+            }
+            yield return new WaitForSeconds(time);
+        }
+
     }
 
     void OnAmmunitionChange()

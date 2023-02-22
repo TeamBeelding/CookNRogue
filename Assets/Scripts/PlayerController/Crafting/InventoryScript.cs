@@ -83,6 +83,17 @@ public class InventoryScript : MonoBehaviour
             attack.effects.Add(ingredient.effect);
 
         }
+
+
+        foreach (IIngredientEffects effect in attack.effects)
+        {
+            if (effect is MultipleShots)
+            {
+                MultipleShots TempEffect = (MultipleShots)effect;
+                attack.ProjectileNbr = TempEffect.shotNbr;
+                attack.TimeBtwShotsRafale = TempEffect.TimebtwShots;
+            }
+        }
         //Clear la Liste d'ingredients
         recipe.Clear();
        
