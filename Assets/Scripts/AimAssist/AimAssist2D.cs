@@ -31,7 +31,6 @@ public class AimAssist2D
                 continue;
             }
 
-            Debug.Log(target);
             tempValidTargets.Add(target);
         }
 
@@ -59,8 +58,6 @@ public class AimAssist2D
         }
         #endregion
 
-        Debug.Log(validTarget);
-
         #region Correct direction
         Vector3 targetDir = (validTarget.transform.position - origin).normalized;
         float curAngle = Vector3.SignedAngle(targetDir, baseDirection, Vector3.up);
@@ -73,6 +70,7 @@ public class AimAssist2D
 
         //Correct aim direction
         Vector3 correctedDir = Vector3.Lerp(angleExtremity, targetDir, correctedStep);
+        correctedDir.y = 0;
         return correctedDir;
         #endregion
     }
