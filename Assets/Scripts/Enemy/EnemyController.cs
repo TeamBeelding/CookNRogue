@@ -26,7 +26,9 @@ public class EnemyController : MonoBehaviour
     private MeshRenderer _meshRenderer;
     private NavMeshAgent _agent;
     
-    private ParticleSystem _particleSystem;
+    private ParticleSystem desctructSystem;
+    public ParticleSystem stateSystem;
+    public Renderer stateRenderer;
     
     [SerializeField]
     private GameObject gun;
@@ -59,7 +61,7 @@ public class EnemyController : MonoBehaviour
     {
         _rend = GetComponentInChildren<Renderer>();
         _meshRenderer = GetComponentInChildren<MeshRenderer>();
-        _particleSystem = GetComponentInChildren<ParticleSystem>();
+        desctructSystem = GetComponentInChildren<ParticleSystem>();
         _rigidbody = GetComponent<Rigidbody>();
         _agent = GetComponent<NavMeshAgent>();
         _agent.speed = data.GetSpeed();
@@ -68,6 +70,11 @@ public class EnemyController : MonoBehaviour
 
         healthpoint = data.GetHealth();
 
+        stateSystem = visual.GetComponentInChildren<ParticleSystem>();
+        stateRenderer = stateSystem.GetComponent<Renderer>();
+
+        stateRenderer.material.color = Color.red;
+        
         AddToEnemyManager();
     }
 
@@ -108,18 +115,23 @@ public class EnemyController : MonoBehaviour
         {
             case State.Chase:
                 _agent.SetDestination(player.transform.position);
-                _rend.material.color = Color.yellow;
+                stateRenderer.material.color = Color.yellow;
+                stateSystem.Play();
                 break;
             case State.Attack:
-                _rend.material.color = Color.red;
+                stateRenderer.material.color = Color.red;
+                stateSystem.Play();
                 Attack();
                 break;
             case State.Neutral:
-                _rend.material.color = Color.green;
+                stateRenderer.material.color = Color.white;
+                // stateSystem.Stop();
                 Pathing();
                 break;
             default:
                 _rend.material.color = Color.white;
+                stateRenderer.material.color = Color.white;
+                // stateSystem.Stop();
                 break;
         }
     }
@@ -274,9 +286,11 @@ public class EnemyController : MonoBehaviour
         EnemyManager.Instance.AddEnemyToLevel(this);
     }
 
+    #region Effect
+
     public void DestroyEffect()
     {
-        _particleSystem.Play();
+        desctructSystem.Play();
     }
 
     public void Shake()
@@ -303,6 +317,8 @@ public class EnemyController : MonoBehaviour
         
         transform.position = originalPos;
     }
+    
+    #endregion
 
     private void OnDrawGizmosSelected()
     {
