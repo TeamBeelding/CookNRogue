@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 public class EnemyController : MonoBehaviour
 {
@@ -39,6 +40,17 @@ public class EnemyController : MonoBehaviour
     private bool _canAttack = true;
     
     private float healthpoint;
+
+    [Serializable]
+    private struct ShakingParams
+    {
+        public float elapsed;
+        public float duration;
+        public float magnitude;
+    }
+
+    [SerializeField]
+    private ShakingParams shakingParams;
 
     private void Awake()
     {
@@ -166,6 +178,8 @@ public class EnemyController : MonoBehaviour
     {
         if (_canAttack)
         {
+            Shake();
+            
             GameObject shot = Instantiate(bullet, gun.transform.position, Quaternion.identity);
             shot.GetComponent<EnemyBulletController>().SetDirection(player.transform);
             _canAttack = false;
@@ -252,6 +266,31 @@ public class EnemyController : MonoBehaviour
     private void AddToEnemyManager()
     {
         EnemyManager.Instance.AddEnemyToLevel(this);
+    }
+
+    public void Shake()
+    {
+        StartCoroutine(ShakeObject());
+    }
+    
+    private IEnumerator ShakeObject()
+    {
+        float elapsed = shakingParams.elapsed;
+
+        Vector3 originalPos = transform.position;
+        
+        while (elapsed < shakingParams.duration)
+        {
+            float x = Random.Range(-1f, 1f) * shakingParams.magnitude;
+            float z = Random.Range(-1f, 1f) * shakingParams.magnitude;
+            
+            transform.position = new Vector3(originalPos.x + x, originalPos.y, originalPos.z + z);
+            elapsed += Time.deltaTime;
+            
+            yield return null;
+        }
+        
+        transform.position = originalPos;
     }
 
     private void OnDrawGizmosSelected()

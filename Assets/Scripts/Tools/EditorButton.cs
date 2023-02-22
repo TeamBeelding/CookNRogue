@@ -11,6 +11,9 @@ public class EditorButton : Editor
         Enemy enemyScript = (Enemy)target;
         DrawDefaultInspector();
 
+        EditorGUILayout.Separator();
+        EditorGUILayout.LabelField("Attack");
+        
         if (GUILayout.Button("Attack"))
         {
             enemyScript.Attack();
@@ -26,14 +29,22 @@ public class EditorButton : Editor
             enemyScript.KnockBack();
         }
 
-        if (GUILayout.Button("Color Feedback"))
-        {
-            enemyScript.ColorFeedback();
-        }
-
         if (GUILayout.Button("Kill Enemy"))
         {
             enemyScript.KillEnemy();
+        }
+        
+        EditorGUILayout.Separator();
+        EditorGUILayout.LabelField("Juice and feedback");
+        
+        if (GUILayout.Button("Shaking Enemy"))
+        {
+            enemyScript.Shake();
+        }
+        
+        if (GUILayout.Button("Color Feedback"))
+        {
+            enemyScript.ColorFeedback();
         }
     }
 }
