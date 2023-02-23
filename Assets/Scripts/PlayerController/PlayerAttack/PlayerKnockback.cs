@@ -33,10 +33,10 @@ public class PlayerKnockback : MonoBehaviour
 
     public void StartKnockback() 
     {
-        StartCoroutine(Knockback());
+        StartCoroutine(IKnockback());
     }
 
-    IEnumerator Knockback()
+    IEnumerator IKnockback()
     {
         // set a variable for the elapse
         float elapsedTime = 0f;
