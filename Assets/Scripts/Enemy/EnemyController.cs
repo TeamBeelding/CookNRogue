@@ -40,6 +40,8 @@ public class EnemyController : MonoBehaviour
     
     private float healthpoint;
 
+    
+
     private void Awake()
     {
         _rend = GetComponentInChildren<Renderer>();
@@ -51,6 +53,8 @@ public class EnemyController : MonoBehaviour
         _focusPlayer = data.GetFocusPlayer();
 
         healthpoint = data.GetHealth();
+
+        AddToEnemyManager();
     }
 
     // Start is called before the first frame update
@@ -215,6 +219,7 @@ public class EnemyController : MonoBehaviour
 
     public void KillEnemy()
     {
+        EnemyManager.Instance.RemoveEnemyFromLevel(this);
         Destroy(gameObject);
     }
     
@@ -243,6 +248,12 @@ public class EnemyController : MonoBehaviour
     {
         yield return new WaitForSeconds(.5f);
         _rigidbody.velocity = Vector3.zero;
+    }
+
+    //Add to enemy manager
+    private void AddToEnemyManager()
+    {
+        EnemyManager.Instance.AddEnemyToLevel(this);
     }
 
     private void OnDrawGizmosSelected()
