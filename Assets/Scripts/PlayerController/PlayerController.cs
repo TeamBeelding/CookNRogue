@@ -29,6 +29,8 @@ public class PlayerController : MonoBehaviour
     GameObject m_model;
 
     [SerializeField]
+    PlayerKnockback m_knockback;
+    [SerializeField]
     LayerMask m_interactionMask;
     [SerializeField]
     AimAssistPreset m_aimAssistPresset;
@@ -66,7 +68,8 @@ public class PlayerController : MonoBehaviour
     Vector2 moveInputValue;
     Vector2 aimInputValue;
 
-    bool _isAiming = false;
+    [HideInInspector]
+    public bool _isAiming = false;
     bool _isAimingOnMouse = false;
     Vector3 _aimDirection;
     Vector3 _correctedAimDirection;
@@ -317,6 +320,7 @@ public class PlayerController : MonoBehaviour
 
         if (context.performed)
         {
+            m_knockback.StartKnockback();
             GetComponent<PlayerAttack>().Shoot();
         }
     }
