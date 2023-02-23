@@ -14,6 +14,8 @@ public class EnemyJumpOnMove : MonoBehaviour
 
     private EnemyController enemy;
 
+    [SerializeField] private bool GuiDebug;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -28,7 +30,6 @@ public class EnemyJumpOnMove : MonoBehaviour
 
     private void UpdateJump()
     {
-
         Vector3 localPos = transform.localPosition;
 
         localPos.y -= currentJumpHeight;
@@ -47,6 +48,7 @@ public class EnemyJumpOnMove : MonoBehaviour
         }
         else
         {
+            jumpTimer = 0;
             currentJumpHeight = 0;
         }
         
@@ -55,6 +57,8 @@ public class EnemyJumpOnMove : MonoBehaviour
     
     private void OnGUI()
     {
+        if (!GuiDebug) return;
+        
         GUILayout.Label($"ratio : {jumpRatio}, {jumpTimer}");
         GUILayout.Label($"current jump height : {currentJumpHeight}");
     }
