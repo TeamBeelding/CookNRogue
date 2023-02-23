@@ -2,42 +2,43 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
-public class ProjectileBehaviour : MonoBehaviour
+public class PlayerBulletBehaviour : MonoBehaviour
 {
     public float heavyDamage;
     public float lightDamage;
     public float speed;
-    public float drag;
+    public float drag = 1;
     private bool HasHit = false;
     private GameObject hitObject;
     public PlayerAttack playerAttack;
-    [SerializeField]
-    Rigidbody rb;
     Sprite sprite;
-    public Vector3 gravity;
+    //public Vector3 gravity;
     public Vector3 direction;
+
 
 
     private void Start()
     {
-        //ParticleSystem.MainModule part = GetComponentInChildren<ParticleSystem>().main;
-        //part.startColor = color;
-       
+        /*ParticleSystem.MainModule part = GetComponentInChildren<ParticleSystem>().main;
+        part.startColor = color;
+
         rb.drag = drag;
-        rb.velocity = direction * speed;
-        Destroy(gameObject, 5f);
+        rb.velocity = direction * speed;*/
+        Destroy(gameObject, 1f);
     }
 
     void FixedUpdate()
     {
-        rb.AddForce(gravity * rb.mass);
+        //rb.AddForce(gravity * rb.mass);
+        
+        transform.Translate(direction*speed*0.1f);
+        speed *= drag;
     }
 
     public void ResetStats()
     {
-        rb.drag = 0;
-        heavyDamage = 1;
+        //rb.drag = 0;
+        //HeavyDamage = 1;
         gameObject.transform.localScale = new Vector3(1,1,1);
     }
 
@@ -49,7 +50,7 @@ public class ProjectileBehaviour : MonoBehaviour
         }
         else
         {
-            //playerAttack.ApplyOnHitEffects(transform.position);
+            playerAttack.ApplyOnHitEffects(transform.position);
         }
     }
 
@@ -59,7 +60,6 @@ public class ProjectileBehaviour : MonoBehaviour
         {
             HasHit= true;
             hitObject = other.gameObject;
-
             if (other.GetComponent<Enemy>())
                 other.GetComponent<Enemy>().TakeDamage(heavyDamage);
 

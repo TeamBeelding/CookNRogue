@@ -9,7 +9,7 @@ public class SlowDown : IIngredientEffects
     public float SlowDownPercent;
 
     //EFFET LORS DU SHOOT
-    public void EffectOnShoot()
+    public void EffectOnShoot(Vector3 Position)
     {
         Debug.Log("SlowDownShootEffect");
     }

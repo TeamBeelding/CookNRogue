@@ -5,12 +5,13 @@ using UnityEngine;
 public class InventoryScript : MonoBehaviour
 {
     public static InventoryScript instance;
+    public LeoScrolling scoll;
     [SerializeField]
     PlayerAttack attack;
     public List<ProjectileData> projectilesData;
     public GameObject UI_Inventory;
     public GameObject SlotsContainer;
-    List<ProjectileData> recipe;
+    public List<ProjectileData> recipe;
 
     [SerializeField]
     int numberOfIngredients;
@@ -41,21 +42,18 @@ public class InventoryScript : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.C) && projectilesData.Count >= numberOfIngredients)
+        if (Input.GetKeyDown(KeyCode.C))
         {
+            Debug.Log(numberOfIngredients);
             Craft();
         }
     }
     public void Craft()
     {
-        if(projectilesData.Count < numberOfIngredients)
-        {
+
+        if (recipe.Count < numberOfIngredients)
             return;
-        }
-
-        //Clear la Liste d'ingredients precedente
-        recipe.Clear();
-
+        /*
         //Fusionne les proprietes des differents ingredients
         for (int i = 0; i < numberOfIngredients; i++)
         {
@@ -63,7 +61,7 @@ public class InventoryScript : MonoBehaviour
             recipe.Add(projectilesData[rand]);
             projectilesData.RemoveAt(rand);
         }
-
+        */
         //Rafraichit l'affichage de l'inventaire
         RefreshInventoryUI();
 
@@ -85,11 +83,14 @@ public class InventoryScript : MonoBehaviour
             attack.effects.Add(ingredient.effect);
 
         }
+        //Clear la Liste d'ingredients
+        recipe.Clear();
+       
     }
     public void AddIngredientToList(ProjectileData data)
     {
         projectilesData.Add(data);
-
+        scoll.ReloadUI();
         RefreshInventoryUI();
     }
 
