@@ -15,9 +15,7 @@ public class PlayerBulletBehaviour : MonoBehaviour
     //public Vector3 gravity;
     public Vector3 direction;
 
-
-
-    private void Start()
+    protected virtual void Start()
     {
         /*ParticleSystem.MainModule part = GetComponentInChildren<ParticleSystem>().main;
         part.startColor = color;
@@ -27,7 +25,7 @@ public class PlayerBulletBehaviour : MonoBehaviour
         Destroy(gameObject, 1f);
     }
 
-    void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
         //rb.AddForce(gravity * rb.mass);
         

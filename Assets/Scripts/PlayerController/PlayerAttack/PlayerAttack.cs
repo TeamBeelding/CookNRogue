@@ -106,11 +106,36 @@ public class PlayerAttack : MonoBehaviour
             projectileBehaviour.lightDamage += lightDamage;
             projectileBehaviour.heavyDamage += heavyDamage;
             projectileBehaviour.direction = _playerController.PlayerAimDirection;
+
+            
+
             foreach (IIngredientEffects effect in effects)
             {
                 if (effect != null)
                     effect.EffectOnShoot(transform.position, Bullet);
+
+                if (effect is Boomerang)
+                {
+                    BoomerangBehaviour boomerangBehaviour = GetComponent<BoomerangBehaviour>();
+                    if (boomerangBehaviour == null)
+                    {
+                        boomerangBehaviour = Bullet.AddComponent<BoomerangBehaviour>();
+                    }
+
+                    Boomerang TempEffect = (Boomerang)effect;
+                    boomerangBehaviour.ResetStats();
+                    boomerangBehaviour.forward = TempEffect.forward;
+                    boomerangBehaviour.MaxForwardDistance = TempEffect.MaxForwardDistance;
+                    boomerangBehaviour.sides = TempEffect.sides;
+                    boomerangBehaviour.MaxSideDistance = TempEffect.MaxSideDistance;
+                    boomerangBehaviour.playerAttack = this;
+                    boomerangBehaviour.boomerangSpeed = TempEffect.Speed;
+                    boomerangBehaviour.lightDamage += lightDamage;
+                    boomerangBehaviour.heavyDamage += heavyDamage;
+                    boomerangBehaviour.direction = _playerController.PlayerAimDirection;
+                }
             }
+
             yield return new WaitForSeconds(time);
         }
 
@@ -129,8 +154,8 @@ public class PlayerAttack : MonoBehaviour
         size = 0;
         speed = 0;
         drag = 0;
-
-
+        ProjectileNbr = 1;
+        TimeBtwShotsRafale = 0;
         heavyAttackDelay = 0;
         heavyDamage = 0;
         lightAttackDelay = 0;
