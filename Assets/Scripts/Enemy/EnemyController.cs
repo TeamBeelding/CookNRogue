@@ -28,6 +28,7 @@ public class EnemyController : MonoBehaviour
     
     [SerializeField]
     private ParticleSystem desctructSystem;
+    [SerializeField]
     private ParticleSystem stateSystem;
     private Renderer stateRenderer;
     
@@ -64,16 +65,14 @@ public class EnemyController : MonoBehaviour
     {
         _rend = GetComponentInChildren<Renderer>();
         _meshRenderer = GetComponentInChildren<MeshRenderer>();
-        desctructSystem = GetComponentInChildren<ParticleSystem>();
+        
         _rigidbody = GetComponent<Rigidbody>();
         _agent = GetComponent<NavMeshAgent>();
         _agent.speed = data.GetSpeed();
         _agent.stoppingDistance = data.GetAttackRange();
         _focusPlayer = data.GetFocusPlayer();
-
         healthpoint = data.GetHealth();
 
-        stateSystem = visual.GetComponentInChildren<ParticleSystem>();
         stateRenderer = stateSystem.GetComponent<Renderer>();
         
         AddToEnemyManager();
@@ -87,9 +86,6 @@ public class EnemyController : MonoBehaviour
 
         if (_focusPlayer)
             state = State.Chase;
-
-        // TODO : demander au prof une autre solution
-        //_rigidbody.constraints = RigidbodyConstraints.FreezeAll;
     }
 
     // Update is called once per frame
@@ -100,10 +96,7 @@ public class EnemyController : MonoBehaviour
 
     public bool IsMoving()
     {
-        if (state == State.Chase)
-            return true;
-
-        return false;
+        return state == State.Chase;
     }
     
     private void FixedUpdate()
@@ -124,22 +117,20 @@ public class EnemyController : MonoBehaviour
         {
             case State.Chase:
                 _agent.SetDestination(player.transform.position);
-                LerpColor(stateRenderer, Color.yellow, 1);
-                stateSystem.Play();
+                stateRenderer.material.color = Color.yellow;
+                stateSystem.gameObject.SetActive(true);
                 break;
             case State.Attack:
-                LerpColor(stateRenderer, Color.red, 1);
-                stateSystem.Play();
+                stateRenderer.material.color = Color.red;
+                stateSystem.gameObject.SetActive(true);
                 Attack();
                 break;
             case State.Neutral:
-                LerpColor(stateRenderer, Color.white, 1);
-                // stateSystem.Stop();
+                stateSystem.gameObject.SetActive(false);
                 Pathing();
                 break;
             default:
-                LerpColor(stateRenderer, Color.white, 1);
-                // stateSystem.Stop();
+                stateSystem.gameObject.SetActive(false);
                 break;
         }
     }
@@ -256,7 +247,7 @@ public class EnemyController : MonoBehaviour
         
         visual.SetActive(false);
         DestroyEffect();
-        Destroy(gameObject, 5);
+        Destroy(gameObject, 2);
     }
     
     // Color the enemy red for a short time to indicate that he has been hit
@@ -298,7 +289,7 @@ public class EnemyController : MonoBehaviour
 
     public void DestroyEffect()
     {
-        desctructSystem.Play();
+        desctructSystem.gameObject.SetActive(true);
     }
 
     public void Shake()
@@ -350,7 +341,6 @@ public class EnemyController : MonoBehaviour
     }
     
     #endregion
-
     
     #region Guizmos
     
