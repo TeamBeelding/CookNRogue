@@ -27,8 +27,10 @@ public class EnemyController : MonoBehaviour
     private NavMeshAgent _agent;
     
     private ParticleSystem desctructSystem;
-    public ParticleSystem stateSystem;
-    public Renderer stateRenderer;
+    private ParticleSystem stateSystem;
+    private Renderer stateRenderer;
+    
+    private IEnumerator colorCoroutine;
     
     [SerializeField]
     private GameObject gun;
@@ -72,8 +74,6 @@ public class EnemyController : MonoBehaviour
 
         stateSystem = visual.GetComponentInChildren<ParticleSystem>();
         stateRenderer = stateSystem.GetComponent<Renderer>();
-
-        stateRenderer.material.color = Color.red;
         
         AddToEnemyManager();
     }
@@ -115,22 +115,21 @@ public class EnemyController : MonoBehaviour
         {
             case State.Chase:
                 _agent.SetDestination(player.transform.position);
-                stateRenderer.material.color = Color.yellow;
+                LerpColor(stateRenderer, Color.yellow, 1);
                 stateSystem.Play();
                 break;
             case State.Attack:
-                stateRenderer.material.color = Color.red;
+                LerpColor(stateRenderer, Color.red, 1);
                 stateSystem.Play();
                 Attack();
                 break;
             case State.Neutral:
-                stateRenderer.material.color = Color.white;
+                LerpColor(stateRenderer, Color.white, 1);
                 // stateSystem.Stop();
                 Pathing();
                 break;
             default:
-                _rend.material.color = Color.white;
-                stateRenderer.material.color = Color.white;
+                LerpColor(stateRenderer, Color.white, 1);
                 // stateSystem.Stop();
                 break;
         }
@@ -193,8 +192,6 @@ public class EnemyController : MonoBehaviour
     {
         if (_canAttack)
         {
-            Shake();
-            
             GameObject shot = Instantiate(bullet, gun.transform.position, Quaternion.identity);
             shot.GetComponent<EnemyBulletController>().SetDirection(player.transform);
             _canAttack = false;
@@ -267,8 +264,10 @@ public class EnemyController : MonoBehaviour
 
     private IEnumerator AttackTimer()
     {
+        LerpColor(_rend, Color.red, data.GetAttackSpeed());
         yield return new WaitForSeconds(data.GetAttackSpeed());
         _canAttack = true;
+        _rend.material.color = Color.white;
     }
     
     #endregion
@@ -318,8 +317,34 @@ public class EnemyController : MonoBehaviour
         transform.position = originalPos;
     }
     
+    // Lerp color of the enemy
+    private void LerpColor(Renderer r, Color color, float t)
+    {
+        colorCoroutine = LerpColorCoroutine(r, color, t);
+        StopCoroutine(colorCoroutine);
+        StartCoroutine(colorCoroutine);
+    }
+    
+    private IEnumerator LerpColorCoroutine(Renderer r, Color color, float t)
+    {
+        Color current = r.material.color;
+        float elapsed = 0.0f;
+        
+        while (elapsed < t)
+        {
+            r.material.color = Color.Lerp(current, color, elapsed / t);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        
+        r.material.color = color;
+    }
+    
     #endregion
 
+    
+    #region Guizmos
+    
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.blue;
@@ -327,4 +352,6 @@ public class EnemyController : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, data.GetAttackRange());
     }
+    
+    #endregion
 }
