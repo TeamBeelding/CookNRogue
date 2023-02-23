@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -63,12 +64,10 @@ public class LeoScrolling : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.V) && InventoryScript.instance.recipe.Count < 3 && InventoryScript.instance.projectilesData.Count>0)
+        if (Input.GetKeyDown(KeyCode.V) && instance.recipe.Count < 3 && instance.projectilesData.Count>0)
         {
             SelectIngredient();
         }
-
-
     }
 
 
@@ -110,16 +109,47 @@ public class LeoScrolling : MonoBehaviour
     {
         if (instance.projectilesData.Count == 0)
         {
+            /*
             ItemImages[0].sprite = Defaultsprite;
             ItemImages[1].sprite = Defaultsprite;
             ItemImages[2].sprite = Defaultsprite;
             ItemImages[3].sprite = Defaultsprite;
             ItemImages[4].sprite = Defaultsprite;
+            */
+
+            for(int index = 0; index < ItemImages.Count; index++)
+            {
+                ItemImages[index].sprite = Defaultsprite;
+            }
             return;
             
         }
         else
         {
+            int itemsNb = ItemImages.Count;
+            int middleItemIndex = (itemsNb / 2) + 1;
+            for (int index = 0; index < itemsNb; index++)
+            {
+                int itemRelativeIndex = index - middleItemIndex;
+                int itemIndex = IncrementIndex(Pointerindex, itemRelativeIndex);
+                ItemImages[index].sprite = instance.projectilesData[itemIndex].inventorySprite;
+            }
+            return;
+
+            /*
+            int secondItemIndex = DecrementIndex(Pointerindex);
+            int firstItemIndex = DecrementIndex(secondItemIndex);
+            int fourthItemIndex = IncrementIndex(Pointerindex);
+            int fifthItemindex = IncrementIndex(fourthItemIndex);
+
+            ItemImages[0].sprite = instance.projectilesData[firstItemIndex].inventorySprite;
+            ItemImages[1].sprite = instance.projectilesData[secondItemIndex].inventorySprite;
+            ItemImages[2].sprite = instance.projectilesData[Pointerindex].inventorySprite;
+            ItemImages[3].sprite = instance.projectilesData[fourthItemIndex].inventorySprite;
+            ItemImages[4].sprite = instance.projectilesData[fifthItemindex].inventorySprite;
+            return;*/
+
+            /*
             Items[2].GetComponentInChildren<Image>().sprite = instance.projectilesData[Pointerindex].inventorySprite;
 
             switch (instance.projectilesData.Count)
@@ -215,13 +245,48 @@ public class LeoScrolling : MonoBehaviour
                         }
 
                     break;
-            }
-            
-        }
-           
+            }*/
+        } 
     }
-           
-             
+   
+    private int IncrementIndex(int baseIndex, int value)
+    {
+        int projectilesNb = instance.projectilesData.Count;
+        int newIndex = baseIndex + value;
+
+        while (newIndex < 0)
+        {
+            newIndex = projectilesNb - newIndex;
+        }
+
+        while (newIndex >= projectilesNb)
+        {
+            newIndex -= projectilesNb;
+        }
+
+        return newIndex;
+    }
+
+    /*
+    private int IncrementIndex(int index)
+    {
+        if (index >= instance.projectilesData.Count - 1)
+        {
+            return 0;
+        }
+
+        return index + 1;
+    }
+
+    private int DecrementIndex(int index)
+    {
+        if (index <= 0)
+        {
+            return instance.projectilesData.Count - 1;
+        }
+
+        return index - 1;
+    }*/
 }
 
     

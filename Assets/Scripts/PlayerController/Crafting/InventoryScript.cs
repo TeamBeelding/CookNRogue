@@ -5,7 +5,7 @@ using UnityEngine;
 public class InventoryScript : MonoBehaviour
 {
     public static InventoryScript instance;
-    public LeoScrolling scoll;
+    public LeoScrolling scroll;
     [SerializeField]
     PlayerAttack attack;
     public List<ProjectileData> projectilesData;
@@ -101,7 +101,7 @@ public class InventoryScript : MonoBehaviour
     public void AddIngredientToList(ProjectileData data)
     {
         projectilesData.Add(data);
-        scoll.ReloadUI();
+        scroll.ReloadUI();
         RefreshInventoryUI();
     }
 
