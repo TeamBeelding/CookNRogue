@@ -27,7 +27,6 @@ public class Ingredient : MonoBehaviour, IInteractable
             var clone = Instantiate(projectileData);
             clone.effect = effect.Value;
             InventoryScript.instance.AddIngredientToList(clone);
-            Debug.Log("ta mere");
             Destroy(gameObject);
         }
 

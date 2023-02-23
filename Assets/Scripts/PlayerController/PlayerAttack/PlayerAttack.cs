@@ -6,7 +6,6 @@ using UnityEngine;
 public class PlayerAttack : MonoBehaviour
 {
     public GameObject Projectile;
-    [HideInInspector]
     public int ProjectileNbr;
     [HideInInspector]
     public float TimeBtwShotsRafale;
