@@ -26,6 +26,7 @@ public class EnemyController : MonoBehaviour
     private MeshRenderer _meshRenderer;
     private NavMeshAgent _agent;
     
+    [SerializeField]
     private ParticleSystem desctructSystem;
     private ParticleSystem stateSystem;
     private Renderer stateRenderer;
@@ -97,6 +98,14 @@ public class EnemyController : MonoBehaviour
         StateManagement();
     }
 
+    public bool IsMoving()
+    {
+        if (state == State.Chase)
+            return true;
+
+        return false;
+    }
+    
     private void FixedUpdate()
     {
         AreaDetection();

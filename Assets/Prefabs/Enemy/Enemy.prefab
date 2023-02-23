@@ -104,7 +104,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 1
   data: {fileID: 11400000, guid: 402439512b08727408d48838f0447ae2, type: 2}
-  stateSystem: {fileID: 0}
+  desctructSystem: {fileID: 1224374792048117031}
   gun: {fileID: 490897484910083895}
   visual: {fileID: 6088391860156414324}
   bullet: {fileID: 1646218331480662972, guid: c0ed5f524013bca43882139c5df1db26, type: 3}
@@ -155,6 +155,7 @@ GameObject:
   - component: {fileID: 5500730173941686565}
   - component: {fileID: 8339629229351381383}
   - component: {fileID: 699059768447240968}
+  - component: {fileID: 4584028852598687501}
   m_Layer: 0
   m_Name: Visual
   m_TagString: Untagged
@@ -228,6 +229,53 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &4584028852598687501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6088391860156414324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67fbacd29e3fa444b8c25684ffc6b38b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 1.3946184
+      outSlope: 1.3946184
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.717042
+      value: 1
+      inSlope: -0.14873259
+      outSlope: -0.14873259
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.06488869
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -3.5340939
+      outSlope: -3.5340939
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  jumpFrequency: 0.25
+  jumpHeight: 0.25
 --- !u!1001 &5541374613110154218
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -302,6 +350,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc530929e43587743952a04ebcaeb369, type: 3}
+--- !u!198 &1224374792048117031 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 6636952055614596813, guid: bc530929e43587743952a04ebcaeb369,
+    type: 3}
+  m_PrefabInstance: {fileID: 5541374613110154218}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1224374792048117032 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6636952055614596802, guid: bc530929e43587743952a04ebcaeb369,
