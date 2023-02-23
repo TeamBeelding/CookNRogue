@@ -44,7 +44,8 @@ public class PlayerController : MonoBehaviour
     Vector2 moveInputValue;
     Vector2 aimInputValue;
 
-    bool _isAiming = false;
+    [HideInInspector]
+    public bool _isAiming = false;
     bool _isAimingOnMouse = false;
     Vector3 _aimDirection;
 

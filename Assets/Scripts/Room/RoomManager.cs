@@ -3,16 +3,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Unity.AI.Navigation;
+using UnityEditor;
+using UnityEditor.Build;
 
-// using UnityEngine.AI;
 
 public class RoomManager : MonoBehaviour
 {
     public static RoomManager instance;
+
     [SerializeField]
     private GameObject[] EasyLevels;
     [SerializeField]
     private GameObject[] HardLevels;
+
+    [HideInInspector]
+    public string[] LevelNames;
+
+    [SerializeField]
+    private NavMeshSurface navMeshSurface;
+    [SerializeField]
+    private bool loadSurface = false;
 
     [SerializeField]
     private EnemyManager EnemyManagerScript;  
@@ -29,15 +40,12 @@ public class RoomManager : MonoBehaviour
     [SerializeField]
     TransitionController Transition;
 
-    private NavMeshSurface _navMeshSurface;
-
-    [SerializeField] 
-    private float delaiBeforeCreateNavMesh = 0.2f;
-
     public event Action OnRoomStart;
 
     void Awake()
     {
+        InitLevelNames();
+
         if (instance != null && instance != this)
             Destroy(gameObject);    // Suppression d'une instance pr�c�dente (s�curit�...s�curit�...)
 
@@ -47,24 +55,27 @@ public class RoomManager : MonoBehaviour
 
     // Start is called before the first frame update
     private void Start()
-    {        
-        _navMeshSurface = GetComponent<NavMeshSurface>();
-
+    {
         Player = GameObject.FindGameObjectWithTag("Player");
         LoadRandomLevel();
+
+        navMeshSurface.BuildNavMesh();
+    }
+
+    private void Update()
+    {
+        if (loadSurface) 
+        {
+            navMeshSurface.UpdateNavMesh(navMeshSurface.navMeshData);
+            navMeshSurface.BuildNavMesh();
+            loadSurface = false;
+        }
     }
 
     public void LoadRandomLevel()
     {
 
-        EnemyManagerScript.DestroyAll();
-
-        Transition.LoadTransition();
-
-        if (CurrentLevel != null)
-        {
-            Destroy(CurrentLevel);
-        }
+        TransitionToLevel();
 
         if (!isHard)
         {
@@ -76,23 +87,112 @@ public class RoomManager : MonoBehaviour
         }
     }
 
+    public void LoadPecifiedLevel(int i)
+    {
+
+        TransitionToLevel();
+
+        if (i < 3)
+        {
+            isHard = false;
+            CurrentLevel = Instantiate(EasyLevels[i], Vector3.zero, Quaternion.identity);
+            loadSurface = true;
+        }
+        else
+        {
+            isHard = true;
+            CurrentLevel = Instantiate(HardLevels[i - EasyLevels.Length], Vector3.zero, Quaternion.identity);
+            loadSurface = true;
+        }
+    }
+
+    private void TransitionToLevel()
+    {
+        EnemyManagerScript.DestroyAll();
+
+        Transition.LoadTransition();
+
+        if (CurrentLevel != null)
+        {
+            Destroy(CurrentLevel);
+        }
+    }
+
     private void LoadLevel(GameObject[] levels) 
     {
         int rand = UnityEngine.Random.Range(0, levels.Length);
         CurrentLevel = Instantiate(levels[rand], Vector3.zero, Quaternion.identity);
-        LoadMeshData();
 
-        OnRoomStart();
+        if (OnRoomStart!= null)
+        {
+            OnRoomStart();
+        }
         Player.transform.position = SpawnPoint.position;
+        loadSurface = true;
     }
 
-    private void LoadMeshData()
+    private void OnEnable()
     {
-        NavMeshData navMeshData = CurrentLevel.GetComponent<NavMeshRoom>()._data;
-        _navMeshSurface.UpdateNavMesh(navMeshData);
-        
-        // Do we need to Build everytime or only once?
-        _navMeshSurface.BuildNavMesh();
+        InitLevelNames();
+    }
+
+    public void InitLevelNames()
+    {
+        LevelNames = new string[EasyLevels.Length + HardLevels.Length];
+
+        for (int i = 0; i < EasyLevels.Length; i++)
+        {
+            LevelNames[i] = EasyLevels[i].name;
+        }
+
+        for (int i = EasyLevels.Length; i < EasyLevels.Length + HardLevels.Length; i++)
+        {
+            LevelNames[i] = HardLevels[i - EasyLevels.Length].name;
+        }
     }
 
 }
+
+
+#if UNITY_EDITOR
+[CustomEditor(typeof(RoomManager))]
+public class RoomManagerEditor : Editor 
+{
+    private int selected = 0;
+
+    public override void OnInspectorGUI() 
+    {
+
+        DrawDefaultInspector();
+        RoomManager room = (RoomManager)target;
+
+
+        EditorGUILayout.Separator();
+
+        EditorGUILayout.LabelField("TOOLS: ", "");
+        GuiLine(1);
+
+        selected = EditorGUILayout.Popup("Specified Level", selected, room.LevelNames);
+
+        if (GUILayout.Button("Load Specified Level"))
+        {
+            room.LoadPecifiedLevel(selected);
+        }
+
+        EditorGUILayout.Separator();
+
+        if (GUILayout.Button("Load Random Level"))
+        {
+            room.LoadRandomLevel();
+        }
+    }
+
+    void GuiLine(int i_height = 1)
+    {
+        Rect rect = EditorGUILayout.GetControlRect(false, i_height);
+        rect.height = i_height;
+        EditorGUI.DrawRect(rect, new Color(0.5f, 0.5f, 0.5f, 1));
+        EditorGUILayout.Separator();
+    }
+}
+#endif
