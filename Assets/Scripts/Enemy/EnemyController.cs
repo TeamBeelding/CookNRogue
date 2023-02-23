@@ -342,6 +342,7 @@ public class EnemyController : MonoBehaviour
     
     #endregion
     
+
     #region Guizmos
     
     private void OnDrawGizmosSelected()
