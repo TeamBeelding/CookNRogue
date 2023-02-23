@@ -26,12 +26,17 @@ public class PlayerKnockback : MonoBehaviour
     {
         if (isKnocked)
         {
-            StartCoroutine(Zoom());
+            StartKnockback();
             isKnocked = false;
         }
     }
 
-    IEnumerator Zoom()
+    public void StartKnockback() 
+    {
+        StartCoroutine(Knockback());
+    }
+
+    IEnumerator Knockback()
     {
         // set a variable for the elapse
         float elapsedTime = 0f;

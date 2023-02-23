@@ -27,6 +27,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     GameObject m_model;
     [SerializeField]
+    PlayerKnockback m_knockback;
+    [SerializeField]
     LayerMask m_interactionMask;
     [SerializeField]
     TransitionController takeDamageTransition;
@@ -276,6 +278,7 @@ public class PlayerController : MonoBehaviour
 
         if (context.performed)
         {
+            m_knockback.StartKnockback();
             GetComponent<PlayerAttack>().Shoot();
         }
     }
