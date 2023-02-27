@@ -27,6 +27,8 @@ public class PlayerController : MonoBehaviour
     Camera m_mainCamera;
     [SerializeField]
     GameObject m_model;
+    [SerializeField]
+    GameObject m_aimArrow;
 
     [SerializeField]
     PlayerKnockback m_knockback;
@@ -115,6 +117,8 @@ public class PlayerController : MonoBehaviour
         _roomManager.OnRoomStart += Spawn;
 
         m_currentHealthValue = m_maxHealthValue;
+
+        m_aimArrow.SetActive(false);
     }
 
     private void Update()
@@ -279,6 +283,8 @@ public class PlayerController : MonoBehaviour
     void Aim_Performed(InputAction.CallbackContext context)
     {
         _isAiming = true;
+
+        m_aimArrow.SetActive(true);
         var inputType = context.control.layout;
 
         //Check Input Device
@@ -305,6 +311,8 @@ public class PlayerController : MonoBehaviour
         _isAiming = false;
         _isAimingOnMouse = false;
         aimInputValue = Vector2.zero;
+
+        m_aimArrow.SetActive(false);
     }
     #endregion
 
