@@ -9,27 +9,20 @@ public class AimArrowController : MonoBehaviour
     float aimArrowSpeed = 0.1f;
     [SerializeField]
     float aimArrowMaxSize = 1;
-
-    bool _isAiming = false;
+    [SerializeField]
+    float zOffset = -1;
 
     void OnDisable()
     {
-        Debug.Log("PrintOnDisable: script was disabled");
         transform.localScale = new Vector3(transform.localScale.x,
                                   transform.localScale.y,
                                   0);
-        _isAiming = false;
         transform.localPosition = new Vector3(0, 0.001f, 0);
     }
 
     void OnEnable()
     {
-        Debug.Log("PrintOnEnable: script was enabled");
-        _isAiming = true;
-        //if (_isAiming) 
-        //{
         StartCoroutine(IAimArrow());
-        //}
     }
 
     IEnumerator IAimArrow()
@@ -39,7 +32,7 @@ public class AimArrowController : MonoBehaviour
             transform.localScale = new Vector3(transform.localScale.x,
                                                transform.localScale.y,
                                                transform.localScale.z + aimArrowSpeed * Time.deltaTime);
-            transform.localPosition = new Vector3(0, 0.001f, 4.9f * transform.localScale.z);
+            transform.localPosition = new Vector3(0, 0.001f, 4.9f * transform.localScale.z + zOffset);
             yield return null;
         }
         //_isAiming = false;
