@@ -25,7 +25,8 @@ Material:
     type: 3}
   m_ValidKeywords:
   - _SURFACE_TYPE_TRANSPARENT
-  m_InvalidKeywords: []
+  m_InvalidKeywords:
+  - _SPECULAR_SETUP
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -103,9 +104,9 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Alpha: -0.78
+    - _Alpha: 1
     - _AlphaClip: 0
-    - _AlphaClipping: 0
+    - _AlphaClipping: 1
     - _Blend: 0
     - _BumpScale: 1
     - _CastShadows: 1
@@ -132,7 +133,7 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 5
     - _Surface: 1
-    - _WorkflowMode: 1
+    - _WorkflowMode: 0
     - _ZTest: 4
     - _ZWrite: 0
     - _ZWriteControl: 0
