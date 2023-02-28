@@ -1,5 +1,6 @@
 using UnityEngine.InputSystem;
 using UnityEngine;
+using System.Collections;
 using UnityEngine.Rendering;
 
 public class PlayerController : MonoBehaviour
@@ -27,8 +28,13 @@ public class PlayerController : MonoBehaviour
     Camera m_mainCamera;
     [SerializeField]
     GameObject m_model;
+
     [SerializeField]
     GameObject m_aimArrow;
+    [SerializeField]
+    float aimArrowGrowth = 0.01f;
+    [SerializeField]
+    float aimArrowDuration = 1;
 
     [SerializeField]
     PlayerKnockback m_knockback;
@@ -136,6 +142,7 @@ public class PlayerController : MonoBehaviour
         relativeRight.y = 0;
         relativeForward.Normalize();
         relativeRight.Normalize();
+        
 
         #region Aim
         //Mouse Inputs Check
@@ -285,6 +292,7 @@ public class PlayerController : MonoBehaviour
         _isAiming = true;
 
         m_aimArrow.SetActive(true);
+
         var inputType = context.control.layout;
 
         //Check Input Device
@@ -314,6 +322,7 @@ public class PlayerController : MonoBehaviour
 
         m_aimArrow.SetActive(false);
     }
+
     #endregion
 
     #region Other Actions
