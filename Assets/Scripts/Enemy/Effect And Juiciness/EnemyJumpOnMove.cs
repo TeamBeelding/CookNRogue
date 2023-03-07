@@ -14,8 +14,10 @@ public class EnemyJumpOnMove : MonoBehaviour
     private float jumpRatio;
 
     private EnemyController enemy;
-
+    private bool isMoving = false;
+    
     [SerializeField] private bool GuiDebug;
+    
     
     // Start is called before the first frame update
     private void Start()
@@ -32,19 +34,19 @@ public class EnemyJumpOnMove : MonoBehaviour
     private void UpdateJump()
     {
         Vector3 localPos = transform.localPosition;
-
+        
         localPos.y -= currentJumpHeight;
-
+        
         if (enemy.IsMoving())
         {
             jumpTimer += Time.deltaTime;
-
+        
             jumpRatio = (jumpTimer % jumpFrequency) / jumpFrequency;
-
+        
             jumpRatio = m_jumpCurve.Evaluate(jumpRatio);
-
+        
             currentJumpHeight = jumpRatio * jumpHeight;
-
+        
             localPos.y += currentJumpHeight;
         }
         else
@@ -54,6 +56,11 @@ public class EnemyJumpOnMove : MonoBehaviour
         }
         
         transform.localPosition = localPos;
+    }
+    
+    public void SetIsMoving(bool value)
+    {
+        isMoving = value;
     }
     
     private void OnGUI()

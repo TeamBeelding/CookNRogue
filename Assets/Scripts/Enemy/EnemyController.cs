@@ -7,21 +7,11 @@ using UnityEngine.AI;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
-public class EnemyController : MonoBehaviour
+public class EnemyController : MonoBehaviour, IState
 {
-    public enum State
-    {
-        Chase,
-        Neutral,
-        Attack,
-        Dying,
-    }
-
-    public State state;
-    
-    private GameObject player;
+    protected PlayerController Player;
     [SerializeField] 
-    private EnemyData data;
+    protected EnemyData data;
 
     private Renderer _rend;
     private Rigidbody _rigidbody;
@@ -43,28 +33,28 @@ public class EnemyController : MonoBehaviour
     private GameObject visual;
     [SerializeField]
     private GameObject bullet;
-    [SerializeField] 
-    private Transform[] paths;
+    // [SerializeField] 
+    // private Transform[] paths;
 
-    private int _destPoint = 0;
+    // private int _destPoint = 0;
     
-    private bool _focusPlayer = false;
+    protected bool _focusPlayer = false;
     private bool _canAttack = true;
     
     private float healthpoint;
 
-    [Serializable]
-    private struct ShakingParams
-    {
-        public float elapsed;
-        public float duration;
-        public float magnitude;
-    }
+    // [Serializable]
+    // private struct ShakingParams
+    // {
+    //     public float elapsed;
+    //     public float duration;
+    //     public float magnitude;
+    // }
 
-    [SerializeField]
-    private ShakingParams shakingParams;
+    // [SerializeField]
+    // private ShakingParams shakingParams;
 
-    private void Awake()
+    protected void Awake()
     {
         _rend = GetComponentInChildren<Renderer>();
         _meshRenderer = GetComponentInChildren<MeshRenderer>();
@@ -77,139 +67,51 @@ public class EnemyController : MonoBehaviour
         healthpoint = data.GetHealth();
 
         stateRenderer = stateSystem.GetComponent<Renderer>();
-        
+
         AddToEnemyManager();
     }
 
     // Start is called before the first frame update
     protected void Start()
     {
-        if (state == State.Dying)
-            return;
+        Player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         
-        player = GameObject.FindGameObjectWithTag("Player");
         _rend.material.color = Color.white;
-
-        if (_focusPlayer)
-            state = State.Chase;
     }
 
     // Update is called once per frame
     protected void Update()
     {
-        if (state == State.Dying)
-            return;
+        // if (state == State.Dying)
+        //     return;
         
-        StateManagement();
+        // IStateManagement();
     }
 
-    public bool IsMoving()
+    public virtual bool IsMoving()
     {
-        return state == State.Chase;
+        return true;
     }
-    
-    private void FixedUpdate()
-    {
-        if (state == State.Dying)
-            return;
-        
-        AreaDetection();
-    }
-
-    public State GetState()
-    {
-        return state;
-    }
-
-    #region State
-    private void StateManagement()
-    {
-        // Change the state of the enemy and call the corresponding function or colorize the enemy
-        switch (state)
-        {
-            case State.Chase:
-                _agent.SetDestination(player.transform.position);
-                stateRenderer.material.color = Color.yellow;
-                stateSystem.gameObject.SetActive(true);
-                break;
-            case State.Attack:
-                stateRenderer.material.color = Color.red;
-                stateSystem.gameObject.SetActive(true);
-                Attack();
-                break;
-            case State.Neutral:
-                stateSystem.gameObject.SetActive(false);
-                Pathing();
-                break;
-            case State.Dying:
-                visual.SetActive(false);
-                KillEnemy();
-                break;
-            default:
-                KillEnemy();
-                break;
-        }
-    }
-
-    private void AreaDetection()
-    {
-        // If the enemy is not focused on the player, it will detect the player if he is in the detection range
-        if (!_focusPlayer)
-        {
-            Collider[] col = Physics.OverlapSphere(transform.position, data.GetRangeDetection(), 
-                LayerMask.NameToLayer("Player"));
-
-            foreach (Collider c in col)
-            {
-                if (c.gameObject.CompareTag("Player"))
-                {
-                    _focusPlayer = true;
-                    state = State.Chase;
-                }
-            }
-        }
-        else
-        {
-            // Switch between chase and attack state depending on the distance between the enemy and the player 
-            state = Vector3.Distance(transform.position, player.transform.position) <= data.GetAttackRange() ? State.Attack : State.Chase;
-        }
-    }
-    
-    #endregion
-    
-    #region NeutralState
-    
-    private void Pathing()
-    {
-        // If path is empty, do nothing
-        if (paths.Length == 0)
-            return;
-        
-        // If the enemy is close enough to the current point, go to the next point
-        if (Vector3.Distance(transform.position, paths[_destPoint].position) < _agent.stoppingDistance)
-            GoToNextPoint();
-        
-        // Set the destination of the enemy to the current point
-        _agent.SetDestination(paths[_destPoint].position);
-    }
-    
-    private void GoToNextPoint()
-    {
-        // If there is no more point, go back to the first point
-        _destPoint = (_destPoint + 1) % paths.Length;
-    }
-    
-    #endregion
 
     #region AttackState
+
+    protected void Chase()
+    {
+        _agent.SetDestination(Player.transform.position);
+        stateRenderer.material.color = Color.yellow;
+        stateSystem.gameObject.SetActive(true);
+    }
     
     // ReSharper disable Unity.PerformanceAnalysis
-    public void Attack()
+    protected void Attack()
     {
+        stateRenderer.material.color = Color.red;
+        stateSystem.gameObject.SetActive(true);
+        
         if (_canAttack)
         {
             GameObject shot = Instantiate(bullet, gun.transform.position, Quaternion.identity);
-            shot.GetComponent<EnemyBulletController>().SetDirection(player.transform);
+            shot.GetComponent<EnemyBulletController>().SetDirection(Player.transform);
             _canAttack = false;
             StartCoroutine(AttackTimer());
         }
@@ -221,9 +123,6 @@ public class EnemyController : MonoBehaviour
 
     public void TakeDamage(float damage = 1)
     {
-        if (state == State.Neutral)
-            state = State.Chase;
-
         ReduiceHealth(damage);
         StartCoroutine(ColorationFeedback());
     }
@@ -233,10 +132,10 @@ public class EnemyController : MonoBehaviour
         damage = Mathf.Abs(damage);
         healthpoint -= damage;
 
-        if (healthpoint <= 0)
-        {
-            state = State.Dying;
-        }
+        // if (healthpoint <= 0)
+        // {
+        //     state = State.Dying;
+        // }
     }
 
     public void KnockBack()
@@ -245,7 +144,7 @@ public class EnemyController : MonoBehaviour
         
         StopCoroutine(StoppingForce());
         
-        Vector3 direction = transform.position - player.transform.position;
+        Vector3 direction = transform.position - Player.transform.position;
         direction.Normalize();
         
         _rigidbody.AddForce(direction * data.GetRecoilForce(), ForceMode.Impulse);
@@ -257,7 +156,7 @@ public class EnemyController : MonoBehaviour
         StartCoroutine(ColorationFeedback());
     }
 
-    public void KillEnemy()
+    protected void Dying()
     {
         EnemyManager.Instance.RemoveEnemyFromLevel(this);
         
@@ -313,31 +212,6 @@ public class EnemyController : MonoBehaviour
             destructSystem.gameObject.SetActive(true);
     }
 
-    public void Shake()
-    {
-        StartCoroutine(ShakeObject());
-    }
-    
-    private IEnumerator ShakeObject()
-    {
-        float elapsed = shakingParams.elapsed;
-
-        Vector3 originalPos = transform.position;
-        
-        while (elapsed < shakingParams.duration)
-        {
-            float x = Random.Range(-1f, 1f) * shakingParams.magnitude;
-            float z = Random.Range(-1f, 1f) * shakingParams.magnitude;
-            
-            transform.position = new Vector3(originalPos.x + x, originalPos.y, originalPos.z + z);
-            elapsed += Time.deltaTime;
-            
-            yield return null;
-        }
-        
-        transform.position = originalPos;
-    }
-    
     // Lerp color of the enemy
     private void LerpColor(Renderer r, Color color, float t)
     {

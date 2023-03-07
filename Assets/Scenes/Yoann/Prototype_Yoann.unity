@@ -1665,6 +1665,51 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
+--- !u!1 &2116444154
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2116444155}
+  - component: {fileID: 2116444156}
+  m_Layer: 0
+  m_Name: EnemyDashing
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2116444155
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2116444154}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2116444156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2116444154}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e912c01912008a4bb5d6f8e197f0427, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  state: 0
 --- !u!1 &3433259342495484450
 GameObject:
   m_ObjectHideFlags: 0
@@ -2183,10 +2228,14 @@ MonoBehaviour:
   m_interactionRange: 0.5
   m_mainCamera: {fileID: 1177456190}
   m_model: {fileID: 6518352296349200059}
+  m_aimArrow: {fileID: 0}
+  aimArrowGrowth: 0.01
+  aimArrowDuration: 1
   m_knockback: {fileID: 6518352296712566022}
   m_interactionMask:
     serializedVersion: 2
     m_Bits: 64
+  m_aimAssistPresset: {fileID: 0}
   takeDamageTransition: {fileID: 353925329}
   _isAiming: 0
 --- !u!114 &6518352297035687740
@@ -2203,6 +2252,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Projectile: {fileID: 1666282856065623693, guid: 4f0c527b1de4f1b408606041297daaf0,
     type: 3}
+  ProjectileNbr: 0
+  TimeBtwShotsRafale: 0
   muzzle: {fileID: 6518352296039825143}
   size: 1
   speed: 20
@@ -2224,10 +2275,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41faddc5fc4364f44b4dfa846756a183, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scroll: {fileID: 0}
   attack: {fileID: 6518352297035687740}
   projectilesData: []
   UI_Inventory: {fileID: 0}
   SlotsContainer: {fileID: 0}
+  recipe: []
   numberOfIngredients: 3
 --- !u!4 &6518352297434094414
 Transform:

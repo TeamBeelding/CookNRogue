@@ -16,7 +16,7 @@ public class EditorButton : Editor
         
         if (GUILayout.Button("Attack"))
         {
-            enemyScript.Attack();
+            // enemyScript.Attack();
         }
         
         if (GUILayout.Button("Take hit"))
@@ -31,7 +31,7 @@ public class EditorButton : Editor
 
         if (GUILayout.Button("Kill Enemy"))
         {
-            enemyScript.KillEnemy();
+            // enemyScript.Dying();
         }
         
         EditorGUILayout.Separator();
@@ -39,7 +39,7 @@ public class EditorButton : Editor
         
         if (GUILayout.Button("Shaking Enemy"))
         {
-            enemyScript.Shake();
+            // enemyScript.Shake();
         }
         
         if (GUILayout.Button("Color Feedback"))

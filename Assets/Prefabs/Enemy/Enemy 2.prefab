@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 490897484666988985}
   - component: {fileID: 490897484666988988}
   - component: {fileID: 490897484666988989}
+  - component: {fileID: 8309553133944820968}
   m_Layer: 0
   m_Name: Enemy 2
   m_TagString: Enemy
@@ -97,12 +98,11 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 490897484666988982}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7acb711e5373f3d428dc16a791cb259f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  state: 1
   data: {fileID: 11400000, guid: 9521b3982c806e642bc33de43dc08683, type: 2}
   destructSystem: {fileID: 5120603425313719853}
   stateSystem: {fileID: 923215663510813206}
@@ -114,6 +114,30 @@ MonoBehaviour:
     elapsed: 0
     duration: 0.15
     magnitude: 0.5
+--- !u!114 &8309553133944820968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 490897484666988982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c8c9b8c080a57e4982b788b2d1a6ebb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: 9521b3982c806e642bc33de43dc08683, type: 2}
+  destructSystem: {fileID: 5120603425313719853}
+  stateSystem: {fileID: 923215663510813206}
+  gun: {fileID: 490897484910083895}
+  visual: {fileID: 4614395803714301683}
+  bullet: {fileID: 1646218331480662972, guid: c0ed5f524013bca43882139c5df1db26, type: 3}
+  paths: []
+  shakingParams:
+    elapsed: 0
+    duration: 0
+    magnitude: 0
+  state: 0
 --- !u!1 &490897484910083895
 GameObject:
   m_ObjectHideFlags: 0

@@ -393,15 +393,15 @@ public class PlayerController : MonoBehaviour
 #if UNITY_EDITOR
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.yellow;
-        Vector3 target = transform.position + _aimDirection * m_aimAssistPresset.GetMaxDistance;
-        //Draw base Aim
-        Gizmos.DrawLine(transform.position, target);
-
-        Gizmos.color = Color.green;
-        target = transform.position + _correctedAimDirection * m_aimAssistPresset.GetMaxDistance;
-        //Draw base Aim
-        Gizmos.DrawLine(transform.position, target);
+        // Gizmos.color = Color.yellow;
+        // Vector3 target = transform.position + _aimDirection * m_aimAssistPresset.GetMaxDistance;
+        // //Draw base Aim
+        // Gizmos.DrawLine(transform.position, target);
+        //
+        // Gizmos.color = Color.green;
+        // target = transform.position + _correctedAimDirection * m_aimAssistPresset.GetMaxDistance;
+        // //Draw base Aim
+        // Gizmos.DrawLine(transform.position, target);
     }
 #endif
 }
