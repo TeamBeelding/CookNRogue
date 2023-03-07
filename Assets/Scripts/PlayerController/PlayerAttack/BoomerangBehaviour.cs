@@ -17,6 +17,7 @@ public class BoomerangBehaviour : PlayerBulletBehaviour
     protected override void Start()
     {
         StartPosition = transform.position;
+        boomerangSpeed /= 100;
         Xaxis = Quaternion.Euler(new Vector3(0,90,0)) * direction;
     }
 
@@ -29,9 +30,16 @@ public class BoomerangBehaviour : PlayerBulletBehaviour
         transform.position = StartPosition + (direction * forward.Evaluate(increment * boomerangSpeed) * MaxForwardDistance) + (Xaxis * sides.Evaluate(increment * boomerangSpeed) * MaxSideDistance);
         if(increment * boomerangSpeed > 1)
         {
+            Debug.Log("destroy");
             Destroy(gameObject);
         }
         increment++;
         
     }
+    protected override void OnDestroy()
+    {
+        //NE SURTOUT PAS ENLEVER CET OVERRIDE SINON LES AUTRES EFFETS SE DECLENCHENT 2X AVEC CET EFFET CI.
+    }
+
+
 }

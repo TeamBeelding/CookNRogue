@@ -47,15 +47,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectileData: {fileID: 11400000, guid: 496a317e0266cc5489a052a83227a782, type: 2}
-  effect:
-    mode: 1
+  effects:
+  - mode: 1
     unityReference: {fileID: 0}
     rawReference:
-      rid: 4990484796112109568
+      rid: 7565062378547314701
   references:
     version: 2
     RefIds:
-    - rid: 4990484796112109568
+    - rid: 7565062378547314701
       type: {class: Boomerang, ns: , asm: Assembly-CSharp}
       data:
         forward:
@@ -151,8 +151,8 @@ MonoBehaviour:
           m_PreInfinity: 2
           m_PostInfinity: 2
           m_RotationOrder: 4
-        Speed: 0.03
-        MaxForwardDistance: 10
+        Speed: 5
+        MaxForwardDistance: 15
         MaxSideDistance: 5
 --- !u!54 &4859087939849403292
 Rigidbody:

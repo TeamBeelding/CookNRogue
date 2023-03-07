@@ -74,6 +74,7 @@ public class PlayerAttack : MonoBehaviour
     {
         foreach (IIngredientEffects effect in effects)
         {
+            Debug.Log(HitObject);
             if(effect != null)
                 effect.EffectOnHit(Position, HitObject, direction);
         }
@@ -114,12 +115,13 @@ public class PlayerAttack : MonoBehaviour
 
                 if (effect is Boomerang)
                 {
+                    
                     BoomerangBehaviour boomerangBehaviour = GetComponent<BoomerangBehaviour>();
                     if (boomerangBehaviour == null)
                     {
                         boomerangBehaviour = Bullet.AddComponent<BoomerangBehaviour>();
                     }
-
+                    
                     Boomerang TempEffect = (Boomerang)effect;
                     boomerangBehaviour.ResetStats();
                     boomerangBehaviour.forward = TempEffect.forward;

@@ -8,8 +8,8 @@ public class PlayerBulletBehaviour : MonoBehaviour
     public float lightDamage;
     public float speed;
     public float drag = 1;
-    private bool HasHit = false;
-    private GameObject hitObject;
+    protected bool HasHit = false;
+    protected GameObject hitObject;
     public PlayerAttack playerAttack;
     Sprite sprite;
     //public Vector3 gravity;
@@ -41,7 +41,7 @@ public class PlayerBulletBehaviour : MonoBehaviour
         gameObject.transform.localScale = new Vector3(1,1,1);
     }
 
-    private void OnDestroy()
+    protected virtual void OnDestroy()
     {
         if(HasHit)
         {
@@ -53,7 +53,7 @@ public class PlayerBulletBehaviour : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    protected virtual void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Enemy"))
         {
@@ -64,6 +64,7 @@ public class PlayerBulletBehaviour : MonoBehaviour
 
             if(destroyOnHit)
             {
+                Debug.Log("destroy");
                 Destroy(gameObject);
             }
 

@@ -80,10 +80,13 @@ public class InventoryScript : MonoBehaviour
             attack.lightDamage += ingredient.lightDamage;
 
             //AJOUT DES EFFETS DANS LE SCRIPT D'ATTAQUE
-            attack.effects.Add(ingredient.effect);
+            foreach(IIngredientEffects effect in ingredient.effects)
+            {
+                attack.effects.Add(effect);
+            }
+            
 
         }
-
 
         foreach (IIngredientEffects effect in attack.effects)
         {
