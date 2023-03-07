@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 490897484666988991}
   - component: {fileID: 490897484666988985}
   - component: {fileID: 490897484666988988}
+  - component: {fileID: 490897484666988989}
   m_Layer: 0
   m_Name: Enemy 3
   m_TagString: Enemy
@@ -103,7 +104,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 1
   data: {fileID: 11400000, guid: c26bd2577f6078145b3bf7f01e7e5ac0, type: 2}
-  desctructSystem: {fileID: 5363989803608816495}
+  destructSystem: {fileID: 5363989803608816495}
   stateSystem: {fileID: 6450776092590197050}
   gun: {fileID: 490897484910083895}
   visual: {fileID: 4213664043020276374}
@@ -155,6 +156,7 @@ GameObject:
   - component: {fileID: 5579886359218335164}
   - component: {fileID: 4383940395174576103}
   - component: {fileID: 1616729406375832449}
+  - component: {fileID: 9030907269819295153}
   m_Layer: 0
   m_Name: Visual
   m_TagString: Untagged
@@ -240,35 +242,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67fbacd29e3fa444b8c25684ffc6b38b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpCurve:
+  m_jumpCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 1.3946184
-      outSlope: 1.3946184
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.717042
-      value: 1
-      inSlope: -0.14873259
-      outSlope: -0.14873259
+      inSlope: 2
+      outSlope: 2
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.06488869
-      outWeight: 0.33333334
+      inWeight: 0
+      outWeight: 0
     - serializedVersion: 3
       time: 1
-      value: 0
-      inSlope: -3.5340939
-      outSlope: -3.5340939
-      tangentMode: 34
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
+      inWeight: 0
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2

@@ -26,7 +26,7 @@ public class PlayerAttack : MonoBehaviour
     public float lightDamage;
 
     public List<IIngredientEffects> effects = new List<IIngredientEffects>();
-
+    
     bool _shootOnCooldown;
 
     [SerializeField]
@@ -47,7 +47,6 @@ public class PlayerAttack : MonoBehaviour
     {
         if (_shootOnCooldown)
             return;
-
 
 
         //BulletInstantiate
