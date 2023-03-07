@@ -111,7 +111,7 @@ public class PlayerController : MonoBehaviour
         //Set Varialbes
         _rb = GetComponent<Rigidbody>();
         _relativeTransform = m_mainCamera.transform;
-        _scriptInventory = InventoryScript.instance;
+        _scriptInventory = InventoryScript._instance;
         _enemyManager = EnemyManager.Instance;
         _roomManager = RoomManager.instance;
 
