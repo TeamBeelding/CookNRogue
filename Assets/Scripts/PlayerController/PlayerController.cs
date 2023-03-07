@@ -1,5 +1,6 @@
 using UnityEngine.InputSystem;
 using UnityEngine;
+using System.Collections;
 using UnityEngine.Rendering;
 
 public class PlayerController : MonoBehaviour
@@ -29,6 +30,13 @@ public class PlayerController : MonoBehaviour
     GameObject m_model;
 
     [SerializeField]
+    GameObject m_aimArrow;
+    [SerializeField]
+    float aimArrowGrowth = 0.01f;
+    [SerializeField]
+    float aimArrowDuration = 1;
+
+    [SerializeField]
     PlayerKnockback m_knockback;
     [SerializeField]
     LayerMask m_interactionMask;
@@ -37,6 +45,11 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField]
     TransitionController takeDamageTransition;
+
+    public PlayerController Instance
+    {
+        get => _instance;
+    }
 
     public Vector3 PlayerAimDirection
     {
@@ -53,9 +66,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public PlayerController Instance
+    public float PlayerAimMagnitude
     {
-        get { return _instance; }
+        get => _aimMagnitude;
     }
 
     PlayerController _instance;
@@ -65,14 +78,15 @@ public class PlayerController : MonoBehaviour
     Rigidbody _rb;
     Transform _relativeTransform;
 
-    Vector2 moveInputValue;
-    Vector2 aimInputValue;
+    Vector2 _moveInputValue;
+    Vector2 _aimInputValue;
 
     [HideInInspector]
     public bool _isAiming = false;
     bool _isAimingOnMouse = false;
     Vector3 _aimDirection;
     Vector3 _correctedAimDirection;
+    float _aimMagnitude;
 
     InventoryScript _scriptInventory;
     EnemyManager _enemyManager;
@@ -115,6 +129,8 @@ public class PlayerController : MonoBehaviour
         _roomManager.OnRoomStart += Spawn;
 
         m_currentHealthValue = m_maxHealthValue;
+
+        m_aimArrow.SetActive(false);
     }
 
     private void Update()
@@ -132,19 +148,21 @@ public class PlayerController : MonoBehaviour
         relativeRight.y = 0;
         relativeForward.Normalize();
         relativeRight.Normalize();
+        
 
         #region Aim
         //Mouse Inputs Check
         if (_isAimingOnMouse)
         {
-            aimInputValue = Input.mousePosition - m_mainCamera.WorldToScreenPoint(transform.position);
+            _aimInputValue = Input.mousePosition - m_mainCamera.WorldToScreenPoint(transform.position);
+            _aimMagnitude = _aimInputValue.magnitude / 10;
         }
 
         //Null Input Check
-        if (aimInputValue.magnitude > 0)
+        if (_aimMagnitude > 0)
         {
             //Rotate Player Model
-            Vector3 aimInputDir = relativeForward * aimInputValue.y + relativeRight * aimInputValue.x;
+            Vector3 aimInputDir = relativeForward * _aimInputValue.y + relativeRight * _aimInputValue.x;
             aimInputDir = aimInputDir.normalized;
             aimInputDir = new Vector3(aimInputDir.x, 0, aimInputDir.z);
 
@@ -166,7 +184,7 @@ public class PlayerController : MonoBehaviour
 
         #region Movement
         //Null Input Check
-        if (moveInputValue.magnitude <= 0)
+        if (_moveInputValue.magnitude <= 0)
         {
             //Stop if input is null
             _rb.velocity = Vector3.zero;
@@ -174,10 +192,10 @@ public class PlayerController : MonoBehaviour
         else
         {
             //Move Player
-            Vector3 moveInputDir = relativeForward * moveInputValue.y + relativeRight * moveInputValue.x;
+            Vector3 moveInputDir = relativeForward * _moveInputValue.y + relativeRight * _moveInputValue.x;
             moveInputDir = moveInputDir.normalized;
 
-            float speed = m_moveSpeed * moveInputValue.sqrMagnitude;
+            float speed = m_moveSpeed * _moveInputValue.sqrMagnitude;
 
             Move(moveInputDir, speed);
 
@@ -255,12 +273,12 @@ public class PlayerController : MonoBehaviour
     #region Movement
     void Move_Performed(InputAction.CallbackContext context)
     {
-        moveInputValue = context.ReadValue<Vector2>();
+        _moveInputValue = context.ReadValue<Vector2>();
     }
 
     void Move_Canceled(InputAction.CallbackContext context)
     {
-        moveInputValue = Vector2.zero;
+        _moveInputValue = Vector2.zero;
     }
 
     void Move(Vector3 direction, float speed)
@@ -279,6 +297,9 @@ public class PlayerController : MonoBehaviour
     void Aim_Performed(InputAction.CallbackContext context)
     {
         _isAiming = true;
+
+        m_aimArrow.SetActive(true);
+
         var inputType = context.control.layout;
 
         //Check Input Device
@@ -293,7 +314,8 @@ public class PlayerController : MonoBehaviour
             //Gamepad
             case ("Stick"):
                 {
-                    aimInputValue = context.ReadValue<Vector2>();
+                    _aimInputValue = context.ReadValue<Vector2>();
+                    _aimMagnitude = _aimInputValue.magnitude;
                     return;
                 }
         }
@@ -304,8 +326,11 @@ public class PlayerController : MonoBehaviour
         //Reset
         _isAiming = false;
         _isAimingOnMouse = false;
-        aimInputValue = Vector2.zero;
+        _aimInputValue = Vector2.zero;
+
+        m_aimArrow.SetActive(false);
     }
+
     #endregion
 
     #region Other Actions

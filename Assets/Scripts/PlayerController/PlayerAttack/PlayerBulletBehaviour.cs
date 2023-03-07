@@ -14,6 +14,7 @@ public class PlayerBulletBehaviour : MonoBehaviour
     Sprite sprite;
     //public Vector3 gravity;
     public Vector3 direction;
+    public bool destroyOnHit = true;
 
     protected virtual void Start()
     {
@@ -61,8 +62,11 @@ public class PlayerBulletBehaviour : MonoBehaviour
             if (other.GetComponent<Enemy>())
                 other.GetComponent<Enemy>().TakeDamage(heavyDamage);
 
+            if(destroyOnHit)
+            {
+                Destroy(gameObject);
+            }
 
-            Destroy(gameObject);
 
         }
     }

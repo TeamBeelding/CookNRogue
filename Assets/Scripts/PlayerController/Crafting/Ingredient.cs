@@ -21,12 +21,15 @@ public class Ingredient : MonoBehaviour, IInteractable
 
     private void OnTriggerEnter(Collider other)
     {
-        //Add effect to projectile data
-        var clone = Instantiate(projectileData);
-        clone.effect = effect.Value;
-        InventoryScript.instance.AddIngredientToList(clone);
+        if(other.tag == "Player")
+        {
+            //Add effect to projectile data
+            var clone = Instantiate(projectileData);
+            clone.effect = effect.Value;
+            InventoryScript.instance.AddIngredientToList(clone);
+            Destroy(gameObject);
+        }
 
-        Destroy(gameObject);
     }
 
 }
