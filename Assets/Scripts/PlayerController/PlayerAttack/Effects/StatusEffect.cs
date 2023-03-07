@@ -17,26 +17,26 @@ public class StatusEffect : IIngredientEffects
     [Header("StatusEffect")]
     [Space(20)]
 
-    public EFFECT effect;
+    public EFFECT _effect;
     [Space(20)]
 
-    public float ImmobilisationDuration;
+    public float _immobilisationDuration;
     [Space(20)]
 
-    public float slowDuration;
-    public float slowFactor;
+    public float _slowDuration;
+    public float _slowFactor;
     [Space(20)]
 
-    public float PolymorpheDuration;
+    public float _polymorpheDuration;
     [Space(20)]
-    public float poisonDuration;
-    public float poisonTickDamage;
-    [Space(20)]
-
-    public float flammesDamage;
+    public float _poisonDuration;
+    public float _poisonTickDamage;
     [Space(20)]
 
-    public float blindDuration;
+    public float _flammesDamage;
+    [Space(20)]
+
+    public float _blindDuration;
 
     //EFFET LORS DU SHOOT
     public void EffectOnShoot(Vector3 Position, GameObject bullet)
@@ -48,7 +48,7 @@ public class StatusEffect : IIngredientEffects
     public void EffectOnHit(Vector3 Position, GameObject HitObject, Vector3 direction)
     {
         Debug.Log("StatusEffectHitEffect");
-        switch(effect)
+        switch(_effect)
         {
             case EFFECT.IMMOBILISATION:
                 break;

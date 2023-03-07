@@ -27,7 +27,7 @@ public class LeoScrolling : MonoBehaviour
     void Start()
     {
 
-        instance = InventoryScript.instance;
+        instance = InventoryScript._instance;
         animator = container.GetComponent<Animator>();
 
         

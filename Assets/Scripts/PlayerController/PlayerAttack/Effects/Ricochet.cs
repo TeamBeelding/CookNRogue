@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class Ricochet : IIngredientEffects
 {
-    [Header("Ricochet")]
-    public float BlindEffectDuration;
+   
 
     //EFFET LORS DU SHOOT
     public void EffectOnShoot(Vector3 Position, GameObject bullet)

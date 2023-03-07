@@ -143,21 +143,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 014018f03101ef1479a35bb79d205c72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectileData: {fileID: 11400000, guid: 8883ec5033ec73546969892fce674344, type: 2}
-  effects:
+  _projectileData: {fileID: 11400000, guid: 496a317e0266cc5489a052a83227a782, type: 2}
+  m_effects:
   - mode: 1
     unityReference: {fileID: 0}
     rawReference:
-      rid: 7565062378547314702
+      rid: 7565062387207241730
   references:
     version: 2
     RefIds:
-    - rid: 7565062378547314702
+    - rid: 7565062387207241730
       type: {class: Explosion, ns: , asm: Assembly-CSharp}
       data:
-        ExplosionDamage: 10
-        ExplosionRadius: 10
-        ExplosionForce: 100
+        m_ExplosionDamage: 5
+        m_ExplosionRadius: 5
+        m_ExplosionForce: 300
 --- !u!54 &6352850237465162560
 Rigidbody:
   m_ObjectHideFlags: 0

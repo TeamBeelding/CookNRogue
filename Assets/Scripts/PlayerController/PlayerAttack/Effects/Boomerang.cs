@@ -6,11 +6,11 @@ public class Boomerang : IIngredientEffects
 {
 
     [Header("Boomerang")]
-    public AnimationCurve forward;
-    public AnimationCurve sides;
-    public float Speed;
-    public float MaxForwardDistance;
-    public float MaxSideDistance;
+    public AnimationCurve _forward;
+    public AnimationCurve _sides;
+    public float _Speed;
+    public float _MaxForwardDistance;
+    public float _MaxSideDistance;
 
 
     //EFFET LORS DU SHOOT

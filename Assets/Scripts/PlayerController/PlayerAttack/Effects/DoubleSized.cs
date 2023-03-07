@@ -6,14 +6,14 @@ public class DoubleSized : IIngredientEffects
 {
 
     [Header("DoubleSized")]
-    public float sizeFactor;
+    [SerializeField] float m_sizeFactor;
     
 
     //EFFET LORS DU SHOOT
     public void EffectOnShoot(Vector3 Position, GameObject bullet)
     {
         Debug.Log("DoubleSizedShootEffect");
-        bullet.GetComponent<Transform>().localScale *= sizeFactor;
+        bullet.GetComponent<Transform>().localScale *= m_sizeFactor;
     }
 
     public void SizeUp(Vector3 Position,GameObject bullet)
