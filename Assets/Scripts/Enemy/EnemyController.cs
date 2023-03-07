@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class EnemyController : MonoBehaviour
@@ -12,7 +13,8 @@ public class EnemyController : MonoBehaviour
     {
         Chase,
         Neutral,
-        Attack
+        Attack,
+        Dying,
     }
 
     public State state;
@@ -25,9 +27,10 @@ public class EnemyController : MonoBehaviour
     private Rigidbody _rigidbody;
     private MeshRenderer _meshRenderer;
     private NavMeshAgent _agent;
+    private CapsuleCollider _collider;
     
     [SerializeField]
-    private ParticleSystem desctructSystem;
+    private ParticleSystem destructSystem;
     [SerializeField]
     private ParticleSystem stateSystem;
     private Renderer stateRenderer;
@@ -65,7 +68,7 @@ public class EnemyController : MonoBehaviour
     {
         _rend = GetComponentInChildren<Renderer>();
         _meshRenderer = GetComponentInChildren<MeshRenderer>();
-        
+        _collider = GetComponent<CapsuleCollider>();
         _rigidbody = GetComponent<Rigidbody>();
         _agent = GetComponent<NavMeshAgent>();
         _agent.speed = data.GetSpeed();
@@ -81,6 +84,9 @@ public class EnemyController : MonoBehaviour
     // Start is called before the first frame update
     protected void Start()
     {
+        if (state == State.Dying)
+            return;
+        
         player = GameObject.FindGameObjectWithTag("Player");
         _rend.material.color = Color.white;
 
@@ -91,6 +97,9 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     protected void Update()
     {
+        if (state == State.Dying)
+            return;
+        
         StateManagement();
     }
 
@@ -101,6 +110,9 @@ public class EnemyController : MonoBehaviour
     
     private void FixedUpdate()
     {
+        if (state == State.Dying)
+            return;
+        
         AreaDetection();
     }
 
@@ -129,8 +141,12 @@ public class EnemyController : MonoBehaviour
                 stateSystem.gameObject.SetActive(false);
                 Pathing();
                 break;
+            case State.Dying:
+                visual.SetActive(false);
+                KillEnemy();
+                break;
             default:
-                stateSystem.gameObject.SetActive(false);
+                KillEnemy();
                 break;
         }
     }
@@ -219,7 +235,7 @@ public class EnemyController : MonoBehaviour
 
         if (healthpoint <= 0)
         {
-            KillEnemy();
+            state = State.Dying;
         }
     }
 
@@ -245,9 +261,13 @@ public class EnemyController : MonoBehaviour
     {
         EnemyManager.Instance.RemoveEnemyFromLevel(this);
         
+        StopAllCoroutines();
+        
+        _collider.enabled = false;
+        stateSystem.gameObject.SetActive(false);
         visual.SetActive(false);
         DestroyEffect();
-        Destroy(gameObject, 2);
+        Destroy(gameObject, 1f);
     }
     
     // Color the enemy red for a short time to indicate that he has been hit
@@ -289,7 +309,8 @@ public class EnemyController : MonoBehaviour
 
     public void DestroyEffect()
     {
-        desctructSystem.gameObject.SetActive(true);
+        if (destructSystem)
+            destructSystem.gameObject.SetActive(true);
     }
 
     public void Shake()
@@ -341,7 +362,6 @@ public class EnemyController : MonoBehaviour
     }
     
     #endregion
-    
 
     #region Guizmos
     

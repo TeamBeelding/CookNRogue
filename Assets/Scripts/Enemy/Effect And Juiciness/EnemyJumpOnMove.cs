@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class EnemyJumpOnMove : MonoBehaviour
 {
-    [SerializeField] private AnimationCurve jumpCurve;
+    [SerializeField] private AnimationCurve m_jumpCurve;
     [SerializeField] private float jumpFrequency = 0.05f;
     private float jumpTimer = 0f;
     private float currentJumpHeight = 0f;
@@ -17,13 +18,13 @@ public class EnemyJumpOnMove : MonoBehaviour
     [SerializeField] private bool GuiDebug;
     
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         enemy = GetComponentInParent<EnemyController>();
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
             UpdateJump();
     }
@@ -40,7 +41,7 @@ public class EnemyJumpOnMove : MonoBehaviour
 
             jumpRatio = (jumpTimer % jumpFrequency) / jumpFrequency;
 
-            jumpRatio = jumpCurve.Evaluate(jumpRatio);
+            jumpRatio = m_jumpCurve.Evaluate(jumpRatio);
 
             currentJumpHeight = jumpRatio * jumpHeight;
 
