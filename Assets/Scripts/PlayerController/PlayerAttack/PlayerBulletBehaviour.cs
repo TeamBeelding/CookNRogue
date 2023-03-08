@@ -59,8 +59,8 @@ public class PlayerBulletBehaviour : MonoBehaviour
         {
             HasHit= true;
             hitObject = other.gameObject;
-            if (other.GetComponent<Enemy>())
-                other.GetComponent<Enemy>().TakeDamage(heavyDamage);
+            if (other.GetComponent<EnemyController>())
+                other.GetComponent<EnemyController>().TakeDamage(heavyDamage);
 
             if(destroyOnHit)
             {

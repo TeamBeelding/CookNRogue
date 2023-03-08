@@ -7,7 +7,7 @@ using UnityEngine.AI;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
-public class EnemyController : MonoBehaviour, IState
+public abstract class EnemyController : MonoBehaviour, IState
 {
     protected PlayerController Player;
     [SerializeField] 
@@ -88,10 +88,7 @@ public class EnemyController : MonoBehaviour, IState
         // IStateManagement();
     }
 
-    public virtual bool IsMoving()
-    {
-        return true;
-    }
+    public abstract bool IsMoving();
 
     #region AttackState
 
