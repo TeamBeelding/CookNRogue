@@ -1,5 +1,7 @@
 using UnityEngine.InputSystem;
 using UnityEngine;
+using System.Collections;
+using UnityEngine.Rendering;
 
 public class PlayerController : MonoBehaviour
 {
@@ -26,42 +28,92 @@ public class PlayerController : MonoBehaviour
     Camera m_mainCamera;
     [SerializeField]
     GameObject m_model;
+
+    [SerializeField]
+    GameObject m_aimArrow;
+    [SerializeField]
+    float aimArrowGrowth = 0.01f;
+    [SerializeField]
+    float aimArrowDuration = 1;
+
+    [SerializeField]
+    PlayerKnockback m_knockback;
     [SerializeField]
     LayerMask m_interactionMask;
     [SerializeField]
+    AimAssistPreset m_aimAssistPresset;
+
+    [SerializeField]
     TransitionController takeDamageTransition;
+
+    public PlayerController Instance
+    {
+        get => _instance;
+    }
 
     public Vector3 PlayerAimDirection
     {
-        get => _aimDirection;
+        get
+        {
+            if (_isAiming)
+            {
+                return _correctedAimDirection;
+            }
+            else
+            {
+                return _aimDirection;
+            }
+        }
     }
+
+    public float PlayerAimMagnitude
+    {
+        get => _aimMagnitude;
+    }
+
+    PlayerController _instance;
 
     PlayerActions _playerActions;
 
     Rigidbody _rb;
     Transform _relativeTransform;
 
-    Vector2 moveInputValue;
-    Vector2 aimInputValue;
+    Vector2 _moveInputValue;
+    Vector2 _aimInputValue;
 
     [HideInInspector]
     public bool _isAiming = false;
     bool _isAimingOnMouse = false;
     Vector3 _aimDirection;
+    Vector3 _correctedAimDirection;
+    float _aimMagnitude;
 
     InventoryScript _scriptInventory;
-
+    EnemyManager _enemyManager;
+    RoomManager _roomManager;
     bool _isLocked = false;
 
     Collider _curInteractCollider = null;
     #endregion
+
+    private void Awake()
+    {
+        if(_instance != null)
+        {
+            Destroy(gameObject);
+        }
+
+        _instance = this;
+    }
 
     void Start()
     {
         //Set Varialbes
         _rb = GetComponent<Rigidbody>();
         _relativeTransform = m_mainCamera.transform;
-        _scriptInventory = InventoryScript.instance;
+        _scriptInventory = InventoryScript._instance;
+        _enemyManager = EnemyManager.Instance;
+        _roomManager = RoomManager.instance;
 
         //Set Input Actions Map
         _playerActions = new PlayerActions();
@@ -74,7 +126,11 @@ public class PlayerController : MonoBehaviour
         _playerActions.Default_PlayerActions.Aim.canceled += Aim_Canceled;
         _playerActions.Default_PlayerActions.Craft.performed += Craft;
 
+        _roomManager.OnRoomStart += Spawn;
+
         m_currentHealthValue = m_maxHealthValue;
+
+        m_aimArrow.SetActive(false);
     }
 
     private void Update()
@@ -92,19 +148,21 @@ public class PlayerController : MonoBehaviour
         relativeRight.y = 0;
         relativeForward.Normalize();
         relativeRight.Normalize();
+        
 
         #region Aim
         //Mouse Inputs Check
         if (_isAimingOnMouse)
         {
-            aimInputValue = Input.mousePosition - m_mainCamera.WorldToScreenPoint(transform.position);
+            _aimInputValue = Input.mousePosition - m_mainCamera.WorldToScreenPoint(transform.position);
+            _aimMagnitude = _aimInputValue.magnitude / 10;
         }
 
         //Null Input Check
-        if (aimInputValue.magnitude > 0)
+        if (_aimMagnitude > 0)
         {
             //Rotate Player Model
-            Vector3 aimInputDir = relativeForward * aimInputValue.y + relativeRight * aimInputValue.x;
+            Vector3 aimInputDir = relativeForward * _aimInputValue.y + relativeRight * _aimInputValue.x;
             aimInputDir = aimInputDir.normalized;
             aimInputDir = new Vector3(aimInputDir.x, 0, aimInputDir.z);
 
@@ -112,12 +170,21 @@ public class PlayerController : MonoBehaviour
 
             //Set Aim Variables
             _aimDirection = aimInputDir;
+
+            //Correct Aim
+            EnemyController[] enemiesInLevel = _enemyManager.EnemiesInLevel;
+            GameObject[] aimTargets = new GameObject[enemiesInLevel.Length];
+            for(int i =  0; i < enemiesInLevel.Length; i++)
+            {
+                aimTargets[i] = enemiesInLevel[i].gameObject; 
+            }
+            _correctedAimDirection = AimAssist2D.CorrectAimDirection(_aimDirection, transform.position, aimTargets, m_aimAssistPresset);
         }
         #endregion
 
         #region Movement
         //Null Input Check
-        if (moveInputValue.magnitude <= 0)
+        if (_moveInputValue.magnitude <= 0)
         {
             //Stop if input is null
             _rb.velocity = Vector3.zero;
@@ -125,10 +192,10 @@ public class PlayerController : MonoBehaviour
         else
         {
             //Move Player
-            Vector3 moveInputDir = relativeForward * moveInputValue.y + relativeRight * moveInputValue.x;
+            Vector3 moveInputDir = relativeForward * _moveInputValue.y + relativeRight * _moveInputValue.x;
             moveInputDir = moveInputDir.normalized;
 
-            float speed = m_moveSpeed * moveInputValue.sqrMagnitude;
+            float speed = m_moveSpeed * _moveInputValue.sqrMagnitude;
 
             Move(moveInputDir, speed);
 
@@ -203,22 +270,15 @@ public class PlayerController : MonoBehaviour
         #endregion
     }
 
-    void Rotate(Vector3 direction)
-    {
-        float newX = Mathf.Lerp(m_model.transform.forward.x, direction.x, Time.deltaTime * m_rotationSpeed);
-        float newZ = Mathf.Lerp(m_model.transform.forward.z, direction.z, Time.deltaTime * m_rotationSpeed);
-        m_model.transform.forward = new Vector3 (newX, 0, newZ);
-    }
-
     #region Movement
     void Move_Performed(InputAction.CallbackContext context)
     {
-        moveInputValue = context.ReadValue<Vector2>();
+        _moveInputValue = context.ReadValue<Vector2>();
     }
 
     void Move_Canceled(InputAction.CallbackContext context)
     {
-        moveInputValue = Vector2.zero;
+        _moveInputValue = Vector2.zero;
     }
 
     void Move(Vector3 direction, float speed)
@@ -237,6 +297,9 @@ public class PlayerController : MonoBehaviour
     void Aim_Performed(InputAction.CallbackContext context)
     {
         _isAiming = true;
+
+        m_aimArrow.SetActive(true);
+
         var inputType = context.control.layout;
 
         //Check Input Device
@@ -251,7 +314,8 @@ public class PlayerController : MonoBehaviour
             //Gamepad
             case ("Stick"):
                 {
-                    aimInputValue = context.ReadValue<Vector2>();
+                    _aimInputValue = context.ReadValue<Vector2>();
+                    _aimMagnitude = _aimInputValue.magnitude;
                     return;
                 }
         }
@@ -262,9 +326,14 @@ public class PlayerController : MonoBehaviour
         //Reset
         _isAiming = false;
         _isAimingOnMouse = false;
-        aimInputValue = Vector2.zero;
+        _aimInputValue = Vector2.zero;
+
+        m_aimArrow.SetActive(false);
     }
-    #endregion 
+
+    #endregion
+
+    #region Other Actions
 
     void Shoot(InputAction.CallbackContext context)
     {
@@ -276,6 +345,7 @@ public class PlayerController : MonoBehaviour
 
         if (context.performed)
         {
+            m_knockback.StartKnockback();
             GetComponent<PlayerAttack>().Shoot();
         }
     }
@@ -285,9 +355,20 @@ public class PlayerController : MonoBehaviour
         _scriptInventory.Craft();
     }
 
+    #endregion
+
+    #region Utilities
+
     public void Lock(bool isLocked)
     {
         _isLocked = isLocked;
+    }
+
+    void Rotate(Vector3 direction)
+    {
+        float newX = Mathf.Lerp(m_model.transform.forward.x, direction.x, Time.deltaTime * m_rotationSpeed);
+        float newZ = Mathf.Lerp(m_model.transform.forward.z, direction.z, Time.deltaTime * m_rotationSpeed);
+        m_model.transform.forward = new Vector3(newX, 0, newZ);
     }
 
     public void TakeDamage(float damage) 
@@ -302,16 +383,25 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmos()
+    void Spawn()
     {
-        if (_isAiming)
-        {
-            //Draw Aim Assist
-        }
-
-        Vector3 target = transform.position + _aimDirection * 2f;
-        Gizmos.DrawLine(transform.position, target);
+        transform.position = _roomManager.SpawnPoint.position;
     }
 
+    #endregion
 
+#if UNITY_EDITOR
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Vector3 target = transform.position + _aimDirection * m_aimAssistPresset.GetMaxDistance;
+        //Draw base Aim
+        Gizmos.DrawLine(transform.position, target);
+
+        Gizmos.color = Color.green;
+        target = transform.position + _correctedAimDirection * m_aimAssistPresset.GetMaxDistance;
+        //Draw base Aim
+        Gizmos.DrawLine(transform.position, target);
+    }
+#endif
 }

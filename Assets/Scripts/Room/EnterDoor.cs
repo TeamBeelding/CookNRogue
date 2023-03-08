@@ -37,11 +37,11 @@ public class EnterDoor : MonoBehaviour
     {
         if (door != null)
         {
-            StartCoroutine(OpenDoor());
+            StartCoroutine(IOpenDoor());
         }
     }
 
-    IEnumerator OpenDoor()
+    IEnumerator IOpenDoor()
     {
         if (SkinnedMaterials.Length > 0)
         {

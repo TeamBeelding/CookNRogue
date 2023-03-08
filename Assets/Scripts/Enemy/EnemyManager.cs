@@ -48,7 +48,7 @@ public class EnemyManager : MonoBehaviour
 
         if(numOfEnemies <= 0 && OnAllEnnemiesKilled != null)
         {
-            OnAllEnnemiesKilled();
+            OnAllEnnemiesKilled?.Invoke();
         }
     }
 

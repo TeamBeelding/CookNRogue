@@ -5,10 +5,10 @@ using UnityEngine;
 public class Knockback : IIngredientEffects
 {
     [Header("knockback")]
-    public float KnockbackForce;
+    [SerializeField] float m_knockbackForce;
 
     //EFFET LORS DU SHOOT
-    public void EffectOnShoot()
+    public void EffectOnShoot(Vector3 Position, GameObject bullet)
     {
         Debug.Log("KnockbackShootEffect");
     }
@@ -20,7 +20,7 @@ public class Knockback : IIngredientEffects
             if (HitObject.GetComponent<Rigidbody>())
             {
                 
-                HitObject.GetComponent<Rigidbody>().AddForce((direction.normalized + Vector3.up)* KnockbackForce, ForceMode.Impulse);
+                HitObject.GetComponent<Rigidbody>().AddForce((direction.normalized)* m_knockbackForce, ForceMode.Impulse);
             }
         }
         

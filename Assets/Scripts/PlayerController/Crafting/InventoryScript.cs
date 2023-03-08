@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class InventoryScript : MonoBehaviour
 {
-    public static InventoryScript instance;
+    public static InventoryScript _instance;
+    public LeoScrolling _scroll;
     [SerializeField]
-    PlayerAttack attack;
+    PlayerAttack m_attack;
     public List<ProjectileData> projectilesData;
     public GameObject UI_Inventory;
     public GameObject SlotsContainer;
-    List<ProjectileData> recipe;
+    public List<ProjectileData> recipe;
 
     [SerializeField]
     int numberOfIngredients;
@@ -18,10 +19,10 @@ public class InventoryScript : MonoBehaviour
 
     void Awake()
     {
-        if (instance != null && instance != this)
+        if (_instance != null && _instance != this)
             Destroy(gameObject);    // Suppression d'une instance pr�c�dente (s�curit�...s�curit�...)
 
-        instance = this;
+        _instance = this;
     }
     private void Start()
     {
@@ -41,21 +42,18 @@ public class InventoryScript : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.C) && projectilesData.Count >= numberOfIngredients)
+        if (Input.GetKeyDown(KeyCode.C))
         {
+            Debug.Log(numberOfIngredients);
             Craft();
         }
     }
     public void Craft()
     {
-        if(projectilesData.Count < numberOfIngredients)
-        {
+
+        if (recipe.Count < numberOfIngredients)
             return;
-        }
-
-        //Clear la Liste d'ingredients precedente
-        recipe.Clear();
-
+        /*
         //Fusionne les proprietes des differents ingredients
         for (int i = 0; i < numberOfIngredients; i++)
         {
@@ -63,33 +61,51 @@ public class InventoryScript : MonoBehaviour
             recipe.Add(projectilesData[rand]);
             projectilesData.RemoveAt(rand);
         }
-
+        */
         //Rafraichit l'affichage de l'inventaire
         RefreshInventoryUI();
 
         //Reinitialise les parametres de l'attaque precedente
-        attack.ResetParameters();
+        m_attack.ResetParameters();
 
         //Fusionne les effets et stats des differents ingredients
         foreach (ProjectileData ingredient in recipe)
         {
-            attack.size += ingredient.size;
-            attack.speed += ingredient.speed;
-            attack.drag += ingredient.drag;
-            attack.heavyAttackDelay += ingredient.heavyAttackDelay;
-            attack.heavyDamage += ingredient.heavyDamage;
-            attack.lightAttackDelay += ingredient.lightAttackDelay;
-            attack.lightDamage += ingredient.lightDamage;
+
+            m_attack._size += ingredient._size;
+            m_attack._speed += ingredient._speed;
+            m_attack._drag += ingredient._drag;
+            m_attack._heavyAttackDelay += ingredient._heavyAttackDelay;
+            m_attack._heavyDamage += ingredient._heavyDamage;
+            m_attack._lightAttackDelay += ingredient._lightAttackDelay;
+            m_attack._lightDamage += ingredient._lightDamage;
 
             //AJOUT DES EFFETS DANS LE SCRIPT D'ATTAQUE
-            attack.effects.Add(ingredient.effect);
+            foreach(IIngredientEffects effect in ingredient._effects)
+            {
+                m_attack._effects.Add(effect);
+            }
+            
 
         }
+
+        foreach (IIngredientEffects effect in m_attack._effects)
+        {
+            if (effect is MultipleShots)
+            {
+                MultipleShots TempEffect = (MultipleShots)effect;
+                m_attack._ProjectileNbr = TempEffect._shotNbr;
+                m_attack._TimeBtwShotsRafale = TempEffect._TimebtwShots;
+            }
+        }
+        //Clear la Liste d'ingredients
+        recipe.Clear();
+       
     }
-    public void AddIngredientToList(ProjectileData data)
+    public void AddIngredientToInventory(ProjectileData data)
     {
         projectilesData.Add(data);
-
+        _scroll.ReloadUI();
         RefreshInventoryUI();
     }
 
