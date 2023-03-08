@@ -136,13 +136,13 @@ public class CameraController : MonoBehaviour
         if (shake)
         {
             shake = false;
-            StartCoroutine(Shake());
+            StartCoroutine(IShake());
         }
 
         if (zoom)
         {
             zoom = false;
-            StartCoroutine(Zoom());
+            StartCoroutine(IZoom());
         }
     }
 
@@ -180,10 +180,10 @@ public class CameraController : MonoBehaviour
 
     public void ScreenShake() 
     {
-        StartCoroutine(Shake());
+        StartCoroutine(IShake());
     }
 
-    IEnumerator Shake()
+    IEnumerator IShake()
     {
         // set a variable for the elapse
         float elapsedTime = 0f;
@@ -206,10 +206,10 @@ public class CameraController : MonoBehaviour
 
     public void ScreenZoom()
     {
-        StartCoroutine(Zoom());
+        StartCoroutine(IZoom());
     }
 
-    IEnumerator Zoom()
+    IEnumerator IZoom()
     {
         // set a variable for the elapse
         float elapsedTime = 0f;

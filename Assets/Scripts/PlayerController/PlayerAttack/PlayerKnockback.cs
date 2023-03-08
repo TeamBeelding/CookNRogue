@@ -7,12 +7,13 @@ public class PlayerKnockback : MonoBehaviour
     [SerializeField]
     private AnimationCurve PlayerKnockCurve;
 
-    [SerializeField]
-    private bool isKnocked = false;
+    public bool isKnocked = false;
 
     [SerializeField]
-    private float knockTime = 1;
+    private float knockTime = 0.1f;
 
+    [SerializeField]
+    private float knockDistance = 0.5f;
 
     // Start is called before the first frame update
     void Start()
@@ -25,28 +26,32 @@ public class PlayerKnockback : MonoBehaviour
     {
         if (isKnocked)
         {
-            StartCoroutine(Zoom());
+            StartKnockback();
             isKnocked = false;
         }
     }
 
-    IEnumerator Zoom()
+    public void StartKnockback() 
+    {
+        StartCoroutine(IKnockback());
+    }
+
+    IEnumerator IKnockback()
     {
         // set a variable for the elapse
         float elapsedTime = 0f;
         // Getting start position of shake gimble in local space
         while (elapsedTime < knockTime)
         {
+
             // adding time to counter
             elapsedTime += Time.deltaTime;
             // strength of the curve at specific time. So strength over time (The y axis being strength, and x being time)
-            float movement = PlayerKnockCurve.Evaluate(elapsedTime / knockTime);
-            Debug.Log(movement);
+            float movement = PlayerKnockCurve.Evaluate(elapsedTime / knockTime) * knockDistance;
             // changing the local postion of shake gimble inside the unit circle, so random position in a circle and adding the start position.
-            transform.localPosition = new Vector3(-movement, 0, 0);
+            transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, -movement);
             yield return null;
         }
     }
-
 
 }

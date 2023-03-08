@@ -264,6 +264,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffd8c756d3b1b2140aaa41c23b9b2651, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_currentHealthValue: 10
+  m_maxHealthValue: 10
   m_rotationSpeed: 30
   m_moveSpeed: 20
   m_maxMoveSpeed: 5
@@ -274,6 +276,8 @@ MonoBehaviour:
   m_interactionMask:
     serializedVersion: 2
     m_Bits: 64
+  m_aimAssistPresset: {fileID: 11400000, guid: 40141add18218fc45b20289473d932ce, type: 2}
+  takeDamageTransition: {fileID: 0}
 --- !u!114 &6518352296090205762
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -296,6 +300,7 @@ MonoBehaviour:
   heavyDamage: 0
   lightAttackDelay: 0
   lightDamage: 0
+  _shootCooldown: 0
 --- !u!114 &6518352296090205763
 MonoBehaviour:
   m_ObjectHideFlags: 0

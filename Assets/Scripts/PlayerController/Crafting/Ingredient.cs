@@ -6,8 +6,9 @@ using TNRD;
 
 public class Ingredient : MonoBehaviour, IInteractable
 {
-    public ProjectileData projectileData;
-    [SerializeField] private SerializableInterface<IIngredientEffects> effect;
+    public ProjectileData _projectileData;
+    [SerializeField]
+    private List<SerializableInterface<IIngredientEffects>> m_effects;
 
     public void Interactable(bool isInteractable)
     {
@@ -15,18 +16,26 @@ public class Ingredient : MonoBehaviour, IInteractable
     }
     public void Interact(string tag)
     {
-        InventoryScript.instance.AddIngredientToList(projectileData);
+        InventoryScript._instance.AddIngredientToInventory(_projectileData);
         Destroy(gameObject);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        //Add effect to projectile data
-        var clone = Instantiate(projectileData);
-        clone.effect = effect.Value;
-        InventoryScript.instance.AddIngredientToList(clone);
+        if(other.tag == "Player")
+        {
+            //Add effect to projectile data
+            var clone = Instantiate(_projectileData);
+            clone._effects = new List<IIngredientEffects>();
+            foreach (SerializableInterface<IIngredientEffects> effect in m_effects)
+            {
+                clone._effects.Add(effect.Value);
+            }
 
-        Destroy(gameObject);
+            InventoryScript._instance.AddIngredientToInventory(clone);
+            Destroy(gameObject);
+        }
+
     }
 
 }
