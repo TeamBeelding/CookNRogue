@@ -1,65 +1,102 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
+    private static EnemyManager _instance;
+
     [SerializeField]
-    private GameObject[] EnemiesInLevel;
+    private List<EnemyController> _enemiesInLevel;
 
     public int numOfEnemies;
 
-    [SerializeField] 
-    private float timeEnemyDeathCheck;
+    public event Action OnAllEnnemiesKilled;
 
-    [SerializeField]
-    private float time;
-
-    void Start()
+    public static EnemyManager Instance
     {
-        time = timeEnemyDeathCheck;
+        get { return _instance; }
+    }
+   
+    public EnemyController[] EnemiesInLevel
+    {
+        get { return _enemiesInLevel.ToArray(); }
     }
 
-    void Update()
+    private void Awake()
     {
-        time -= Time.deltaTime;
-        if (time <= 0)
+        if (_instance != null && _instance != this)
         {
-            time = timeEnemyDeathCheck;
-            Countdown();
+            Destroy(this);
+        }
+
+        _instance = this;
+    }
+
+    public void AddEnemyToLevel(EnemyController enemy)
+    {
+        _enemiesInLevel.Add(enemy);
+        numOfEnemies++;
+    }
+
+    public void RemoveEnemyFromLevel(EnemyController enemy)
+    {
+        _enemiesInLevel.Remove(enemy);
+        numOfEnemies--;
+
+        if(numOfEnemies <= 0 && OnAllEnnemiesKilled != null)
+        {
+            OnAllEnnemiesKilled?.Invoke();
         }
     }
 
     public void DestroyAll()
     {
-        if (EnemiesInLevel != null) 
+        if (_enemiesInLevel != null) 
         {
-            Debug.Log("Enemey Delete");
-            for (int i = 0; i < EnemiesInLevel.Length; i++)
+            int StartCount = _enemiesInLevel.Count;
+            for (int i = StartCount - 1; i >= 0; i--)
             {
-                Destroy(EnemiesInLevel[i]);
+                EnemyController current = _enemiesInLevel[i];
+                RemoveEnemyFromLevel(current);
+                Destroy(current.gameObject);
             }
         }
-    }
-
-    void Countdown()
-    {
-        //yield return new WaitForSeconds(seconds);
-        if (GameObject.FindGameObjectWithTag("Enemy"))
-        {
-            EnemiesInLevel = GameObject.FindGameObjectsWithTag("Enemy");
-        }
-
-        numOfEnemies = EnemiesInLevel.Length;
-
-        if (!EnemiesInLevel[0])
-        {
-            if (GameObject.Find("Porte")) 
-            {
-                GameObject.Find("Porte").SetActive(false);
-            }
-        }
-
-        Debug.Log("Enemy");
     }
 }
+
+
+#if UNITY_EDITOR
+[CustomEditor(typeof(EnemyManager))]
+public class EnemyManagerEditor : Editor
+{
+    public override void OnInspectorGUI()
+    {
+
+        DrawDefaultInspector();
+        //EnemyManager enemies = (EnemyManager)target;
+
+        EditorGUILayout.Separator();
+
+        EditorGUILayout.LabelField("TOOLS: ", "");
+        GuiLine(1);
+
+        if (GUILayout.Button("Kill All Enemies In Level"))
+        {
+            EnemyManager.Instance.DestroyAll();
+        }
+
+        EditorGUILayout.Separator();
+    }
+
+    void GuiLine(int i_height = 1)
+    {
+        Rect rect = EditorGUILayout.GetControlRect(false, i_height);
+        rect.height = i_height;
+        EditorGUI.DrawRect(rect, new Color(0.5f, 0.5f, 0.5f, 1));
+        EditorGUILayout.Separator();
+    }
+}
+#endif

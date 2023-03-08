@@ -45,17 +45,17 @@ public class PlayerSetup : EditorWindow
         GUILayout.Space(20);
         GUILayout.BeginVertical();
         GUILayout.Label("Physics & Movements", EditorStyles.boldLabel);
-        _playerAttack.size = EditorGUILayout.FloatField("Size", _playerAttack.size);
-        _playerAttack.speed = EditorGUILayout.FloatField("Speed", _playerAttack.speed);
-        _playerAttack.drag = EditorGUILayout.FloatField("Drag", _playerAttack.drag);
+        _playerAttack._size = EditorGUILayout.FloatField("Size", _playerAttack._size);
+        _playerAttack._speed = EditorGUILayout.FloatField("Speed", _playerAttack._speed);
+        _playerAttack._drag = EditorGUILayout.FloatField("Drag", _playerAttack._drag);
         GUILayout.EndVertical();
         GUILayout.Space(20);
         GUILayout.BeginVertical();
         GUILayout.Label("Attack", EditorStyles.boldLabel);
-        _playerAttack.heavyAttackDelay = EditorGUILayout.FloatField("Heavy Attack Delay", _playerAttack.heavyAttackDelay);
-        _playerAttack.heavyDamage = EditorGUILayout.FloatField("Heavy Attack Damage", _playerAttack.heavyDamage);
-        _playerAttack.lightAttackDelay = EditorGUILayout.FloatField("Light Attack Delay", _playerAttack.lightAttackDelay);
-        _playerAttack.lightDamage = EditorGUILayout.FloatField("Light Attack Damage", _playerAttack.lightDamage);
+        _playerAttack._heavyAttackDelay = EditorGUILayout.FloatField("Heavy Attack Delay", _playerAttack._heavyAttackDelay);
+        _playerAttack._heavyDamage = EditorGUILayout.FloatField("Heavy Attack Damage", _playerAttack._heavyDamage);
+        _playerAttack._lightAttackDelay = EditorGUILayout.FloatField("Light Attack Delay", _playerAttack._lightAttackDelay);
+        _playerAttack._lightDamage = EditorGUILayout.FloatField("Light Attack Damage", _playerAttack._lightDamage);
         GUILayout.EndVertical();
     }
 }
