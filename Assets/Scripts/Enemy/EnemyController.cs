@@ -10,63 +10,46 @@ using Random = UnityEngine.Random;
 public abstract class EnemyController : MonoBehaviour, IState
 {
     protected PlayerController Player;
+    
     [SerializeField] 
     protected EnemyData data;
-
     private Renderer _rend;
-    private Rigidbody _rigidbody;
     private MeshRenderer _meshRenderer;
     private NavMeshAgent _agent;
     private CapsuleCollider _collider;
     
     [SerializeField]
-    private ParticleSystem destructSystem;
+    private ParticleSystem m_destructSystem;
     [SerializeField]
-    private ParticleSystem stateSystem;
+    private ParticleSystem m_stateSystem;
     private Renderer stateRenderer;
     
     private IEnumerator colorCoroutine;
     
     [SerializeField]
-    private GameObject gun;
+    private GameObject m_gun;
     [SerializeField]
-    private GameObject visual;
+    private GameObject m_visual;
     [SerializeField]
-    private GameObject bullet;
-    // [SerializeField] 
-    // private Transform[] paths;
+    private GameObject m_bullet;
 
-    // private int _destPoint = 0;
-    
     protected bool _focusPlayer = false;
     private bool _canAttack = true;
     
-    private float healthpoint;
-
-    // [Serializable]
-    // private struct ShakingParams
-    // {
-    //     public float elapsed;
-    //     public float duration;
-    //     public float magnitude;
-    // }
-
-    // [SerializeField]
-    // private ShakingParams shakingParams;
+    protected float healthpoint;
 
     protected void Awake()
     {
         _rend = GetComponentInChildren<Renderer>();
         _meshRenderer = GetComponentInChildren<MeshRenderer>();
         _collider = GetComponent<CapsuleCollider>();
-        _rigidbody = GetComponent<Rigidbody>();
         _agent = GetComponent<NavMeshAgent>();
         _agent.speed = data.GetSpeed();
         _agent.stoppingDistance = data.GetAttackRange();
         _focusPlayer = data.GetFocusPlayer();
         healthpoint = data.GetHealth();
 
-        stateRenderer = stateSystem.GetComponent<Renderer>();
+        stateRenderer = m_stateSystem.GetComponent<Renderer>();
 
         AddToEnemyManager();
     }
@@ -96,21 +79,21 @@ public abstract class EnemyController : MonoBehaviour, IState
     {
         _agent.SetDestination(Player.transform.position);
         stateRenderer.material.color = Color.yellow;
-        stateSystem.gameObject.SetActive(true);
+        m_stateSystem.gameObject.SetActive(true);
     }
     
     // ReSharper disable Unity.PerformanceAnalysis
     protected void Attack()
     {
         stateRenderer.material.color = Color.red;
-        stateSystem.gameObject.SetActive(true);
+        m_stateSystem.gameObject.SetActive(true);
         
         if (_canAttack)
         {
-            GameObject shot = Instantiate(bullet, gun.transform.position, Quaternion.identity);
+            GameObject shot = Instantiate(m_bullet, m_gun.transform.position, Quaternion.identity);
             shot.GetComponent<EnemyBulletController>().SetDirection(Player.transform);
             _canAttack = false;
-            StartCoroutine(AttackTimer());
+            StartCoroutine(IAttackTimer());
         }
     }
     
@@ -118,39 +101,12 @@ public abstract class EnemyController : MonoBehaviour, IState
     
     #region TakeDamage
 
-    public void TakeDamage(float damage = 1)
-    {
-        ReduiceHealth(damage);
-        StartCoroutine(ColorationFeedback());
-    }
-
-    private void ReduiceHealth(float damage)
+    public virtual void TakeDamage(float damage = 1)
     {
         damage = Mathf.Abs(damage);
         healthpoint -= damage;
-
-        // if (healthpoint <= 0)
-        // {
-        //     state = State.Dying;
-        // }
-    }
-
-    public void KnockBack()
-    {
-        _rigidbody.constraints = RigidbodyConstraints.None;
         
-        StopCoroutine(StoppingForce());
-        
-        Vector3 direction = transform.position - Player.transform.position;
-        direction.Normalize();
-        
-        _rigidbody.AddForce(direction * data.GetRecoilForce(), ForceMode.Impulse);
-        StartCoroutine(StoppingForce());
-    }
-
-    public void ColorFeedback()
-    {
-        StartCoroutine(ColorationFeedback());
+        StartCoroutine(IColorationFeedback());
     }
 
     protected void Dying()
@@ -160,14 +116,14 @@ public abstract class EnemyController : MonoBehaviour, IState
         StopAllCoroutines();
         
         _collider.enabled = false;
-        stateSystem.gameObject.SetActive(false);
-        visual.SetActive(false);
+        m_stateSystem.gameObject.SetActive(false);
+        m_visual.SetActive(false);
         DestroyEffect();
         Destroy(gameObject, 1f);
     }
     
     // Color the enemy red for a short time to indicate that he has been hit
-    private IEnumerator ColorationFeedback()
+    private IEnumerator IColorationFeedback()
     {
         for (int i = 0; i < 5; i++)
         {
@@ -178,7 +134,7 @@ public abstract class EnemyController : MonoBehaviour, IState
         }
     }
 
-    private IEnumerator AttackTimer()
+    private IEnumerator IAttackTimer()
     {
         LerpColor(_rend, Color.red, data.GetAttackSpeed());
         yield return new WaitForSeconds(data.GetAttackSpeed());
@@ -188,13 +144,6 @@ public abstract class EnemyController : MonoBehaviour, IState
     
     #endregion
 
-    // Stop the enemy from moving after receiving a recoil force
-    private IEnumerator StoppingForce()
-    {
-        yield return new WaitForSeconds(.5f);
-        _rigidbody.velocity = Vector3.zero;
-    }
-
     //Add to enemy manager
     private void AddToEnemyManager()
     {
@@ -203,21 +152,21 @@ public abstract class EnemyController : MonoBehaviour, IState
 
     #region Effect
 
-    public void DestroyEffect()
+    private void DestroyEffect()
     {
-        if (destructSystem)
-            destructSystem.gameObject.SetActive(true);
+        if (m_destructSystem)
+            m_destructSystem.gameObject.SetActive(true);
     }
 
     // Lerp color of the enemy
     private void LerpColor(Renderer r, Color color, float t)
     {
-        colorCoroutine = LerpColorCoroutine(r, color, t);
+        colorCoroutine = ILerpColorCoroutine(r, color, t);
         StopCoroutine(colorCoroutine);
         StartCoroutine(colorCoroutine);
     }
     
-    private IEnumerator LerpColorCoroutine(Renderer r, Color color, float t)
+    private IEnumerator ILerpColorCoroutine(Renderer r, Color color, float t)
     {
         Color current = r.material.color;
         float elapsed = 0.0f;

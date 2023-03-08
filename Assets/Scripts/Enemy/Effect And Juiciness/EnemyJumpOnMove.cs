@@ -7,10 +7,10 @@ using UnityEngine.Serialization;
 public class EnemyJumpOnMove : MonoBehaviour
 {
     [SerializeField] private AnimationCurve m_jumpCurve;
-    [SerializeField] private float jumpFrequency = 0.05f;
+    [SerializeField] private float m_jumpFrequency = 0.05f;
     private float jumpTimer = 0f;
     private float currentJumpHeight = 0f;
-    [SerializeField] private float jumpHeight = 0f;
+    [SerializeField] private float m_jumpHeight = 0f;
     private float jumpRatio;
 
     private EnemyController enemy;
@@ -41,11 +41,11 @@ public class EnemyJumpOnMove : MonoBehaviour
         {
             jumpTimer += Time.deltaTime;
         
-            jumpRatio = (jumpTimer % jumpFrequency) / jumpFrequency;
+            jumpRatio = (jumpTimer % m_jumpFrequency) / m_jumpFrequency;
         
             jumpRatio = m_jumpCurve.Evaluate(jumpRatio);
         
-            currentJumpHeight = jumpRatio * jumpHeight;
+            currentJumpHeight = jumpRatio * m_jumpHeight;
         
             localPos.y += currentJumpHeight;
         }

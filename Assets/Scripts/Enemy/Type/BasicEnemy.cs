@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class BasicEnemy : EnemyController, IState
+public class BasicEnemy : EnemyController
 {
     public enum State
     {
@@ -14,7 +14,7 @@ public class BasicEnemy : EnemyController, IState
     }
 
     public State state;
-
+    
     private new void Awake()
     {
         base.Awake();
@@ -121,5 +121,15 @@ public class BasicEnemy : EnemyController, IState
     public override bool IsMoving()
     {
         return state == State.Chase;
+    }
+
+    public override void TakeDamage(float damage = 1)
+    {
+        base.TakeDamage(damage);
+        
+        if (healthpoint <= 0)
+        {
+            state = State.Dying;
+        }
     }
 }

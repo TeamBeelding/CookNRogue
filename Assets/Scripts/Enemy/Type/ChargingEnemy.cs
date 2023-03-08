@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChargingEnemy : MonoBehaviour, IState
+public class ChargingEnemy : EnemyController
 {
     // Start is called before the first frame update
     private void Start()
@@ -14,6 +14,11 @@ public class ChargingEnemy : MonoBehaviour, IState
     private void Update()
     {
         
+    }
+
+    public override bool IsMoving()
+    {
+        return false;
     }
 
     public enum State
@@ -37,6 +42,30 @@ public class ChargingEnemy : MonoBehaviour, IState
     
     private void IStateManagement()
     {
+        switch (state)
+        {
+            case State.Dashing:
+                break;
+            case State.Casting:
+                break;
+            case State.Dying:
+                Dying();
+                break;
+        }
+    }
+    
+    private void Dash()
+    {
         
+    }
+    
+    private void Cast()
+    {
+        
+    }
+    
+    private new void Dying()
+    {
+        base.Dying();
     }
 }

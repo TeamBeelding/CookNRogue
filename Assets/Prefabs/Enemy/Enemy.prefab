@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 490897484666988991}
   - component: {fileID: 490897484666988985}
   - component: {fileID: 490897484666988988}
-  - component: {fileID: 490897484666988989}
   - component: {fileID: 2622071322217477621}
   m_Layer: 0
   m_Name: Enemy
@@ -91,30 +90,6 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &490897484666988989
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 490897484666988982}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7acb711e5373f3d428dc16a791cb259f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  state: 0
-  data: {fileID: 11400000, guid: 402439512b08727408d48838f0447ae2, type: 2}
-  destructSystem: {fileID: 1224374792048117031}
-  stateSystem: {fileID: 1721084446442806959}
-  gun: {fileID: 490897484910083895}
-  visual: {fileID: 6088391860156414324}
-  bullet: {fileID: 1646218331480662972, guid: c0ed5f524013bca43882139c5df1db26, type: 3}
-  paths: []
-  shakingParams:
-    elapsed: 0
-    duration: 0.15
-    magnitude: 0.5
 --- !u!114 &2622071322217477621
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -127,19 +102,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c8c9b8c080a57e4982b788b2d1a6ebb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  state: 0
   data: {fileID: 11400000, guid: 402439512b08727408d48838f0447ae2, type: 2}
-  destructSystem: {fileID: 1224374792048117031}
-  stateSystem: {fileID: 1721084446442806959}
-  gun: {fileID: 490897484910083895}
-  visual: {fileID: 6088391860156414324}
-  bullet: {fileID: 1646218331480662972, guid: c0ed5f524013bca43882139c5df1db26, type: 3}
-  paths: []
-  shakingParams:
-    elapsed: 0
-    duration: 0.15
-    magnitude: 0.5
-  currentState: 0
+  m_destructSystem: {fileID: 1224374792048117031}
+  m_stateSystem: {fileID: 1721084446442806959}
+  m_gun: {fileID: 490897484910083895}
+  m_visual: {fileID: 6088391860156414324}
+  m_bullet: {fileID: 1646218331480662972, guid: c0ed5f524013bca43882139c5df1db26,
+    type: 3}
+  state: 0
 --- !u!1 &490897484910083895
 GameObject:
   m_ObjectHideFlags: 0
@@ -292,8 +262,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  jumpFrequency: 0.25
-  jumpHeight: 0.25
+  m_jumpFrequency: 0.25
+  m_jumpHeight: 0.25
   GuiDebug: 0
 --- !u!1001 &5541374613110154218
 PrefabInstance:
