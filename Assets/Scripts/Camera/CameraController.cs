@@ -83,6 +83,9 @@ public class CameraController : MonoBehaviour
     // This can be usfull for bosses, special items in the room ect..
     [SerializeField]
     private Transform Target;
+    [SerializeField]
+    private float CameraAimDistance;
+    private float CurrentMagnitude = 0;
 
     void Start()
     {
@@ -90,6 +93,7 @@ public class CameraController : MonoBehaviour
 
         //MainCamera.position += OffsetCoord;
         MainCamera.rotation *= OffsetRotation;
+        MainCamera.position += OffsetCoord;
 
         // To get the child transform of the camera for the shake
         ShakeGimble = MainCamera.GetChild(0).GetComponent<Transform>();
@@ -106,13 +110,15 @@ public class CameraController : MonoBehaviour
         // When target is removed (=null) Camera will start following the player again
         if (Target == null)
         {
+            CurrentMagnitude = CameraPlayerTarget.gameObject.GetComponent<PlayerController>().AimInputValue;
 
             if (CameraPlayerTarget.gameObject.GetComponent<PlayerController>()._isAiming)
             {
                 MainCamera.position = Vector3.Lerp(MainCamera.position,
-                OffsetCoord + AimPlayerTarget.position, smoothSpeed * 2f * Time.deltaTime);
+                    AimPlayerTarget.position + CameraPlayerTarget.gameObject.GetComponent<PlayerController>().PlayerAimDirection + OffsetCoord, //* CurrentMagnitude + OffsetCoord, 
+                    smoothSpeed * Time.deltaTime);
             }
-            else 
+            else
             {
                 MainCamera.position = Vector3.Lerp(MainCamera.position, CameraPlayerTarget.position + OffsetCoord, smoothSpeed * Time.deltaTime);
             }

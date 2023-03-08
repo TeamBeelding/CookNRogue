@@ -81,6 +81,11 @@ public class PlayerController : MonoBehaviour
     Vector2 _moveInputValue;
     Vector2 _aimInputValue;
 
+    public float AimInputValue
+    {
+        get => _aimInputValue.magnitude; 
+    }
+
     [HideInInspector]
     public bool _isAiming = false;
     bool _isAimingOnMouse = false;
@@ -328,7 +333,7 @@ public class PlayerController : MonoBehaviour
         _isAimingOnMouse = false;
         _aimInputValue = Vector2.zero;
 
-        m_aimArrow.SetActive(false);
+        //m_aimArrow.SetActive(false);
     }
 
     #endregion
