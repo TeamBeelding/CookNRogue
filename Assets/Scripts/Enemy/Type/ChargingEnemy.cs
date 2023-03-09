@@ -59,7 +59,6 @@ public class ChargingEnemy : EnemyController
                 Casting();
                 break;
             case State.Dashing:
-                Debug.Log("Dashing");
                 Dashing();
                 break;
             case State.Dying:
@@ -79,7 +78,7 @@ public class ChargingEnemy : EnemyController
     private void Casting()
     {
         isCharging = false;
-        StartCasting();
+        castingCoroutine = StartCoroutine(ICasting());
     }
     
     private new void Dying()
@@ -94,11 +93,6 @@ public class ChargingEnemy : EnemyController
         StopCasting();
         SetState(State.Casting);
     }
-    
-    private void StartCasting()
-    {
-        castingCoroutine = StartCoroutine(ICasting());
-    }
 
     private void StopCasting()
     {
@@ -108,16 +102,11 @@ public class ChargingEnemy : EnemyController
     
     private Vector3 GetPlayerDirection()
     {
-    //     if (isCharging)
-    //         return Vector3.zero;
-    //     else
-    //     {
-            isCharging = true;
-            Vector3 direction = (player.transform.position - transform.position).normalized;
-            direction.y = 0;
-
-            return direction;
-        // }
+        isCharging = true;
+        Vector3 direction = (player.transform.position - transform.position).normalized;
+        direction.y = 0;
+        
+        return direction;
     }
     
     private void ChargingToPlayer()
@@ -137,7 +126,7 @@ public class ChargingEnemy : EnemyController
     {
         if (other.gameObject.CompareTag("Wall"))
         {
-            Debug.Log($"HitSomething {other.gameObject.name}");
+            Debug.Log($"HitSomething {other.gameObject.name} {other.gameObject.tag}");
             SetState(State.Casting);
         }
         
