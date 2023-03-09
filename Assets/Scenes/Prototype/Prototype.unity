@@ -631,7 +631,6 @@ MonoBehaviour:
   - {fileID: 1412149176}
   - {fileID: 1487474673}
   - {fileID: 2098460802}
-  ItemImages: []
   Pointerindex: 0
 --- !u!95 &403041109
 Animator:
@@ -3311,6 +3310,7 @@ GameObject:
   - component: {fileID: 6518352297035687739}
   - component: {fileID: 6518352297035687740}
   - component: {fileID: 6518352297035687741}
+  - component: {fileID: 6518352297035687742}
   - component: {fileID: 6518352297035687736}
   - component: {fileID: 6518352297035687737}
   m_Layer: 7
@@ -3433,14 +3433,30 @@ MonoBehaviour:
   m_GameObject: {fileID: 6518352297035687734}
   m_Enabled: 1
   m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f63e76e8eefff194e938bba803e128a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  container: {fileID: 403041107}
+  Defaultsprite: {fileID: 0}
+  Items: []
+  Pointerindex: 0
+--- !u!114 &6518352297035687742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6518352297035687734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 41faddc5fc4364f44b4dfa846756a183, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scroll: {fileID: 403041108}
+  _scroll: {fileID: 6518352297035687741}
   m_attack: {fileID: 6518352297035687740}
   projectilesData: []
-  UI_Inventory: {fileID: 574202258}
-  SlotsContainer: {fileID: 403041106}
+  UI_Inventory: {fileID: 0}
+  SlotsContainer: {fileID: 0}
   recipe: []
   numberOfIngredients: 3
 --- !u!4 &6518352297434094414

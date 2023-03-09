@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InventoryScript : MonoBehaviour
+public class PlayerInventoryScript : MonoBehaviour
 {
-    public static InventoryScript _instance;
-    public LeoScrolling _scroll;
+    public static PlayerInventoryScript _instance;
+    public PlayerInventoryScrolling _scroll;
     [SerializeField]
     PlayerAttack m_attack;
     public List<ProjectileData> projectilesData;
@@ -50,9 +50,12 @@ public class InventoryScript : MonoBehaviour
     }
     public void Craft()
     {
-
         if (recipe.Count < numberOfIngredients)
+        {
+            _scroll.SelectIngredient();
             return;
+        }
+
         /*
         //Fusionne les proprietes des differents ingredients
         for (int i = 0; i < numberOfIngredients; i++)
@@ -105,12 +108,11 @@ public class InventoryScript : MonoBehaviour
     public void AddIngredientToInventory(ProjectileData data)
     {
         projectilesData.Add(data);
-        _scroll.ReloadUI();
         RefreshInventoryUI();
     }
 
     public void RefreshInventoryUI()
     {
-        //Rafraichit l'affichage de l'inventaire
+        _scroll.ReloadUI();
     }
 }
