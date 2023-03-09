@@ -46,19 +46,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 014018f03101ef1479a35bb79d205c72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectileData: {fileID: 11400000, guid: 496a317e0266cc5489a052a83227a782, type: 2}
-  effects:
+  _projectileData: {fileID: 11400000, guid: 496a317e0266cc5489a052a83227a782, type: 2}
+  m_effects:
   - mode: 1
     unityReference: {fileID: 0}
     rawReference:
-      rid: 7565062378547314701
+      rid: 7565062387207241729
   references:
     version: 2
     RefIds:
-    - rid: 7565062378547314701
+    - rid: 7565062387207241729
       type: {class: Boomerang, ns: , asm: Assembly-CSharp}
       data:
-        forward:
+        _forward:
           serializedVersion: 2
           m_Curve:
           - serializedVersion: 3
@@ -109,7 +109,7 @@ MonoBehaviour:
           m_PreInfinity: 2
           m_PostInfinity: 2
           m_RotationOrder: 4
-        sides:
+        _sides:
           serializedVersion: 2
           m_Curve:
           - serializedVersion: 3
@@ -151,9 +151,9 @@ MonoBehaviour:
           m_PreInfinity: 2
           m_PostInfinity: 2
           m_RotationOrder: 4
-        Speed: 5
-        MaxForwardDistance: 15
-        MaxSideDistance: 5
+        _Speed: 5
+        _MaxForwardDistance: 15
+        _MaxSideDistance: 5
 --- !u!54 &4859087939849403292
 Rigidbody:
   m_ObjectHideFlags: 0

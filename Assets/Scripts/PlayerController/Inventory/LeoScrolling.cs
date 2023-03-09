@@ -1,12 +1,6 @@
-using JetBrains.Annotations;
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Device;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 public class LeoScrolling : MonoBehaviour
 {
@@ -14,9 +8,6 @@ public class LeoScrolling : MonoBehaviour
     public Sprite Defaultsprite;
     public List <RectTransform> Items;
     public List<Image> ItemImages;
-    bool m_LerpRight = false;
-    bool m_LerpLeft = false;
-    private float m_padding;
     private Animator animator;
     InventoryScript instance;
 
@@ -27,7 +18,7 @@ public class LeoScrolling : MonoBehaviour
     void Start()
     {
 
-        instance = InventoryScript.instance;
+        instance = InventoryScript._instance;
         animator = container.GetComponent<Animator>();
 
         

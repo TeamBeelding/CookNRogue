@@ -6,9 +6,9 @@ using UnityEngine.UIElements;
 public class Explosion : IIngredientEffects
 {
     [Header(" Explosion")]
-    public float ExplosionDamage;
-    public float ExplosionRadius;
-    public float ExplosionForce;
+    [SerializeField] float m_ExplosionDamage;
+    [SerializeField] float m_ExplosionRadius;
+    [SerializeField] float m_ExplosionForce;
 
     //EFFET LORS DU SHOOT
     public void EffectOnShoot(Vector3 Position, GameObject bullet)
@@ -28,7 +28,7 @@ public class Explosion : IIngredientEffects
     {
         
 
-        Collider[] hitColliders = Physics.OverlapSphere(Position, ExplosionRadius);
+        Collider[] hitColliders = Physics.OverlapSphere(Position,m_ExplosionRadius);
 
         foreach(Collider hitCollider in hitColliders)
         {
@@ -41,7 +41,7 @@ public class Explosion : IIngredientEffects
                 if (!hitCollider.CompareTag("Player") && rb != null)
                 {
                 Debug.Log("kaboom");
-                rb.AddExplosionForce(ExplosionForce, Position, ExplosionRadius);
+                rb.AddExplosionForce(m_ExplosionForce, Position, m_ExplosionRadius);
                 }
 
             

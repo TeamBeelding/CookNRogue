@@ -116,7 +116,7 @@ public class PlayerController : MonoBehaviour
         //Set Varialbes
         _rb = GetComponent<Rigidbody>();
         _relativeTransform = m_mainCamera.transform;
-        _scriptInventory = InventoryScript.instance;
+        _scriptInventory = InventoryScript._instance;
         _enemyManager = EnemyManager.Instance;
         _roomManager = RoomManager.instance;
 
@@ -160,7 +160,7 @@ public class PlayerController : MonoBehaviour
         if (_isAimingOnMouse)
         {
             _aimInputValue = Input.mousePosition - m_mainCamera.WorldToScreenPoint(transform.position);
-            _aimMagnitude = _aimInputValue.magnitude / 10;
+            _aimMagnitude = 1f;
         }
 
         //Null Input Check
@@ -332,6 +332,7 @@ public class PlayerController : MonoBehaviour
         _isAiming = false;
         _isAimingOnMouse = false;
         _aimInputValue = Vector2.zero;
+        _aimMagnitude = 0f;
 
         //m_aimArrow.SetActive(false);
     }
@@ -398,15 +399,18 @@ public class PlayerController : MonoBehaviour
 #if UNITY_EDITOR
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.yellow;
-        Vector3 target = transform.position + _aimDirection * m_aimAssistPresset.GetMaxDistance;
-        //Draw base Aim
-        Gizmos.DrawLine(transform.position, target);
+        if (m_aimAssistPresset)
+        {
+            Gizmos.color = Color.yellow;
+            Vector3 target = transform.position + _aimDirection * m_aimAssistPresset.GetMaxDistance;
+            //Draw base Aim
+            Gizmos.DrawLine(transform.position, target);
 
-        Gizmos.color = Color.green;
-        target = transform.position + _correctedAimDirection * m_aimAssistPresset.GetMaxDistance;
-        //Draw base Aim
-        Gizmos.DrawLine(transform.position, target);
+            Gizmos.color = Color.green;
+            target = transform.position + _correctedAimDirection * m_aimAssistPresset.GetMaxDistance;
+            //Draw base Aim
+            Gizmos.DrawLine(transform.position, target);
+        }
     }
 #endif
 }

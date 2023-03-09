@@ -7,12 +7,12 @@ public class AOE : IIngredientEffects
 {
     [Header(" AOE")]
     public GameObject ZONE;
-    public float AOERadius;
-    public float AOEDuration;
-    public float AOEDamage;
-    public float AOETick;
-    public float AOESlowEnnemies;
-    public float AOESSpeedPlayer;
+    [SerializeField] float m_AOERadius;
+    [SerializeField] float m_AOEDuration;
+    [SerializeField] float m_AOEDamage;
+    [SerializeField] float m_AOETick;
+    [SerializeField] float m_AOESlowEnnemies;
+    [SerializeField] float m_AOESSpeedPlayer;
 
     //EFFET LORS DU SHOOT
     public void EffectOnShoot(Vector3 Position, GameObject bullet)
@@ -30,7 +30,7 @@ public class AOE : IIngredientEffects
         {
             //Debug.Log(hit.transform.name);
             GameObject instancedObj = GameObject.Instantiate(ZONE, hit.point, Quaternion.identity) as GameObject;
-            UnityEngine.Object.Destroy(instancedObj, AOEDuration);
+            UnityEngine.Object.Destroy(instancedObj, m_AOEDuration);
         }
  
     }

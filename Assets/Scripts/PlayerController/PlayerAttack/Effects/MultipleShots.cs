@@ -6,8 +6,8 @@ public class MultipleShots : IIngredientEffects
 {
 
     [Header("DoubleSized")]
-    public int shotNbr;
-    public float TimebtwShots;
+    public int _shotNbr;
+    public float _TimebtwShots;
 
 
     //EFFET LORS DU SHOOT
