@@ -84,12 +84,19 @@ public class ChargingEnemy : EnemyController
     private new void Dying()
     {
         StopCasting();
+        
         base.Dying();
     }
     
     public override void TakeDamage(float damage = 1)
     {
-        base.TakeDamage(damage);
+        base.TakeDamage();
+        
+        if (healthpoint <= 0)
+        {
+            state = State.Dying;
+        }
+        
         StopCasting();
         SetState(State.Casting);
     }

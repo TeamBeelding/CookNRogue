@@ -39,6 +39,7 @@ public abstract class EnemyController : MonoBehaviour, IState, IEffectable
     protected bool _focusPlayer = false;
     private bool _canAttack = true;
     
+    [SerializeField]
     protected float healthpoint;
 
     protected void Awake()
@@ -51,7 +52,7 @@ public abstract class EnemyController : MonoBehaviour, IState, IEffectable
         _agent.stoppingDistance = data.GetAttackRange();
         _focusPlayer = data.GetFocusPlayer();
         healthpoint = data.GetHealth();
-
+        
         stateRenderer = m_stateSystem.GetComponent<Renderer>();
 
         player = GameObject.FindGameObjectWithTag("Player");
@@ -175,6 +176,7 @@ public abstract class EnemyController : MonoBehaviour, IState, IEffectable
         _agent.speed = data.GetSpeed();
         _agent.stoppingDistance = data.GetAttackRange();
         _focusPlayer = data.GetFocusPlayer();
+        
         if (_part != null)
             Destroy(_part);
             
