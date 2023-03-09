@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     TransitionController takeDamageTransition;
 
-    public PlayerController Instance
+    public static PlayerController Instance
     {
         get => _instance;
     }
@@ -71,7 +71,7 @@ public class PlayerController : MonoBehaviour
         get => _aimMagnitude;
     }
 
-    PlayerController _instance;
+    static PlayerController _instance;
 
     PlayerActions _playerActions;
 
@@ -88,7 +88,7 @@ public class PlayerController : MonoBehaviour
     Vector3 _correctedAimDirection;
     float _aimMagnitude;
 
-    InventoryScript _scriptInventory;
+    PlayerInventoryScript _inventoryScript;
     EnemyManager _enemyManager;
     RoomManager _roomManager;
     bool _isLocked = false;
@@ -111,7 +111,7 @@ public class PlayerController : MonoBehaviour
         //Set Varialbes
         _rb = GetComponent<Rigidbody>();
         _relativeTransform = m_mainCamera.transform;
-        _scriptInventory = InventoryScript._instance;
+        _inventoryScript = PlayerInventoryScript._instance;
         _enemyManager = EnemyManager.Instance;
         _roomManager = RoomManager.instance;
 
@@ -125,6 +125,8 @@ public class PlayerController : MonoBehaviour
         _playerActions.Default_PlayerActions.Aim.performed += Aim_Performed;
         _playerActions.Default_PlayerActions.Aim.canceled += Aim_Canceled;
         _playerActions.Default_PlayerActions.Craft.performed += Craft;
+        _playerActions.Default_PlayerActions.MoveInventorySlotLeft.performed += MoveInventorySlotLeft;
+        _playerActions.Default_PlayerActions.MoveInventorySlotRight.performed += MoveInventorySlotRight;
 
         _roomManager.OnRoomStart += Spawn;
 
@@ -334,6 +336,23 @@ public class PlayerController : MonoBehaviour
 
     #endregion
 
+    #region Bullet Crafting
+    void Craft(InputAction.CallbackContext context)
+    {
+        _inventoryScript.Craft();
+    }
+
+    void MoveInventorySlotLeft(InputAction.CallbackContext context)
+    {
+        _inventoryScript._scroll.SwitchToLeftIngredient();
+    }
+
+    void MoveInventorySlotRight(InputAction.CallbackContext context)
+    {
+        _inventoryScript._scroll.SwitchToRightIngredient();
+    }
+    #endregion
+
     #region Other Actions
 
     void Shoot(InputAction.CallbackContext context)
@@ -350,12 +369,6 @@ public class PlayerController : MonoBehaviour
             GetComponent<PlayerAttack>().Shoot();
         }
     }
-
-    void Craft(InputAction.CallbackContext context)
-    {
-        _scriptInventory.Craft();
-    }
-
     #endregion
 
     #region Utilities

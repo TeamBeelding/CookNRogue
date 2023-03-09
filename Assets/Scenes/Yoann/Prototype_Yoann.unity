@@ -2183,10 +2183,14 @@ MonoBehaviour:
   m_interactionRange: 0.5
   m_mainCamera: {fileID: 1177456190}
   m_model: {fileID: 6518352296349200059}
+  m_aimArrow: {fileID: 0}
+  aimArrowGrowth: 0.01
+  aimArrowDuration: 1
   m_knockback: {fileID: 6518352296712566022}
   m_interactionMask:
     serializedVersion: 2
     m_Bits: 64
+  m_aimAssistPresset: {fileID: 0}
   takeDamageTransition: {fileID: 353925329}
   _isAiming: 0
 --- !u!114 &6518352297035687740
@@ -2203,6 +2207,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Projectile: {fileID: 1666282856065623693, guid: 4f0c527b1de4f1b408606041297daaf0,
     type: 3}
+  ProjectileNbr: 0
+  TimeBtwShotsRafale: 0
   muzzle: {fileID: 6518352296039825143}
   size: 1
   speed: 20
@@ -2224,10 +2230,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41faddc5fc4364f44b4dfa846756a183, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scroll: {fileID: 0}
   attack: {fileID: 6518352297035687740}
   projectilesData: []
   UI_Inventory: {fileID: 0}
   SlotsContainer: {fileID: 0}
+  recipe: []
   numberOfIngredients: 3
 --- !u!4 &6518352297434094414
 Transform:
