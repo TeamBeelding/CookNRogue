@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     TransitionController takeDamageTransition;
 
-    public PlayerController Instance
+    public static PlayerController Instance
     {
         get => _instance;
     }
@@ -71,7 +71,7 @@ public class PlayerController : MonoBehaviour
         get => _aimMagnitude;
     }
 
-    PlayerController _instance;
+    static PlayerController _instance;
 
     PlayerActions _playerActions;
 

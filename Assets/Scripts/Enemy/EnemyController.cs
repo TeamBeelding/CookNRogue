@@ -9,7 +9,7 @@ using Random = UnityEngine.Random;
 
 public abstract class EnemyController : MonoBehaviour, IState
 {
-    protected PlayerController Player;
+    protected GameObject player;
     
     [SerializeField] 
     protected EnemyData data;
@@ -57,7 +57,7 @@ public abstract class EnemyController : MonoBehaviour, IState
     // Start is called before the first frame update
     protected void Start()
     {
-        Player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        player = PlayerController.Instance.gameObject;
         
         _rend.material.color = Color.white;
     }
@@ -77,7 +77,7 @@ public abstract class EnemyController : MonoBehaviour, IState
 
     protected void Chase()
     {
-        _agent.SetDestination(Player.transform.position);
+        _agent.SetDestination(player.transform.position);
         stateRenderer.material.color = Color.yellow;
         m_stateSystem.gameObject.SetActive(true);
     }
@@ -91,7 +91,7 @@ public abstract class EnemyController : MonoBehaviour, IState
         if (_canAttack)
         {
             GameObject shot = Instantiate(m_bullet, m_gun.transform.position, Quaternion.identity);
-            shot.GetComponent<EnemyBulletController>().SetDirection(Player.transform);
+            shot.GetComponent<EnemyBulletController>().SetDirection(player.transform);
             _canAttack = false;
             StartCoroutine(IAttackTimer());
         }

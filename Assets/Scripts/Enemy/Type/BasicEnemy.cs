@@ -81,9 +81,9 @@ public class BasicEnemy : EnemyController
         if (state == State.Dying)
             return;
         
-        if (Vector3.Distance(transform.position, Player.transform.position) <= data.GetRangeDetection())
+        if (Vector3.Distance(transform.position, player.transform.position) <= data.GetRangeDetection())
         {
-            if (Vector3.Distance(transform.position, Player.transform.position) <= data.GetAttackSpeed())
+            if (Vector3.Distance(transform.position, player.transform.position) <= data.GetAttackSpeed())
             {
                 state = State.Attack;
             }
