@@ -159,7 +159,6 @@ public abstract class EnemyController : MonoBehaviour, IState, IEffectable
 
     public void ApplyEffect(StatusEffectData data)
     {
-        
         _effectData = data;
         if(_effectData._effectpart != null)
             _part = Instantiate(_effectData._effectpart,transform);

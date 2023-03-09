@@ -9,10 +9,18 @@ public class ChargingEnemy : EnemyController
     private bool isCharging = false;
     
     private Vector3 direction;
+    private Rigidbody rigidbody;
+    
+    private void Awake()
+    {
+        base.Awake();
+    }
     
     // Start is called before the first frame update
     private void Start()
     {
+        rigidbody = GetComponent<Rigidbody>();
+        
         state = State.Casting;
     }
 
@@ -133,12 +141,15 @@ public class ChargingEnemy : EnemyController
     {
         if (other.gameObject.CompareTag("Wall"))
         {
-            Debug.Log($"HitSomething {other.gameObject.name} {other.gameObject.tag}");
+            rigidbody.velocity = Vector3.zero;
+            StopCasting();
             SetState(State.Casting);
         }
         
         if (other.gameObject.CompareTag("Player"))
         {
+            rigidbody.velocity = Vector3.zero;
+            StopCasting();
             other.gameObject.GetComponent<PlayerController>().TakeDamage(1);
             SetState(State.Casting);
         }
