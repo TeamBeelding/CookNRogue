@@ -6,18 +6,18 @@ public class AimArrowController : MonoBehaviour
 {
 
     [SerializeField]
-    float aimArrowSpeed = 0.1f;
+    private float m_aimArrowSpeed = 7f;
     [SerializeField]
-    float aimArrowMaxSize = 1;
+    private float m_aimArrowMaxSize = 1.1f;
     [SerializeField]
-    float zOffset = -1;
+    private float m_zOffset = -0.1f;
 
-    private PlayerController playerController;
+    private PlayerController _playerController;
 
 
     private void Start()
     {
-        playerController = gameObject.GetComponentInParent<PlayerController>();
+        _playerController = gameObject.GetComponentInParent<PlayerController>();
     }
 
     void OnDisable()
@@ -31,18 +31,18 @@ public class AimArrowController : MonoBehaviour
 
     private void Update()
     {
-        if (transform.localScale.z <= aimArrowMaxSize * playerController.PlayerAimMagnitude)
+        if (transform.localScale.z <= m_aimArrowMaxSize * _playerController.PlayerAimMagnitude)
         {
-            transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, Mathf.Lerp(transform.localScale.z, transform.localScale.z + playerController.PlayerAimMagnitude, aimArrowSpeed * Time.deltaTime));
-            transform.localPosition = new Vector3(0, 0.001f, 4.9f * transform.localScale.z + zOffset);
+            transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, Mathf.Lerp(transform.localScale.z, transform.localScale.z + _playerController.PlayerAimMagnitude, m_aimArrowSpeed * Time.deltaTime));
+            transform.localPosition = new Vector3(0, 0.001f, 4.9f * transform.localScale.z + m_zOffset);
         }
-        else
+        else if (transform.localScale.z > m_aimArrowMaxSize * _playerController.PlayerAimMagnitude)
         {
-            transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, Mathf.Lerp(transform.localScale.z, 0, aimArrowSpeed * 10 * Time.deltaTime));
-            transform.localPosition = new Vector3(0, 0.001f, 4.9f * transform.localScale.z + zOffset);
+            transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, Mathf.Lerp(transform.localScale.z, 0, m_aimArrowSpeed * 2 * Time.deltaTime));
+            transform.localPosition = new Vector3(0, 0.001f, 4.9f * transform.localScale.z + m_zOffset);
         }
 
-        //if (playerController.AimInputValue <= 0)
+        //if (_playerController.AimInputValue <= 0)
         //{
         //    gameObject.SetActive(false);
         //}
@@ -55,10 +55,10 @@ public class AimArrowController : MonoBehaviour
 
     IEnumerator IAimArrow()
     {
-        //Debug.Log(playerController.PlayerAimMagnitude);
-        while (transform.localScale.z < aimArrowMaxSize * playerController.PlayerAimMagnitude)
+        //Debug.Log(_playerController.PlayerAimMagnitude);
+        while (transform.localScale.z < m_aimArrowMaxSize * _playerController.PlayerAimMagnitude)
         {
-            transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, Mathf.Lerp(transform.localScale.z, transform.localScale.z + playerController.PlayerAimMagnitude, aimArrowSpeed * Time.deltaTime)); //* aimArrowSpeed * Time.deltaTime);
+            transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, Mathf.Lerp(transform.localScale.z, transform.localScale.z + _playerController.PlayerAimMagnitude, m_aimArrowSpeed * Time.deltaTime)); //* m_aimArrowSpeed * Time.deltaTime);
 
             yield return null;
         }

@@ -10,113 +10,112 @@ public class CameraController : MonoBehaviour
     //Controler
     [Header("Camera Controller")]
     [Header("==========================================================================================================================================================================================================================")]
-    // MainCamera Transform is needeed for the smooth movement of the camera.
+    // m_mainCamera Transform is needeed for the smooth movement of the camera.
     [SerializeField]
-    private Transform MainCamera;
-    // The child of main camera is needed for the shake of the camera thus called shake gimble
-    [SerializeField]
-    private Transform ShakeGimble;
+    private Transform m_mainCamera;
+    // The child of main camera is needed for the _shake of the camera thus called _shake gimble
+    private Transform _shakeGimble;
     //Player target is initialised as the camera lock, it is the MAIN object (Player) which the camera follows.
     [SerializeField]
-    private Transform CameraPlayerTarget;    
-    [SerializeField]
-    private Transform AimPlayerTarget;
+    private Transform m_cameraPlayerTarget; 
 
     [SerializeField]
-    private Vector3 OffsetCoord;
+    private Vector3 m_offsetCoord;
     [SerializeField]
-    private Quaternion OffsetRotation;
+    private Quaternion m_offsetRotation;
 
     //Obstructions
     [Header("Obstructions")]
     [Header("==========================================================================================================================================================================================================================")]
-    // opacity is the value which Chooses the amount of transparency in the walls when they are faded
+    // m_opacity is the value which Chooses the amount of transparency in the walls when they are faded
     [SerializeField]
     [Range(0.0f, 1.0f)]
-    private float opacity = 0.5f; // frome 0 to 1 (float) : default 0.5
+    private float m_opacity = 0.5f; // frome 0 to 1 (float) : default 0.5
     [SerializeField]
     // Tramsform Head, is GameObject holds an important role for the raycast and place holder for the meshrender. So it is never null;
-    private Transform TransformHead;
+    private Transform m_transformHead;
 
-    private MeshRenderer PlaceHolderMesh;
-    private MeshRenderer ObstructionMesh;
-    private RaycastHit Hit;
+    private MeshRenderer _placeHolderMesh;
+    private MeshRenderer _obstructionMesh;
+    private RaycastHit _hit;
 
 
     //Shake
     [Header("Camera Shake")]
     [Header("==========================================================================================================================================================================================================================")]
-    // How long will the shake last
+    // How long will the _shake last
     [SerializeField]
-    private float ShakeDuration = 1f;
-    // This decides the amount of shake over time
+    private float m_shakeDuration = 1f;
+    // This decides the amount of _shake over time
     [SerializeField]
-    private AnimationCurve ShakeCurve;
+    private AnimationCurve m_shakeCurve;
     // Whether it is currently shaking or not
     [HideInInspector]
-    public bool shake = false;
+    public bool _shake = false;
 
     //Shake
     [Header("Camera Zoom")]
     [Header("==========================================================================================================================================================================================================================")]
-    // How long will the shake last
+    // How long will the _shake last
     [SerializeField]
-    private float zoomDuration = 1f;
+    private float m_zoomDuration = 1f;
     [SerializeField]
     [Range(1f,10f)]
-    private float zoomFactor = 2f;
-    // This decides the amount of shake over time
+    private float m_zoomFactor = 2f;
+    // This decides the amount of _shake over time
     [SerializeField]
-    private AnimationCurve ZoomCurve;
+    private AnimationCurve m_zoomCurve;
     // Whether it is currently shaking or not
     [HideInInspector]
-    public bool zoom = false;
+    public bool _zoom = false;
 
     //Smooth
     [Header("Camera Smooth")]
     [Header("==========================================================================================================================================================================================================================")]
     // How fast dose the camera follow the player
     [SerializeField]
-    private float smoothSpeed = 2.5f;
-    float initialZoom;
+    private float m_smoothSpeed = 2.5f;
+    float _initialZoom;
     // If needed an addtional target can be added, in that case the camera make its way to that the target transform in a smooth way.
     // This can be usfull for bosses, special items in the room ect..
     [SerializeField]
-    private Transform Target;
+    private Transform m_target;
+
+    [Header("Aim Smoothing")]
+    [Header("==========================================================================================================================================================================================================================")]
     [SerializeField]
-    private float CameraAimDistance;
-    private float CurrentMagnitude = 0;
+    private float m_cameraAimDistance;
+    private float _currentMagnitude = 0;
 
     void Start()
     {
         instance = this;
 
-        //MainCamera.position += OffsetCoord;
-        MainCamera.rotation *= OffsetRotation;
-        MainCamera.position += OffsetCoord;
+        //m_mainCamera.position += m_offsetCoord;
+        m_mainCamera.rotation *= m_offsetRotation;
+        m_mainCamera.position += m_offsetCoord;
 
-        // To get the child transform of the camera for the shake
-        ShakeGimble = MainCamera.GetChild(0).GetComponent<Transform>();
+        // To get the child transform of the camera for the _shake
+        _shakeGimble = m_mainCamera.GetChild(0).GetComponent<Transform>();
         // Making sure the obstruction is initied and not null at the start for erros.
-        PlaceHolderMesh = TransformHead.gameObject.GetComponent<MeshRenderer>();
+        _placeHolderMesh = m_transformHead.gameObject.GetComponent<MeshRenderer>();
 
-        initialZoom = ShakeGimble.GetChild(0).GetComponent<Camera>().orthographicSize;
-        ObstructionMesh = PlaceHolderMesh;
+        _initialZoom = _shakeGimble.GetChild(0).GetComponent<Camera>().orthographicSize;
+        _obstructionMesh = _placeHolderMesh;
     }
 
     private void LateUpdate()
     {
         // In the update the camera will follow the player, unless the the target object has been added.
         // When target is removed (=null) Camera will start following the player again
-        if (Target == null)
+        if (m_target == null)
         {
-            CurrentMagnitude = CameraPlayerTarget.gameObject.GetComponent<PlayerController>().PlayerAimMagnitude;
-
-            MainCamera.position = Vector3.Lerp(MainCamera.position, CameraPlayerTarget.position + (CameraAimDistance * CameraPlayerTarget.gameObject.GetComponent<PlayerController>().PlayerAimDirection) * CurrentMagnitude + OffsetCoord, smoothSpeed * Time.deltaTime);
+            _currentMagnitude = m_cameraPlayerTarget.gameObject.GetComponent<PlayerController>().PlayerAimMagnitude;
+            m_mainCamera.position = Vector3.Lerp(m_mainCamera.position, m_cameraPlayerTarget.position + (m_cameraAimDistance * m_cameraPlayerTarget.gameObject.GetComponent<PlayerController>().PlayerAimDirection) * _currentMagnitude + m_offsetCoord, m_smoothSpeed * Time.deltaTime);
         }
         else 
         {
-            MainCamera.position = Vector3.Lerp(MainCamera.position, Target.position + OffsetCoord, smoothSpeed * Time.deltaTime);
+            m_mainCamera.position = Vector3.Lerp(m_mainCamera.position, m_target.position + m_offsetCoord, m_smoothSpeed * Time.deltaTime);
         }
         
     }
@@ -127,46 +126,46 @@ public class CameraController : MonoBehaviour
     {
         // Main Function for the Transparency of the obstructions / walls.
         CameraTransparent();
-        // initiate shake corountine if shake is true
-        if (shake)
+        // initiate _shake corountine if _shake is true
+        if (_shake)
         {
-            shake = false;
+            _shake = false;
             StartCoroutine(IShake());
         }
 
-        if (zoom)
+        if (_zoom)
         {
-            zoom = false;
+            _zoom = false;
             StartCoroutine(IZoom());
         }
     }
 
     private void CameraTransparent()
     {
-        Debug.DrawLine(TransformHead.position + OffsetCoord, TransformHead.position, Color.magenta);
-        Debug.DrawLine(MainCamera.position, CameraPlayerTarget.position, Color.red);
+        Debug.DrawLine(m_transformHead.position + m_offsetCoord, m_transformHead.position, Color.magenta);
+        Debug.DrawLine(m_mainCamera.position, m_cameraPlayerTarget.position, Color.red);
 
         // Security measure for when and if obstruction = null, for instance when the room / level changes.
-        if (!ObstructionMesh) 
+        if (!_obstructionMesh) 
         {
-            ObstructionMesh = PlaceHolderMesh;
+            _obstructionMesh = _placeHolderMesh;
         }
 
         // Shooots a physics linecaste to check object obstructing the player from the camera
-        if (Physics.Linecast(TransformHead.position + OffsetCoord, TransformHead.position, out Hit))
+        if (Physics.Linecast(m_transformHead.position + m_offsetCoord, m_transformHead.position, out _hit))
         {
-            ObstructionMesh.material.SetFloat("_Opacity", 1f);
+            _obstructionMesh.material.SetFloat("_Opacity", 1f);
             // if the object is tagged obstruction it turns transparent
-            if (Hit.collider.CompareTag("Obstruction"))
+            if (_hit.collider.CompareTag("Obstruction"))
             {
-                ObstructionMesh = Hit.collider.GetComponent<MeshRenderer>();
-                ObstructionMesh.material.SetFloat("_Opacity", opacity);
+                _obstructionMesh = _hit.collider.GetComponent<MeshRenderer>();
+                _obstructionMesh.material.SetFloat("_Opacity", m_opacity);
             }
         }
         else
         {
             //else turn it back to what it was.
-            ObstructionMesh.material.SetFloat("_Opacity", 1f);
+            _obstructionMesh.material.SetFloat("_Opacity", 1f);
         }
     }
 
@@ -179,20 +178,20 @@ public class CameraController : MonoBehaviour
     {
         // set a variable for the elapse
         float elapsedTime = 0f;
-        // Getting start position of shake gimble in local space
-        Vector3 startPosition = ShakeGimble.localPosition;
-        while (elapsedTime < ShakeDuration)
+        // Getting start position of _shake gimble in local space
+        Vector3 startPosition = _shakeGimble.localPosition;
+        while (elapsedTime < m_shakeDuration)
         {
             // adding time to counter
             elapsedTime += Time.deltaTime;
             // strength of the curve at specific time. So strength over time (The y axis being strength, and x being time)
-            float strength = ShakeCurve.Evaluate(elapsedTime / ShakeDuration);
-            // changing the local postion of shake gimble inside the unit circle, so random position in a circle and adding the start position.
-            ShakeGimble.localPosition = startPosition + Random.insideUnitSphere * strength;
+            float strength = m_shakeCurve.Evaluate(elapsedTime / m_shakeDuration);
+            // changing the local postion of _shake gimble inside the unit circle, so random position in a circle and adding the start position.
+            _shakeGimble.localPosition = startPosition + Random.insideUnitSphere * strength;
             yield return null;
         }
         // reseting shakegimble to original position.
-        ShakeGimble.localPosition = startPosition;
+        _shakeGimble.localPosition = startPosition;
     }
 
 
@@ -205,16 +204,16 @@ public class CameraController : MonoBehaviour
     {
         // set a variable for the elapse
         float elapsedTime = 0f;
-        // Getting start position of shake gimble in local space
-        while (elapsedTime < ShakeDuration)
+        // Getting start position of _shake gimble in local space
+        while (elapsedTime < m_zoomDuration)
         {
             // adding time to counter
             elapsedTime += Time.deltaTime;
             // strength of the curve at specific time. So strength over time (The y axis being strength, and x being time)
-            float zoomspeed = ZoomCurve.Evaluate(elapsedTime / ShakeDuration);
+            float zoomspeed = m_zoomCurve.Evaluate(elapsedTime / m_zoomDuration);
             Debug.Log(zoomspeed);
-            // changing the local postion of shake gimble inside the unit circle, so random position in a circle and adding the start position.
-            ShakeGimble.GetChild(0).GetComponent<Camera>().orthographicSize = initialZoom * zoomspeed;
+            // changing the local postion of _shake gimble inside the unit circle, so random position in a circle and adding the start position.
+            _shakeGimble.GetChild(0).GetComponent<Camera>().orthographicSize = _initialZoom * zoomspeed;
             yield return null;
         }
     }
@@ -237,12 +236,12 @@ public class CameraControllerEditor : Editor
 
         if (GUILayout.Button("Shake"))
         {
-            CameraController.instance.shake = true;
+            CameraController.instance._shake = true;
         }
 
         if (GUILayout.Button("Zoom"))
         {
-            CameraController.instance.zoom = true;
+            CameraController.instance._zoom = true;
         }
     }
 

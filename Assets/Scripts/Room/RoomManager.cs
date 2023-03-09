@@ -9,32 +9,36 @@ public class RoomManager : MonoBehaviour
     public static RoomManager instance;
 
     [SerializeField]
-    private GameObject[] EasyLevels;
+    private GameObject[] m_easyLevels;
     [SerializeField]
-    private GameObject[] HardLevels;
+    private GameObject[] m_hardLevels;
 
-    [HideInInspector]
-    public string[] LevelNames;
+    private string[] _levelNames;
+
+    public string[] LevelNames 
+    { 
+        get => _levelNames;
+    }
 
     [SerializeField]
-    private NavMeshSurface navMeshSurface;
+    private NavMeshSurface m_navMeshSurface;
     [SerializeField]
-    private bool loadSurface = false;
+    private bool m_loadSurface = false;
 
     [SerializeField]
-    private EnemyManager EnemyManagerScript;  
+    private EnemyManager m_enemyManagerScript;  
 
     public bool isHard;
 
-    GameObject CurrentLevel;
+    private GameObject _currentLevel;
 
     [SerializeField]
-    GameObject Player;
+    private GameObject m_player;
     
     public Transform SpawnPoint;
 
     [SerializeField]
-    TransitionController Transition;
+    private TransitionController m_transition;
 
     public event Action OnRoomStart;
 
@@ -52,19 +56,19 @@ public class RoomManager : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        Player = GameObject.FindGameObjectWithTag("Player");
+        m_player = GameObject.FindGameObjectWithTag("Player");
         LoadRandomLevel();
 
-        navMeshSurface.BuildNavMesh();
+        m_navMeshSurface.BuildNavMesh();
     }
 
     private void Update()
     {
-        if (loadSurface) 
+        if (m_loadSurface) 
         {
-            navMeshSurface.UpdateNavMesh(navMeshSurface.navMeshData);
-            navMeshSurface.BuildNavMesh();
-            loadSurface = false;
+            m_navMeshSurface.UpdateNavMesh(m_navMeshSurface.navMeshData);
+            m_navMeshSurface.BuildNavMesh();
+            m_loadSurface = false;
         }
     }
 
@@ -75,11 +79,11 @@ public class RoomManager : MonoBehaviour
 
         if (!isHard)
         {
-            LoadLevel(EasyLevels);
+            LoadLevel(m_easyLevels);
         }
         else
         {
-            LoadLevel(HardLevels);
+            LoadLevel(m_hardLevels);
         }
     }
 
@@ -91,40 +95,40 @@ public class RoomManager : MonoBehaviour
         if (i < 3)
         {
             isHard = false;
-            CurrentLevel = Instantiate(EasyLevels[i], Vector3.zero, Quaternion.identity);
-            loadSurface = true;
+            _currentLevel = Instantiate(m_easyLevels[i], Vector3.zero, Quaternion.identity);
+            m_loadSurface = true;
         }
         else
         {
             isHard = true;
-            CurrentLevel = Instantiate(HardLevels[i - EasyLevels.Length], Vector3.zero, Quaternion.identity);
-            loadSurface = true;
+            _currentLevel = Instantiate(m_hardLevels[i - m_easyLevels.Length], Vector3.zero, Quaternion.identity);
+            m_loadSurface = true;
         }
     }
 
     private void TransitionToLevel()
     {
-        EnemyManagerScript.DestroyAll();
+        m_enemyManagerScript.DestroyAll();
 
-        Transition.LoadTransition();
+        m_transition.LoadTransition();
 
-        if (CurrentLevel != null)
+        if (_currentLevel != null)
         {
-            Destroy(CurrentLevel);
+            Destroy(_currentLevel);
         }
     }
 
     private void LoadLevel(GameObject[] levels) 
     {
         int rand = UnityEngine.Random.Range(0, levels.Length);
-        CurrentLevel = Instantiate(levels[rand], Vector3.zero, Quaternion.identity);
+        _currentLevel = Instantiate(levels[rand], Vector3.zero, Quaternion.identity);
 
         if (OnRoomStart!= null)
         {
             OnRoomStart();
         }
-        Player.transform.position = SpawnPoint.position;
-        loadSurface = true;
+        m_player.transform.position = SpawnPoint.position;
+        m_loadSurface = true;
     }
 
     private void OnEnable()
@@ -134,16 +138,16 @@ public class RoomManager : MonoBehaviour
 
     public void InitLevelNames()
     {
-        LevelNames = new string[EasyLevels.Length + HardLevels.Length];
+        _levelNames = new string[m_easyLevels.Length + m_hardLevels.Length];
 
-        for (int i = 0; i < EasyLevels.Length; i++)
+        for (int i = 0; i < m_easyLevels.Length; i++)
         {
-            LevelNames[i] = EasyLevels[i].name;
+            _levelNames[i] = m_easyLevels[i].name;
         }
 
-        for (int i = EasyLevels.Length; i < EasyLevels.Length + HardLevels.Length; i++)
+        for (int i = m_easyLevels.Length; i < m_easyLevels.Length + m_hardLevels.Length; i++)
         {
-            LevelNames[i] = HardLevels[i - EasyLevels.Length].name;
+            _levelNames[i] = m_hardLevels[i - m_easyLevels.Length].name;
         }
     }
 

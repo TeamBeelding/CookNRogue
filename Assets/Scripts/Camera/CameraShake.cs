@@ -6,16 +6,16 @@ public class CameraShake : MonoBehaviour
 {
 
     [SerializeField]
-    private float ShakeDuration = 1f;
+    private float m_shakeDuration = 1f;
 
     [SerializeField]
-    private AnimationCurve ShakeCurve;
+    private AnimationCurve m_shakeCurve;
 
     [SerializeField]
-    private bool shake = false;
+    private bool _shake = false;
 
     [SerializeField]
-    private Transform CameraTransform;
+    private Transform m_cameraTransform;
 
 
     Vector3 startPosition;
@@ -29,17 +29,17 @@ public class CameraShake : MonoBehaviour
     void Update()
     {
 
-        transform.position = CameraTransform.position;
-        transform.rotation = CameraTransform.rotation;
+        transform.position = m_cameraTransform.position;
+        transform.rotation = m_cameraTransform.rotation;
 
-        if (shake)
+        if (_shake)
         {
-            shake = false;
+            _shake = false;
             StartCoroutine(Shake());
         }
 
         
-        //CameraTransform  = GetComponentInParent<Transform>();
+        //m_cameraTransform  = GetComponentInParent<Transform>();
         //transform.position = GetComponentInParent<Transform>().position;
 
     }
@@ -49,10 +49,10 @@ public class CameraShake : MonoBehaviour
     {
         float elapsedTime = 0f;
         Vector3 startPosition = transform.position;
-        while (elapsedTime < ShakeDuration)
+        while (elapsedTime < m_shakeDuration)
         {
             elapsedTime += Time.deltaTime;
-            float strength = ShakeCurve.Evaluate(elapsedTime / ShakeDuration);
+            float strength = m_shakeCurve.Evaluate(elapsedTime / m_shakeDuration);
             transform.position = transform.position + Random.insideUnitSphere * strength;
             yield return null;
         }
