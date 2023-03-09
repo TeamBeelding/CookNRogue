@@ -39,7 +39,6 @@ public abstract class EnemyController : MonoBehaviour, IState, IEffectable
     protected bool _focusPlayer = false;
     private bool _canAttack = true;
     
-    [SerializeField]
     protected float healthpoint;
 
     protected void Awake()
@@ -69,10 +68,8 @@ public abstract class EnemyController : MonoBehaviour, IState, IEffectable
     // Update is called once per frame
     protected void Update()
     {
-        // if (state == State.Dying)
-        //     return;
-        
-        // IStateManagement();
+        if (_effectData != null)
+            HandleEffect();
     }
 
     public abstract bool IsMoving();
@@ -195,7 +192,7 @@ public abstract class EnemyController : MonoBehaviour, IState, IEffectable
         if(_effectData._DOTAmount != 0 && _currentEffectTime > _NextTickTime)
         {
             _NextTickTime += _currentEffectTime;
-            // ReduiceHealth(_effectData._DOTAmount);
+            TakeDamage(_effectData._DOTAmount);
         }
             
     }
