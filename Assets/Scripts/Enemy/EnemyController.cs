@@ -9,7 +9,6 @@ using Random = UnityEngine.Random;
 
 public abstract class EnemyController : MonoBehaviour, IState
 {
-    [SerializeField]
     protected GameObject player;
     
     [SerializeField] 
