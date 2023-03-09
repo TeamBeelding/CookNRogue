@@ -7,7 +7,7 @@ using UnityEngine.AI;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
-public class EnemyController : MonoBehaviour
+public class EnemyController : MonoBehaviour,IEffectable
 {
     public enum State
     {
@@ -22,6 +22,7 @@ public class EnemyController : MonoBehaviour
     private GameObject player;
     [SerializeField] 
     private EnemyData data;
+    private StatusEffectData _effectData;
 
     private Renderer _rend;
     private Rigidbody _rigidbody;
@@ -99,7 +100,10 @@ public class EnemyController : MonoBehaviour
     {
         if (state == State.Dying)
             return;
-        
+
+        if(_effectData != null)
+            HandleEffect();
+
         StateManagement();
     }
 
@@ -304,6 +308,50 @@ public class EnemyController : MonoBehaviour
     {
         EnemyManager.Instance.AddEnemyToLevel(this);
     }
+
+    #region StatusEffect
+    private float _currentEffectTime = 0;
+    private float _NextTickTime = 0;
+    private ParticleSystem _part;
+
+    public void ApplyEffect(StatusEffectData data)
+    {
+        _effectData = data;
+        if(_effectData._effectpart != null)
+            _part = Instantiate(_effectData._effectpart,transform);
+    }
+
+    public void RemoveEffect()
+    {
+        _currentEffectTime = 0;
+        _NextTickTime = 0;
+        _effectData = null;
+        _agent.speed = data.GetSpeed();
+        _agent.stoppingDistance = data.GetAttackRange();
+        _focusPlayer = data.GetFocusPlayer();
+        if (_part != null)
+            Destroy(_part);
+            
+    }
+
+    public void HandleEffect()
+    {
+        _currentEffectTime += Time.deltaTime;
+
+        if (_currentEffectTime > _effectData._lifetime)
+            RemoveEffect();
+
+        if (_effectData == null)
+            return;
+
+        if(_effectData._DOTAmount != 0 && _currentEffectTime > _NextTickTime)
+        {
+            _NextTickTime += _currentEffectTime;
+            ReduiceHealth(_effectData._DOTAmount);
+        }
+            
+    }
+    #endregion
 
     #region Effect
 
