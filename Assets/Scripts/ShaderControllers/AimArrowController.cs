@@ -31,9 +31,9 @@ public class AimArrowController : MonoBehaviour
 
     private void Update()
     {
-        if (transform.localScale.z < aimArrowMaxSize * playerController.AimInputValue)
+        if (transform.localScale.z <= aimArrowMaxSize * playerController.PlayerAimMagnitude)
         {
-            transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, Mathf.Lerp(transform.localScale.z, transform.localScale.z + playerController.AimInputValue, aimArrowSpeed * Time.deltaTime));
+            transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, Mathf.Lerp(transform.localScale.z, transform.localScale.z + playerController.PlayerAimMagnitude, aimArrowSpeed * Time.deltaTime));
             transform.localPosition = new Vector3(0, 0.001f, 4.9f * transform.localScale.z + zOffset);
         }
         else

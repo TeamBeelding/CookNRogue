@@ -81,11 +81,6 @@ public class PlayerController : MonoBehaviour
     Vector2 _moveInputValue;
     Vector2 _aimInputValue;
 
-    public float AimInputValue
-    {
-        get => _aimInputValue.magnitude; 
-    }
-
     [HideInInspector]
     public bool _isAiming = false;
     bool _isAimingOnMouse = false;

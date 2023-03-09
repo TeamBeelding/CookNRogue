@@ -110,20 +110,9 @@ public class CameraController : MonoBehaviour
         // When target is removed (=null) Camera will start following the player again
         if (Target == null)
         {
-            CurrentMagnitude = CameraPlayerTarget.gameObject.GetComponent<PlayerController>().AimInputValue;
+            CurrentMagnitude = CameraPlayerTarget.gameObject.GetComponent<PlayerController>().PlayerAimMagnitude;
 
-            if (CameraPlayerTarget.gameObject.GetComponent<PlayerController>()._isAiming)
-            {
-                MainCamera.position = Vector3.Lerp(MainCamera.position,
-                    AimPlayerTarget.position + CameraPlayerTarget.gameObject.GetComponent<PlayerController>().PlayerAimDirection + OffsetCoord, //* CurrentMagnitude + OffsetCoord, 
-                    smoothSpeed * Time.deltaTime);
-            }
-            else
-            {
-                MainCamera.position = Vector3.Lerp(MainCamera.position, CameraPlayerTarget.position + OffsetCoord, smoothSpeed * Time.deltaTime);
-            }
-
-            //Vector3.Lerp(CameraPlayerTarget.position + OffsetCoord, AimPlayerTarget.position, smoothSpeed * Time.deltaTime);
+            MainCamera.position = Vector3.Lerp(MainCamera.position, CameraPlayerTarget.position + (CameraAimDistance * CameraPlayerTarget.gameObject.GetComponent<PlayerController>().PlayerAimDirection) * CurrentMagnitude + OffsetCoord, smoothSpeed * Time.deltaTime);
         }
         else 
         {
@@ -154,9 +143,6 @@ public class CameraController : MonoBehaviour
 
     private void CameraTransparent()
     {
-        // Draws a line from player to object.
-        //Debug.DrawLine(MainCamera.position - OffsetCoord, TransformHead.position, Color.green);
-        //Debug.DrawLine(MainCamera.position, TransformHead.position + OffsetCoord, Color.yellow);
         Debug.DrawLine(TransformHead.position + OffsetCoord, TransformHead.position, Color.magenta);
         Debug.DrawLine(MainCamera.position, CameraPlayerTarget.position, Color.red);
 
