@@ -8,11 +8,12 @@ public class ChargingEnemy : EnemyController
     private Coroutine castingCoroutine;
     private bool isCharging = false;
     
+    private Vector3 direction;
+    
     // Start is called before the first frame update
     private void Start()
     {
-        if (_focusPlayer)
-            state = State.Casting;
+        state = State.Casting;
     }
 
     // Update is called once per frame
@@ -45,7 +46,7 @@ public class ChargingEnemy : EnemyController
         return state;
     }
     
-    public void SetState(State value)
+    private void SetState(State value)
     {
         state = value;
     }
@@ -58,6 +59,7 @@ public class ChargingEnemy : EnemyController
                 Casting();
                 break;
             case State.Dashing:
+                Debug.Log("Dashing");
                 Dashing();
                 break;
             case State.Dying:
@@ -82,54 +84,67 @@ public class ChargingEnemy : EnemyController
     
     private new void Dying()
     {
+        StopCasting();
         base.Dying();
     }
     
     public override void TakeDamage(float damage = 1)
     {
         base.TakeDamage(damage);
-        StartCasting();
+        StopCasting();
+        SetState(State.Casting);
     }
     
     private void StartCasting()
     {
+        castingCoroutine = StartCoroutine(ICasting());
+    }
+
+    private void StopCasting()
+    {
         if (castingCoroutine != null)
             StopCoroutine(castingCoroutine);
-        
-        castingCoroutine = StartCoroutine(ICasting());
     }
     
     private Vector3 GetPlayerDirection()
     {
-        if (isCharging)
-            return Vector3.zero;
-        
-        Vector3 direction = (player.transform.position - transform.position).normalized;
-        direction.y = 0;
+    //     if (isCharging)
+    //         return Vector3.zero;
+    //     else
+    //     {
+            isCharging = true;
+            Vector3 direction = (player.transform.position - transform.position).normalized;
+            direction.y = 0;
 
-        return direction;
+            return direction;
+        // }
     }
     
     private void ChargingToPlayer()
     {
-        transform.position += GetPlayerDirection() * (5 * Time.deltaTime);
+        transform.position += direction * (data.GetSpeed() * Time.deltaTime);
     }
     
     private IEnumerator ICasting()
     {
         yield return new WaitForSeconds(2f);
-        state = State.Dashing;
+        
+        direction = GetPlayerDirection();
+        SetState(State.Dashing);
     }
     
     private void OnCollisionEnter(Collision other)
     {
-        if (!other.gameObject.CompareTag("Enemy"))
-            state = State.Casting;
+        if (other.gameObject.CompareTag("Wall"))
+        {
+            Debug.Log($"HitSomething {other.gameObject.name}");
+            SetState(State.Casting);
+        }
         
         if (other.gameObject.CompareTag("Player"))
         {
             other.gameObject.GetComponent<PlayerController>().TakeDamage(1);
-            StartCasting();
+            SetState(State.Casting);
         }
     }
 }

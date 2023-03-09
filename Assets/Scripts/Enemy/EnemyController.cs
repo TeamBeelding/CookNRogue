@@ -9,6 +9,7 @@ using Random = UnityEngine.Random;
 
 public abstract class EnemyController : MonoBehaviour, IState
 {
+    [SerializeField]
     protected GameObject player;
     
     [SerializeField] 
@@ -51,14 +52,14 @@ public abstract class EnemyController : MonoBehaviour, IState
 
         stateRenderer = m_stateSystem.GetComponent<Renderer>();
 
+        player = GameObject.FindGameObjectWithTag("Player");
+        
         AddToEnemyManager();
     }
 
     // Start is called before the first frame update
     protected void Start()
     {
-        player = PlayerController.Instance.gameObject;
-        
         _rend.material.color = Color.white;
     }
 
