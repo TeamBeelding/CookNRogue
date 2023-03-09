@@ -22,13 +22,13 @@ public class EnemyRotateOnMove : MonoBehaviour
     {
         Vector3 localRotation = transform.localRotation.eulerAngles;
         
-        if (enemy.IsMoving())
-        {
-            
-        }
-        else
-        {
-            transform.localRotation = Quaternion.Euler(localRotation);
-        }
+        // if (enemy.IsMoving())
+        // {
+        //     
+        // }
+        // else
+        // {
+        //     transform.localRotation = Quaternion.Euler(localRotation);
+        // }
     }
 }
