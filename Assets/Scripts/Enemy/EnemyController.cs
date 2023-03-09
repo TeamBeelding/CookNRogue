@@ -22,7 +22,8 @@ public class EnemyController : MonoBehaviour,IEffectable
     private GameObject player;
     [SerializeField] 
     private EnemyData data;
-    private StatusEffectData _effectData;
+    [HideInInspector]
+    public StatusEffectData _effectData;
 
     private Renderer _rend;
     private Rigidbody _rigidbody;
@@ -310,12 +311,14 @@ public class EnemyController : MonoBehaviour,IEffectable
     }
 
     #region StatusEffect
+
     private float _currentEffectTime = 0;
     private float _NextTickTime = 0;
     private ParticleSystem _part;
 
     public void ApplyEffect(StatusEffectData data)
     {
+        
         _effectData = data;
         if(_effectData._effectpart != null)
             _part = Instantiate(_effectData._effectpart,transform);
