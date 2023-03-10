@@ -1860,6 +1860,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   isKnocked: 0
   knockTime: 1
+  knockDistance: 0.5
 --- !u!23 &6518352296712566018
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2164,9 +2165,14 @@ MonoBehaviour:
   m_interactionRange: 0.5
   m_mainCamera: {fileID: 1177456190}
   m_model: {fileID: 6518352296349200059}
+  m_aimArrow: {fileID: 0}
+  aimArrowGrowth: 0.01
+  aimArrowDuration: 1
+  m_knockback: {fileID: 0}
   m_interactionMask:
     serializedVersion: 2
     m_Bits: 64
+  m_aimAssistPresset: {fileID: 0}
   takeDamageTransition: {fileID: 353925329}
   _isAiming: 0
 --- !u!114 &6518352297035687740
@@ -2181,16 +2187,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a34558ecc9aa7f34e83646aee1d9a244, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Projectile: {fileID: 1666282856065623693, guid: 4f0c527b1de4f1b408606041297daaf0,
-    type: 3}
-  muzzle: {fileID: 6518352296039825143}
-  size: 1
-  speed: 20
-  drag: 0
-  heavyAttackDelay: 0
-  heavyDamage: 1
-  lightAttackDelay: 0
-  lightDamage: 1
+  _Projectile: {fileID: 0}
+  _ProjectileNbr: 0
+  _TimeBtwShotsRafale: 0
+  _muzzle: {fileID: 0}
+  _size: 0
+  _speed: 0
+  _drag: 0
+  _heavyAttackDelay: 0
+  _heavyDamage: 0
+  _lightAttackDelay: 0
+  _lightDamage: 0
   _shootCooldown: 0.2
 --- !u!114 &6518352297035687741
 MonoBehaviour:
@@ -2204,10 +2211,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41faddc5fc4364f44b4dfa846756a183, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attack: {fileID: 6518352297035687740}
+  _scroll: {fileID: 0}
+  m_attack: {fileID: 0}
   projectilesData: []
   UI_Inventory: {fileID: 0}
   SlotsContainer: {fileID: 0}
+  recipe: []
   numberOfIngredients: 3
 --- !u!4 &6518352297434094414
 Transform:
