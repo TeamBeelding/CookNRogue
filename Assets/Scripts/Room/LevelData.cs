@@ -1,28 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 using UnityEngine.Serialization;
 
-[CreateAssetMenu(fileName = "LevelData", menuName = "Level")]
-public class LevelData : ScriptableObject
+
+public class LevelData
 {
-    [Header("Statistics")]
     [SerializeField]
-    private int amountOfRooms = 10;
-
+    private GameObject _level;
     [SerializeField]
-    [Range(0, 10)]
-    private int EasyLevels = 6;
+    private int _prob;
 
-    [SerializeField]
-    [Range(0, 10)]
-    private int HardLevels = 4;
+    public GameObject Level
+    {
+        get => _level;
+        set { _level = value; }
+    }
 
-    //public float GetAmountOfRooms() => health;
-    //public float GetRangeDetection() => rangeDetection;
-    //public float GetAttackRange() => attackRange;
-    //public float GetAttackSpeed() => attackSpeed;
-    //public float GetDamage() => damage;
-    //public float GetRecoilForce() => forceRecoil;
-    //public bool GetFocusPlayer() => focusInstantlyPlayer;
+    public int Prob
+    {
+        get => _prob;
+        set { _prob = value; }
+    }
 }
