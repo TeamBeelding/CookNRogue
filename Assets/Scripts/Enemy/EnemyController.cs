@@ -7,11 +7,13 @@ using UnityEngine.AI;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
-public abstract class EnemyController : MonoBehaviour, IState
+public abstract class EnemyController : MonoBehaviour, IState, IEffectable
 {
-    [SerializeField]
     protected GameObject player;
     
+    [HideInInspector]
+    public StatusEffectData _effectData;
+
     [SerializeField] 
     protected EnemyData data;
     private Renderer _rend;
@@ -49,7 +51,7 @@ public abstract class EnemyController : MonoBehaviour, IState
         _agent.stoppingDistance = data.GetAttackRange();
         _focusPlayer = data.GetFocusPlayer();
         healthpoint = data.GetHealth();
-
+        
         stateRenderer = m_stateSystem.GetComponent<Renderer>();
 
         player = GameObject.FindGameObjectWithTag("Player");
@@ -66,10 +68,8 @@ public abstract class EnemyController : MonoBehaviour, IState
     // Update is called once per frame
     protected void Update()
     {
-        // if (state == State.Dying)
-        //     return;
-        
-        // IStateManagement();
+        if (_effectData != null)
+            HandleEffect();
     }
 
     public abstract bool IsMoving();
@@ -150,6 +150,52 @@ public abstract class EnemyController : MonoBehaviour, IState
     {
         EnemyManager.Instance.AddEnemyToLevel(this);
     }
+
+    #region StatusEffect
+
+    private float _currentEffectTime = 0;
+    private float _NextTickTime = 0;
+    private ParticleSystem _part;
+
+    public void ApplyEffect(StatusEffectData data)
+    {
+        _effectData = data;
+        if(_effectData._effectpart != null)
+            _part = Instantiate(_effectData._effectpart,transform);
+    }
+
+    public void RemoveEffect()
+    {
+        _currentEffectTime = 0;
+        _NextTickTime = 0;
+        _effectData = null;
+        _agent.speed = data.GetSpeed();
+        _agent.stoppingDistance = data.GetAttackRange();
+        _focusPlayer = data.GetFocusPlayer();
+        
+        if (_part != null)
+            Destroy(_part);
+            
+    }
+
+    public void HandleEffect()
+    {
+        _currentEffectTime += Time.deltaTime;
+
+        if (_currentEffectTime > _effectData._lifetime)
+            RemoveEffect();
+
+        if (_effectData == null)
+            return;
+
+        if(_effectData._DOTAmount != 0 && _currentEffectTime > _NextTickTime)
+        {
+            _NextTickTime += _currentEffectTime;
+            TakeDamage(_effectData._DOTAmount);
+        }
+            
+    }
+    #endregion
 
     #region Effect
 

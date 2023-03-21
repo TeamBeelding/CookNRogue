@@ -4,17 +4,18 @@ using UnityEngine;
 
 public class PlayerBulletBehaviour : MonoBehaviour
 {
-    public float heavyDamage;
-    public float lightDamage;
-    public float speed;
-    public float drag = 1;
-    private bool HasHit = false;
-    private GameObject hitObject;
-    public PlayerAttack playerAttack;
+    public float _heavyDamage;
+    public float _lightDamage;
+    public float _speed;
+    public float _drag = 1;
+    protected bool _HasHit = false;
+    protected GameObject _hitObject;
+    public PlayerAttack _playerAttack;
     Sprite sprite;
     //public Vector3 gravity;
-    public Vector3 direction;
+    public Vector3 _direction;
     public bool destroyOnHit = true;
+    public int bouncingNbr = 0;
 
     protected virtual void Start()
     {
@@ -30,8 +31,8 @@ public class PlayerBulletBehaviour : MonoBehaviour
     {
         //rb.AddForce(gravity * rb.mass);
         
-        transform.Translate(direction*speed*0.1f);
-        speed *= drag;
+        transform.Translate(_direction * _speed*0.1f);
+        _speed *= _drag;
     }
 
     public void ResetStats()
@@ -41,33 +42,52 @@ public class PlayerBulletBehaviour : MonoBehaviour
         gameObject.transform.localScale = new Vector3(1,1,1);
     }
 
-    private void OnDestroy()
+    protected virtual void OnDestroy()
     {
-        if(HasHit)
+        if(_HasHit)
         {
-            playerAttack.ApplyOnHitEffects(transform.position, hitObject, direction);
+            _playerAttack.ApplyOnHitEffects(transform.position, _hitObject, _direction);
         }
         else
         {
-            playerAttack.ApplyOnHitEffects(transform.position);
+            _playerAttack.ApplyOnHitEffects(transform.position);
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    protected virtual void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Enemy"))
         {
-            HasHit= true;
-            hitObject = other.gameObject;
+            _HasHit = true;
+            _hitObject = other.gameObject;
             if (other.GetComponent<EnemyController>())
-                other.GetComponent<EnemyController>().TakeDamage(heavyDamage);
+                other.GetComponent<EnemyController>().TakeDamage(_heavyDamage);
 
             if(destroyOnHit)
             {
                 Destroy(gameObject);
+
             }
 
 
+        }
+        else if(!other.gameObject.CompareTag("Player"))
+        {
+            if (bouncingNbr > 0)
+            {
+                bouncingNbr--;
+                RaycastHit hit;
+                if (Physics.Raycast(transform.position, _direction, out hit))
+                {
+                    _direction = Vector3.Reflect(_direction.normalized, hit.normal);
+                }
+
+                bouncingNbr--;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
         }
     }
 

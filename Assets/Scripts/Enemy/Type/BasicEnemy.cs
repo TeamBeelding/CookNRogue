@@ -31,9 +31,6 @@ public class BasicEnemy : EnemyController
     // Update is called once per frame
     private new void Update()
     {
-        if (state == State.Dying)
-            return;
-        
         IStateManagement();
     }
     
@@ -112,9 +109,6 @@ public class BasicEnemy : EnemyController
     
     private new void Dying()
     {
-        if (state == State.Dying)
-            return;
-        
         base.Dying();
     }
     
@@ -125,7 +119,10 @@ public class BasicEnemy : EnemyController
 
     public override void TakeDamage(float damage = 1)
     {
-        base.TakeDamage(damage);
+        base.TakeDamage();
+        
+        if (state == State.Neutral)
+            state = State.Chase;
         
         if (healthpoint <= 0)
         {

@@ -5,26 +5,26 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
-    public GameObject Projectile;
-    public int ProjectileNbr;
+    public GameObject _Projectile;
+    public int _ProjectileNbr;
     [HideInInspector]
-    public float TimeBtwShotsRafale;
-    PlayerBulletBehaviour projectileBehaviour;
-    public Transform muzzle;
+    public float _TimeBtwShotsRafale;
+    PlayerBulletBehaviour _projectileBehaviour;
+    public Transform _muzzle;
 
     [Header("Physic and Movements")]
-    public float size;
-    public float speed;
-    public float drag;
+    public float _size;
+    public float _speed;
+    public float _drag;
     [Space(20)]
 
     [Header("Attack")]
-    public float heavyAttackDelay;
-    public float heavyDamage;
-    public float lightAttackDelay;
-    public float lightDamage;
+    public float _heavyAttackDelay;
+    public float _heavyDamage;
+    public float _lightAttackDelay;
+    public float _lightDamage;
 
-    public List<IIngredientEffects> effects = new List<IIngredientEffects>();
+    public List<IIngredientEffects> _effects = new List<IIngredientEffects>();
     
     bool _shootOnCooldown;
 
@@ -49,7 +49,7 @@ public class PlayerAttack : MonoBehaviour
 
 
         //BulletInstantiate
-        StartCoroutine(shootbullets(TimeBtwShotsRafale));
+        StartCoroutine(shootbullets(_TimeBtwShotsRafale));
         
 
 
@@ -65,15 +65,16 @@ public class PlayerAttack : MonoBehaviour
     #region OnHitEffects
     public void ApplyOnHitEffects(Vector3 Position)
     {
-        foreach (IIngredientEffects effect in effects)
+        foreach (IIngredientEffects effect in _effects)
         {
             effect.EffectOnHit(Position, null,Vector3.zero);
         }
     }
     public void ApplyOnHitEffects(Vector3 Position,GameObject HitObject, Vector3 direction)
     {
-        foreach (IIngredientEffects effect in effects)
+        foreach (IIngredientEffects effect in _effects)
         {
+            Debug.Log(HitObject);
             if(effect != null)
                 effect.EffectOnHit(Position, HitObject, direction);
         }
@@ -93,44 +94,45 @@ public class PlayerAttack : MonoBehaviour
 
     IEnumerator shootbullets(float time)
     {
-        for(int i = 0; i< ProjectileNbr; i++)
+        for(int i = 0; i< _ProjectileNbr; i++)
         {
-            GameObject Bullet = Instantiate(Projectile, muzzle.position, Quaternion.identity);
-            projectileBehaviour = Bullet.GetComponent<PlayerBulletBehaviour>();
-            projectileBehaviour.ResetStats();
-            projectileBehaviour.playerAttack = this;
-            projectileBehaviour.speed += speed;
-            projectileBehaviour.drag -= drag;
-            projectileBehaviour.lightDamage += lightDamage;
-            projectileBehaviour.heavyDamage += heavyDamage;
-            projectileBehaviour.direction = _playerController.PlayerAimDirection;
+            GameObject Bullet = Instantiate(_Projectile, _muzzle.position, Quaternion.identity);
+            _projectileBehaviour = Bullet.GetComponent<PlayerBulletBehaviour>();
+            _projectileBehaviour.ResetStats();
+            _projectileBehaviour._playerAttack = this;
+            _projectileBehaviour._speed += _speed;
+            _projectileBehaviour._drag -=_drag;
+            _projectileBehaviour._lightDamage += _lightDamage;
+            _projectileBehaviour._heavyDamage += _heavyDamage;
+            _projectileBehaviour._direction = _playerController.PlayerAimDirection;
 
             
 
-            foreach (IIngredientEffects effect in effects)
+            foreach (IIngredientEffects effect in _effects)
             {
                 if (effect != null)
                     effect.EffectOnShoot(transform.position, Bullet);
 
                 if (effect is Boomerang)
                 {
+                    
                     BoomerangBehaviour boomerangBehaviour = GetComponent<BoomerangBehaviour>();
                     if (boomerangBehaviour == null)
                     {
                         boomerangBehaviour = Bullet.AddComponent<BoomerangBehaviour>();
                     }
-
+                    
                     Boomerang TempEffect = (Boomerang)effect;
                     boomerangBehaviour.ResetStats();
-                    boomerangBehaviour.forward = TempEffect.forward;
-                    boomerangBehaviour.MaxForwardDistance = TempEffect.MaxForwardDistance;
-                    boomerangBehaviour.sides = TempEffect.sides;
-                    boomerangBehaviour.MaxSideDistance = TempEffect.MaxSideDistance;
-                    boomerangBehaviour.playerAttack = this;
-                    boomerangBehaviour.boomerangSpeed = TempEffect.Speed;
-                    boomerangBehaviour.lightDamage += lightDamage;
-                    boomerangBehaviour.heavyDamage += heavyDamage;
-                    boomerangBehaviour.direction = _playerController.PlayerAimDirection;
+                    boomerangBehaviour._forward = TempEffect._forward;
+                    boomerangBehaviour._MaxForwardDistance = TempEffect._MaxForwardDistance;
+                    boomerangBehaviour._sides = TempEffect._sides;
+                    boomerangBehaviour._MaxSideDistance = TempEffect._MaxSideDistance;
+                    boomerangBehaviour._playerAttack = this;
+                    boomerangBehaviour._boomerangSpeed = TempEffect._Speed;
+                    boomerangBehaviour._lightDamage += _lightDamage;
+                    boomerangBehaviour._heavyDamage += _heavyDamage;
+                    boomerangBehaviour._direction = _playerController.PlayerAimDirection;
                 }
             }
 
@@ -148,16 +150,16 @@ public class PlayerAttack : MonoBehaviour
 
     public void ResetParameters()
     {
-        effects.Clear();
-        size = 0;
-        speed = 0;
-        drag = 0;
-        ProjectileNbr = 1;
-        TimeBtwShotsRafale = 0;
-        heavyAttackDelay = 0;
-        heavyDamage = 0;
-        lightAttackDelay = 0;
-        lightDamage = 0;
+        _effects.Clear();
+        _size = 0;
+        _speed = 0;
+        _drag = 0;
+        _ProjectileNbr = 1;
+        _TimeBtwShotsRafale = 0;
+        _heavyAttackDelay = 0;
+        _heavyDamage = 0;
+        _lightAttackDelay = 0;
+        _lightDamage = 0;
     }
 
 }
