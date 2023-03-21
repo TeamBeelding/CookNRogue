@@ -6,10 +6,16 @@ using UnityEngine;
 public class ChargingEnemy : EnemyController
 {
     private Coroutine castingCoroutine;
+    private Coroutine waitingCoroutine;
+    
     private bool isCharging = false;
     
     private Vector3 direction;
     private Rigidbody rigidbody;
+
+    [SerializeField] private GameObject _redLine;
+    [SerializeField] private Color redColor;
+    [SerializeField] private Color redColorAtEnd;
     
     private void Awake()
     {
@@ -24,12 +30,6 @@ public class ChargingEnemy : EnemyController
         state = State.Casting;
     }
 
-    // Update is called once per frame
-    private void Update()
-    {
-        
-    }
-    
     private void FixedUpdate()
     {
         IStateManagement();
@@ -43,6 +43,7 @@ public class ChargingEnemy : EnemyController
     public enum State
     {
         Casting,
+        Waiting,
         Dashing,
         Dying
     }
@@ -66,6 +67,9 @@ public class ChargingEnemy : EnemyController
             case State.Casting:
                 Casting();
                 break;
+            case State.Waiting:
+                WaitingAnotherDash();
+                break;
             case State.Dashing:
                 Dashing();
                 break;
@@ -77,16 +81,31 @@ public class ChargingEnemy : EnemyController
                 break;
         }
     }
-    
+
     private void Dashing()
     {
+        isCharging = true;
         ChargingToPlayer();
     }
     
     private void Casting()
     {
         isCharging = false;
+        rigidbody.velocity = Vector3.zero;
         castingCoroutine = StartCoroutine(ICasting());
+    }
+    
+    private void WaitingAnotherDash()
+    {
+        isCharging = false;
+        rigidbody.velocity = Vector3.zero;
+        
+        HideRedLine();
+        
+        if (castingCoroutine != null)
+            StopCoroutine(castingCoroutine);
+        
+        waitingCoroutine = StartCoroutine(IWaiting());
     }
     
     private new void Dying()
@@ -131,27 +150,55 @@ public class ChargingEnemy : EnemyController
     
     private IEnumerator ICasting()
     {
+        yield return new WaitForSeconds(0.5f);
+        
+        ShowRedLine();
+        
         yield return new WaitForSeconds(2f);
         
-        direction = GetPlayerDirection();
+        if (!isCharging)
+            direction = GetPlayerDirection();
+        
         SetState(State.Dashing);
     }
     
+    private IEnumerator IWaiting()
+    {
+        yield return new WaitForSeconds(3f);
+        
+        SetState(State.Casting);
+    }
+
+    private void ShowRedLine()
+    {
+        // Todo : Enable red line game object
+    }
+    
+    private void HideRedLine()
+    {
+        // Todo : Reset red line 
+        // Todo: Disable red line game object
+    }
+    
+    private void LerpRedLine()
+    {
+        // Todo : Interpolate red line
+    }
+
     private void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.CompareTag("Wall"))
         {
             rigidbody.velocity = Vector3.zero;
             StopCasting();
-            SetState(State.Casting);
+            SetState(State.Waiting);
         }
         
         if (other.gameObject.CompareTag("Player"))
         {
-            rigidbody.velocity = Vector3.zero;
             StopCasting();
             other.gameObject.GetComponent<PlayerController>().TakeDamage(1);
-            SetState(State.Casting);
+            SetState(State.Waiting);
         }
     }
 }
