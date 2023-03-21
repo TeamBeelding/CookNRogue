@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class ChargingEnemy : EnemyController
 {
@@ -17,9 +18,13 @@ public class ChargingEnemy : EnemyController
     [SerializeField] private Color redColor;
     [SerializeField] private Color redColorAtEnd;
     
+    [SerializeField]
+    private EnemyDashingData _data;
+        
     private void Awake()
     {
         base.Awake();
+        healthpoint = _data.GetHealth();
     }
     
     // Start is called before the first frame update
@@ -145,44 +150,58 @@ public class ChargingEnemy : EnemyController
     
     private void ChargingToPlayer()
     {
-        transform.position += direction * (data.GetSpeed() * Time.deltaTime);
+        transform.position += direction * (_data.GetSpeed() * Time.deltaTime);
     }
     
     private IEnumerator ICasting()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(_data.GetTimeBeforeShowingRedLine());
         
         ShowRedLine();
         
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(_data.GetTimeBeforeLerpRedLine());
         
+        LerpRedLine();
+        
+        yield return new WaitForSeconds(_data.GetRemainingForDash());
+
         if (!isCharging)
             direction = GetPlayerDirection();
         
         SetState(State.Dashing);
     }
     
+    /// <summary>
+    /// Time before the enemy can dash again
+    /// </summary>
     private IEnumerator IWaiting()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(_data.GetTimeWaitingDash());
         
         SetState(State.Casting);
     }
 
     private void ShowRedLine()
     {
-        // Todo : Enable red line game object
+        _redLine.SetActive(true);
     }
-    
+
+    /// <summary>
+    /// Reset line renderer color and hide it
+    /// </summary>
     private void HideRedLine()
     {
-        // Todo : Reset red line 
-        // Todo: Disable red line game object
+        // Todo : Reset red line color
+        
+        _redLine.SetActive(false);
     }
     
+    /// <summary>
+    /// Lerp the line renderer color for better feedback
+    /// </summary>
     private void LerpRedLine()
     {
-        // Todo : Interpolate red line
+        Color.Lerp(redColor, redColorAtEnd, 0.5f);
     }
 
     private void OnCollisionEnter(Collision other)
@@ -197,8 +216,16 @@ public class ChargingEnemy : EnemyController
         if (other.gameObject.CompareTag("Player"))
         {
             StopCasting();
-            other.gameObject.GetComponent<PlayerController>().TakeDamage(1);
+            other.gameObject.GetComponent<PlayerController>().TakeDamage(_data.GetDamage());
             SetState(State.Waiting);
         }
+    }
+    
+    /// <summary>
+    /// Stop all coroutines when the object is destroyed
+    /// </summary>
+    ~ChargingEnemy()
+    {
+        StopAllCoroutines();
     }
 }

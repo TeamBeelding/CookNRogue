@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-[CreateAssetMenu(fileName = "EnemyData", menuName = "Enemy")]
+[CreateAssetMenu(fileName = "EnemyBasicData", menuName = "Enemy/Basic")]
 public class EnemyData : ScriptableObject
 {
     [Header("Statistics")]

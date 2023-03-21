@@ -13,7 +13,6 @@ public abstract class EnemyController : MonoBehaviour, IState, IEffectable
     
     [HideInInspector]
     public StatusEffectData _effectData;
-
     [SerializeField] 
     protected EnemyData data;
     private Renderer _rend;
