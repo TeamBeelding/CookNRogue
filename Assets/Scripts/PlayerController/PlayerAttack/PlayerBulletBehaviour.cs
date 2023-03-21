@@ -71,8 +71,9 @@ public class PlayerBulletBehaviour : MonoBehaviour
 
 
         }
-        else if(!other.gameObject.CompareTag("Player"))
+        else
         {
+            Debug.Log("dffsgsgg");
             if (bouncingNbr > 0)
             {
                 bouncingNbr--;
