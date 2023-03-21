@@ -74,7 +74,6 @@ public class PlayerAttack : MonoBehaviour
     {
         foreach (IIngredientEffects effect in _effects)
         {
-            Debug.Log(HitObject);
             if(effect != null)
                 effect.EffectOnHit(Position, HitObject, direction);
         }
@@ -94,47 +93,75 @@ public class PlayerAttack : MonoBehaviour
 
     IEnumerator shootbullets(float time)
     {
+
         for(int i = 0; i< _ProjectileNbr; i++)
         {
-            GameObject Bullet = Instantiate(_Projectile, _muzzle.position, Quaternion.identity);
-            _projectileBehaviour = Bullet.GetComponent<PlayerBulletBehaviour>();
-            _projectileBehaviour.ResetStats();
-            _projectileBehaviour._playerAttack = this;
-            _projectileBehaviour._speed += _speed;
-            _projectileBehaviour._drag -=_drag;
-            _projectileBehaviour._lightDamage += _lightDamage;
-            _projectileBehaviour._heavyDamage += _heavyDamage;
-            _projectileBehaviour._direction = _playerController.PlayerAimDirection;
-
-            
+            ConeShots coneShots = null;
+            float totalAngle = 0;
+            float incrementAngle = 0;
 
             foreach (IIngredientEffects effect in _effects)
             {
-                if (effect != null)
-                    effect.EffectOnShoot(transform.position, Bullet);
-
-                if (effect is Boomerang)
+                if (effect is ConeShots)
                 {
-                    
-                    BoomerangBehaviour boomerangBehaviour = GetComponent<BoomerangBehaviour>();
-                    if (boomerangBehaviour == null)
-                    {
-                        boomerangBehaviour = Bullet.AddComponent<BoomerangBehaviour>();
-                    }
-                    
-                    Boomerang TempEffect = (Boomerang)effect;
-                    boomerangBehaviour.ResetStats();
-                    boomerangBehaviour._forward = TempEffect._forward;
-                    boomerangBehaviour._MaxForwardDistance = TempEffect._MaxForwardDistance;
-                    boomerangBehaviour._sides = TempEffect._sides;
-                    boomerangBehaviour._MaxSideDistance = TempEffect._MaxSideDistance;
-                    boomerangBehaviour._playerAttack = this;
-                    boomerangBehaviour._boomerangSpeed = TempEffect._Speed;
-                    boomerangBehaviour._lightDamage += _lightDamage;
-                    boomerangBehaviour._heavyDamage += _heavyDamage;
-                    boomerangBehaviour._direction = _playerController.PlayerAimDirection;
+                    coneShots = (ConeShots)effect;
+                    incrementAngle = coneShots._bulletAngleSpread;
+                    totalAngle = incrementAngle;
                 }
             }
+
+            int j = 2;
+            if (incrementAngle > 0)
+            {
+                j = 0;
+            }
+            
+            for (int k = j;k < 3; k++)
+            {
+
+                GameObject Bullet = Instantiate(_Projectile, _muzzle.position, Quaternion.identity);
+                _projectileBehaviour = Bullet.GetComponent<PlayerBulletBehaviour>();
+                _projectileBehaviour.ResetStats();
+                _projectileBehaviour._playerAttack = this;
+                _projectileBehaviour._speed += _speed;
+                _projectileBehaviour._drag -= _drag;
+                _projectileBehaviour._lightDamage += _lightDamage;
+                _projectileBehaviour._heavyDamage += _heavyDamage;
+                _projectileBehaviour._direction = Quaternion.Euler(0, totalAngle, 0) * _playerController.PlayerAimDirection;
+
+
+
+                foreach (IIngredientEffects effect in _effects)
+                {
+                    if (effect != null)
+                        effect.EffectOnShoot(transform.position, Bullet);
+
+                    if (effect is Boomerang)
+                    {
+
+                        BoomerangBehaviour boomerangBehaviour = GetComponent<BoomerangBehaviour>();
+                        if (boomerangBehaviour == null)
+                        {
+                            boomerangBehaviour = Bullet.AddComponent<BoomerangBehaviour>();
+                        }
+
+                        Boomerang TempEffect = (Boomerang)effect;
+                        boomerangBehaviour.ResetStats();
+                        boomerangBehaviour._forward = TempEffect._forward;
+                        boomerangBehaviour._MaxForwardDistance = TempEffect._MaxForwardDistance;
+                        boomerangBehaviour._sides = TempEffect._sides;
+                        boomerangBehaviour._MaxSideDistance = TempEffect._MaxSideDistance;
+                        boomerangBehaviour._playerAttack = this;
+                        boomerangBehaviour._boomerangSpeed = TempEffect._Speed;
+                        boomerangBehaviour._lightDamage += _lightDamage;
+                        boomerangBehaviour._heavyDamage += _heavyDamage;
+                        boomerangBehaviour._direction = Quaternion.Euler(0, totalAngle, 0) * _playerController.PlayerAimDirection;
+                    }
+                }
+
+                totalAngle -= incrementAngle;
+            }
+            
 
             yield return new WaitForSeconds(time);
         }
