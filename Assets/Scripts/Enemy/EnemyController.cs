@@ -1,11 +1,6 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Serialization;
-using Random = UnityEngine.Random;
 
 public abstract class EnemyController : MonoBehaviour, IState, IEffectable
 {
@@ -21,8 +16,6 @@ public abstract class EnemyController : MonoBehaviour, IState, IEffectable
     private CapsuleCollider _collider;
     
     [SerializeField]
-    private ParticleSystem m_destructSystem;
-    [SerializeField]
     private ParticleSystem m_stateSystem;
     private Renderer stateRenderer;
     
@@ -31,14 +24,15 @@ public abstract class EnemyController : MonoBehaviour, IState, IEffectable
     [SerializeField]
     private GameObject m_gun;
     [SerializeField]
-    private GameObject m_visual;
-    [SerializeField]
     private GameObject m_bullet;
 
     protected bool _focusPlayer = false;
     private bool _canAttack = true;
     
     protected float healthpoint;
+    
+    [SerializeField]
+    protected GameObject explosion;
 
     protected void Awake()
     {
@@ -53,7 +47,7 @@ public abstract class EnemyController : MonoBehaviour, IState, IEffectable
         
         stateRenderer = m_stateSystem.GetComponent<Renderer>();
 
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = PlayerController.Instance.gameObject;
         
         AddToEnemyManager();
     }
@@ -111,15 +105,8 @@ public abstract class EnemyController : MonoBehaviour, IState, IEffectable
 
     protected void Dying()
     {
-        EnemyManager.Instance.RemoveEnemyFromLevel(this);
-        
-        StopAllCoroutines();
-        
-        _collider.enabled = false;
-        m_stateSystem.gameObject.SetActive(false);
-        m_visual.SetActive(false);
         DestroyEffect();
-        Destroy(gameObject, 1f);
+        Destroy(gameObject);
     }
     
     // Color the enemy red for a short time to indicate that he has been hit
@@ -148,6 +135,12 @@ public abstract class EnemyController : MonoBehaviour, IState, IEffectable
     private void AddToEnemyManager()
     {
         EnemyManager.Instance.AddEnemyToLevel(this);
+    }
+    
+    private void OnDestroy()
+    {
+        StopAllCoroutines();
+        EnemyManager.Instance.RemoveEnemyFromLevel(this);
     }
 
     #region StatusEffect
@@ -200,8 +193,9 @@ public abstract class EnemyController : MonoBehaviour, IState, IEffectable
 
     private void DestroyEffect()
     {
-        if (m_destructSystem)
-            m_destructSystem.gameObject.SetActive(true);
+        Instantiate(explosion, transform.position, Quaternion.identity);
+        _collider.enabled = false;
+        m_stateSystem.gameObject.SetActive(false);
     }
 
     // Lerp color of the enemy
