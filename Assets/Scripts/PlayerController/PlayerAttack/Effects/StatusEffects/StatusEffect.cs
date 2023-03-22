@@ -17,9 +17,16 @@ public class StatusEffect : IIngredientEffects
     //EFFET LORS DE LA COLLISION
     public void EffectOnHit(Vector3 Position, GameObject HitObject, Vector3 direction)
     {
+        Debug.Log("StatusEffectDataHitEffect");
+
+        if (!HitObject)
+            return;
+
         if (HitObject.gameObject.GetComponent<EnemyController>())
         {
-            HitObject.gameObject.GetComponent<EnemyController>().ApplyEffect(_data);
+            StatusEffectHandler handler = HitObject.AddComponent<StatusEffectHandler>();
+            handler.ApplyEffect(_data, HitObject.gameObject.GetComponent<EnemyController>());
+            HitObject.gameObject.GetComponent<EnemyController>().ApplyEffect(handler);
         }
 
     }

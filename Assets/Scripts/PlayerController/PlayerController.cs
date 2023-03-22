@@ -118,7 +118,7 @@ public class PlayerController : MonoBehaviour
         _enemyManager = EnemyManager.Instance;
         _roomManager = RoomManager.instance;
         
-        pauseMenu.SetActive(false);
+        //pauseMenu.SetActive(false);
 
         //Set Input Actions Map
         _playerActions = new PlayerActions();
