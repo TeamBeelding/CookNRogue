@@ -17,7 +17,7 @@ public class AimArrowController : MonoBehaviour
         transform.localScale = new Vector3(transform.localScale.x,
                                   transform.localScale.y,
                                   0);
-        transform.localPosition = new Vector3(0, 0.001f, 0);
+        transform.localPosition = new Vector3(0, 0.01f, 0);
     }
 
     void OnEnable()
@@ -32,7 +32,7 @@ public class AimArrowController : MonoBehaviour
             transform.localScale = new Vector3(transform.localScale.x,
                                                transform.localScale.y,
                                                transform.localScale.z + aimArrowSpeed * Time.deltaTime);
-            transform.localPosition = new Vector3(0, 0.001f, 4.9f * transform.localScale.z + zOffset);
+            transform.localPosition = new Vector3(0, 0.01f, 4.9f * transform.localScale.z + zOffset);
             yield return null;
         }
         //_isAiming = false;

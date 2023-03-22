@@ -1,3 +1,4 @@
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,15 +9,16 @@ public class ChargingEnemy : EnemyController
 {
     private Coroutine castingCoroutine;
     private Coroutine waitingCoroutine;
-    
+    private RaycastHit _hit;
+
     private bool isCharging = false;
     
     private Vector3 direction;
     private Rigidbody rigidbody;
 
     [SerializeField] private GameObject _redLine;
-    [SerializeField] private Color redColor;
-    [SerializeField] private Color redColorAtEnd;
+    //[SerializeField] private Color redColor;
+    //[SerializeField] private Color redColorAtEnd;
     
     [SerializeField]
     private EnemyDashingData _data;
@@ -90,6 +92,7 @@ public class ChargingEnemy : EnemyController
     private void Dashing()
     {
         isCharging = true;
+        StopCoroutine(castingCoroutine);
         ChargingToPlayer();
     }
     
@@ -98,6 +101,8 @@ public class ChargingEnemy : EnemyController
         isCharging = false;
         rigidbody.velocity = Vector3.zero;
         castingCoroutine = StartCoroutine(ICasting());
+        transform.LookAt(player.transform);
+
     }
     
     private void WaitingAnotherDash()
@@ -157,11 +162,11 @@ public class ChargingEnemy : EnemyController
     {
         yield return new WaitForSeconds(_data.GetTimeBeforeShowingRedLine());
         
-        ShowRedLine();
+        HideRedLine();
         
         yield return new WaitForSeconds(_data.GetTimeBeforeLerpRedLine());
         
-        LerpRedLine();
+        ShowRedLine();
         
         yield return new WaitForSeconds(_data.GetRemainingForDash());
 
@@ -183,7 +188,12 @@ public class ChargingEnemy : EnemyController
 
     private void ShowRedLine()
     {
-        _redLine.SetActive(true);
+        _redLine.GetComponent<MeshRenderer>().material.SetFloat("_Alpha", 0.3f);
+        
+        if (Physics.Raycast(transform.position, Vector3.forward, out _hit, 6)) 
+        {
+            //_hit.distance;
+        }
     }
 
     /// <summary>
@@ -192,17 +202,9 @@ public class ChargingEnemy : EnemyController
     private void HideRedLine()
     {
         // Todo : Reset red line color
-        
-        _redLine.SetActive(false);
+        _redLine.GetComponent<MeshRenderer>().material.SetFloat("_Alpha", 0.85f);
     }
     
-    /// <summary>
-    /// Lerp the line renderer color for better feedback
-    /// </summary>
-    private void LerpRedLine()
-    {
-        Color.Lerp(redColor, redColorAtEnd, 0.5f);
-    }
 
     private void OnCollisionEnter(Collision other)
     {
