@@ -103,7 +103,7 @@ public abstract class EnemyController : MonoBehaviour, IState, IEffectable
         StartCoroutine(IColorationFeedback());
     }
 
-    protected void Dying()
+    protected virtual void Dying()
     {
         DestroyEffect();
         Destroy(gameObject);

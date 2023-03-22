@@ -1,9 +1,5 @@
-
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class ChargingEnemy : EnemyController
 {
@@ -17,11 +13,10 @@ public class ChargingEnemy : EnemyController
     private Rigidbody rigidbody;
 
     [SerializeField] private GameObject _redLine;
-    //[SerializeField] private Color redColor;
-    //[SerializeField] private Color redColorAtEnd;
+    [SerializeField] private EnemyDashingData _data;
     
-    [SerializeField]
-    private EnemyDashingData _data;
+    private Material _redLineMaterial;
+    private bool _isRedLineFullVisible = false;
         
     private void Awake()
     {
@@ -35,6 +30,8 @@ public class ChargingEnemy : EnemyController
         rigidbody = GetComponent<Rigidbody>();
         
         state = State.Casting;
+        
+        _redLineMaterial = _redLine.GetComponent<Renderer>().material;
     }
 
     private void FixedUpdate()
@@ -93,13 +90,21 @@ public class ChargingEnemy : EnemyController
     {
         isCharging = true;
         StopCoroutine(castingCoroutine);
+        
         ChargingToPlayer();
     }
     
+    // function make ia stop moving
+    
+    private void StopMoving()
+    {
+        rigidbody.velocity = Vector3.zero;
+        rigidbody.angularVelocity = Vector3.zero;
+    }
+
     private void Casting()
     {
         isCharging = false;
-        rigidbody.velocity = Vector3.zero;
         castingCoroutine = StartCoroutine(ICasting());
         transform.LookAt(player.transform);
 
@@ -108,9 +113,10 @@ public class ChargingEnemy : EnemyController
     private void WaitingAnotherDash()
     {
         isCharging = false;
-        rigidbody.velocity = Vector3.zero;
+        _isRedLineFullVisible = false;
         
-        HideRedLine();
+        StopMoving();
+        ShowLightRedLine();
         
         if (castingCoroutine != null)
             StopCoroutine(castingCoroutine);
@@ -118,7 +124,7 @@ public class ChargingEnemy : EnemyController
         waitingCoroutine = StartCoroutine(IWaiting());
     }
     
-    private new void Dying()
+    protected override void Dying()
     {
         base.Dying();
 
@@ -157,16 +163,18 @@ public class ChargingEnemy : EnemyController
     {
         transform.position += direction * (_data.GetSpeed() * Time.deltaTime);
     }
-    
+
     private IEnumerator ICasting()
     {
+        // HideRedLine();
+        
         yield return new WaitForSeconds(_data.GetTimeBeforeShowingRedLine());
         
-        HideRedLine();
+        ShowLightRedLine();
         
         yield return new WaitForSeconds(_data.GetTimeBeforeLerpRedLine());
         
-        ShowRedLine();
+        ShowFullyRedLine();
         
         yield return new WaitForSeconds(_data.GetRemainingForDash());
 
@@ -186,31 +194,31 @@ public class ChargingEnemy : EnemyController
         SetState(State.Casting);
     }
 
-    private void ShowRedLine()
+    private void ShowFullyRedLine()
     {
-        _redLine.GetComponent<MeshRenderer>().material.SetFloat("_Alpha", 0.3f);
-        
-        if (Physics.Raycast(transform.position, Vector3.forward, out _hit, 6)) 
-        {
-            //_hit.distance;
-        }
+        _isRedLineFullVisible = true;
+        _redLineMaterial.SetFloat("_Alpha", 0.3f);
     }
 
     /// <summary>
     /// Reset line renderer color and hide it
     /// </summary>
-    private void HideRedLine()
+    private void ShowLightRedLine()
     {
-        // Todo : Reset red line color
-        _redLine.GetComponent<MeshRenderer>().material.SetFloat("_Alpha", 0.85f);
+        if (_isRedLineFullVisible) return;
+        
+        _redLineMaterial.SetFloat("_Alpha", 0.85f);
     }
     
+    private void HideRedLine()
+    {
+        _redLineMaterial.SetFloat("_Alpha", 1f);
+    }
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.CompareTag("Wall"))
+        if (other.gameObject.CompareTag("Obstruction"))
         {
-            rigidbody.velocity = Vector3.zero;
             StopCasting();
             SetState(State.Waiting);
         }
