@@ -119,10 +119,7 @@ public class RoomManager : MonoBehaviour
         int rand = UnityEngine.Random.Range(0, levels.Length);
         CurrentLevel = Instantiate(levels[rand], Vector3.zero, Quaternion.identity);
 
-        if (OnRoomStart!= null)
-        {
-            OnRoomStart();
-        }
+        OnRoomStart?.Invoke();
         Player.transform.position = SpawnPoint.position;
         loadSurface = true;
     }

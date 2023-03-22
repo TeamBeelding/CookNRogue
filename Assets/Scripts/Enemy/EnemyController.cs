@@ -41,7 +41,7 @@ public abstract class EnemyController : MonoBehaviour, IState, IEffectable
     
     protected float healthpoint;
 
-    protected void Awake()
+    protected virtual void Awake()
     {
         _rend = GetComponentInChildren<Renderer>();
         _meshRenderer = GetComponentInChildren<MeshRenderer>();
@@ -60,13 +60,13 @@ public abstract class EnemyController : MonoBehaviour, IState, IEffectable
     }
 
     // Start is called before the first frame update
-    protected void Start()
+    protected virtual void Start()
     {
         _rend.material.color = Color.white;
     }
 
     // Update is called once per frame
-    protected void Update()
+    protected virtual void Update()
     {
         if (_effectData != null)
             HandleEffect();
@@ -76,7 +76,7 @@ public abstract class EnemyController : MonoBehaviour, IState, IEffectable
 
     #region AttackState
 
-    protected void Chase()
+    protected virtual void Chase()
     {
         _agent.SetDestination(player.transform.position);
         stateRenderer.material.color = Color.yellow;
@@ -84,7 +84,7 @@ public abstract class EnemyController : MonoBehaviour, IState, IEffectable
     }
     
     // ReSharper disable Unity.PerformanceAnalysis
-    protected void Attack()
+    protected virtual void Attack()
     {
         stateRenderer.material.color = Color.red;
         m_stateSystem.gameObject.SetActive(true);
@@ -110,7 +110,7 @@ public abstract class EnemyController : MonoBehaviour, IState, IEffectable
         StartCoroutine(IColorationFeedback());
     }
 
-    protected void Dying()
+    protected virtual void Dying()
     {
         EnemyManager.Instance.RemoveEnemyFromLevel(this);
         

@@ -11,6 +11,8 @@ public class PlayerAttack : MonoBehaviour
     public float _TimeBtwShotsRafale;
     PlayerBulletBehaviour _projectileBehaviour;
     public Transform _muzzle;
+    [SerializeField]
+    PlayerKnockback m_knockbackScript;
 
     [Header("Physic and Movements")]
     public float _size;
@@ -52,14 +54,13 @@ public class PlayerAttack : MonoBehaviour
         StartCoroutine(shootbullets(_TimeBtwShotsRafale));
         
 
+        //Shoot Bullet
+        _shootOnCooldown = true;
+        _curShootDelay = StartCoroutine(ShootDelay(_shootCooldown));
 
+        //Animation
+        m_knockbackScript.StartKnockback();
 
-        
-
-         //Shoot Bullet
-         _shootOnCooldown = true;
-         _curShootDelay = StartCoroutine(ShootDelay(_shootCooldown));
-        
     }
 
     #region OnHitEffects

@@ -15,13 +15,13 @@ public class BasicEnemy : EnemyController
 
     public State state;
     
-    private new void Awake()
+    protected override void Awake()
     {
         base.Awake();
     }
-    
+
     // Start is called before the first frame update
-    private new void Start()
+    protected override void Start()
     {
         state = _focusPlayer ? State.Chase : State.Neutral;
 
@@ -29,12 +29,12 @@ public class BasicEnemy : EnemyController
     }
 
     // Update is called once per frame
-    private new void Update()
+    protected override void Update()
     {
         IStateManagement();
     }
-    
-    private new void FixedUpdate()
+
+    private void FixedUpdate()
     {
         if (state == State.Dying)
             return;
@@ -91,23 +91,23 @@ public class BasicEnemy : EnemyController
         }
     }
 
-    private new void Chase()
+    protected override void Chase()
     {
         if (state == State.Dying)
             return;
         
         base.Chase();
     }
-    
-    private new void Attack()
+
+    protected override void Attack()
     {
         if (state == State.Dying)
             return;
         
         base.Attack();
     }
-    
-    private new void Dying()
+
+    protected override void Dying()
     {
         base.Dying();
     }

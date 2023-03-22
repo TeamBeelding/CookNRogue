@@ -15,22 +15,6 @@ public class PlayerKnockback : MonoBehaviour
     [SerializeField]
     private float knockDistance = 0.5f;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (isKnocked)
-        {
-            StartKnockback();
-            isKnocked = false;
-        }
-    }
-
     public void StartKnockback() 
     {
         StartCoroutine(IKnockback());
@@ -40,6 +24,7 @@ public class PlayerKnockback : MonoBehaviour
     {
         // set a variable for the elapse
         float elapsedTime = 0f;
+        isKnocked = true;
         // Getting start position of shake gimble in local space
         while (elapsedTime < knockTime)
         {
@@ -52,6 +37,7 @@ public class PlayerKnockback : MonoBehaviour
             transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, -movement);
             yield return null;
         }
+        isKnocked= false;
     }
 
 }
