@@ -5,73 +5,102 @@ using UnityEditor;
 using UnityEngine.Serialization;
 
 
-[CreateAssetMenu(fileName = "LevelData", menuName = "Level")]
+
+[CreateAssetMenu(fileName = "LevelListData", menuName = "Level")]
 public class LevelListData : ScriptableObject
 {
     [Header("Statistics")]
-    [SerializeField]
-    private int amountOfRooms = 10;
 
     [SerializeField]
-    [Range(0, 10)]
-    private int EasyLevels = 6;
-
-    [SerializeField]
-    [Range(0, 10)]
-    private int HardLevels = 4;
-
-    [SerializeField]
-    private List<LevelData> _levelList;
-
-    public List<LevelData> LevelList
+    private List<GameObject> _corridorList;
+    public List<GameObject> CorridorList
     {
-        get => _levelList;
-        set => LevelList = value;
+        get => _corridorList;
     }
 
-    //public int GetProbability(int index)
-    //{
-    //    return _levelList[index].Prob;
-    //}
-
-    //public GameObject GetLevel(int index)
-    //{
-    //    return _levelList[index].Level;
-    //}
-}
-
-#if UNITY_EDITOR
-[CustomEditor(typeof(LevelListData))]
-public class LevelListDataEditor : Editor
-{
-    public override void OnInspectorGUI()
+    [SerializeField]
+    private List<GameObject> _roomList;
+    public List<GameObject> RoomList
     {
-        DrawDefaultInspector();
-
-        
-
-        EditorGUILayout.Separator();
-
-        EditorGUILayout.LabelField("TOOLS: ", "");
-        GuiLine(1);
-
-        if (GUILayout.Button("Shake"))
-        {
-            CameraController.instance._shake = true;
-        }
-
-        if (GUILayout.Button("Zoom"))
-        {
-            CameraController.instance._zoom = true;
-        }
+        get => _roomList;
     }
 
-    void GuiLine(int i_height = 1)
+    [SerializeField]
+    private List<GameObject> _shopList;
+    public List<GameObject> ShopList
     {
-        Rect rect = EditorGUILayout.GetControlRect(false, i_height);
-        rect.height = i_height;
-        EditorGUI.DrawRect(rect, new Color(0.5f, 0.5f, 0.5f, 1));
-        EditorGUILayout.Separator();
+        get => _roomList;
+    }
+
+    [SerializeField]
+    private List<GameObject> _finalList;
+    public List<GameObject> FinalList
+    {
+        get => _roomList;
     }
 }
-#endif
+
+//#if UNITY_EDITOR
+//[CustomEditor(typeof(LevelListData))]
+//public class LevelListDataEditor : Editor
+//{
+//    public override void OnInspectorGUI()
+//    {
+//        DrawDefaultInspector();
+
+//        LevelListData _levelListData = new LevelListData();
+
+//        LevelData data = null;
+
+//        //data = (LevelData)EditorGUILayout.ObjectField(data, typeof(LevelData), true);
+
+//        if (GUILayout.Button("Update"))
+//        {
+//            for (int i = 0; i < _levelListData.m_amountOfRooms; i++)
+//            {
+//                data = (LevelData)EditorGUILayout.ObjectField(data, typeof(LevelData), true);
+//            }
+//        }
+
+
+//        if (data)
+//        {
+
+//        }
+
+//        //EditorGUILayout.Separator();
+
+//        //EditorGUILayout.LabelField("TOOLS: ", "");
+//        //GuiLine(1);
+
+//        //if (GUILayout.Button("Shake"))
+//        //{
+//        //    CameraController.instance._shake = true;
+//        //}
+
+//        //if (GUILayout.Button("Zoom"))
+//        //{
+//        //    CameraController.instance._zoom = true;
+//        //}
+//    }
+
+
+//    //
+//    // Summary:
+//    //     Checks if this editor requires constant repaints in its current state.
+//    //public override bool RequiresConstantRepaint() = true;
+
+//    //public override void OnInspectorUpdate() 
+//    //{ 
+    
+//    //}
+
+//    void GuiLine(int i_height = 1)
+//    {
+//        Rect rect = EditorGUILayout.GetControlRect(false, i_height);
+//        rect.height = i_height;
+//        EditorGUI.DrawRect(rect, new Color(0.5f, 0.5f, 0.5f, 1));
+//        EditorGUILayout.Separator();
+//    }
+//}
+//#endif

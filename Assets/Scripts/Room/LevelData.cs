@@ -4,11 +4,12 @@ using UnityEngine;
 using UnityEditor;
 using UnityEngine.Serialization;
 
-
-public class LevelData
+[System.Serializable]
+public class LevelData : ScriptableObject
 {
     [SerializeField]
     private GameObject _level;
+
     [SerializeField]
     private int _prob;
 
@@ -17,7 +18,6 @@ public class LevelData
         get => _level;
         set { _level = value; }
     }
-
     public int Prob
     {
         get => _prob;
