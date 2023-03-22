@@ -73,7 +73,6 @@ public class PlayerBulletBehaviour : MonoBehaviour
         }
         else
         {
-            Debug.Log("dffsgsgg");
             if (bouncingNbr > 0)
             {
                 bouncingNbr--;

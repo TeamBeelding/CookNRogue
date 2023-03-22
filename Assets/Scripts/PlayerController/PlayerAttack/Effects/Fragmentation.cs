@@ -18,7 +18,7 @@ public class Fragmentation : IIngredientEffects
 
         if (_fragParticles)
         {
-            ParticleSystem tempfragParticles = ParticleSystem.Instantiate(_fragParticles, HitObject.transform.position, Quaternion.identity) as ParticleSystem;
+            ParticleSystem tempfragParticles = ParticleSystem.Instantiate(_fragParticles, Position, Quaternion.identity) as ParticleSystem;
         }
 
     }
