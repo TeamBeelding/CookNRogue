@@ -20,7 +20,11 @@ public class StatusEffectHandler : MonoBehaviour
         _currentEffectTime += Time.deltaTime;
 
         if (_currentEffectTime > _effectData._lifetime)
+        {
+            _enemyController.RemoveEffect(this);
             Destroy(this);
+        }
+            
 
         if (_effectData == null)
             return;
