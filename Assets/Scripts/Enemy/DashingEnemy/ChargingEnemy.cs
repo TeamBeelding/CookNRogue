@@ -103,6 +103,9 @@ public class ChargingEnemy : EnemyController
     {
         rigidbody.velocity = Vector3.zero;
         rigidbody.angularVelocity = Vector3.zero;
+
+        StopCoroutine(ICanShowingRedLine());
+        canShowingRedLine = false;
         
         direction = Vector3.zero;
     }
@@ -116,7 +119,6 @@ public class ChargingEnemy : EnemyController
         isCharging = false;
         castingCoroutine = StartCoroutine(ICasting());
         transform.LookAt(player.transform);
-
     }
     
     /// <summary>
@@ -129,7 +131,6 @@ public class ChargingEnemy : EnemyController
         canShowingRedLine = false;
         
         StopMoving();
-        // ShowLightRedLine();
         
         if (castingCoroutine != null)
             StopCoroutine(castingCoroutine);
