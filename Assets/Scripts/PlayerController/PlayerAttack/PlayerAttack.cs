@@ -75,8 +75,12 @@ public class PlayerAttack : MonoBehaviour
     {
         foreach (IIngredientEffects effect in _effects)
         {
-            if(effect != null)
-                effect.EffectOnHit(Position, HitObject, direction);
+            
+                if (effect != null)
+                {
+                    effect.EffectOnHit(Position, HitObject, direction);
+                }
+
         }
     }
     #endregion
