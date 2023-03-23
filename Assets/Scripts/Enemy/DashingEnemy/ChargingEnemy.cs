@@ -8,6 +8,7 @@ public class ChargingEnemy : EnemyController
     private RaycastHit _hit;
 
     private bool isCharging = false;
+    private bool canShowingRedLine = false;
     
     private Vector3 direction;
     private Rigidbody rigidbody;
@@ -86,6 +87,10 @@ public class ChargingEnemy : EnemyController
         }
     }
 
+    /// <summary>
+    /// Dashing State :
+    /// Stop casting and dash to player
+    /// </summary>
     private void Dashing()
     {
         isCharging = true;
@@ -93,8 +98,6 @@ public class ChargingEnemy : EnemyController
         
         ChargingToPlayer();
     }
-    
-    // function make ia stop moving
     
     private void StopMoving()
     {
@@ -104,6 +107,10 @@ public class ChargingEnemy : EnemyController
         direction = Vector3.zero;
     }
 
+    /// <summary>
+    /// Casting State :
+    /// Preparing to dash and Look at player
+    /// </summary>
     private void Casting()
     {
         isCharging = false;
@@ -112,13 +119,17 @@ public class ChargingEnemy : EnemyController
 
     }
     
+    /// <summary>
+    /// Wait some time before casting again
+    /// </summary>
     private void WaitingAnotherDash()
     {
         isCharging = false;
         _isRedLineFullVisible = false;
+        canShowingRedLine = false;
         
         StopMoving();
-        ShowLightRedLine();
+        // ShowLightRedLine();
         
         if (castingCoroutine != null)
             StopCoroutine(castingCoroutine);
@@ -126,6 +137,9 @@ public class ChargingEnemy : EnemyController
         waitingCoroutine = StartCoroutine(IWaiting());
     }
     
+    /// <summary>
+    /// Dying Test
+    /// </summary>
     protected override void Dying()
     {
         base.Dying();
@@ -133,6 +147,10 @@ public class ChargingEnemy : EnemyController
         StopCasting();
     }
     
+    /// <summary>
+    /// Enemy Take Damage
+    /// </summary>
+    /// <param name="damage"></param>
     public override void TakeDamage(float damage = 1)
     {
         base.TakeDamage();
@@ -146,12 +164,20 @@ public class ChargingEnemy : EnemyController
         }
     }
 
+    /// <summary>
+    /// Stop casting coroutine
+    /// </summary>
     private void StopCasting()
     {
         if (castingCoroutine != null)
             StopCoroutine(castingCoroutine);
     }
     
+    
+    /// <summary>
+    /// Return the direction to player
+    /// </summary>
+    /// <returns></returns>
     private Vector3 GetPlayerDirection()
     {
         isCharging = true;
@@ -168,9 +194,11 @@ public class ChargingEnemy : EnemyController
 
     private IEnumerator ICasting()
     {
-        // HideRedLine();
-        
-        yield return new WaitForSeconds(_data.GetTimeBeforeShowingRedLine());
+        // yield return new WaitForSeconds(_data.GetTimeBeforeShowingRedLine());
+        //
+        // ShowLightRedLine();
+
+        yield return StartCoroutine(ICanShowingRedLine());
         
         ShowLightRedLine();
         
@@ -186,6 +214,15 @@ public class ChargingEnemy : EnemyController
         SetState(State.Dashing);
     }
     
+    private IEnumerator ICanShowingRedLine()
+    {
+        if (canShowingRedLine)
+            yield break;
+        
+        HideRedLine();
+        yield return new WaitForSeconds(_data.GetTimeBeforeShowingRedLine());
+    }
+    
     /// <summary>
     /// Time before the enemy can dash again
     /// </summary>
@@ -196,6 +233,9 @@ public class ChargingEnemy : EnemyController
         SetState(State.Casting);
     }
 
+    /// <summary>
+    /// Make Red line more visible
+    /// </summary>
     private void ShowFullyRedLine()
     {
         _isRedLineFullVisible = true;
@@ -209,9 +249,13 @@ public class ChargingEnemy : EnemyController
     {
         if (_isRedLineFullVisible) return;
         
+        canShowingRedLine = true;
         _redLineMaterial.SetFloat("_Alpha", 0.85f);
     }
     
+    /// <summary>
+    /// Put the red line to full alpha (invisible)
+    /// </summary>
     private void HideRedLine()
     {
         _redLineMaterial.SetFloat("_Alpha", 1f);
