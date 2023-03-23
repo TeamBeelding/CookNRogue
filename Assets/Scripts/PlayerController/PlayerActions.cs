@@ -89,6 +89,15 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Quit"",
+                    ""type"": ""Button"",
+                    ""id"": ""e81f954d-c622-4de1-94d2-70d625d37ce3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -300,6 +309,67 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                     ""action"": ""MoveInventorySlotRight"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""440facc4-16b7-42ea-9908-03e8aa57f182"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Quit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c266a7ab-47fe-47e9-ae99-d83ed5fceeab"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""GamePad"",
+                    ""action"": ""Quit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""UI"",
+            ""id"": ""99640325-fa2f-41a2-8f51-562d0191ca22"",
+            ""actions"": [
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""64ce9059-d66f-4e68-bd72-92ed0264571f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""4198e10d-2500-4f17-99db-28ed30924722"",
+                    ""path"": ""<Keyboard>/p"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""be10b25c-c2d3-44bf-9e4e-b58c13b32725"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -343,6 +413,11 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
         m_Default_PlayerActions_Craft = m_Default_PlayerActions.FindAction("Craft", throwIfNotFound: true);
         m_Default_PlayerActions_MoveInventorySlotLeft = m_Default_PlayerActions.FindAction("MoveInventorySlotLeft", throwIfNotFound: true);
         m_Default_PlayerActions_MoveInventorySlotRight = m_Default_PlayerActions.FindAction("MoveInventorySlotRight", throwIfNotFound: true);
+        m_Default_PlayerActions_Quit = m_Default_PlayerActions.FindAction("Quit", throwIfNotFound: true);
+
+        // UI
+        m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
+        m_UI_Pause = m_UI.FindAction("Pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -409,6 +484,7 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Default_PlayerActions_Craft;
     private readonly InputAction m_Default_PlayerActions_MoveInventorySlotLeft;
     private readonly InputAction m_Default_PlayerActions_MoveInventorySlotRight;
+    private readonly InputAction m_Default_PlayerActions_Quit;
     public struct Default_PlayerActionsActions
     {
         private @PlayerActions m_Wrapper;
@@ -420,6 +496,7 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
         public InputAction @Craft => m_Wrapper.m_Default_PlayerActions_Craft;
         public InputAction @MoveInventorySlotLeft => m_Wrapper.m_Default_PlayerActions_MoveInventorySlotLeft;
         public InputAction @MoveInventorySlotRight => m_Wrapper.m_Default_PlayerActions_MoveInventorySlotRight;
+        public InputAction @Quit => m_Wrapper.m_Default_PlayerActions_Quit;
         public InputActionMap Get() { return m_Wrapper.m_Default_PlayerActions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -450,6 +527,9 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                 @MoveInventorySlotRight.started -= m_Wrapper.m_Default_PlayerActionsActionsCallbackInterface.OnMoveInventorySlotRight;
                 @MoveInventorySlotRight.performed -= m_Wrapper.m_Default_PlayerActionsActionsCallbackInterface.OnMoveInventorySlotRight;
                 @MoveInventorySlotRight.canceled -= m_Wrapper.m_Default_PlayerActionsActionsCallbackInterface.OnMoveInventorySlotRight;
+                @Quit.started -= m_Wrapper.m_Default_PlayerActionsActionsCallbackInterface.OnQuit;
+                @Quit.performed -= m_Wrapper.m_Default_PlayerActionsActionsCallbackInterface.OnQuit;
+                @Quit.canceled -= m_Wrapper.m_Default_PlayerActionsActionsCallbackInterface.OnQuit;
             }
             m_Wrapper.m_Default_PlayerActionsActionsCallbackInterface = instance;
             if (instance != null)
@@ -475,10 +555,46 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                 @MoveInventorySlotRight.started += instance.OnMoveInventorySlotRight;
                 @MoveInventorySlotRight.performed += instance.OnMoveInventorySlotRight;
                 @MoveInventorySlotRight.canceled += instance.OnMoveInventorySlotRight;
+                @Quit.started += instance.OnQuit;
+                @Quit.performed += instance.OnQuit;
+                @Quit.canceled += instance.OnQuit;
             }
         }
     }
     public Default_PlayerActionsActions @Default_PlayerActions => new Default_PlayerActionsActions(this);
+
+    // UI
+    private readonly InputActionMap m_UI;
+    private IUIActions m_UIActionsCallbackInterface;
+    private readonly InputAction m_UI_Pause;
+    public struct UIActions
+    {
+        private @PlayerActions m_Wrapper;
+        public UIActions(@PlayerActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Pause => m_Wrapper.m_UI_Pause;
+        public InputActionMap Get() { return m_Wrapper.m_UI; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(UIActions set) { return set.Get(); }
+        public void SetCallbacks(IUIActions instance)
+        {
+            if (m_Wrapper.m_UIActionsCallbackInterface != null)
+            {
+                @Pause.started -= m_Wrapper.m_UIActionsCallbackInterface.OnPause;
+                @Pause.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnPause;
+                @Pause.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnPause;
+            }
+            m_Wrapper.m_UIActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
+            }
+        }
+    }
+    public UIActions @UI => new UIActions(this);
     private int m_GamePadSchemeIndex = -1;
     public InputControlScheme GamePadScheme
     {
@@ -506,5 +622,10 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
         void OnCraft(InputAction.CallbackContext context);
         void OnMoveInventorySlotLeft(InputAction.CallbackContext context);
         void OnMoveInventorySlotRight(InputAction.CallbackContext context);
+        void OnQuit(InputAction.CallbackContext context);
+    }
+    public interface IUIActions
+    {
+        void OnPause(InputAction.CallbackContext context);
     }
 }

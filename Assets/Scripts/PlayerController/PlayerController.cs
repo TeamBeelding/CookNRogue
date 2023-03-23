@@ -37,14 +37,17 @@ public class PlayerController : MonoBehaviour
     float aimArrowDuration = 1;
 
     [SerializeField]
-    PlayerKnockback m_knockback;
-    [SerializeField]
     LayerMask m_interactionMask;
     [SerializeField]
     AimAssistPreset m_aimAssistPresset;
 
     [SerializeField]
     TransitionController takeDamageTransition;
+
+    [SerializeField]
+    private GameObject pauseMenu;
+    
+    private bool m_isGamePaused = false;
 
     public static PlayerController Instance
     {
@@ -114,10 +117,13 @@ public class PlayerController : MonoBehaviour
         _inventoryScript = PlayerInventoryScript._instance;
         _enemyManager = EnemyManager.Instance;
         _roomManager = RoomManager.instance;
+        
+        //pauseMenu.SetActive(false);
 
         //Set Input Actions Map
         _playerActions = new PlayerActions();
         _playerActions.Default_PlayerActions.Enable();
+        _playerActions.UI.Enable();
         //Set Events
         _playerActions.Default_PlayerActions.Shoot.performed += Shoot;
         _playerActions.Default_PlayerActions.Move.performed += Move_Performed;
@@ -127,6 +133,9 @@ public class PlayerController : MonoBehaviour
         _playerActions.Default_PlayerActions.Craft.performed += Craft;
         _playerActions.Default_PlayerActions.MoveInventorySlotLeft.performed += MoveInventorySlotLeft;
         _playerActions.Default_PlayerActions.MoveInventorySlotRight.performed += MoveInventorySlotRight;
+        _playerActions.Default_PlayerActions.Quit.performed += Quit;
+
+        _playerActions.UI.Pause.performed += OnPauseGame;
 
         _roomManager.OnRoomStart += Spawn;
 
@@ -365,7 +374,6 @@ public class PlayerController : MonoBehaviour
 
         if (context.performed)
         {
-            m_knockback.StartKnockback();
             GetComponent<PlayerAttack>().Shoot();
         }
     }
@@ -400,6 +408,41 @@ public class PlayerController : MonoBehaviour
     void Spawn()
     {
         transform.position = _roomManager.SpawnPoint.position;
+    }
+
+    void Quit(InputAction.CallbackContext context)
+    {
+        Application.Quit();
+    }
+
+    #endregion
+
+    #region UI
+
+    private void OnPauseGame(InputAction.CallbackContext callbackContext)
+    {
+        PauseGame();
+    }
+
+    public void PauseGame()
+    {
+        if (m_isGamePaused)
+        {
+            Time.timeScale = 1;
+            pauseMenu.SetActive(false);
+        }
+        else
+        {
+            Time.timeScale = 0;
+            pauseMenu.SetActive(true);
+        }
+
+        m_isGamePaused = !m_isGamePaused;
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 
     #endregion

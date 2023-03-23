@@ -24,7 +24,7 @@ public class PlayerBulletBehaviour : MonoBehaviour
 
         rb.drag = drag;
         rb.velocity = direction * speed;*/
-        Destroy(gameObject, 1f);
+        Invoke("DestroyBullet", 1);
     }
 
     protected virtual void FixedUpdate()
@@ -44,35 +44,37 @@ public class PlayerBulletBehaviour : MonoBehaviour
 
     protected virtual void OnDestroy()
     {
-        if(_HasHit)
+        if (!_HasHit)
         {
-            _playerAttack.ApplyOnHitEffects(transform.position, _hitObject, _direction);
+            ApplyCorrectOnHitEffects();
         }
-        else
-        {
-            _playerAttack.ApplyOnHitEffects(transform.position);
-        }
+    }
+    public void DestroyBullet()
+    {
+        Destroy(gameObject);
     }
 
     protected virtual void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Enemy"))
+        if (other.GetComponent<EnemyController>())
         {
+            Debug.Log("hit enemy");
             _HasHit = true;
             _hitObject = other.gameObject;
-            if (other.GetComponent<EnemyController>())
-                other.GetComponent<EnemyController>().TakeDamage(_heavyDamage);
+            ApplyCorrectOnHitEffects();
+             other.GetComponent<EnemyController>().TakeDamage(_heavyDamage);
 
             if(destroyOnHit)
             {
                 Destroy(gameObject);
-
             }
 
 
         }
-        else if(!other.gameObject.CompareTag("Player"))
+        else
         {
+            _HasHit = false;
+            ApplyCorrectOnHitEffects();
             if (bouncingNbr > 0)
             {
                 bouncingNbr--;
@@ -81,13 +83,29 @@ public class PlayerBulletBehaviour : MonoBehaviour
                 {
                     _direction = Vector3.Reflect(_direction.normalized, hit.normal);
                 }
-
+                
                 bouncingNbr--;
             }
             else
             {
                 Destroy(gameObject);
             }
+        }
+
+        
+
+
+    }
+
+    void ApplyCorrectOnHitEffects()
+    {
+        if (_HasHit)
+        {
+            _playerAttack.ApplyOnHitEffects(transform.position, _hitObject, _direction);
+        }
+        else
+        {
+            _playerAttack.ApplyOnHitEffects(transform.position);
         }
     }
 

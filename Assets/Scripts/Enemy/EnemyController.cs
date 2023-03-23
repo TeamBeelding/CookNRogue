@@ -1,13 +1,15 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public abstract class EnemyController : MonoBehaviour, IState, IEffectable
+public abstract class EnemyController : MonoBehaviour, IState
 {
     protected GameObject player;
     
     [HideInInspector]
-    public StatusEffectData _effectData;
+    public List<StatusEffectHandler> _effectHandlers;
+
     [SerializeField] 
     protected EnemyData data;
     private Renderer _rend;
@@ -34,7 +36,7 @@ public abstract class EnemyController : MonoBehaviour, IState, IEffectable
     [SerializeField]
     protected GameObject explosion;
 
-    protected void Awake()
+    protected virtual void Awake()
     {
         _rend = GetComponentInChildren<Renderer>();
         _meshRenderer = GetComponentInChildren<MeshRenderer>();
@@ -53,23 +55,22 @@ public abstract class EnemyController : MonoBehaviour, IState, IEffectable
     }
 
     // Start is called before the first frame update
-    protected void Start()
+    protected virtual void Start()
     {
         _rend.material.color = Color.white;
     }
 
     // Update is called once per frame
-    protected void Update()
+    protected virtual void Update()
     {
-        if (_effectData != null)
-            HandleEffect();
+        HandleAllEffects();
     }
 
     public abstract bool IsMoving();
 
     #region AttackState
 
-    protected void Chase()
+    protected virtual void Chase()
     {
         _agent.SetDestination(player.transform.position);
         stateRenderer.material.color = Color.yellow;
@@ -77,7 +78,7 @@ public abstract class EnemyController : MonoBehaviour, IState, IEffectable
     }
     
     // ReSharper disable Unity.PerformanceAnalysis
-    protected void Attack()
+    protected virtual void Attack()
     {
         stateRenderer.material.color = Color.red;
         m_stateSystem.gameObject.SetActive(true);
@@ -145,47 +146,22 @@ public abstract class EnemyController : MonoBehaviour, IState, IEffectable
 
     #region StatusEffect
 
-    private float _currentEffectTime = 0;
-    private float _NextTickTime = 0;
-    private ParticleSystem _part;
-
-    public void ApplyEffect(StatusEffectData data)
+    public void ApplyEffect(StatusEffectHandler handler)
     {
-        _effectData = data;
-        if(_effectData._effectpart != null)
-            _part = Instantiate(_effectData._effectpart,transform);
+        _effectHandlers.Add(handler);
     }
 
-    public void RemoveEffect()
+    public void RemoveEffect(StatusEffectHandler handler)
     {
-        _currentEffectTime = 0;
-        _NextTickTime = 0;
-        _effectData = null;
-        _agent.speed = data.GetSpeed();
-        _agent.stoppingDistance = data.GetAttackRange();
-        _focusPlayer = data.GetFocusPlayer();
-        
-        if (_part != null)
-            Destroy(_part);
-            
+        _effectHandlers.Remove(handler);
     }
 
-    public void HandleEffect()
+    private void HandleAllEffects()
     {
-        _currentEffectTime += Time.deltaTime;
-
-        if (_currentEffectTime > _effectData._lifetime)
-            RemoveEffect();
-
-        if (_effectData == null)
-            return;
-
-        if(_effectData._DOTAmount != 0 && _currentEffectTime > _NextTickTime)
+        foreach (StatusEffectHandler handler in _effectHandlers)
         {
-            _NextTickTime += _currentEffectTime;
-            TakeDamage(_effectData._DOTAmount);
+            handler.HandleEffect();
         }
-            
     }
     #endregion
 
