@@ -6,35 +6,35 @@ using UnityEngine.Serialization;
 
 
 
-[CreateAssetMenu(fileName = "LevelListData", menuName = "Level")]
+[CreateAssetMenu(fileName = "LevelListData", menuName = "Level/LevelList")]
 public class LevelListData : ScriptableObject
 {
     [Header("Statistics")]
 
     [SerializeField]
-    private List<GameObject> _corridorList;
-    public List<GameObject> CorridorList
+    private GameObject[] _corridorList;
+    public GameObject[] CorridorList
     {
         get => _corridorList;
     }
 
     [SerializeField]
-    private List<GameObject> _roomList;
-    public List<GameObject> RoomList
+    private GameObject[] _roomList;
+    public GameObject[] RoomList
     {
         get => _roomList;
     }
 
     [SerializeField]
-    private List<GameObject> _shopList;
-    public List<GameObject> ShopList
+    private GameObject[] _shopList;
+    public GameObject[] ShopList
     {
         get => _roomList;
     }
 
     [SerializeField]
-    private List<GameObject> _finalList;
-    public List<GameObject> FinalList
+    private GameObject[] _finalList;
+    public GameObject[] FinalList
     {
         get => _roomList;
     }
@@ -52,7 +52,7 @@ public class LevelListData : ScriptableObject
 
 //        LevelData data = null;
 
-//        //data = (LevelData)EditorGUILayout.ObjectField(data, typeof(LevelData), true);
+//        data = (LevelData)EditorGUILayout.ObjectField(data, typeof(LevelData), true);
 
 //        if (GUILayout.Button("Update"))
 //        {
@@ -92,7 +92,7 @@ public class LevelListData : ScriptableObject
 
 //    //public override void OnInspectorUpdate() 
 //    //{ 
-    
+
 //    //}
 
 //    void GuiLine(int i_height = 1)
