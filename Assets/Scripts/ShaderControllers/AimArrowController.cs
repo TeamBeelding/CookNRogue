@@ -60,8 +60,8 @@ public class AimArrowController : MonoBehaviour
         {
             transform.localScale = new Vector3(transform.localScale.x,
                                                transform.localScale.y,
-                                               transform.localScale.z + aimArrowSpeed * Time.deltaTime);
-            transform.localPosition = new Vector3(0, 0.01f, 4.9f * transform.localScale.z + zOffset);
+                                               transform.localScale.z + m_aimArrowSpeed * Time.deltaTime);
+            transform.localPosition = new Vector3(0, 0.01f, 4.9f * transform.localScale.z + m_zOffset);
             yield return null;
         }
         //_isAiming = false;

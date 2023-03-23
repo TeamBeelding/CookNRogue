@@ -26,7 +26,7 @@ public class PlayerKnockback : MonoBehaviour
         float elapsedTime = 0f;
         isKnocked = true;
         // Getting start position of shake gimble in local space
-        while (elapsedTime < knockTime)
+        while (elapsedTime < m_knockTime)
         {
 
             // adding time to counter

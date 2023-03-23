@@ -124,8 +124,8 @@ public class RoomManager : MonoBehaviour
         _currentLevel = Instantiate(levels[rand], Vector3.zero, Quaternion.identity);
 
         OnRoomStart?.Invoke();
-        Player.transform.position = SpawnPoint.position;
-        loadSurface = true;
+        m_player.transform.position = SpawnPoint.position;
+        m_loadSurface = true;
     }
 
     private void OnEnable()
