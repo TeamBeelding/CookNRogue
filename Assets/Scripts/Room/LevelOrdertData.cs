@@ -6,7 +6,7 @@ using UnityEngine.Serialization;
 
 
 [CreateAssetMenu(fileName = "LevelOrderList", menuName = "Level/LevelOrder")]
-public class LevelOrdertData : ScriptableObject
+public class LeveOrdertData : ScriptableObject
 {
     [Header("Statistics")]
 
@@ -68,8 +68,8 @@ public class LevelOrdertData : ScriptableObject
 }
 
 #if UNITY_EDITOR
-[CustomEditor(typeof(LevelOrdertData))]
-public class LevelOrdertDataEditor : Editor
+[CustomEditor(typeof(LeveOrdertData))]
+public class LeveOrdertDataEditor : Editor
 {
     private int selected = 0;
 
@@ -79,7 +79,7 @@ public class LevelOrdertDataEditor : Editor
     {
 
         DrawDefaultInspector();
-        LevelOrdertData order = (LevelOrdertData)target;
+        LeveOrdertData order = (LeveOrdertData)target;
 
         _roomTypes = new string[] { "Corridor","Room","Shop","Final Room"};
 

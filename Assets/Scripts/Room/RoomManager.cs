@@ -13,10 +13,13 @@ public class RoomManager : MonoBehaviour
     [SerializeField]
     private GameObject[] m_hardLevels;
 
+    //[SerializeField]
+    //private LevelOrderData m_hardLevels;
+
     private string[] _levelNames;
 
-    public string[] LevelNames 
-    { 
+    public string[] LevelNames
+    {
         get => _levelNames;
     }
 
