@@ -54,6 +54,8 @@ public class BasicEnemy : EnemyController
     // Update is called once per frame
     protected override void Update()
     {
+        base.Update();
+        
         IStateManagement();
     }
 
