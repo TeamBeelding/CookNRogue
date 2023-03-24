@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 
 public abstract class EnemyController : MonoBehaviour, IState, IEffectable
 {
@@ -8,24 +9,12 @@ public abstract class EnemyController : MonoBehaviour, IState, IEffectable
     
     [HideInInspector]
     public StatusEffectData _effectData;
-    // [SerializeField] 
-    // protected EnemyData data;
     private Renderer _rend;
     private MeshRenderer _meshRenderer;
-    // private NavMeshAgent _agent;
     private CapsuleCollider _collider;
-    
-    [SerializeField]
-    private ParticleSystem m_stateSystem;
-    private Renderer stateRenderer;
     
     private IEnumerator colorCoroutine;
     
-    // [SerializeField]
-    // private GameObject m_gun;
-    // [SerializeField]
-    // private GameObject m_bullet;
-
     protected bool _focusPlayer = false;
     private bool _canAttack = true;
     
@@ -34,21 +23,13 @@ public abstract class EnemyController : MonoBehaviour, IState, IEffectable
     [SerializeField]
     protected GameObject explosion;
 
-    protected void Awake()
+    protected virtual void Awake()
     {
         _rend = GetComponentInChildren<Renderer>();
         _meshRenderer = GetComponentInChildren<MeshRenderer>();
         _collider = GetComponent<CapsuleCollider>();
-        // _agent = GetComponent<NavMeshAgent>();
-        // _agent.speed = data.GetSpeed();
-        // _agent.stoppingDistance = data.GetAttackRange();
-        // _focusPlayer = data.GetFocusPlayer();
-        // healthpoint = data.GetHealth();
-        
-        // stateRenderer = m_stateSystem.GetComponent<Renderer>();
 
-        player = GameObject.FindGameObjectWithTag("Player");
-        // player = PlayerController.Instance.gameObject;
+        player = PlayerController.Instance.gameObject;
         
         AddToEnemyManager();
     }
@@ -60,7 +41,7 @@ public abstract class EnemyController : MonoBehaviour, IState, IEffectable
     }
 
     // Update is called once per frame
-    protected void Update()
+    protected virtual void Update()
     {
         if (_effectData != null)
             HandleEffect();
@@ -70,25 +51,18 @@ public abstract class EnemyController : MonoBehaviour, IState, IEffectable
 
     #region AttackState
 
-    protected void Chase()
+    protected virtual void Chase()
     {
-        // _agent.SetDestination(player.transform.position);
-        stateRenderer.material.color = Color.yellow;
-        m_stateSystem.gameObject.SetActive(true);
+        
     }
     
-    // ReSharper disable Unity.PerformanceAnalysis
-    protected void Attack()
+    protected virtual void Attack(UnityAction OnAction, float delay = 0.5f)
     {
-        stateRenderer.material.color = Color.red;
-        m_stateSystem.gameObject.SetActive(true);
-        
         if (_canAttack)
         {
-            // GameObject shot = Instantiate(m_bullet, m_gun.transform.position, Quaternion.identity);
-            // shot.GetComponent<EnemyBulletController>().SetDirection(player.transform);
+            OnAction?.Invoke();
             _canAttack = false;
-            // StartCoroutine(IAttackTimer());
+            StartCoroutine(IAttackTimer(delay));
         }
     }
     
@@ -122,13 +96,12 @@ public abstract class EnemyController : MonoBehaviour, IState, IEffectable
         }
     }
 
-    // private IEnumerator IAttackTimer()
-    // {
-    //     // LerpColor(_rend, Color.red, data.GetAttackSpeed());
-    //     // yield return new WaitForSeconds(data.GetAttackSpeed());
-    //     _canAttack = true;
-    //     _rend.material.color = Color.white;
-    // }
+    private IEnumerator IAttackTimer(float delay = 0.5f)
+    {
+        yield return new WaitForSeconds(delay);
+        _canAttack = true;
+        _rend.material.color = Color.white;
+    }
     
     #endregion
 
@@ -162,9 +135,6 @@ public abstract class EnemyController : MonoBehaviour, IState, IEffectable
         _currentEffectTime = 0;
         _NextTickTime = 0;
         _effectData = null;
-        // _agent.speed = data.GetSpeed();
-        // _agent.stoppingDistance = data.GetAttackRange();
-        // _focusPlayer = data.GetFocusPlayer();
         
         if (_part != null)
             Destroy(_part);
@@ -196,7 +166,6 @@ public abstract class EnemyController : MonoBehaviour, IState, IEffectable
     {
         Instantiate(explosion, transform.position, Quaternion.identity);
         _collider.enabled = false;
-        m_stateSystem.gameObject.SetActive(false);
     }
 
     // Lerp color of the enemy
@@ -226,13 +195,14 @@ public abstract class EnemyController : MonoBehaviour, IState, IEffectable
 
     #region Guizmos
     
-    private void OnDrawGizmosSelected()
+    #if UNITY_EDITOR
+
+    protected virtual void OnDrawGizmosSelected()
     {
-        // Gizmos.color = Color.blue;
-        // Gizmos.DrawWireSphere(transform.position, data.GetRangeDetection());
-        // Gizmos.color = Color.red;
-        // Gizmos.DrawWireSphere(transform.position, data.GetAttackRange());
+        
     }
-    
+
+    #endif
+
     #endregion
 }
