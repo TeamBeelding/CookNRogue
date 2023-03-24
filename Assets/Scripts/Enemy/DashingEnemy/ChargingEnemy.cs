@@ -18,6 +18,9 @@ public class ChargingEnemy : EnemyController
     
     private Material _redLineMaterial;
     private bool _isRedLineFullVisible = false;
+
+    [SerializeField]
+    private GameObject visual;
         
     private void Awake()
     {
@@ -26,12 +29,12 @@ public class ChargingEnemy : EnemyController
     }
     
     // Start is called before the first frame update
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
+        
         rigidbody = GetComponent<Rigidbody>();
-        
         state = State.Casting;
-        
         _redLineMaterial = _redLine.GetComponent<Renderer>().material;
     }
 
@@ -101,13 +104,13 @@ public class ChargingEnemy : EnemyController
     
     private void StopMoving()
     {
+        direction = Vector3.zero;
+
         rigidbody.velocity = Vector3.zero;
         rigidbody.angularVelocity = Vector3.zero;
 
         StopCoroutine(ICanShowingRedLine());
         canShowingRedLine = false;
-        
-        direction = Vector3.zero;
     }
 
     /// <summary>
@@ -118,7 +121,7 @@ public class ChargingEnemy : EnemyController
     {
         isCharging = false;
         castingCoroutine = StartCoroutine(ICasting());
-        transform.LookAt(player.transform);
+        visual.transform.LookAt(new Vector3(player.transform.position.x, visual.transform.position.y, player.transform.position.z));
     }
     
     /// <summary>
@@ -126,12 +129,12 @@ public class ChargingEnemy : EnemyController
     /// </summary>
     private void WaitingAnotherDash()
     {
+        StopMoving();
+
         isCharging = false;
         _isRedLineFullVisible = false;
         canShowingRedLine = false;
-        
-        StopMoving();
-        
+
         if (castingCoroutine != null)
             StopCoroutine(castingCoroutine);
         
@@ -273,8 +276,8 @@ public class ChargingEnemy : EnemyController
         if (other.gameObject.CompareTag("Player"))
         {
             StopCasting();
-            other.gameObject.GetComponent<PlayerController>().TakeDamage(_data.GetDamage());
             SetState(State.Waiting);
+            other.gameObject.GetComponent<PlayerController>().TakeDamage(_data.GetDamage());
         }
     }
     

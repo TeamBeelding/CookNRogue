@@ -1,10 +1,24 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
+using UnityEngine.AI;
+using UnityEngine.Events;
 
 public class BasicEnemy : EnemyController
 {
+    [SerializeField]
+    private EnemyData data;
+    [SerializeField]
+    private NavMeshAgent _agent;
+    
+    [SerializeField]
+    private GameObject m_gun;
+    [SerializeField]
+    private GameObject m_bullet;
+    [SerializeField]
+    private ParticleSystem m_stateSystem;
+    [SerializeField]
+    private Renderer stateRenderer;
+
     public enum State
     {
         Neutral,
@@ -13,11 +27,20 @@ public class BasicEnemy : EnemyController
         Dying,
     }
 
-    public State state;
+    [SerializeField]
+    private State state;
     
     protected override void Awake()
     {
         base.Awake();
+        
+        _agent = GetComponent<NavMeshAgent>();
+        _agent.speed = data.GetSpeed();
+        _agent.stoppingDistance = data.GetAttackRange();
+        _focusPlayer = data.GetFocusPlayer();
+        healthpoint = data.GetHealth();
+        
+        stateRenderer = m_stateSystem.GetComponent<Renderer>();
     }
 
     // Start is called before the first frame update
@@ -62,7 +85,7 @@ public class BasicEnemy : EnemyController
                 Chase();
                 break;
             case State.Attack:
-                Attack();
+                Attack(Shot, data.GetAttackSpeed());
                 break;
             case State.Dying:
                 Dying();
@@ -95,23 +118,36 @@ public class BasicEnemy : EnemyController
     {
         if (state == State.Dying)
             return;
-        
-        base.Chase();
-    }
 
-    protected override void Attack()
+        _agent.SetDestination(player.transform.position);
+        
+        stateRenderer.material.color = Color.yellow;
+        m_stateSystem.gameObject.SetActive(true);
+    }
+    
+    protected override void Attack(UnityAction Shot, float delay)
     {
         if (state == State.Dying)
             return;
         
-        base.Attack();
+        stateRenderer.material.color = Color.red;
+        m_stateSystem.gameObject.SetActive(true);
+
+        base.Attack(Shot);
     }
 
-    protected override void Dying()
+    private void Shot()
     {
-        base.Dying();
+        GameObject shot = Instantiate(m_bullet, m_gun.transform.position, Quaternion.identity);
+        shot.GetComponent<EnemyBulletController>().SetDirection(player.transform);
     }
     
+    private new void Dying()
+    {
+        base.Dying();
+        m_stateSystem.gameObject.SetActive(false);
+    }
+
     public override bool IsMoving()
     {
         return state == State.Chase;
@@ -129,4 +165,16 @@ public class BasicEnemy : EnemyController
             state = State.Dying;
         }
     }
+    
+    #if UNITY_EDITOR
+    
+    protected override void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, data.GetRangeDetection());
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, data.GetAttackRange());
+    }
+    
+    #endif
 }
