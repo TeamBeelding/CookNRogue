@@ -8,11 +8,6 @@ public class RoomManager : MonoBehaviour
 {
     public static RoomManager instance;
 
-    //[SerializeField]
-    //private GameObject[] m_easyLevels;
-    //[SerializeField]
-    //private GameObject[] m_hardLevels;
-
     [SerializeField]
     private LevelOrderData m_Levels;
 
@@ -21,17 +16,8 @@ public class RoomManager : MonoBehaviour
         get => m_Levels;
     }
 
-    private string[] _levelNames;
-
-    public string[] LevelNames
-    {
-        get => m_Levels.LevelNames;
-    }
-
     [SerializeField]
     private int m_amountOfLevels;
-    [SerializeField]
-    private int m_amountOfLevelsInPool;
     [SerializeField]
     private string m_currentLevelType;
     [SerializeField]
@@ -75,12 +61,11 @@ public class RoomManager : MonoBehaviour
     private void Start()
     {
         m_player = GameObject.FindGameObjectWithTag("Player");
-        LoadNextLevel();
+        RestartLevel();
 
         m_navMeshSurface.BuildNavMesh();
 
         m_amountOfLevels = m_Levels.OrderList.Count;
-        m_amountOfLevelsInPool = m_Levels.LevelNames.Length;
     }
 
     private void Update()
@@ -95,17 +80,17 @@ public class RoomManager : MonoBehaviour
 
     public void LoadNextLevel()
     {
-        if (m_currentLevelIndex > m_amountOfLevels) 
+        if (m_currentLevelIndex >= m_amountOfLevels - 1)
         {
             RestartLevel();
-            return;
         }
-
-        TransitionToLevel();
-
-        m_currentLevelIndex += 1;
-        m_currentLevelType = m_Levels.OrderList[m_currentLevelIndex];
-        PickFromType(m_currentLevelType);
+        else
+        {
+            TransitionToLevel();
+            m_currentLevelIndex += 1;
+            m_currentLevelType = m_Levels.OrderList[m_currentLevelIndex];
+            PickFromType(m_currentLevelType);
+        }
     }
 
     public void RestartLevel()
@@ -113,14 +98,6 @@ public class RoomManager : MonoBehaviour
         TransitionToLevel();
 
         m_currentLevelIndex = 0;
-        m_currentLevelType = m_Levels.OrderList[m_currentLevelIndex];
-        PickFromType(m_currentLevelType);
-    }
-
-    public void PickFromTypeAndIndex(string currentLevelType, int index)
-    {
-        TransitionToLevel();
-        m_currentLevelIndex = index;
         m_currentLevelType = m_Levels.OrderList[m_currentLevelIndex];
         PickFromType(m_currentLevelType);
     }
@@ -138,10 +115,34 @@ public class RoomManager : MonoBehaviour
             case "Shop":
                 LoadLevel(m_Levels.LevelLists.ShopList);
                 break;
-            default:
+            case "Final":
                 LoadLevel(m_Levels.LevelLists.FinalList);
                 break;
         }
+    }
+    public void PickFromTypeAndIndex(string currentLevelType, int index)
+    {
+        TransitionToLevel();
+        m_currentLevelType = currentLevelType;
+
+        switch (currentLevelType)
+        {
+            case "Room":
+                _currentLevel = Instantiate(m_Levels.LevelLists.RoomList[index], Vector3.zero, Quaternion.identity);
+                break;
+            case "Corridor":
+                _currentLevel = Instantiate(m_Levels.LevelLists.CorridorList[index], Vector3.zero, Quaternion.identity);
+                break;
+            case "Shop":
+                _currentLevel = Instantiate(m_Levels.LevelLists.ShopList[index], Vector3.zero, Quaternion.identity);
+                break;
+            case "Final":
+                _currentLevel = Instantiate(m_Levels.LevelLists.FinalList[index], Vector3.zero, Quaternion.identity);
+                break;
+        }
+        OnRoomStart?.Invoke();
+        m_player.transform.position = SpawnPoint.position;
+        m_loadSurface = true;
     }
 
     private void TransitionToLevel()
@@ -166,6 +167,10 @@ public class RoomManager : MonoBehaviour
         m_loadSurface = true;
     }
 
+    private void Reset()
+    {
+        
+    }
 }
 
 
@@ -196,12 +201,25 @@ public class RoomManagerEditor : Editor
             }
         }
 
-
         EditorGUILayout.Separator();
 
         typeSelected = EditorGUILayout.Popup("Level Type", typeSelected, room.Levels.RoomTypes);
 
-        selected = EditorGUILayout.Popup("Specified Level", selected, room.LevelNames);
+        switch (room.Levels.RoomTypes[typeSelected])
+        {
+            case "Room":
+                selected = EditorGUILayout.Popup("Specified Level", selected, room.Levels.LevelNames[0]);
+                break;
+            case "Corridor":
+                selected = EditorGUILayout.Popup("Specified Level", selected, room.Levels.LevelNames[1]);
+                break;
+            case "Shop":
+                selected = EditorGUILayout.Popup("Specified Level", selected, room.Levels.LevelNames[2]);
+                break;
+            case "Final":
+                selected = EditorGUILayout.Popup("Specified Level", selected, room.Levels.LevelNames[3]);
+                break;
+        }
 
         if (GUILayout.Button("Load Specified Level"))
         {

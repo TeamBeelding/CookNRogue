@@ -24,12 +24,24 @@ public class LevelOrderData : ScriptableObject
         get => m_orderList;
     }
 
-    private string[] _levelNames;
-    public string[] LevelNames
+    // Name
+    private string[] _roomNames;
+
+    private string[] _corridorNames;
+
+    private string[] _shopNames;
+
+    private string[] _finalNames;
+
+    // list of strings
+
+    private List<string[]> _levelNames;
+    public List<string[]> LevelNames 
     {
         get => _levelNames;
     }
 
+    // Types
     private string[] _roomTypes;
     public string[] RoomTypes
     {
@@ -38,33 +50,42 @@ public class LevelOrderData : ScriptableObject
 
     private void OnEnable()
     {
-        _roomTypes = new string[] { "Corridor", "Room", "Shop", "Final Room" };
+        _levelNames = new List<string[]>();
+        _roomTypes = new string[] { "Room", "Corridor", "Shop", "Final" };
         InitLevelNames();
     }
 
     public void InitLevelNames()
     {
-        _levelNames = new string[LevelLists.CorridorList.Length + LevelLists.RoomList.Length + LevelLists.ShopList.Length + LevelLists.FinalList.Length];
+
+        _roomNames = new string[LevelLists.RoomList.Length];
+        _corridorNames = new string[LevelLists.CorridorList.Length];
+        _shopNames = new string[LevelLists.ShopList.Length];
+        _finalNames = new string[LevelLists.FinalList.Length];
+
+        for (int i = 0; i < LevelLists.RoomList.Length; i++)
+        {
+            _roomNames[i] = LevelLists.RoomList[i].name;
+        }
+        _levelNames.Add(_roomNames);
 
         for (int i = 0; i < LevelLists.CorridorList.Length; i++)
         {
-            _levelNames[i] = LevelLists.CorridorList[i].name;
+            _corridorNames[i] = LevelLists.CorridorList[i].name;
         }
+        _levelNames.Add(_corridorNames);
 
-        for (int i = LevelLists.CorridorList.Length; i < LevelLists.CorridorList.Length + LevelLists.RoomList.Length; i++)
+        for (int i = 0; i < LevelLists.ShopList.Length; i++)
         {
-            _levelNames[i] = LevelLists.RoomList[i - LevelLists.CorridorList.Length].name;
+            _shopNames[i] = LevelLists.ShopList[i].name;
         }
+        _levelNames.Add(_shopNames);
 
-        for (int i = LevelLists.CorridorList.Length + LevelLists.RoomList.Length; i < LevelLists.CorridorList.Length + LevelLists.RoomList.Length + LevelLists.ShopList.Length; i++)
+        for (int i = 0; i < LevelLists.FinalList.Length; i++)
         {
-            _levelNames[i] = LevelLists.ShopList[i - LevelLists.CorridorList.Length - LevelLists.RoomList.Length].name;
+            _finalNames[i] = LevelLists.FinalList[i].name;
         }
-
-        for (int i = LevelLists.FinalList.Length + LevelLists.CorridorList.Length + LevelLists.RoomList.Length; i < LevelLists.CorridorList.Length + LevelLists.RoomList.Length + LevelLists.ShopList.Length + LevelLists.FinalList.Length; i++)
-        {
-            _levelNames[i] = LevelLists.FinalList[i - LevelLists.CorridorList.Length - LevelLists.RoomList.Length - LevelLists.ShopList.Length].name;
-        }
+        _levelNames.Add(_finalNames);
     }
 }
 
