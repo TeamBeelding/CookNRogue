@@ -3,7 +3,6 @@ using UnityEngine;
 using Unity.AI.Navigation;
 using UnityEditor;
 
-
 public class RoomManager : MonoBehaviour
 {
     public static RoomManager instance;
@@ -205,6 +204,8 @@ public class RoomManagerEditor : Editor
 
         typeSelected = EditorGUILayout.Popup("Level Type", typeSelected, room.Levels.RoomTypes);
 
+        Debug.Log(typeSelected);
+
         switch (room.Levels.RoomTypes[typeSelected])
         {
             case "Room":
@@ -220,6 +221,8 @@ public class RoomManagerEditor : Editor
                 selected = EditorGUILayout.Popup("Specified Level", selected, room.Levels.LevelNames[3]);
                 break;
         }
+
+        Debug.Log(room.Levels.RoomTypes[typeSelected]);
 
         if (GUILayout.Button("Load Specified Level"))
         {

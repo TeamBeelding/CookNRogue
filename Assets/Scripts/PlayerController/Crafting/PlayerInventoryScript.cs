@@ -44,7 +44,6 @@ public class PlayerInventoryScript : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.C))
         {
-            Debug.Log(numberOfIngredients);
             Craft();
         }
     }

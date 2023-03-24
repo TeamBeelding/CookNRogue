@@ -1,6 +1,4 @@
 using System.Collections;
-using System.IO;
-using UnityEditor;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
@@ -217,40 +215,4 @@ public class CameraController : MonoBehaviour
             yield return null;
         }
     }
-
-
 }
-
-#if UNITY_EDITOR
-[CustomEditor(typeof(CameraController))]
-public class CameraControllerEditor : Editor
-{
-    public override void OnInspectorGUI()
-    {
-        DrawDefaultInspector();
-
-        EditorGUILayout.Separator();
-
-        EditorGUILayout.LabelField("TOOLS: ", "");
-        GuiLine(1);
-
-        if (GUILayout.Button("Shake"))
-        {
-            CameraController.instance._shake = true;
-        }
-
-        if (GUILayout.Button("Zoom"))
-        {
-            CameraController.instance._zoom = true;
-        }
-    }
-
-    void GuiLine(int i_height = 1)
-    {
-        Rect rect = EditorGUILayout.GetControlRect(false, i_height);
-        rect.height = i_height;
-        EditorGUI.DrawRect(rect, new Color(0.5f, 0.5f, 0.5f, 1));
-        EditorGUILayout.Separator();
-    }
-}
-#endif

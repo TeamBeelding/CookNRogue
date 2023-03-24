@@ -17,13 +17,11 @@ public class AOE : IIngredientEffects
     //EFFET LORS DU SHOOT
     public void EffectOnShoot(Vector3 Position, GameObject bullet)
     {
-        Debug.Log("AOEShootEffect");
     }
 
     //EFFET LORS DE LA COLLISION
     public void EffectOnHit(Vector3 Position,GameObject HitObject, Vector3 direction)
     {
-        Debug.Log("AOEOnHitEffect");
         RaycastHit hit;
         
         if (Physics.Raycast(Position - (direction), Vector3.down, out hit, Mathf.Infinity))

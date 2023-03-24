@@ -29,13 +29,13 @@ public class LevelListData : ScriptableObject
     private GameObject[] _shopList;
     public GameObject[] ShopList
     {
-        get => _roomList;
+        get => _shopList;
     }
 
     [SerializeField]
     private GameObject[] _finalList;
     public GameObject[] FinalList
     {
-        get => _roomList;
+        get => _finalList;
     }
 }
