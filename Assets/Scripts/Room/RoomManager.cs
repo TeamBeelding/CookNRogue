@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using Unity.AI.Navigation;
-using UnityEditor;
 
 
 public class RoomManager : MonoBehaviour
@@ -152,47 +151,3 @@ public class RoomManager : MonoBehaviour
     }
 
 }
-
-
-#if UNITY_EDITOR
-[CustomEditor(typeof(RoomManager))]
-public class RoomManagerEditor : Editor 
-{
-    private int selected = 0;
-
-    public override void OnInspectorGUI() 
-    {
-
-        DrawDefaultInspector();
-        RoomManager room = (RoomManager)target;
-
-
-        EditorGUILayout.Separator();
-
-        EditorGUILayout.LabelField("TOOLS: ", "");
-        GuiLine(1);
-
-        selected = EditorGUILayout.Popup("Specified Level", selected, room.LevelNames);
-
-        if (GUILayout.Button("Load Specified Level"))
-        {
-            room.LoadPecifiedLevel(selected);
-        }
-
-        EditorGUILayout.Separator();
-
-        if (GUILayout.Button("Load Random Level"))
-        {
-            room.LoadRandomLevel();
-        }
-    }
-
-    void GuiLine(int i_height = 1)
-    {
-        Rect rect = EditorGUILayout.GetControlRect(false, i_height);
-        rect.height = i_height;
-        EditorGUI.DrawRect(rect, new Color(0.5f, 0.5f, 0.5f, 1));
-        EditorGUILayout.Separator();
-    }
-}
-#endif
