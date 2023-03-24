@@ -1,5 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
+#if UNITY_EDITOR
+
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -26,3 +26,5 @@ public class MarmiteEnemyManager
         return !Application.isPlaying;
     }
 }
+
+#endif

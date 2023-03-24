@@ -1,5 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
+#if UNITY_EDITOR
+
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -54,3 +54,5 @@ public class MarmiteRoomManager
         return !Application.isPlaying;
     }
 }
+
+#endif
