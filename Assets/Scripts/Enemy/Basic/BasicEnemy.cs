@@ -78,17 +78,17 @@ public class BasicEnemy : EnemyController
         if (state == State.Dying)
             return;
         
-        if (Vector3.Distance(transform.position, player.transform.position) <= data.GetRangeDetection())
-        {
-            if (Vector3.Distance(transform.position, player.transform.position) <= data.GetAttackSpeed())
-            {
-                state = State.Attack;
-            }
-            else
-            {
-                state = State.Chase;
-            }
-        }
+        // if (Vector3.Distance(transform.position, player.transform.position) <= data.GetRangeDetection())
+        // {
+        //     if (Vector3.Distance(transform.position, player.transform.position) <= data.GetAttackSpeed())
+        //     {
+        //         state = State.Attack;
+        //     }
+        //     else
+        //     {
+        //         state = State.Chase;
+        //     }
+        // }
     }
 
     private new void Chase()
