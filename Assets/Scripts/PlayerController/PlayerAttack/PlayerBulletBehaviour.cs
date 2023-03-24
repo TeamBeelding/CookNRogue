@@ -16,8 +16,13 @@ public class PlayerBulletBehaviour : MonoBehaviour
     public Vector3 _direction;
     public bool destroyOnHit = true;
     public int bouncingNbr = 0;
+
     public int _ricochetNbr = 0;
     private float _initialSpeed;
+
+    public float _maxDistance;
+    public LayerMask _sphereMask;
+    public LayerMask _rayMask;
 
 
     protected virtual void Start()
@@ -65,11 +70,6 @@ public class PlayerBulletBehaviour : MonoBehaviour
     protected virtual void OnTriggerEnter(Collider other)
     {
 
-        
-            
-
-        
-
         if (other.GetComponent<EnemyController>())
         {
             _HasHit = true;
@@ -80,6 +80,7 @@ public class PlayerBulletBehaviour : MonoBehaviour
             if (_ricochetNbr > 0)
             {
                 _ricochetNbr--;
+                BulletRicochet(transform.position, _hitObject, _direction);
                 ResetSpeed();
                 Debug.Log(_ricochetNbr);
                 return;
@@ -117,6 +118,59 @@ public class PlayerBulletBehaviour : MonoBehaviour
 
 
     }
+
+    void BulletRicochet(Vector3 Position, GameObject HitObject, Vector3 direction)
+    {
+        if (!HitObject)
+            return;
+
+        Collider[] hitColliders = Physics.OverlapSphere(Position, _maxDistance, _sphereMask);
+        float closest = 999f;
+        float distance = 0f;
+        GameObject closestEnemy = HitObject;
+        Collider closestCollider = HitObject.GetComponent<Collider>();
+
+        if (HitObject.GetComponent<EnemyController>())
+            HitObject.layer = 2;
+
+        foreach (Collider hitCollider in hitColliders)
+        {
+
+            if (hitCollider.gameObject != HitObject && hitCollider.GetComponent<EnemyController>())
+            {
+                hitCollider.transform.gameObject.layer = 2;
+                distance = Vector3.Distance(hitCollider.gameObject.transform.position, Position);
+
+                Vector3 rayDirection = (hitCollider.gameObject.transform.position - Position).normalized;
+                RaycastHit hit;
+                Physics.Raycast(Position, rayDirection, out hit, _rayMask);
+
+                if (distance < closest && !Physics.Raycast(Position, rayDirection, _rayMask))
+                {
+                    closest = distance;
+                    closestEnemy = hitCollider.gameObject;
+
+
+
+                }
+                hitCollider.transform.gameObject.layer = 0;
+            }
+
+        }
+
+        Debug.DrawLine(Position, closestEnemy.transform.position, Color.red, 999);
+        HitObject.layer = 0;
+        if (closestEnemy != HitObject)
+        {
+            Debug.Log("ricochet");
+            CancelInvoke("DestroyBullet");
+            Invoke("DestroyBullet", 1);
+            _direction = (closestEnemy.gameObject.transform.position - HitObject.transform.position).normalized;
+            destroyOnHit = true;
+        }
+
+    }
+
 
     void ApplyCorrectOnHitEffects()
     {

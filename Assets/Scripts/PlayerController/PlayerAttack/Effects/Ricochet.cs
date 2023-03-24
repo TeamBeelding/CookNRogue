@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Ricochet : IIngredientEffects
 {
-    private GameObject _bullet;
-    [SerializeField] float maxDistance;
+    private PlayerBulletBehaviour _bulletBehaviour;
+    [SerializeField] float _maxDistance;
     [SerializeField] LayerMask _sphereMask;
     [SerializeField] LayerMask _rayMask;
     [SerializeField] int _ricochetCount;
@@ -14,14 +14,17 @@ public class Ricochet : IIngredientEffects
     public void EffectOnShoot(Vector3 Position, GameObject bullet)
     {
         Debug.Log("RicochetOnShootEffect");
-        _bullet = bullet;
-        _bullet.GetComponent<PlayerBulletBehaviour>().destroyOnHit = false;
-        _bullet.GetComponent<PlayerBulletBehaviour>()._ricochetNbr = _ricochetCount;
+        _bulletBehaviour = bullet.GetComponent<PlayerBulletBehaviour>();
+        _bulletBehaviour.destroyOnHit = false;
+        _bulletBehaviour._ricochetNbr = _ricochetCount;
+        _bulletBehaviour._sphereMask = _sphereMask;
+        _bulletBehaviour._rayMask = _rayMask;
+        _bulletBehaviour._maxDistance = _maxDistance;
     }
     //EFFET LORS DE LA COLLISION
     public void EffectOnHit(Vector3 Position, GameObject HitObject, Vector3 direction)
     {
-        
+        /*
         if (!HitObject)
             return;
 
@@ -66,11 +69,11 @@ public class Ricochet : IIngredientEffects
         if (closestEnemy != HitObject)
         {
             Debug.Log("ricochet");
-            _bullet.GetComponent<PlayerBulletBehaviour>().CancelInvoke("DestroyBullet");
-            _bullet.GetComponent<PlayerBulletBehaviour>().Invoke("DestroyBullet",1);
-            _bullet.GetComponent<PlayerBulletBehaviour>()._direction = (closestEnemy.gameObject.transform.position - HitObject.transform.position).normalized;
-            _bullet.GetComponent<PlayerBulletBehaviour>().destroyOnHit = true;
+            _bulletBehaviour.CancelInvoke("DestroyBullet");
+            _bulletBehaviour.Invoke("DestroyBullet",1);
+            _bulletBehaviour._direction = (closestEnemy.gameObject.transform.position - HitObject.transform.position).normalized;
+            _bulletBehaviour.destroyOnHit = true;
         }
-        
+        */
     }
 }
