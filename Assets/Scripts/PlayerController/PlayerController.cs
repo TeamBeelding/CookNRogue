@@ -401,7 +401,7 @@ public class PlayerController : MonoBehaviour
         if (m_currentHealthValue <= 0)
         {
             m_currentHealthValue = m_maxHealthValue;
-            RoomManager.instance.LoadRandomLevel();
+            RoomManager.instance.RestartLevel();
         }
     }
 

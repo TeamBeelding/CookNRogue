@@ -6,15 +6,15 @@ using UnityEngine.Serialization;
 
 
 [CreateAssetMenu(fileName = "LevelOrderList", menuName = "Level/LevelOrder")]
-public class LevelOrdertData : ScriptableObject
+public class LevelOrderData : ScriptableObject
 {
     [Header("Statistics")]
 
     [SerializeField]
-    private LevelListData m_levelPool;
-    public LevelListData LevelData
+    private LevelListData m_LevelLists;
+    public LevelListData LevelLists
     {
-        get => m_levelPool;
+        get => m_LevelLists;
     }
 
     [SerializeField]
@@ -30,77 +30,67 @@ public class LevelOrdertData : ScriptableObject
         get => _levelNames;
     }
 
-    private void OnEnable()
+    private string[] _roomTypes;
+    public string[] RoomTypes
     {
-        InitLevelNames();
+        get => _roomTypes;
     }
 
-    private void AddToList()
+    private void OnEnable()
     {
-
+        _roomTypes = new string[] { "Corridor", "Room", "Shop", "Final Room" };
+        InitLevelNames();
     }
 
     public void InitLevelNames()
     {
-        _levelNames = new string[LevelData.CorridorList.Length + LevelData.RoomList.Length + LevelData.ShopList.Length + LevelData.FinalList.Length];
+        _levelNames = new string[LevelLists.CorridorList.Length + LevelLists.RoomList.Length + LevelLists.ShopList.Length + LevelLists.FinalList.Length];
 
-        for (int i = 0; i < LevelData.CorridorList.Length; i++)
+        for (int i = 0; i < LevelLists.CorridorList.Length; i++)
         {
-            _levelNames[i] = LevelData.CorridorList[i].name;
+            _levelNames[i] = LevelLists.CorridorList[i].name;
         }
 
-        for (int i = LevelData.CorridorList.Length; i < LevelData.CorridorList.Length + LevelData.RoomList.Length; i++)
+        for (int i = LevelLists.CorridorList.Length; i < LevelLists.CorridorList.Length + LevelLists.RoomList.Length; i++)
         {
-            _levelNames[i] = LevelData.RoomList[i - LevelData.CorridorList.Length].name;
+            _levelNames[i] = LevelLists.RoomList[i - LevelLists.CorridorList.Length].name;
         }
 
-        //for (int i = LevelData.CorridorList.Length + LevelData.RoomList.Length; i < LevelData.CorridorList.Length + LevelData.RoomList.Length + LevelData.ShopList.Length; i++)
-        //{
-        //    _levelNames[i] = LevelData.ShopList[i - LevelData.CorridorList.Length - LevelData.RoomList.Length].name;
-        //}
+        for (int i = LevelLists.CorridorList.Length + LevelLists.RoomList.Length; i < LevelLists.CorridorList.Length + LevelLists.RoomList.Length + LevelLists.ShopList.Length; i++)
+        {
+            _levelNames[i] = LevelLists.ShopList[i - LevelLists.CorridorList.Length - LevelLists.RoomList.Length].name;
+        }
 
-        //for (int i = LevelData.FinalList.Length +LevelData.CorridorList.Length + LevelData.RoomList.Length; i < LevelData.CorridorList.Length + LevelData.RoomList.Length + LevelData.ShopList.Length + LevelData.FinalList.Length; i++)
-        //{
-        //    _levelNames[i] = LevelData.FinalList[i - LevelData.CorridorList.Length - LevelData.RoomList.Length - LevelData.ShopList.Length].name;
-        //}
+        for (int i = LevelLists.FinalList.Length + LevelLists.CorridorList.Length + LevelLists.RoomList.Length; i < LevelLists.CorridorList.Length + LevelLists.RoomList.Length + LevelLists.ShopList.Length + LevelLists.FinalList.Length; i++)
+        {
+            _levelNames[i] = LevelLists.FinalList[i - LevelLists.CorridorList.Length - LevelLists.RoomList.Length - LevelLists.ShopList.Length].name;
+        }
     }
-
 }
 
 #if UNITY_EDITOR
-[CustomEditor(typeof(LevelOrdertData))]
-public class LevelOrdertDataEditor : Editor
+[CustomEditor(typeof(LevelOrderData))]
+public class LeveOrdertDataEditor : Editor
 {
     private int selected = 0;
-
-    string[] _roomTypes;
 
     public override void OnInspectorGUI()
     {
 
         DrawDefaultInspector();
-        LevelOrdertData order = (LevelOrdertData)target;
-
-        _roomTypes = new string[] { "Corridor","Room","Shop","Final Room"};
+        LevelOrderData order = (LevelOrderData)target;
 
         EditorGUILayout.Separator();
 
         EditorGUILayout.LabelField("TOOLS: ", "");
         GuiLine(1);
 
-        selected = EditorGUILayout.Popup("Specified Level", selected, _roomTypes);
+        selected = EditorGUILayout.Popup("Specified Level", selected, order.RoomTypes);
 
         if (GUILayout.Button("Add Room Type"))
         {
-            order.OrderList.Add(_roomTypes[selected]);
+            order.OrderList.Add(order.RoomTypes[selected]);
         }
-
-        //EditorGUILayout.Separator();
-
-        //if (GUILayout.Button("Load Random Level"))
-        //{
-        //    room.LoadRandomLevel();
-        //}
     }
 
     void GuiLine(int i_height = 1)

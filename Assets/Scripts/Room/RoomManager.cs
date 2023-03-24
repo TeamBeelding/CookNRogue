@@ -8,20 +8,35 @@ public class RoomManager : MonoBehaviour
 {
     public static RoomManager instance;
 
-    [SerializeField]
-    private GameObject[] m_easyLevels;
-    [SerializeField]
-    private GameObject[] m_hardLevels;
-
     //[SerializeField]
-    //private LevelOrderData m_hardLevels;
+    //private GameObject[] m_easyLevels;
+    //[SerializeField]
+    //private GameObject[] m_hardLevels;
+
+    [SerializeField]
+    private LevelOrderData m_Levels;
+
+    public LevelOrderData Levels 
+    { 
+        get => m_Levels;
+    }
 
     private string[] _levelNames;
 
     public string[] LevelNames
     {
-        get => _levelNames;
+        get => m_Levels.LevelNames;
     }
+
+    [SerializeField]
+    private int m_amountOfLevels;
+    [SerializeField]
+    private int m_amountOfLevelsInPool;
+    [SerializeField]
+    private string m_currentLevelType;
+    [SerializeField]
+    private int m_currentLevelIndex = -1;
+
 
     [SerializeField]
     private NavMeshSurface m_navMeshSurface;
@@ -47,7 +62,7 @@ public class RoomManager : MonoBehaviour
 
     void Awake()
     {
-        InitLevelNames();
+        //InitLevelNames();
 
         if (instance != null && instance != this)
             Destroy(gameObject);    // Suppression d'une instance pr�c�dente (s�curit�...s�curit�...)
@@ -60,9 +75,12 @@ public class RoomManager : MonoBehaviour
     private void Start()
     {
         m_player = GameObject.FindGameObjectWithTag("Player");
-        LoadRandomLevel();
+        LoadNextLevel();
 
         m_navMeshSurface.BuildNavMesh();
+
+        m_amountOfLevels = m_Levels.OrderList.Count;
+        m_amountOfLevelsInPool = m_Levels.LevelNames.Length;
     }
 
     private void Update()
@@ -75,37 +93,54 @@ public class RoomManager : MonoBehaviour
         }
     }
 
-    public void LoadRandomLevel()
+    public void LoadNextLevel()
     {
+        if (m_currentLevelIndex > m_amountOfLevels) 
+        {
+            RestartLevel();
+            return;
+        }
 
         TransitionToLevel();
 
-        if (!isHard)
-        {
-            LoadLevel(m_easyLevels);
-        }
-        else
-        {
-            LoadLevel(m_hardLevels);
-        }
+        m_currentLevelIndex += 1;
+        m_currentLevelType = m_Levels.OrderList[m_currentLevelIndex];
+        PickFromType(m_currentLevelType);
     }
 
-    public void LoadPecifiedLevel(int i)
+    public void RestartLevel()
     {
-
         TransitionToLevel();
 
-        if (i < 3)
+        m_currentLevelIndex = 0;
+        m_currentLevelType = m_Levels.OrderList[m_currentLevelIndex];
+        PickFromType(m_currentLevelType);
+    }
+
+    public void PickFromTypeAndIndex(string currentLevelType, int index)
+    {
+        TransitionToLevel();
+        m_currentLevelIndex = index;
+        m_currentLevelType = m_Levels.OrderList[m_currentLevelIndex];
+        PickFromType(m_currentLevelType);
+    }
+
+    private void PickFromType(string currentLevelType) 
+    {
+        switch (currentLevelType)
         {
-            isHard = false;
-            _currentLevel = Instantiate(m_easyLevels[i], Vector3.zero, Quaternion.identity);
-            m_loadSurface = true;
-        }
-        else
-        {
-            isHard = true;
-            _currentLevel = Instantiate(m_hardLevels[i - m_easyLevels.Length], Vector3.zero, Quaternion.identity);
-            m_loadSurface = true;
+            case "Room":
+                LoadLevel(m_Levels.LevelLists.RoomList);
+                break;
+            case "Corridor":
+                LoadLevel(m_Levels.LevelLists.CorridorList);
+                break;
+            case "Shop":
+                LoadLevel(m_Levels.LevelLists.ShopList);
+                break;
+            default:
+                LoadLevel(m_Levels.LevelLists.FinalList);
+                break;
         }
     }
 
@@ -131,26 +166,6 @@ public class RoomManager : MonoBehaviour
         m_loadSurface = true;
     }
 
-    private void OnEnable()
-    {
-        InitLevelNames();
-    }
-
-    public void InitLevelNames()
-    {
-        _levelNames = new string[m_easyLevels.Length + m_hardLevels.Length];
-
-        for (int i = 0; i < m_easyLevels.Length; i++)
-        {
-            _levelNames[i] = m_easyLevels[i].name;
-        }
-
-        for (int i = m_easyLevels.Length; i < m_easyLevels.Length + m_hardLevels.Length; i++)
-        {
-            _levelNames[i] = m_hardLevels[i - m_easyLevels.Length].name;
-        }
-    }
-
 }
 
 
@@ -159,6 +174,7 @@ public class RoomManager : MonoBehaviour
 public class RoomManagerEditor : Editor 
 {
     private int selected = 0;
+    private int typeSelected = 0;
 
     public override void OnInspectorGUI() 
     {
@@ -172,18 +188,27 @@ public class RoomManagerEditor : Editor
         EditorGUILayout.LabelField("TOOLS: ", "");
         GuiLine(1);
 
+        if (GUILayout.Button(" Load Next Level -> "))
+        {
+            if (Application.isPlaying)
+            {
+                room.LoadNextLevel();
+            }
+        }
+
+
+        EditorGUILayout.Separator();
+
+        typeSelected = EditorGUILayout.Popup("Level Type", typeSelected, room.Levels.RoomTypes);
+
         selected = EditorGUILayout.Popup("Specified Level", selected, room.LevelNames);
 
         if (GUILayout.Button("Load Specified Level"))
         {
-            room.LoadPecifiedLevel(selected);
-        }
-
-        EditorGUILayout.Separator();
-
-        if (GUILayout.Button("Load Random Level"))
-        {
-            room.LoadRandomLevel();
+            if (Application.isPlaying)
+            {
+                room.PickFromTypeAndIndex(room.Levels.RoomTypes[typeSelected], selected);
+            }
         }
     }
 
