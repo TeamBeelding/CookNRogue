@@ -13,7 +13,6 @@ public class Ricochet : IIngredientEffects
     //EFFET LORS DU SHOOT
     public void EffectOnShoot(Vector3 Position, GameObject bullet)
     {
-        Debug.Log("RicochetOnShootEffect");
         _bulletBehaviour = bullet.GetComponent<PlayerBulletBehaviour>();
         _bulletBehaviour.destroyOnHit = false;
         _bulletBehaviour._ricochetNbr = _ricochetCount;

@@ -17,7 +17,7 @@ public class PlayerBulletBehaviour : MonoBehaviour
     public bool destroyOnHit = true;
     public int bouncingNbr = 0;
 
-    public int _ricochetNbr = 0;
+    public int _ricochetNbr ;
     private float _initialSpeed;
 
     public float _maxDistance;
@@ -82,7 +82,6 @@ public class PlayerBulletBehaviour : MonoBehaviour
                 _ricochetNbr--;
                 BulletRicochet(transform.position, _hitObject, _direction);
                 ResetSpeed();
-                Debug.Log(_ricochetNbr);
                 return;
             }
 
@@ -142,27 +141,21 @@ public class PlayerBulletBehaviour : MonoBehaviour
                 distance = Vector3.Distance(hitCollider.gameObject.transform.position, Position);
 
                 Vector3 rayDirection = (hitCollider.gameObject.transform.position - Position).normalized;
-                RaycastHit hit;
-                Physics.Raycast(Position, rayDirection, out hit, _rayMask);
+      
 
                 if (distance < closest && !Physics.Raycast(Position, rayDirection, _rayMask))
                 {
                     closest = distance;
                     closestEnemy = hitCollider.gameObject;
-
-
-
                 }
                 hitCollider.transform.gameObject.layer = 0;
             }
 
         }
 
-        Debug.DrawLine(Position, closestEnemy.transform.position, Color.red, 999);
         HitObject.layer = 0;
         if (closestEnemy != HitObject)
         {
-            Debug.Log("ricochet");
             CancelInvoke("DestroyBullet");
             Invoke("DestroyBullet", 1);
             _direction = (closestEnemy.gameObject.transform.position - HitObject.transform.position).normalized;
