@@ -16,6 +16,9 @@ public class PlayerBulletBehaviour : MonoBehaviour
     public Vector3 _direction;
     public bool destroyOnHit = true;
     public int bouncingNbr = 0;
+    public int _ricochetNbr = 0;
+    private float _initialSpeed;
+
 
     protected virtual void Start()
     {
@@ -25,6 +28,7 @@ public class PlayerBulletBehaviour : MonoBehaviour
         rb.drag = drag;
         rb.velocity = direction * speed;*/
         Invoke("DestroyBullet", 1);
+        _initialSpeed = _speed;
     }
 
     protected virtual void FixedUpdate()
@@ -51,20 +55,37 @@ public class PlayerBulletBehaviour : MonoBehaviour
     }
     public void DestroyBullet()
     {
+        Debug.Log("Destroy");
         Destroy(gameObject);
     }
-
+    public void ResetSpeed()
+    {
+      _speed = _initialSpeed;
+    }
     protected virtual void OnTriggerEnter(Collider other)
     {
+
+        
+            
+
+        
+
         if (other.GetComponent<EnemyController>())
         {
-            Debug.Log("hit enemy");
             _HasHit = true;
             _hitObject = other.gameObject;
             ApplyCorrectOnHitEffects();
              other.GetComponent<EnemyController>().TakeDamage(_heavyDamage);
 
-            if(destroyOnHit)
+            if (_ricochetNbr > 0)
+            {
+                _ricochetNbr--;
+                ResetSpeed();
+                Debug.Log(_ricochetNbr);
+                return;
+            }
+
+            if (destroyOnHit)
             {
                 Destroy(gameObject);
             }
