@@ -31,7 +31,7 @@ public class PlayerAttack : MonoBehaviour
     bool _shootOnCooldown;
 
     [SerializeField]
-    float _shootCooldown;
+    public float _shootCooldown;
 
     Coroutine _curShootDelay;
 
