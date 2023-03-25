@@ -9,7 +9,7 @@ public class PlayerInventoryScrolling : MonoBehaviour
     public List <RectTransform> Items;
     private List<Image> ItemImages;
     private Animator animator;
-    PlayerInventoryScript instance;
+    PlayerInventoryScript _inventoryScript;
 
     public int Pointerindex;
 
@@ -17,7 +17,7 @@ public class PlayerInventoryScrolling : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        instance = PlayerInventoryScript._instance;
+        _inventoryScript = PlayerInventoryScript.Instance;
         animator = container.GetComponent<Animator>();
        
         ItemImages = new List<Image>();
@@ -51,13 +51,13 @@ public class PlayerInventoryScrolling : MonoBehaviour
 
     public void SelectIngredient()
     {
-        if (instance.projectilesData.Count > 0)
+        if (_inventoryScript.projectilesData.Count > 0)
         {
-            instance.recipe.Add(instance.projectilesData[Pointerindex]);
+            _inventoryScript.recipe.Add(_inventoryScript.projectilesData[Pointerindex]);
 
-            instance.projectilesData.RemoveAt(Pointerindex);
+            _inventoryScript.projectilesData.RemoveAt(Pointerindex);
 
-            if (instance.projectilesData.Count > 0)
+            if (_inventoryScript.projectilesData.Count > 0)
             {
                 IncrementPointor(-1);
             }
@@ -68,7 +68,7 @@ public class PlayerInventoryScrolling : MonoBehaviour
 
     private void IncrementPointor(int v)
     {
-        if(instance.projectilesData.Count == 0)
+        if(_inventoryScript.projectilesData.Count == 0)
         {
             Pointerindex = 0;
             return;
@@ -77,9 +77,9 @@ public class PlayerInventoryScrolling : MonoBehaviour
         Pointerindex += v;
         if (Pointerindex < 0)
         {
-            Pointerindex = instance.projectilesData.Count - 1;
+            Pointerindex = _inventoryScript.projectilesData.Count - 1;
         }
-        if(Pointerindex> instance.projectilesData.Count - 1)
+        if(Pointerindex> _inventoryScript.projectilesData.Count - 1)
         {
             Pointerindex = 0;
         }
@@ -87,7 +87,7 @@ public class PlayerInventoryScrolling : MonoBehaviour
 
     public void ReloadUI()
     {
-        if (instance.projectilesData.Count == 0)
+        if (_inventoryScript.projectilesData.Count == 0)
         {
             for(int index = 0; index < ItemImages.Count; index++)
             {
@@ -104,7 +104,7 @@ public class PlayerInventoryScrolling : MonoBehaviour
             {
                 int itemRelativeIndex = index - middleItemIndex;
                 int itemIndex = IncrementIndex(Pointerindex, itemRelativeIndex);
-                ItemImages[index].sprite = instance.projectilesData[itemIndex].inventorySprite;
+                ItemImages[index].sprite = _inventoryScript.projectilesData[itemIndex].inventorySprite;
             }
 
             return;
@@ -113,7 +113,7 @@ public class PlayerInventoryScrolling : MonoBehaviour
    
     private int IncrementIndex(int baseIndex, int value)
     {
-        int projectilesNb = instance.projectilesData.Count;
+        int projectilesNb = _inventoryScript.projectilesData.Count;
         int newIndex = baseIndex + value;
 
         while (newIndex < 0)

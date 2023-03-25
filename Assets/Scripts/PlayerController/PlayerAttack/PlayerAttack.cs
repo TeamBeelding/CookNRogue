@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+[RequireComponent (typeof (PlayerController))]
 public class PlayerAttack : MonoBehaviour
 {
     public GameObject _Projectile;
@@ -37,13 +38,11 @@ public class PlayerAttack : MonoBehaviour
 
     PlayerController _playerController;
 
-    private void Start()
+    private void Awake()
     {
-
         _playerController = GetComponent<PlayerController>();
     }
 
-    
     public void Shoot()
     {
         if (_shootOnCooldown)
@@ -189,5 +188,4 @@ public class PlayerAttack : MonoBehaviour
         _lightAttackDelay = 0;
         _lightDamage = 0;
     }
-
 }

@@ -16,7 +16,7 @@ public class Ingredient : MonoBehaviour, IInteractable
     }
     public void Interact(string tag)
     {
-        PlayerInventoryScript._instance.AddIngredientToInventory(_projectileData);
+        PlayerInventoryScript.Instance.AddIngredientToInventory(_projectileData);
         Destroy(gameObject);
     }
 
@@ -32,7 +32,7 @@ public class Ingredient : MonoBehaviour, IInteractable
                 clone._effects.Add(effect.Value);
             }
 
-            PlayerInventoryScript._instance.AddIngredientToInventory(clone);
+            PlayerInventoryScript.Instance.AddIngredientToInventory(clone);
             Destroy(gameObject);
         }
 

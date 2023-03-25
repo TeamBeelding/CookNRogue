@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.Rendering;
 
+[RequireComponent (typeof(Rigidbody2D), typeof (Collider2D))]
 public class PlayerController : MonoBehaviour
 {
     #region Variables
@@ -49,6 +50,15 @@ public class PlayerController : MonoBehaviour
     
     private bool m_isGamePaused = false;
 
+    private enum playerStates
+    {
+        Default,
+        Cooking,
+        UI
+    }
+
+    private playerStates _curState = playerStates.Default;
+
     public static PlayerController Instance
     {
         get => _instance;
@@ -94,6 +104,8 @@ public class PlayerController : MonoBehaviour
     PlayerInventoryScript _inventoryScript;
     EnemyManager _enemyManager;
     RoomManager _roomManager;
+    PlayerCooking _cookingScript;
+
     bool _isLocked = false;
 
     Collider _curInteractCollider = null;
@@ -111,31 +123,44 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        //Set Varialbes
-        _rb = GetComponent<Rigidbody>();
         _relativeTransform = m_mainCamera.transform;
-        _inventoryScript = PlayerInventoryScript._instance;
+        _inventoryScript = PlayerInventoryScript.Instance;
         _enemyManager = EnemyManager.Instance;
         _roomManager = RoomManager.instance;
-        
+        _cookingScript = GetComponent<PlayerCooking>();
+
+        _rb = _rb != null ? _rb : GetComponent<Rigidbody>();
+
+
         pauseMenu.SetActive(false);
 
         //Set Input Actions Map
         _playerActions = new PlayerActions();
-        _playerActions.Default_PlayerActions.Enable();
+        _playerActions.Default.Enable();
+        _playerActions.Cooking.Enable();
         _playerActions.UI.Enable();
-        //Set Events
-        _playerActions.Default_PlayerActions.Shoot.performed += Shoot;
-        _playerActions.Default_PlayerActions.Move.performed += Move_Performed;
-        _playerActions.Default_PlayerActions.Move.canceled += Move_Canceled;
-        _playerActions.Default_PlayerActions.Aim.performed += Aim_Performed;
-        _playerActions.Default_PlayerActions.Aim.canceled += Aim_Canceled;
-        _playerActions.Default_PlayerActions.Craft.performed += Craft;
-        _playerActions.Default_PlayerActions.MoveInventorySlotLeft.performed += MoveInventorySlotLeft;
-        _playerActions.Default_PlayerActions.MoveInventorySlotRight.performed += MoveInventorySlotRight;
-        _playerActions.Default_PlayerActions.Quit.performed += Quit;
 
+        //Set Default Events
+        _playerActions.Default.Shoot.performed += Shoot;
+        _playerActions.Default.Move.performed += Move_Performed;
+        _playerActions.Default.Move.canceled += Move_Canceled;
+        _playerActions.Default.Aim.performed += Aim_Performed;
+        _playerActions.Default.Aim.canceled += Aim_Canceled;
+        _playerActions.Default.Cook.performed += Cook_Performed;
+        _playerActions.Default.Quit.performed += Quit;
+
+        //Set Cooking Events
+        _playerActions.Cooking.Cook.canceled += Cook_Canceled;
+        _playerActions.Cooking.SelectIngerdient.performed += SelectIngredient;
+        _playerActions.Cooking.MoveInventorySlotLeft.performed += MoveInventorySlotLeft;
+        _playerActions.Cooking.MoveInventorySlotRight.performed += MoveInventorySlotRight;
+        _playerActions.Cooking.StartCrafting.performed += StartCraftingBullet;
+
+        //Set UI Events
         _playerActions.UI.Pause.performed += OnPauseGame;
+
+        _playerActions.Cooking.Disable();
+        _playerActions.UI.Disable();
 
         _roomManager.OnRoomStart += Spawn;
 
@@ -262,7 +287,7 @@ public class PlayerController : MonoBehaviour
                 interactable.Interactable(true);
 
                 //Interact if button is pressed
-                if (_playerActions.Default_PlayerActions.Interact.triggered)
+                if (_playerActions.Default.Interact.triggered)
                 {
                     interactable.Interact("Default");
                 }
@@ -345,20 +370,91 @@ public class PlayerController : MonoBehaviour
 
     #endregion
 
-    #region Bullet Crafting
-    void Craft(InputAction.CallbackContext context)
+    #region Cooking
+    void Cook_Performed(InputAction.CallbackContext context)
     {
-        _inventoryScript.Craft();
+        StartCookingState();
+
+        //Start cooking
+        _cookingScript.StartCooking();
+    }
+
+    void Cook_Canceled(InputAction.CallbackContext context)
+    {
+        StopCookingState();
+
+        //Stop cooking
+        _cookingScript.StopCooking();
+    }
+
+    void StartCookingState()
+    {
+        Debug.Log("cook");
+
+        //Input state check
+        if(_curState != playerStates.Default)
+            return;
+
+        //Set input state
+        _playerActions.Default.Disable();
+        _playerActions.Cooking.Enable();
+
+        _curState = playerStates.Cooking;
+    }
+
+    public void StopCookingState()
+    {
+        Debug.Log("stop cook");
+
+        //Input state check
+        if (_curState != playerStates.Cooking)
+            return;
+
+        //Set input state
+        _playerActions.Cooking.Disable();
+        _playerActions.Default.Enable();
+
+        _curState = playerStates.Default;
+    }
+
+    void SelectIngredient(InputAction.CallbackContext context)
+    {
+        //Active Inventory Check
+        if (!_inventoryScript.IsDisplayed)
+            return;
+
+        _inventoryScript.SelectIngredient();
     }
 
     void MoveInventorySlotLeft(InputAction.CallbackContext context)
     {
+        //Active Inventory Check
+        if (!_inventoryScript.IsDisplayed)
+            return;
+
         _inventoryScript._scroll.SwitchToLeftIngredient();
     }
 
     void MoveInventorySlotRight(InputAction.CallbackContext context)
     {
+        //Active Inventory Check
+        if (!_inventoryScript.IsDisplayed)
+            return;
+
         _inventoryScript._scroll.SwitchToRightIngredient();
+    }
+
+    void StartCraftingBullet(InputAction.CallbackContext context)
+    {
+        //Active Inventory Check
+        if (_inventoryScript.IsDisplayed)
+        {
+            _cookingScript.StartCrafting();
+        }
+        else
+        {
+            _cookingScript.CheckQTE();
+        }
     }
     #endregion
 
@@ -380,7 +476,6 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region Utilities
-
     public void Lock(bool isLocked)
     {
         _isLocked = isLocked;
@@ -396,8 +491,15 @@ public class PlayerController : MonoBehaviour
     public void TakeDamage(float damage) 
     {
         m_currentHealthValue -= Mathf.Abs(damage);
+
+        //Feedbacks
         CameraController.instance.ScreenShake();
         takeDamageTransition.LoadTransition();
+
+        //Cooking cancel
+        StopCookingState();
+
+        //Death Check
         if (m_currentHealthValue <= 0)
         {
             m_currentHealthValue = m_maxHealthValue;
@@ -462,6 +564,12 @@ public class PlayerController : MonoBehaviour
             //Draw base Aim
             Gizmos.DrawLine(transform.position, target);
         }
+    }
+
+    private void Reset()
+    {
+        //Set Varialbes
+        _rb = GetComponent<Rigidbody>();
     }
 #endif
 }

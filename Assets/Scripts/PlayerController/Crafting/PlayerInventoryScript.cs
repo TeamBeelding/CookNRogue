@@ -4,17 +4,29 @@ using UnityEngine;
 
 public class PlayerInventoryScript : MonoBehaviour
 {
-    public static PlayerInventoryScript _instance;
+    private static PlayerInventoryScript _instance;
     public PlayerInventoryScrolling _scroll;
     [SerializeField]
     PlayerAttack m_attack;
     public List<ProjectileData> projectilesData;
     public GameObject UI_Inventory;
-    public GameObject SlotsContainer;
     public List<ProjectileData> recipe;
 
     [SerializeField]
     int numberOfIngredients;
+
+    public bool IsDisplayed
+    {
+        get
+        {
+            return UI_Inventory.activeInHierarchy;
+        }
+    }
+
+    public static PlayerInventoryScript Instance 
+    {
+        get { return _instance; }
+    }
 
 
     void Awake()
@@ -27,49 +39,40 @@ public class PlayerInventoryScript : MonoBehaviour
     private void Start()
     {
         recipe = new List<ProjectileData>();
+        Show(false);
     }
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Tab))
-        {
-            if (!UI_Inventory.activeInHierarchy)
-            {
-                UI_Inventory.SetActive(true);
-            }
-            else
-            {
-                UI_Inventory.SetActive(false);
-            }
-        }
 
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            Debug.Log(numberOfIngredients);
-            Craft();
-        }
-    }
-    public void Craft()
+    public void Show(bool value)
     {
-        if (recipe.Count < numberOfIngredients)
-        {
-            _scroll.SelectIngredient();
-            return;
-        }
+        UI_Inventory.SetActive(value);
 
-        /*
-        //Fusionne les proprietes des differents ingredients
-        for (int i = 0; i < numberOfIngredients; i++)
-        {
-            int rand = Random.Range(0, projectilesData.Count);
-            recipe.Add(projectilesData[rand]);
-            projectilesData.RemoveAt(rand);
-        }
-        */
         //Rafraichit l'affichage de l'inventaire
         RefreshInventoryUI();
 
-        //Reinitialise les parametres de l'attaque precedente
-        m_attack.ResetParameters();
+    }
+
+    public void SelectIngredient()
+    {
+        _scroll.SelectIngredient();
+    }
+
+    public void CancelCraft()
+    {
+        foreach (ProjectileData ingredient in recipe)
+        {
+            AddIngredientToInventory(ingredient);
+        }
+
+        recipe.Clear();
+    }
+
+    public void CraftBullet()
+    {
+        if(recipe.Count <= 0) 
+        {
+            Debug.Log("Recipe is empty");
+            return;
+        }
 
         //Fusionne les effets et stats des differents ingredients
         foreach (ProjectileData ingredient in recipe)
@@ -84,12 +87,10 @@ public class PlayerInventoryScript : MonoBehaviour
             m_attack._lightDamage += ingredient._lightDamage;
 
             //AJOUT DES EFFETS DANS LE SCRIPT D'ATTAQUE
-            foreach(IIngredientEffects effect in ingredient._effects)
+            foreach (IIngredientEffects effect in ingredient._effects)
             {
                 m_attack._effects.Add(effect);
             }
-            
-
         }
 
         foreach (IIngredientEffects effect in m_attack._effects)
@@ -103,8 +104,8 @@ public class PlayerInventoryScript : MonoBehaviour
         }
         //Clear la Liste d'ingredients
         recipe.Clear();
-       
     }
+
     public void AddIngredientToInventory(ProjectileData data)
     {
         projectilesData.Add(data);
