@@ -17,6 +17,14 @@ public class PlayerBulletBehaviour : MonoBehaviour
     public bool destroyOnHit = true;
     public int bouncingNbr = 0;
 
+    public int _ricochetNbr ;
+    private float _initialSpeed;
+
+    public float _maxDistance;
+    public LayerMask _sphereMask;
+    public LayerMask _rayMask;
+
+
     protected virtual void Start()
     {
         /*ParticleSystem.MainModule part = GetComponentInChildren<ParticleSystem>().main;
@@ -24,7 +32,8 @@ public class PlayerBulletBehaviour : MonoBehaviour
 
         rb.drag = drag;
         rb.velocity = direction * speed;*/
-        Destroy(gameObject, 1f);
+        Invoke("DestroyBullet", 1);
+        _initialSpeed = _speed;
     }
 
     protected virtual void FixedUpdate()
@@ -44,35 +53,49 @@ public class PlayerBulletBehaviour : MonoBehaviour
 
     protected virtual void OnDestroy()
     {
-        if(_HasHit)
+        if (!_HasHit)
         {
-            _playerAttack.ApplyOnHitEffects(transform.position, _hitObject, _direction);
-        }
-        else
-        {
-            _playerAttack.ApplyOnHitEffects(transform.position);
+            ApplyCorrectOnHitEffects();
         }
     }
-
+    public void DestroyBullet()
+    {
+        Debug.Log("Destroy");
+        Destroy(gameObject);
+    }
+    public void ResetSpeed()
+    {
+      _speed = _initialSpeed;
+    }
     protected virtual void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Enemy"))
+
+        if (other.GetComponent<EnemyController>())
         {
             _HasHit = true;
             _hitObject = other.gameObject;
-            if (other.GetComponent<Enemy>())
-                other.GetComponent<Enemy>().TakeDamage(_heavyDamage);
+            ApplyCorrectOnHitEffects();
+             other.GetComponent<EnemyController>().TakeDamage(_heavyDamage);
 
-            if(destroyOnHit)
+            if (_ricochetNbr > 0)
+            {
+                _ricochetNbr--;
+                BulletRicochet(transform.position, _hitObject, _direction);
+                ResetSpeed();
+                return;
+            }
+
+            if (destroyOnHit)
             {
                 Destroy(gameObject);
-
             }
 
 
         }
-        else if(!other.gameObject.CompareTag("Player"))
+        else
         {
+            _HasHit = false;
+            ApplyCorrectOnHitEffects();
             if (bouncingNbr > 0)
             {
                 bouncingNbr--;
@@ -81,13 +104,76 @@ public class PlayerBulletBehaviour : MonoBehaviour
                 {
                     _direction = Vector3.Reflect(_direction.normalized, hit.normal);
                 }
-
+                
                 bouncingNbr--;
             }
             else
             {
                 Destroy(gameObject);
             }
+        }
+
+        
+
+
+    }
+
+    void BulletRicochet(Vector3 Position, GameObject HitObject, Vector3 direction)
+    {
+        if (!HitObject)
+            return;
+
+        Collider[] hitColliders = Physics.OverlapSphere(Position, _maxDistance, _sphereMask);
+        float closest = 999f;
+        float distance = 0f;
+        GameObject closestEnemy = HitObject;
+        Collider closestCollider = HitObject.GetComponent<Collider>();
+
+        if (HitObject.GetComponent<EnemyController>())
+            HitObject.layer = 2;
+
+        foreach (Collider hitCollider in hitColliders)
+        {
+
+            if (hitCollider.gameObject != HitObject && hitCollider.GetComponent<EnemyController>())
+            {
+                hitCollider.transform.gameObject.layer = 2;
+                distance = Vector3.Distance(hitCollider.gameObject.transform.position, Position);
+
+                Vector3 rayDirection = (hitCollider.gameObject.transform.position - Position).normalized;
+      
+
+                if (distance < closest && !Physics.Raycast(Position, rayDirection, _rayMask))
+                {
+                    closest = distance;
+                    closestEnemy = hitCollider.gameObject;
+                }
+                hitCollider.transform.gameObject.layer = 0;
+            }
+
+        }
+
+        HitObject.layer = 0;
+        if (closestEnemy != HitObject)
+        {
+            CancelInvoke("DestroyBullet");
+            Invoke("DestroyBullet", 1);
+            _direction = (closestEnemy.gameObject.transform.position - HitObject.transform.position).normalized;
+            destroyOnHit = true;
+        }
+
+    }
+
+
+    void ApplyCorrectOnHitEffects()
+    {
+        if (_HasHit)
+        {
+            _playerAttack.ApplyOnHitEffects(transform.position, _hitObject, _direction);
+        }
+        else
+        {
+            _playerAttack.ApplyOnHitEffects(transform.position);
         }
     }
 

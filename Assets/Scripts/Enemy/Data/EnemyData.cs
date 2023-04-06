@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-[CreateAssetMenu(fileName = "EnemyData", menuName = "Enemy")]
+[CreateAssetMenu(fileName = "EnemyBasicData", menuName = "Enemy/Basic")]
 public class EnemyData : ScriptableObject
 {
     [Header("Statistics")]
@@ -30,10 +30,6 @@ public class EnemyData : ScriptableObject
     [SerializeField]
     private bool focusInstantlyPlayer = false;
     
-    [Header("Path")]
-    [SerializeField]
-    private GameObject[] path;
-
     public float GetHealth() => health;
     public float GetSpeed() => speed;
     public float GetRangeDetection() => rangeDetection;

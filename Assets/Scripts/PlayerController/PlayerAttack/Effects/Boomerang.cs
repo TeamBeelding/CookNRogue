@@ -16,7 +16,7 @@ public class Boomerang : IIngredientEffects
     //EFFET LORS DU SHOOT
     public void EffectOnShoot(Vector3 Position, GameObject bullet)
     {
-        Debug.Log("BoomerangShootEffect");
+
 
     }
 
@@ -24,7 +24,9 @@ public class Boomerang : IIngredientEffects
     //EFFET LORS DE LA COLLISION
     public void EffectOnHit(Vector3 Position, GameObject HitObject, Vector3 direction)
     {
-        Debug.Log("BoomerangHitEffect");
+
 
     }
+
+  
 }
