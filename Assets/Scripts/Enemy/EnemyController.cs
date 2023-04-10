@@ -29,15 +29,14 @@ public abstract class EnemyController : MonoBehaviour
         _rend = GetComponentInChildren<Renderer>();
         _meshRenderer = GetComponentInChildren<MeshRenderer>();
         _collider = GetComponent<CapsuleCollider>();
-
-        player = PlayerController.Instance.gameObject;
-        
-        AddToEnemyManager();
     }
 
     // Start is called before the first frame update
     protected virtual void Start()
     {
+        player = PlayerController.Instance.gameObject;
+        AddToEnemyManager();
+        
         _rend.material.color = Color.white;
     }
 

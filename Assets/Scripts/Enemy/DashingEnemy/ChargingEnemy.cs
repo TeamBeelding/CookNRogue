@@ -21,6 +21,16 @@ public class ChargingEnemy : EnemyController
 
     [SerializeField]
     private GameObject visual;
+    
+    public enum State
+    {
+        Casting,
+        Waiting,
+        Dashing,
+        Dying
+    }
+
+    public State state;
         
     private void Awake()
     {
@@ -47,16 +57,6 @@ public class ChargingEnemy : EnemyController
     {
         return false;
     }
-
-    public enum State
-    {
-        Casting,
-        Waiting,
-        Dashing,
-        Dying
-    }
-
-    public State state;
 
     public State GetState()
     {
