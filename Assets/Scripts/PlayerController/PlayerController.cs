@@ -407,7 +407,7 @@ public class PlayerController : MonoBehaviour
 
     void Spawn()
     {
-        transform.position = _roomManager.SpawnPoint.position;
+        transform.position = _roomManager.m_spawnPoint.position;
     }
 
     void Quit(InputAction.CallbackContext context)
