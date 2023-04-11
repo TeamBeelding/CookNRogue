@@ -32,7 +32,7 @@ public class PlayerKnockback : MonoBehaviour
             // adding time to counter
             elapsedTime += Time.deltaTime;
             // strength of the curve at specific time. So strength over time (The y axis being strength, and x being time)
-            float movement = m_playerKnockCurve.Evaluate(elapsedTime / m_knockTime) * knockDistance;
+            float movement = m_playerKnockCurve.Evaluate(elapsedTime / m_knockTime);
             // changing the local postion of _shake gimble inside the unit circle, so random position in a circle and adding the start position.
             transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, -movement);
             yield return null;

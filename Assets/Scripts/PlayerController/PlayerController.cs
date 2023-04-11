@@ -54,6 +54,9 @@ public class PlayerController : MonoBehaviour
         get => _instance;
     }
 
+    [SerializeField]
+    private PlayerAnimStates PlayerAnimStates;
+
     public Vector3 PlayerAimDirection
     {
         get
@@ -199,6 +202,17 @@ public class PlayerController : MonoBehaviour
         {
             //Stop if input is null
             _rb.velocity = Vector3.zero;
+            //m_animator.SetBool("runningBool", false);
+            //m_animator.SetBool("runningAttackBool", false);
+            //m_animator.SetBool("idleAttackBool", false);
+
+            PlayerAnimStates.animStates = PlayerAnimStates.playerAnimStates.IDLE;
+
+            if (_isAiming)
+            {
+                //m_animator.SetBool("idleAttackBool", true);
+                PlayerAnimStates.animStates = PlayerAnimStates.playerAnimStates.IDLEATTACK;
+            }
         }
         else
         {
@@ -210,11 +224,20 @@ public class PlayerController : MonoBehaviour
 
             Move(moveInputDir, speed);
 
+            //m_animator.SetBool("runningBool", true);
+            //m_animator.SetBool("runningAttackBool", true);
+            //m_animator.SetBool("idleAttackBool", false);
+
+            PlayerAnimStates.animStates = PlayerAnimStates.playerAnimStates.RUNNINGATTACK;
+
             //Rotate model if player is not aiming
             if (!_isAiming)
             {
                 Rotate(moveInputDir);
 
+                //m_animator.SetBool("runningAttackBool", false);
+
+                PlayerAnimStates.animStates = PlayerAnimStates.playerAnimStates.RUNNING;
                 //Set Aiming Variables
                 _aimDirection = moveInputDir;
             }
