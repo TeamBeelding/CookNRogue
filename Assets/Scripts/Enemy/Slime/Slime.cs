@@ -16,6 +16,7 @@ public class Slime : EnemyController
     public enum State
     {
         Neutral,
+        KeepingDistance,
         Chase,
         Attack,
         Dying,
@@ -42,8 +43,6 @@ public class Slime : EnemyController
     {
         state = _focusPlayer ? State.Chase : State.Neutral;
 
-        
-        // Invoke(nameof(Dying), 2);
         base.Start();
     }
 
@@ -70,6 +69,9 @@ public class Slime : EnemyController
                 break;
             case State.Chase:
                 Chase();
+                break;
+            case State.KeepingDistance:
+                KeepDistance();
                 break;
             case State.Attack:
                 Attack(ThrowMinimoyz, _data.GetAttackSpeed);
@@ -100,7 +102,10 @@ public class Slime : EnemyController
 
         if (Vector3.Distance(transform.position, player.transform.position) <= _data.GetAttackRange)
         {
-            state = State.Attack;
+            if (Vector3.Distance(transform.position, player.transform.position) <= _data.GetMinimumDistanceToKeep)
+                state = State.KeepingDistance;
+            else
+                state = State.Attack;
         }
         else
         {
@@ -109,8 +114,19 @@ public class Slime : EnemyController
         }
     }
     
+    private void KeepDistance()
+    {
+        if (Vector3.Distance(transform.position, player.transform.position) <= _data.GetMinimumDistanceToKeep)
+        {
+            Vector3 target = transform.position - (player.transform.position - transform.position);
+            _agent.stoppingDistance = 0;
+            _agent.SetDestination(target);
+        }
+    }
+    
     protected override void Chase()
     {
+        _agent.stoppingDistance = _data.GetAttackRange;
         _agent.SetDestination(player.transform.position);
     }
 
