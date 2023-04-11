@@ -38,7 +38,8 @@ public class RoomManager : MonoBehaviour
     [SerializeField]
     private GameObject m_player;
     
-    public Transform SpawnPoint;
+    [HideInInspector]
+    public Transform m_spawnPoint;
 
     [SerializeField]
     private TransitionController m_transition;
@@ -140,7 +141,7 @@ public class RoomManager : MonoBehaviour
                 break;
         }
         OnRoomStart?.Invoke();
-        m_player.transform.position = SpawnPoint.position;
+        m_player.transform.position = m_spawnPoint.position;
         m_loadSurface = true;
     }
 
@@ -161,8 +162,15 @@ public class RoomManager : MonoBehaviour
         int rand = UnityEngine.Random.Range(0, levels.Length);
         _currentLevel = Instantiate(levels[rand], Vector3.zero, Quaternion.identity);
 
+        
+        m_spawnPoint = GameObject.FindWithTag("PlayerSpawn")?.transform;
+        if (m_spawnPoint == null)
+        {
+            Debug.LogError("No player spawn found in level. Create a Transform GO with the \"PlayerSpawn\" tag.");
+            return;
+        }
+        m_player.transform.position = m_spawnPoint.position;
         OnRoomStart?.Invoke();
-        m_player.transform.position = SpawnPoint.position;
         m_loadSurface = true;
     }
 
