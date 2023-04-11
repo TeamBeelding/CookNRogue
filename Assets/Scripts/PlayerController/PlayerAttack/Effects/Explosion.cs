@@ -14,14 +14,14 @@ public class Explosion : IIngredientEffects
     public void EffectOnShoot(Vector3 Position, GameObject bullet)
     {
        
-        Debug.Log("ExplosionShootEffect");
+
     }
 
     //EFFET LORS DE LA COLLISION
     public void EffectOnHit(Vector3 Position,  GameObject HitObject, Vector3 direction)
     {
         kaboom(Position);
-        Debug.Log("ExplosionHitEffect");
+
     }
 
     void kaboom(Vector3 Position)
@@ -40,8 +40,7 @@ public class Explosion : IIngredientEffects
 
                 if (!hitCollider.CompareTag("Player") && rb != null)
                 {
-                Debug.Log("kaboom");
-                rb.AddExplosionForce(m_ExplosionForce, Position, m_ExplosionRadius);
+                    rb.AddExplosionForce(m_ExplosionForce, Position, m_ExplosionRadius);
                 }
 
             

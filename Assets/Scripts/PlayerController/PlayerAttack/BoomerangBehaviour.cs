@@ -36,9 +36,14 @@ public class BoomerangBehaviour : PlayerBulletBehaviour
         _increment++;
         
     }
+
     protected override void OnDestroy()
     {
-        //NE SURTOUT PAS ENLEVER CET OVERRIDE SINON LES AUTRES EFFETS SE DECLENCHENT 2X AVEC CET EFFET CI.
+        //NE PAS ENLEVER
+    }
+    protected override void OnTriggerEnter(Collider other)
+    {
+        //NE PAS ENLEVER
     }
 
 

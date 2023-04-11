@@ -37,8 +37,6 @@ public class PlayerController : MonoBehaviour
     float aimArrowDuration = 1;
 
     [SerializeField]
-    PlayerKnockback m_knockback;
-    [SerializeField]
     LayerMask m_interactionMask;
     [SerializeField]
     AimAssistPreset m_aimAssistPresset;
@@ -46,7 +44,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     TransitionController takeDamageTransition;
 
-    public PlayerController Instance
+    [SerializeField]
+    private GameObject pauseMenu;
+    
+    private bool m_isGamePaused = false;
+
+    public static PlayerController Instance
     {
         get => _instance;
     }
@@ -71,7 +74,7 @@ public class PlayerController : MonoBehaviour
         get => _aimMagnitude;
     }
 
-    PlayerController _instance;
+    static PlayerController _instance;
 
     PlayerActions _playerActions;
 
@@ -88,7 +91,7 @@ public class PlayerController : MonoBehaviour
     Vector3 _correctedAimDirection;
     float _aimMagnitude;
 
-    InventoryScript _scriptInventory;
+    PlayerInventoryScript _inventoryScript;
     EnemyManager _enemyManager;
     RoomManager _roomManager;
     bool _isLocked = false;
@@ -111,13 +114,16 @@ public class PlayerController : MonoBehaviour
         //Set Varialbes
         _rb = GetComponent<Rigidbody>();
         _relativeTransform = m_mainCamera.transform;
-        _scriptInventory = InventoryScript._instance;
+        _inventoryScript = PlayerInventoryScript._instance;
         _enemyManager = EnemyManager.Instance;
         _roomManager = RoomManager.instance;
+        
+        //pauseMenu.SetActive(false);
 
         //Set Input Actions Map
         _playerActions = new PlayerActions();
         _playerActions.Default_PlayerActions.Enable();
+        _playerActions.UI.Enable();
         //Set Events
         _playerActions.Default_PlayerActions.Shoot.performed += Shoot;
         _playerActions.Default_PlayerActions.Move.performed += Move_Performed;
@@ -125,6 +131,11 @@ public class PlayerController : MonoBehaviour
         _playerActions.Default_PlayerActions.Aim.performed += Aim_Performed;
         _playerActions.Default_PlayerActions.Aim.canceled += Aim_Canceled;
         _playerActions.Default_PlayerActions.Craft.performed += Craft;
+        _playerActions.Default_PlayerActions.MoveInventorySlotLeft.performed += MoveInventorySlotLeft;
+        _playerActions.Default_PlayerActions.MoveInventorySlotRight.performed += MoveInventorySlotRight;
+        _playerActions.Default_PlayerActions.Quit.performed += Quit;
+
+        _playerActions.UI.Pause.performed += OnPauseGame;
 
         _roomManager.OnRoomStart += Spawn;
 
@@ -155,7 +166,7 @@ public class PlayerController : MonoBehaviour
         if (_isAimingOnMouse)
         {
             _aimInputValue = Input.mousePosition - m_mainCamera.WorldToScreenPoint(transform.position);
-            _aimMagnitude = _aimInputValue.magnitude / 10;
+            _aimMagnitude = 1f;
         }
 
         //Null Input Check
@@ -327,10 +338,28 @@ public class PlayerController : MonoBehaviour
         _isAiming = false;
         _isAimingOnMouse = false;
         _aimInputValue = Vector2.zero;
+        _aimMagnitude = 0f;
 
-        m_aimArrow.SetActive(false);
+        //m_aimArrow.SetActive(false);
     }
 
+    #endregion
+
+    #region Bullet Crafting
+    void Craft(InputAction.CallbackContext context)
+    {
+        _inventoryScript.Craft();
+    }
+
+    void MoveInventorySlotLeft(InputAction.CallbackContext context)
+    {
+        _inventoryScript._scroll.SwitchToLeftIngredient();
+    }
+
+    void MoveInventorySlotRight(InputAction.CallbackContext context)
+    {
+        _inventoryScript._scroll.SwitchToRightIngredient();
+    }
     #endregion
 
     #region Other Actions
@@ -345,16 +374,9 @@ public class PlayerController : MonoBehaviour
 
         if (context.performed)
         {
-            m_knockback.StartKnockback();
             GetComponent<PlayerAttack>().Shoot();
         }
     }
-
-    void Craft(InputAction.CallbackContext context)
-    {
-        _scriptInventory.Craft();
-    }
-
     #endregion
 
     #region Utilities
@@ -379,13 +401,48 @@ public class PlayerController : MonoBehaviour
         if (m_currentHealthValue <= 0)
         {
             m_currentHealthValue = m_maxHealthValue;
-            RoomManager.instance.LoadRandomLevel();
+            RoomManager.instance.RestartLevel();
         }
     }
 
     void Spawn()
     {
-        transform.position = _roomManager.SpawnPoint.position;
+        transform.position = _roomManager.m_spawnPoint.position;
+    }
+
+    void Quit(InputAction.CallbackContext context)
+    {
+        Application.Quit();
+    }
+
+    #endregion
+
+    #region UI
+
+    private void OnPauseGame(InputAction.CallbackContext callbackContext)
+    {
+        PauseGame();
+    }
+
+    public void PauseGame()
+    {
+        if (m_isGamePaused)
+        {
+            Time.timeScale = 1;
+            pauseMenu.SetActive(false);
+        }
+        else
+        {
+            Time.timeScale = 0;
+            pauseMenu.SetActive(true);
+        }
+
+        m_isGamePaused = !m_isGamePaused;
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 
     #endregion
@@ -393,15 +450,18 @@ public class PlayerController : MonoBehaviour
 #if UNITY_EDITOR
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.yellow;
-        Vector3 target = transform.position + _aimDirection * m_aimAssistPresset.GetMaxDistance;
-        //Draw base Aim
-        Gizmos.DrawLine(transform.position, target);
+        if (m_aimAssistPresset)
+        {
+            Gizmos.color = Color.yellow;
+            Vector3 target = transform.position + _aimDirection * m_aimAssistPresset.GetMaxDistance;
+            //Draw base Aim
+            Gizmos.DrawLine(transform.position, target);
 
-        Gizmos.color = Color.green;
-        target = transform.position + _correctedAimDirection * m_aimAssistPresset.GetMaxDistance;
-        //Draw base Aim
-        Gizmos.DrawLine(transform.position, target);
+            Gizmos.color = Color.green;
+            target = transform.position + _correctedAimDirection * m_aimAssistPresset.GetMaxDistance;
+            //Draw base Aim
+            Gizmos.DrawLine(transform.position, target);
+        }
     }
 #endif
 }
