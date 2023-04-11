@@ -140,7 +140,6 @@ namespace Enemy.Slime
         {
             GameObject minimoyz = Instantiate(_minimoyz, RandomPoint(), quaternion.identity);
             minimoyz.GetComponent<MinimoyzController>().SetFocus();
-            Debug.Log("Throw Minimoyz");
         }
 
         private Vector3 RandomPoint()
