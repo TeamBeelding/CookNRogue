@@ -42,7 +42,6 @@ public class MinimoyzController : EnemyController
     {
         state = _focusPlayer ? State.Chase : State.Neutral;
 
-
         base.Start();
     }
 
@@ -51,7 +50,7 @@ public class MinimoyzController : EnemyController
     {
         base.Update();
         
-        IStateManagement();
+        StateManagement();
     }
 
     protected void FixedUpdate()
@@ -62,7 +61,7 @@ public class MinimoyzController : EnemyController
         AreaDetection();
     }
 
-    private void IStateManagement()
+    private void StateManagement()
     {
         switch (state)
         {
