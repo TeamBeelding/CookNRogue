@@ -106,6 +106,9 @@ public class RoomManager : MonoBehaviour
     {
         switch (currentLevelType)
         {
+            case "Hub":
+                LoadLevel(m_Levels.LevelLists.HubList);
+                break;
             case "Room":
                 LoadLevel(m_Levels.LevelLists.RoomList);
                 break;
@@ -127,6 +130,9 @@ public class RoomManager : MonoBehaviour
 
         switch (currentLevelType)
         {
+            case "Hub":
+                _currentLevel = Instantiate(m_Levels.LevelLists.HubList[index], Vector3.zero, Quaternion.identity);
+                break;
             case "Room":
                 _currentLevel = Instantiate(m_Levels.LevelLists.RoomList[index], Vector3.zero, Quaternion.identity);
                 break;
@@ -216,17 +222,20 @@ public class RoomManagerEditor : Editor
 
         switch (room.Levels.RoomTypes[typeSelected])
         {
-            case "Room":
+            case "Hub":
                 selected = EditorGUILayout.Popup("Specified Level", selected, room.Levels.LevelNames[0]);
                 break;
-            case "Corridor":
+            case "Room":
                 selected = EditorGUILayout.Popup("Specified Level", selected, room.Levels.LevelNames[1]);
                 break;
-            case "Shop":
+            case "Corridor":
                 selected = EditorGUILayout.Popup("Specified Level", selected, room.Levels.LevelNames[2]);
                 break;
-            case "Final":
+            case "Shop":
                 selected = EditorGUILayout.Popup("Specified Level", selected, room.Levels.LevelNames[3]);
+                break;
+            case "Final":
+                selected = EditorGUILayout.Popup("Specified Level", selected, room.Levels.LevelNames[4]);
                 break;
         }
 
