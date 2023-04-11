@@ -1,18 +1,14 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Events;
-using UnityEngine.Serialization;
 
 public class MinimoyzController : EnemyController
 {
     [SerializeField] private MinimoyzData _data;
     [SerializeField] private NavMeshAgent _agent;
     
-    private Coroutine castingCoroutine;
-    private Coroutine attackCoroutine;
+    private Coroutine _castingCoroutine;
+    private Coroutine _attackCoroutine;
     
     public enum State
     {
@@ -59,6 +55,11 @@ public class MinimoyzController : EnemyController
             return;
         
         AreaDetection();
+    }
+
+    public void SetFocus(bool value = true)
+    {
+        _focusPlayer = value;
     }
 
     private void StateManagement()
@@ -134,9 +135,9 @@ public class MinimoyzController : EnemyController
         if (state == State.Dying)
             return;
         
-        if (castingCoroutine == null)
+        if (_castingCoroutine == null)
         {
-            castingCoroutine = StartCoroutine(CastAttack());
+            _castingCoroutine = StartCoroutine(CastAttack());
         }
     }
 
@@ -150,8 +151,8 @@ public class MinimoyzController : EnemyController
         if (state == State.Dying)
             return;
         
-        if (attackCoroutine == null)
-            attackCoroutine = StartCoroutine(ISettingAttack());
+        if (_attackCoroutine == null)
+            _attackCoroutine = StartCoroutine(ISettingAttack());
         
         HitPlayer();
 
@@ -176,7 +177,7 @@ public class MinimoyzController : EnemyController
     
     private void CancelCast()
     {
-        castingCoroutine = null;
+        _castingCoroutine = null;
         state = State.Chase;
     }
 
@@ -197,5 +198,15 @@ public class MinimoyzController : EnemyController
         
         if (Vector3.Distance(transform.position, player.transform.position) <= _data.GetAttackRange())
             HitPlayer();
+    }
+    
+    public override void TakeDamage(float damage)
+    {
+        base.TakeDamage(damage);
+        
+        if (healthpoint <= 0)
+        {
+            state = State.Dying;
+        }
     }
 }

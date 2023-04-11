@@ -7,37 +7,43 @@ using UnityEngine.Serialization;
 [CreateAssetMenu(fileName = "SlimeData", menuName = "Enemy/SlimeData")]
 public class SlimeData : ScriptableObject
 {
-    [SerializeField] private float _speed = 2f;
-    [SerializeField] private float _attackRange = 4f;
-    [SerializeField] private float _attackSpeed = 2f;
-    [SerializeField] private float _health = 10f;
-    [SerializeField] private bool _focusPlayer = false;
-    [SerializeField] private float _focusRange = 10f;
-    [SerializeField] private int _slimeSpawnWhenDying = 4;
+    [SerializeField] private float speed = 2f;
+    [SerializeField] private float attackRange = 4f;
+    [SerializeField] private float attackSpeed = 2f;
+    [SerializeField] private float health = 10f;
+    [SerializeField] private bool focusPlayer = false;
+    [SerializeField] private float focusRange = 10f;
+    [SerializeField] private int slimeSpawnWhenDying = 4;
     
-    [SerializeField] private float _radiusMinimoyzSpawnPoint = 0.5f;
-    [SerializeField] private float _minimumDistanceToKeep = 2f;
+    [SerializeField] private float radiusMinimoyzSpawnPoint = 0.5f;
+    [SerializeField] private float minimumDistanceToKeep = 2f;
+    [SerializeField] private float innerRadius = 0.5f;
+    [SerializeField] private float outerRadius = 1f;
 
     private void Reset()
     {
-        _speed = 2f;
-        _attackRange = 4f;
-        _attackSpeed = 2f;
-        _health = 10f;
-        _focusPlayer = false;
-        _focusRange = 10f;
-        _slimeSpawnWhenDying = 4;
-        _radiusMinimoyzSpawnPoint = 0.5f;
-        _minimumDistanceToKeep = 2f;
+        speed = 2f;
+        attackRange = 4f;
+        attackSpeed = 2f;
+        health = 10f;
+        focusPlayer = false;
+        focusRange = 10f;
+        slimeSpawnWhenDying = 4;
+        radiusMinimoyzSpawnPoint = 0.5f;
+        minimumDistanceToKeep = 2f;
+        innerRadius = 0.5f;
+        outerRadius = 1f;
     }
 
-    public float GetSpeed => _speed;
-    public float GetAttackRange => _attackRange;
-    public float GetAttackSpeed => _attackSpeed;
-    public float GetHealth => _health;
-    public bool GetFocusPlayer => _focusPlayer;
-    public float GetFocusRange => _focusRange;
-    public float GetSlimeSpawnWhenDying => _slimeSpawnWhenDying;
-    public float GetRadiusMinimoyzSpawnPoint => _radiusMinimoyzSpawnPoint;
-    public float GetMinimumDistanceToKeep => _minimumDistanceToKeep;
+    public float GetSpeed => speed;
+    public float GetAttackRange => attackRange;
+    public float GetAttackSpeed => attackSpeed;
+    public float GetHealth => health;
+    public bool GetFocusPlayer => focusPlayer;
+    public float GetFocusRange => focusRange;
+    public float GetSlimeSpawnWhenDying => slimeSpawnWhenDying;
+    public float GetRadiusMinimoyzSpawnPoint => radiusMinimoyzSpawnPoint;
+    public float GetMinimumDistanceToKeep => minimumDistanceToKeep;
+    public float GetInnerRadius => innerRadius;
+    public float GetOuterRadius => outerRadius;
 }

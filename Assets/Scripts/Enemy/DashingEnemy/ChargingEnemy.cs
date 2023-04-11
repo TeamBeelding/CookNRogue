@@ -3,15 +3,15 @@ using UnityEngine;
 
 public class ChargingEnemy : EnemyController
 {
-    private Coroutine castingCoroutine;
-    private Coroutine waitingCoroutine;
+    private Coroutine _castingCoroutine;
+    private Coroutine _waitingCoroutine;
     private RaycastHit _hit;
 
-    private bool isCharging = false;
-    private bool canShowingRedLine = false;
+    private bool _isCharging = false;
+    private bool _canShowingRedLine = false;
     
-    private Vector3 direction;
-    private Rigidbody rigidbody;
+    private Vector3 _direction;
+    private Rigidbody _rigidbody;
 
     [SerializeField] private GameObject _redLine;
     [SerializeField] private EnemyDashingData _data;
@@ -43,7 +43,7 @@ public class ChargingEnemy : EnemyController
     {
         base.Start();
         
-        rigidbody = GetComponent<Rigidbody>();
+        _rigidbody = GetComponent<Rigidbody>();
         state = State.Casting;
         _redLineMaterial = _redLine.GetComponent<Renderer>().material;
     }
@@ -96,21 +96,21 @@ public class ChargingEnemy : EnemyController
     /// </summary>
     private void Dashing()
     {
-        isCharging = true;
-        StopCoroutine(castingCoroutine);
+        _isCharging = true;
+        StopCoroutine(_castingCoroutine);
         
         ChargingToPlayer();
     }
     
     private void StopMoving()
     {
-        direction = Vector3.zero;
+        _direction = Vector3.zero;
 
-        rigidbody.velocity = Vector3.zero;
-        rigidbody.angularVelocity = Vector3.zero;
+        _rigidbody.velocity = Vector3.zero;
+        _rigidbody.angularVelocity = Vector3.zero;
 
         StopCoroutine(ICanShowingRedLine());
-        canShowingRedLine = false;
+        _canShowingRedLine = false;
     }
 
     /// <summary>
@@ -119,8 +119,8 @@ public class ChargingEnemy : EnemyController
     /// </summary>
     private void Casting()
     {
-        isCharging = false;
-        castingCoroutine = StartCoroutine(ICasting());
+        _isCharging = false;
+        _castingCoroutine = StartCoroutine(ICasting());
         visual.transform.LookAt(new Vector3(player.transform.position.x, visual.transform.position.y, player.transform.position.z));
     }
     
@@ -131,14 +131,14 @@ public class ChargingEnemy : EnemyController
     {
         StopMoving();
 
-        isCharging = false;
+        _isCharging = false;
         _isRedLineFullVisible = false;
-        canShowingRedLine = false;
+        _canShowingRedLine = false;
 
-        if (castingCoroutine != null)
-            StopCoroutine(castingCoroutine);
+        if (_castingCoroutine != null)
+            StopCoroutine(_castingCoroutine);
         
-        waitingCoroutine = StartCoroutine(IWaiting());
+        _waitingCoroutine = StartCoroutine(IWaiting());
     }
     
     /// <summary>
@@ -173,8 +173,8 @@ public class ChargingEnemy : EnemyController
     /// </summary>
     private void StopCasting()
     {
-        if (castingCoroutine != null)
-            StopCoroutine(castingCoroutine);
+        if (_castingCoroutine != null)
+            StopCoroutine(_castingCoroutine);
     }
     
     
@@ -184,7 +184,7 @@ public class ChargingEnemy : EnemyController
     /// <returns></returns>
     private Vector3 GetPlayerDirection()
     {
-        isCharging = true;
+        _isCharging = true;
         Vector3 direction = (player.transform.position - transform.position).normalized;
         direction.y = 0;
         
@@ -193,7 +193,7 @@ public class ChargingEnemy : EnemyController
     
     private void ChargingToPlayer()
     {
-        transform.position += direction * (_data.GetSpeed() * Time.deltaTime);
+        transform.position += _direction * (_data.GetSpeed() * Time.deltaTime);
     }
 
     private IEnumerator ICasting()
@@ -212,15 +212,15 @@ public class ChargingEnemy : EnemyController
         
         yield return new WaitForSeconds(_data.GetRemainingForDash());
 
-        if (!isCharging)
-            direction = GetPlayerDirection();
+        if (!_isCharging)
+            _direction = GetPlayerDirection();
         
         SetState(State.Dashing);
     }
     
     private IEnumerator ICanShowingRedLine()
     {
-        if (canShowingRedLine)
+        if (_canShowingRedLine)
             yield break;
         
         HideRedLine();
@@ -253,7 +253,7 @@ public class ChargingEnemy : EnemyController
     {
         if (_isRedLineFullVisible) return;
         
-        canShowingRedLine = true;
+        _canShowingRedLine = true;
         _redLineMaterial.SetFloat("_Alpha", 0.85f);
     }
     

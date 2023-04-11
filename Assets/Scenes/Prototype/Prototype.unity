@@ -894,26 +894,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 916360725}
   m_CullTransparentMesh: 1
---- !u!1 &946172190 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8374838445907740390, guid: 4d6c9153bfea08c4e80cf31b7762b0d4,
-    type: 3}
-  m_PrefabInstance: {fileID: 8374838446047950840}
-  m_PrefabAsset: {fileID: 0}
---- !u!136 &946172194
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 946172190}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1018904204
 GameObject:
   m_ObjectHideFlags: 0
@@ -4073,6 +4053,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Slime
       objectReference: {fileID: 0}
+    - target: {fileID: 8374838445234050371, guid: 4d6c9153bfea08c4e80cf31b7762b0d4,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8374838445234050373, guid: 4d6c9153bfea08c4e80cf31b7762b0d4,
         type: 3}
       propertyPath: m_RootOrder
@@ -4128,8 +4113,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 1351426751, guid: 4d6c9153bfea08c4e80cf31b7762b0d4, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d6c9153bfea08c4e80cf31b7762b0d4, type: 3}
 --- !u!4 &8902403905059677096
 Transform:
