@@ -248,8 +248,7 @@ GameObject:
   - component: {fileID: 139901849}
   - component: {fileID: 139901851}
   - component: {fileID: 139901850}
-  - component: {fileID: 139901852}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: AimedMarmite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -321,72 +320,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 139901848}
   m_Mesh: {fileID: 4711208715938537054, guid: 753751f521b03d84eab1dae2187f0397, type: 3}
---- !u!114 &139901852
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 139901848}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e72e0edb7612794db4436824d45bc26, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_playerKnockCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: -0.0005477651
-      value: 0.5025358
-      inSlope: -0.9512183
-      outSlope: -0.9512183
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.11338536
-    - serializedVersion: 3
-      time: 0.25017
-      value: 0.2507964
-      inSlope: -1.0009933
-      outSlope: -1.0009933
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.10564599
-    - serializedVersion: 3
-      time: 0.4996854
-      value: -0.0013396144
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 136
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.751061
-      value: 0.25046974
-      inSlope: 1.1127725
-      outSlope: 1.1127725
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.16247943
-      outWeight: 0.089873016
-    - serializedVersion: 3
-      time: 1.0002222
-      value: 0.50135994
-      inSlope: 0.9642645
-      outSlope: 0.9642645
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.17275433
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  isKnocked: 0
-  m_knockTime: 0.1
-  knockDistance: 1
 --- !u!1 &160622171
 GameObject:
   m_ObjectHideFlags: 0
@@ -2961,7 +2894,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 2039
 --- !u!114 &2041367652
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3501,7 +3434,7 @@ GameObject:
   - component: {fileID: 543450653603304265}
   - component: {fileID: 3469287837587053804}
   - component: {fileID: 1711813855671576614}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Marmite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5031,7 +4964,6 @@ MonoBehaviour:
   _ProjectileNbr: 1
   _TimeBtwShotsRafale: 0
   _muzzle: {fileID: 6518352296712566020}
-  m_knockbackScript: {fileID: 139901852}
   _size: 1
   _speed: 1
   _drag: 0
