@@ -5,6 +5,7 @@ using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
+using Random = UnityEngine.Random;
 
 public class Slime : EnemyController
 {
@@ -42,7 +43,7 @@ public class Slime : EnemyController
         state = _focusPlayer ? State.Chase : State.Neutral;
 
         
-        Invoke(nameof(Dying), 20f);
+        // Invoke(nameof(Dying), 2);
         base.Start();
     }
 
@@ -122,7 +123,11 @@ public class Slime : EnemyController
     {
         for (int i = 0; i < _data.GetSlimeSpawnWhenDying; i++)
         {
-            Instantiate(_minimoyz, transform.position, Quaternion.identity);
+            Vector2 origin = new Vector2(transform.position.x, transform.position.z);
+            Vector3 point = Random.insideUnitCircle * _data.GetRadiusMinimoyzSpawnPoint + origin;
+            point = new Vector3(point.x, 0, point.y);
+            
+            Instantiate(_minimoyz, point, Quaternion.identity);
         }
         
         base.Dying();
