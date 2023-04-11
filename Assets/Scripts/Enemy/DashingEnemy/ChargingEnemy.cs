@@ -152,7 +152,7 @@ public class ChargingEnemy : EnemyController
     /// Enemy Take Damage
     /// </summary>
     /// <param name="damage"></param>
-    public override void TakeDamage(float damage = 1)
+    public override void TakeDamage(float damage = 1, bool isCritical = false)
     {
         base.TakeDamage();
 
