@@ -91,12 +91,12 @@ public abstract class EnemyController : MonoBehaviour, IState
             StartCoroutine(IAttackTimer());
         }
     }
-    
+
     #endregion
-    
+
     #region TakeDamage
 
-    public virtual void TakeDamage(float damage = 1)
+    public virtual void TakeDamage(float damage = 1, bool isCritical = false)
     {
         damage = Mathf.Abs(damage);
         healthpoint -= damage;
