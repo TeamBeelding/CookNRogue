@@ -2,20 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Events;
 
-public abstract class EnemyController : MonoBehaviour
+public abstract class EnemyController : MonoBehaviour, IState
 {
     protected GameObject player;
     
     [HideInInspector]
     public List<StatusEffectHandler> _effectHandlers;
+
+    [SerializeField] 
+    protected EnemyData data;
     private Renderer _rend;
     private MeshRenderer _meshRenderer;
+    private NavMeshAgent _agent;
     private CapsuleCollider _collider;
+    
+    [SerializeField]
+    private ParticleSystem m_stateSystem;
+    private Renderer stateRenderer;
     
     private IEnumerator colorCoroutine;
     
+    [SerializeField]
+    private GameObject m_gun;
+    [SerializeField]
+    private GameObject m_bullet;
+
     protected bool _focusPlayer = false;
     private bool _canAttack = true;
     
@@ -29,14 +41,22 @@ public abstract class EnemyController : MonoBehaviour
         _rend = GetComponentInChildren<Renderer>();
         _meshRenderer = GetComponentInChildren<MeshRenderer>();
         _collider = GetComponent<CapsuleCollider>();
+        _agent = GetComponent<NavMeshAgent>();
+        _agent.speed = data.GetSpeed();
+        _agent.stoppingDistance = data.GetAttackRange();
+        _focusPlayer = data.GetFocusPlayer();
+        healthpoint = data.GetHealth();
+        
+        stateRenderer = m_stateSystem.GetComponent<Renderer>();
+
+        player = PlayerController.Instance.gameObject;
+        
+        AddToEnemyManager();
     }
 
     // Start is called before the first frame update
     protected virtual void Start()
     {
-        player = PlayerController.Instance.gameObject;
-        AddToEnemyManager();
-        
         _rend.material.color = Color.white;
     }
 
@@ -52,16 +72,23 @@ public abstract class EnemyController : MonoBehaviour
 
     protected virtual void Chase()
     {
-        
+        _agent.SetDestination(player.transform.position);
+        stateRenderer.material.color = Color.yellow;
+        m_stateSystem.gameObject.SetActive(true);
     }
     
-    protected virtual void Attack(UnityAction OnAction, float delay = 0.5f)
+    // ReSharper disable Unity.PerformanceAnalysis
+    protected virtual void Attack()
     {
+        stateRenderer.material.color = Color.red;
+        m_stateSystem.gameObject.SetActive(true);
+        
         if (_canAttack)
         {
-            OnAction?.Invoke();
+            GameObject shot = Instantiate(m_bullet, m_gun.transform.position, Quaternion.identity);
+            shot.GetComponent<EnemyBulletController>().SetDirection(player.transform);
             _canAttack = false;
-            StartCoroutine(IAttackTimer(delay));
+            StartCoroutine(IAttackTimer());
         }
     }
 
@@ -95,9 +122,10 @@ public abstract class EnemyController : MonoBehaviour
         }
     }
 
-    private IEnumerator IAttackTimer(float delay = 0.5f)
+    private IEnumerator IAttackTimer()
     {
-        yield return new WaitForSeconds(delay);
+        LerpColor(_rend, Color.red, data.GetAttackSpeed());
+        yield return new WaitForSeconds(data.GetAttackSpeed());
         _canAttack = true;
         _rend.material.color = Color.white;
     }
@@ -143,6 +171,7 @@ public abstract class EnemyController : MonoBehaviour
     {
         Instantiate(explosion, transform.position, Quaternion.identity);
         _collider.enabled = false;
+        m_stateSystem.gameObject.SetActive(false);
     }
 
     // Lerp color of the enemy
@@ -172,14 +201,13 @@ public abstract class EnemyController : MonoBehaviour
 
     #region Guizmos
     
-    #if UNITY_EDITOR
-
-    protected virtual void OnDrawGizmosSelected()
+    private void OnDrawGizmosSelected()
     {
-        
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, data.GetRangeDetection());
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, data.GetAttackRange());
     }
-
-    #endif
-
+    
     #endregion
 }

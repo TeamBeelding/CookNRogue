@@ -3,34 +3,21 @@ using UnityEngine;
 
 public class ChargingEnemy : EnemyController
 {
-    private Coroutine _castingCoroutine;
-    private Coroutine _waitingCoroutine;
+    private Coroutine castingCoroutine;
+    private Coroutine waitingCoroutine;
     private RaycastHit _hit;
 
-    private bool _isCharging = false;
-    private bool _canShowingRedLine = false;
+    private bool isCharging = false;
+    private bool canShowingRedLine = false;
     
-    private Vector3 _direction;
-    private Rigidbody _rigidbody;
+    private Vector3 direction;
+    private Rigidbody rigidbody;
 
     [SerializeField] private GameObject _redLine;
     [SerializeField] private EnemyDashingData _data;
     
     private Material _redLineMaterial;
     private bool _isRedLineFullVisible = false;
-
-    [SerializeField]
-    private GameObject visual;
-    
-    public enum State
-    {
-        Casting,
-        Waiting,
-        Dashing,
-        Dying
-    }
-
-    public State state;
         
     private void Awake()
     {
@@ -39,12 +26,12 @@ public class ChargingEnemy : EnemyController
     }
     
     // Start is called before the first frame update
-    protected override void Start()
+    private void Start()
     {
-        base.Start();
+        rigidbody = GetComponent<Rigidbody>();
         
-        _rigidbody = GetComponent<Rigidbody>();
         state = State.Casting;
+        
         _redLineMaterial = _redLine.GetComponent<Renderer>().material;
     }
 
@@ -57,6 +44,16 @@ public class ChargingEnemy : EnemyController
     {
         return false;
     }
+
+    public enum State
+    {
+        Casting,
+        Waiting,
+        Dashing,
+        Dying
+    }
+
+    public State state;
 
     public State GetState()
     {
@@ -96,21 +93,21 @@ public class ChargingEnemy : EnemyController
     /// </summary>
     private void Dashing()
     {
-        _isCharging = true;
-        StopCoroutine(_castingCoroutine);
+        isCharging = true;
+        StopCoroutine(castingCoroutine);
         
         ChargingToPlayer();
     }
     
     private void StopMoving()
     {
-        _direction = Vector3.zero;
-
-        _rigidbody.velocity = Vector3.zero;
-        _rigidbody.angularVelocity = Vector3.zero;
+        rigidbody.velocity = Vector3.zero;
+        rigidbody.angularVelocity = Vector3.zero;
 
         StopCoroutine(ICanShowingRedLine());
-        _canShowingRedLine = false;
+        canShowingRedLine = false;
+        
+        direction = Vector3.zero;
     }
 
     /// <summary>
@@ -119,9 +116,9 @@ public class ChargingEnemy : EnemyController
     /// </summary>
     private void Casting()
     {
-        _isCharging = false;
-        _castingCoroutine = StartCoroutine(ICasting());
-        visual.transform.LookAt(new Vector3(player.transform.position.x, visual.transform.position.y, player.transform.position.z));
+        isCharging = false;
+        castingCoroutine = StartCoroutine(ICasting());
+        transform.LookAt(player.transform);
     }
     
     /// <summary>
@@ -129,16 +126,16 @@ public class ChargingEnemy : EnemyController
     /// </summary>
     private void WaitingAnotherDash()
     {
-        StopMoving();
-
-        _isCharging = false;
+        isCharging = false;
         _isRedLineFullVisible = false;
-        _canShowingRedLine = false;
-
-        if (_castingCoroutine != null)
-            StopCoroutine(_castingCoroutine);
+        canShowingRedLine = false;
         
-        _waitingCoroutine = StartCoroutine(IWaiting());
+        StopMoving();
+        
+        if (castingCoroutine != null)
+            StopCoroutine(castingCoroutine);
+        
+        waitingCoroutine = StartCoroutine(IWaiting());
     }
     
     /// <summary>
@@ -173,8 +170,8 @@ public class ChargingEnemy : EnemyController
     /// </summary>
     private void StopCasting()
     {
-        if (_castingCoroutine != null)
-            StopCoroutine(_castingCoroutine);
+        if (castingCoroutine != null)
+            StopCoroutine(castingCoroutine);
     }
     
     
@@ -184,7 +181,7 @@ public class ChargingEnemy : EnemyController
     /// <returns></returns>
     private Vector3 GetPlayerDirection()
     {
-        _isCharging = true;
+        isCharging = true;
         Vector3 direction = (player.transform.position - transform.position).normalized;
         direction.y = 0;
         
@@ -193,7 +190,7 @@ public class ChargingEnemy : EnemyController
     
     private void ChargingToPlayer()
     {
-        transform.position += _direction * (_data.GetSpeed() * Time.deltaTime);
+        transform.position += direction * (_data.GetSpeed() * Time.deltaTime);
     }
 
     private IEnumerator ICasting()
@@ -212,15 +209,15 @@ public class ChargingEnemy : EnemyController
         
         yield return new WaitForSeconds(_data.GetRemainingForDash());
 
-        if (!_isCharging)
-            _direction = GetPlayerDirection();
+        if (!isCharging)
+            direction = GetPlayerDirection();
         
         SetState(State.Dashing);
     }
     
     private IEnumerator ICanShowingRedLine()
     {
-        if (_canShowingRedLine)
+        if (canShowingRedLine)
             yield break;
         
         HideRedLine();
@@ -253,7 +250,7 @@ public class ChargingEnemy : EnemyController
     {
         if (_isRedLineFullVisible) return;
         
-        _canShowingRedLine = true;
+        canShowingRedLine = true;
         _redLineMaterial.SetFloat("_Alpha", 0.85f);
     }
     
@@ -276,8 +273,8 @@ public class ChargingEnemy : EnemyController
         if (other.gameObject.CompareTag("Player"))
         {
             StopCasting();
-            SetState(State.Waiting);
             other.gameObject.GetComponent<PlayerController>().TakeDamage(_data.GetDamage());
+            SetState(State.Waiting);
         }
     }
     
