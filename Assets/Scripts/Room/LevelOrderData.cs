@@ -25,6 +25,8 @@ public class LevelOrderData : ScriptableObject
     }
 
     // Name
+    private string[] _hubNames;
+
     private string[] _roomNames;
 
     private string[] _corridorNames;
@@ -51,16 +53,24 @@ public class LevelOrderData : ScriptableObject
     private void OnEnable()
     {
         _levelNames = new List<string[]>();
-        _roomTypes = new string[] { "Room", "Corridor", "Shop", "Final" };
+        _roomTypes = new string[] { "Hub", "Room", "Corridor", "Shop", "Final" };
         InitLevelNames();
     }
 
     public void InitLevelNames()
     {
+
+        _hubNames = new string[LevelLists.HubList.Length];
         _roomNames = new string[LevelLists.RoomList.Length];
         _corridorNames = new string[LevelLists.CorridorList.Length];
         _shopNames = new string[LevelLists.ShopList.Length];
         _finalNames = new string[LevelLists.FinalList.Length];
+
+        for (int i = 0; i < LevelLists.HubList.Length; i++)
+        {
+            _hubNames[i] = LevelLists.HubList[i].name;
+        }
+        _levelNames.Add(_hubNames);
 
         for (int i = 0; i < LevelLists.RoomList.Length; i++)
         {
