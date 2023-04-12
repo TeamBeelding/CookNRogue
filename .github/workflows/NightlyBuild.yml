@@ -20,7 +20,7 @@ jobs:
 
     steps:
       - name: Fix ownership
-        run: echo ${{ secrets.USER_PASSWORD }} | sudo -S chown -R github:github .
+        run: echo ${{ secrets.USER_PASSWORD }} | sudo -S chown -R user:user .
       
       - uses: actions/checkout@v3
         with:
@@ -43,7 +43,7 @@ jobs:
           targetPlatform: ${{ matrix.targetPlatform }}
           
       - name: Fix ownership
-        run: echo ${{ secrets.USER_PASSWORD }} | sudo -S chown -R github:github .
+        run: echo ${{ secrets.USER_PASSWORD }} | sudo -S chown -R user:user .
         
       - name: Create info file
         run: touch build/${{ matrix.targetPlatform }}/${{ github.event.repository.name }}-nightly-develop-${{ matrix.targetPlatform }}
