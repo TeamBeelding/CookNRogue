@@ -12,6 +12,13 @@ public class LevelListData : ScriptableObject
     [Header("Statistics")]
 
     [SerializeField]
+    private GameObject[] _hubList;
+    public GameObject[] HubList
+    {
+        get => _hubList;
+    }
+
+    [SerializeField]
     private GameObject[] _roomList;
     public GameObject[] RoomList
     {
@@ -38,4 +45,5 @@ public class LevelListData : ScriptableObject
     {
         get => _finalList;
     }
+
 }
