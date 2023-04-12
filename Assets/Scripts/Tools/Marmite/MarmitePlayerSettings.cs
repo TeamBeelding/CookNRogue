@@ -36,6 +36,14 @@ public class MarmitePlayerSettings
     public float moveDrag;
     [BoxGroup("PlayerController")]
     [EnableIf("m_playerController")]
+    [CustomValueDrawer("SetDashDuration")]
+    public float dashDuration;
+    [BoxGroup("PlayerController")]
+    [EnableIf("m_playerController")]
+    [CustomValueDrawer("SetDashForce")]
+    public float dashForce;
+    [BoxGroup("PlayerController")]
+    [EnableIf("m_playerController")]
     [CustomValueDrawer("SetInteractionRange")]
     public float interactionRange;
     
@@ -94,6 +102,8 @@ public class MarmitePlayerSettings
         moveSpeed = m_playerController.m_moveSpeed;
         maxMoveSpeed = m_playerController.m_maxMoveSpeed;
         moveDrag = m_playerController.m_moveDrag;
+        dashDuration = m_playerController.m_dashDuration;
+        dashForce = m_playerController.m_dashForce;
         interactionRange = m_playerController.m_interactionRange;
         
         m_playerAttack = GameObject.FindObjectOfType<PlayerAttack>();
@@ -139,6 +149,16 @@ public class MarmitePlayerSettings
     {
         if (m_playerController == null) return EditorGUILayout.FloatField(label, 0);;
         return EditorGUILayout.FloatField(label, m_playerController.m_moveDrag = value);
+    }
+    private float SetDashDuration(float value, GUIContent label)
+    {
+        if (m_playerController == null) return EditorGUILayout.FloatField(label, 0);;
+        return EditorGUILayout.FloatField(label, m_playerController.m_dashDuration = value);
+    }
+    private float SetDashForce(float value, GUIContent label)
+    {
+        if (m_playerController == null) return EditorGUILayout.FloatField(label, 0);;
+        return EditorGUILayout.FloatField(label, m_playerController.m_dashForce = value);
     }
     private float SetInteractionRange(float value, GUIContent label)
     {
