@@ -6,9 +6,10 @@ public class MinimoyzController : EnemyController
 {
     [SerializeField] private MinimoyzData _data;
     [SerializeField] private NavMeshAgent _agent;
-    
+
     private Coroutine _castingCoroutine;
     private Coroutine _attackCoroutine;
+    private bool shouldChaseAndAttack;
     
     public enum State
     {
@@ -97,7 +98,11 @@ public class MinimoyzController : EnemyController
         if (Vector3.Distance(transform.position, player.transform.position) <= _data.GetFocusRange())
         {
             _focusPlayer = true;
-            state = State.Chase;
+            
+            if (shouldChaseAndAttack)
+                state = State.ChaseAndAttack;
+            else
+                state = State.Chase;
         }
         else
         {
@@ -106,7 +111,10 @@ public class MinimoyzController : EnemyController
 
         if (Vector3.Distance(transform.position, player.transform.position) <= _data.GetAttackRange())
         {
-            state = State.Attack;
+            if (shouldChaseAndAttack)
+                state = State.ChaseAndAttack;
+            else
+                state = State.Attack;
         }
         else
         {
@@ -154,8 +162,6 @@ public class MinimoyzController : EnemyController
         if (_attackCoroutine == null)
             _attackCoroutine = StartCoroutine(ISettingAttack());
         
-        HitPlayer();
-
         IEnumerator ISettingAttack()
         {
             yield return new WaitForSeconds(0.4f);
@@ -163,14 +169,22 @@ public class MinimoyzController : EnemyController
             if (Vector3.Distance(transform.position, player.transform.position) > _data.GetAttackRange())
             {
                 CancelCast();
+                _attackCoroutine = null;
                 SetState(State.Chase);
             }
 
             yield return new WaitForSeconds(0.5f);
-
+            
             if (Vector3.Distance(transform.position, player.transform.position) > _data.GetAttackRange())
             {
+                shouldChaseAndAttack = true;
+                _attackCoroutine = null;
                 SetState(State.ChaseAndAttack);
+            }
+            else
+            {
+                _attackCoroutine = null;
+                HitPlayer();
             }
         }
     }
@@ -197,7 +211,10 @@ public class MinimoyzController : EnemyController
         Chase();
         
         if (Vector3.Distance(transform.position, player.transform.position) <= _data.GetAttackRange())
+        {
             HitPlayer();
+            shouldChaseAndAttack = false;
+        }
     }
     
     public override void TakeDamage(float damage)
