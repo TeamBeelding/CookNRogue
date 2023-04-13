@@ -159,7 +159,7 @@ namespace Enemy.Slime
             return new Vector3(x, y, z);
         }
     
-        public override void TakeDamage(float damage)
+        public override void TakeDamage(float damage, bool isCritical = false)
         {
             base.TakeDamage(damage);
         

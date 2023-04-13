@@ -10,7 +10,6 @@ public class Knockback : IIngredientEffects
     //EFFET LORS DU SHOOT
     public void EffectOnShoot(Vector3 Position, GameObject bullet)
     {
-        Debug.Log("KnockbackShootEffect");
     }
 
     //EFFET LORS DE LA COLLISION
@@ -24,6 +23,5 @@ public class Knockback : IIngredientEffects
             }
         }
         
-        Debug.Log("KnockbackHitEffect");
     }
 }

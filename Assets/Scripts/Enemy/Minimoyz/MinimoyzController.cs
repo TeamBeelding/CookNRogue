@@ -217,7 +217,7 @@ public class MinimoyzController : EnemyController
         }
     }
     
-    public override void TakeDamage(float damage)
+    public override void TakeDamage(float damage, bool isCritical = false)
     {
         base.TakeDamage(damage);
         

@@ -13,23 +13,23 @@ public class AOE : IIngredientEffects
     [SerializeField] float m_AOETick;
     [SerializeField] float m_AOESlowEnnemies;
     [SerializeField] float m_AOESSpeedPlayer;
+    [SerializeField] LayerMask _mask;
 
     //EFFET LORS DU SHOOT
     public void EffectOnShoot(Vector3 Position, GameObject bullet)
     {
-        Debug.Log("AOEShootEffect");
     }
 
     //EFFET LORS DE LA COLLISION
     public void EffectOnHit(Vector3 Position,GameObject HitObject, Vector3 direction)
     {
-        Debug.Log("AOEOnHitEffect");
         RaycastHit hit;
-        
-        if (Physics.Raycast(Position - (direction), Vector3.down, out hit, Mathf.Infinity))
+
+        if (Physics.Raycast(Position - (direction), Vector3.down,out hit,Mathf.Infinity, _mask))
         {
             //Debug.Log(hit.transform.name);
             GameObject instancedObj = GameObject.Instantiate(ZONE, hit.point, Quaternion.identity) as GameObject;
+            instancedObj.transform.localScale = Vector3.one * (m_AOERadius / 2);
             UnityEngine.Object.Destroy(instancedObj, m_AOEDuration);
         }
  

@@ -17,6 +17,9 @@ public class PlayerController : MonoBehaviour
     internal float m_moveSpeed = 5f;
     [SerializeField]
     internal float m_maxMoveSpeed = 5f;
+
+    [SerializeField] internal float m_dashDuration = .2f;
+    [SerializeField] internal float m_dashForce = 2f;
     [SerializeField]
     internal float m_moveDrag = 1f;
 
@@ -46,6 +49,9 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField]
     private GameObject pauseMenu;
+
+    private bool m_isDashing = false;
+    private Vector3 m_dashDirection = Vector2.zero;
     
     private bool m_isGamePaused = false;
 
@@ -130,6 +136,7 @@ public class PlayerController : MonoBehaviour
         _playerActions.Default_PlayerActions.Move.canceled += Move_Canceled;
         _playerActions.Default_PlayerActions.Aim.performed += Aim_Performed;
         _playerActions.Default_PlayerActions.Aim.canceled += Aim_Canceled;
+        _playerActions.Default_PlayerActions.Dash.performed += Dash;
         _playerActions.Default_PlayerActions.Craft.performed += Craft;
         _playerActions.Default_PlayerActions.MoveInventorySlotLeft.performed += MoveInventorySlotLeft;
         _playerActions.Default_PlayerActions.MoveInventorySlotRight.performed += MoveInventorySlotRight;
@@ -195,31 +202,44 @@ public class PlayerController : MonoBehaviour
 
         #region Movement
         //Null Input Check
-        if (_moveInputValue.magnitude <= 0)
+        if(!m_isDashing)
         {
-            //Stop if input is null
-            _rb.velocity = Vector3.zero;
+            if (_moveInputValue.magnitude <= 0)
+            {
+                //Stop if input is null
+                _rb.velocity = Vector3.zero;
+            }
+            else
+            {
+                //Move Player
+                Vector3 moveInputDir = relativeForward * _moveInputValue.y + relativeRight * _moveInputValue.x;
+                moveInputDir = moveInputDir.normalized;
+                float speed = m_moveSpeed * _moveInputValue.sqrMagnitude;
+
+                Move(moveInputDir, speed);
+
+                //Rotate model if player is not aiming
+                if (!_isAiming)
+                {
+                    Rotate(moveInputDir);
+
+                    //Set Aiming Variables
+                    _aimDirection = moveInputDir;
+                }
+            }
         }
         else
         {
-            //Move Player
-            Vector3 moveInputDir = relativeForward * _moveInputValue.y + relativeRight * _moveInputValue.x;
-            moveInputDir = moveInputDir.normalized;
-
-            float speed = m_moveSpeed * _moveInputValue.sqrMagnitude;
-
-            Move(moveInputDir, speed);
-
-            //Rotate model if player is not aiming
-            if (!_isAiming)
+            if (m_dashDirection == Vector3.zero)
             {
-                Rotate(moveInputDir);
-
-                //Set Aiming Variables
-                _aimDirection = moveInputDir;
+                m_dashDirection = m_model.transform.forward;
+                StartCoroutine(ICasting());
+            }
+            else
+            {
+                Move(m_dashDirection, m_moveSpeed * m_dashForce);
             }
         }
-
 
         #endregion
 
@@ -297,11 +317,24 @@ public class PlayerController : MonoBehaviour
         _rb.AddForce(100f * speed * Time.deltaTime * direction, ForceMode.Force);
         _rb.drag = m_moveDrag;
 
-        if (_rb.velocity.magnitude > m_maxMoveSpeed)
+        if (!m_isDashing && _rb.velocity.magnitude > m_maxMoveSpeed)
         {
             _rb.velocity = new Vector3(direction.x, _rb.velocity.y, direction.z) * m_maxMoveSpeed;
         }
     }
+
+    private void Dash(InputAction.CallbackContext context)
+    {
+        m_isDashing = true;
+    }
+
+    private IEnumerator ICasting()
+    {
+        yield return new WaitForSeconds(m_dashDuration);
+        m_isDashing = false;
+        m_dashDirection = Vector2.zero;
+    }
+    
     #endregion
 
     #region Aim
@@ -340,7 +373,7 @@ public class PlayerController : MonoBehaviour
         _aimInputValue = Vector2.zero;
         _aimMagnitude = 0f;
 
-        m_aimArrow.SetActive(false);
+        //m_aimArrow.SetActive(false);
     }
 
     #endregion
@@ -401,13 +434,13 @@ public class PlayerController : MonoBehaviour
         if (m_currentHealthValue <= 0)
         {
             m_currentHealthValue = m_maxHealthValue;
-            RoomManager.instance.LoadRandomLevel();
+            RoomManager.instance.RestartLevel();
         }
     }
 
     void Spawn()
     {
-        transform.position = _roomManager.SpawnPoint.position;
+        transform.position = _roomManager.m_spawnPoint.position;
     }
 
     void Quit(InputAction.CallbackContext context)

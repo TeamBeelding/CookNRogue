@@ -30,7 +30,7 @@ public class EnterDoor : MonoBehaviour
     {
         if (other.CompareTag("Player") && !door.activeInHierarchy)
         {
-            RoomManager.instance.LoadRandomLevel();
+            RoomManager.instance.LoadNextLevel();
         }
     }
     private void StartOpenDoor()

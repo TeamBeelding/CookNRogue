@@ -75,6 +75,7 @@ public class EnemyManager : MonoBehaviour
     }
 }
 
+
 #if UNITY_EDITOR
 [CustomEditor(typeof(EnemyManager))]
 public class EnemyManagerEditor : Editor

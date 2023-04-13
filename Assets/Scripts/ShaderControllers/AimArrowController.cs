@@ -6,11 +6,19 @@ public class AimArrowController : MonoBehaviour
 {
 
     [SerializeField]
-    float aimArrowSpeed = 0.1f;
+    private float m_aimArrowSpeed = 7f;
     [SerializeField]
-    float aimArrowMaxSize = 1;
+    private float m_aimArrowMaxSize = 1.1f;
     [SerializeField]
-    float zOffset = -1;
+    private float m_zOffset = -0.1f;
+
+    private PlayerController _playerController;
+
+
+    private void Start()
+    {
+        _playerController = gameObject.GetComponentInParent<PlayerController>();
+    }
 
     void OnDisable()
     {
@@ -20,19 +28,40 @@ public class AimArrowController : MonoBehaviour
         transform.localPosition = new Vector3(0, 0.01f, 0);
     }
 
-    void OnEnable()
+
+    private void Update()
     {
-        StartCoroutine(IAimArrow());
+        if (transform.localScale.z <= m_aimArrowMaxSize * _playerController.PlayerAimMagnitude)
+        {
+            transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, Mathf.Lerp(transform.localScale.z, transform.localScale.z + _playerController.PlayerAimMagnitude, m_aimArrowSpeed * Time.deltaTime));
+            transform.localPosition = new Vector3(0, 0.001f, 4.9f * transform.localScale.z + m_zOffset);
+        }
+        else if (transform.localScale.z > m_aimArrowMaxSize * _playerController.PlayerAimMagnitude)
+        {
+            transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, Mathf.Lerp(transform.localScale.z, 0, m_aimArrowSpeed * 2 * Time.deltaTime));
+            transform.localPosition = new Vector3(0, 0.001f, 4.9f * transform.localScale.z + m_zOffset);
+        }
+
+        //if (_playerController.AimInputValue <= 0)
+        //{
+        //    gameObject.SetActive(false);
+        //}
     }
+
+    //void OnEnable()
+    //{
+    //    StartCoroutine(IAimArrow());
+    //}
 
     IEnumerator IAimArrow()
     {
-        while (transform.localScale.z < aimArrowMaxSize)
+        //Debug.Log(_playerController.PlayerAimMagnitude);
+        while (transform.localScale.z < m_aimArrowMaxSize * _playerController.PlayerAimMagnitude)
         {
             transform.localScale = new Vector3(transform.localScale.x,
                                                transform.localScale.y,
-                                               transform.localScale.z + aimArrowSpeed * Time.deltaTime);
-            transform.localPosition = new Vector3(0, 0.01f, 4.9f * transform.localScale.z + zOffset);
+                                               transform.localScale.z + m_aimArrowSpeed * Time.deltaTime);
+            transform.localPosition = new Vector3(0, 0.01f, 4.9f * transform.localScale.z + m_zOffset);
             yield return null;
         }
         //_isAiming = false;
