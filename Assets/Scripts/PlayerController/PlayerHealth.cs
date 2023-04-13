@@ -5,13 +5,12 @@ using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
-    [SerializeField] int _health;
+    int _health;
     [SerializeField] int _maxHealth;
-    [SerializeField] RectTransform _heart;
-    [SerializeField] RectTransform _lifeContainer;
-    List<Image> _heartsRenderer = new List<Image>();
+    HeartBar _heartBar;
     private void Start()
     {
+        _heartBar = HeartBar.instance;
         HealthInit();
     }
     private void Update()
@@ -23,43 +22,43 @@ public class PlayerHealth : MonoBehaviour
     }
     public void HealthInit()
     {
+        //GUARDS
+        _maxHealth = Mathf.Abs(_maxHealth);
+        if (_maxHealth == 0)
+            _maxHealth = 6;
+
+        if(_maxHealth%2 !=0)
+            _maxHealth++;
+        
+        
+
         _health = _maxHealth;
+        _heartBar.InitBar(_health);
 
-        for (int i = 0; i < (_health / 2); i++)
-        {
-            RectTransform newHeart = Instantiate(_heart, _lifeContainer);
-            _heartsRenderer.Add(newHeart.GetComponent<Image>());
-        }
-
-        UpdateHealthVisual();
     }
 
     public void TakeDamage(int damage)
     {
+        if (damage <= 0)
+            return;
+
         _health -= damage;
-        UpdateHealthVisual();
+        _heartBar.UpdateHealthVisual(_health);
     }
 
-    public void UpdateHealthVisual()
+    public void Heal(int heal)
     {
-        for (int i = 1; i <= _heartsRenderer.Count;i++)
-        {
-            if ((i * 2) -1 <= (_health))
-            {
-                // FULL HEART
-                _heartsRenderer[i-1].color = Color.white;
+        if (heal <= 0)
+            return;
 
-                if((i * 2) - 1 == _health)
-                {
-                    // HALF HEART
-                    _heartsRenderer[i - 1].color = Color.grey;
-                }
-            }
-            else
-            {
-                // NO HEART
-                _heartsRenderer[i-1].color = Color.black;
-            }
-        }
+        _health += heal;
+
+        _heartBar.UpdateHealthVisual(_health);
     }
+
+    private void Reset()
+    {
+        _maxHealth = 6;
+    }
+
 }

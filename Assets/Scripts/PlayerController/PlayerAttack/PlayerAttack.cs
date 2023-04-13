@@ -98,7 +98,6 @@ public class PlayerAttack : MonoBehaviour
 
     IEnumerator shootbullets(float time)
     {
-
         for(int i = 0; i< _ProjectileNbr; i++)
         {
             ConeShots coneShots = null;
@@ -133,7 +132,6 @@ public class PlayerAttack : MonoBehaviour
                 _projectileBehaviour._lightDamage += _lightDamage;
                 _projectileBehaviour._heavyDamage += _heavyDamage;
                 _projectileBehaviour._direction = Quaternion.Euler(0, totalAngle, 0) * _playerController.PlayerAimDirection;
-
 
 
                 foreach (IIngredientEffects effect in _effects)
@@ -192,6 +190,23 @@ public class PlayerAttack : MonoBehaviour
         _heavyDamage = 0;
         _lightAttackDelay = 0;
         _lightDamage = 0;
+    }
+
+    public void Reset()
+    {
+        _ProjectileNbr= 1;
+        _size = 1;
+        _speed = 1;
+        _drag = 0;
+        _heavyAttackDelay = 0;
+        _heavyDamage = 1;
+        _lightAttackDelay = 0;
+        _lightDamage = 1;
+        _shootCooldown = 0.5f;
+
+        //A CHANGER DANS LE FUTUR
+        _muzzle = GameObject.Find("CharacterModel").transform;
+        m_knockbackScript = GameObject.Find("CharacterModel").GetComponent<PlayerKnockback>();
     }
 
 }

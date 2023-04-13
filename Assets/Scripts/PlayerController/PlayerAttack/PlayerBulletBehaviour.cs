@@ -180,5 +180,10 @@ public class PlayerBulletBehaviour : MonoBehaviour
         }
     }
 
-    
+    private void Reset()
+    {
+        _speed= 1;
+        _drag = 1;
+    }
+
 }
