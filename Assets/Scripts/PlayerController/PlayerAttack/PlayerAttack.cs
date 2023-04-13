@@ -192,4 +192,21 @@ public class PlayerAttack : MonoBehaviour
         _lightDamage = 0;
     }
 
+    public void Reset()
+    {
+        _ProjectileNbr= 1;
+        _size = 1;
+        _speed = 1;
+        _drag = 0;
+        _heavyAttackDelay = 0;
+        _heavyDamage = 1;
+        _lightAttackDelay = 0;
+        _lightDamage = 1;
+        _shootCooldown = 0.5f;
+
+        //A CHANGER DANS LE FUTUR
+        _muzzle = GameObject.Find("CharacterModel").transform;
+        m_knockbackScript = GameObject.Find("CharacterModel").GetComponent<PlayerKnockback>();
+    }
+
 }

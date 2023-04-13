@@ -56,4 +56,9 @@ public class PlayerHealth : MonoBehaviour
         _heartBar.UpdateHealthVisual(_health);
     }
 
+    private void Reset()
+    {
+        _maxHealth = 6;
+    }
+
 }
