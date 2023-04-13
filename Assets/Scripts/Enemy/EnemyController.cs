@@ -13,7 +13,7 @@ public abstract class EnemyController : MonoBehaviour
     private MeshRenderer _meshRenderer;
     private CapsuleCollider _collider;
     
-    private IEnumerator colorCoroutine;
+    private IEnumerator _colorCoroutine;
     
     protected bool _focusPlayer = false;
     private bool _canAttack = true;
@@ -72,26 +72,33 @@ public abstract class EnemyController : MonoBehaviour
     {
         damage = Mathf.Abs(damage);
         healthpoint -= damage;
+
+        if (healthpoint > 0)
+        {
+            StartCoroutine(IColorationFeedback());
+        }
+        else
+        {
+            Dying();
+        }
         
-        StartCoroutine(IColorationFeedback());
+        // Color the enemy red for a short time to indicate that he has been hit
+        IEnumerator IColorationFeedback()
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                _meshRenderer.enabled = false;
+                yield return new WaitForSeconds(0.2f);
+                _meshRenderer.enabled = true;
+                yield return new WaitForSeconds(0.2f);
+            }
+        }
     }
 
     protected virtual void Dying()
     {
         DestroyEffect();
         Destroy(gameObject);
-    }
-    
-    // Color the enemy red for a short time to indicate that he has been hit
-    private IEnumerator IColorationFeedback()
-    {
-        for (int i = 0; i < 5; i++)
-        {
-            _meshRenderer.enabled = false;
-            yield return new WaitForSeconds(0.2f);
-            _meshRenderer.enabled = true;
-            yield return new WaitForSeconds(0.2f);
-        }
     }
 
     private IEnumerator IAttackTimer(float delay = 0.5f)
@@ -147,9 +154,9 @@ public abstract class EnemyController : MonoBehaviour
     // Lerp color of the enemy
     private void LerpColor(Renderer r, Color color, float t)
     {
-        colorCoroutine = ILerpColorCoroutine(r, color, t);
-        StopCoroutine(colorCoroutine);
-        StartCoroutine(colorCoroutine);
+        _colorCoroutine = ILerpColorCoroutine(r, color, t);
+        StopCoroutine(_colorCoroutine);
+        StartCoroutine(_colorCoroutine);
     }
     
     private IEnumerator ILerpColorCoroutine(Renderer r, Color color, float t)

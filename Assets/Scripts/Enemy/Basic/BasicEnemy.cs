@@ -157,7 +157,7 @@ public class BasicEnemy : EnemyController
 
     public override void TakeDamage(float damage = 1, bool isCritical = false)
     {
-        base.TakeDamage();
+        base.TakeDamage(damage, isCritical);
         
         if (state == State.Neutral)
             state = State.Chase;

@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class ChargingEnemy : EnemyController
 {
@@ -157,15 +158,10 @@ public class ChargingEnemy : EnemyController
     /// <param name="damage"></param>
     public override void TakeDamage(float damage = 1, bool isCritical = false)
     {
-        base.TakeDamage();
+        base.TakeDamage(damage, isCritical);
 
         StopCasting();
         SetState(State.Casting);
-        
-        if (healthpoint <= 0)
-        {
-            state = State.Dying;
-        }
     }
 
     /// <summary>
@@ -176,7 +172,6 @@ public class ChargingEnemy : EnemyController
         if (_castingCoroutine != null)
             StopCoroutine(_castingCoroutine);
     }
-    
     
     /// <summary>
     /// Return the direction to player
@@ -198,10 +193,6 @@ public class ChargingEnemy : EnemyController
 
     private IEnumerator ICasting()
     {
-        // yield return new WaitForSeconds(_data.GetTimeBeforeShowingRedLine());
-        //
-        // ShowLightRedLine();
-
         yield return StartCoroutine(ICanShowingRedLine());
         
         ShowLightRedLine();
