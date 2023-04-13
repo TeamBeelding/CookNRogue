@@ -23,6 +23,10 @@ public class PlayerHealth : MonoBehaviour
     }
     public void HealthInit()
     {
+        _maxHealth = Mathf.Abs(_maxHealth);
+        if (_maxHealth == 0)
+            _maxHealth = 6;
+
         _health = _maxHealth;
 
         for (int i = 0; i < (_health / 2); i++)
@@ -36,7 +40,19 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        if (damage <= 0)
+            return;
+
         _health -= damage;
+        UpdateHealthVisual();
+    }
+
+    public void Heal(int heal)
+    {
+        if (heal <= 0)
+            return;
+
+        _health += heal;
         UpdateHealthVisual();
     }
 
@@ -62,4 +78,5 @@ public class PlayerHealth : MonoBehaviour
             }
         }
     }
+
 }
