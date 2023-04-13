@@ -98,6 +98,15 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Dash"",
+                    ""type"": ""Button"",
+                    ""id"": ""bad0678d-5049-4437-9481-6d35e8112f76"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -331,6 +340,17 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                     ""action"": ""Quit"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""715b5077-20f8-4990-ae12-e62cdf900623"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Dash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -414,7 +434,7 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
         m_Default_PlayerActions_MoveInventorySlotLeft = m_Default_PlayerActions.FindAction("MoveInventorySlotLeft", throwIfNotFound: true);
         m_Default_PlayerActions_MoveInventorySlotRight = m_Default_PlayerActions.FindAction("MoveInventorySlotRight", throwIfNotFound: true);
         m_Default_PlayerActions_Quit = m_Default_PlayerActions.FindAction("Quit", throwIfNotFound: true);
-
+        m_Default_PlayerActions_Dash = m_Default_PlayerActions.FindAction("Dash", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Pause = m_UI.FindAction("Pause", throwIfNotFound: true);
@@ -485,6 +505,7 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Default_PlayerActions_MoveInventorySlotLeft;
     private readonly InputAction m_Default_PlayerActions_MoveInventorySlotRight;
     private readonly InputAction m_Default_PlayerActions_Quit;
+    private readonly InputAction m_Default_PlayerActions_Dash;
     public struct Default_PlayerActionsActions
     {
         private @PlayerActions m_Wrapper;
@@ -497,6 +518,7 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
         public InputAction @MoveInventorySlotLeft => m_Wrapper.m_Default_PlayerActions_MoveInventorySlotLeft;
         public InputAction @MoveInventorySlotRight => m_Wrapper.m_Default_PlayerActions_MoveInventorySlotRight;
         public InputAction @Quit => m_Wrapper.m_Default_PlayerActions_Quit;
+        public InputAction @Dash => m_Wrapper.m_Default_PlayerActions_Dash;
         public InputActionMap Get() { return m_Wrapper.m_Default_PlayerActions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -530,6 +552,9 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                 @Quit.started -= m_Wrapper.m_Default_PlayerActionsActionsCallbackInterface.OnQuit;
                 @Quit.performed -= m_Wrapper.m_Default_PlayerActionsActionsCallbackInterface.OnQuit;
                 @Quit.canceled -= m_Wrapper.m_Default_PlayerActionsActionsCallbackInterface.OnQuit;
+                @Dash.started -= m_Wrapper.m_Default_PlayerActionsActionsCallbackInterface.OnDash;
+                @Dash.performed -= m_Wrapper.m_Default_PlayerActionsActionsCallbackInterface.OnDash;
+                @Dash.canceled -= m_Wrapper.m_Default_PlayerActionsActionsCallbackInterface.OnDash;
             }
             m_Wrapper.m_Default_PlayerActionsActionsCallbackInterface = instance;
             if (instance != null)
@@ -558,6 +583,9 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                 @Quit.started += instance.OnQuit;
                 @Quit.performed += instance.OnQuit;
                 @Quit.canceled += instance.OnQuit;
+                @Dash.started += instance.OnDash;
+                @Dash.performed += instance.OnDash;
+                @Dash.canceled += instance.OnDash;
             }
         }
     }
@@ -623,6 +651,7 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
         void OnMoveInventorySlotLeft(InputAction.CallbackContext context);
         void OnMoveInventorySlotRight(InputAction.CallbackContext context);
         void OnQuit(InputAction.CallbackContext context);
+        void OnDash(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

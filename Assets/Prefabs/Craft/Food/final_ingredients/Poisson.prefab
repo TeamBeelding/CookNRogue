@@ -155,10 +155,14 @@ MonoBehaviour:
     - rid: 7565062741193129984
       type: {class: Ricochet, ns: , asm: Assembly-CSharp}
       data:
-        maxDistance: 10
-        _mask:
+        _maxDistance: 10
+        _sphereMask:
           serializedVersion: 2
-          m_Bits: 768
+          m_Bits: 503
+        _rayMask:
+          serializedVersion: 2
+          m_Bits: 1536
+        _ricochetCount: 1
 --- !u!54 &6178714104745003322
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -24,7 +24,7 @@ public class AOE : IIngredientEffects
     public void EffectOnHit(Vector3 Position,GameObject HitObject, Vector3 direction)
     {
         RaycastHit hit;
-        
+
         if (Physics.Raycast(Position - (direction), Vector3.down,out hit,Mathf.Infinity, _mask))
         {
             //Debug.Log(hit.transform.name);
