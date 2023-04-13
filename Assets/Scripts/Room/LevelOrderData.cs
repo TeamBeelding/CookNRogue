@@ -8,7 +8,7 @@ using UnityEngine.Serialization;
 [CreateAssetMenu(fileName = "LevelOrderList", menuName = "Level/LevelOrder")]
 public class LevelOrderData : ScriptableObject
 {
-    [Header("Statistics")]
+    [Header("Order")]
 
     [SerializeField]
     private LevelListData m_LevelLists;

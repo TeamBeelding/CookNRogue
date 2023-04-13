@@ -9,7 +9,7 @@ using UnityEngine.Serialization;
 [CreateAssetMenu(fileName = "LevelListData", menuName = "Level/LevelList")]
 public class LevelListData : ScriptableObject
 {
-    [Header("Statistics")]
+    [Header("All Levels")]
 
     [SerializeField]
     private GameObject[] _hubList;

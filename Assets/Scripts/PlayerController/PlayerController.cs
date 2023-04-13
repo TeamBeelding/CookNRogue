@@ -60,6 +60,9 @@ public class PlayerController : MonoBehaviour
         get => _instance;
     }
 
+    [SerializeField]
+    private PlayerAnimStates PlayerAnimStates;
+
     public Vector3 PlayerAimDirection
     {
         get
@@ -202,43 +205,43 @@ public class PlayerController : MonoBehaviour
 
         #region Movement
         //Null Input Check
-        if(!m_isDashing)
+        if(_moveInputValue.magnitude <= 0)
         {
-            if (_moveInputValue.magnitude <= 0)
+            //Stop if input is null
+            _rb.velocity = Vector3.zero;
+
+            PlayerAnimStates.animStates = PlayerAnimStates.playerAnimStates.IDLE;
+
+            if (_isAiming)
             {
-                //Stop if input is null
-                _rb.velocity = Vector3.zero;
-            }
-            else
-            {
-                //Move Player
-                Vector3 moveInputDir = relativeForward * _moveInputValue.y + relativeRight * _moveInputValue.x;
-                moveInputDir = moveInputDir.normalized;
-                float speed = m_moveSpeed * _moveInputValue.sqrMagnitude;
-
-                Move(moveInputDir, speed);
-
-                //Rotate model if player is not aiming
-                if (!_isAiming)
-                {
-                    Rotate(moveInputDir);
-
-                    //Set Aiming Variables
-                    _aimDirection = moveInputDir;
-                }
+                PlayerAnimStates.animStates = PlayerAnimStates.playerAnimStates.IDLEATTACK;
             }
         }
         else
         {
-            if (m_dashDirection == Vector3.zero)
+            //Move Player
+            Vector3 moveInputDir = relativeForward * _moveInputValue.y + relativeRight * _moveInputValue.x;
+            moveInputDir = moveInputDir.normalized;
+
+            float speed = m_moveSpeed * _moveInputValue.sqrMagnitude;
+
+            Move(moveInputDir, speed);
+
+            PlayerAnimStates.animStates = PlayerAnimStates.playerAnimStates.RUNNINGATTACK;
+
+            //Rotate model if player is not aiming
+            if (!_isAiming)
             {
-                m_dashDirection = m_model.transform.forward;
-                StartCoroutine(ICasting());
+                Rotate(moveInputDir);
+
+                PlayerAnimStates.animStates = PlayerAnimStates.playerAnimStates.RUNNING;
+                //Set Aiming Variables
+                _aimDirection = moveInputDir;
             }
-            else
-            {
-                Move(m_dashDirection, m_moveSpeed * m_dashForce);
-            }
+            //else
+            //{
+            //    Move(m_dashDirection, m_moveSpeed * m_dashForce);
+            //}
         }
 
         #endregion
@@ -317,10 +320,12 @@ public class PlayerController : MonoBehaviour
         _rb.AddForce(100f * speed * Time.deltaTime * direction, ForceMode.Force);
         _rb.drag = m_moveDrag;
 
-        if (!m_isDashing && _rb.velocity.magnitude > m_maxMoveSpeed)
-        {
-            _rb.velocity = new Vector3(direction.x, _rb.velocity.y, direction.z) * m_maxMoveSpeed;
-        }
+        _rb.velocity = new Vector3(direction.x, _rb.velocity.y, direction.z) * m_maxMoveSpeed;
+
+        //if (!m_isDashing && _rb.velocity.magnitude > m_maxMoveSpeed)
+        //{
+        //    _rb.velocity = new Vector3(direction.x, _rb.velocity.y, direction.z) * m_maxMoveSpeed;
+        //}
     }
 
     private void Dash(InputAction.CallbackContext context)

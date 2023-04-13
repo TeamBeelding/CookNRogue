@@ -11,8 +11,8 @@ public class PlayerAttack : MonoBehaviour
     public float _TimeBtwShotsRafale;
     PlayerBulletBehaviour _projectileBehaviour;
     public Transform _muzzle;
-    [SerializeField]
-    PlayerKnockback m_knockbackScript;
+    //[SerializeField]
+    //PlayerKnockback m_knockbackScript;
 
     [Header("Physic and Movements")]
     public float _size;
@@ -59,7 +59,7 @@ public class PlayerAttack : MonoBehaviour
         _curShootDelay = StartCoroutine(ShootDelay(_shootCooldown));
 
         //Animation
-        m_knockbackScript.StartKnockback();
+        //m_knockbackScript.StartKnockback();
 
     }
 
@@ -206,7 +206,7 @@ public class PlayerAttack : MonoBehaviour
 
         //A CHANGER DANS LE FUTUR
         _muzzle = GameObject.Find("CharacterModel").transform;
-        m_knockbackScript = GameObject.Find("CharacterModel").GetComponent<PlayerKnockback>();
+        //m_knockbackScript = GameObject.Find("CharacterModel").GetComponent<PlayerKnockback>();
     }
 
 }
