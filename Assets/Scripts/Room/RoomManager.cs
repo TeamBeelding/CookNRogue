@@ -10,8 +10,8 @@ public class RoomManager : MonoBehaviour
     [SerializeField]
     private LevelOrderData m_Levels;
 
-    public LevelOrderData Levels 
-    { 
+    public LevelOrderData Levels
+    {
         get => m_Levels;
     }
 
@@ -29,15 +29,15 @@ public class RoomManager : MonoBehaviour
     private bool m_loadSurface = false;
 
     [SerializeField]
-    private EnemyManager m_enemyManagerScript;  
+    private EnemyManager m_enemyManagerScript;
 
     public bool isHard;
 
     private GameObject _currentLevel;
 
     [SerializeField]
-    private GameObject m_player;
-    
+    private PlayerController m_player;
+
     public Transform m_spawnPoint;
 
     [SerializeField]
@@ -59,7 +59,8 @@ public class RoomManager : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        m_player = GameObject.FindGameObjectWithTag("Player");
+        m_player = m_player != null ? m_player : PlayerController.Instance;
+        //m_player = GameObject.FindGameObjectWithTag("Player");
         RestartLevel();
 
         m_navMeshSurface.BuildNavMesh();
@@ -69,7 +70,7 @@ public class RoomManager : MonoBehaviour
 
     private void Update()
     {
-        if (m_loadSurface) 
+        if (m_loadSurface)
         {
             m_navMeshSurface.UpdateNavMesh(m_navMeshSurface.navMeshData);
             m_navMeshSurface.BuildNavMesh();
@@ -101,7 +102,7 @@ public class RoomManager : MonoBehaviour
         PickFromType(m_currentLevelType);
     }
 
-    private void PickFromType(string currentLevelType) 
+    private void PickFromType(string currentLevelType)
     {
         switch (currentLevelType)
         {
@@ -146,10 +147,10 @@ public class RoomManager : MonoBehaviour
                 break;
         }
 
-        SpawnPlayer();
+        ExcractSpawnPoint(_currentLevel);
 
         OnRoomStart?.Invoke();
-        
+
         m_loadSurface = true;
     }
 
@@ -167,30 +168,39 @@ public class RoomManager : MonoBehaviour
         }
     }
 
-    private void LoadLevel(GameObject[] levels) 
+    private void LoadLevel(GameObject[] levels)
     {
 
         int rand = UnityEngine.Random.Range(0, levels.Length);
         _currentLevel = Instantiate(levels[rand], Vector3.zero, Quaternion.identity);
 
-        SpawnPlayer();
+        ExcractSpawnPoint(_currentLevel);
 
         OnRoomStart?.Invoke();
 
         m_loadSurface = true;
     }
 
-    private void SpawnPlayer() 
+    private void ExcractSpawnPoint(GameObject levels) 
     {
-        m_spawnPoint = GameObject.FindWithTag("PlayerSpawn")?.transform;
-        if (m_spawnPoint == null)
-        {
-            Debug.LogError("No player spawn found in level. Create a Transform GO with the \"PlayerSpawn\" tag.");
-            return;
-        }
-
-        m_player.transform.position = m_spawnPoint.position;
+        m_spawnPoint = levels.GetComponent<RoomInfo>().SpawnPoint.transform;
+        PlayerController.Instance.transform.position = m_spawnPoint.position;
     }
+
+    //private void SpawnPlayer() 
+    //{
+    //    m_spawnPoint = GameObject.FindWithTag("PlayerSpawn")?.transform;
+
+    //    Debug.Log(m_spawnPoint.gameObject.name);
+
+    //    if (m_spawnPoint == null)
+    //    {
+    //        Debug.LogError("No player spawn found in level. Create a Transform GO with the \"PlayerSpawn\" tag.");
+    //        return;
+    //    }
+
+    //    PlayerController.Instance.transform.position = m_spawnPoint.position;
+    //}
 
     private void Reset()
     {

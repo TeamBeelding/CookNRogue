@@ -440,7 +440,8 @@ public class PlayerController : MonoBehaviour
 
     void Spawn()
     {
-        transform.position = _roomManager.m_spawnPoint.position;
+        //transform.position = _roomManager.m_spawnPoint.position;
+        //Debug.Log("I have triggered");
     }
 
     void Quit(InputAction.CallbackContext context)
