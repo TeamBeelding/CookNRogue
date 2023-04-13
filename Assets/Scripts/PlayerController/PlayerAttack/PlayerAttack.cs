@@ -206,7 +206,7 @@ public class PlayerAttack : MonoBehaviour
 
         //A CHANGER DANS LE FUTUR
         _muzzle = GameObject.Find("CharacterModel").transform;
-        m_knockbackScript = GameObject.Find("CharacterModel").GetComponent<PlayerKnockback>();
+        //m_knockbackScript = GameObject.Find("CharacterModel").GetComponent<PlayerKnockback>();
     }
 
 }

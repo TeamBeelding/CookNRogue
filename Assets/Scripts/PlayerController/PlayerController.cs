@@ -205,19 +205,15 @@ public class PlayerController : MonoBehaviour
 
         #region Movement
         //Null Input Check
-        if(!m_isDashing)
+        if(_moveInputValue.magnitude <= 0)
         {
             //Stop if input is null
             _rb.velocity = Vector3.zero;
-            //m_animator.SetBool("runningBool", false);
-            //m_animator.SetBool("runningAttackBool", false);
-            //m_animator.SetBool("idleAttackBool", false);
 
             PlayerAnimStates.animStates = PlayerAnimStates.playerAnimStates.IDLE;
 
             if (_isAiming)
             {
-                //m_animator.SetBool("idleAttackBool", true);
                 PlayerAnimStates.animStates = PlayerAnimStates.playerAnimStates.IDLEATTACK;
             }
         }
@@ -231,10 +227,6 @@ public class PlayerController : MonoBehaviour
 
             Move(moveInputDir, speed);
 
-            //m_animator.SetBool("runningBool", true);
-            //m_animator.SetBool("runningAttackBool", true);
-            //m_animator.SetBool("idleAttackBool", false);
-
             PlayerAnimStates.animStates = PlayerAnimStates.playerAnimStates.RUNNINGATTACK;
 
             //Rotate model if player is not aiming
@@ -242,16 +234,14 @@ public class PlayerController : MonoBehaviour
             {
                 Rotate(moveInputDir);
 
-                //m_animator.SetBool("runningAttackBool", false);
-
                 PlayerAnimStates.animStates = PlayerAnimStates.playerAnimStates.RUNNING;
                 //Set Aiming Variables
                 _aimDirection = moveInputDir;
             }
-            else
-            {
-                Move(m_dashDirection, m_moveSpeed * m_dashForce);
-            }
+            //else
+            //{
+            //    Move(m_dashDirection, m_moveSpeed * m_dashForce);
+            //}
         }
 
         #endregion
@@ -330,10 +320,12 @@ public class PlayerController : MonoBehaviour
         _rb.AddForce(100f * speed * Time.deltaTime * direction, ForceMode.Force);
         _rb.drag = m_moveDrag;
 
-        if (!m_isDashing && _rb.velocity.magnitude > m_maxMoveSpeed)
-        {
-            _rb.velocity = new Vector3(direction.x, _rb.velocity.y, direction.z) * m_maxMoveSpeed;
-        }
+        _rb.velocity = new Vector3(direction.x, _rb.velocity.y, direction.z) * m_maxMoveSpeed;
+
+        //if (!m_isDashing && _rb.velocity.magnitude > m_maxMoveSpeed)
+        //{
+        //    _rb.velocity = new Vector3(direction.x, _rb.velocity.y, direction.z) * m_maxMoveSpeed;
+        //}
     }
 
     private void Dash(InputAction.CallbackContext context)
