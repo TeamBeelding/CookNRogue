@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
@@ -11,9 +9,8 @@ public class EnemyManager : MonoBehaviour
 
     [SerializeField]
     private List<EnemyController> _enemiesInLevel = new List<EnemyController>();
-
-    public int numOfEnemies;
-
+    
+    [SerializeField] private int numOfEnemies;
     public event Action OnAllEnnemiesKilled;
 
     public static EnemyManager Instance
@@ -77,7 +74,6 @@ public class EnemyManager : MonoBehaviour
         }
     }
 }
-
 
 #if UNITY_EDITOR
 [CustomEditor(typeof(EnemyManager))]
