@@ -1,8 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 [CreateAssetMenu(fileName = "SlimeData", menuName = "Enemy/SlimeData")]
 public class SlimeData : ScriptableObject
