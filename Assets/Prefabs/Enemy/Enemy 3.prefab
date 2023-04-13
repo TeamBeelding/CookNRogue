@@ -101,14 +101,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c8c9b8c080a57e4982b788b2d1a6ebb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _effectData: {fileID: 0}
+  _effectHandlers: []
+  explosion: {fileID: 466446929295881914, guid: 3fb8a478fb9325d40bc6d96484133a99,
+    type: 3}
   data: {fileID: 11400000, guid: b60022393c89da945915f6900ffd78c0, type: 2}
-  m_stateSystem: {fileID: 6450776092590197050}
+  _agent: {fileID: 490897484666988988}
   m_gun: {fileID: 490897484910083895}
   m_bullet: {fileID: 1646218331480662972, guid: c0ed5f524013bca43882139c5df1db26,
     type: 3}
-  explosion: {fileID: 466446929295881914, guid: 3fb8a478fb9325d40bc6d96484133a99,
-    type: 3}
+  m_stateSystem: {fileID: 6450776092590197050}
+  stateRenderer: {fileID: 0}
   state: 0
 --- !u!1 &490897484910083895
 GameObject:
