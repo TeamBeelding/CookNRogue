@@ -98,7 +98,6 @@ public class PlayerAttack : MonoBehaviour
 
     IEnumerator shootbullets(float time)
     {
-
         for(int i = 0; i< _ProjectileNbr; i++)
         {
             ConeShots coneShots = null;
@@ -133,7 +132,6 @@ public class PlayerAttack : MonoBehaviour
                 _projectileBehaviour._lightDamage += _lightDamage;
                 _projectileBehaviour._heavyDamage += _heavyDamage;
                 _projectileBehaviour._direction = Quaternion.Euler(0, totalAngle, 0) * _playerController.PlayerAimDirection;
-
 
 
                 foreach (IIngredientEffects effect in _effects)
