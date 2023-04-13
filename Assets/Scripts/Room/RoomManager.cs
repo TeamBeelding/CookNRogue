@@ -38,7 +38,6 @@ public class RoomManager : MonoBehaviour
     [SerializeField]
     private GameObject m_player;
     
-    [HideInInspector]
     public Transform m_spawnPoint;
 
     [SerializeField]
