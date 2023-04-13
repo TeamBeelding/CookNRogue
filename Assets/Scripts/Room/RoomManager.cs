@@ -145,8 +145,11 @@ public class RoomManager : MonoBehaviour
                 _currentLevel = Instantiate(m_Levels.LevelLists.FinalList[index], Vector3.zero, Quaternion.identity);
                 break;
         }
+
+        SpawnPlayer();
+
         OnRoomStart?.Invoke();
-        m_player.transform.position = m_spawnPoint.position;
+        
         m_loadSurface = true;
     }
 
@@ -156,6 +159,8 @@ public class RoomManager : MonoBehaviour
 
         m_transition.LoadTransition();
 
+        m_spawnPoint = null;
+
         if (_currentLevel != null)
         {
             Destroy(_currentLevel);
@@ -164,19 +169,27 @@ public class RoomManager : MonoBehaviour
 
     private void LoadLevel(GameObject[] levels) 
     {
+
         int rand = UnityEngine.Random.Range(0, levels.Length);
         _currentLevel = Instantiate(levels[rand], Vector3.zero, Quaternion.identity);
 
-        
+        SpawnPlayer();
+
+        OnRoomStart?.Invoke();
+
+        m_loadSurface = true;
+    }
+
+    private void SpawnPlayer() 
+    {
         m_spawnPoint = GameObject.FindWithTag("PlayerSpawn")?.transform;
         if (m_spawnPoint == null)
         {
             Debug.LogError("No player spawn found in level. Create a Transform GO with the \"PlayerSpawn\" tag.");
             return;
         }
+
         m_player.transform.position = m_spawnPoint.position;
-        OnRoomStart?.Invoke();
-        m_loadSurface = true;
     }
 
     private void Reset()
