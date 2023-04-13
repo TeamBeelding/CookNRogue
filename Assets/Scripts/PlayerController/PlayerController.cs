@@ -60,6 +60,9 @@ public class PlayerController : MonoBehaviour
         get => _instance;
     }
 
+    [SerializeField]
+    private PlayerAnimStates PlayerAnimStates;
+
     public Vector3 PlayerAimDirection
     {
         get
@@ -204,36 +207,46 @@ public class PlayerController : MonoBehaviour
         //Null Input Check
         if(!m_isDashing)
         {
-            if (_moveInputValue.magnitude <= 0)
+            //Stop if input is null
+            _rb.velocity = Vector3.zero;
+            //m_animator.SetBool("runningBool", false);
+            //m_animator.SetBool("runningAttackBool", false);
+            //m_animator.SetBool("idleAttackBool", false);
+
+            PlayerAnimStates.animStates = PlayerAnimStates.playerAnimStates.IDLE;
+
+            if (_isAiming)
             {
-                //Stop if input is null
-                _rb.velocity = Vector3.zero;
-            }
-            else
-            {
-                //Move Player
-                Vector3 moveInputDir = relativeForward * _moveInputValue.y + relativeRight * _moveInputValue.x;
-                moveInputDir = moveInputDir.normalized;
-                float speed = m_moveSpeed * _moveInputValue.sqrMagnitude;
-
-                Move(moveInputDir, speed);
-
-                //Rotate model if player is not aiming
-                if (!_isAiming)
-                {
-                    Rotate(moveInputDir);
-
-                    //Set Aiming Variables
-                    _aimDirection = moveInputDir;
-                }
+                //m_animator.SetBool("idleAttackBool", true);
+                PlayerAnimStates.animStates = PlayerAnimStates.playerAnimStates.IDLEATTACK;
             }
         }
         else
         {
-            if (m_dashDirection == Vector3.zero)
+            //Move Player
+            Vector3 moveInputDir = relativeForward * _moveInputValue.y + relativeRight * _moveInputValue.x;
+            moveInputDir = moveInputDir.normalized;
+
+            float speed = m_moveSpeed * _moveInputValue.sqrMagnitude;
+
+            Move(moveInputDir, speed);
+
+            //m_animator.SetBool("runningBool", true);
+            //m_animator.SetBool("runningAttackBool", true);
+            //m_animator.SetBool("idleAttackBool", false);
+
+            PlayerAnimStates.animStates = PlayerAnimStates.playerAnimStates.RUNNINGATTACK;
+
+            //Rotate model if player is not aiming
+            if (!_isAiming)
             {
-                m_dashDirection = m_model.transform.forward;
-                StartCoroutine(ICasting());
+                Rotate(moveInputDir);
+
+                //m_animator.SetBool("runningAttackBool", false);
+
+                PlayerAnimStates.animStates = PlayerAnimStates.playerAnimStates.RUNNING;
+                //Set Aiming Variables
+                _aimDirection = moveInputDir;
             }
             else
             {
