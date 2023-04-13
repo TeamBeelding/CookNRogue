@@ -1496,10 +1496,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28bd06e595155b44c8b9346ca673da6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: 0
-  _maxHealth: 10
-  _heart: {fileID: 4345580288583077177, guid: 8e14aa32b5ee2504d88e928c8cf34e46, type: 3}
-  _lifeContainer: {fileID: 976474280}
+  _maxHealth: 1
 --- !u!1 &599846954
 GameObject:
   m_ObjectHideFlags: 0
@@ -1755,6 +1752,7 @@ GameObject:
   m_Component:
   - component: {fileID: 976474280}
   - component: {fileID: 976474281}
+  - component: {fileID: 976474282}
   m_Layer: 5
   m_Name: Life
   m_TagString: Untagged
@@ -1808,6 +1806,19 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &976474282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 976474279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae1dabfcebaeab9488908bdd3d07a388, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _heart: {fileID: 0}
 --- !u!1 &997226014
 GameObject:
   m_ObjectHideFlags: 0
