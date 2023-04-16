@@ -24,7 +24,7 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
     ""name"": ""PlayerActions"",
     ""maps"": [
         {
-            ""name"": ""Default_PlayerActions"",
+            ""name"": ""Default"",
             ""id"": ""f0cff418-85af-4d0e-b16c-dc0d41f2fb47"",
             ""actions"": [
                 {
@@ -64,27 +64,9 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Craft"",
+                    ""name"": ""Cook"",
                     ""type"": ""Button"",
                     ""id"": ""2968a975-66e5-4109-b8e3-cd5cd6e71647"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""MoveInventorySlotLeft"",
-                    ""type"": ""Button"",
-                    ""id"": ""cdf4a057-b1d4-4250-ada3-2ffa48e9b4ec"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""MoveInventorySlotRight"",
-                    ""type"": ""Button"",
-                    ""id"": ""95efaebf-bc11-43b8-a2f6-5cd7cd1959ae"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -94,15 +76,6 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                     ""name"": ""Quit"",
                     ""type"": ""Button"",
                     ""id"": ""e81f954d-c622-4de1-94d2-70d625d37ce3"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Dash"",
-                    ""type"": ""Button"",
-                    ""id"": ""bad0678d-5049-4437-9481-6d35e8112f76"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -256,11 +229,11 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""b2f4dd92-9071-4509-a70e-5499c599b803"",
-                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
                     ""interactions"": """",
-                    ""processors"": """",
+                    ""processors"": ""AxisDeadzone"",
                     ""groups"": ""GamePad"",
-                    ""action"": ""Craft"",
+                    ""action"": ""Cook"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -271,51 +244,7 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""Craft"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""28bc8868-249c-4f03-ac15-b8a1cb8037eb"",
-                    ""path"": ""<Gamepad>/dpad/left"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""GamePad"",
-                    ""action"": ""MoveInventorySlotLeft"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""fffd6b78-93b8-46ed-bc26-82c6f31f4f41"",
-                    ""path"": ""<Keyboard>/q"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard"",
-                    ""action"": ""MoveInventorySlotLeft"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""14550c21-5a20-4739-ae3f-96715488600b"",
-                    ""path"": ""<Gamepad>/dpad/right"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""GamePad"",
-                    ""action"": ""MoveInventorySlotRight"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""34809b30-8a20-404c-8f06-b2e083112482"",
-                    ""path"": ""<Keyboard>/e"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard"",
-                    ""action"": ""MoveInventorySlotRight"",
+                    ""action"": ""Cook"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -340,15 +269,167 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                     ""action"": ""Quit"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Cooking"",
+            ""id"": ""9b62ea70-9f89-4e8d-a285-d6bd7be856e0"",
+            ""actions"": [
+                {
+                    ""name"": ""Cook"",
+                    ""type"": ""Button"",
+                    ""id"": ""f21ec3b5-b419-486a-b36b-5759215dd98a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SelectIngerdient"",
+                    ""type"": ""Button"",
+                    ""id"": ""3f0c7d75-1b65-49fe-939e-69e7b181b17a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MoveInventorySlotLeft"",
+                    ""type"": ""Button"",
+                    ""id"": ""294fb2db-e784-4257-8d83-0f51a4064d3b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MoveInventorySlotRight"",
+                    ""type"": ""Button"",
+                    ""id"": ""6453b270-45c7-4b8f-a1f5-725add19aeb5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""StartCrafting"",
+                    ""type"": ""Button"",
+                    ""id"": ""18a4c17f-7942-48c3-b1a9-be709d1cdcbc"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""6900fb1a-5b03-409f-9dcf-8f328845652b"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": ""AxisDeadzone"",
+                    ""groups"": ""GamePad"",
+                    ""action"": ""Cook"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""715b5077-20f8-4990-ae12-e62cdf900623"",
-                    ""path"": ""<Keyboard>/space"",
+                    ""id"": ""ce8a2b36-245e-4aec-9fc5-06d12d3d90d7"",
+                    ""path"": ""<Keyboard>/leftShift"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""Dash"",
+                    ""action"": ""Cook"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""723b5e95-a559-404b-a382-cac422db7b04"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""GamePad"",
+                    ""action"": ""SelectIngerdient"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""12dcfd7d-7f3d-4097-80e6-1b46d9a71cfb"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""SelectIngerdient"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""293f2ee9-e526-44f7-b2e8-54719b654b35"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""GamePad"",
+                    ""action"": ""MoveInventorySlotLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a46b537e-b5ae-419d-bb1e-d05c9cdbe8e8"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""MoveInventorySlotLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""53c0260b-059c-4052-8a2e-79abf963b976"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""GamePad"",
+                    ""action"": ""MoveInventorySlotRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""886c7bec-3d60-4b69-9454-cc3d1aa41673"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""MoveInventorySlotRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a800c54f-9926-4929-92bd-a02f7ddabb66"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""GamePad"",
+                    ""action"": ""StartCrafting"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6ed6b55a-5062-4b06-9202-704dbab3d33a"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""StartCrafting"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -424,17 +505,21 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
         }
     ]
 }");
-        // Default_PlayerActions
-        m_Default_PlayerActions = asset.FindActionMap("Default_PlayerActions", throwIfNotFound: true);
-        m_Default_PlayerActions_Move = m_Default_PlayerActions.FindAction("Move", throwIfNotFound: true);
-        m_Default_PlayerActions_Aim = m_Default_PlayerActions.FindAction("Aim", throwIfNotFound: true);
-        m_Default_PlayerActions_Shoot = m_Default_PlayerActions.FindAction("Shoot", throwIfNotFound: true);
-        m_Default_PlayerActions_Interact = m_Default_PlayerActions.FindAction("Interact", throwIfNotFound: true);
-        m_Default_PlayerActions_Craft = m_Default_PlayerActions.FindAction("Craft", throwIfNotFound: true);
-        m_Default_PlayerActions_MoveInventorySlotLeft = m_Default_PlayerActions.FindAction("MoveInventorySlotLeft", throwIfNotFound: true);
-        m_Default_PlayerActions_MoveInventorySlotRight = m_Default_PlayerActions.FindAction("MoveInventorySlotRight", throwIfNotFound: true);
-        m_Default_PlayerActions_Quit = m_Default_PlayerActions.FindAction("Quit", throwIfNotFound: true);
-        m_Default_PlayerActions_Dash = m_Default_PlayerActions.FindAction("Dash", throwIfNotFound: true);
+        // Default
+        m_Default = asset.FindActionMap("Default", throwIfNotFound: true);
+        m_Default_Move = m_Default.FindAction("Move", throwIfNotFound: true);
+        m_Default_Aim = m_Default.FindAction("Aim", throwIfNotFound: true);
+        m_Default_Shoot = m_Default.FindAction("Shoot", throwIfNotFound: true);
+        m_Default_Interact = m_Default.FindAction("Interact", throwIfNotFound: true);
+        m_Default_Cook = m_Default.FindAction("Cook", throwIfNotFound: true);
+        m_Default_Quit = m_Default.FindAction("Quit", throwIfNotFound: true);
+        // Cooking
+        m_Cooking = asset.FindActionMap("Cooking", throwIfNotFound: true);
+        m_Cooking_Cook = m_Cooking.FindAction("Cook", throwIfNotFound: true);
+        m_Cooking_SelectIngerdient = m_Cooking.FindAction("SelectIngerdient", throwIfNotFound: true);
+        m_Cooking_MoveInventorySlotLeft = m_Cooking.FindAction("MoveInventorySlotLeft", throwIfNotFound: true);
+        m_Cooking_MoveInventorySlotRight = m_Cooking.FindAction("MoveInventorySlotRight", throwIfNotFound: true);
+        m_Cooking_StartCrafting = m_Cooking.FindAction("StartCrafting", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Pause = m_UI.FindAction("Pause", throwIfNotFound: true);
@@ -494,69 +579,54 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
         return asset.FindBinding(bindingMask, out action);
     }
 
-    // Default_PlayerActions
-    private readonly InputActionMap m_Default_PlayerActions;
-    private IDefault_PlayerActionsActions m_Default_PlayerActionsActionsCallbackInterface;
-    private readonly InputAction m_Default_PlayerActions_Move;
-    private readonly InputAction m_Default_PlayerActions_Aim;
-    private readonly InputAction m_Default_PlayerActions_Shoot;
-    private readonly InputAction m_Default_PlayerActions_Interact;
-    private readonly InputAction m_Default_PlayerActions_Craft;
-    private readonly InputAction m_Default_PlayerActions_MoveInventorySlotLeft;
-    private readonly InputAction m_Default_PlayerActions_MoveInventorySlotRight;
-    private readonly InputAction m_Default_PlayerActions_Quit;
-    private readonly InputAction m_Default_PlayerActions_Dash;
-    public struct Default_PlayerActionsActions
+    // Default
+    private readonly InputActionMap m_Default;
+    private IDefaultActions m_DefaultActionsCallbackInterface;
+    private readonly InputAction m_Default_Move;
+    private readonly InputAction m_Default_Aim;
+    private readonly InputAction m_Default_Shoot;
+    private readonly InputAction m_Default_Interact;
+    private readonly InputAction m_Default_Cook;
+    private readonly InputAction m_Default_Quit;
+    public struct DefaultActions
     {
         private @PlayerActions m_Wrapper;
-        public Default_PlayerActionsActions(@PlayerActions wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Move => m_Wrapper.m_Default_PlayerActions_Move;
-        public InputAction @Aim => m_Wrapper.m_Default_PlayerActions_Aim;
-        public InputAction @Shoot => m_Wrapper.m_Default_PlayerActions_Shoot;
-        public InputAction @Interact => m_Wrapper.m_Default_PlayerActions_Interact;
-        public InputAction @Craft => m_Wrapper.m_Default_PlayerActions_Craft;
-        public InputAction @MoveInventorySlotLeft => m_Wrapper.m_Default_PlayerActions_MoveInventorySlotLeft;
-        public InputAction @MoveInventorySlotRight => m_Wrapper.m_Default_PlayerActions_MoveInventorySlotRight;
-        public InputAction @Quit => m_Wrapper.m_Default_PlayerActions_Quit;
-        public InputAction @Dash => m_Wrapper.m_Default_PlayerActions_Dash;
-        public InputActionMap Get() { return m_Wrapper.m_Default_PlayerActions; }
+        public DefaultActions(@PlayerActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Move => m_Wrapper.m_Default_Move;
+        public InputAction @Aim => m_Wrapper.m_Default_Aim;
+        public InputAction @Shoot => m_Wrapper.m_Default_Shoot;
+        public InputAction @Interact => m_Wrapper.m_Default_Interact;
+        public InputAction @Cook => m_Wrapper.m_Default_Cook;
+        public InputAction @Quit => m_Wrapper.m_Default_Quit;
+        public InputActionMap Get() { return m_Wrapper.m_Default; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(Default_PlayerActionsActions set) { return set.Get(); }
-        public void SetCallbacks(IDefault_PlayerActionsActions instance)
+        public static implicit operator InputActionMap(DefaultActions set) { return set.Get(); }
+        public void SetCallbacks(IDefaultActions instance)
         {
-            if (m_Wrapper.m_Default_PlayerActionsActionsCallbackInterface != null)
+            if (m_Wrapper.m_DefaultActionsCallbackInterface != null)
             {
-                @Move.started -= m_Wrapper.m_Default_PlayerActionsActionsCallbackInterface.OnMove;
-                @Move.performed -= m_Wrapper.m_Default_PlayerActionsActionsCallbackInterface.OnMove;
-                @Move.canceled -= m_Wrapper.m_Default_PlayerActionsActionsCallbackInterface.OnMove;
-                @Aim.started -= m_Wrapper.m_Default_PlayerActionsActionsCallbackInterface.OnAim;
-                @Aim.performed -= m_Wrapper.m_Default_PlayerActionsActionsCallbackInterface.OnAim;
-                @Aim.canceled -= m_Wrapper.m_Default_PlayerActionsActionsCallbackInterface.OnAim;
-                @Shoot.started -= m_Wrapper.m_Default_PlayerActionsActionsCallbackInterface.OnShoot;
-                @Shoot.performed -= m_Wrapper.m_Default_PlayerActionsActionsCallbackInterface.OnShoot;
-                @Shoot.canceled -= m_Wrapper.m_Default_PlayerActionsActionsCallbackInterface.OnShoot;
-                @Interact.started -= m_Wrapper.m_Default_PlayerActionsActionsCallbackInterface.OnInteract;
-                @Interact.performed -= m_Wrapper.m_Default_PlayerActionsActionsCallbackInterface.OnInteract;
-                @Interact.canceled -= m_Wrapper.m_Default_PlayerActionsActionsCallbackInterface.OnInteract;
-                @Craft.started -= m_Wrapper.m_Default_PlayerActionsActionsCallbackInterface.OnCraft;
-                @Craft.performed -= m_Wrapper.m_Default_PlayerActionsActionsCallbackInterface.OnCraft;
-                @Craft.canceled -= m_Wrapper.m_Default_PlayerActionsActionsCallbackInterface.OnCraft;
-                @MoveInventorySlotLeft.started -= m_Wrapper.m_Default_PlayerActionsActionsCallbackInterface.OnMoveInventorySlotLeft;
-                @MoveInventorySlotLeft.performed -= m_Wrapper.m_Default_PlayerActionsActionsCallbackInterface.OnMoveInventorySlotLeft;
-                @MoveInventorySlotLeft.canceled -= m_Wrapper.m_Default_PlayerActionsActionsCallbackInterface.OnMoveInventorySlotLeft;
-                @MoveInventorySlotRight.started -= m_Wrapper.m_Default_PlayerActionsActionsCallbackInterface.OnMoveInventorySlotRight;
-                @MoveInventorySlotRight.performed -= m_Wrapper.m_Default_PlayerActionsActionsCallbackInterface.OnMoveInventorySlotRight;
-                @MoveInventorySlotRight.canceled -= m_Wrapper.m_Default_PlayerActionsActionsCallbackInterface.OnMoveInventorySlotRight;
-                @Quit.started -= m_Wrapper.m_Default_PlayerActionsActionsCallbackInterface.OnQuit;
-                @Quit.performed -= m_Wrapper.m_Default_PlayerActionsActionsCallbackInterface.OnQuit;
-                @Quit.canceled -= m_Wrapper.m_Default_PlayerActionsActionsCallbackInterface.OnQuit;
-                @Dash.started -= m_Wrapper.m_Default_PlayerActionsActionsCallbackInterface.OnDash;
-                @Dash.performed -= m_Wrapper.m_Default_PlayerActionsActionsCallbackInterface.OnDash;
-                @Dash.canceled -= m_Wrapper.m_Default_PlayerActionsActionsCallbackInterface.OnDash;
+                @Move.started -= m_Wrapper.m_DefaultActionsCallbackInterface.OnMove;
+                @Move.performed -= m_Wrapper.m_DefaultActionsCallbackInterface.OnMove;
+                @Move.canceled -= m_Wrapper.m_DefaultActionsCallbackInterface.OnMove;
+                @Aim.started -= m_Wrapper.m_DefaultActionsCallbackInterface.OnAim;
+                @Aim.performed -= m_Wrapper.m_DefaultActionsCallbackInterface.OnAim;
+                @Aim.canceled -= m_Wrapper.m_DefaultActionsCallbackInterface.OnAim;
+                @Shoot.started -= m_Wrapper.m_DefaultActionsCallbackInterface.OnShoot;
+                @Shoot.performed -= m_Wrapper.m_DefaultActionsCallbackInterface.OnShoot;
+                @Shoot.canceled -= m_Wrapper.m_DefaultActionsCallbackInterface.OnShoot;
+                @Interact.started -= m_Wrapper.m_DefaultActionsCallbackInterface.OnInteract;
+                @Interact.performed -= m_Wrapper.m_DefaultActionsCallbackInterface.OnInteract;
+                @Interact.canceled -= m_Wrapper.m_DefaultActionsCallbackInterface.OnInteract;
+                @Cook.started -= m_Wrapper.m_DefaultActionsCallbackInterface.OnCook;
+                @Cook.performed -= m_Wrapper.m_DefaultActionsCallbackInterface.OnCook;
+                @Cook.canceled -= m_Wrapper.m_DefaultActionsCallbackInterface.OnCook;
+                @Quit.started -= m_Wrapper.m_DefaultActionsCallbackInterface.OnQuit;
+                @Quit.performed -= m_Wrapper.m_DefaultActionsCallbackInterface.OnQuit;
+                @Quit.canceled -= m_Wrapper.m_DefaultActionsCallbackInterface.OnQuit;
             }
-            m_Wrapper.m_Default_PlayerActionsActionsCallbackInterface = instance;
+            m_Wrapper.m_DefaultActionsCallbackInterface = instance;
             if (instance != null)
             {
                 @Move.started += instance.OnMove;
@@ -571,25 +641,81 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                 @Interact.started += instance.OnInteract;
                 @Interact.performed += instance.OnInteract;
                 @Interact.canceled += instance.OnInteract;
-                @Craft.started += instance.OnCraft;
-                @Craft.performed += instance.OnCraft;
-                @Craft.canceled += instance.OnCraft;
+                @Cook.started += instance.OnCook;
+                @Cook.performed += instance.OnCook;
+                @Cook.canceled += instance.OnCook;
+                @Quit.started += instance.OnQuit;
+                @Quit.performed += instance.OnQuit;
+                @Quit.canceled += instance.OnQuit;
+            }
+        }
+    }
+    public DefaultActions @Default => new DefaultActions(this);
+
+    // Cooking
+    private readonly InputActionMap m_Cooking;
+    private ICookingActions m_CookingActionsCallbackInterface;
+    private readonly InputAction m_Cooking_Cook;
+    private readonly InputAction m_Cooking_SelectIngerdient;
+    private readonly InputAction m_Cooking_MoveInventorySlotLeft;
+    private readonly InputAction m_Cooking_MoveInventorySlotRight;
+    private readonly InputAction m_Cooking_StartCrafting;
+    public struct CookingActions
+    {
+        private @PlayerActions m_Wrapper;
+        public CookingActions(@PlayerActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Cook => m_Wrapper.m_Cooking_Cook;
+        public InputAction @SelectIngerdient => m_Wrapper.m_Cooking_SelectIngerdient;
+        public InputAction @MoveInventorySlotLeft => m_Wrapper.m_Cooking_MoveInventorySlotLeft;
+        public InputAction @MoveInventorySlotRight => m_Wrapper.m_Cooking_MoveInventorySlotRight;
+        public InputAction @StartCrafting => m_Wrapper.m_Cooking_StartCrafting;
+        public InputActionMap Get() { return m_Wrapper.m_Cooking; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(CookingActions set) { return set.Get(); }
+        public void SetCallbacks(ICookingActions instance)
+        {
+            if (m_Wrapper.m_CookingActionsCallbackInterface != null)
+            {
+                @Cook.started -= m_Wrapper.m_CookingActionsCallbackInterface.OnCook;
+                @Cook.performed -= m_Wrapper.m_CookingActionsCallbackInterface.OnCook;
+                @Cook.canceled -= m_Wrapper.m_CookingActionsCallbackInterface.OnCook;
+                @SelectIngerdient.started -= m_Wrapper.m_CookingActionsCallbackInterface.OnSelectIngerdient;
+                @SelectIngerdient.performed -= m_Wrapper.m_CookingActionsCallbackInterface.OnSelectIngerdient;
+                @SelectIngerdient.canceled -= m_Wrapper.m_CookingActionsCallbackInterface.OnSelectIngerdient;
+                @MoveInventorySlotLeft.started -= m_Wrapper.m_CookingActionsCallbackInterface.OnMoveInventorySlotLeft;
+                @MoveInventorySlotLeft.performed -= m_Wrapper.m_CookingActionsCallbackInterface.OnMoveInventorySlotLeft;
+                @MoveInventorySlotLeft.canceled -= m_Wrapper.m_CookingActionsCallbackInterface.OnMoveInventorySlotLeft;
+                @MoveInventorySlotRight.started -= m_Wrapper.m_CookingActionsCallbackInterface.OnMoveInventorySlotRight;
+                @MoveInventorySlotRight.performed -= m_Wrapper.m_CookingActionsCallbackInterface.OnMoveInventorySlotRight;
+                @MoveInventorySlotRight.canceled -= m_Wrapper.m_CookingActionsCallbackInterface.OnMoveInventorySlotRight;
+                @StartCrafting.started -= m_Wrapper.m_CookingActionsCallbackInterface.OnStartCrafting;
+                @StartCrafting.performed -= m_Wrapper.m_CookingActionsCallbackInterface.OnStartCrafting;
+                @StartCrafting.canceled -= m_Wrapper.m_CookingActionsCallbackInterface.OnStartCrafting;
+            }
+            m_Wrapper.m_CookingActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Cook.started += instance.OnCook;
+                @Cook.performed += instance.OnCook;
+                @Cook.canceled += instance.OnCook;
+                @SelectIngerdient.started += instance.OnSelectIngerdient;
+                @SelectIngerdient.performed += instance.OnSelectIngerdient;
+                @SelectIngerdient.canceled += instance.OnSelectIngerdient;
                 @MoveInventorySlotLeft.started += instance.OnMoveInventorySlotLeft;
                 @MoveInventorySlotLeft.performed += instance.OnMoveInventorySlotLeft;
                 @MoveInventorySlotLeft.canceled += instance.OnMoveInventorySlotLeft;
                 @MoveInventorySlotRight.started += instance.OnMoveInventorySlotRight;
                 @MoveInventorySlotRight.performed += instance.OnMoveInventorySlotRight;
                 @MoveInventorySlotRight.canceled += instance.OnMoveInventorySlotRight;
-                @Quit.started += instance.OnQuit;
-                @Quit.performed += instance.OnQuit;
-                @Quit.canceled += instance.OnQuit;
-                @Dash.started += instance.OnDash;
-                @Dash.performed += instance.OnDash;
-                @Dash.canceled += instance.OnDash;
+                @StartCrafting.started += instance.OnStartCrafting;
+                @StartCrafting.performed += instance.OnStartCrafting;
+                @StartCrafting.canceled += instance.OnStartCrafting;
             }
         }
     }
-    public Default_PlayerActionsActions @Default_PlayerActions => new Default_PlayerActionsActions(this);
+    public CookingActions @Cooking => new CookingActions(this);
 
     // UI
     private readonly InputActionMap m_UI;
@@ -641,17 +767,22 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
             return asset.controlSchemes[m_KeyboardSchemeIndex];
         }
     }
-    public interface IDefault_PlayerActionsActions
+    public interface IDefaultActions
     {
         void OnMove(InputAction.CallbackContext context);
         void OnAim(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
-        void OnCraft(InputAction.CallbackContext context);
+        void OnCook(InputAction.CallbackContext context);
+        void OnQuit(InputAction.CallbackContext context);
+    }
+    public interface ICookingActions
+    {
+        void OnCook(InputAction.CallbackContext context);
+        void OnSelectIngerdient(InputAction.CallbackContext context);
         void OnMoveInventorySlotLeft(InputAction.CallbackContext context);
         void OnMoveInventorySlotRight(InputAction.CallbackContext context);
-        void OnQuit(InputAction.CallbackContext context);
-        void OnDash(InputAction.CallbackContext context);
+        void OnStartCrafting(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
