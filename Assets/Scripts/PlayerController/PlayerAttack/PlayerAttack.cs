@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-[RequireComponent (typeof (PlayerController))]
 public class PlayerAttack : MonoBehaviour
 {
     public GameObject _Projectile;
@@ -12,8 +11,8 @@ public class PlayerAttack : MonoBehaviour
     public float _TimeBtwShotsRafale;
     PlayerBulletBehaviour _projectileBehaviour;
     public Transform _muzzle;
-    [SerializeField]
-    PlayerKnockback m_knockbackScript;
+    //[SerializeField]
+    //PlayerKnockback m_knockbackScript;
 
     [Header("Physic and Movements")]
     public float _size;
@@ -32,17 +31,19 @@ public class PlayerAttack : MonoBehaviour
     bool _shootOnCooldown;
 
     [SerializeField]
-    float _shootCooldown;
+    public float _shootCooldown;
 
     Coroutine _curShootDelay;
 
     PlayerController _playerController;
 
-    private void Awake()
+    private void Start()
     {
+
         _playerController = GetComponent<PlayerController>();
     }
 
+    
     public void Shoot()
     {
         if (_shootOnCooldown)
@@ -58,7 +59,7 @@ public class PlayerAttack : MonoBehaviour
         _curShootDelay = StartCoroutine(ShootDelay(_shootCooldown));
 
         //Animation
-        m_knockbackScript.StartKnockback();
+        //m_knockbackScript.StartKnockback();
 
     }
 
@@ -74,8 +75,12 @@ public class PlayerAttack : MonoBehaviour
     {
         foreach (IIngredientEffects effect in _effects)
         {
-            if(effect != null)
-                effect.EffectOnHit(Position, HitObject, direction);
+            
+                if (effect != null)
+                {
+                    effect.EffectOnHit(Position, HitObject, direction);
+                }
+
         }
     }
     #endregion
@@ -93,7 +98,6 @@ public class PlayerAttack : MonoBehaviour
 
     IEnumerator shootbullets(float time)
     {
-
         for(int i = 0; i< _ProjectileNbr; i++)
         {
             ConeShots coneShots = null;
@@ -128,7 +132,6 @@ public class PlayerAttack : MonoBehaviour
                 _projectileBehaviour._lightDamage += _lightDamage;
                 _projectileBehaviour._heavyDamage += _heavyDamage;
                 _projectileBehaviour._direction = Quaternion.Euler(0, totalAngle, 0) * _playerController.PlayerAimDirection;
-
 
 
                 foreach (IIngredientEffects effect in _effects)
@@ -188,4 +191,22 @@ public class PlayerAttack : MonoBehaviour
         _lightAttackDelay = 0;
         _lightDamage = 0;
     }
+
+    public void Reset()
+    {
+        _ProjectileNbr= 1;
+        _size = 1;
+        _speed = 1;
+        _drag = 0;
+        _heavyAttackDelay = 0;
+        _heavyDamage = 1;
+        _lightAttackDelay = 0;
+        _lightDamage = 1;
+        _shootCooldown = 0.5f;
+
+        //A CHANGER DANS LE FUTUR
+        _muzzle = GameObject.Find("CharacterModel").transform;
+        //m_knockbackScript = GameObject.Find("CharacterModel").GetComponent<PlayerKnockback>();
+    }
+
 }

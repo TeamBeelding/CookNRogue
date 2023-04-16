@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 
 public class MinimoyzController : EnemyController
 {
@@ -217,9 +218,9 @@ public class MinimoyzController : EnemyController
         }
     }
     
-    public override void TakeDamage(float damage, bool isCritical = false)
+    public override void TakeDamage(float damage = 1, bool isCritical = false)
     {
-        base.TakeDamage(damage);
+        base.TakeDamage(damage, isCritical);
         
         if (healthpoint <= 0)
         {

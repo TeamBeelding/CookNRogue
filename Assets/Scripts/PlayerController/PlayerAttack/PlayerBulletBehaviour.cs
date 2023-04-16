@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.WSA;
 
 public class PlayerBulletBehaviour : MonoBehaviour
 {
@@ -62,7 +59,7 @@ public class PlayerBulletBehaviour : MonoBehaviour
     }
     public void DestroyBullet()
     {
-        Debug.Log("Destroy");
+        //Debug.Log("Destroy");
         Destroy(gameObject);
     }
     public void ResetSpeed()

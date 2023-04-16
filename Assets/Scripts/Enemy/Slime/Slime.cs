@@ -2,6 +2,7 @@ using NaughtyAttributes;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
 namespace Enemy.Slime
@@ -159,14 +160,19 @@ namespace Enemy.Slime
             return new Vector3(x, y, z);
         }
     
-        public override void TakeDamage(float damage, bool isCritical = false)
+        public override void TakeDamage(float damage = 1, bool isCritical = false)
         {
-            base.TakeDamage(damage);
+            base.TakeDamage(damage, isCritical);
         
             if (healthpoint <= 0)
             {
                 state = State.Dying;
             }
+        }
+
+        private void SetState(State value)
+        {
+            state = value;
         }
 
         protected override void Dying()

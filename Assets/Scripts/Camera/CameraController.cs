@@ -156,8 +156,16 @@ public class CameraController : MonoBehaviour
             // if the object is tagged obstruction it turns transparent
             if (_hit.collider.CompareTag("Obstruction"))
             {
-                _obstructionMesh = _hit.collider.GetComponent<MeshRenderer>();
-                _obstructionMesh.material.SetFloat("_Opacity", m_opacity);
+                if (!_hit.collider.GetComponent<MeshRenderer>())
+                {
+                    _obstructionMesh = _hit.collider.GetComponentInChildren<MeshRenderer>();
+                    _obstructionMesh.material.SetFloat("_Opacity", m_opacity);
+                }
+                else
+                {
+                    _obstructionMesh = _hit.collider.GetComponent<MeshRenderer>();
+                    _obstructionMesh.material.SetFloat("_Opacity", m_opacity);
+                }
             }
         }
         else
