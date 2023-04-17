@@ -2183,17 +2183,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ea33c1efe3856345b33dacf6b88a5a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Levels: {fileID: 0}
+  m_Levels: {fileID: 11400000, guid: 6f838f2a5dec645429dc4d6491daa9ad, type: 2}
   m_amountOfLevels: 0
-  m_currentLevelType: 
+  m_currentLevelType: Room
   m_currentLevelIndex: -1
-  m_navMeshSurface: {fileID: 0}
+  m_navMeshSurface: {fileID: 1037132505}
   m_loadSurface: 0
-  m_enemyManagerScript: {fileID: 0}
+  m_enemyManagerScript: {fileID: 134267770}
   isHard: 0
-  m_player: {fileID: 0}
-  m_spawnPoint: {fileID: 0}
-  m_transition: {fileID: 0}
+  m_player: {fileID: 6518352297035687743}
+  m_spawnPoint: {fileID: 1276025253}
+  m_transition: {fileID: 824941331}
 --- !u!4 &1270660378
 Transform:
   m_ObjectHideFlags: 0
@@ -2498,7 +2498,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1362945276}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0.35355338, y: 0.35355338, z: -0.1464466, w: 0.8535535}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.001, y: 0.001, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2506,7 +2506,7 @@ RectTransform:
   - {fileID: 748245584}
   m_Father: {fileID: 366987512}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 45, y: 45, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 4}
@@ -3162,16 +3162,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d070f5a59a601547baf5633e34dd27b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_mainCamera: {fileID: 0}
-  m_cameraPlayerTarget: {fileID: 0}
-  m_offsetCoord: {x: 0, y: 0, z: 0}
-  m_offsetRotation: {x: 0, y: 0, z: 0, w: 0}
+  m_mainCamera: {fileID: 4051458157710151034}
+  m_cameraPlayerTarget: {fileID: 6518352297035687738}
+  m_offsetCoord: {x: -16, y: 22, z: -16}
+  m_offsetRotation: {x: 0.34609133, y: 0.35481793, z: -0.14335576, w: 0.8566062}
   m_opacity: 0.5
-  m_transformHead: {fileID: 0}
+  m_transformHead: {fileID: 8902403905059677096}
   m_shakeDuration: 1
   m_shakeCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: -0.0005493164
+      value: 0.0039138794
+      inSlope: 3.240992
+      outSlope: 3.240992
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.05861087
+      value: 0.19565158
+      inSlope: 2.8426423
+      outSlope: 2.8426423
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.025615515
+    - serializedVersion: 3
+      time: 0.33577487
+      value: 0.18812823
+      inSlope: -0.6702659
+      outSlope: -0.6702659
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.9995117
+      value: -0.0006904602
+      inSlope: -0.28447825
+      outSlope: -0.28447825
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -3180,14 +3216,41 @@ MonoBehaviour:
   m_zoomFactor: 2
   m_zoomCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: -2.0033543
+      outSlope: -2.0033543
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.5006573
+      value: -0.0029939413
+      inSlope: 0.002637148
+      outSlope: 0.002637148
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 2.0086286
+      outSlope: 2.0086286
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
   _zoom: 0
   m_smoothSpeed: 2.5
   m_target: {fileID: 0}
-  m_cameraAimDistance: 0
+  m_cameraAimDistance: 7
 --- !u!4 &1794743068
 Transform:
   m_ObjectHideFlags: 0
@@ -5380,8 +5443,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_currentHealthValue: 10
   m_maxHealthValue: 10
-  m_rotationSpeed: 3
-  m_moveSpeed: 5
+  m_rotationSpeed: 30
+  m_moveSpeed: 20
   m_maxMoveSpeed: 5
   m_moveDrag: 1
   m_dashDuration: 0.2
