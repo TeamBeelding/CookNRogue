@@ -363,7 +363,10 @@ public class PlayerController : MonoBehaviour
 
         if (!m_isDashing && _rb.velocity.magnitude > m_maxMoveSpeed)
         {
-            _rb.velocity = new Vector3(direction.x, _rb.velocity.y, direction.z) * m_maxMoveSpeed;
+            _rb.velocity = new Vector3(direction.x, 0, direction.z) * m_maxMoveSpeed;
+
+            //_rb.velocity = new Vector3(direction.x, _rb.velocity.y, direction.z) * m_maxMoveSpeed;
+
         }
     }
 
