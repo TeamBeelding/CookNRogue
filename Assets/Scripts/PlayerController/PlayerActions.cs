@@ -55,6 +55,15 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""Dash"",
+                    ""type"": ""Button"",
+                    ""id"": ""bad0678d-5049-4437-9481-6d35e8112f76"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Interact"",
                     ""type"": ""Button"",
                     ""id"": ""88238274-356a-4186-b180-f3f39ea19244"",
@@ -76,15 +85,6 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                     ""name"": ""Quit"",
                     ""type"": ""Button"",
                     ""id"": ""e81f954d-c622-4de1-94d2-70d625d37ce3"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Dash"",
-                    ""type"": ""Button"",
-                    ""id"": ""bad0678d-5049-4437-9481-6d35e8112f76"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -162,17 +162,6 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""8340a0ba-b8e3-4d6e-8cb4-1428e0fe559c"",
                     ""path"": ""<Gamepad>/rightTrigger"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""GamePad"",
-                    ""action"": ""Shoot"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""9672cad4-051e-44b5-9514-cd0920091675"",
-                    ""path"": ""<Gamepad>/buttonEast"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""GamePad"",
@@ -293,7 +282,7 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""a7951093-4c26-4a6a-9675-07bf8656d831"",
-                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""path"": ""<Gamepad>/buttonEast"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""GamePad"",
@@ -541,10 +530,10 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
         m_Default_Move = m_Default.FindAction("Move", throwIfNotFound: true);
         m_Default_Aim = m_Default.FindAction("Aim", throwIfNotFound: true);
         m_Default_Shoot = m_Default.FindAction("Shoot", throwIfNotFound: true);
+        m_Default_Dash = m_Default.FindAction("Dash", throwIfNotFound: true);
         m_Default_Interact = m_Default.FindAction("Interact", throwIfNotFound: true);
         m_Default_Cook = m_Default.FindAction("Cook", throwIfNotFound: true);
         m_Default_Quit = m_Default.FindAction("Quit", throwIfNotFound: true);
-        m_Default_Dash = m_Default.FindAction("Dash", throwIfNotFound: true);
         // Cooking
         m_Cooking = asset.FindActionMap("Cooking", throwIfNotFound: true);
         m_Cooking_Cook = m_Cooking.FindAction("Cook", throwIfNotFound: true);
@@ -617,10 +606,10 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Default_Move;
     private readonly InputAction m_Default_Aim;
     private readonly InputAction m_Default_Shoot;
+    private readonly InputAction m_Default_Dash;
     private readonly InputAction m_Default_Interact;
     private readonly InputAction m_Default_Cook;
     private readonly InputAction m_Default_Quit;
-    private readonly InputAction m_Default_Dash;
     public struct DefaultActions
     {
         private @PlayerActions m_Wrapper;
@@ -628,10 +617,10 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_Default_Move;
         public InputAction @Aim => m_Wrapper.m_Default_Aim;
         public InputAction @Shoot => m_Wrapper.m_Default_Shoot;
+        public InputAction @Dash => m_Wrapper.m_Default_Dash;
         public InputAction @Interact => m_Wrapper.m_Default_Interact;
         public InputAction @Cook => m_Wrapper.m_Default_Cook;
         public InputAction @Quit => m_Wrapper.m_Default_Quit;
-        public InputAction @Dash => m_Wrapper.m_Default_Dash;
         public InputActionMap Get() { return m_Wrapper.m_Default; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -650,6 +639,9 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                 @Shoot.started -= m_Wrapper.m_DefaultActionsCallbackInterface.OnShoot;
                 @Shoot.performed -= m_Wrapper.m_DefaultActionsCallbackInterface.OnShoot;
                 @Shoot.canceled -= m_Wrapper.m_DefaultActionsCallbackInterface.OnShoot;
+                @Dash.started -= m_Wrapper.m_DefaultActionsCallbackInterface.OnDash;
+                @Dash.performed -= m_Wrapper.m_DefaultActionsCallbackInterface.OnDash;
+                @Dash.canceled -= m_Wrapper.m_DefaultActionsCallbackInterface.OnDash;
                 @Interact.started -= m_Wrapper.m_DefaultActionsCallbackInterface.OnInteract;
                 @Interact.performed -= m_Wrapper.m_DefaultActionsCallbackInterface.OnInteract;
                 @Interact.canceled -= m_Wrapper.m_DefaultActionsCallbackInterface.OnInteract;
@@ -659,9 +651,6 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                 @Quit.started -= m_Wrapper.m_DefaultActionsCallbackInterface.OnQuit;
                 @Quit.performed -= m_Wrapper.m_DefaultActionsCallbackInterface.OnQuit;
                 @Quit.canceled -= m_Wrapper.m_DefaultActionsCallbackInterface.OnQuit;
-                @Dash.started -= m_Wrapper.m_DefaultActionsCallbackInterface.OnDash;
-                @Dash.performed -= m_Wrapper.m_DefaultActionsCallbackInterface.OnDash;
-                @Dash.canceled -= m_Wrapper.m_DefaultActionsCallbackInterface.OnDash;
             }
             m_Wrapper.m_DefaultActionsCallbackInterface = instance;
             if (instance != null)
@@ -675,6 +664,9 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                 @Shoot.started += instance.OnShoot;
                 @Shoot.performed += instance.OnShoot;
                 @Shoot.canceled += instance.OnShoot;
+                @Dash.started += instance.OnDash;
+                @Dash.performed += instance.OnDash;
+                @Dash.canceled += instance.OnDash;
                 @Interact.started += instance.OnInteract;
                 @Interact.performed += instance.OnInteract;
                 @Interact.canceled += instance.OnInteract;
@@ -684,9 +676,6 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                 @Quit.started += instance.OnQuit;
                 @Quit.performed += instance.OnQuit;
                 @Quit.canceled += instance.OnQuit;
-                @Dash.started += instance.OnDash;
-                @Dash.performed += instance.OnDash;
-                @Dash.canceled += instance.OnDash;
             }
         }
     }
@@ -812,10 +801,10 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnAim(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
+        void OnDash(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnCook(InputAction.CallbackContext context);
         void OnQuit(InputAction.CallbackContext context);
-        void OnDash(InputAction.CallbackContext context);
     }
     public interface ICookingActions
     {
