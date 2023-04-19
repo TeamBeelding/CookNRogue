@@ -21,10 +21,8 @@ public class PlayerAttack : MonoBehaviour
     [Space(20)]
 
     [Header("Attack")]
-    public float _heavyAttackDelay;
-    public float _heavyDamage;
-    public float _lightAttackDelay;
-    public float _lightDamage;
+    public float _attackDelay;
+    public float _damage;
 
     public List<IIngredientEffects> _effects = new List<IIngredientEffects>();
     
@@ -129,8 +127,7 @@ public class PlayerAttack : MonoBehaviour
                 _projectileBehaviour._playerAttack = this;
                 _projectileBehaviour._speed += _speed;
                 _projectileBehaviour._drag -= _drag;
-                _projectileBehaviour._lightDamage += _lightDamage;
-                _projectileBehaviour._heavyDamage += _heavyDamage;
+                _projectileBehaviour._damage += _damage;
                 _projectileBehaviour._direction = Quaternion.Euler(0, totalAngle, 0) * _playerController.PlayerAimDirection;
 
 
@@ -156,8 +153,7 @@ public class PlayerAttack : MonoBehaviour
                         boomerangBehaviour._MaxSideDistance = TempEffect._MaxSideDistance;
                         boomerangBehaviour._playerAttack = this;
                         boomerangBehaviour._boomerangSpeed = TempEffect._Speed;
-                        boomerangBehaviour._lightDamage += _lightDamage;
-                        boomerangBehaviour._heavyDamage += _heavyDamage;
+                        boomerangBehaviour._damage += _damage;
                         boomerangBehaviour._direction = Quaternion.Euler(0, totalAngle, 0) * _playerController.PlayerAimDirection;
                     }
                 }
@@ -186,10 +182,8 @@ public class PlayerAttack : MonoBehaviour
         _drag = 0;
         _ProjectileNbr = 1;
         _TimeBtwShotsRafale = 0;
-        _heavyAttackDelay = 0;
-        _heavyDamage = 0;
-        _lightAttackDelay = 0;
-        _lightDamage = 0;
+        _damage = 0;
+        _attackDelay = 0;
     }
 
     public void Reset()
@@ -198,11 +192,8 @@ public class PlayerAttack : MonoBehaviour
         _size = 1;
         _speed = 1;
         _drag = 0;
-        _heavyAttackDelay = 0;
-        _heavyDamage = 1;
-        _lightAttackDelay = 0;
-        _lightDamage = 1;
         _shootCooldown = 0.5f;
+        _damage = 1;
 
         //A CHANGER DANS LE FUTUR
         _muzzle = GameObject.Find("CharacterModel").transform;

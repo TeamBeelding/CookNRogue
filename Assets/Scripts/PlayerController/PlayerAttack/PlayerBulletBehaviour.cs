@@ -2,8 +2,7 @@ using UnityEngine;
 
 public class PlayerBulletBehaviour : MonoBehaviour
 {
-    public float _heavyDamage;
-    public float _lightDamage;
+    public float _damage;
     public bool _isCritical;
     public float _speed;
     public float _drag = 1;
@@ -75,7 +74,7 @@ public class PlayerBulletBehaviour : MonoBehaviour
             _hitObject = other.gameObject;
             ApplyCorrectOnHitEffects();
 
-             other.GetComponent<EnemyController>().TakeDamage(_heavyDamage, _isCritical);
+             other.GetComponent<EnemyController>().TakeDamage(_damage, _isCritical);
 
             if (_ricochetNbr > 0)
             {
