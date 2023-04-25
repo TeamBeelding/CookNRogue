@@ -70,6 +70,7 @@ public class PlayerCookingQTE : MonoBehaviour
         float tProgress = 0f;
         while(tProgress < duration)
         {
+            tProgress += Time.deltaTime;
             yield return new WaitForSeconds(Time.deltaTime);
         }
 
