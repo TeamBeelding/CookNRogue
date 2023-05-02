@@ -31,10 +31,10 @@ public class ProjectileData : ScriptableObject
     [Space(20)]
 
     [Header("Attack")]
-    public float _heavyAttackDelay;
-    public float _heavyDamage;
-    public float _lightAttackDelay;
-    public float _lightDamage;
+    public int _ammunition;
+    public float _attackDelay;
+    public float _damage;
+
     [Space(20)]
 
     [Header("Debug")]
