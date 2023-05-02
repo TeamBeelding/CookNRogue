@@ -16,14 +16,17 @@ public class EnterDoor : MonoBehaviour
 
     private void Start()
     {
-        Mesh = door.GetComponent<MeshRenderer>();
-
-        if (Mesh != null)
+        if (door != null)
         {
-            SkinnedMaterials = Mesh.materials;
-        }
+            Mesh = door.GetComponent<MeshRenderer>();
 
-        EnemyManager.Instance.OnAllEnnemiesKilled += StartOpenDoor;
+            if (Mesh != null)
+            {
+                SkinnedMaterials = Mesh.materials;
+            }
+
+            EnemyManager.Instance.OnAllEnnemiesKilled += StartOpenDoor;
+        }
     }
 
     private void OnTriggerEnter(Collider other)

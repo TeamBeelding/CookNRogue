@@ -19,14 +19,14 @@ jobs:
           - StandaloneWindows64 # Build a Windows 64-bit standalone.
 
     steps:
-      - name: Fix ownership
-        run: echo ${{ secrets.USER_PASSWORD }} | sudo -S chown -R user:user .
-      
       - uses: actions/checkout@v3
         with:
           ref: refs/heads/develop
           lfs: false
           
+      - name: Fix ownership
+        run: echo ${{ secrets.USER_PASSWORD }} | sudo -S chown -R github:github .
+        
       - uses: actions/cache@v3
         with:
           path: Library
@@ -41,9 +41,9 @@ jobs:
         with:
           unityVersion: ${{ matrix.unityVersion }}
           targetPlatform: ${{ matrix.targetPlatform }}
-          
+        
       - name: Fix ownership
-        run: echo ${{ secrets.USER_PASSWORD }} | sudo -S chown -R user:user .
+        run: echo ${{ secrets.USER_PASSWORD }} | sudo -S chown -R github:github .
         
       - name: Create info file
         run: touch build/${{ matrix.targetPlatform }}/${{ github.event.repository.name }}-nightly-develop-${{ matrix.targetPlatform }}

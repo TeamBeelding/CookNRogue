@@ -100,17 +100,9 @@ public class PlayerAnimStates : MonoBehaviour
         _horizontalAxis = Input.GetAxis("Horizontal");
         _verticalAxis = Input.GetAxis("Vertical");
 
+        //Vector2 _moveInputValue;
+        //Vector2 _aimInputValue;
 
-        //Debug.Log(_horizontalAxis);
-        //Debug.Log(_verticalAxis);
-
-        //if (cam != null)
-        //{
-        //    camForward = Vector3.Scale(cam.forward, new Vector3(1, 0, 1)).normalized;
-        //    move = _verticalAxis * camForward + _horizontalAxis * cam.right;
-        //}
-        //else
-        //{
         move = _verticalAxis * Vector3.forward + _horizontalAxis * Vector3.right;
         //}
 

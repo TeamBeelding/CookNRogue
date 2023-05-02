@@ -1,12 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.WSA;
 
 public class PlayerBulletBehaviour : MonoBehaviour
 {
-    public float _heavyDamage;
-    public float _lightDamage;
+    public float _damage;
     public bool _isCritical;
     public float _speed;
     public float _drag = 1;
@@ -62,7 +58,7 @@ public class PlayerBulletBehaviour : MonoBehaviour
     }
     public void DestroyBullet()
     {
-        Debug.Log("Destroy");
+        //Debug.Log("Destroy");
         Destroy(gameObject);
     }
     public void ResetSpeed()
@@ -78,7 +74,7 @@ public class PlayerBulletBehaviour : MonoBehaviour
             _hitObject = other.gameObject;
             ApplyCorrectOnHitEffects();
 
-             other.GetComponent<EnemyController>().TakeDamage(_heavyDamage, _isCritical);
+             other.GetComponent<EnemyController>().TakeDamage(_damage, _isCritical);
 
             if (_ricochetNbr > 0)
             {
@@ -180,5 +176,10 @@ public class PlayerBulletBehaviour : MonoBehaviour
         }
     }
 
-    
+    private void Reset()
+    {
+        _speed= 1;
+        _drag = 1;
+    }
+
 }
