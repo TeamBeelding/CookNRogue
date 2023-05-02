@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class ChargingEnemy : EnemyController
 {
@@ -161,7 +160,7 @@ public class ChargingEnemy : EnemyController
         base.TakeDamage(damage, isCritical);
 
         StopCasting();
-        SetState(State.Casting);
+        SetState(State.Waiting);
     }
 
     /// <summary>
