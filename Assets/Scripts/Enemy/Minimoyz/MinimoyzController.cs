@@ -31,14 +31,14 @@ public class MinimoyzController : EnemyController
         _agent = GetComponent<NavMeshAgent>();
         _agent.speed = _data.GetSpeed();
         _agent.stoppingDistance = _data.GetAttackRange();
-        _focusPlayer = _data.GetFocusPlayer();
-        healthpoint = _data.GetHealth();
+        FocusPlayer = _data.GetFocusPlayer();
+        Healthpoint = _data.GetHealth();
     }
 
     // Start is called before the first frame update
     protected override void Start()
     {
-        state = _focusPlayer ? State.Chase : State.Neutral;
+        state = FocusPlayer ? State.Chase : State.Neutral;
 
         base.Start();
     }
@@ -61,7 +61,7 @@ public class MinimoyzController : EnemyController
 
     public void SetFocus(bool value = true)
     {
-        _focusPlayer = value;
+        FocusPlayer = value;
     }
 
     private void StateManagement()
@@ -96,9 +96,9 @@ public class MinimoyzController : EnemyController
         if (state == State.Dying)
             return;
 
-        if (Vector3.Distance(transform.position, player.transform.position) <= _data.GetFocusRange())
+        if (Vector3.Distance(transform.position, Player.transform.position) <= _data.GetFocusRange())
         {
-            _focusPlayer = true;
+            FocusPlayer = true;
             
             if (shouldChaseAndAttack)
                 state = State.ChaseAndAttack;
@@ -110,7 +110,7 @@ public class MinimoyzController : EnemyController
             state = State.Neutral;
         }
 
-        if (Vector3.Distance(transform.position, player.transform.position) <= _data.GetAttackRange())
+        if (Vector3.Distance(transform.position, Player.transform.position) <= _data.GetAttackRange())
         {
             if (shouldChaseAndAttack)
                 state = State.ChaseAndAttack;
@@ -119,7 +119,7 @@ public class MinimoyzController : EnemyController
         }
         else
         {
-            if (_focusPlayer)
+            if (FocusPlayer)
                 state = State.Chase;
         }
     }
@@ -167,7 +167,7 @@ public class MinimoyzController : EnemyController
         {
             yield return new WaitForSeconds(0.4f);
 
-            if (Vector3.Distance(transform.position, player.transform.position) > _data.GetAttackRange())
+            if (Vector3.Distance(transform.position, Player.transform.position) > _data.GetAttackRange())
             {
                 CancelCast();
                 _attackCoroutine = null;
@@ -176,7 +176,7 @@ public class MinimoyzController : EnemyController
 
             yield return new WaitForSeconds(0.5f);
             
-            if (Vector3.Distance(transform.position, player.transform.position) > _data.GetAttackRange())
+            if (Vector3.Distance(transform.position, Player.transform.position) > _data.GetAttackRange())
             {
                 shouldChaseAndAttack = true;
                 _attackCoroutine = null;
@@ -198,20 +198,20 @@ public class MinimoyzController : EnemyController
 
     private void HitPlayer()
     {
-        player.GetComponent<PlayerController>().TakeDamage(_data.GetDamage());
+        Player.GetComponent<PlayerController>().TakeDamage(_data.GetDamage());
         SetState(State.Cast);
     }
 
     protected override void Chase()
     {
-        _agent.SetDestination(player.transform.position);
+        _agent.SetDestination(Player.transform.position);
     }
     
     private void ChaseAndAttack()
     {
         Chase();
         
-        if (Vector3.Distance(transform.position, player.transform.position) <= _data.GetAttackRange())
+        if (Vector3.Distance(transform.position, Player.transform.position) <= _data.GetAttackRange())
         {
             HitPlayer();
             shouldChaseAndAttack = false;
@@ -222,7 +222,7 @@ public class MinimoyzController : EnemyController
     {
         base.TakeDamage(damage, isCritical);
         
-        if (healthpoint <= 0)
+        if (Healthpoint <= 0)
         {
             state = State.Dying;
         }

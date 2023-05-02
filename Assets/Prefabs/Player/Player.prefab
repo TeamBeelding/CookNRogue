@@ -267,17 +267,25 @@ MonoBehaviour:
   m_currentHealthValue: 10
   m_maxHealthValue: 10
   m_rotationSpeed: 30
-  m_moveSpeed: 20
-  m_maxMoveSpeed: 5
-  m_moveDrag: 1
+  m_moveSpeed: 70
+  m_maxMoveSpeed: 7
+  m_dashDuration: 0.2
+  m_dashForce: 2
+  m_moveDrag: 5
   m_interactionRange: 0.5
   m_mainCamera: {fileID: 0}
   m_model: {fileID: 6518352297282107333}
+  m_aimArrow: {fileID: 0}
+  aimArrowGrowth: 0.01
+  aimArrowDuration: 1
   m_interactionMask:
     serializedVersion: 2
     m_Bits: 64
   m_aimAssistPresset: {fileID: 11400000, guid: 40141add18218fc45b20289473d932ce, type: 2}
   takeDamageTransition: {fileID: 0}
+  pauseMenu: {fileID: 0}
+  PlayerAnimStates: {fileID: 0}
+  _isAiming: 0
 --- !u!114 &6518352296090205762
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -290,16 +298,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a34558ecc9aa7f34e83646aee1d9a244, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Projectile: {fileID: 1666282856065623693, guid: 4f0c527b1de4f1b408606041297daaf0,
-    type: 3}
-  muzzle: {fileID: 6518352297253742473}
-  size: 0
-  speed: 0
-  drag: 0
-  heavyAttackDelay: 0
-  heavyDamage: 0
-  lightAttackDelay: 0
-  lightDamage: 0
+  _Projectile: {fileID: 0}
+  _ProjectileNbr: 0
+  _TimeBtwShotsRafale: 0
+  _muzzle: {fileID: 0}
+  _size: 0
+  _speed: 0
+  _drag: 0
+  _heavyAttackDelay: 0
+  _heavyDamage: 0
+  _lightAttackDelay: 0
+  _lightDamage: 0
   _shootCooldown: 0
 --- !u!114 &6518352296090205763
 MonoBehaviour:
@@ -313,7 +322,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41faddc5fc4364f44b4dfa846756a183, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attack: {fileID: 6518352296090205762}
+  _scroll: {fileID: 0}
+  m_attack: {fileID: 0}
   projectilesData:
   - {fileID: 11400000, guid: 496a317e0266cc5489a052a83227a782, type: 2}
   - {fileID: 11400000, guid: 8883ec5033ec73546969892fce674344, type: 2}
@@ -323,6 +333,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c249b6e3405390948a8c59b5a9344853, type: 2}
   UI_Inventory: {fileID: 0}
   SlotsContainer: {fileID: 0}
+  recipe: []
   numberOfIngredients: 3
 --- !u!136 &6518352296090205766
 CapsuleCollider:

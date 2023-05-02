@@ -37,8 +37,8 @@ public class BasicEnemy : EnemyController
         _agent = GetComponent<NavMeshAgent>();
         _agent.speed = data.GetSpeed();
         _agent.stoppingDistance = data.GetAttackRange();
-        _focusPlayer = data.GetFocusPlayer();
-        healthpoint = data.GetHealth();
+        FocusPlayer = data.GetFocusPlayer();
+        Healthpoint = data.GetHealth();
         
         stateRenderer = m_stateSystem.GetComponent<Renderer>();
     }
@@ -46,7 +46,7 @@ public class BasicEnemy : EnemyController
     // Start is called before the first frame update
     protected override void Start()
     {
-        state = _focusPlayer ? State.Chase : State.Neutral;
+        state = FocusPlayer ? State.Chase : State.Neutral;
 
         base.Start();
     }
@@ -103,9 +103,9 @@ public class BasicEnemy : EnemyController
         if (state == State.Dying)
             return;
         
-        if (Vector3.Distance(transform.position, player.transform.position) <= data.GetRangeDetection())
+        if (Vector3.Distance(transform.position, Player.transform.position) <= data.GetRangeDetection())
         {
-            if (Vector3.Distance(transform.position, player.transform.position) <= data.GetAttackSpeed())
+            if (Vector3.Distance(transform.position, Player.transform.position) <= data.GetAttackSpeed())
             {
                 state = State.Attack;
             }
@@ -121,7 +121,7 @@ public class BasicEnemy : EnemyController
         if (state == State.Dying)
             return;
 
-        _agent.SetDestination(player.transform.position);
+        _agent.SetDestination(Player.transform.position);
         
         stateRenderer.material.color = Color.yellow;
         m_stateSystem.gameObject.SetActive(true);
@@ -141,7 +141,7 @@ public class BasicEnemy : EnemyController
     private void Shot()
     {
         GameObject shot = Instantiate(m_bullet, m_gun.transform.position, Quaternion.identity);
-        shot.GetComponent<EnemyBulletController>().SetDirection(player.transform);
+        shot.GetComponent<EnemyBulletController>().SetDirection(Player.transform);
     }
     
     private new void Dying()
@@ -162,7 +162,7 @@ public class BasicEnemy : EnemyController
         if (state == State.Neutral)
             state = State.Chase;
         
-        if (healthpoint <= 0)
+        if (Healthpoint <= 0)
         {
             state = State.Dying;
         }

@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class ChargingEnemy : EnemyController
 {
@@ -36,7 +35,7 @@ public class ChargingEnemy : EnemyController
     private void Awake()
     {
         base.Awake();
-        healthpoint = _data.GetHealth();
+        Healthpoint = _data.GetHealth();
     }
     
     // Start is called before the first frame update
@@ -122,7 +121,7 @@ public class ChargingEnemy : EnemyController
     {
         _isCharging = false;
         _castingCoroutine = StartCoroutine(ICasting());
-        visual.transform.LookAt(new Vector3(player.transform.position.x, visual.transform.position.y, player.transform.position.z));
+        visual.transform.LookAt(new Vector3(Player.transform.position.x, visual.transform.position.y, Player.transform.position.z));
     }
     
     /// <summary>
@@ -161,7 +160,7 @@ public class ChargingEnemy : EnemyController
         base.TakeDamage(damage, isCritical);
 
         StopCasting();
-        SetState(State.Casting);
+        SetState(State.Waiting);
     }
 
     /// <summary>
@@ -180,7 +179,7 @@ public class ChargingEnemy : EnemyController
     private Vector3 GetPlayerDirection()
     {
         _isCharging = true;
-        Vector3 direction = (player.transform.position - transform.position).normalized;
+        Vector3 direction = (Player.transform.position - transform.position).normalized;
         direction.y = 0;
         
         return direction;
