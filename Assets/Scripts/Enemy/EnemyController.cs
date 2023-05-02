@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 public abstract class EnemyController : MonoBehaviour
 {
-    protected GameObject player;
+    protected GameObject Player;
     
     [HideInInspector]
     public List<StatusEffectHandler> _effectHandlers;
@@ -15,10 +15,10 @@ public abstract class EnemyController : MonoBehaviour
     
     private IEnumerator _colorCoroutine;
     
-    protected bool _focusPlayer = false;
+    protected bool FocusPlayer = false;
     private bool _canAttack = true;
     
-    protected float healthpoint;
+    protected float Healthpoint;
     
     [SerializeField]
     protected GameObject explosion;
@@ -33,7 +33,7 @@ public abstract class EnemyController : MonoBehaviour
     // Start is called before the first frame update
     protected virtual void Start()
     {
-        player = PlayerController.Instance.gameObject;
+        Player = PlayerController.Instance.gameObject;
         AddToEnemyManager();
         
         _rend.material.color = Color.white;
@@ -71,9 +71,9 @@ public abstract class EnemyController : MonoBehaviour
     public virtual void TakeDamage(float damage = 1, bool isCritical = false)
     {
         damage = Mathf.Abs(damage);
-        healthpoint -= damage;
+        Healthpoint -= damage;
 
-        if (healthpoint > 0)
+        if (Healthpoint > 0)
         {
             StartCoroutine(IColorationFeedback());
         }
