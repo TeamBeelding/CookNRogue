@@ -7,6 +7,7 @@ public class PlayerAttack : MonoBehaviour
 {
     public GameObject _Projectile;
     public int _ProjectileNbr;
+    public int _ammunition;
     [HideInInspector]
     public float _TimeBtwShotsRafale;
     PlayerBulletBehaviour _projectileBehaviour;
@@ -56,6 +57,11 @@ public class PlayerAttack : MonoBehaviour
         _shootOnCooldown = true;
         _curShootDelay = StartCoroutine(ShootDelay(_shootCooldown));
 
+        _ammunition--;
+        if(_ammunition <= 0)
+        {
+            ResetParameters();
+        }
         //Animation
         //m_knockbackScript.StartKnockback();
 
@@ -184,6 +190,7 @@ public class PlayerAttack : MonoBehaviour
         _TimeBtwShotsRafale = 0;
         _damage = 0;
         _attackDelay = 0;
+        _ammunition = 0;
     }
 
     public void Reset()

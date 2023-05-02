@@ -31,6 +31,7 @@ public class ProjectileData : ScriptableObject
     [Space(20)]
 
     [Header("Attack")]
+    public int _ammunition;
     public float _attackDelay;
     public float _damage;
 

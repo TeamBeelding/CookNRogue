@@ -83,6 +83,7 @@ public class PlayerInventoryScript : MonoBehaviour
             m_attack._drag += ingredient._drag;
             m_attack._attackDelay += ingredient._attackDelay;
             m_attack._damage += ingredient._damage;
+            m_attack._ammunition += ingredient._ammunition;
 
 
             //AJOUT DES EFFETS DANS LE SCRIPT D'ATTAQUE
