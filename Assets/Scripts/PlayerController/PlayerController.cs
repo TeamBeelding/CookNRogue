@@ -2,7 +2,7 @@ using UnityEngine.InputSystem;
 using UnityEngine;
 using System.Collections;
 
-[RequireComponent (typeof(Rigidbody), typeof (Collider))]
+[RequireComponent(typeof(Rigidbody), typeof(Collider))]
 public class PlayerController : MonoBehaviour
 {
     #region Variables
@@ -61,7 +61,17 @@ public class PlayerController : MonoBehaviour
     Transform _relativeTransform;
 
     Vector2 _moveInputValue;
+    public Vector2 MoveInputValue
+    {
+        get => _moveInputValue;
+    }
+
     Vector2 _aimInputValue;
+    public Vector2 AimInputValue
+    {
+        get => _aimInputValue;
+    }
+
 
     private bool m_isDashing = false;
     private Vector3 m_dashDirection = Vector2.zero;
@@ -364,8 +374,6 @@ public class PlayerController : MonoBehaviour
         if (!m_isDashing && _rb.velocity.magnitude > m_maxMoveSpeed)
         {
             _rb.velocity = new Vector3(direction.x, 0, direction.z) * m_maxMoveSpeed;
-
-            //_rb.velocity = new Vector3(direction.x, _rb.velocity.y, direction.z) * m_maxMoveSpeed;
 
         }
     }
