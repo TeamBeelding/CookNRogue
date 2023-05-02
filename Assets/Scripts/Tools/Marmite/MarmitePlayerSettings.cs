@@ -68,19 +68,11 @@ public class MarmitePlayerSettings
     [BoxGroup("PlayerAttack")]
     [EnableIf("m_playerController")]
     [CustomValueDrawer("SetHeavyAttackDelay")]
-    public float heavyAttackDelay;
+    public float attackDelay;
     [BoxGroup("PlayerAttack")]
     [EnableIf("m_playerController")]
     [CustomValueDrawer("SetHeavyDamage")]
-    public float heavyDamage;
-    [BoxGroup("PlayerAttack")]
-    [EnableIf("m_playerController")]
-    [CustomValueDrawer("SetLightAttackDelay")]
-    public float lightAttackDelay;
-    [BoxGroup("PlayerAttack")]
-    [EnableIf("m_playerController")]
-    [CustomValueDrawer("SetLightDamage")]
-    public float lightDamage;
+    public float damage;
     [BoxGroup("PlayerAttack")]
     [EnableIf("m_playerController")]
     [CustomValueDrawer("SetShootCooldown")]
@@ -116,10 +108,8 @@ public class MarmitePlayerSettings
         size = m_playerAttack._size;
         speed = m_playerAttack._speed;
         drag = m_playerAttack._drag;
-        heavyAttackDelay = m_playerAttack._heavyAttackDelay;
-        heavyDamage = m_playerAttack._heavyDamage;
-        lightAttackDelay = m_playerAttack._lightAttackDelay;
-        lightDamage = m_playerAttack._lightDamage;
+        attackDelay = m_playerAttack._attackDelay;
+        damage = m_playerAttack._damage;
         shootCooldown = m_playerAttack._shootCooldown;
     }
 
@@ -187,23 +177,14 @@ public class MarmitePlayerSettings
     private float SetHeavyAttackDelay(float value, GUIContent label)
     {
         if (m_playerAttack == null) return EditorGUILayout.FloatField(label, 0);;
-        return EditorGUILayout.FloatField(label, m_playerAttack._heavyAttackDelay = value);
+        return EditorGUILayout.FloatField(label, m_playerAttack._attackDelay = value);
     }
     private float SetHeavyDamage(float value, GUIContent label)
     {
         if (m_playerAttack == null) return EditorGUILayout.FloatField(label, 0);;
-        return EditorGUILayout.FloatField(label, m_playerAttack._heavyDamage = value);
+        return EditorGUILayout.FloatField(label, m_playerAttack._damage = value);
     }
-    private float SetLightAttackDelay(float value, GUIContent label)
-    {
-        if (m_playerAttack == null) return EditorGUILayout.FloatField(label, 0);;
-        return EditorGUILayout.FloatField(label, m_playerAttack._lightAttackDelay = value);
-    }
-    private float SetLightDamage(float value, GUIContent label)
-    {
-        if (m_playerAttack == null) return EditorGUILayout.FloatField(label, 0);;
-        return EditorGUILayout.FloatField(label, m_playerAttack._lightDamage = value);
-    }
+
     private float SetShootCooldown(float value, GUIContent label)
     {
         if (m_playerAttack == null) return EditorGUILayout.FloatField(label, 0);;

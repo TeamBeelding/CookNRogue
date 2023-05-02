@@ -81,10 +81,10 @@ public class PlayerInventoryScript : MonoBehaviour
             m_attack._size += ingredient._size;
             m_attack._speed += ingredient._speed;
             m_attack._drag += ingredient._drag;
-            m_attack._heavyAttackDelay += ingredient._heavyAttackDelay;
-            m_attack._heavyDamage += ingredient._heavyDamage;
-            m_attack._lightAttackDelay += ingredient._lightAttackDelay;
-            m_attack._lightDamage += ingredient._lightDamage;
+            m_attack._attackDelay += ingredient._attackDelay;
+            m_attack._damage += ingredient._damage;
+            m_attack._ammunition += ingredient._ammunition;
+
 
             //AJOUT DES EFFETS DANS LE SCRIPT D'ATTAQUE
             foreach (IIngredientEffects effect in ingredient._effects)
