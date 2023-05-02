@@ -108,6 +108,7 @@ GameObject:
   - component: {fileID: 1083191455915078813}
   - component: {fileID: 1083191455915078812}
   - component: {fileID: 1083191455915078815}
+  - component: {fileID: 6819553030259180332}
   m_Layer: 0
   m_Name: Oeuf
   m_TagString: Untagged
@@ -124,8 +125,8 @@ Transform:
   m_GameObject: {fileID: 1083191455915078883}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3.2636292, y: 0.000002861023, z: 0.43712616}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1083191455250324987}
   - {fileID: 2825121004574503457}
@@ -173,6 +174,24 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &6819553030259180332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1083191455915078883}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 1
+  outlineColor: {r: 1, g: 0.95953274, b: 0.65471697, a: 1}
+  outlineWidth: 4
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1001 &2359430906459264458
 PrefabInstance:
   m_ObjectHideFlags: 0
