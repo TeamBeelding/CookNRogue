@@ -8,6 +8,7 @@ public class PlayerAttack : MonoBehaviour
     public GameObject _Projectile;
     public int _ProjectileNbr;
     public int _ammunition;
+    private AmmunitionBar _ammunitionBar;
     [HideInInspector]
     public float _TimeBtwShotsRafale;
     PlayerBulletBehaviour _projectileBehaviour;
@@ -40,6 +41,9 @@ public class PlayerAttack : MonoBehaviour
     {
 
         _playerController = GetComponent<PlayerController>();
+        _ammunitionBar = AmmunitionBar.instance;
+
+        _ammunitionBar.InitAmmoBar(0);
     }
 
     
@@ -56,12 +60,15 @@ public class PlayerAttack : MonoBehaviour
         //Shoot Bullet
         _shootOnCooldown = true;
         _curShootDelay = StartCoroutine(ShootDelay(_shootCooldown));
-
+        
         _ammunition--;
         if(_ammunition <= 0)
         {
             ResetParameters();
         }
+
+        if(_ammunitionBar)
+            _ammunitionBar.UpdateAmmoBar();
         //Animation
         //m_knockbackScript.StartKnockback();
 

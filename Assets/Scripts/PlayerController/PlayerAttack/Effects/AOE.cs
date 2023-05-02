@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class AOE : IIngredientEffects
 {
@@ -24,13 +23,13 @@ public class AOE : IIngredientEffects
     public void EffectOnHit(Vector3 Position,GameObject HitObject, Vector3 direction)
     {
         RaycastHit hit;
-
+        Debug.DrawLine(Position - (direction), Position - (direction) + (Vector3.down) * 9,Color.blue,999);
         if (Physics.Raycast(Position - (direction), Vector3.down,out hit,Mathf.Infinity, _mask))
         {
-            //Debug.Log(hit.transform.name);
+            
             GameObject instancedObj = GameObject.Instantiate(ZONE, hit.point, Quaternion.identity) as GameObject;
             instancedObj.transform.localScale = Vector3.one * (m_AOERadius / 2);
-            UnityEngine.Object.Destroy(instancedObj, m_AOEDuration);
+            Object.Destroy(instancedObj, m_AOEDuration);
         }
  
     }

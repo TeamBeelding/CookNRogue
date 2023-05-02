@@ -85,6 +85,7 @@ public class PlayerInventoryScript : MonoBehaviour
             m_attack._damage += ingredient._damage;
             m_attack._ammunition += ingredient._ammunition;
 
+            AmmunitionBar.instance.AddIngredientAmmo(ingredient._ammunition);
 
             //AJOUT DES EFFETS DANS LE SCRIPT D'ATTAQUE
             foreach (IIngredientEffects effect in ingredient._effects)
