@@ -1,8 +1,8 @@
+using System;
 using NaughtyAttributes;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
 namespace Enemy.Slime
@@ -11,9 +11,9 @@ namespace Enemy.Slime
     {
         [SerializeField] private SlimeData _data;
         [SerializeField] private NavMeshAgent _agent;
-        [SerializeField] private GameObject _gun;
         [SerializeField, Required("Prefabs minimoyz")] private GameObject _minimoyz;
-    
+        [SerializeField, Required("Minimoyz spawn checker")] private SlimeCheckingMinimoyzSpawn _minimoyzSpawnChecker;
+
         public enum State
         {
             Neutral,
@@ -28,17 +28,18 @@ namespace Enemy.Slime
         private void Reset()
         {
             _agent = GetComponent<NavMeshAgent>();
-            healthpoint = _data.GetHealth;
+            Healthpoint = _data.GetHealth;
             _agent = GetComponent<NavMeshAgent>();
             _agent.speed = _data.GetSpeed;
             _agent.stoppingDistance = _data.GetAttackRange;
+            _minimoyzSpawnChecker = GetComponentInChildren<SlimeCheckingMinimoyzSpawn>();
         }
 
         protected override void Awake()
         {
             base.Awake();
         
-            healthpoint = _data.GetHealth;
+            Healthpoint = _data.GetHealth;
             _agent = GetComponent<NavMeshAgent>();
             _agent.speed = _data.GetSpeed;
             _agent.stoppingDistance = _data.GetAttackRange;
@@ -48,6 +49,7 @@ namespace Enemy.Slime
         protected override void Start()
         {
             state = _data.GetFocusPlayer ? State.Chase : State.Neutral;
+            _minimoyzSpawnChecker = GetComponentInChildren<SlimeCheckingMinimoyzSpawn>();
 
             base.Start();
         }
@@ -96,9 +98,9 @@ namespace Enemy.Slime
             if (state == State.Dying)
                 return;
         
-            if (Vector3.Distance(transform.position, player.transform.position) <= _data.GetFocusRange)
+            if (Vector3.Distance(transform.position, Player.transform.position) <= _data.GetFocusRange)
             {
-                _focusPlayer = true;
+                FocusPlayer = true;
                 state = State.Chase;
             }
             else
@@ -106,25 +108,25 @@ namespace Enemy.Slime
                 state = State.Neutral;
             }
 
-            if (Vector3.Distance(transform.position, player.transform.position) <= _data.GetAttackRange)
+            if (Vector3.Distance(transform.position, Player.transform.position) <= _data.GetAttackRange)
             {
-                if (Vector3.Distance(transform.position, player.transform.position) <= _data.GetMinimumDistanceToKeep)
+                if (Vector3.Distance(transform.position, Player.transform.position) <= _data.GetMinimumDistanceToKeep)
                     state = State.KeepingDistance;
                 else
                     state = State.Attack;
             }
             else
             {
-                if (_focusPlayer)
+                if (FocusPlayer)
                     state = State.Chase;
             }
         }
     
         private void KeepDistance()
         {
-            if (Vector3.Distance(transform.position, player.transform.position) <= _data.GetMinimumDistanceToKeep)
+            if (Vector3.Distance(transform.position, Player.transform.position) <= _data.GetMinimumDistanceToKeep)
             {
-                Vector3 target = transform.position - (player.transform.position - transform.position);
+                Vector3 target = transform.position - (Player.transform.position - transform.position);
                 _agent.stoppingDistance = 0;
                 _agent.SetDestination(target);
             }
@@ -133,19 +135,26 @@ namespace Enemy.Slime
         protected override void Chase()
         {
             _agent.stoppingDistance = _data.GetAttackRange;
-            _agent.SetDestination(player.transform.position);
+            _agent.SetDestination(Player.transform.position);
         }
 
         // ReSharper disable Unity.PerformanceAnalysis
         private void ThrowMinimoyz()
         {
-            GameObject minimoyz = Instantiate(_minimoyz, RandomPoint(), quaternion.identity);
+            Vector3 point = RandomPoint();
+            
+            _minimoyzSpawnChecker.SetTransformPosition(point);
+            
+            if (!_minimoyzSpawnChecker.IsPathValid(Player.transform.position))
+                ThrowMinimoyz();
+
+            GameObject minimoyz = Instantiate(_minimoyz, point, quaternion.identity);
             minimoyz.GetComponent<MinimoyzController>().SetFocus();
         }
 
         private Vector3 RandomPoint()
         {
-            Vector3 center = player.transform.position;
+            Vector3 center = Player.transform.position;
             float distanceBetweenRadius = _data.GetOuterRadius - _data.GetInnerRadius;
             float randomRadius = Random.value;
             float distanceFromCenter = _data.GetInnerRadius + (randomRadius * distanceBetweenRadius);
@@ -164,7 +173,7 @@ namespace Enemy.Slime
         {
             base.TakeDamage(damage, isCritical);
         
-            if (healthpoint <= 0)
+            if (Healthpoint <= 0)
             {
                 state = State.Dying;
             }
