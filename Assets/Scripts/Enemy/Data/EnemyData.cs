@@ -30,12 +30,12 @@ public class EnemyData : ScriptableObject
     [SerializeField]
     private bool focusInstantlyPlayer = false;
     
-    public float GetHealth() => health;
-    public float GetSpeed() => speed;
-    public float GetRangeDetection() => rangeDetection;
-    public float GetAttackRange() => attackRange;
-    public float GetAttackSpeed() => attackSpeed;
-    public float GetDamage() => damage;
-    public float GetRecoilForce() => forceRecoil;
-    public bool GetFocusPlayer() => focusInstantlyPlayer;
+    public float GetHealth => health;
+    public float GetSpeed => speed;
+    public float GetRangeDetection => rangeDetection;
+    public float GetAttackRange => attackRange;
+    public float GetAttackSpeed => attackSpeed;
+    public float GetDamage => damage;
+    public float GetRecoilForce => forceRecoil;
+    public bool GetFocusPlayer => focusInstantlyPlayer;
 }

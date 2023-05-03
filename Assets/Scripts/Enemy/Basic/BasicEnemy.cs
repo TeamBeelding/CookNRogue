@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
@@ -35,10 +36,10 @@ public class BasicEnemy : EnemyController
         base.Awake();
         
         _agent = GetComponent<NavMeshAgent>();
-        _agent.speed = data.GetSpeed();
-        _agent.stoppingDistance = data.GetAttackRange();
-        FocusPlayer = data.GetFocusPlayer();
-        Healthpoint = data.GetHealth();
+        _agent.speed = data.GetSpeed;
+        _agent.stoppingDistance = data.GetAttackRange;
+        FocusPlayer = data.GetFocusPlayer;
+        Healthpoint = data.GetHealth;
         
         stateRenderer = m_stateSystem.GetComponent<Renderer>();
     }
@@ -54,9 +55,19 @@ public class BasicEnemy : EnemyController
     // Update is called once per frame
     protected override void Update()
     {
+        _agent.SetDestination(Player.transform.position);
+
         base.Update();
         
-        IStateManagement();
+        StateManagement();
+    }
+    
+    private void Reset()
+    {
+        Healthpoint = data.GetHealth;
+        _agent = GetComponent<NavMeshAgent>();
+        _agent.speed = data.GetSpeed;
+        _agent.stoppingDistance = data.GetAttackRange;
     }
 
     private void FixedUpdate()
@@ -77,17 +88,18 @@ public class BasicEnemy : EnemyController
         state = value;
     }
     
-    private void IStateManagement()
+    // ReSharper disable Unity.PerformanceAnalysis
+    private void StateManagement()
     {
         switch (state)
         {
             case State.Neutral:
                 break;
             case State.Chase:
-                Chase();
+                _agent.SetDestination(Player.transform.position);
                 break;
             case State.Attack:
-                Attack(Shot, data.GetAttackSpeed());
+                Attack(Shot, data.GetAttackSpeed);
                 break;
             case State.Dying:
                 Dying();
@@ -100,12 +112,12 @@ public class BasicEnemy : EnemyController
     
     private void AreaDetection()
     {
-        if (state == State.Dying)
+        if (state == State.Dying || state == State.Neutral)
             return;
         
-        if (Vector3.Distance(transform.position, Player.transform.position) <= data.GetRangeDetection())
+        if (Vector3.Distance(transform.position, Player.transform.position) <= data.GetRangeDetection)
         {
-            if (Vector3.Distance(transform.position, Player.transform.position) <= data.GetAttackSpeed())
+            if (Vector3.Distance(transform.position, Player.transform.position) <= data.GetAttackSpeed)
             {
                 state = State.Attack;
             }
@@ -123,8 +135,8 @@ public class BasicEnemy : EnemyController
 
         _agent.SetDestination(Player.transform.position);
         
-        stateRenderer.material.color = Color.yellow;
-        m_stateSystem.gameObject.SetActive(true);
+        // stateRenderer.material.color = Color.yellow;
+        // m_stateSystem.gameObject.SetActive(true);
     }
     
     protected override void Attack(UnityAction Shot, float delay)
@@ -132,8 +144,8 @@ public class BasicEnemy : EnemyController
         if (state == State.Dying)
             return;
         
-        stateRenderer.material.color = Color.red;
-        m_stateSystem.gameObject.SetActive(true);
+        // stateRenderer.material.color = Color.red;
+        // m_stateSystem.gameObject.SetActive(true);
 
         base.Attack(Shot);
     }
@@ -173,9 +185,9 @@ public class BasicEnemy : EnemyController
     protected override void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, data.GetRangeDetection());
+        Gizmos.DrawWireSphere(transform.position, data.GetRangeDetection);
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, data.GetAttackRange());
+        Gizmos.DrawWireSphere(transform.position, data.GetAttackRange);
     }
     
     #endif

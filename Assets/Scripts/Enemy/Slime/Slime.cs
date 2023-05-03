@@ -27,7 +27,6 @@ namespace Enemy.Slime
 
         private void Reset()
         {
-            _agent = GetComponent<NavMeshAgent>();
             Healthpoint = _data.GetHealth;
             _agent = GetComponent<NavMeshAgent>();
             _agent.speed = _data.GetSpeed;
