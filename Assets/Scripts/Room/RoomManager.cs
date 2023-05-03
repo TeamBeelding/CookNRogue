@@ -109,17 +109,39 @@ public class RoomManager : MonoBehaviour
             case "Hub":
                 LoadLevel(m_Levels.LevelLists.HubList);
                 break;
-            case "Room":
-                LoadLevel(m_Levels.LevelLists.RoomList);
+
+            case "Easy_Room":
+                LoadLevel(m_Levels.LevelLists.RoomEasyList);
                 break;
-            case "Corridor":
-                LoadLevel(m_Levels.LevelLists.CorridorList);
+            case "Normal_Room":
+                LoadLevel(m_Levels.LevelLists.RoomNormalList);
                 break;
+            case "Hard_Room":
+                LoadLevel(m_Levels.LevelLists.RoomHardList);
+                break;
+
+            case "Easy_Corridor":
+                LoadLevel(m_Levels.LevelLists.CorridorEasyList);
+                break;
+            case "Normal_Corridor":
+                LoadLevel(m_Levels.LevelLists.CorridorNormalList);
+                break;
+            case "Hard_Corridor":
+                LoadLevel(m_Levels.LevelLists.CorridorHardList);
+                break;
+
             case "Shop":
                 LoadLevel(m_Levels.LevelLists.ShopList);
+
                 break;
-            case "Final":
-                LoadLevel(m_Levels.LevelLists.FinalList);
+            case "Easy_Final":
+                LoadLevel(m_Levels.LevelLists.FinalEasyList);
+                break;
+            case "Normal_Final":
+                LoadLevel(m_Levels.LevelLists.FinalNormalList);
+                break;
+            case "Hard_Final":
+                LoadLevel(m_Levels.LevelLists.FinalHardList);
                 break;
         }
     }
@@ -133,17 +155,39 @@ public class RoomManager : MonoBehaviour
             case "Hub":
                 _currentLevel = Instantiate(m_Levels.LevelLists.HubList[index], Vector3.zero, Quaternion.identity);
                 break;
-            case "Room":
-                _currentLevel = Instantiate(m_Levels.LevelLists.RoomList[index], Vector3.zero, Quaternion.identity);
+
+            case "Easy_Room":
+                _currentLevel = Instantiate(m_Levels.LevelLists.RoomEasyList[index], Vector3.zero, Quaternion.identity);
                 break;
-            case "Corridor":
-                _currentLevel = Instantiate(m_Levels.LevelLists.CorridorList[index], Vector3.zero, Quaternion.identity);
+            case "Normal_Room":
+                _currentLevel = Instantiate(m_Levels.LevelLists.RoomNormalList[index], Vector3.zero, Quaternion.identity);
                 break;
+            case "Hard_Room":
+                _currentLevel = Instantiate(m_Levels.LevelLists.RoomHardList[index], Vector3.zero, Quaternion.identity);
+                break;
+
+            case "Easy_Corridor":
+                _currentLevel = Instantiate(m_Levels.LevelLists.CorridorEasyList[index], Vector3.zero, Quaternion.identity);
+                break;
+            case "Normal_Corridor":
+                _currentLevel = Instantiate(m_Levels.LevelLists.CorridorNormalList[index], Vector3.zero, Quaternion.identity);
+                break;
+            case "Hard_Corridor":
+                _currentLevel = Instantiate(m_Levels.LevelLists.CorridorHardList[index], Vector3.zero, Quaternion.identity);
+                break;
+
             case "Shop":
                 _currentLevel = Instantiate(m_Levels.LevelLists.ShopList[index], Vector3.zero, Quaternion.identity);
                 break;
-            case "Final":
-                _currentLevel = Instantiate(m_Levels.LevelLists.FinalList[index], Vector3.zero, Quaternion.identity);
+
+            case "Easy_Final":
+                _currentLevel = Instantiate(m_Levels.LevelLists.FinalEasyList[index], Vector3.zero, Quaternion.identity);
+                break;
+            case "Normal_Final":
+                _currentLevel = Instantiate(m_Levels.LevelLists.FinalNormalList[index], Vector3.zero, Quaternion.identity);
+                break;
+            case "Hard_Final":
+                _currentLevel = Instantiate(m_Levels.LevelLists.FinalHardList[index], Vector3.zero, Quaternion.identity);
                 break;
         }
 
@@ -247,17 +291,38 @@ public class RoomManagerEditor : Editor
             case "Hub":
                 selected = EditorGUILayout.Popup("Specified Level", selected, room.Levels.LevelNames[0]);
                 break;
-            case "Room":
+            case "Easy_Room":
                 selected = EditorGUILayout.Popup("Specified Level", selected, room.Levels.LevelNames[1]);
                 break;
-            case "Corridor":
+            case "Normal_Room":
                 selected = EditorGUILayout.Popup("Specified Level", selected, room.Levels.LevelNames[2]);
                 break;
-            case "Shop":
+            case "Hard_Room":
                 selected = EditorGUILayout.Popup("Specified Level", selected, room.Levels.LevelNames[3]);
                 break;
-            case "Final":
+
+            case "Easy_Corridor":
                 selected = EditorGUILayout.Popup("Specified Level", selected, room.Levels.LevelNames[4]);
+                break;
+            case "Normal_Corridor":
+                selected = EditorGUILayout.Popup("Specified Level", selected, room.Levels.LevelNames[5]);
+                break;
+            case "Hard_Corridor":
+                selected = EditorGUILayout.Popup("Specified Level", selected, room.Levels.LevelNames[6]);
+                break;
+
+            case "Shop":
+                selected = EditorGUILayout.Popup("Specified Level", selected, room.Levels.LevelNames[7]);
+                break;
+
+            case "Easy_Final":
+                selected = EditorGUILayout.Popup("Specified Level", selected, room.Levels.LevelNames[8]);
+                break;
+            case "Normal_Final":
+                selected = EditorGUILayout.Popup("Specified Level", selected, room.Levels.LevelNames[9]);
+                break;
+            case "Hard_Final":
+                selected = EditorGUILayout.Popup("Specified Level", selected, room.Levels.LevelNames[10]);
                 break;
         }
 
