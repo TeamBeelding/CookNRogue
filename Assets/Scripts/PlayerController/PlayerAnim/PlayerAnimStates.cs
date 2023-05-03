@@ -94,7 +94,13 @@ public class PlayerAnimStates : MonoBehaviour
     {
         Vector2 _moveInputValue = _player.MoveInputValue;
         Vector2 _aimInputValue = _player.AimInputValue;
-        _moveInputValue = _moveInputValue.normalized;
 
+        Vector2 _normalizedMoveInputValue = _moveInputValue.normalized;
+        Vector2 _normalizedAimInputValue = _aimInputValue.normalized;
+
+        Vector2 _resultingVector = _moveInputValue + _aimInputValue;
+
+        _animator.SetFloat("right", _resultingVector.x);
+        _animator.SetFloat("forward", _resultingVector.y);
     }
 }
