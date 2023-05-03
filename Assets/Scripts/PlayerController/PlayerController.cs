@@ -159,7 +159,8 @@ public class PlayerController : MonoBehaviour
         _playerActions.UI.Enable();
 
         //Set Default Events
-        _playerActions.Default.Shoot.performed += Shoot;
+        _playerActions.Default.Shoot.performed += Shoot_Performed;
+        _playerActions.Default.Shoot.canceled += Shoot_Canceled;
         _playerActions.Default.Move.performed += Move_Performed;
         _playerActions.Default.Move.canceled += Move_Canceled;
         _playerActions.Default.Aim.performed += Aim_Performed;
@@ -525,7 +526,7 @@ public class PlayerController : MonoBehaviour
 
     #region Other Actions
 
-    void Shoot(InputAction.CallbackContext context)
+    void Shoot_Performed(InputAction.CallbackContext context)
     {
         //Block player actions
         if (_isLocked)
@@ -535,13 +536,21 @@ public class PlayerController : MonoBehaviour
 
         if (context.performed)
         {
-            GetComponent<PlayerAttack>().Shoot();
+            GetComponent<PlayerAttack>().SetIsShooting(true);
         }
     }
-    #endregion
 
-    #region Utilities
-    public void Lock(bool isLocked)
+    void Shoot_Canceled(InputAction.CallbackContext context)
+    {
+        if (context.canceled)
+        {
+            GetComponent<PlayerAttack>().SetIsShooting(false);
+        }
+    }
+        #endregion
+
+        #region Utilities
+        public void Lock(bool isLocked)
     {
         _isLocked = isLocked;
     }

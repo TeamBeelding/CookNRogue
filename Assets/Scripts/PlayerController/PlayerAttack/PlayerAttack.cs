@@ -25,7 +25,7 @@ public class PlayerAttack : MonoBehaviour
     [Header("Attack")]
     public float _attackDelay;
     public float _damage;
-
+    [SerializeField]private bool _isShooting = false;
     public List<IIngredientEffects> _effects = new List<IIngredientEffects>();
     
     bool _shootOnCooldown;
@@ -46,7 +46,10 @@ public class PlayerAttack : MonoBehaviour
         _ammunitionBar.InitAmmoBar(0);
     }
 
-    
+    public void SetIsShooting(bool isShooting)
+    {
+        _isShooting = isShooting;
+    }
     public void Shoot()
     {
         if (_shootOnCooldown)
@@ -200,6 +203,13 @@ public class PlayerAttack : MonoBehaviour
         _ammunition = 0;
     }
 
+    public void FixedUpdate()
+    {
+        if (_isShooting)
+        {
+            Shoot();
+        }
+    }
     public void Reset()
     {
         _ProjectileNbr= 1;
