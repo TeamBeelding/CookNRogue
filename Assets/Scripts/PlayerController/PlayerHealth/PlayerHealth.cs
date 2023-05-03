@@ -13,13 +13,6 @@ public class PlayerHealth : MonoBehaviour
         _heartBar = HeartBar.instance;
         HealthInit();
     }
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            TakeDamage(1);
-        }
-    }
     public void HealthInit()
     {
         //GUARDS

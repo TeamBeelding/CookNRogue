@@ -74,6 +74,7 @@ public class PlayerInventoryScript : MonoBehaviour
             return;
         }
 
+        m_attack._shootCooldown = 0;
         //Fusionne les effets et stats des differents ingredients
         foreach (ProjectileData ingredient in recipe)
         {
@@ -81,10 +82,12 @@ public class PlayerInventoryScript : MonoBehaviour
             m_attack._size += ingredient._size;
             m_attack._speed += ingredient._speed;
             m_attack._drag += ingredient._drag;
-            m_attack._attackDelay += ingredient._attackDelay;
             m_attack._damage += ingredient._damage;
             m_attack._ammunition += ingredient._ammunition;
+            m_attack._shootCooldown += ingredient._attackDelay;
 
+            if (AmmunitionBar.instance!= null)
+                AmmunitionBar.instance.AddIngredientAmmo(ingredient._ammunition);
 
             //AJOUT DES EFFETS DANS LE SCRIPT D'ATTAQUE
             foreach (IIngredientEffects effect in ingredient._effects)

@@ -92,15 +92,9 @@ public class PlayerAnimStates : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        //_moveInputValue = _player.MoveInputValue.normalized;
-        //_aimInputValue = _player.AimInputValue.normalized;
-
-        Vector2 _relativeValue = _aimInputValue - _moveInputValue;
-
-        //if() 
-        //{ 
-        
-        //}
+        Vector2 _moveInputValue = _player.MoveInputValue;
+        Vector2 _aimInputValue = _player.AimInputValue;
+        _moveInputValue = _moveInputValue.normalized;
 
     }
 }
