@@ -22,20 +22,15 @@ public class PlayerAnimStates : MonoBehaviour
     [SerializeField]
     private Transform aimedMarmite;
 
-    private float _horizontalAxis;
-    private float _verticalAxis;
+    private PlayerController _player;
 
-    public Transform cam;
-    Vector3 camForward;
-    Vector3 move;
-    Vector3 moveInput;
-
-    float forwardAmount;
-    float strafeAmount;
+    Vector2 _moveInputValue;
+    Vector2 _aimInputValue;
 
     void Start()
     {
         _animator = GetComponent<Animator>();
+        _player = GetComponentInParent<PlayerController>();
     }
 
     private void Update()
@@ -97,49 +92,15 @@ public class PlayerAnimStates : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        _horizontalAxis = Input.GetAxis("Horizontal");
-        _verticalAxis = Input.GetAxis("Vertical");
+        //_moveInputValue = _player.MoveInputValue.normalized;
+        //_aimInputValue = _player.AimInputValue.normalized;
 
-        //Vector2 _moveInputValue;
-        //Vector2 _aimInputValue;
+        Vector2 _relativeValue = _aimInputValue - _moveInputValue;
 
-        move = _verticalAxis * Vector3.forward + _horizontalAxis * Vector3.right;
+        //if() 
+        //{ 
+        
         //}
 
-        //if (move.magnitude > 1)
-        //{
-        //    move.Normalize();
-        //}
-
-        Move(move);
-
-        //_animator.SetFloat("forward", _verticalAxis, 0.1f, Time.deltaTime);
-        //_animator.SetFloat("strafe", _horizontalAxis, 0.1f, Time.deltaTime);
-
     }
-
-    void Move(Vector3 currentMove)
-    {
-        if (currentMove.magnitude > 1)
-        {
-            currentMove.Normalize();
-        }
-        moveInput = currentMove;
-
-        ConvertMoveInput();
-        UpdateAnimator();
-    }
-
-    void ConvertMoveInput()
-    {
-        Vector3 localMove = transform.InverseTransformDirection(moveInput);
-        strafeAmount = localMove.x;
-        forwardAmount = localMove.z;
-    }
-    void UpdateAnimator()
-    {
-        _animator.SetFloat("forward", forwardAmount, 0.1f, Time.deltaTime);
-        _animator.SetFloat("strafe", strafeAmount, 0.1f, Time.deltaTime);
-    }
-
 }
