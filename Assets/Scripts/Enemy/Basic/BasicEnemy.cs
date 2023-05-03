@@ -112,7 +112,7 @@ public class BasicEnemy : EnemyController
     
     private void AreaDetection()
     {
-        if (state == State.Dying || state == State.Neutral)
+        if (state == State.Dying)
             return;
         
         if (Vector3.Distance(transform.position, Player.transform.position) <= data.GetRangeDetection)
@@ -179,16 +179,4 @@ public class BasicEnemy : EnemyController
             state = State.Dying;
         }
     }
-    
-    #if UNITY_EDITOR
-    
-    protected override void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, data.GetRangeDetection);
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, data.GetAttackRange);
-    }
-    
-    #endif
 }

@@ -28,6 +28,9 @@ public abstract class EnemyController : MonoBehaviour
         _rend = GetComponentInChildren<Renderer>();
         _meshRenderer = GetComponentInChildren<MeshRenderer>();
         _collider = GetComponent<CapsuleCollider>();
+        
+        if (_collider == null)
+            _collider = GetComponentInChildren<CapsuleCollider>();
     }
 
     // Start is called before the first frame update
@@ -75,7 +78,7 @@ public abstract class EnemyController : MonoBehaviour
 
         if (Healthpoint > 0)
         {
-            StartCoroutine(IColorationFeedback());
+            // StartCoroutine(IColorationFeedback());
         }
         else
         {
@@ -175,17 +178,12 @@ public abstract class EnemyController : MonoBehaviour
     }
     
     #endregion
-
-    #region Guizmos
     
-    #if UNITY_EDITOR
-
-    protected virtual void OnDrawGizmosSelected()
+    /// <summary>
+    /// Stop all coroutines when the object is destroyed
+    /// </summary>
+    ~EnemyController()
     {
-        
+        StopAllCoroutines();
     }
-
-    #endif
-
-    #endregion
 }
