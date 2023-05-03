@@ -23,7 +23,7 @@ public class PlayerAttack : MonoBehaviour
     [Space(20)]
 
     [Header("Attack")]
-    public float _attackDelay;
+    public float _shootCooldown;
     public float _damage;
     [SerializeField]private bool _isShooting = false;
     public List<IIngredientEffects> _effects = new List<IIngredientEffects>();
@@ -31,7 +31,7 @@ public class PlayerAttack : MonoBehaviour
     bool _shootOnCooldown;
 
     [SerializeField]
-    public float _shootCooldown;
+    
 
     Coroutine _curShootDelay;
 
@@ -199,8 +199,8 @@ public class PlayerAttack : MonoBehaviour
         _ProjectileNbr = 1;
         _TimeBtwShotsRafale = 0;
         _damage = 0;
-        _attackDelay = 0;
         _ammunition = 0;
+        _shootCooldown = 0.5f;
     }
 
     public void FixedUpdate()
