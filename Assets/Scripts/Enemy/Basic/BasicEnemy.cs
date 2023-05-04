@@ -1,169 +1,173 @@
-using System.Collections;
-using System.Linq;
+using System;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Events;
 
-public class BasicEnemy : EnemyController
+namespace Enemy.Basic
 {
-    [SerializeField]
-    private EnemyData data;
-    [SerializeField]
-    private NavMeshAgent _agent;
+    public class BasicEnemy : EnemyController
+    {
+        [SerializeField]
+        private EnemyData data;
+        [SerializeField]
+        private NavMeshAgent _agent;
     
-    [SerializeField]
-    private GameObject m_gun;
-    [SerializeField]
-    private GameObject m_bullet;
-    [SerializeField]
-    private ParticleSystem m_stateSystem;
-    [SerializeField]
-    private Renderer stateRenderer;
+        [SerializeField]
+        private GameObject m_gun;
+        [SerializeField]
+        private GameObject m_bullet;
+        [SerializeField]
+        private ParticleSystem m_stateSystem;
+        [SerializeField]
+        private Renderer stateRenderer;
 
-    public enum State
-    {
-        Neutral,
-        Chase,
-        Attack,
-        Dying,
-    }
-
-    [SerializeField]
-    private State state;
-    
-    protected override void Awake()
-    {
-        base.Awake();
-        
-        _agent = GetComponent<NavMeshAgent>();
-        _agent.speed = data.GetSpeed;
-        _agent.stoppingDistance = data.GetAttackRange;
-        FocusPlayer = data.GetFocusPlayer;
-        Healthpoint = data.GetHealth;
-        
-        stateRenderer = m_stateSystem.GetComponent<Renderer>();
-    }
-
-    // Start is called before the first frame update
-    protected override void Start()
-    {
-        state = FocusPlayer ? State.Chase : State.Neutral;
-
-        base.Start();
-    }
-
-    // Update is called once per frame
-    protected override void Update()
-    {
-        _agent.SetDestination(Player.transform.position);
-
-        base.Update();
-
-        StateManagement();
-    }
-    
-    private void Reset()
-    {
-        Healthpoint = data.GetHealth;
-        _agent = GetComponent<NavMeshAgent>();
-        _agent.speed = data.GetSpeed;
-        _agent.stoppingDistance = data.GetAttackRange;
-    }
-
-    private void FixedUpdate()
-    {
-        if (state == State.Dying)
-            return;
-        
-        AreaDetection();
-    }
-    
-    public State GetState()
-    {
-        return state;
-    }
-    
-    public void SetState(State value)
-    {
-        state = value;
-    }
-    
-    // ReSharper disable Unity.PerformanceAnalysis
-    private void StateManagement()
-    {
-        switch (state)
+        public enum State
         {
-            case State.Neutral:
-                break;
-            case State.Chase:
-                _agent.SetDestination(Player.transform.position);
-                break;
-            case State.Attack:
-                Attack(Shot, data.GetAttackSpeed);
-                break;
-            case State.Dying:
-                Dying();
-                break;
-            default:
-                Dying();
-                break;
+            Neutral,
+            Chase,
+            Attack,
+            Dying,
         }
-    }
+
+        [SerializeField]
+        private State state;
     
-    private void AreaDetection()
-    {
-        if (state == State.Dying)
-            return;
-        
-        if (Vector3.Distance(transform.position, Player.transform.position) <= data.GetRangeDetection && 
-            Vector3.Distance(transform.position, Player.transform.position) > data.GetAttackRange)
+        protected override void Awake()
         {
-            state = State.Chase;
-        }
-        else
-        {
-            state = State.Attack;
-        }
-    }
-
-    protected override void Chase()
-    {
-        if (state == State.Dying)
-            return;
-
-        _agent.SetDestination(Player.transform.position);
+            base.Awake();
         
-        // stateRenderer.material.color = Color.yellow;
-        // m_stateSystem.gameObject.SetActive(true);
-    }
+            _agent = GetComponent<NavMeshAgent>();
+            _agent.speed = data.GetSpeed;
+            _agent.stoppingDistance = data.GetAttackRange;
+            FocusPlayer = data.GetFocusPlayer;
+            Healthpoint = data.GetHealth;
+        
+            stateRenderer = m_stateSystem.GetComponent<Renderer>();
+        }
 
-    private void Shot()
-    {
-        GameObject shot = Instantiate(m_bullet, m_gun.transform.position, Quaternion.identity);
-        shot.GetComponent<EnemyBulletController>().SetDirection(Player.transform);
-    }
+        // Start is called before the first frame update
+        protected override void Start()
+        {
+            SetState(FocusPlayer ? State.Chase : State.Neutral);
+            
+            base.Start();
+        }
+
+        // Update is called once per frame
+        protected override void Update()
+        {
+            base.Update();
+
+            StateManagement();
+        }
     
-    private new void Dying()
-    {
-        base.Dying();
-        m_stateSystem.gameObject.SetActive(false);
-    }
-
-    public override bool IsMoving()
-    {
-        return state == State.Chase;
-    }
-
-    public override void TakeDamage(float damage = 1, bool isCritical = false)
-    {
-        base.TakeDamage(damage, isCritical);
-        
-        if (state == State.Neutral)
-            state = State.Chase;
-        
-        if (Healthpoint <= 0)
+        private void Reset()
         {
-            state = State.Dying;
+            Healthpoint = data.GetHealth;
+            _agent = GetComponent<NavMeshAgent>();
+            _agent.speed = data.GetSpeed;
+            _agent.stoppingDistance = data.GetAttackRange;
+        }
+
+        private void FixedUpdate()
+        {
+            if (state == State.Dying)
+                return;
+        
+            AreaDetection();
+        }
+    
+        public State GetState()
+        {
+            return state;
+        }
+    
+        public void SetState(State value)
+        {
+            state = value;
+        }
+    
+        // ReSharper disable Unity.PerformanceAnalysis
+        private void StateManagement()
+        {
+            switch (state)
+            {
+                case State.Neutral:
+                    break;
+                case State.Chase:
+                    _agent.SetDestination(Player.transform.position);
+                    break;
+                case State.Attack:
+                    Attack(Shot, data.GetAttackSpeed);
+                    break;
+                case State.Dying:
+                    Dying();
+                    break;
+                default:
+                    Dying();
+                    break;
+            }
+        }
+    
+        private void AreaDetection()
+        {
+            if (state == State.Dying)
+                return;
+
+            if (Vector3.Distance(transform.position, Player.transform.position) <= data.GetRangeDetection)
+            {
+                FocusPlayer = true;
+            }
+
+            if (FocusPlayer)
+            {
+                if (Vector3.Distance(transform.position, Player.transform.position) <= data.GetRangeDetection && 
+                    Vector3.Distance(transform.position, Player.transform.position) > data.GetAttackRange)
+                {
+                    SetState(State.Chase);
+                }
+                else
+                {
+                    SetState(State.Attack);
+                }
+            }
+        }
+
+        protected override void Chase()
+        {
+            if (state == State.Dying)
+                return;
+
+            _agent.SetDestination(Player.transform.position);
+        }
+
+        private void Shot()
+        {
+            GameObject shot = Instantiate(m_bullet, m_gun.transform.position, Quaternion.identity);
+            shot.GetComponent<EnemyBulletController>().SetDirection(Player.transform);
+        }
+    
+        private new void Dying()
+        {
+            base.Dying();
+            m_stateSystem.gameObject.SetActive(false);
+        }
+
+        public override bool IsMoving()
+        {
+            return state == State.Chase;
+        }
+
+        public override void TakeDamage(float damage = 1, bool isCritical = false)
+        {
+            base.TakeDamage(damage, isCritical);
+        
+            if (state == State.Neutral)
+                SetState(State.Chase);
+        
+            if (Healthpoint <= 0)
+            {
+                SetState(State.Dying);
+            }
         }
     }
 }
