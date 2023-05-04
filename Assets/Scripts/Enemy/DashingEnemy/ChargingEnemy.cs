@@ -20,7 +20,7 @@ namespace Enemy.DashingEnemy
         [SerializeField] private GameObject _redLine;
         [SerializeField] private EnemyDashingData _data;
     
-        // private Material _redLineMaterial;
+        private Material _redLineMaterial;
         private bool _isRedLineFullVisible = false;
 
         [SerializeField]
@@ -48,7 +48,7 @@ namespace Enemy.DashingEnemy
             base.Start();
         
             SetState(State.Casting);
-            // _redLineMaterial = _redLine.GetComponent<Renderer>().material;
+            _redLineMaterial = _redLine.GetComponent<Renderer>().material;
         }
 
         public override bool IsMoving()
@@ -120,8 +120,8 @@ namespace Enemy.DashingEnemy
         private void StopMoving()
         {
             _direction = Vector3.zero;
-
-            _canShowingRedLine = false;
+            
+            HideRedLine();
         }
 
         /// <summary>
@@ -132,7 +132,8 @@ namespace Enemy.DashingEnemy
         {
             _changeStateToWaiting = false;
             _isCharging = false;
-            _castingCoroutine = StartCoroutine(ICasting());
+            
+            StartCoroutine(ICasting());
             _rotateToPlayerCoroutine = StartCoroutine(RotateToPlayer());
 
             IEnumerator RotateToPlayer()
@@ -148,7 +149,6 @@ namespace Enemy.DashingEnemy
         
             IEnumerator ICasting()
             {
-
                 yield return StartCoroutine(ICanShowingRedLine());
         
                 ShowLightRedLine();
@@ -162,7 +162,6 @@ namespace Enemy.DashingEnemy
                 if (!_isCharging)
                     _direction = GetPlayerDirection();
             
-                _castingCoroutine = null;
                 SetState(State.Dashing);
             }
         }
@@ -215,8 +214,11 @@ namespace Enemy.DashingEnemy
         /// </summary>
         private void StopCasting()
         {
-            if (_castingCoroutine != null)
-                StopCoroutine(_castingCoroutine);
+            if (_castingCoroutine == null) 
+                return;
+            
+            StopCoroutine(_castingCoroutine);
+            _castingCoroutine = null;
         }
     
         /// <summary>
@@ -246,25 +248,19 @@ namespace Enemy.DashingEnemy
         /// </summary>
         private void ShowFullyRedLine()
         {
-            // _isRedLineFullVisible = true;
-            //
-            // if (!_redLineMaterial) 
-            //     return;
-            //
-            // _redLineMaterial.SetFloat("_Alpha", 0.3f);
+            _redLineMaterial.SetFloat("_Alpha", 0.3f);
         }
         
         private void ShowLightRedLine()
         {
-            // if (_isRedLineFullVisible) return;
-            //
-            // _canShowingRedLine = true;
-            // _redLineMaterial.SetFloat("_Alpha", 0.85f);
+            _canShowingRedLine = true;
+            _redLineMaterial.SetFloat("_Alpha", 0.85f);
         }
 
         private void HideRedLine()
         {
-            // _redLineMaterial.SetFloat("_Alpha", 1f);
+            if (_redLineMaterial)
+                _redLineMaterial.SetFloat("_Alpha", 1f);
         }
     
         /// <summary>
@@ -283,8 +279,6 @@ namespace Enemy.DashingEnemy
             Player.GetComponent<PlayerController>().TakeDamage(_data.GetDamage());
 
             SetState(State.Waiting);
-            
-            Debug.Log("collide with player");
         }
     
         public void CollideWithObstruction()
