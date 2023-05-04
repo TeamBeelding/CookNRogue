@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Enemy.Data;
 using UnityEngine;
 using UnityEngine.AI;
@@ -21,6 +22,9 @@ namespace Enemy.Basic
         [SerializeField]
         private Renderer stateRenderer;
 
+        [SerializeField]
+        private Coroutine _chaseCoroutine;
+        
         public enum State
         {
             Neutral,
@@ -53,14 +57,14 @@ namespace Enemy.Basic
             base.Start();
         }
 
-        // Update is called once per frame
-        protected override void Update()
+        private void FixedUpdate()
         {
-            base.Update();
-
-            StateManagement();
+            if (state == State.Dying)
+                return;
+        
+            AreaDetection();
         }
-    
+        
         private void Reset()
         {
             Healthpoint = data.GetHealth;
@@ -69,22 +73,16 @@ namespace Enemy.Basic
             _agent.stoppingDistance = data.GetAttackRange;
         }
 
-        private void FixedUpdate()
-        {
-            if (state == State.Dying)
-                return;
-        
-            AreaDetection();
-        }
-    
-        public State GetState()
+        private State GetState()
         {
             return state;
         }
-    
-        public void SetState(State value)
+
+        private void SetState(State value)
         {
             state = value;
+            
+            StateManagement();
         }
     
         // ReSharper disable Unity.PerformanceAnalysis
@@ -95,7 +93,7 @@ namespace Enemy.Basic
                 case State.Neutral:
                     break;
                 case State.Chase:
-                    _agent.SetDestination(Player.transform.position);
+                    Chase();
                     break;
                 case State.Attack:
                     Attack(Shot, data.GetAttackSpeed);
@@ -137,8 +135,25 @@ namespace Enemy.Basic
         {
             if (state == State.Dying)
                 return;
-
-            _agent.SetDestination(Player.transform.position);
+            
+            if (_chaseCoroutine == null)
+                _chaseCoroutine = StartCoroutine(IChase());
+            
+            IEnumerator IChase()
+            {
+                while (state == State.Chase)
+                {
+                    if (Vector3.Distance(transform.position, Player.transform.position) <= data.GetAttackRange)
+                    {
+                        SetState(State.Attack);
+                        _chaseCoroutine = null;
+                    }
+                
+                    _agent.SetDestination(Player.transform.position);
+                
+                    yield return null;
+                }
+            }
         }
 
         private void Shot()
