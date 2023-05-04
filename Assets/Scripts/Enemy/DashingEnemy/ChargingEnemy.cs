@@ -33,8 +33,8 @@ namespace Enemy.DashingEnemy
         }
 
         public State state;
-        
-        private void Awake()
+
+        protected override void Awake()
         {
             base.Awake();
             Healthpoint = _data.GetHealth();
@@ -45,13 +45,8 @@ namespace Enemy.DashingEnemy
         {
             base.Start();
         
-            state = State.Casting;
+            SetState(State.Casting);
             _redLineMaterial = _redLine.GetComponent<Renderer>().material;
-        }
-
-        private void FixedUpdate()
-        {
-            StateManagement();
         }
 
         public override bool IsMoving()
@@ -59,7 +54,7 @@ namespace Enemy.DashingEnemy
             return false;
         }
 
-        public State GetState()
+        private State GetState()
         {
             return state;
         }
@@ -67,6 +62,8 @@ namespace Enemy.DashingEnemy
         private void SetState(State value)
         {
             state = value;
+            
+            StateManagement();
         }
     
         private void StateManagement()
@@ -191,9 +188,9 @@ namespace Enemy.DashingEnemy
         public override void TakeDamage(float damage = 1, bool isCritical = false)
         {
             base.TakeDamage(damage, isCritical);
-
-            // StopCasting();
-            // SetState(State.Waiting);
+            
+            if (GetState() == State.Casting)
+                SetState(State.Casting);
         }
 
         /// <summary>
@@ -233,12 +230,13 @@ namespace Enemy.DashingEnemy
         private void ShowFullyRedLine()
         {
             _isRedLineFullVisible = true;
+
+            if (!_redLineMaterial) 
+                return;
+            
             _redLineMaterial.SetFloat("_Alpha", 0.3f);
         }
-
-        /// <summary>
-        /// Reset line renderer color and hide it
-        /// </summary>
+        
         private void ShowLightRedLine()
         {
             if (_isRedLineFullVisible) return;
@@ -246,10 +244,7 @@ namespace Enemy.DashingEnemy
             _canShowingRedLine = true;
             _redLineMaterial.SetFloat("_Alpha", 0.85f);
         }
-    
-        /// <summary>
-        /// Put the red line to full alpha (invisible)
-        /// </summary>
+
         private void HideRedLine()
         {
             _redLineMaterial.SetFloat("_Alpha", 1f);
@@ -268,9 +263,8 @@ namespace Enemy.DashingEnemy
         public void CollideWithPlayer()
         {
             StopMoving();
-            // Player.GetComponent<PlayerController>().TakeDamage(_data.GetDamage());
+            Player.GetComponent<PlayerController>().TakeDamage(_data.GetDamage());
             _changeStateToWaiting = true;
-
 
             Debug.Log("collide with player");
         }

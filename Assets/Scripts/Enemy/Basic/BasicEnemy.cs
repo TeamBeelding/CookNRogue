@@ -1,4 +1,5 @@
 using System;
+using Enemy.Data;
 using UnityEngine;
 using UnityEngine.AI;
 
