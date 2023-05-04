@@ -59,8 +59,6 @@ public class BasicEnemy : EnemyController
 
         base.Update();
 
-        Debug.Log(Vector3.Distance(transform.position, Player.transform.position));
-        
         StateManagement();
     }
     
