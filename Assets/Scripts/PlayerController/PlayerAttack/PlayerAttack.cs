@@ -8,6 +8,7 @@ public class PlayerAttack : MonoBehaviour
     public GameObject _Projectile;
     public int _ProjectileNbr;
     public int _ammunition;
+    private AmmunitionBar _ammunitionBar;
     [HideInInspector]
     public float _TimeBtwShotsRafale;
     PlayerBulletBehaviour _projectileBehaviour;
@@ -22,15 +23,15 @@ public class PlayerAttack : MonoBehaviour
     [Space(20)]
 
     [Header("Attack")]
-    public float _attackDelay;
+    public float _shootCooldown;
     public float _damage;
-
+    [SerializeField]private bool _isShooting = false;
     public List<IIngredientEffects> _effects = new List<IIngredientEffects>();
     
     bool _shootOnCooldown;
 
     [SerializeField]
-    public float _shootCooldown;
+    
 
     Coroutine _curShootDelay;
 
@@ -40,9 +41,15 @@ public class PlayerAttack : MonoBehaviour
     {
 
         _playerController = GetComponent<PlayerController>();
+        _ammunitionBar = AmmunitionBar.instance;
+
+        _ammunitionBar.InitAmmoBar(0);
     }
 
-    
+    public void SetIsShooting(bool isShooting)
+    {
+        _isShooting = isShooting;
+    }
     public void Shoot()
     {
         if (_shootOnCooldown)
@@ -56,12 +63,15 @@ public class PlayerAttack : MonoBehaviour
         //Shoot Bullet
         _shootOnCooldown = true;
         _curShootDelay = StartCoroutine(ShootDelay(_shootCooldown));
-
+        
         _ammunition--;
         if(_ammunition <= 0)
         {
             ResetParameters();
         }
+
+        if(_ammunitionBar)
+            _ammunitionBar.UpdateAmmoBar();
         //Animation
         //m_knockbackScript.StartKnockback();
 
@@ -189,10 +199,17 @@ public class PlayerAttack : MonoBehaviour
         _ProjectileNbr = 1;
         _TimeBtwShotsRafale = 0;
         _damage = 0;
-        _attackDelay = 0;
         _ammunition = 0;
+        _shootCooldown = 0.5f;
     }
 
+    public void FixedUpdate()
+    {
+        if (_isShooting)
+        {
+            Shoot();
+        }
+    }
     public void Reset()
     {
         _ProjectileNbr= 1;

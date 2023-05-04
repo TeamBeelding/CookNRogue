@@ -2,7 +2,7 @@ using UnityEngine.InputSystem;
 using UnityEngine;
 using System.Collections;
 
-[RequireComponent (typeof(Rigidbody), typeof (Collider))]
+[RequireComponent(typeof(Rigidbody), typeof(Collider))]
 public class PlayerController : MonoBehaviour
 {
     #region Variables
@@ -61,7 +61,17 @@ public class PlayerController : MonoBehaviour
     Transform _relativeTransform;
 
     Vector2 _moveInputValue;
+    public Vector2 MoveInputValue
+    {
+        get => _moveInputValue;
+    }
+
     Vector2 _aimInputValue;
+    public Vector2 AimInputValue
+    {
+        get => _aimInputValue;
+    }
+
 
     private bool m_isDashing = false;
     private Vector3 m_dashDirection = Vector2.zero;
@@ -149,7 +159,8 @@ public class PlayerController : MonoBehaviour
         _playerActions.UI.Enable();
 
         //Set Default Events
-        _playerActions.Default.Shoot.performed += Shoot;
+        _playerActions.Default.Shoot.performed += Shoot_Performed;
+        _playerActions.Default.Shoot.canceled += Shoot_Canceled;
         _playerActions.Default.Move.performed += Move_Performed;
         _playerActions.Default.Move.canceled += Move_Canceled;
         _playerActions.Default.Aim.performed += Aim_Performed;
@@ -365,8 +376,6 @@ public class PlayerController : MonoBehaviour
         {
             _rb.velocity = new Vector3(direction.x, 0, direction.z) * m_maxMoveSpeed;
 
-            //_rb.velocity = new Vector3(direction.x, _rb.velocity.y, direction.z) * m_maxMoveSpeed;
-
         }
     }
 
@@ -517,7 +526,7 @@ public class PlayerController : MonoBehaviour
 
     #region Other Actions
 
-    void Shoot(InputAction.CallbackContext context)
+    void Shoot_Performed(InputAction.CallbackContext context)
     {
         //Block player actions
         if (_isLocked)
@@ -527,13 +536,21 @@ public class PlayerController : MonoBehaviour
 
         if (context.performed)
         {
-            GetComponent<PlayerAttack>().Shoot();
+            GetComponent<PlayerAttack>().SetIsShooting(true);
         }
     }
-    #endregion
 
-    #region Utilities
-    public void Lock(bool isLocked)
+    void Shoot_Canceled(InputAction.CallbackContext context)
+    {
+        if (context.canceled)
+        {
+            GetComponent<PlayerAttack>().SetIsShooting(false);
+        }
+    }
+        #endregion
+
+        #region Utilities
+        public void Lock(bool isLocked)
     {
         _isLocked = isLocked;
     }

@@ -43,7 +43,6 @@ public class FragmentationParticlesCollisions : MonoBehaviour
 
         foreach (Collider hitCollider in hitColliders)
         {
-            Debug.Log(hitCollider.transform.gameObject);
             //float distance = (Position - hitCollider.transform.position).magnitude;
 
 
