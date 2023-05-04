@@ -1,4 +1,5 @@
 using System;
+using Enemy.DashingEnemy;
 using UnityEngine;
 
 public class CollisionEvent : MonoBehaviour

@@ -1,274 +1,286 @@
 using System.Collections;
 using UnityEngine;
 
-public class ChargingEnemy : EnemyController
+namespace Enemy.DashingEnemy
 {
-    private Coroutine _castingCoroutine;
-    private Coroutine _waitingCoroutine;
-    private RaycastHit _hit;
+    public class ChargingEnemy : EnemyController
+    {
+        private Coroutine _castingCoroutine;
+        private Coroutine _waitingCoroutine;
+        private RaycastHit _hit;
 
-    private bool _isCharging = false;
-    private bool _canShowingRedLine = false;
+        private bool _isCharging = false;
+        private bool _canShowingRedLine = false;
+        private bool _changeStateToWaiting = false;
     
-    private Vector3 _direction;
+        private Vector3 _direction;
 
-    [SerializeField] private GameObject _redLine;
-    [SerializeField] private EnemyDashingData _data;
+        [SerializeField] private GameObject _redLine;
+        [SerializeField] private EnemyDashingData _data;
     
-    private Material _redLineMaterial;
-    private bool _isRedLineFullVisible = false;
+        private Material _redLineMaterial;
+        private bool _isRedLineFullVisible = false;
 
-    [SerializeField]
-    private GameObject visual;
+        [SerializeField]
+        private GameObject visual;
     
-    public enum State
-    {
-        Casting,
-        Waiting,
-        Dashing,
-        Dying
-    }
-
-    public State state;
-        
-    private void Awake()
-    {
-        base.Awake();
-        Healthpoint = _data.GetHealth();
-    }
-    
-    // Start is called before the first frame update
-    protected override void Start()
-    {
-        base.Start();
-        
-        state = State.Casting;
-        _redLineMaterial = _redLine.GetComponent<Renderer>().material;
-    }
-
-    private void FixedUpdate()
-    {
-        IStateManagement();
-    }
-
-    public override bool IsMoving()
-    {
-        return false;
-    }
-
-    public State GetState()
-    {
-        return state;
-    }
-    
-    private void SetState(State value)
-    {
-        state = value;
-    }
-    
-    private void IStateManagement()
-    {
-        switch (state)
+        public enum State
         {
-            case State.Casting:
-                Casting();
-                break;
-            case State.Waiting:
-                WaitingAnotherDash();
-                break;
-            case State.Dashing:
-                Dashing();
-                break;
-            case State.Dying:
-                Dying();
-                break;
-            default:
-                Dying();
-                break;
+            Casting,
+            Waiting,
+            Dashing,
+            Dying
         }
-    }
 
-    /// <summary>
-    /// Dashing State :
-    /// Stop casting and dash to player
-    /// </summary>
-    private void Dashing()
-    {
-        _isCharging = true;
-        ChargingToPlayer();
+        public State state;
         
-        void ChargingToPlayer()
+        private void Awake()
         {
-            transform.position += _direction * (_data.GetSpeed() * Time.deltaTime);
+            base.Awake();
+            Healthpoint = _data.GetHealth();
         }
-    }
     
-    private void StopMoving()
-    {
-        _direction = Vector3.zero;
-
-        _canShowingRedLine = false;
-    }
-
-    /// <summary>
-    /// Casting State :
-    /// Preparing to dash and Look at player
-    /// </summary>
-    private void Casting()
-    {
-        visual.transform.LookAt(new Vector3(Player.transform.position.x, visual.transform.position.y, Player.transform.position.z));
-
-        _isCharging = false;
-        _castingCoroutine = StartCoroutine(ICasting());
-        
-        IEnumerator ICasting()
+        // Start is called before the first frame update
+        protected override void Start()
         {
-            yield return StartCoroutine(ICanShowingRedLine());
+            base.Start();
         
-            ShowLightRedLine();
-        
-            yield return new WaitForSeconds(_data.GetTimeBeforeLerpRedLine());
-        
-            ShowFullyRedLine();
-        
-            yield return new WaitForSeconds(_data.GetRemainingForDash());
+            state = State.Casting;
+            _redLineMaterial = _redLine.GetComponent<Renderer>().material;
+        }
 
-            if (!_isCharging)
-                _direction = GetPlayerDirection();
+        private void FixedUpdate()
+        {
+            StateManagement();
+        }
+
+        public override bool IsMoving()
+        {
+            return false;
+        }
+
+        public State GetState()
+        {
+            return state;
+        }
+    
+        private void SetState(State value)
+        {
+            state = value;
+        }
+    
+        private void StateManagement()
+        {
+            switch (state)
+            {
+                case State.Casting:
+                    Casting();
+                    break;
+                case State.Waiting:
+                    WaitingAnotherDash();
+                    break;
+                case State.Dashing:
+                    Dashing();
+                    break;
+                case State.Dying:
+                    Dying();
+                    break;
+                default:
+                    Dying();
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Dashing State :
+        /// Stop casting and dash to player
+        /// </summary>
+        private void Dashing()
+        {
+            _isCharging = true;
+            ChargingToPlayer();
+        
+            void ChargingToPlayer()
+            {
+                if (_changeStateToWaiting)
+                {
+                    StopMoving();
+                    SetState(State.Waiting);
+                }
+                else
+                {
+                    transform.position += _direction * (_data.GetSpeed() * Time.deltaTime);
+                }
+            }
+        }
+    
+        private void StopMoving()
+        {
+            _direction = Vector3.zero;
+
+            _canShowingRedLine = false;
+        }
+
+        /// <summary>
+        /// Casting State :
+        /// Preparing to dash and Look at player
+        /// </summary>
+        private void Casting()
+        {
+            visual.transform.LookAt(new Vector3(Player.transform.position.x, visual.transform.position.y, Player.transform.position.z));
             
-            _castingCoroutine = null;
-            SetState(State.Dashing);
-        }
-    }
-    
-    /// <summary>
-    /// Wait some time before casting again
-    /// </summary>
-    private void WaitingAnotherDash()
-    {
-        _isCharging = false;
-        _isRedLineFullVisible = false;
-        _canShowingRedLine = false;
+            _changeStateToWaiting = false;
+            _isCharging = false;
+            _castingCoroutine = StartCoroutine(ICasting());
+        
+            IEnumerator ICasting()
+            {
+                yield return StartCoroutine(ICanShowingRedLine());
+        
+                ShowLightRedLine();
+        
+                yield return new WaitForSeconds(_data.GetTimeBeforeLerpRedLine());
+        
+                ShowFullyRedLine();
+        
+                yield return new WaitForSeconds(_data.GetRemainingForDash());
 
-        _waitingCoroutine = StartCoroutine(IWaiting());
-        StopCoroutine(ICanShowingRedLine());
-        
-        IEnumerator IWaiting()
+                if (!_isCharging)
+                    _direction = GetPlayerDirection();
+            
+                _castingCoroutine = null;
+                SetState(State.Dashing);
+            }
+        }
+    
+        /// <summary>
+        /// Wait some time before casting again
+        /// </summary>
+        private void WaitingAnotherDash()
         {
-            yield return new WaitForSeconds(_data.GetTimeWaitingDash());
+            _isCharging = false;
+            _isRedLineFullVisible = false;
+            _canShowingRedLine = false;
+
+            _waitingCoroutine = StartCoroutine(IWaiting());
+            StopCoroutine(ICanShowingRedLine());
         
-            _waitingCoroutine = null;
+            IEnumerator IWaiting()
+            {
+                yield return new WaitForSeconds(_data.GetTimeWaitingDash());
+        
+                _waitingCoroutine = null;
+                SetState(State.Casting);
+            }
+        }
+    
+        /// <summary>
+        /// Dying Test
+        /// </summary>
+        protected override void Dying()
+        {
+            base.Dying();
+
+            StopCasting();
+        }
+    
+        /// <summary>
+        /// Enemy Take Damage
+        /// </summary>
+        /// <param name="damage"></param>
+        public override void TakeDamage(float damage = 1, bool isCritical = false)
+        {
+            base.TakeDamage(damage, isCritical);
+
+            // StopCasting();
+            // SetState(State.Waiting);
+        }
+
+        /// <summary>
+        /// Stop casting coroutine
+        /// </summary>
+        private void StopCasting()
+        {
+            if (_castingCoroutine != null)
+                StopCoroutine(_castingCoroutine);
+        }
+    
+        /// <summary>
+        /// Return the direction to player
+        /// </summary>
+        /// <returns></returns>
+        private Vector3 GetPlayerDirection()
+        {
+            _isCharging = true;
+            Vector3 direction = (Player.transform.position - transform.position).normalized;
+            direction.y = 0;
+        
+            return direction;
+        }
+
+        private IEnumerator ICanShowingRedLine()
+        {
+            if (_canShowingRedLine)
+                yield break;
+        
+            HideRedLine();
+            yield return new WaitForSeconds(_data.GetTimeBeforeShowingRedLine());
+        }
+
+        /// <summary>
+        /// Make Red line more visible
+        /// </summary>
+        private void ShowFullyRedLine()
+        {
+            _isRedLineFullVisible = true;
+            _redLineMaterial.SetFloat("_Alpha", 0.3f);
+        }
+
+        /// <summary>
+        /// Reset line renderer color and hide it
+        /// </summary>
+        private void ShowLightRedLine()
+        {
+            if (_isRedLineFullVisible) return;
+        
+            _canShowingRedLine = true;
+            _redLineMaterial.SetFloat("_Alpha", 0.85f);
+        }
+    
+        /// <summary>
+        /// Put the red line to full alpha (invisible)
+        /// </summary>
+        private void HideRedLine()
+        {
+            _redLineMaterial.SetFloat("_Alpha", 1f);
+        }
+    
+        /// <summary>
+        /// If he gets stun or knockback during the cast,
+        /// he will restart his charge from the beginning. 
+        /// </summary>
+        public void RestartHisCharge()
+        {
+            StopCasting();
             SetState(State.Casting);
         }
-    }
     
-    /// <summary>
-    /// Dying Test
-    /// </summary>
-    protected override void Dying()
-    {
-        base.Dying();
+        public void CollideWithPlayer()
+        {
+            StopMoving();
+            // Player.GetComponent<PlayerController>().TakeDamage(_data.GetDamage());
+            _changeStateToWaiting = true;
 
-        StopCasting();
-    }
+
+            Debug.Log("collide with player");
+        }
     
-    /// <summary>
-    /// Enemy Take Damage
-    /// </summary>
-    /// <param name="damage"></param>
-    public override void TakeDamage(float damage = 1, bool isCritical = false)
-    {
-        base.TakeDamage(damage, isCritical);
+        public void CollideWithObstruction()
+        {
+            StopMoving();
+            _changeStateToWaiting = true;
 
-        // StopCasting();
-        // SetState(State.Waiting);
-    }
-
-    /// <summary>
-    /// Stop casting coroutine
-    /// </summary>
-    private void StopCasting()
-    {
-        if (_castingCoroutine != null)
-            StopCoroutine(_castingCoroutine);
-    }
-    
-    /// <summary>
-    /// Return the direction to player
-    /// </summary>
-    /// <returns></returns>
-    private Vector3 GetPlayerDirection()
-    {
-        _isCharging = true;
-        Vector3 direction = (Player.transform.position - transform.position).normalized;
-        direction.y = 0;
-        
-        return direction;
-    }
-
-    private IEnumerator ICanShowingRedLine()
-    {
-        if (_canShowingRedLine)
-            yield break;
-        
-        HideRedLine();
-        yield return new WaitForSeconds(_data.GetTimeBeforeShowingRedLine());
-    }
-
-    /// <summary>
-    /// Make Red line more visible
-    /// </summary>
-    private void ShowFullyRedLine()
-    {
-        _isRedLineFullVisible = true;
-        _redLineMaterial.SetFloat("_Alpha", 0.3f);
-    }
-
-    /// <summary>
-    /// Reset line renderer color and hide it
-    /// </summary>
-    private void ShowLightRedLine()
-    {
-        if (_isRedLineFullVisible) return;
-        
-        _canShowingRedLine = true;
-        _redLineMaterial.SetFloat("_Alpha", 0.85f);
-    }
-    
-    /// <summary>
-    /// Put the red line to full alpha (invisible)
-    /// </summary>
-    private void HideRedLine()
-    {
-        _redLineMaterial.SetFloat("_Alpha", 1f);
-    }
-    
-    /// <summary>
-    /// If he gets stun or knockback during the cast,
-    /// he will restart his charge from the beginning. 
-    /// </summary>
-    public void RestartHisCharge()
-    {
-        StopCasting();
-        SetState(State.Casting);
-    }
-    
-    public void CollideWithPlayer()
-    {
-        StopMoving();
-        StopCasting();
-        Player.GetComponent<PlayerController>().TakeDamage(_data.GetDamage());
-        state = State.Waiting;
-
-        Debug.Log("collide with player");
-    }
-    
-    public void CollideWithObstruction()
-    {
-        StopMoving();
-        StopCasting();
-        state = State.Waiting;
-
-        Debug.Log("collide with obstruction");
+            Debug.Log("collide with obstruction");
+        }
     }
 }

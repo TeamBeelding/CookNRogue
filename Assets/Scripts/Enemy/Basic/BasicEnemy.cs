@@ -59,8 +59,6 @@ public class BasicEnemy : EnemyController
 
         base.Update();
 
-        Debug.Log(Vector3.Distance(transform.position, Player.transform.position));
-        
         StateManagement();
     }
     
@@ -137,17 +135,6 @@ public class BasicEnemy : EnemyController
         
         // stateRenderer.material.color = Color.yellow;
         // m_stateSystem.gameObject.SetActive(true);
-    }
-    
-    protected override void Attack(UnityAction Shot, float delay)
-    {
-        if (state == State.Dying)
-            return;
-        
-        // stateRenderer.material.color = Color.red;
-        // m_stateSystem.gameObject.SetActive(true);
-
-        base.Attack(Shot);
     }
 
     private void Shot()

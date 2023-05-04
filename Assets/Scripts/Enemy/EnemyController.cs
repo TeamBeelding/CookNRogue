@@ -14,6 +14,7 @@ public abstract class EnemyController : MonoBehaviour
     private CapsuleCollider _collider;
     
     private IEnumerator _colorCoroutine;
+    private IEnumerator _attackCoroutine;
     
     protected bool FocusPlayer = false;
     private bool _canAttack = true;
@@ -65,6 +66,13 @@ public abstract class EnemyController : MonoBehaviour
             _canAttack = false;
             StartCoroutine(IAttackTimer(delay));
         }
+        
+        IEnumerator IAttackTimer(float delay = 0.5f)
+        {
+            yield return new WaitForSeconds(delay);
+            _canAttack = true;
+            _rend.material.color = Color.white;
+        }
     }
 
     #endregion
@@ -105,13 +113,6 @@ public abstract class EnemyController : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private IEnumerator IAttackTimer(float delay = 0.5f)
-    {
-        yield return new WaitForSeconds(delay);
-        _canAttack = true;
-        _rend.material.color = Color.white;
-    }
-    
     #endregion
 
     //Add to enemy manager
