@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerBulletBehaviour : MonoBehaviour
@@ -78,6 +79,7 @@ public class PlayerBulletBehaviour : MonoBehaviour
 
             if (_ricochetNbr > 0)
             {
+                Debug.Log("ricochet");
                 _ricochetNbr--;
                 BulletRicochet(transform.position, _hitObject, _direction);
                 ResetSpeed();
@@ -126,32 +128,34 @@ public class PlayerBulletBehaviour : MonoBehaviour
         float closest = 999f;
         float distance = 0f;
         GameObject closestEnemy = HitObject;
-        Collider closestCollider = HitObject.GetComponent<Collider>();
 
         if (HitObject.GetComponent<EnemyController>())
             HitObject.layer = 2;
-
+        
         foreach (Collider hitCollider in hitColliders)
         {
-
             if (hitCollider.gameObject != HitObject && hitCollider.GetComponent<EnemyController>())
             {
                 hitCollider.transform.gameObject.layer = 2;
                 distance = Vector3.Distance(hitCollider.gameObject.transform.position, Position);
 
                 Vector3 rayDirection = (hitCollider.gameObject.transform.position - Position).normalized;
-      
+                Debug.DrawLine(Position, Position + (rayDirection * (distance * 0.8f)), Color.cyan, 999);
 
-                if (distance < closest && !Physics.Raycast(Position, rayDirection, _rayMask))
+                RaycastHit hit;
+                bool hashit = Physics.Raycast(Position, rayDirection, out hit, distance * 0.8f, _rayMask);
+                if (distance < closest)
                 {
+                    
                     closest = distance;
                     closestEnemy = hitCollider.gameObject;
+                    Debug.Log(closestEnemy);
                 }
                 hitCollider.transform.gameObject.layer = 0;
             }
+            
 
         }
-
         HitObject.layer = 0;
         if (closestEnemy != HitObject)
         {
@@ -159,6 +163,10 @@ public class PlayerBulletBehaviour : MonoBehaviour
             Invoke("DestroyBullet", 1);
             _direction = (closestEnemy.gameObject.transform.position - HitObject.transform.position).normalized;
             destroyOnHit = true;
+        }
+        else
+        {
+            DestroyBullet();
         }
 
     }
