@@ -77,14 +77,10 @@ public abstract class EnemyController : MonoBehaviour
         Healthpoint -= damage;
 
         if (Healthpoint > 0)
-        {
-            // StartCoroutine(IColorationFeedback());
-        }
+            TakeDamageEffect();
         else
-        {
             Dying();
-        }
-        
+
         // Color the enemy red for a short time to indicate that he has been hit
         IEnumerator IColorationFeedback()
         {
@@ -96,6 +92,11 @@ public abstract class EnemyController : MonoBehaviour
                 yield return new WaitForSeconds(0.2f);
             }
         }
+    }
+    
+    protected virtual void TakeDamageEffect()
+    {
+        
     }
 
     protected virtual void Dying()
