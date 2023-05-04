@@ -7,6 +7,8 @@ namespace Enemy.DashingEnemy
     {
         private Coroutine _castingCoroutine;
         private Coroutine _waitingCoroutine;
+        private Coroutine _rotateToPlayerCoroutine;
+        private Coroutine _chargingToPlayerCoroutine;
         private RaycastHit _hit;
 
         private bool _isCharging = false;
@@ -18,7 +20,7 @@ namespace Enemy.DashingEnemy
         [SerializeField] private GameObject _redLine;
         [SerializeField] private EnemyDashingData _data;
     
-        private Material _redLineMaterial;
+        // private Material _redLineMaterial;
         private bool _isRedLineFullVisible = false;
 
         [SerializeField]
@@ -46,7 +48,7 @@ namespace Enemy.DashingEnemy
             base.Start();
         
             SetState(State.Casting);
-            _redLineMaterial = _redLine.GetComponent<Renderer>().material;
+            // _redLineMaterial = _redLine.GetComponent<Renderer>().material;
         }
 
         public override bool IsMoving()
@@ -95,18 +97,22 @@ namespace Enemy.DashingEnemy
         private void Dashing()
         {
             _isCharging = true;
-            ChargingToPlayer();
-        
-            void ChargingToPlayer()
+            StartCoroutine(ChargingToPlayer());
+
+            IEnumerator ChargingToPlayer()
             {
-                if (_changeStateToWaiting)
+                while (_isCharging)
                 {
-                    StopMoving();
-                    SetState(State.Waiting);
-                }
-                else
-                {
-                    transform.position += _direction * (_data.GetSpeed() * Time.deltaTime);
+                    if (_direction != Vector3.zero)
+                    {
+                        transform.position += _direction * (_data.GetSpeed() * Time.deltaTime);
+                    }
+                    else
+                    {
+                        _isCharging = false;
+                    }
+                
+                    yield return null;
                 }
             }
         }
@@ -124,14 +130,25 @@ namespace Enemy.DashingEnemy
         /// </summary>
         private void Casting()
         {
-            visual.transform.LookAt(new Vector3(Player.transform.position.x, visual.transform.position.y, Player.transform.position.z));
-            
             _changeStateToWaiting = false;
             _isCharging = false;
             _castingCoroutine = StartCoroutine(ICasting());
+            _rotateToPlayerCoroutine = StartCoroutine(RotateToPlayer());
+
+            IEnumerator RotateToPlayer()
+            {
+                while (GetState() == State.Casting)
+                {
+                    visual.transform.LookAt(new Vector3(Player.transform.position.x, visual.transform.position.y, Player.transform.position.z));
+                    yield return null;
+                }
+                
+                _rotateToPlayerCoroutine = null;
+            }
         
             IEnumerator ICasting()
             {
+
                 yield return StartCoroutine(ICanShowingRedLine());
         
                 ShowLightRedLine();
@@ -229,25 +246,25 @@ namespace Enemy.DashingEnemy
         /// </summary>
         private void ShowFullyRedLine()
         {
-            _isRedLineFullVisible = true;
-
-            if (!_redLineMaterial) 
-                return;
-            
-            _redLineMaterial.SetFloat("_Alpha", 0.3f);
+            // _isRedLineFullVisible = true;
+            //
+            // if (!_redLineMaterial) 
+            //     return;
+            //
+            // _redLineMaterial.SetFloat("_Alpha", 0.3f);
         }
         
         private void ShowLightRedLine()
         {
-            if (_isRedLineFullVisible) return;
-        
-            _canShowingRedLine = true;
-            _redLineMaterial.SetFloat("_Alpha", 0.85f);
+            // if (_isRedLineFullVisible) return;
+            //
+            // _canShowingRedLine = true;
+            // _redLineMaterial.SetFloat("_Alpha", 0.85f);
         }
 
         private void HideRedLine()
         {
-            _redLineMaterial.SetFloat("_Alpha", 1f);
+            // _redLineMaterial.SetFloat("_Alpha", 1f);
         }
     
         /// <summary>
@@ -264,15 +281,16 @@ namespace Enemy.DashingEnemy
         {
             StopMoving();
             Player.GetComponent<PlayerController>().TakeDamage(_data.GetDamage());
-            _changeStateToWaiting = true;
 
+            SetState(State.Waiting);
+            
             Debug.Log("collide with player");
         }
     
         public void CollideWithObstruction()
         {
             StopMoving();
-            _changeStateToWaiting = true;
+            SetState(State.Waiting);
 
             Debug.Log("collide with obstruction");
         }
