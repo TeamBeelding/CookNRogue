@@ -58,6 +58,8 @@ public class BasicEnemy : EnemyController
         _agent.SetDestination(Player.transform.position);
 
         base.Update();
+
+        Debug.Log(Vector3.Distance(transform.position, Player.transform.position));
         
         StateManagement();
     }
@@ -112,19 +114,17 @@ public class BasicEnemy : EnemyController
     
     private void AreaDetection()
     {
-        if (state == State.Dying || state == State.Neutral)
+        if (state == State.Dying)
             return;
         
-        if (Vector3.Distance(transform.position, Player.transform.position) <= data.GetRangeDetection)
+        if (Vector3.Distance(transform.position, Player.transform.position) <= data.GetRangeDetection && 
+            Vector3.Distance(transform.position, Player.transform.position) > data.GetAttackRange)
         {
-            if (Vector3.Distance(transform.position, Player.transform.position) <= data.GetAttackSpeed)
-            {
-                state = State.Attack;
-            }
-            else
-            {
-                state = State.Chase;
-            }
+            state = State.Chase;
+        }
+        else
+        {
+            state = State.Attack;
         }
     }
 
@@ -179,16 +179,4 @@ public class BasicEnemy : EnemyController
             state = State.Dying;
         }
     }
-    
-    #if UNITY_EDITOR
-    
-    protected override void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, data.GetRangeDetection);
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, data.GetAttackRange);
-    }
-    
-    #endif
 }

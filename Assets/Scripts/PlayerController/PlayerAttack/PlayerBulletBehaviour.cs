@@ -68,14 +68,13 @@ public class PlayerBulletBehaviour : MonoBehaviour
     }
     protected virtual void OnTriggerEnter(Collider other)
     {
-
-        if (other.GetComponent<EnemyController>())
+        if (other.GetComponentInParent<EnemyController>())
         {
             _HasHit = true;
             _hitObject = other.gameObject;
             ApplyCorrectOnHitEffects();
 
-             other.GetComponent<EnemyController>().TakeDamage(_damage, _isCritical);
+             other.GetComponentInParent<EnemyController>().TakeDamage(_damage, _isCritical);
 
             if (_ricochetNbr > 0)
             {

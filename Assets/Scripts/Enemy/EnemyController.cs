@@ -28,6 +28,9 @@ public abstract class EnemyController : MonoBehaviour
         _rend = GetComponentInChildren<Renderer>();
         _meshRenderer = GetComponentInChildren<MeshRenderer>();
         _collider = GetComponent<CapsuleCollider>();
+        
+        if (_collider == null)
+            _collider = GetComponentInChildren<CapsuleCollider>();
     }
 
     // Start is called before the first frame update
@@ -74,14 +77,10 @@ public abstract class EnemyController : MonoBehaviour
         Healthpoint -= damage;
 
         if (Healthpoint > 0)
-        {
-            StartCoroutine(IColorationFeedback());
-        }
+            TakeDamageEffect();
         else
-        {
             Dying();
-        }
-        
+
         // Color the enemy red for a short time to indicate that he has been hit
         IEnumerator IColorationFeedback()
         {
@@ -93,6 +92,11 @@ public abstract class EnemyController : MonoBehaviour
                 yield return new WaitForSeconds(0.2f);
             }
         }
+    }
+    
+    protected virtual void TakeDamageEffect()
+    {
+        
     }
 
     protected virtual void Dying()
@@ -175,17 +179,12 @@ public abstract class EnemyController : MonoBehaviour
     }
     
     #endregion
-
-    #region Guizmos
     
-    #if UNITY_EDITOR
-
-    protected virtual void OnDrawGizmosSelected()
+    /// <summary>
+    /// Stop all coroutines when the object is destroyed
+    /// </summary>
+    ~EnemyController()
     {
-        
+        StopAllCoroutines();
     }
-
-    #endif
-
-    #endregion
 }

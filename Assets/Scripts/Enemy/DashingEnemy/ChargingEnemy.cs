@@ -11,7 +11,6 @@ public class ChargingEnemy : EnemyController
     private bool _canShowingRedLine = false;
     
     private Vector3 _direction;
-    private Rigidbody _rigidbody;
 
     [SerializeField] private GameObject _redLine;
     [SerializeField] private EnemyDashingData _data;
@@ -43,7 +42,6 @@ public class ChargingEnemy : EnemyController
     {
         base.Start();
         
-        _rigidbody = GetComponent<Rigidbody>();
         state = State.Casting;
         _redLineMaterial = _redLine.GetComponent<Renderer>().material;
     }
@@ -97,19 +95,18 @@ public class ChargingEnemy : EnemyController
     private void Dashing()
     {
         _isCharging = true;
-        StopCoroutine(_castingCoroutine);
-        
         ChargingToPlayer();
+        
+        void ChargingToPlayer()
+        {
+            transform.position += _direction * (_data.GetSpeed() * Time.deltaTime);
+        }
     }
     
     private void StopMoving()
     {
         _direction = Vector3.zero;
 
-        _rigidbody.velocity = Vector3.zero;
-        _rigidbody.angularVelocity = Vector3.zero;
-
-        StopCoroutine(ICanShowingRedLine());
         _canShowingRedLine = false;
     }
 
@@ -119,9 +116,29 @@ public class ChargingEnemy : EnemyController
     /// </summary>
     private void Casting()
     {
+        visual.transform.LookAt(new Vector3(Player.transform.position.x, visual.transform.position.y, Player.transform.position.z));
+
         _isCharging = false;
         _castingCoroutine = StartCoroutine(ICasting());
-        visual.transform.LookAt(new Vector3(Player.transform.position.x, visual.transform.position.y, Player.transform.position.z));
+        
+        IEnumerator ICasting()
+        {
+            yield return StartCoroutine(ICanShowingRedLine());
+        
+            ShowLightRedLine();
+        
+            yield return new WaitForSeconds(_data.GetTimeBeforeLerpRedLine());
+        
+            ShowFullyRedLine();
+        
+            yield return new WaitForSeconds(_data.GetRemainingForDash());
+
+            if (!_isCharging)
+                _direction = GetPlayerDirection();
+            
+            _castingCoroutine = null;
+            SetState(State.Dashing);
+        }
     }
     
     /// <summary>
@@ -129,16 +146,20 @@ public class ChargingEnemy : EnemyController
     /// </summary>
     private void WaitingAnotherDash()
     {
-        StopMoving();
-
         _isCharging = false;
         _isRedLineFullVisible = false;
         _canShowingRedLine = false;
 
-        if (_castingCoroutine != null)
-            StopCoroutine(_castingCoroutine);
-        
         _waitingCoroutine = StartCoroutine(IWaiting());
+        StopCoroutine(ICanShowingRedLine());
+        
+        IEnumerator IWaiting()
+        {
+            yield return new WaitForSeconds(_data.GetTimeWaitingDash());
+        
+            _waitingCoroutine = null;
+            SetState(State.Casting);
+        }
     }
     
     /// <summary>
@@ -159,8 +180,8 @@ public class ChargingEnemy : EnemyController
     {
         base.TakeDamage(damage, isCritical);
 
-        StopCasting();
-        SetState(State.Waiting);
+        // StopCasting();
+        // SetState(State.Waiting);
     }
 
     /// <summary>
@@ -184,30 +205,7 @@ public class ChargingEnemy : EnemyController
         
         return direction;
     }
-    
-    private void ChargingToPlayer()
-    {
-        transform.position += _direction * (_data.GetSpeed() * Time.deltaTime);
-    }
 
-    private IEnumerator ICasting()
-    {
-        yield return StartCoroutine(ICanShowingRedLine());
-        
-        ShowLightRedLine();
-        
-        yield return new WaitForSeconds(_data.GetTimeBeforeLerpRedLine());
-        
-        ShowFullyRedLine();
-        
-        yield return new WaitForSeconds(_data.GetRemainingForDash());
-
-        if (!_isCharging)
-            _direction = GetPlayerDirection();
-        
-        SetState(State.Dashing);
-    }
-    
     private IEnumerator ICanShowingRedLine()
     {
         if (_canShowingRedLine)
@@ -215,16 +213,6 @@ public class ChargingEnemy : EnemyController
         
         HideRedLine();
         yield return new WaitForSeconds(_data.GetTimeBeforeShowingRedLine());
-    }
-    
-    /// <summary>
-    /// Time before the enemy can dash again
-    /// </summary>
-    private IEnumerator IWaiting()
-    {
-        yield return new WaitForSeconds(_data.GetTimeWaitingDash());
-        
-        SetState(State.Casting);
     }
 
     /// <summary>
@@ -254,28 +242,33 @@ public class ChargingEnemy : EnemyController
     {
         _redLineMaterial.SetFloat("_Alpha", 1f);
     }
-
-    private void OnCollisionEnter(Collision other)
-    {
-        if (other.gameObject.CompareTag("Obstruction"))
-        {
-            StopCasting();
-            SetState(State.Waiting);
-        }
-        
-        if (other.gameObject.CompareTag("Player"))
-        {
-            StopCasting();
-            SetState(State.Waiting);
-            other.gameObject.GetComponent<PlayerController>().TakeDamage(_data.GetDamage());
-        }
-    }
     
     /// <summary>
-    /// Stop all coroutines when the object is destroyed
+    /// If he gets stun or knockback during the cast,
+    /// he will restart his charge from the beginning. 
     /// </summary>
-    ~ChargingEnemy()
+    public void RestartHisCharge()
     {
-        StopAllCoroutines();
+        StopCasting();
+        SetState(State.Casting);
+    }
+    
+    public void CollideWithPlayer()
+    {
+        StopMoving();
+        StopCasting();
+        Player.GetComponent<PlayerController>().TakeDamage(_data.GetDamage());
+        state = State.Waiting;
+
+        Debug.Log("collide with player");
+    }
+    
+    public void CollideWithObstruction()
+    {
+        StopMoving();
+        StopCasting();
+        state = State.Waiting;
+
+        Debug.Log("collide with obstruction");
     }
 }
