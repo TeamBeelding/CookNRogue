@@ -78,7 +78,6 @@ public class PlayerBulletBehaviour : MonoBehaviour
 
             if (_ricochetNbr > 0)
             {
-                Debug.Log("ricochet");
                 _ricochetNbr--;
                 BulletRicochet(transform.position, _hitObject, _direction);
                 ResetSpeed();
@@ -109,6 +108,7 @@ public class PlayerBulletBehaviour : MonoBehaviour
             }
             else
             {
+                
                 Destroy(gameObject);
             }
         }
@@ -124,33 +124,32 @@ public class PlayerBulletBehaviour : MonoBehaviour
             return;
 
         Collider[] hitColliders = Physics.OverlapSphere(Position, _maxDistance, _sphereMask);
+
         float closest = 999f;
         float distance = 0f;
         GameObject closestEnemy = HitObject;
 
         if (HitObject.GetComponent<EnemyController>())
             HitObject.layer = 2;
+
         
         foreach (Collider hitCollider in hitColliders)
         {
-            if (hitCollider.gameObject != HitObject && hitCollider.GetComponent<EnemyController>())
+            Debug.Log("foreach");
+            if (hitCollider.gameObject != HitObject && hitCollider.CompareTag("Enemy"))
             {
-                hitCollider.transform.gameObject.layer = 2;
+                Debug.Log("valid target");
                 distance = Vector3.Distance(hitCollider.gameObject.transform.position, Position);
 
                 Vector3 rayDirection = (hitCollider.gameObject.transform.position - Position).normalized;
-                Debug.DrawLine(Position, Position + (rayDirection * (distance * 0.8f)), Color.cyan, 999);
-
-                RaycastHit hit;
-                bool hashit = Physics.Raycast(Position, rayDirection, out hit, distance * 0.8f, _rayMask);
+                
                 if (distance < closest)
                 {
-                    
+                    Debug.Log("closest");
                     closest = distance;
                     closestEnemy = hitCollider.gameObject;
                     Debug.Log(closestEnemy);
                 }
-                hitCollider.transform.gameObject.layer = 0;
             }
             
 
