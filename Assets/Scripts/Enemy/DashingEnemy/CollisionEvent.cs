@@ -1,31 +1,33 @@
 using System;
-using Enemy.DashingEnemy;
 using UnityEngine;
 
-public class CollisionEvent : MonoBehaviour
+namespace Enemy.DashingEnemy
 {
-    private ChargingEnemy _chargingEnemy;
-
-    private void Awake()
+    public class CollisionEvent : MonoBehaviour
     {
-        _chargingEnemy = GetComponentInParent<ChargingEnemy>();
-    }
+        private ChargingEnemy _chargingEnemy;
 
-    private void Reset()
-    {
-        _chargingEnemy = GetComponentInParent<ChargingEnemy>();
-    }
-
-    private void OnCollisionEnter(Collision other)
-    {
-        if (other.gameObject.CompareTag("Player"))
+        private void Awake()
         {
-            _chargingEnemy.CollideWithPlayer();
+            _chargingEnemy = GetComponent<ChargingEnemy>();
         }
-        
-        if (other.gameObject.CompareTag("Obstruction"))
+
+        private void Reset()
         {
-            _chargingEnemy.CollideWithObstruction();
+            _chargingEnemy = GetComponent<ChargingEnemy>();
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.gameObject.CompareTag("Player"))
+            {
+                _chargingEnemy.CollideWithPlayer();
+            }
+        
+            if (other.gameObject.CompareTag("Obstruction"))
+            {
+                _chargingEnemy.CollideWithObstruction();
+            }
         }
     }
 }
