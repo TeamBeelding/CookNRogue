@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.InputSystem.XR;
 using static System.Net.Mime.MediaTypeNames;
+using System.Linq;
 
 public class DialogueBox : MonoBehaviour
 {
@@ -19,7 +20,24 @@ public class DialogueBox : MonoBehaviour
 
     [SerializeField] private float TextTimeOnScreen;
 
-    public void DisplayDialogueText(string text)
+    [SerializeField] Camera cam;
+    [SerializeField] Transform Lookat;
+    private void Start()
+    {
+        cam = Camera.main;
+    }
+    private void Update()
+    {
+        if(Lookat != null)
+        {
+            Vector3 pos = cam.WorldToScreenPoint(Lookat.position  + Vector3.up);
+
+            if (transform.position != pos)
+                transform.position = pos;
+        }
+
+    }
+    public void DisplayDialogueText(string text, Transform lookat)
     {
         //STOPS COROUTINE IF IT IS CURRENTLY RUNNING
         if (isEnumeratorRunning)
@@ -29,6 +47,7 @@ public class DialogueBox : MonoBehaviour
         }
 
         //INITIALISE THE TEXT TO DISPLAY AND THE PARAMETERS
+        Lookat = lookat;
         textToDisplay = text;
         DialogueText.text = "";
         TimeBtwLetters = 1 / TextSpeed;

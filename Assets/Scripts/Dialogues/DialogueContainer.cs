@@ -16,7 +16,7 @@ public class DialogueContainer : MonoBehaviour
     {
         if (_dialogueBox != null && other.CompareTag("Player"))
         {
-            _dialogueBox.DisplayDialogueText(_dialogue);
+            _dialogueBox.DisplayDialogueText(_dialogue, transform);
         }
     }
 }
