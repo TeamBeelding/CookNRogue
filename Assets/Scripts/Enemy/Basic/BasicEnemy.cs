@@ -22,7 +22,6 @@ namespace Enemy.Basic
         [SerializeField]
         private Renderer stateRenderer;
 
-        [SerializeField]
         private Coroutine _chaseCoroutine;
         
         public enum State
