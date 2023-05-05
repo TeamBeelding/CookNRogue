@@ -214,13 +214,13 @@ namespace Enemy.LongDistanceEnemy
             
             IEnumerator ITakeDistance()
             {
-                while (Vector3.Distance(transform.position, position) < 0.5f)
+                while (Vector3.Distance(transform.position, position) > 0.5f)
                 {
-                    Debug.Log(Vector3.Distance(transform.position, position));
+                    Debug.Log("taking distance");
                     _agent.SetDestination(position);
                     yield return null;
                 }
-                
+
                 _takingDistanceCoroutine = null;
             }
         }
