@@ -230,7 +230,7 @@ public class PlayerCookingInventory : MonoBehaviour
             m_playerAttackScript._size += ingredient._size;
             m_playerAttackScript._speed += ingredient._speed;
             m_playerAttackScript._drag += ingredient._drag;
-            m_playerAttackScript._attackDelay += ingredient._attackDelay;
+            m_playerAttackScript._shootCooldown += ingredient._attackDelay;
             m_playerAttackScript._damage += ingredient._damage;
 
 
@@ -242,7 +242,7 @@ public class PlayerCookingInventory : MonoBehaviour
         }
 
         //Average rate of fire
-        m_playerAttackScript._attackDelay /= _recipe.Count;
+        m_playerAttackScript._shootCooldown /= _recipe.Count;
 
         foreach (IIngredientEffects effect in m_playerAttackScript._effects)
         {
