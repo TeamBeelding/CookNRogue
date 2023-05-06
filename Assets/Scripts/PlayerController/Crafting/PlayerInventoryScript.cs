@@ -48,7 +48,6 @@ public class PlayerInventoryScript : MonoBehaviour
 
         //Rafraichit l'affichage de l'inventaire
         RefreshInventoryUI();
-
     }
 
     public void SelectIngredient()
