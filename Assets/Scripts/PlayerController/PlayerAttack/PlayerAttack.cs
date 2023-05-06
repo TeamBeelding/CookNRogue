@@ -27,7 +27,9 @@ public class PlayerAttack : MonoBehaviour
     public float _damage;
     [SerializeField]private bool _isShooting = false;
     public List<IIngredientEffects> _effects = new List<IIngredientEffects>();
+    //To delete
     public List<float> _shootingDelays = new List<float>();
+    //
     bool _shootOnCooldown;
 
     [SerializeField]
@@ -99,6 +101,7 @@ public class PlayerAttack : MonoBehaviour
     }
     #endregion
 
+    //To delete
     public void CalculateShootDelay()
     {
         float TotalDelay = 0;
@@ -108,6 +111,8 @@ public class PlayerAttack : MonoBehaviour
         }
         _shootCooldown = TotalDelay / _shootingDelays.Count;
     }
+    //
+
     IEnumerator ShootDelay(float delay)
     {
         float curTime = 0;
