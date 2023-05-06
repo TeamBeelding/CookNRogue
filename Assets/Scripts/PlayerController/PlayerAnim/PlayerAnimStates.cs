@@ -90,17 +90,31 @@ public class PlayerAnimStates : MonoBehaviour
 
 
     // Update is called once per frame
-    void FixedUpdate()
+    public void FixedUpdate()
     {
+
         Vector2 _moveInputValue = _player.MoveInputValue;
         Vector2 _aimInputValue = _player.AimInputValue;
 
         Vector2 _normalizedMoveInputValue = _moveInputValue.normalized;
         Vector2 _normalizedAimInputValue = _aimInputValue.normalized;
 
-        Vector2 _resultingVector = _moveInputValue + _aimInputValue;
+        float _angle = Vector2.Angle(_normalizedAimInputValue, _normalizedMoveInputValue);
+        
+        float _deltaX = _normalizedMoveInputValue.x - _normalizedAimInputValue.x;
+        float _deltaY = _normalizedMoveInputValue.y - _normalizedAimInputValue.y;
 
-        _animator.SetFloat("right", _resultingVector.x);
-        _animator.SetFloat("forward", _resultingVector.y);
+        float deg = Mathf.Atan2(_deltaY, _deltaX) * (180 / Mathf.PI);
+
+        Vector2 _relativeVector = Quaternion.Euler(_angle, 0, _angle) * Vector2.up;
+
+        Debug.DrawLine(transform.position, new Vector3(_normalizedMoveInputValue.x, 0,_normalizedMoveInputValue.y), Color.magenta);
+        Debug.DrawLine(transform.position, new Vector3(_normalizedAimInputValue.x, 0, _normalizedAimInputValue.y), Color.magenta);
+
+        Debug.Log(deg);
+        
+        //_animator.SetFloat("right", _relativeVector.x);
+        //_animator.SetFloat("forward", _relativeVector.y);
+
     }
 }
