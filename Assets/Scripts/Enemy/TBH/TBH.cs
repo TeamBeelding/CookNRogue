@@ -87,18 +87,26 @@ public class TBH : EnemyController
 
         for (int i = 0; i < _data.NumberOfBullet; i++)
         {
+            StartCoroutine(IShotRandomly(i));
+        }
+
+        SetState(State.Casting);
+
+        IEnumerator IShotRandomly(int i)
+        {
             var spread = Random.Range(-2f, 2f);
             
             Quaternion rotation = quaternion.Euler(angleStep * i, 0, angleStep * i);
             Vector3 direction = rotation * transform.forward;
+            
+            float randomDelay = Random.Range(0.1f, 0.5f);
+            yield return new WaitForSeconds(randomDelay);
             
             GameObject bullet = Instantiate(_bullet, _gun.transform.position, Quaternion.identity);
             
             bullet.GetComponent<EnemyBulletController>().SetDirection(new Vector3(Player.transform.position.x + spread, Player.transform.position.y, Player.transform.position.z + spread));
             bullet.GetComponent<EnemyBulletController>().SetDamage(_data.DamagePerBullet);
         }
-
-        SetState(State.Casting);
     }
 
     private void Teleport()
