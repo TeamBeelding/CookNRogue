@@ -1,10 +1,9 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using Enemy.Data;
+using Enemy.Slime;
 using Unity.Mathematics;
 using UnityEngine;
-using UnityEngine.AI;
 using Random = UnityEngine.Random;
 
 public class TBH : EnemyController
@@ -13,6 +12,7 @@ public class TBH : EnemyController
     [SerializeField] private GameObject _gun;
     [SerializeField] private GameObject _bullet;
     [SerializeField] private ParticleSystem m_stateSystem;
+    [SerializeField] private CheckingSpawn _checkingSpawn;
     
     public enum State
     {
@@ -30,6 +30,7 @@ public class TBH : EnemyController
         base.Awake();
         
         Healthpoint = _data.Health;
+        _checkingSpawn = GetComponentInChildren<CheckingSpawn>();
     }
     
     private void Reset()
@@ -106,10 +107,29 @@ public class TBH : EnemyController
         
         if (Vector3.Distance(transform.position, randomPosition) <= _data.MinimumRadius)
             randomPosition = UnityEngine.Random.insideUnitSphere * _data.AttackRange + Player.transform.position;
+
+        Vector3 position = new Vector3(randomPosition.x, transform.position.y, randomPosition.z);
         
-        transform.position = new Vector3(randomPosition.x, transform.position.y, randomPosition.z);
+        if (CanTeleportHere(position))
+            transform.position = new Vector3(randomPosition.x, transform.position.y, randomPosition.z);
+        else
+            Teleport();
         
         SetState(State.Attacking);
+    }
+
+    private bool CanTeleportHere(Vector3 position)
+    {
+        RaycastHit hit;
+        Vector3 direction = Player.transform.position - position;
+        
+        if (Physics.Raycast(position, direction, out hit, _data.AttackRange))
+        {
+            if (hit.collider.CompareTag("Player"))
+                return true;
+        }
+
+        return false;
     }
 
     private void Casting()
@@ -127,8 +147,6 @@ public class TBH : EnemyController
     {
         _state = value;
 
-        Debug.Log(_state);
-        
         StateManagement();
     }
 
