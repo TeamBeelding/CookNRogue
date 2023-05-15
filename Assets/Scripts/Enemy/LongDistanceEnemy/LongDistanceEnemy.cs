@@ -52,13 +52,13 @@ namespace Enemy.LongDistanceEnemy
             _agent.stoppingDistance = _data.AttackRange;
         }
 
-        protected override void Update()
-        {
-            base.Update();
-
-            if (Input.GetKeyDown(KeyCode.A))
-                TakingDistance();
-        }
+        // protected override void Update()
+        // {
+        //     base.Update();
+        //
+        //     if (Input.GetKeyDown(KeyCode.A))
+        //         TakingDistance();
+        // }
 
         private void FixedUpdate()
         {
