@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
+using TNRD;
 
 public enum INGREDIENT
 {
@@ -13,7 +14,7 @@ public enum INGREDIENT
 [CreateAssetMenu(fileName = "ProjectileData", menuName = "Player/Projectile Data")]
 public class ProjectileData : ScriptableObject
 {
-    public List<IIngredientEffects> _effects;
+    public List<SerializableInterface<IIngredientEffects>> _effects;
 
     [Header("Composition")]
     public INGREDIENT _plat;

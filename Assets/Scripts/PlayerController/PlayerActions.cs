@@ -238,7 +238,7 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""19400ea6-aaf5-40db-baff-b3283281265c"",
-                    ""path"": ""<Keyboard>/c"",
+                    ""path"": ""<Keyboard>/leftShift"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
@@ -306,27 +306,9 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""SelectIngerdient"",
+                    ""name"": ""SelectIngredient"",
                     ""type"": ""Button"",
                     ""id"": ""3f0c7d75-1b65-49fe-939e-69e7b181b17a"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""MoveInventorySlotLeft"",
-                    ""type"": ""Button"",
-                    ""id"": ""294fb2db-e784-4257-8d83-0f51a4064d3b"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""MoveInventorySlotRight"",
-                    ""type"": ""Button"",
-                    ""id"": ""6453b270-45c7-4b8f-a1f5-725add19aeb5"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -336,6 +318,24 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                     ""name"": ""StartCrafting"",
                     ""type"": ""Button"",
                     ""id"": ""18a4c17f-7942-48c3-b1a9-be709d1cdcbc"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""IngredientSelector"",
+                    ""type"": ""Value"",
+                    ""id"": ""984d14e4-b498-4cca-8e44-543bf9ea5b93"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""ChangeWheel"",
+                    ""type"": ""Button"",
+                    ""id"": ""ac3372bb-e759-48db-9061-f0953e7c50ed"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -372,7 +372,7 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""GamePad"",
-                    ""action"": ""SelectIngerdient"",
+                    ""action"": ""SelectIngredient"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -383,51 +383,7 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""SelectIngerdient"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""293f2ee9-e526-44f7-b2e8-54719b654b35"",
-                    ""path"": ""<Gamepad>/dpad/left"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""GamePad"",
-                    ""action"": ""MoveInventorySlotLeft"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""a46b537e-b5ae-419d-bb1e-d05c9cdbe8e8"",
-                    ""path"": ""<Keyboard>/q"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard"",
-                    ""action"": ""MoveInventorySlotLeft"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""53c0260b-059c-4052-8a2e-79abf963b976"",
-                    ""path"": ""<Gamepad>/dpad/right"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""GamePad"",
-                    ""action"": ""MoveInventorySlotRight"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""886c7bec-3d60-4b69-9454-cc3d1aa41673"",
-                    ""path"": ""<Keyboard>/d"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard"",
-                    ""action"": ""MoveInventorySlotRight"",
+                    ""action"": ""SelectIngredient"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -450,6 +406,28 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
                     ""action"": ""StartCrafting"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4c025de8-9dea-4412-b06f-86d77e52514a"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""GamePad"",
+                    ""action"": ""IngredientSelector"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dfd3be85-538d-4026-b51d-fc014dcc3879"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""GamePad"",
+                    ""action"": ""ChangeWheel"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -537,10 +515,10 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
         // Cooking
         m_Cooking = asset.FindActionMap("Cooking", throwIfNotFound: true);
         m_Cooking_Cook = m_Cooking.FindAction("Cook", throwIfNotFound: true);
-        m_Cooking_SelectIngerdient = m_Cooking.FindAction("SelectIngerdient", throwIfNotFound: true);
-        m_Cooking_MoveInventorySlotLeft = m_Cooking.FindAction("MoveInventorySlotLeft", throwIfNotFound: true);
-        m_Cooking_MoveInventorySlotRight = m_Cooking.FindAction("MoveInventorySlotRight", throwIfNotFound: true);
+        m_Cooking_SelectIngredient = m_Cooking.FindAction("SelectIngredient", throwIfNotFound: true);
         m_Cooking_StartCrafting = m_Cooking.FindAction("StartCrafting", throwIfNotFound: true);
+        m_Cooking_IngredientSelector = m_Cooking.FindAction("IngredientSelector", throwIfNotFound: true);
+        m_Cooking_ChangeWheel = m_Cooking.FindAction("ChangeWheel", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Pause = m_UI.FindAction("Pause", throwIfNotFound: true);
@@ -685,19 +663,19 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Cooking;
     private ICookingActions m_CookingActionsCallbackInterface;
     private readonly InputAction m_Cooking_Cook;
-    private readonly InputAction m_Cooking_SelectIngerdient;
-    private readonly InputAction m_Cooking_MoveInventorySlotLeft;
-    private readonly InputAction m_Cooking_MoveInventorySlotRight;
+    private readonly InputAction m_Cooking_SelectIngredient;
     private readonly InputAction m_Cooking_StartCrafting;
+    private readonly InputAction m_Cooking_IngredientSelector;
+    private readonly InputAction m_Cooking_ChangeWheel;
     public struct CookingActions
     {
         private @PlayerActions m_Wrapper;
         public CookingActions(@PlayerActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Cook => m_Wrapper.m_Cooking_Cook;
-        public InputAction @SelectIngerdient => m_Wrapper.m_Cooking_SelectIngerdient;
-        public InputAction @MoveInventorySlotLeft => m_Wrapper.m_Cooking_MoveInventorySlotLeft;
-        public InputAction @MoveInventorySlotRight => m_Wrapper.m_Cooking_MoveInventorySlotRight;
+        public InputAction @SelectIngredient => m_Wrapper.m_Cooking_SelectIngredient;
         public InputAction @StartCrafting => m_Wrapper.m_Cooking_StartCrafting;
+        public InputAction @IngredientSelector => m_Wrapper.m_Cooking_IngredientSelector;
+        public InputAction @ChangeWheel => m_Wrapper.m_Cooking_ChangeWheel;
         public InputActionMap Get() { return m_Wrapper.m_Cooking; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -710,18 +688,18 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                 @Cook.started -= m_Wrapper.m_CookingActionsCallbackInterface.OnCook;
                 @Cook.performed -= m_Wrapper.m_CookingActionsCallbackInterface.OnCook;
                 @Cook.canceled -= m_Wrapper.m_CookingActionsCallbackInterface.OnCook;
-                @SelectIngerdient.started -= m_Wrapper.m_CookingActionsCallbackInterface.OnSelectIngerdient;
-                @SelectIngerdient.performed -= m_Wrapper.m_CookingActionsCallbackInterface.OnSelectIngerdient;
-                @SelectIngerdient.canceled -= m_Wrapper.m_CookingActionsCallbackInterface.OnSelectIngerdient;
-                @MoveInventorySlotLeft.started -= m_Wrapper.m_CookingActionsCallbackInterface.OnMoveInventorySlotLeft;
-                @MoveInventorySlotLeft.performed -= m_Wrapper.m_CookingActionsCallbackInterface.OnMoveInventorySlotLeft;
-                @MoveInventorySlotLeft.canceled -= m_Wrapper.m_CookingActionsCallbackInterface.OnMoveInventorySlotLeft;
-                @MoveInventorySlotRight.started -= m_Wrapper.m_CookingActionsCallbackInterface.OnMoveInventorySlotRight;
-                @MoveInventorySlotRight.performed -= m_Wrapper.m_CookingActionsCallbackInterface.OnMoveInventorySlotRight;
-                @MoveInventorySlotRight.canceled -= m_Wrapper.m_CookingActionsCallbackInterface.OnMoveInventorySlotRight;
+                @SelectIngredient.started -= m_Wrapper.m_CookingActionsCallbackInterface.OnSelectIngredient;
+                @SelectIngredient.performed -= m_Wrapper.m_CookingActionsCallbackInterface.OnSelectIngredient;
+                @SelectIngredient.canceled -= m_Wrapper.m_CookingActionsCallbackInterface.OnSelectIngredient;
                 @StartCrafting.started -= m_Wrapper.m_CookingActionsCallbackInterface.OnStartCrafting;
                 @StartCrafting.performed -= m_Wrapper.m_CookingActionsCallbackInterface.OnStartCrafting;
                 @StartCrafting.canceled -= m_Wrapper.m_CookingActionsCallbackInterface.OnStartCrafting;
+                @IngredientSelector.started -= m_Wrapper.m_CookingActionsCallbackInterface.OnIngredientSelector;
+                @IngredientSelector.performed -= m_Wrapper.m_CookingActionsCallbackInterface.OnIngredientSelector;
+                @IngredientSelector.canceled -= m_Wrapper.m_CookingActionsCallbackInterface.OnIngredientSelector;
+                @ChangeWheel.started -= m_Wrapper.m_CookingActionsCallbackInterface.OnChangeWheel;
+                @ChangeWheel.performed -= m_Wrapper.m_CookingActionsCallbackInterface.OnChangeWheel;
+                @ChangeWheel.canceled -= m_Wrapper.m_CookingActionsCallbackInterface.OnChangeWheel;
             }
             m_Wrapper.m_CookingActionsCallbackInterface = instance;
             if (instance != null)
@@ -729,18 +707,18 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                 @Cook.started += instance.OnCook;
                 @Cook.performed += instance.OnCook;
                 @Cook.canceled += instance.OnCook;
-                @SelectIngerdient.started += instance.OnSelectIngerdient;
-                @SelectIngerdient.performed += instance.OnSelectIngerdient;
-                @SelectIngerdient.canceled += instance.OnSelectIngerdient;
-                @MoveInventorySlotLeft.started += instance.OnMoveInventorySlotLeft;
-                @MoveInventorySlotLeft.performed += instance.OnMoveInventorySlotLeft;
-                @MoveInventorySlotLeft.canceled += instance.OnMoveInventorySlotLeft;
-                @MoveInventorySlotRight.started += instance.OnMoveInventorySlotRight;
-                @MoveInventorySlotRight.performed += instance.OnMoveInventorySlotRight;
-                @MoveInventorySlotRight.canceled += instance.OnMoveInventorySlotRight;
+                @SelectIngredient.started += instance.OnSelectIngredient;
+                @SelectIngredient.performed += instance.OnSelectIngredient;
+                @SelectIngredient.canceled += instance.OnSelectIngredient;
                 @StartCrafting.started += instance.OnStartCrafting;
                 @StartCrafting.performed += instance.OnStartCrafting;
                 @StartCrafting.canceled += instance.OnStartCrafting;
+                @IngredientSelector.started += instance.OnIngredientSelector;
+                @IngredientSelector.performed += instance.OnIngredientSelector;
+                @IngredientSelector.canceled += instance.OnIngredientSelector;
+                @ChangeWheel.started += instance.OnChangeWheel;
+                @ChangeWheel.performed += instance.OnChangeWheel;
+                @ChangeWheel.canceled += instance.OnChangeWheel;
             }
         }
     }
@@ -809,10 +787,10 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
     public interface ICookingActions
     {
         void OnCook(InputAction.CallbackContext context);
-        void OnSelectIngerdient(InputAction.CallbackContext context);
-        void OnMoveInventorySlotLeft(InputAction.CallbackContext context);
-        void OnMoveInventorySlotRight(InputAction.CallbackContext context);
+        void OnSelectIngredient(InputAction.CallbackContext context);
         void OnStartCrafting(InputAction.CallbackContext context);
+        void OnIngredientSelector(InputAction.CallbackContext context);
+        void OnChangeWheel(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
