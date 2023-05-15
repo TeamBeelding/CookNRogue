@@ -12,6 +12,15 @@ namespace Enemy.LongDistanceEnemy
         [SerializeField] private GameObject _gun;
         [SerializeField] private GameObject _bullet;
         [SerializeField] private ParticleSystem m_stateSystem;
+        
+        private int _numberShootBeforeMoving;
+        
+        private Coroutine _chaseCoroutine;
+        private Coroutine _attackCoroutine;
+        private Coroutine _movingAnotherPositionCoroutine;
+        private Coroutine _takingDistanceCoroutine;
+
+        private bool _needTakeDistance = false;
 
         public enum State
         {
@@ -32,6 +41,7 @@ namespace Enemy.LongDistanceEnemy
             _agent.speed = _data.Speed;
             _agent.stoppingDistance = _data.AttackRange;
             Healthpoint = _data.Health;
+            _numberShootBeforeMoving = _data.NumberShootBeforeMoving;
         }
         
         private void Reset()
@@ -42,9 +52,17 @@ namespace Enemy.LongDistanceEnemy
             _agent.stoppingDistance = _data.AttackRange;
         }
 
+        // protected override void Update()
+        // {
+        //     base.Update();
+        //
+        //     if (Input.GetKeyDown(KeyCode.A))
+        //         TakingDistance();
+        // }
+
         private void FixedUpdate()
         {
-            AreaDetection();
+            // AreaDetection();
         }
 
         private State GetState()
@@ -94,7 +112,7 @@ namespace Enemy.LongDistanceEnemy
             }
             else
             {
-                if (Vector3.Distance(transform.position, Player.transform.position) <= _data.AttackRange - _data.MinimumDistanceToKeep)
+                if (Vector3.Distance(transform.position, Player.transform.position) < _data.MinimumDistanceToKeep)
                 {
                     SetState(State.TakingDistance);
                 }
@@ -107,7 +125,8 @@ namespace Enemy.LongDistanceEnemy
 
         private void Chasing()
         {
-            StartCoroutine(IChasing());
+            _chaseCoroutine = StartCoroutine(IChasing());
+            _movingAnotherPositionCoroutine = null;
             
             IEnumerator IChasing()
             {
@@ -116,18 +135,22 @@ namespace Enemy.LongDistanceEnemy
                     _agent.SetDestination(Player.transform.position);
                     yield return null;
                 }
+                
+                _chaseCoroutine = null;
             }
         }
         
         private void Shot()
         {
-            if (!_bullet)
-                return;
+            AreaDetection();
             
+            _numberShootBeforeMoving--;
+
             GameObject shot = Instantiate(_bullet, _gun.transform.position, Quaternion.identity);
             shot.GetComponent<EnemyBulletController>().SetDirection(Player.transform);
-            
-            SetState(State.MovingAnotherPosition);
+
+            if (_numberShootBeforeMoving == 0)
+                SetState(State.MovingAnotherPosition);
         }
         
         /// <summary>
@@ -135,14 +158,30 @@ namespace Enemy.LongDistanceEnemy
         /// </summary>
         private void MovingAnotherPosition()
         {
-            if (CanMoveThere(GetRandomPoint()))
+            _numberShootBeforeMoving = _data.NumberShootBeforeMoving;
+            
+            Vector3 newPosition = GetRandomPoint();
+            
+            if (CanMoveThere(newPosition))
             {
-                if (GetState() != State.Attacking)
-                {
-                    MovingAnotherPosition();
-                }
+                _movingAnotherPositionCoroutine = StartCoroutine(IMovingAnotherPosition());
+            }
+            else
+            {
+                MovingAnotherPosition();
             }
 
+            IEnumerator IMovingAnotherPosition()
+            {
+                while (Vector3.Distance(transform.position, newPosition) > 0.5f)
+                {
+                    _agent.SetDestination(newPosition);
+                    yield return null;
+                }
+                
+                _movingAnotherPositionCoroutine = null;
+            }
+            
             Vector3 GetRandomPoint()
             {
                 Vector3 center = Player.transform.position;
@@ -153,6 +192,12 @@ namespace Enemy.LongDistanceEnemy
             
             bool CanMoveThere(Vector3 position)
             {
+                if (Physics.Raycast(position, Player.transform.position.normalized, out RaycastHit hit, _data.AttackRange))
+                {
+                    if (hit.collider.CompareTag("Obstruction"))
+                        return false;
+                }
+                
                 return true;
             }
         }
@@ -162,17 +207,27 @@ namespace Enemy.LongDistanceEnemy
         /// </summary>
         private void TakingDistance()
         {
-            Vector3 position = transform.position - _data.MinimumDistanceToKeep * (transform.position - Player.transform.position).normalized;
+            Vector3 randomPoint = Player.transform.position + Random.insideUnitSphere;
+            Vector3 position = randomPoint * _data.AttackRange;
 
-            while (Vector3.Distance(transform.position, position) > 0.1f)
+            _takingDistanceCoroutine = StartCoroutine(ITakeDistance());
+            
+            IEnumerator ITakeDistance()
             {
-                _agent.SetDestination(position);
+                while (Vector3.Distance(transform.position, position) > 0.5f)
+                {
+                    Debug.Log("taking distance");
+                    _agent.SetDestination(position);
+                    yield return null;
+                }
+
+                _takingDistanceCoroutine = null;
             }
         }
 
         public override bool IsMoving()
         {
-            throw new System.NotImplementedException();
+            return false;
         }
         
         public override void TakeDamage(float damage = 1, bool isCritical = false)
@@ -180,9 +235,7 @@ namespace Enemy.LongDistanceEnemy
             base.TakeDamage(damage, isCritical);
 
             if (Healthpoint <= 0)
-            {
                 SetState(State.Dying);
-            }
         }
     }
 }
