@@ -144,19 +144,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 014018f03101ef1479a35bb79d205c72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _projectileData: {fileID: 11400000, guid: 496a317e0266cc5489a052a83227a782, type: 2}
+  _projectileData: {fileID: 11400000, guid: fb81163306b564c4d870be345796413b, type: 2}
   m_effects:
   - mode: 1
     unityReference: {fileID: 0}
     rawReference:
-      rid: 7565062726754762762
+      rid: 4485746909785620480
   references:
     version: 2
     RefIds:
-    - rid: 7565062726754762762
-      type: {class: StatusEffect, ns: , asm: Assembly-CSharp}
+    - rid: 4485746909785620480
+      type: {class: AOE, ns: , asm: Assembly-CSharp}
       data:
-        _data: {fileID: 0}
+        ZONE: {fileID: 0}
+        m_AOERadius: 1
+        m_AOEDuration: 10
+        m_AOEDamage: 0
+        m_AOETick: 0
+        m_AOESlowEnnemies: 0
+        m_AOESSpeedPlayer: 0
+        _mask:
+          serializedVersion: 2
+          m_Bits: 0
 --- !u!54 &2052581223583518506
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -1,8 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using UnityEditor;
-using UnityEngine.Serialization;
+using UnityEngine;
 
 
 [CreateAssetMenu(fileName = "LevelOrderList", menuName = "Level/LevelOrder")]
@@ -27,13 +25,19 @@ public class LevelOrderData : ScriptableObject
     // Name
     private string[] _hubNames;
 
-    private string[] _roomNames;
+    private string[] _roomEasyNames;
+    private string[] _roomNormalNames;
+    private string[] _roomHardNames;
 
-    private string[] _corridorNames;
+    private string[] _corridorEasyNames;
+    private string[] _corridorNormalNames;
+    private string[] _corridorHardNames;
 
     private string[] _shopNames;
 
-    private string[] _finalNames;
+    private string[] _finalEasyNames;
+    private string[] _finalNormalNames;
+    private string[] _finalHardNames;
 
     // list of strings
 
@@ -53,7 +57,7 @@ public class LevelOrderData : ScriptableObject
     private void OnEnable()
     {
         _levelNames = new List<string[]>();
-        _roomTypes = new string[] { "Hub", "Room", "Corridor", "Shop", "Final" };
+        _roomTypes = new string[] { "Hub", "Easy_Room", "Normal_Room", "Hard_Room", "Easy_Corridor", "Normal_Corridor", "Hard_Corridor", "Shop", "Easy_Final", "Normal_Final", "Hard_Final" };
         InitLevelNames();
     }
 
@@ -61,10 +65,22 @@ public class LevelOrderData : ScriptableObject
     {
 
         _hubNames = new string[LevelLists.HubList.Length];
-        _roomNames = new string[LevelLists.RoomList.Length];
-        _corridorNames = new string[LevelLists.CorridorList.Length];
+
+        _roomEasyNames = new string[LevelLists.RoomEasyList.Length];
+        _roomNormalNames = new string[LevelLists.RoomNormalList.Length];
+        _roomHardNames = new string[LevelLists.RoomHardList.Length];
+
+        _corridorEasyNames = new string[LevelLists.CorridorEasyList.Length];
+        _corridorNormalNames = new string[LevelLists.CorridorNormalList.Length];
+        _corridorHardNames = new string[LevelLists.CorridorHardList.Length];
+
         _shopNames = new string[LevelLists.ShopList.Length];
-        _finalNames = new string[LevelLists.FinalList.Length];
+
+        _finalEasyNames = new string[LevelLists.FinalEasyList.Length];
+        _finalNormalNames = new string[LevelLists.FinalNormalList.Length];
+        _finalHardNames = new string[LevelLists.FinalHardList.Length];
+
+        // ===============================================================
 
         for (int i = 0; i < LevelLists.HubList.Length; i++)
         {
@@ -72,19 +88,47 @@ public class LevelOrderData : ScriptableObject
         }
         _levelNames.Add(_hubNames);
 
-        for (int i = 0; i < LevelLists.RoomList.Length; i++)
+        // ===============================================================
+
+        for (int i = 0; i < LevelLists.RoomEasyList.Length; i++)
         {
-            _roomNames[i] = LevelLists.RoomList[i].name;
+            _roomEasyNames[i] = LevelLists.RoomEasyList[i].name;
         }
-        _levelNames.Add(_roomNames);
+        _levelNames.Add(_roomEasyNames);
 
-
-        for (int i = 0; i < LevelLists.CorridorList.Length; i++)
+        for (int i = 0; i < LevelLists.RoomNormalList.Length; i++)
         {
-            _corridorNames[i] = LevelLists.CorridorList[i].name;
+            _roomNormalNames[i] = LevelLists.RoomNormalList[i].name;
         }
-        _levelNames.Add(_corridorNames);
+        _levelNames.Add(_roomNormalNames);
 
+        for (int i = 0; i < LevelLists.RoomHardList.Length; i++)
+        {
+            _roomHardNames[i] = LevelLists.RoomHardList[i].name;
+        }
+        _levelNames.Add(_roomHardNames);
+
+        // ===============================================================
+
+        for (int i = 0; i < LevelLists.CorridorEasyList.Length; i++)
+        {
+            _corridorEasyNames[i] = LevelLists.CorridorEasyList[i].name;
+        }
+        _levelNames.Add(_corridorEasyNames);
+
+        for (int i = 0; i < LevelLists.CorridorNormalList.Length; i++)
+        {
+            _corridorNormalNames[i] = LevelLists.CorridorNormalList[i].name;
+        }
+        _levelNames.Add(_corridorNormalNames);
+
+        for (int i = 0; i < LevelLists.CorridorHardList.Length; i++)
+        {
+            _corridorHardNames[i] = LevelLists.CorridorHardList[i].name;
+        }
+        _levelNames.Add(_corridorHardNames);
+
+        // ===============================================================
 
         for (int i = 0; i < LevelLists.ShopList.Length; i++)
         {
@@ -92,12 +136,27 @@ public class LevelOrderData : ScriptableObject
         }
         _levelNames.Add(_shopNames);
 
+        // ===============================================================
 
-        for (int i = 0; i < LevelLists.FinalList.Length; i++)
+        for (int i = 0; i < LevelLists.FinalEasyList.Length; i++)
         {
-            _finalNames[i] = LevelLists.FinalList[i].name;
+            _finalEasyNames[i] = LevelLists.FinalEasyList[i].name;
         }
-        _levelNames.Add(_finalNames);
+        _levelNames.Add(_finalEasyNames);
+
+        for (int i = 0; i < LevelLists.FinalNormalList.Length; i++)
+        {
+            _finalNormalNames[i] = LevelLists.FinalNormalList[i].name;
+        }
+        _levelNames.Add(_finalNormalNames);
+
+        for (int i = 0; i < LevelLists.FinalHardList.Length; i++)
+        {
+            _finalHardNames[i] = LevelLists.FinalHardList[i].name;
+        }
+        _levelNames.Add(_finalHardNames);
+
+        // ===============================================================
     }
 }
 
@@ -135,111 +194,3 @@ public class LeveOrdertDataEditor : Editor
     }
 }
 #endif
-
-//#if UNITY_EDITOR
-//[CustomEditor(typeof(LeveOrdertData))]
-//public class LeveOrdertDataEditor : Editor
-//{
-//    private int selected = 0;
-
-//    public override void OnInspectorGUI()
-//    {
-
-//        DrawDefaultInspector();
-//        LeveOrdertData order = (LeveOrdertData)target;
-
-
-//        EditorGUILayout.Separator();
-
-//        EditorGUILayout.LabelField("TOOLS: ", "");
-//        GuiLine(1);
-
-//        selected = EditorGUILayout.Popup("Specified Level", selected, order.LevelData.CorridorList.name);
-
-//        if (GUILayout.Button("Load Specified Level"))
-//        {
-//            room.LoadPecifiedLevel(selected);
-//        }
-
-//        EditorGUILayout.Separator();
-
-//        if (GUILayout.Button("Load Random Level"))
-//        {
-//            room.LoadRandomLevel();
-//        }
-//    }
-
-//    void GuiLine(int i_height = 1)
-//    {
-//        Rect rect = EditorGUILayout.GetControlRect(false, i_height);
-//        rect.height = i_height;
-//        EditorGUI.DrawRect(rect, new Color(0.5f, 0.5f, 0.5f, 1));
-//        EditorGUILayout.Separator();
-//    }
-//}
-//#endif
-
-//#if UNITY_EDITOR
-//[CustomEditor(typeof(LevelListData))]
-//public class LevelListDataEditor : Editor
-//{
-//    public override void OnInspectorGUI()
-//    {
-//        DrawDefaultInspector();
-
-//        LevelListData _levelListData = new LevelListData();
-
-//        LevelData data = null;
-
-//        //data = (LevelData)EditorGUILayout.ObjectField(data, typeof(LevelData), true);
-
-//        if (GUILayout.Button("Update"))
-//        {
-//            for (int i = 0; i < _levelListData.m_amountOfRooms; i++)
-//            {
-//                data = (LevelData)EditorGUILayout.ObjectField(data, typeof(LevelData), true);
-//            }
-//        }
-
-
-//        if (data)
-//        {
-
-//        }
-
-//        //EditorGUILayout.Separator();
-
-//        //EditorGUILayout.LabelField("TOOLS: ", "");
-//        //GuiLine(1);
-
-//        //if (GUILayout.Button("Shake"))
-//        //{
-//        //    CameraController.instance._shake = true;
-//        //}
-
-//        //if (GUILayout.Button("Zoom"))
-//        //{
-//        //    CameraController.instance._zoom = true;
-//        //}
-//    }
-
-
-//    //
-//    // Summary:
-//    //     Checks if this editor requires constant repaints in its current state.
-//    //public override bool RequiresConstantRepaint() = true;
-
-//    //public override void OnInspectorUpdate() 
-//    //{ 
-
-//    //}
-
-//    void GuiLine(int i_height = 1)
-//    {
-//        Rect rect = EditorGUILayout.GetControlRect(false, i_height);
-//        rect.height = i_height;
-//        EditorGUI.DrawRect(rect, new Color(0.5f, 0.5f, 0.5f, 1));
-//        EditorGUILayout.Separator();
-//    }
-//}
-//#endif
