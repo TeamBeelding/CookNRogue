@@ -28,7 +28,7 @@ public class EnemyJumpOnMove : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-            UpdateJump();
+        UpdateJump();
     }
 
     private void UpdateJump()
@@ -61,13 +61,5 @@ public class EnemyJumpOnMove : MonoBehaviour
     public void SetIsMoving(bool value)
     {
         isMoving = value;
-    }
-    
-    private void OnGUI()
-    {
-        if (!GuiDebug) return;
-        
-        GUILayout.Label($"ratio : {jumpRatio}, {jumpTimer}");
-        GUILayout.Label($"current jump height : {currentJumpHeight}");
     }
 }
