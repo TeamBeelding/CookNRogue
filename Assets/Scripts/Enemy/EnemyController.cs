@@ -152,6 +152,9 @@ public abstract class EnemyController : MonoBehaviour
 
     private void DestroyEffect()
     {
+        if (explosion == null)
+            return;
+        
         Instantiate(explosion, transform.position, Quaternion.identity);
         _collider.enabled = false;
     }

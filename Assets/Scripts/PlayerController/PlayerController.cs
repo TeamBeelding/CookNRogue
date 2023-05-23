@@ -634,6 +634,11 @@ public class PlayerController : MonoBehaviour
 
     #endregion
 
+    public PlayerActions GetPlayerAction()
+    {
+        return _playerActions;
+    }
+
 #if UNITY_EDITOR
     private void OnDrawGizmos()
     {
