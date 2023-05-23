@@ -22,7 +22,7 @@ public class PlayerBulletBehaviour : MonoBehaviour
     public float _maxDistance;
     public LayerMask _sphereMask;
     public LayerMask _rayMask;
-
+    public GameObject Explosion;
 
     protected virtual void Start()
     {
@@ -52,6 +52,8 @@ public class PlayerBulletBehaviour : MonoBehaviour
 
     protected virtual void OnDestroy()
     {
+        GameObject explosion = Instantiate(Explosion, transform.position,Quaternion.identity);
+        Destroy(explosion,1);
         if (!_HasHit)
         {
             ApplyCorrectOnHitEffects();

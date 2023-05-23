@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53abb120a886f884a82d268ea4771c0d, type: 3}
   m_Name: pain
   m_EditorClassIdentifier: 
+  _effects:
+  - rid: 3501995644070658048
   _plat: 0
   inventorySprite: {fileID: 0}
   _size: 1.5
@@ -21,3 +23,10 @@ MonoBehaviour:
   _attackDelay: 0.3
   _damage: 80
   color: {r: 0, g: 0, b: 0, a: 0}
+  references:
+    version: 2
+    RefIds:
+    - rid: 3501995644070658048
+      type: {class: ConeShots, ns: , asm: Assembly-CSharp}
+      data:
+        _bulletAngleSpread: 10
