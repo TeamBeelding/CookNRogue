@@ -3,6 +3,7 @@ using NaughtyAttributes;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 namespace Enemy.Slime
@@ -12,7 +13,7 @@ namespace Enemy.Slime
         [SerializeField] private SlimeData _data;
         [SerializeField] private NavMeshAgent _agent;
         [SerializeField, Required("Prefabs minimoyz")] private GameObject _minimoyz;
-        [SerializeField, Required("Minimoyz spawn checker")] private SlimeCheckingMinimoyzSpawn _minimoyzSpawnChecker;
+        [FormerlySerializedAs("_minimoyzSpawnChecker")] [SerializeField, Required("Minimoyz spawn checker")] private CheckingSpawn spawnChecker;
 
         public enum State
         {
@@ -31,7 +32,7 @@ namespace Enemy.Slime
             _agent = GetComponent<NavMeshAgent>();
             _agent.speed = _data.GetSpeed;
             _agent.stoppingDistance = _data.GetAttackRange;
-            _minimoyzSpawnChecker = GetComponentInChildren<SlimeCheckingMinimoyzSpawn>();
+            spawnChecker = GetComponentInChildren<CheckingSpawn>();
         }
 
         protected override void Awake()
@@ -48,7 +49,7 @@ namespace Enemy.Slime
         protected override void Start()
         {
             state = _data.GetFocusPlayer ? State.Chase : State.Neutral;
-            _minimoyzSpawnChecker = GetComponentInChildren<SlimeCheckingMinimoyzSpawn>();
+            spawnChecker = GetComponentInChildren<CheckingSpawn>();
 
             base.Start();
         }
@@ -142,9 +143,9 @@ namespace Enemy.Slime
         {
             Vector3 point = RandomPoint();
             
-            _minimoyzSpawnChecker.SetTransformPosition(point);
+            spawnChecker.SetTransformPosition(point);
             
-            if (!_minimoyzSpawnChecker.IsPathValid(Player.transform.position))
+            if (!spawnChecker.IsPathValid(Player.transform.position))
                 ThrowMinimoyz();
 
             GameObject minimoyz = Instantiate(_minimoyz, point, quaternion.identity);

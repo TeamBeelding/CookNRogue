@@ -3,7 +3,7 @@ using UnityEngine.AI;
 
 namespace Enemy.Slime
 {
-    public class SlimeCheckingMinimoyzSpawn : MonoBehaviour
+    public class CheckingSpawn : MonoBehaviour
     {
         private NavMeshAgent _agent;
         
