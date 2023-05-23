@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53abb120a886f884a82d268ea4771c0d, type: 3}
   m_Name: poisson
   m_EditorClassIdentifier: 
+  _effects:
+  - rid: 4485747390005641223
   _plat: 0
   inventorySprite: {fileID: 0}
   _size: 1
@@ -21,3 +23,17 @@ MonoBehaviour:
   _attackDelay: 0.3
   _damage: 160
   color: {r: 0, g: 0, b: 0, a: 0}
+  references:
+    version: 2
+    RefIds:
+    - rid: 4485747390005641223
+      type: {class: Ricochet, ns: , asm: Assembly-CSharp}
+      data:
+        _maxDistance: 20
+        _sphereMask:
+          serializedVersion: 2
+          m_Bits: 0
+        _rayMask:
+          serializedVersion: 2
+          m_Bits: 0
+        _ricochetCount: 2
