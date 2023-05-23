@@ -1,194 +1,188 @@
+using System;
 using System.Collections;
-using System.Linq;
+using Enemy.Data;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Events;
 
-public class BasicEnemy : EnemyController
+namespace Enemy.Basic
 {
-    [SerializeField]
-    private EnemyData data;
-    [SerializeField]
-    private NavMeshAgent _agent;
-    
-    [SerializeField]
-    private GameObject m_gun;
-    [SerializeField]
-    private GameObject m_bullet;
-    [SerializeField]
-    private ParticleSystem m_stateSystem;
-    [SerializeField]
-    private Renderer stateRenderer;
-
-    public enum State
+    public class BasicEnemy : EnemyController
     {
-        Neutral,
-        Chase,
-        Attack,
-        Dying,
-    }
-
-    [SerializeField]
-    private State state;
+        [SerializeField]
+        private EnemyData data;
+        [SerializeField]
+        private NavMeshAgent _agent;
     
-    protected override void Awake()
-    {
-        base.Awake();
+        [SerializeField]
+        private GameObject m_gun;
+        [SerializeField]
+        private GameObject m_bullet;
+        [SerializeField]
+        private ParticleSystem m_stateSystem;
+        [SerializeField]
+        private Renderer stateRenderer;
+
+        private Coroutine _chaseCoroutine;
         
-        _agent = GetComponent<NavMeshAgent>();
-        _agent.speed = data.GetSpeed;
-        _agent.stoppingDistance = data.GetAttackRange;
-        FocusPlayer = data.GetFocusPlayer;
-        Healthpoint = data.GetHealth;
-        
-        stateRenderer = m_stateSystem.GetComponent<Renderer>();
-    }
-
-    // Start is called before the first frame update
-    protected override void Start()
-    {
-        state = FocusPlayer ? State.Chase : State.Neutral;
-
-        base.Start();
-    }
-
-    // Update is called once per frame
-    protected override void Update()
-    {
-        _agent.SetDestination(Player.transform.position);
-
-        base.Update();
-        
-        StateManagement();
-    }
-    
-    private void Reset()
-    {
-        Healthpoint = data.GetHealth;
-        _agent = GetComponent<NavMeshAgent>();
-        _agent.speed = data.GetSpeed;
-        _agent.stoppingDistance = data.GetAttackRange;
-    }
-
-    private void FixedUpdate()
-    {
-        if (state == State.Dying)
-            return;
-        
-        AreaDetection();
-    }
-    
-    public State GetState()
-    {
-        return state;
-    }
-    
-    public void SetState(State value)
-    {
-        state = value;
-    }
-    
-    // ReSharper disable Unity.PerformanceAnalysis
-    private void StateManagement()
-    {
-        switch (state)
+        public enum State
         {
-            case State.Neutral:
-                break;
-            case State.Chase:
-                _agent.SetDestination(Player.transform.position);
-                break;
-            case State.Attack:
-                Attack(Shot, data.GetAttackSpeed);
-                break;
-            case State.Dying:
-                Dying();
-                break;
-            default:
-                Dying();
-                break;
+            Neutral,
+            Chase,
+            Attack,
+            Dying,
         }
-    }
+
+        [SerializeField]
+        private State state;
     
-    private void AreaDetection()
-    {
-        if (state == State.Dying || state == State.Neutral)
-            return;
-        
-        if (Vector3.Distance(transform.position, Player.transform.position) <= data.GetRangeDetection)
+        protected override void Awake()
         {
-            if (Vector3.Distance(transform.position, Player.transform.position) <= data.GetAttackSpeed)
+            base.Awake();
+        
+            _agent = GetComponent<NavMeshAgent>();
+            _agent.speed = data.GetSpeed;
+            _agent.stoppingDistance = data.GetAttackRange;
+            FocusPlayer = data.GetFocusPlayer;
+            Healthpoint = data.GetHealth;
+        
+            stateRenderer = m_stateSystem.GetComponent<Renderer>();
+        }
+
+        // Start is called before the first frame update
+        protected override void Start()
+        {
+            SetState(FocusPlayer ? State.Chase : State.Neutral);
+            
+            base.Start();
+        }
+
+        private void FixedUpdate()
+        {
+            if (state == State.Dying)
+                return;
+        
+            AreaDetection();
+        }
+        
+        private void Reset()
+        {
+            Healthpoint = data.GetHealth;
+            _agent = GetComponent<NavMeshAgent>();
+            _agent.speed = data.GetSpeed;
+            _agent.stoppingDistance = data.GetAttackRange;
+        }
+
+        private State GetState()
+        {
+            return state;
+        }
+
+        private void SetState(State value)
+        {
+            state = value;
+            
+            StateManagement();
+        }
+    
+        // ReSharper disable Unity.PerformanceAnalysis
+        private void StateManagement()
+        {
+            switch (state)
             {
-                state = State.Attack;
-            }
-            else
-            {
-                state = State.Chase;
+                case State.Neutral:
+                    break;
+                case State.Chase:
+                    Chase();
+                    break;
+                case State.Attack:
+                    Attack(Shot, data.GetAttackSpeed);
+                    break;
+                case State.Dying:
+                    Dying();
+                    break;
+                default:
+                    Dying();
+                    break;
             }
         }
-    }
-
-    protected override void Chase()
-    {
-        if (state == State.Dying)
-            return;
-
-        _agent.SetDestination(Player.transform.position);
-        
-        // stateRenderer.material.color = Color.yellow;
-        // m_stateSystem.gameObject.SetActive(true);
-    }
     
-    protected override void Attack(UnityAction Shot, float delay)
-    {
-        if (state == State.Dying)
-            return;
-        
-        // stateRenderer.material.color = Color.red;
-        // m_stateSystem.gameObject.SetActive(true);
-
-        base.Attack(Shot);
-    }
-
-    private void Shot()
-    {
-        GameObject shot = Instantiate(m_bullet, m_gun.transform.position, Quaternion.identity);
-        shot.GetComponent<EnemyBulletController>().SetDirection(Player.transform);
-    }
-    
-    private new void Dying()
-    {
-        base.Dying();
-        m_stateSystem.gameObject.SetActive(false);
-    }
-
-    public override bool IsMoving()
-    {
-        return state == State.Chase;
-    }
-
-    public override void TakeDamage(float damage = 1, bool isCritical = false)
-    {
-        base.TakeDamage(damage, isCritical);
-        
-        if (state == State.Neutral)
-            state = State.Chase;
-        
-        if (Healthpoint <= 0)
+        private void AreaDetection()
         {
-            state = State.Dying;
+            if (state == State.Dying)
+                return;
+
+            if (Vector3.Distance(transform.position, Player.transform.position) <= data.GetRangeDetection)
+            {
+                FocusPlayer = true;
+            }
+
+            if (FocusPlayer)
+            {
+                if (Vector3.Distance(transform.position, Player.transform.position) <= data.GetRangeDetection && 
+                    Vector3.Distance(transform.position, Player.transform.position) > data.GetAttackRange)
+                {
+                    SetState(State.Chase);
+                }
+                else
+                {
+                    SetState(State.Attack);
+                }
+            }
+        }
+
+        protected override void Chase()
+        {
+            if (state == State.Dying)
+                return;
+            
+            if (_chaseCoroutine == null)
+                _chaseCoroutine = StartCoroutine(IChase());
+            
+            IEnumerator IChase()
+            {
+                while (state == State.Chase)
+                {
+                    if (Vector3.Distance(transform.position, Player.transform.position) <= data.GetAttackRange)
+                    {
+                        SetState(State.Attack);
+                        _chaseCoroutine = null;
+                    }
+                
+                    _agent.SetDestination(Player.transform.position);
+                
+                    yield return null;
+                }
+            }
+        }
+
+        private void Shot()
+        {
+            GameObject shot = Instantiate(m_bullet, m_gun.transform.position, Quaternion.identity);
+            shot.GetComponent<EnemyBulletController>().SetDirection(Player.transform);
+        }
+    
+        private new void Dying()
+        {
+            base.Dying();
+            m_stateSystem.gameObject.SetActive(false);
+        }
+
+        public override bool IsMoving()
+        {
+            return state == State.Chase;
+        }
+
+        public override void TakeDamage(float damage = 1, bool isCritical = false)
+        {
+            base.TakeDamage(damage, isCritical);
+        
+            if (state == State.Neutral)
+                SetState(State.Chase);
+        
+            if (Healthpoint <= 0)
+            {
+                SetState(State.Dying);
+            }
         }
     }
-    
-    #if UNITY_EDITOR
-    
-    protected override void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, data.GetRangeDetection);
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, data.GetAttackRange);
-    }
-    
-    #endif
 }

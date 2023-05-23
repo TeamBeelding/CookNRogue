@@ -26,14 +26,9 @@ public class PlayerAttack : MonoBehaviour
     public float _shootCooldown;
     public float _damage;
     [SerializeField]private bool _isShooting = false;
+    [SerializeReference]
     public List<IIngredientEffects> _effects = new List<IIngredientEffects>();
-    //To delete
-    public List<float> _shootingDelays = new List<float>();
-    //
     bool _shootOnCooldown;
-
-    [SerializeField]
-    
 
     Coroutine _curShootDelay;
 
@@ -59,7 +54,7 @@ public class PlayerAttack : MonoBehaviour
 
 
         //BulletInstantiate
-        StartCoroutine(shootbullets(_TimeBtwShotsRafale));
+        StartCoroutine(Shootbullets(_TimeBtwShotsRafale));
         
 
         //Shoot Bullet
@@ -91,27 +86,13 @@ public class PlayerAttack : MonoBehaviour
     {
         foreach (IIngredientEffects effect in _effects)
         {
-            
-                if (effect != null)
-                {
-                    effect.EffectOnHit(Position, HitObject, direction);
-                }
-
+            if (effect != null)
+            {
+                effect.EffectOnHit(Position, HitObject, direction);
+            }
         }
     }
     #endregion
-
-    //To delete
-    public void CalculateShootDelay()
-    {
-        float TotalDelay = 0;
-        foreach(float delay in _shootingDelays)
-        {
-            TotalDelay += delay;
-        }
-        _shootCooldown = TotalDelay / _shootingDelays.Count;
-    }
-    //
 
     IEnumerator ShootDelay(float delay)
     {
@@ -125,19 +106,18 @@ public class PlayerAttack : MonoBehaviour
         _shootOnCooldown = false;
     }
 
-    IEnumerator shootbullets(float time)
+    IEnumerator Shootbullets(float time)
     {
         for(int i = 0; i< _ProjectileNbr; i++)
         {
-            ConeShots coneShots = null;
             float totalAngle = 0;
             float incrementAngle = 0;
 
             foreach (IIngredientEffects effect in _effects)
             {
-                if (effect is ConeShots)
+                if (effect is ConeShots shots)
                 {
-                    coneShots = (ConeShots)effect;
+                    ConeShots coneShots = shots;
                     incrementAngle = coneShots._bulletAngleSpread;
                     totalAngle = incrementAngle;
                 }
@@ -167,16 +147,15 @@ public class PlayerAttack : MonoBehaviour
                     if (effect != null)
                         effect.EffectOnShoot(transform.position, Bullet);
 
-                    if (effect is Boomerang)
+                    if (effect is Boomerang boomerang)
                     {
-
                         BoomerangBehaviour boomerangBehaviour = GetComponent<BoomerangBehaviour>();
                         if (boomerangBehaviour == null)
                         {
                             boomerangBehaviour = Bullet.AddComponent<BoomerangBehaviour>();
                         }
 
-                        Boomerang TempEffect = (Boomerang)effect;
+                        Boomerang TempEffect = boomerang;
                         boomerangBehaviour.ResetStats();
                         boomerangBehaviour._forward = TempEffect._forward;
                         boomerangBehaviour._MaxForwardDistance = TempEffect._MaxForwardDistance;

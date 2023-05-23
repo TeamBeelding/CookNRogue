@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using TNRD;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
