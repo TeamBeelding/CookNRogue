@@ -232,7 +232,8 @@ public class PlayerCookingInventory : MonoBehaviour
             m_playerAttackScript._drag += ingredient._drag;
             m_playerAttackScript._shootCooldown += ingredient._attackDelay;
             m_playerAttackScript._damage += ingredient._damage;
-            
+            m_playerAttackScript._ammunition += ingredient._ammunition;
+
             //Add effects
             foreach (IIngredientEffects effect in ingredient.Effects)
             {
