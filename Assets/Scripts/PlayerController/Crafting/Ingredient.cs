@@ -26,7 +26,7 @@ public class Ingredient : MonoBehaviour, IInteractable
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Player")
+        if(other.CompareTag("Player"))
         {
             PlayerCookingInventory.Instance.AddIngredientToInventory(_projectileData);
             Destroy(gameObject);

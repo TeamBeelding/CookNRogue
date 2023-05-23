@@ -75,7 +75,6 @@ public class PlayerInventoryScript : MonoBehaviour
 
         //PREPARE LE DELAI DE TIR EN LE METTANT A ZERO POUR IGNORER LA VALEUR DE BASE
         m_attack._shootCooldown = 0;
-        m_attack._shootingDelays.Clear();
         //Fusionne les effets et stats des differents ingredients
         foreach (ProjectileData ingredient in recipe)
         {
@@ -85,20 +84,19 @@ public class PlayerInventoryScript : MonoBehaviour
             m_attack._drag += ingredient._drag;
             m_attack._damage += ingredient._damage;
             m_attack._ammunition += ingredient._ammunition;
-            m_attack._shootingDelays.Add(ingredient._attackDelay);
             //m_attack._shootCooldown += ingredient._attackDelay;
 
             if (AmmunitionBar.instance!= null)
                 AmmunitionBar.instance.AddIngredientAmmo(ingredient._ammunition);
 
             //AJOUT DES EFFETS DANS LE SCRIPT D'ATTAQUE
-            foreach (IIngredientEffects effect in ingredient._effects)
+            foreach (IIngredientEffects effect in ingredient.Effects)
             {
                 m_attack._effects.Add(effect);
             }
         }
         //CALCULE LE DELAIS DE TIR ENTRE CHAQUE BALLE EN FAISANT LA MOYENNE
-        m_attack.CalculateShootDelay();
+        //m_attack.CalculateShootDelay();
 
         foreach (IIngredientEffects effect in m_attack._effects)
         {

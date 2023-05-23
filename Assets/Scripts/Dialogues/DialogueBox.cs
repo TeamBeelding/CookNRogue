@@ -2,13 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Rendering;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
-using UnityEngine.InputSystem.XR;
-using static System.Net.Mime.MediaTypeNames;
-using System.Linq;
 using System;
-using static UnityEditor.PlayerSettings;
+
 
 [Serializable]
 public class Dialogue

@@ -42,7 +42,6 @@ GameObject:
   - component: {fileID: 8374838445234050373}
   - component: {fileID: 8374838445234050372}
   - component: {fileID: 8374838445234050374}
-  - component: {fileID: 2710201452435552215}
   m_Layer: 0
   m_Name: Slime
   m_TagString: Untagged
@@ -65,6 +64,7 @@ Transform:
   - {fileID: 1526352956}
   - {fileID: 7729783465877267911}
   - {fileID: 5900735735034971511}
+  - {fileID: 6652404931875985943}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -77,7 +77,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 8374838445234050371}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 2.75
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
@@ -109,14 +109,47 @@ MonoBehaviour:
   _agent: {fileID: 8374838445234050372}
   _minimoyz: {fileID: 3843937293996089466, guid: 1ca9a5944e58f734e8e435ac5cd845a0,
     type: 3}
+  _minimoyzSpawnChecker: {fileID: 0}
   state: 0
---- !u!136 &2710201452435552215
+--- !u!1 &9170120249770325098
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6652404931875985943}
+  - component: {fileID: 3487489608531878158}
+  m_Layer: 0
+  m_Name: Physics
+  m_TagString: Enemy
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6652404931875985943
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9170120249770325098}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8374838445234050373}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &3487489608531878158
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8374838445234050371}
+  m_GameObject: {fileID: 9170120249770325098}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
@@ -264,7 +297,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: e2a4654f7aee04d4399395cd032f4c44,
         type: 3}
       propertyPath: m_Name
-      value: haricot_low
+      value: Visual
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e2a4654f7aee04d4399395cd032f4c44, type: 3}
