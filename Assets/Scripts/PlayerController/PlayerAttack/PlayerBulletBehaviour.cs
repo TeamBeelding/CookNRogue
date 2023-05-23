@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerBulletBehaviour : MonoBehaviour
@@ -107,6 +108,7 @@ public class PlayerBulletBehaviour : MonoBehaviour
             }
             else
             {
+                
                 Destroy(gameObject);
             }
         }
@@ -122,35 +124,36 @@ public class PlayerBulletBehaviour : MonoBehaviour
             return;
 
         Collider[] hitColliders = Physics.OverlapSphere(Position, _maxDistance, _sphereMask);
+
         float closest = 999f;
         float distance = 0f;
         GameObject closestEnemy = HitObject;
-        Collider closestCollider = HitObject.GetComponent<Collider>();
 
         if (HitObject.GetComponent<EnemyController>())
             HitObject.layer = 2;
 
+        
         foreach (Collider hitCollider in hitColliders)
         {
-
-            if (hitCollider.gameObject != HitObject && hitCollider.GetComponent<EnemyController>())
+            Debug.Log("foreach");
+            if (hitCollider.gameObject != HitObject && hitCollider.CompareTag("Enemy"))
             {
-                hitCollider.transform.gameObject.layer = 2;
+                Debug.Log("valid target");
                 distance = Vector3.Distance(hitCollider.gameObject.transform.position, Position);
 
                 Vector3 rayDirection = (hitCollider.gameObject.transform.position - Position).normalized;
-      
-
-                if (distance < closest && !Physics.Raycast(Position, rayDirection, _rayMask))
+                
+                if (distance < closest)
                 {
+                    Debug.Log("closest");
                     closest = distance;
                     closestEnemy = hitCollider.gameObject;
+                    Debug.Log(closestEnemy);
                 }
-                hitCollider.transform.gameObject.layer = 0;
             }
+            
 
         }
-
         HitObject.layer = 0;
         if (closestEnemy != HitObject)
         {
@@ -158,6 +161,10 @@ public class PlayerBulletBehaviour : MonoBehaviour
             Invoke("DestroyBullet", 1);
             _direction = (closestEnemy.gameObject.transform.position - HitObject.transform.position).normalized;
             destroyOnHit = true;
+        }
+        else
+        {
+            DestroyBullet();
         }
 
     }

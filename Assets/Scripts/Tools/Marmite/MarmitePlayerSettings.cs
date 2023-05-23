@@ -67,10 +67,6 @@ public class MarmitePlayerSettings
     public float drag;
     [BoxGroup("PlayerAttack")]
     [EnableIf("m_playerController")]
-    [CustomValueDrawer("SetHeavyAttackDelay")]
-    public float attackDelay;
-    [BoxGroup("PlayerAttack")]
-    [EnableIf("m_playerController")]
     [CustomValueDrawer("SetHeavyDamage")]
     public float damage;
     [BoxGroup("PlayerAttack")]
@@ -108,7 +104,6 @@ public class MarmitePlayerSettings
         size = m_playerAttack._size;
         speed = m_playerAttack._speed;
         drag = m_playerAttack._drag;
-        attackDelay = m_playerAttack._attackDelay;
         damage = m_playerAttack._damage;
         shootCooldown = m_playerAttack._shootCooldown;
     }
@@ -173,11 +168,6 @@ public class MarmitePlayerSettings
     {
         if (m_playerAttack == null) return EditorGUILayout.FloatField(label, 0);;
         return EditorGUILayout.FloatField(label, m_playerAttack._drag = value);
-    }
-    private float SetHeavyAttackDelay(float value, GUIContent label)
-    {
-        if (m_playerAttack == null) return EditorGUILayout.FloatField(label, 0);;
-        return EditorGUILayout.FloatField(label, m_playerAttack._attackDelay = value);
     }
     private float SetHeavyDamage(float value, GUIContent label)
     {
