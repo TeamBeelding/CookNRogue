@@ -24,7 +24,7 @@ jobs:
         
       - uses: actions/checkout@v3
         with:
-          ref: refs/heads/develop
+          ref: refs/heads/wwise
           lfs: false
           
       - name: install_dependencies
@@ -51,11 +51,11 @@ jobs:
         run: echo ${{ secrets.USER_PASSWORD }} | sudo -S chown -R github:github .
         
       - name: Create info file
-        run: touch build/${{ matrix.targetPlatform }}/${{ github.event.repository.name }}-nightly-develop-${{ matrix.targetPlatform }}
+        run: touch build/${{ matrix.targetPlatform }}/${{ github.event.repository.name }}-nightly-wwise-${{ matrix.targetPlatform }}
         
       - uses: actions/upload-artifact@v3
         with:
-          name: ${{ github.event.repository.name }}-nightly-develop-${{ matrix.targetPlatform }}
+          name: ${{ github.event.repository.name }}-nightly-wwise-${{ matrix.targetPlatform }}
           path: build/${{ matrix.targetPlatform }}
           retention-days: 7
       
