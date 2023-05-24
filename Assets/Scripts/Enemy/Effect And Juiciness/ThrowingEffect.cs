@@ -9,18 +9,9 @@ namespace Enemy.Effect_And_Juiciness
         [SerializeField] private AnimationCurve yCurve;
         [SerializeField] private float speed;
         [SerializeField] private float maxHeight;
-        [SerializeField] private float maxLength;
-        [SerializeField] private Vector3 direction;
-<<<<<<< HEAD
         [SerializeField] private Transform target;
-=======
->>>>>>> Enemy
         
-        // Start is called before the first frame update
-        void Start()
-        {
-            direction.Normalize();
-        }
+        private float _maxLength;
 
         private void Update()
         {
@@ -34,15 +25,16 @@ namespace Enemy.Effect_And_Juiciness
         {
             float timer = 0;
             Vector3 initPos = transform.position;
+            Vector3 direction = (target.position - transform.position).normalized;
+            _maxLength = Vector3.Distance(transform.position, target.position);
 
             while (timer < 1)
             {
-                float x = xCurve.Evaluate(timer) * maxLength;
+                float x = xCurve.Evaluate(timer) * _maxLength;
                 float y = yCurve.Evaluate(timer) * maxHeight;
                 
                 transform.position = initPos + direction * x + Vector3.up * y;
-                // transform.position = initPos + new Vector3(x, y, transform.position.z);
-                
+
                 timer += Time.deltaTime * speed;
                 
                 yield return new WaitForSeconds(Time.deltaTime * speed);
