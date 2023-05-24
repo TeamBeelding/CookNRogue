@@ -28,7 +28,7 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField]private bool _isShooting = false;
     [SerializeReference]
     public List<IIngredientEffects> _effects = new List<IIngredientEffects>();
-    bool _shootOnCooldown;
+    bool _shootOnCooldown = false;
 
     Coroutine _curShootDelay;
 
@@ -41,6 +41,7 @@ public class PlayerAttack : MonoBehaviour
         _ammunitionBar = AmmunitionBar.instance;
 
         _ammunitionBar.InitAmmoBar(0);
+        ResetParameters();
     }
 
     public void SetIsShooting(bool isShooting)
@@ -52,13 +53,12 @@ public class PlayerAttack : MonoBehaviour
         if (_shootOnCooldown)
             return;
 
-
+        _shootOnCooldown = true;
         //BulletInstantiate
         StartCoroutine(Shootbullets(_TimeBtwShotsRafale));
         
 
         //Shoot Bullet
-        _shootOnCooldown = true;
         _curShootDelay = StartCoroutine(ShootDelay(_shootCooldown));
         
         _ammunition--;
@@ -139,8 +139,15 @@ public class PlayerAttack : MonoBehaviour
                 _projectileBehaviour._speed += _speed;
                 _projectileBehaviour._drag -= _drag;
                 _projectileBehaviour._damage += _damage;
-                _projectileBehaviour._direction = Quaternion.Euler(0, totalAngle, 0) * _playerController.PlayerAimDirection;
 
+                Vector3 direction = Quaternion.Euler(0, totalAngle, 0) * _playerController.PlayerAimDirection;
+
+                if(direction == Vector3.zero)
+                    direction = transform.forward;
+
+                _projectileBehaviour._direction = direction;
+
+                Debug.Log(_projectileBehaviour._speed);
 
                 foreach (IIngredientEffects effect in _effects)
                 {
