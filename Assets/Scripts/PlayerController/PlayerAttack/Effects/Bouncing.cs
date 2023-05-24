@@ -7,6 +7,7 @@ public class Bouncing : IIngredientEffects
     //EFFET LORS DU SHOOT
     [SerializeField] int m_bouncingNbr;
     private PlayerBulletBehaviour bulletBehaviour;
+    public GameObject TomatoSplash;
     public void EffectOnShoot(Vector3 Position, GameObject bullet)
     {
 
@@ -18,6 +19,11 @@ public class Bouncing : IIngredientEffects
     //EFFET LORS DE LA COLLISION
     public void EffectOnHit(Vector3 Position, GameObject HitObject, Vector3 direction)
     {
+        if (TomatoSplash)
+        {
+            GameObject SplashEffect = GameObject.Instantiate(TomatoSplash, Position, Quaternion.identity);
+            GameObject.Destroy(SplashEffect, 1);
+        }
 
     }
 }
