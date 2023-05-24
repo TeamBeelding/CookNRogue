@@ -14,7 +14,16 @@ public enum INGREDIENT
 [CreateAssetMenu(fileName = "ProjectileData", menuName = "Player/Projectile Data")]
 public class ProjectileData : ScriptableObject
 {
-    public List<SerializableInterface<IIngredientEffects>> _effects;
+    [SerializeReference]
+    private List<IIngredientEffects> _effects;
+
+    public List<IIngredientEffects> Effects
+    {
+        get
+        {
+            return _effects;
+        }
+    }
 
     [Header("Composition")]
     public INGREDIENT _plat;
