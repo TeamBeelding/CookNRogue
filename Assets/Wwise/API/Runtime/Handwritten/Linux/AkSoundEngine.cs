@@ -17,7 +17,7 @@ Copyright (c) 2023 Audiokinetic Inc.
 
 ﻿public partial class AkSoundEngine
 {
-#if UNITY_EDITOR_LINUX || (UNITY_STANDALONE_LINUX && !UNITY_EDITOR)
+#if UNITY_STANDALONE_LINUX && !UNITY_EDITOR
 	/// <summary>
 	///     Converts "AkOSChar*" C-strings to C# strings.
 	/// </summary>
