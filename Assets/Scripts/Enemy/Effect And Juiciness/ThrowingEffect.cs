@@ -11,7 +11,10 @@ namespace Enemy.Effect_And_Juiciness
         [SerializeField] private float maxHeight;
         [SerializeField] private float maxLength;
         [SerializeField] private Vector3 direction;
+<<<<<<< HEAD
         [SerializeField] private Transform target;
+=======
+>>>>>>> Enemy
         
         // Start is called before the first frame update
         void Start()
