@@ -41,7 +41,6 @@ public class PlayerAttack : MonoBehaviour
         _ammunitionBar = AmmunitionBar.instance;
 
         _ammunitionBar.InitAmmoBar(0);
-        ResetParameters();
     }
 
     public void SetIsShooting(bool isShooting)
