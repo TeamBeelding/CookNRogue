@@ -22,24 +22,18 @@ public class PlayerAnimStates : MonoBehaviour
     [SerializeField]
     private Transform aimedMarmite;
 
-    private PlayerController _player;
+    private PlayerController _player;    
+    private PlayerAttack _playerAttack;
 
     Vector2 _moveInputValue;
     Vector2 _aimInputValue;
-    
-    [Range(-1f, 1f)]
-    public float MoveInputValueX;
-    [Range(-1f, 1f)]
-    public float MoveInputValueY;
-    [Range(-1f, 1f)]
-    public float AimInputValueX;
-    [Range(-1f, 1f)]
-    public float AimInputValueY; 
+    float _moveInputMagnitude;
 
     void Start()
     {
         _animator = GetComponent<Animator>();
         _player = GetComponentInParent<PlayerController>();
+        _playerAttack = GetComponentInParent<PlayerAttack>();
     }
 
     private void Update()
@@ -80,7 +74,21 @@ public class PlayerAnimStates : MonoBehaviour
                     break;
                 }
         }
-    }
+
+
+    //        public bool ShootOnCooldown
+    //{
+    //    get => _shootOnCooldown;
+    //}
+    //if (_playerAttack.ShootOnCooldown)
+    //{
+    //    _animator.SetBool("shoot", true);
+    //}
+    //else
+    //{
+    //    _animator.SetBool("shoot", false);
+    //}
+}
 
     private void AimedMarmite(bool isAimed) 
     {
@@ -96,14 +104,14 @@ public class PlayerAnimStates : MonoBehaviour
         }
     }
 
-
-
     // Update is called once per frame
     public void FixedUpdate()
     {
 
-        Vector2 _moveInputValue = _player.MoveInputValue;
-        Vector2 _aimInputValue = _player.AimInputValue;
+        _moveInputValue = _player.MoveInputValue;
+        _moveInputMagnitude = _player.MoveInputValue.magnitude;
+
+        _aimInputValue = _player.AimInputValue;
 
         Vector2 _normalizedMoveInputValue = _moveInputValue.normalized;
         Vector2 _normalizedAimInputValue = _aimInputValue.normalized;
@@ -114,9 +122,7 @@ public class PlayerAnimStates : MonoBehaviour
         dir.x = Mathf.Cos(_angle * Mathf.Deg2Rad);
         dir.y = Mathf.Sin(_angle * Mathf.Deg2Rad);
 
-        //Debug.Log("MOVE: " + _normalizedMoveInputValue + "  AIM: " + _normalizedAimInputValue + "  ANGLE:" + _angle);
-
-        _animator.SetFloat("right", dir.x);
-        _animator.SetFloat("forward", dir.y);
+        _animator.SetFloat("right", _moveInputMagnitude * dir.x);
+        _animator.SetFloat("forward", _moveInputMagnitude * dir.y);
     }
 }

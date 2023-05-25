@@ -28,6 +28,7 @@ public class PlayerAttack : MonoBehaviour
     
     bool _shootOnCooldown;
 
+
     [SerializeField]
     public float _shootCooldown;
 
@@ -51,7 +52,6 @@ public class PlayerAttack : MonoBehaviour
         //BulletInstantiate
         StartCoroutine(shootbullets(_TimeBtwShotsRafale));
         
-
         //Shoot Bullet
         _shootOnCooldown = true;
         _curShootDelay = StartCoroutine(ShootDelay(_shootCooldown));
