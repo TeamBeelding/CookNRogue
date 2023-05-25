@@ -1,7 +1,11 @@
+using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+
+using UnityEngine.InputSystem;
+
 
 public class PlayerAttack : MonoBehaviour
 {
@@ -26,27 +30,32 @@ public class PlayerAttack : MonoBehaviour
     public float _shootCooldown;
     public float _damage;
     [SerializeField]private bool _isShooting = false;
+    [SerializeReference]
     public List<IIngredientEffects> _effects = new List<IIngredientEffects>();
-    //To delete
-    public List<float> _shootingDelays = new List<float>();
-    //
-    bool _shootOnCooldown;
-
-    [SerializeField]
-    
-
+    bool _shootOnCooldown = false;
     Coroutine _curShootDelay;
 
     PlayerController _playerController;
+    [SerializeField] ParticleSystem _shootingParticles;
+    [ColorUsage(true, true)]
+    public Color _color;
+
+    [ColorUsage(true, true)]
+    [SerializeField] Color defaultcolor;
 
     private void Start()
     {
-
+        
         _playerController = GetComponent<PlayerController>();
+
         _ammunitionBar = AmmunitionBar.instance;
 
         _ammunitionBar.InitAmmoBar(0);
+
+        ResetParameters();
     }
+
+   
 
     public void SetIsShooting(bool isShooting)
     {
@@ -54,16 +63,21 @@ public class PlayerAttack : MonoBehaviour
     }
     public void Shoot()
     {
+        if (!_playerController._isAiming)
+            return;
+
         if (_shootOnCooldown)
             return;
 
+        if(_shootingParticles)
+            _shootingParticles.Play();
 
+        _shootOnCooldown = true;
         //BulletInstantiate
-        StartCoroutine(shootbullets(_TimeBtwShotsRafale));
+        StartCoroutine(Shootbullets(_TimeBtwShotsRafale));
         
 
         //Shoot Bullet
-        _shootOnCooldown = true;
         _curShootDelay = StartCoroutine(ShootDelay(_shootCooldown));
         
         _ammunition--;
@@ -91,27 +105,13 @@ public class PlayerAttack : MonoBehaviour
     {
         foreach (IIngredientEffects effect in _effects)
         {
-            
-                if (effect != null)
-                {
-                    effect.EffectOnHit(Position, HitObject, direction);
-                }
-
+            if (effect != null)
+            {
+                effect.EffectOnHit(Position, HitObject, direction);
+            }
         }
     }
     #endregion
-
-    //To delete
-    public void CalculateShootDelay()
-    {
-        float TotalDelay = 0;
-        foreach(float delay in _shootingDelays)
-        {
-            TotalDelay += delay;
-        }
-        _shootCooldown = TotalDelay / _shootingDelays.Count;
-    }
-    //
 
     IEnumerator ShootDelay(float delay)
     {
@@ -125,19 +125,18 @@ public class PlayerAttack : MonoBehaviour
         _shootOnCooldown = false;
     }
 
-    IEnumerator shootbullets(float time)
+    IEnumerator Shootbullets(float time)
     {
         for(int i = 0; i< _ProjectileNbr; i++)
         {
-            ConeShots coneShots = null;
             float totalAngle = 0;
             float incrementAngle = 0;
 
             foreach (IIngredientEffects effect in _effects)
             {
-                if (effect is ConeShots)
+                if (effect is ConeShots shots)
                 {
-                    coneShots = (ConeShots)effect;
+                    ConeShots coneShots = shots;
                     incrementAngle = coneShots._bulletAngleSpread;
                     totalAngle = incrementAngle;
                 }
@@ -159,24 +158,35 @@ public class PlayerAttack : MonoBehaviour
                 _projectileBehaviour._speed += _speed;
                 _projectileBehaviour._drag -= _drag;
                 _projectileBehaviour._damage += _damage;
-                _projectileBehaviour._direction = Quaternion.Euler(0, totalAngle, 0) * _playerController.PlayerAimDirection;
+                Vector3 direction = Quaternion.Euler(0, totalAngle, 0) * _playerController.PlayerAimDirection;
 
+                if(_color != null)
+                    SetGadientInParticle(Bullet, _color);
+
+                if (direction == Vector3.zero)
+                    direction = transform.forward;
+
+                _projectileBehaviour._direction = direction;
+
+                Debug.Log(_projectileBehaviour._speed);
 
                 foreach (IIngredientEffects effect in _effects)
                 {
                     if (effect != null)
-                        effect.EffectOnShoot(transform.position, Bullet);
-
-                    if (effect is Boomerang)
                     {
+                        effect.EffectOnShoot(transform.position, Bullet);
+                    }
 
+
+                    if (effect is Boomerang boomerang)
+                    {
                         BoomerangBehaviour boomerangBehaviour = GetComponent<BoomerangBehaviour>();
                         if (boomerangBehaviour == null)
                         {
                             boomerangBehaviour = Bullet.AddComponent<BoomerangBehaviour>();
                         }
 
-                        Boomerang TempEffect = (Boomerang)effect;
+                        Boomerang TempEffect = boomerang;
                         boomerangBehaviour.ResetStats();
                         boomerangBehaviour._forward = TempEffect._forward;
                         boomerangBehaviour._MaxForwardDistance = TempEffect._MaxForwardDistance;
@@ -198,6 +208,25 @@ public class PlayerAttack : MonoBehaviour
 
     }
 
+    void SetGadientInParticle(GameObject bullet, Color color)
+    {
+
+        var RenderModule = bullet.transform.GetChild(1).GetChild(1).GetComponent<ParticleSystemRenderer>();
+        Material splashmat = Instantiate(RenderModule.sharedMaterials[0]);
+        splashmat.SetColor("_Color",color);
+        RenderModule.material = splashmat;
+
+        var ps = bullet.transform.GetChild(1).GetChild(0).GetComponent<ParticleSystem>();
+        var psMain = ps.main;
+        var grad = psMain.startColor.gradient;
+        GradientColorKey[] keys = grad.colorKeys;
+        keys[0].color = grad.colorKeys[0].color;
+        keys[keys.Length - 1].color = color;
+        grad.colorKeys = keys;
+
+        psMain.startColor = grad;
+    }
+
     void OnAmmunitionChange()
     {
         StopCoroutine(_curShootDelay);
@@ -207,6 +236,7 @@ public class PlayerAttack : MonoBehaviour
 
     public void ResetParameters()
     {
+        _color = defaultcolor;
         _effects.Clear();
         _size = 0;
         _speed = 0;
@@ -216,6 +246,7 @@ public class PlayerAttack : MonoBehaviour
         _damage = 0;
         _ammunition = 0;
         _shootCooldown = 0.5f;
+        
     }
 
     public void FixedUpdate()
@@ -233,7 +264,6 @@ public class PlayerAttack : MonoBehaviour
         _drag = 0;
         _shootCooldown = 0.5f;
         _damage = 1;
-
         //A CHANGER DANS LE FUTUR
         _muzzle = GameObject.Find("CharacterModel").transform;
         //m_knockbackScript = GameObject.Find("CharacterModel").GetComponent<PlayerKnockback>();

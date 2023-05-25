@@ -12,12 +12,13 @@ public class Boomerang : IIngredientEffects
     public float _MaxForwardDistance;
     public float _MaxSideDistance;
 
+    public GameObject WindEffect;
 
     //EFFET LORS DU SHOOT
     public void EffectOnShoot(Vector3 Position, GameObject bullet)
     {
-
-
+        if(WindEffect)
+            GameObject.Instantiate(WindEffect, bullet.transform.position, Quaternion.identity, bullet.transform);
     }
 
 

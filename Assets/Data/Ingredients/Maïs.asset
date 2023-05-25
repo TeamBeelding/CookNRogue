@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53abb120a886f884a82d268ea4771c0d, type: 3}
   m_Name: "Ma\xEFs"
   m_EditorClassIdentifier: 
+  _effects:
+  - rid: 4485747390005641219
   _plat: 0
-  inventorySprite: {fileID: 0}
+  inventorySprite: {fileID: 21300000, guid: c60ef4b9b19fa9d42a1442235daf6c72, type: 3}
   _size: 1
   _speed: 2
   _drag: 0
@@ -21,3 +23,11 @@ MonoBehaviour:
   _attackDelay: 0.1
   _damage: 80
   color: {r: 0, g: 0, b: 0, a: 0}
+  references:
+    version: 2
+    RefIds:
+    - rid: 4485747390005641219
+      type: {class: Fragmentation, ns: , asm: Assembly-CSharp}
+      data:
+        _fragParticles: {fileID: 7521055215119940931, guid: 89e8829270b7e3c418b35bb0ea557a4c,
+          type: 3}
