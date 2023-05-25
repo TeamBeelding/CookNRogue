@@ -50,7 +50,10 @@ public class PlayerAttack : MonoBehaviour
 
         _ammunitionBar = AmmunitionBar.instance;
 
-        _ammunitionBar.InitAmmoBar(0);
+        if (_ammunitionBar)
+        {
+            _ammunitionBar.InitAmmoBar(0);
+        }
 
         ResetParameters();
     }
@@ -264,8 +267,6 @@ public class PlayerAttack : MonoBehaviour
         _drag = 0;
         _shootCooldown = 0.5f;
         _damage = 1;
-        //A CHANGER DANS LE FUTUR
-        _muzzle = GameObject.Find("CharacterModel").transform;
         //m_knockbackScript = GameObject.Find("CharacterModel").GetComponent<PlayerKnockback>();
     }
 
