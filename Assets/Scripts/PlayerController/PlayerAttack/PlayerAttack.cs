@@ -44,12 +44,14 @@ public class PlayerAttack : MonoBehaviour
 
     private void Start()
     {
-
+        
         _playerController = GetComponent<PlayerController>();
 
         _ammunitionBar = AmmunitionBar.instance;
 
         _ammunitionBar.InitAmmoBar(0);
+
+        ResetParameters();
     }
 
    
