@@ -10,10 +10,12 @@ public class EnemyBulletController : MonoBehaviour
     private bool isDirectionSet = false;
     private float _speed;
     private Vector3 _direction;
-
+    private float _damage;
+    
     private void Start()
     {
         _speed = _data.GetSpeed();
+        _damage = _data.GetDamage();
         Destroy(gameObject, _data.GetLifeTime());
     }
     
@@ -31,6 +33,18 @@ public class EnemyBulletController : MonoBehaviour
         _direction.Normalize();
         isDirectionSet = true;
     }
+    
+    public void SetDirection(Vector3 dir)
+    {
+        _direction = new Vector3(dir.x - transform.position.x, 0, dir.z - transform.position.z);
+        _direction.Normalize();
+        isDirectionSet = true;
+    }
+    
+    public void SetDamage(float damage)
+    {
+        _damage = damage;
+    }
 
     // Move bullet
     private void Move()
@@ -43,7 +57,7 @@ public class EnemyBulletController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            other.GetComponent<PlayerController>().TakeDamage(_data.GetDamage());
+            other.GetComponent<PlayerController>().TakeDamage(_damage);
             Destroy(gameObject);
         }
     }

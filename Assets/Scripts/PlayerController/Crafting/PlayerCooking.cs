@@ -33,7 +33,7 @@ public class PlayerCooking : MonoBehaviour
     [SerializeField]
     Image m_cookingProgressBarFill;
 
-    PlayerInventoryScript _inventoryScript;
+    PlayerCookingInventory _inventoryScript;
     PlayerController _playerController;
 
     bool _craftingInProgress;
@@ -64,7 +64,7 @@ public class PlayerCooking : MonoBehaviour
         m_attackScript = m_attackScript != null ? m_attackScript : GetComponent<PlayerAttack>();
         m_QTEScript = m_QTEScript != null ? m_QTEScript : GetComponent<PlayerCookingQTE>();
 
-        _inventoryScript = PlayerInventoryScript.Instance;
+        _inventoryScript = PlayerCookingInventory.Instance;
         _playerController = PlayerController.Instance;
 
         m_cookingProgressVisuals.SetActive(false);
@@ -103,7 +103,7 @@ public class PlayerCooking : MonoBehaviour
         if (!_craftingInProgress)
         {
             //Recipe Check
-            float bulletIngredientsNb = _inventoryScript.recipe.Count;
+            float bulletIngredientsNb = _inventoryScript.RecipeSize();
             if (bulletIngredientsNb > 3 || bulletIngredientsNb < 1)
             {
                 return;
@@ -148,6 +148,9 @@ public class PlayerCooking : MonoBehaviour
 
             //Show UI
             m_cookingProgressVisuals.SetActive(true);
+
+            //Stop Slow Motion
+            Time.timeScale = 1f;
         }
     }
 
@@ -166,7 +169,7 @@ public class PlayerCooking : MonoBehaviour
     public void RestartCrafting()
     {
         //Restart coroutine
-        _craftingRoutine = StartCoroutine(ICraftingLoop(_randQTEDelay));
+        _craftingRoutine = StartCoroutine(ICraftingLoop(_randQTEDelay * _totalCookTime));
 
         //Show UI
         m_cookingProgressVisuals.SetActive(true);

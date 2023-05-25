@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 public abstract class EnemyController : MonoBehaviour
 {
-    protected GameObject player;
+    protected GameObject Player;
     
     [HideInInspector]
     public List<StatusEffectHandler> _effectHandlers;
@@ -14,11 +14,12 @@ public abstract class EnemyController : MonoBehaviour
     private CapsuleCollider _collider;
     
     private IEnumerator _colorCoroutine;
+    private IEnumerator _attackCoroutine;
     
-    protected bool _focusPlayer = false;
+    protected bool FocusPlayer = false;
     private bool _canAttack = true;
     
-    protected float healthpoint;
+    protected float Healthpoint;
     
     [SerializeField]
     protected GameObject explosion;
@@ -28,12 +29,15 @@ public abstract class EnemyController : MonoBehaviour
         _rend = GetComponentInChildren<Renderer>();
         _meshRenderer = GetComponentInChildren<MeshRenderer>();
         _collider = GetComponent<CapsuleCollider>();
+        
+        if (_collider == null)
+            _collider = GetComponentInChildren<CapsuleCollider>();
     }
 
     // Start is called before the first frame update
     protected virtual void Start()
     {
-        player = PlayerController.Instance.gameObject;
+        Player = PlayerController.Instance.gameObject;
         AddToEnemyManager();
         
         _rend.material.color = Color.white;
@@ -62,6 +66,13 @@ public abstract class EnemyController : MonoBehaviour
             _canAttack = false;
             StartCoroutine(IAttackTimer(delay));
         }
+        
+        IEnumerator IAttackTimer(float delay = 0.5f)
+        {
+            yield return new WaitForSeconds(delay);
+            _canAttack = true;
+            _rend.material.color = Color.white;
+        }
     }
 
     #endregion
@@ -71,17 +82,13 @@ public abstract class EnemyController : MonoBehaviour
     public virtual void TakeDamage(float damage = 1, bool isCritical = false)
     {
         damage = Mathf.Abs(damage);
-        healthpoint -= damage;
+        Healthpoint -= damage;
 
-        if (healthpoint > 0)
-        {
-            StartCoroutine(IColorationFeedback());
-        }
+        if (Healthpoint > 0)
+            TakeDamageEffect();
         else
-        {
             Dying();
-        }
-        
+
         // Color the enemy red for a short time to indicate that he has been hit
         IEnumerator IColorationFeedback()
         {
@@ -94,6 +101,11 @@ public abstract class EnemyController : MonoBehaviour
             }
         }
     }
+    
+    protected virtual void TakeDamageEffect()
+    {
+        
+    }
 
     protected virtual void Dying()
     {
@@ -101,13 +113,6 @@ public abstract class EnemyController : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private IEnumerator IAttackTimer(float delay = 0.5f)
-    {
-        yield return new WaitForSeconds(delay);
-        _canAttack = true;
-        _rend.material.color = Color.white;
-    }
-    
     #endregion
 
     //Add to enemy manager
@@ -147,6 +152,9 @@ public abstract class EnemyController : MonoBehaviour
 
     private void DestroyEffect()
     {
+        if (explosion == null)
+            return;
+        
         Instantiate(explosion, transform.position, Quaternion.identity);
         _collider.enabled = false;
     }
@@ -175,17 +183,12 @@ public abstract class EnemyController : MonoBehaviour
     }
     
     #endregion
-
-    #region Guizmos
     
-    #if UNITY_EDITOR
-
-    protected virtual void OnDrawGizmosSelected()
+    /// <summary>
+    /// Stop all coroutines when the object is destroyed
+    /// </summary>
+    ~EnemyController()
     {
-        
+        StopAllCoroutines();
     }
-
-    #endif
-
-    #endregion
 }

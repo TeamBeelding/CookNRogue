@@ -4,8 +4,13 @@ using UnityEngine;
 
 public class EnterDoor : MonoBehaviour
 {
-    public GameObject door;
-    public MeshRenderer Mesh;
+    [SerializeField]
+    private GameObject m_door;
+    [SerializeField]
+    private MeshRenderer m_mesh;
+    [SerializeField]
+    private bool m_isOpenOnStart = false;
+
     private Material[] SkinnedMaterials;
 
     [SerializeField]
@@ -16,29 +21,34 @@ public class EnterDoor : MonoBehaviour
 
     private void Start()
     {
-        if (door != null)
+        if (m_door != null)
         {
-            Mesh = door.GetComponent<MeshRenderer>();
-
-            if (Mesh != null)
+            if (m_mesh != null)
             {
-                SkinnedMaterials = Mesh.materials;
+                SkinnedMaterials = m_mesh.materials;
             }
 
-            EnemyManager.Instance.OnAllEnnemiesKilled += StartOpenDoor;
+            if (m_isOpenOnStart)
+            {
+                m_door.SetActive(false);
+            }
+            else
+            {
+                EnemyManager.Instance.OnAllEnnemiesKilled += StartOpenDoor;
+            }
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && !door.activeInHierarchy)
+        if (other.CompareTag("Player") && !m_door.activeInHierarchy)
         {
             RoomManager.instance.LoadNextLevel();
         }
     }
     private void StartOpenDoor()
     {
-        if (door != null)
+        if (m_door != null)
         {
             StartCoroutine(IOpenDoor());
         }
@@ -61,6 +71,6 @@ public class EnterDoor : MonoBehaviour
             }
         }
         //OPEN GNE GNOOOOOR
-        door.SetActive(false);
+        m_door.SetActive(false);
     }
 }

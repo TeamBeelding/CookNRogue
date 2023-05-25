@@ -9,6 +9,7 @@ public class FragmentationParticlesCollisions : MonoBehaviour
     List<ParticleCollisionEvent> _collisionEvents;
     [SerializeField] private float m_ExplosionForce;
     [SerializeField] private float m_ExplosionRadius;
+    [SerializeField] private float damage;
     [SerializeField] private LayerMask _mask;
 
     void Start()
@@ -26,7 +27,12 @@ public class FragmentationParticlesCollisions : MonoBehaviour
 
         while (i < numCollisionEvents)
         {
-           
+           EnemyController enemyController = other.GetComponent<EnemyController>();
+
+            if (enemyController != null)
+            {
+                enemyController.TakeDamage(damage);
+            }
             kaboom(other.transform.position);
             i++;
         }
@@ -43,7 +49,6 @@ public class FragmentationParticlesCollisions : MonoBehaviour
 
         foreach (Collider hitCollider in hitColliders)
         {
-            Debug.Log(hitCollider.transform.gameObject);
             //float distance = (Position - hitCollider.transform.position).magnitude;
 
 

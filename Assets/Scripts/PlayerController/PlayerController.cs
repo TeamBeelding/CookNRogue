@@ -84,7 +84,7 @@ public class PlayerController : MonoBehaviour
     Vector3 _correctedAimDirection;
     float _aimMagnitude;
 
-    PlayerInventoryScript _inventoryScript;
+    PlayerCookingInventory _inventoryScript;
     EnemyManager _enemyManager;
     RoomManager _roomManager;
     PlayerCooking _cookingScript;
@@ -142,7 +142,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         _relativeTransform = m_mainCamera.transform;
-        _inventoryScript = PlayerInventoryScript.Instance;
+        _inventoryScript = PlayerCookingInventory.Instance;
         _enemyManager = EnemyManager.Instance;
         _roomManager = RoomManager.instance;
         _cookingScript = GetComponent<PlayerCooking>();
@@ -159,7 +159,8 @@ public class PlayerController : MonoBehaviour
         _playerActions.UI.Enable();
 
         //Set Default Events
-        _playerActions.Default.Shoot.performed += Shoot;
+        _playerActions.Default.Shoot.performed += Shoot_Performed;
+        _playerActions.Default.Shoot.canceled += Shoot_Canceled;
         _playerActions.Default.Move.performed += Move_Performed;
         _playerActions.Default.Move.canceled += Move_Canceled;
         _playerActions.Default.Aim.performed += Aim_Performed;
@@ -170,10 +171,12 @@ public class PlayerController : MonoBehaviour
 
         //Set Cooking Events
         _playerActions.Cooking.Cook.canceled += Cook_Canceled;
-        _playerActions.Cooking.SelectIngerdient.performed += SelectIngredient;
-        _playerActions.Cooking.MoveInventorySlotLeft.performed += MoveInventorySlotLeft;
-        _playerActions.Cooking.MoveInventorySlotRight.performed += MoveInventorySlotRight;
+        _playerActions.Cooking.SelectIngredient.performed += SelectIngredient;
         _playerActions.Cooking.StartCrafting.performed += StartCraftingBullet;
+        _playerActions.Cooking.IngredientSelector.performed += OnIngredientSelectorInput;
+        _playerActions.Cooking.IngredientSelector.canceled += OnIngredientSelectorInputStop;
+        _playerActions.Cooking.ChangeWheel.performed += OnChangeUIWheel;
+
 
         //Set UI Events
         _playerActions.UI.Pause.performed += OnPauseGame;
@@ -485,34 +488,43 @@ public class PlayerController : MonoBehaviour
     void SelectIngredient(InputAction.CallbackContext context)
     {
         //Active Inventory Check
-        if (!_inventoryScript.IsDisplayed)
+        if (!_inventoryScript.IsDisplayed())
             return;
 
         _inventoryScript.SelectIngredient();
     }
 
-    void MoveInventorySlotLeft(InputAction.CallbackContext context)
+    void OnIngredientSelectorInput(InputAction.CallbackContext context)
     {
         //Active Inventory Check
-        if (!_inventoryScript.IsDisplayed)
+        if (!_inventoryScript.IsDisplayed())
             return;
 
-        _inventoryScript._scroll.SwitchToLeftIngredient();
+        _inventoryScript.OnSelectorInput(context.ReadValue<Vector2>().normalized);
     }
 
-    void MoveInventorySlotRight(InputAction.CallbackContext context)
+    void OnIngredientSelectorInputStop(InputAction.CallbackContext context)
     {
         //Active Inventory Check
-        if (!_inventoryScript.IsDisplayed)
+        if (!_inventoryScript.IsDisplayed())
             return;
 
-        _inventoryScript._scroll.SwitchToRightIngredient();
+        _inventoryScript.OnSelectorInputStop();
+    }
+
+    void OnChangeUIWheel(InputAction.CallbackContext context)
+    {
+        //Active Inventory Check
+        if (!_inventoryScript.IsDisplayed())
+            return;
+
+        _inventoryScript.SwitchWheel();
     }
 
     void StartCraftingBullet(InputAction.CallbackContext context)
     {
         //Active Inventory Check
-        if (_inventoryScript.IsDisplayed)
+        if (_inventoryScript.IsDisplayed())
         {
             _cookingScript.StartCrafting();
         }
@@ -525,7 +537,7 @@ public class PlayerController : MonoBehaviour
 
     #region Other Actions
 
-    void Shoot(InputAction.CallbackContext context)
+    void Shoot_Performed(InputAction.CallbackContext context)
     {
         //Block player actions
         if (_isLocked)
@@ -535,13 +547,21 @@ public class PlayerController : MonoBehaviour
 
         if (context.performed)
         {
-            GetComponent<PlayerAttack>().Shoot();
+            GetComponent<PlayerAttack>().SetIsShooting(true);
         }
     }
-    #endregion
 
-    #region Utilities
-    public void Lock(bool isLocked)
+    void Shoot_Canceled(InputAction.CallbackContext context)
+    {
+        if (context.canceled)
+        {
+            GetComponent<PlayerAttack>().SetIsShooting(false);
+        }
+    }
+        #endregion
+
+        #region Utilities
+        public void Lock(bool isLocked)
     {
         _isLocked = isLocked;
     }
@@ -613,6 +633,11 @@ public class PlayerController : MonoBehaviour
     }
 
     #endregion
+
+    public PlayerActions GetPlayerAction()
+    {
+        return _playerActions;
+    }
 
 #if UNITY_EDITOR
     private void OnDrawGizmos()
