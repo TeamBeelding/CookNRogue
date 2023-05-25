@@ -26,6 +26,15 @@ public class PlayerAnimStates : MonoBehaviour
 
     Vector2 _moveInputValue;
     Vector2 _aimInputValue;
+    
+    [Range(-1f, 1f)]
+    public float MoveInputValueX;
+    [Range(-1f, 1f)]
+    public float MoveInputValueY;
+    [Range(-1f, 1f)]
+    public float AimInputValueX;
+    [Range(-1f, 1f)]
+    public float AimInputValueY; 
 
     void Start()
     {
@@ -99,30 +108,15 @@ public class PlayerAnimStates : MonoBehaviour
         Vector2 _normalizedMoveInputValue = _moveInputValue.normalized;
         Vector2 _normalizedAimInputValue = _aimInputValue.normalized;
 
+        float _angle = Vector2.SignedAngle(_normalizedAimInputValue, _normalizedMoveInputValue);
 
+        Vector2 dir = Vector2.zero;
+        dir.x = Mathf.Cos(_angle * Mathf.Deg2Rad);
+        dir.y = Mathf.Sin(_angle * Mathf.Deg2Rad);
 
-        Vector2 _relativeVector = _normalizedMoveInputValue + _normalizedAimInputValue;
+        Debug.Log("MOVE: " + _normalizedMoveInputValue + "  AIM: " + _normalizedAimInputValue + "  ANGLE:" + _angle);
 
-        //float _angle = Vector2.Angle(_normalizedAimInputValue, _normalizedMoveInputValue);
-
-        
-
-        float _deltaX = _normalizedMoveInputValue.x - _normalizedAimInputValue.x;
-        float _deltaY = _normalizedMoveInputValue.y - _normalizedAimInputValue.y;
-
-        float deg = Mathf.Atan2(_deltaY, _deltaX) * (180 / Mathf.PI);
-
-        _relativeVector = Quaternion.Euler(deg, 0, deg) * Vector2.up;
-
-        Debug.Log("MOVE: " + _normalizedMoveInputValue + "  AIM: " + _normalizedAimInputValue + "  ANGLE:" + deg);
-
-        //Debug.DrawLine(transform.position, new Vector3(_normalizedMoveInputValue.x, 0,_normalizedMoveInputValue.y), Color.magenta);
-        //Debug.DrawLine(transform.position, new Vector3(_normalizedAimInputValue.x, 0, _normalizedAimInputValue.y), Color.magenta);
-
-        //Debug.Log(_angle);
-
-        //_animator.SetFloat("right", _relativeVector.x);
-        //_animator.SetFloat("forward", _relativeVector.y);
-
+        _animator.SetFloat("right", dir.x);
+        _animator.SetFloat("forward", dir.y);
     }
 }
