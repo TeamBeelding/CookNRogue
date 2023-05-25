@@ -33,6 +33,7 @@ public class PlayerAttack : MonoBehaviour
     Coroutine _curShootDelay;
 
     PlayerController _playerController;
+    [SerializeField] ParticleSystem _shootingParticles;
 
     private void Start()
     {
@@ -41,7 +42,6 @@ public class PlayerAttack : MonoBehaviour
         _ammunitionBar = AmmunitionBar.instance;
 
         _ammunitionBar.InitAmmoBar(0);
-        ResetParameters();
     }
 
     public void SetIsShooting(bool isShooting)
@@ -52,6 +52,9 @@ public class PlayerAttack : MonoBehaviour
     {
         if (_shootOnCooldown)
             return;
+
+        if(_shootingParticles)
+            _shootingParticles.Play();
 
         _shootOnCooldown = true;
         //BulletInstantiate
@@ -139,7 +142,6 @@ public class PlayerAttack : MonoBehaviour
                 _projectileBehaviour._speed += _speed;
                 _projectileBehaviour._drag -= _drag;
                 _projectileBehaviour._damage += _damage;
-
                 Vector3 direction = Quaternion.Euler(0, totalAngle, 0) * _playerController.PlayerAimDirection;
 
                 if(direction == Vector3.zero)
