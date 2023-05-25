@@ -39,6 +39,7 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] ParticleSystem _shootingParticles;
     [ColorUsage(true, true)]
     public Color _color;
+
     [ColorUsage(true, true)]
     [SerializeField] Color defaultcolor;
 
@@ -235,6 +236,7 @@ public class PlayerAttack : MonoBehaviour
 
     public void ResetParameters()
     {
+        _color = defaultcolor;
         _effects.Clear();
         _size = 0;
         _speed = 0;
@@ -244,7 +246,7 @@ public class PlayerAttack : MonoBehaviour
         _damage = 0;
         _ammunition = 0;
         _shootCooldown = 0.5f;
-        _color = defaultcolor;
+        
     }
 
     public void FixedUpdate()
