@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+using UnityEngine.InputSystem;
+
+
 public class PlayerAttack : MonoBehaviour
 {
     public GameObject _Projectile;
@@ -29,7 +32,6 @@ public class PlayerAttack : MonoBehaviour
     [SerializeReference]
     public List<IIngredientEffects> _effects = new List<IIngredientEffects>();
     bool _shootOnCooldown = false;
-
     Coroutine _curShootDelay;
 
     PlayerController _playerController;
@@ -39,10 +41,14 @@ public class PlayerAttack : MonoBehaviour
     {
 
         _playerController = GetComponent<PlayerController>();
+
+
         _ammunitionBar = AmmunitionBar.instance;
 
         _ammunitionBar.InitAmmoBar(0);
     }
+
+   
 
     public void SetIsShooting(bool isShooting)
     {
@@ -50,6 +56,9 @@ public class PlayerAttack : MonoBehaviour
     }
     public void Shoot()
     {
+        if (!_playerController._isAiming)
+            return;
+
         if (_shootOnCooldown)
             return;
 
