@@ -114,7 +114,7 @@ public class PlayerAnimStates : MonoBehaviour
         dir.x = Mathf.Cos(_angle * Mathf.Deg2Rad);
         dir.y = Mathf.Sin(_angle * Mathf.Deg2Rad);
 
-        Debug.Log("MOVE: " + _normalizedMoveInputValue + "  AIM: " + _normalizedAimInputValue + "  ANGLE:" + _angle);
+        //Debug.Log("MOVE: " + _normalizedMoveInputValue + "  AIM: " + _normalizedAimInputValue + "  ANGLE:" + _angle);
 
         _animator.SetFloat("right", dir.x);
         _animator.SetFloat("forward", dir.y);
