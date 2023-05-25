@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8324148476584500317}
-  - component: {fileID: 7994711001894885004}
   m_Layer: 0
   m_Name: 02_Muret_1
   m_TagString: Obstruction
@@ -33,19 +32,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &7994711001894885004
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3449114673478118306}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.5249757, y: 5.571168, z: 5.1658773}
-  m_Center: {x: -0.42498654, y: 2.4037652, z: 0.96021986}
 --- !u!1001 &1885199872414864183
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -108,6 +94,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: c1831804f3befbf47aa7cf69b4f92ab9,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 71cdfeb93d040cc41b4f0fdb1e983ee4, type: 2}
     - target: {fileID: 919132149155446097, guid: c1831804f3befbf47aa7cf69b4f92ab9,
         type: 3}
       propertyPath: m_Name
