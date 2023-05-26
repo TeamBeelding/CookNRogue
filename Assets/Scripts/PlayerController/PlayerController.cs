@@ -74,6 +74,11 @@ public class PlayerController : MonoBehaviour
 
 
     private bool m_isDashing = false;
+    public bool IsDashing
+    {
+        get => m_isDashing;
+    }
+
     private Vector3 m_dashDirection = Vector2.zero;
 
     [HideInInspector]
