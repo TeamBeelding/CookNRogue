@@ -224,8 +224,7 @@ public class PlayerCookingInventory : MonoBehaviour
         }
 
 
-        Debug.Log(_recipe[0]);
-       // m_playerAttackScript._color = _recipe[0].color;
+        m_playerAttackScript._color = _recipe[0].color;
 
         //Fuse ingredients's effects and stats
         foreach (ProjectileData ingredient in _recipe)
