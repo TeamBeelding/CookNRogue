@@ -32,7 +32,13 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField]private bool _isShooting = false;
     [SerializeReference]
     public List<IIngredientEffects> _effects = new List<IIngredientEffects>();
+
     bool _shootOnCooldown = false;
+    public bool ShootOnCooldown
+    {
+        get => _shootOnCooldown;
+    }
+
     Coroutine _curShootDelay;
 
     PlayerController _playerController;
@@ -58,7 +64,7 @@ public class PlayerAttack : MonoBehaviour
         ResetParameters();
     }
 
-   
+
 
     public void SetIsShooting(bool isShooting)
     {

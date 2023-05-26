@@ -18,9 +18,14 @@ public class PlayerAnimStates : MonoBehaviour
     private Animator _animator;
 
     [SerializeField]
-    private Transform Marmite;
+    private Transform m_marmite;
     [SerializeField]
-    private Transform aimedMarmite;
+    private Transform m_aimedMarmite;
+
+    [SerializeField]
+    private Transform m_spoon;
+    [SerializeField]
+    private Transform m_aimedSpoon;
 
     private PlayerController _player;    
     private PlayerAttack _playerAttack;
@@ -75,32 +80,40 @@ public class PlayerAnimStates : MonoBehaviour
                 }
         }
 
+        if (_playerAttack.ShootOnCooldown)
+        {
+            _animator.SetBool("shoot", true);
+        }
+        else
+        {
+            _animator.SetBool("shoot", false);
+        }
 
-    //        public bool ShootOnCooldown
-    //{
-    //    get => _shootOnCooldown;
-    //}
-    //if (_playerAttack.ShootOnCooldown)
-    //{
-    //    _animator.SetBool("shoot", true);
-    //}
-    //else
-    //{
-    //    _animator.SetBool("shoot", false);
-    //}
-}
+        if (_player.IsDashing && !_animator.GetBool("dash"))
+        {
+            _animator.SetBool("dash", true);
+        }
+        else if (!_player.IsDashing)
+        {
+            _animator.SetBool("dash", false);
+        }
+    }
 
     private void AimedMarmite(bool isAimed) 
     {
         if (!isAimed)
         {
-            Marmite.gameObject.SetActive(true);
-            aimedMarmite.gameObject.SetActive(false);
+            m_marmite.gameObject.SetActive(true);
+            m_aimedMarmite.gameObject.SetActive(false);
+            m_spoon.gameObject.SetActive(true);
+            m_aimedSpoon.gameObject.SetActive(false);
         }
         else 
         {
-            Marmite.gameObject.SetActive(false);
-            aimedMarmite.gameObject.SetActive(true);
+            m_marmite.gameObject.SetActive(false);
+            m_aimedMarmite.gameObject.SetActive(true);
+            m_spoon.gameObject.SetActive(false);
+            m_aimedSpoon.gameObject.SetActive(true);
         }
     }
 
