@@ -1,7 +1,11 @@
+using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+
+using UnityEngine.InputSystem;
+
 
 public class PlayerAttack : MonoBehaviour
 {
@@ -28,21 +32,39 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField]private bool _isShooting = false;
     [SerializeReference]
     public List<IIngredientEffects> _effects = new List<IIngredientEffects>();
+
     bool _shootOnCooldown = false;
+    public bool ShootOnCooldown
+    {
+        get => _shootOnCooldown;
+    }
 
     Coroutine _curShootDelay;
 
     PlayerController _playerController;
     [SerializeField] ParticleSystem _shootingParticles;
+    [ColorUsage(true, true)]
+    public Color _color;
+
+    [ColorUsage(true, true)]
+    [SerializeField] Color defaultcolor;
 
     private void Start()
     {
-
+        
         _playerController = GetComponent<PlayerController>();
+
         _ammunitionBar = AmmunitionBar.instance;
 
-        _ammunitionBar.InitAmmoBar(0);
+        if (_ammunitionBar)
+        {
+            _ammunitionBar.InitAmmoBar(0);
+        }
+
+        ResetParameters();
     }
+
+
 
     public void SetIsShooting(bool isShooting)
     {
@@ -50,6 +72,9 @@ public class PlayerAttack : MonoBehaviour
     }
     public void Shoot()
     {
+        if (!_playerController._isAiming)
+            return;
+
         if (_shootOnCooldown)
             return;
 
@@ -60,7 +85,6 @@ public class PlayerAttack : MonoBehaviour
         //BulletInstantiate
         StartCoroutine(Shootbullets(_TimeBtwShotsRafale));
         
-
         //Shoot Bullet
         _curShootDelay = StartCoroutine(ShootDelay(_shootCooldown));
         
@@ -144,7 +168,10 @@ public class PlayerAttack : MonoBehaviour
                 _projectileBehaviour._damage += _damage;
                 Vector3 direction = Quaternion.Euler(0, totalAngle, 0) * _playerController.PlayerAimDirection;
 
-                if(direction == Vector3.zero)
+                if(_color != null)
+                    SetGadientInParticle(Bullet, _color);
+
+                if (direction == Vector3.zero)
                     direction = transform.forward;
 
                 _projectileBehaviour._direction = direction;
@@ -154,7 +181,10 @@ public class PlayerAttack : MonoBehaviour
                 foreach (IIngredientEffects effect in _effects)
                 {
                     if (effect != null)
+                    {
                         effect.EffectOnShoot(transform.position, Bullet);
+                    }
+
 
                     if (effect is Boomerang boomerang)
                     {
@@ -186,6 +216,30 @@ public class PlayerAttack : MonoBehaviour
 
     }
 
+    void SetGadientInParticle(GameObject bullet, Color color)
+    {
+
+        var RenderModule = bullet.transform.GetChild(1).GetChild(1).GetComponent<ParticleSystemRenderer>();
+        Material splashmat = Instantiate(RenderModule.sharedMaterials[0]);
+        splashmat.SetColor("_Color",color);
+        RenderModule.material = splashmat;
+        /*
+        var ps = bullet.transform.GetChild(1).GetChild(0).GetComponent<ParticleSystem>();
+        var psMain = ps.main;
+        var grad = psMain.startColor.gradient;
+        GradientColorKey[] keys = grad.colorKeys;
+        keys[0].color = grad.colorKeys[0].color;
+        keys[keys.Length - 1].color = color;
+        grad.colorKeys = keys;
+
+        psMain.startColor = grad;
+        */
+        var BubbleRenderModule = bullet.transform.GetChild(1).GetChild(0).GetComponent<ParticleSystemRenderer>();
+        Material Bubblemat = Instantiate(BubbleRenderModule.sharedMaterials[0]);
+        Bubblemat.SetColor("_EmissionColor", color);
+        BubbleRenderModule.material = Bubblemat;
+    }
+
     void OnAmmunitionChange()
     {
         StopCoroutine(_curShootDelay);
@@ -195,6 +249,7 @@ public class PlayerAttack : MonoBehaviour
 
     public void ResetParameters()
     {
+        _color = defaultcolor;
         _effects.Clear();
         _size = 0;
         _speed = 0;
@@ -204,6 +259,7 @@ public class PlayerAttack : MonoBehaviour
         _damage = 0;
         _ammunition = 0;
         _shootCooldown = 0.5f;
+        
     }
 
     public void FixedUpdate()
@@ -221,9 +277,6 @@ public class PlayerAttack : MonoBehaviour
         _drag = 0;
         _shootCooldown = 0.5f;
         _damage = 1;
-
-        //A CHANGER DANS LE FUTUR
-        _muzzle = GameObject.Find("CharacterModel").transform;
         //m_knockbackScript = GameObject.Find("CharacterModel").GetComponent<PlayerKnockback>();
     }
 

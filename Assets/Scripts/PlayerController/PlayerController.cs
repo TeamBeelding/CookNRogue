@@ -1,6 +1,7 @@
 using UnityEngine.InputSystem;
 using UnityEngine;
 using System.Collections;
+using static UnityEngine.ParticleSystem;
 
 [RequireComponent(typeof(Rigidbody), typeof(Collider))]
 public class PlayerController : MonoBehaviour
@@ -56,6 +57,7 @@ public class PlayerController : MonoBehaviour
     static PlayerController _instance;
 
     PlayerActions _playerActions;
+    PlayerHealth _playerHealth;
 
     Rigidbody _rb;
     Transform _relativeTransform;
@@ -74,6 +76,13 @@ public class PlayerController : MonoBehaviour
 
 
     private bool m_isDashing = false;
+    public bool IsDashing
+    {
+        get => m_isDashing;
+    }
+
+    [SerializeField] ParticleSystem DashingParticles;
+
     private Vector3 m_dashDirection = Vector2.zero;
 
     [HideInInspector]
@@ -146,7 +155,7 @@ public class PlayerController : MonoBehaviour
         _enemyManager = EnemyManager.Instance;
         _roomManager = RoomManager.instance;
         _cookingScript = GetComponent<PlayerCooking>();
-
+        _playerHealth = GetComponent<PlayerHealth>();
         _rb = _rb != null ? _rb : GetComponent<Rigidbody>();
 
 
@@ -377,7 +386,6 @@ public class PlayerController : MonoBehaviour
         if (!m_isDashing && _rb.velocity.magnitude > m_maxMoveSpeed)
         {
             _rb.velocity = new Vector3(direction.x, 0, direction.z) * m_maxMoveSpeed;
-
         }
     }
 
@@ -390,9 +398,11 @@ public class PlayerController : MonoBehaviour
     //Dash Casting
     private IEnumerator ICasting()
     {
+        DashingParticles.Play();
         yield return new WaitForSeconds(m_dashDuration);
         m_isDashing = false;
         m_dashDirection = Vector2.zero;
+        DashingParticles.Stop();
     }
 
     #endregion
@@ -575,8 +585,6 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(float damage) 
     {
-        m_currentHealthValue -= Mathf.Abs(damage);
-
         //Feedbacks
         CameraController.instance.ScreenShake();
         takeDamageTransition.LoadTransition();
@@ -584,12 +592,7 @@ public class PlayerController : MonoBehaviour
         //Cooking cancel
         StopCookingState();
 
-        //Death Check
-        if (m_currentHealthValue <= 0)
-        {
-            m_currentHealthValue = m_maxHealthValue;
-            RoomManager.instance.RestartLevel();
-        }
+        _playerHealth.TakeDamage(1);
     }
 
     void Spawn()
