@@ -10,26 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 53abb120a886f884a82d268ea4771c0d, type: 3}
-  m_Name: Patate
+  m_Name: boeuf
   m_EditorClassIdentifier: 
   _effects:
-  - rid: 4485747390005641222
+  - rid: 4485747430315786241
   _plat: 0
-  inventorySprite: {fileID: 21300000, guid: be311f505104cf646a04c5efafff1c57, type: 3}
-  _size: 1.5
+  inventorySprite: {fileID: 21300000, guid: 6b9aab805092f9346a82e2e3c0eb5597, type: 3}
+  _size: 1
   _speed: 2
   _drag: 0
-  _ammunition: 30
+  _ammunition: 25
   _attackDelay: 0.3
-  _damage: 80
-  color: {r: 0, g: 0, b: 0, a: 0}
+  _damage: 160
+  color: {r: 0.017205715, g: 0, b: 1, a: 1}
   references:
     version: 2
     RefIds:
-    - rid: 4485747390005641222
+    - rid: 4485747430315786241
       type: {class: SizeOtherDistance, ns: , asm: Assembly-CSharp}
       data:
-        _speed: 0
+        _speed: 1
         _minSize: 0.5
         _maxSize: 4
         _size:
@@ -38,8 +38,8 @@ MonoBehaviour:
           - serializedVersion: 3
             time: 0
             value: 0.5
-            inSlope: 2
-            outSlope: 2
+            inSlope: 0
+            outSlope: 0
             tangentMode: 0
             weightedMode: 0
             inWeight: 0
@@ -47,8 +47,8 @@ MonoBehaviour:
           - serializedVersion: 3
             time: 1
             value: 4
-            inSlope: 0
-            outSlope: 0
+            inSlope: 2
+            outSlope: 2
             tangentMode: 0
             weightedMode: 0
             inWeight: 0
