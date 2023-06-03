@@ -1,6 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
 <WwiseDocument Type="WorkUnit" ID="{FFAD6C4B-E5CF-46C9-B0F9-D60A9D3D1568}" SchemaVersion="110">
 	<SoundcasterSessions>
-		<WorkUnit Name="Default Work Unit" ID="{FFAD6C4B-E5CF-46C9-B0F9-D60A9D3D1568}" PersistMode="Standalone"/>
+		<WorkUnit Name="Default Work Unit" ID="{FFAD6C4B-E5CF-46C9-B0F9-D60A9D3D1568}" PersistMode="Standalone">
+			<ChildrenList>
+				<SoundcasterSession Name="Enemies_TEST" ID="{DEB44BBC-8D69-4992-9467-DC28907927A1}">
+					<ModuleList>
+						<Module>
+							<ObjectRef Name="Play_SFX_Cabbage_Footsteps" ID="{AB510070-89D4-4724-AB10-6DB277CAC122}" WorkUnitID="{ABFF2DFC-7AF2-45F5-A49E-711F8D02B4F4}"/>
+							<Position X="0" Y="0"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Play_SFX_Corn_Footsteps" ID="{4132336D-CD8B-489B-B14B-9315F6B8862B}" WorkUnitID="{6E5F4E40-3426-47E0-8C42-84C9F73E2B8A}"/>
+							<Position X="0" Y="2"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Play_SFX_Cabbage_Hit" ID="{9753C00E-4EA3-4102-9738-A8883A648880}" WorkUnitID="{ABFF2DFC-7AF2-45F5-A49E-711F8D02B4F4}"/>
+							<Position X="1" Y="0"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Play_SFX_Corn_Attack_Charge" ID="{DEAAEAF3-7A4C-4697-A0E1-7D10BE1EFF4F}" WorkUnitID="{6E5F4E40-3426-47E0-8C42-84C9F73E2B8A}"/>
+							<Position X="1" Y="2"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Play_SFX_Cabbage_Charge_LP" ID="{84C41461-CD73-46A1-A694-FF3E59A30932}" WorkUnitID="{ABFF2DFC-7AF2-45F5-A49E-711F8D02B4F4}"/>
+							<Position X="2" Y="0"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Play_SFX_Corn_Attack_Shot" ID="{801B2D94-1CEA-4024-B878-3174B13D15CC}" WorkUnitID="{6E5F4E40-3426-47E0-8C42-84C9F73E2B8A}"/>
+							<Position X="2" Y="2"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Play_SFX_Cabbage_Charge_Impact" ID="{7ED28F22-7E01-4313-BC38-1D1062B45E50}" WorkUnitID="{ABFF2DFC-7AF2-45F5-A49E-711F8D02B4F4}"/>
+							<Position X="3" Y="0"/>
+						</Module>
+					</ModuleList>
+					<RTPCValueList ShowAll="true"/>
+					<CurrentStateList ShowAll="true"/>
+					<CurrentSwitchList ShowAll="true"/>
+				</SoundcasterSession>
+				<SoundcasterSession Name="UI_Test" ID="{DE615D6A-CEE6-483B-9D70-A5EC0029A3BF}">
+					<ModuleList>
+						<Module>
+							<ObjectRef Name="Play_UI_Settings_Open" ID="{B42C0E7D-8F1B-484A-8CFB-232C4856C34F}" WorkUnitID="{7044BF9E-4C55-43A4-8983-46D41D6DFCDF}"/>
+							<Position X="0" Y="0"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Play_UI_Settings_Close" ID="{11297731-DA32-49EF-944F-C7B5F6A53147}" WorkUnitID="{7044BF9E-4C55-43A4-8983-46D41D6DFCDF}"/>
+							<Position X="0" Y="1"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Play_UI_Settings_Navigate" ID="{B680E6E8-BF48-42F6-89C9-467C2C3B23B2}" WorkUnitID="{7044BF9E-4C55-43A4-8983-46D41D6DFCDF}"/>
+							<Position X="1" Y="0"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Play_UI_Settings_Select" ID="{A473965D-F186-48B1-9C52-7E1938253076}" WorkUnitID="{7044BF9E-4C55-43A4-8983-46D41D6DFCDF}"/>
+							<Position X="1" Y="1"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Play_UI_Settings_Validate" ID="{D8DF6B12-A2C5-4E64-8DC4-39627E5800A7}" WorkUnitID="{7044BF9E-4C55-43A4-8983-46D41D6DFCDF}"/>
+							<Position X="2" Y="0"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Play_UI_Settings_Decline" ID="{B1D45776-1B3F-4009-BB61-F291754C2F6E}" WorkUnitID="{7044BF9E-4C55-43A4-8983-46D41D6DFCDF}"/>
+							<Position X="2" Y="1"/>
+						</Module>
+					</ModuleList>
+					<RTPCValueList ShowAll="true"/>
+					<CurrentStateList ShowAll="true"/>
+					<CurrentSwitchList ShowAll="true"/>
+				</SoundcasterSession>
+				<SoundcasterSession Name="MC_TEST" ID="{B32836EA-C2C8-4CE6-BBAC-E7F4AF7E115F}">
+					<ModuleList>
+						<Module>
+							<ObjectRef Name="Play_MC_Cauldron_Idle" ID="{19EAA07F-838A-4F83-AEE4-B5CEBCC65AF3}" WorkUnitID="{3ACD8602-9C03-4508-96EF-687EE3AEFC09}"/>
+							<Position X="0" Y="0"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Play_MC_Run" ID="{BBAB9789-D59D-4AC5-A1DC-EEA9B1E408EB}" WorkUnitID="{3ACD8602-9C03-4508-96EF-687EE3AEFC09}"/>
+							<Position X="0" Y="1"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Play_MC_Dash" ID="{4141D814-C5B1-4654-B4D0-D17E30B80054}" WorkUnitID="{3ACD8602-9C03-4508-96EF-687EE3AEFC09}"/>
+							<Position X="0" Y="2"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Play_MC_Run_Foley" ID="{3F4F1D00-958A-466B-AFD1-5038900B1F19}" WorkUnitID="{3ACD8602-9C03-4508-96EF-687EE3AEFC09}"/>
+							<Position X="1" Y="1"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Play_MC_Run_Footstep" ID="{2DA1DB7D-D75B-49C4-B3BF-8F8CF7DB6011}" WorkUnitID="{3ACD8602-9C03-4508-96EF-687EE3AEFC09}"/>
+							<Position X="2" Y="1"/>
+						</Module>
+					</ModuleList>
+					<RTPCValueList ShowAll="true"/>
+					<CurrentStateList ShowAll="true"/>
+					<CurrentSwitchList ShowAll="true"/>
+				</SoundcasterSession>
+			</ChildrenList>
+		</WorkUnit>
 	</SoundcasterSessions>
 </WwiseDocument>

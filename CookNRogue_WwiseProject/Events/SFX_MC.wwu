@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{3ACD8602-9C03-4508-96EF-687EE3AEFC09}" SchemaVersion="110" RootDocumentID="{899603F8-092E-4FB8-93A5-00C3DC23A21E}" ParentDocumentID="{899603F8-092E-4FB8-93A5-00C3DC23A21E}">
+	<Events>
+		<WorkUnit Name="SFX_MC" ID="{3ACD8602-9C03-4508-96EF-687EE3AEFC09}" OwnerID="{899603F8-092E-4FB8-93A5-00C3DC23A21E}" PersistMode="Nested">
+			<PropertyList>
+				<Property Name="Color" Type="int16" Value="2"/>
+				<Property Name="OverrideColor" Type="bool" Value="True"/>
+			</PropertyList>
+			<ChildrenList>
+				<Event Name="Play_MC_Run" ID="{BBAB9789-D59D-4AC5-A1DC-EEA9B1E408EB}">
+					<ChildrenList>
+						<Action Name="" ID="{8026FFA0-ADE6-4CBF-86DF-19C0C104051F}" ShortID="370264795">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="RC_MC_Run" ID="{47B4AD92-A14D-4147-9FF4-F6707F84199E}" WorkUnitID="{95800B67-52C6-48DF-823F-E0CBD975D443}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_MC_Run_Footstep" ID="{2DA1DB7D-D75B-49C4-B3BF-8F8CF7DB6011}">
+					<ChildrenList>
+						<Action Name="" ID="{476E50D5-159C-426D-AD01-AC1E4D7185F7}" ShortID="969089990">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="RC_MC_Footstep" ID="{B3732425-67FC-4E88-8FD1-B9A3B55DAC8B}" WorkUnitID="{95800B67-52C6-48DF-823F-E0CBD975D443}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_MC_Run_Foley" ID="{3F4F1D00-958A-466B-AFD1-5038900B1F19}">
+					<ChildrenList>
+						<Action Name="" ID="{43E0457B-4581-4855-B7AB-2BCC6683C749}" ShortID="716788749">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="RC_MC_Foley" ID="{6F8B1DA2-5A3B-4D03-A339-4C613EA0AB89}" WorkUnitID="{95800B67-52C6-48DF-823F-E0CBD975D443}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_MC_Cauldron_Idle" ID="{19EAA07F-838A-4F83-AEE4-B5CEBCC65AF3}">
+					<ChildrenList>
+						<Action Name="" ID="{44BAFE09-3E7D-4877-88A6-7C5DA3A640DF}" ShortID="978324806">
+							<PropertyList>
+								<Property Name="FadeTime" Type="Real64" Value="0.1"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="MC_Cauldron_Idle" ID="{D11D54E9-58A0-4DEB-8003-32EDADA2BBCC}" WorkUnitID="{95800B67-52C6-48DF-823F-E0CBD975D443}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_MC_Dash" ID="{4141D814-C5B1-4654-B4D0-D17E30B80054}">
+					<ChildrenList>
+						<Action Name="" ID="{94BACF9F-8F55-42D5-93EA-CFC91301495D}" ShortID="153184254">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+								<Property Name="FadeTime" Type="Real64" Value="0.2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="RC_MC_Foley" ID="{6F8B1DA2-5A3B-4D03-A339-4C613EA0AB89}" WorkUnitID="{95800B67-52C6-48DF-823F-E0CBD975D443}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+						<Action Name="" ID="{B7DB6F23-1ED0-44D7-89F6-EB516543282F}" ShortID="658302236">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+								<Property Name="FadeTime" Type="Real64" Value="0.2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="RC_MC_Footstep" ID="{B3732425-67FC-4E88-8FD1-B9A3B55DAC8B}" WorkUnitID="{95800B67-52C6-48DF-823F-E0CBD975D443}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+						<Action Name="" ID="{2B0D24A1-064A-4A96-98E8-31F8882E5370}" ShortID="1050074235">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+								<Property Name="FadeTime" Type="Real64" Value="0.2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="RC_MC_Run" ID="{47B4AD92-A14D-4147-9FF4-F6707F84199E}" WorkUnitID="{95800B67-52C6-48DF-823F-E0CBD975D443}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+						<Action Name="" ID="{3043A0A7-6EB7-4364-8838-5050016F9259}" ShortID="279609085">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="RC_MC_Dash" ID="{6C5D56F1-E6E8-4999-B80F-99630677FCE3}" WorkUnitID="{95800B67-52C6-48DF-823F-E0CBD975D443}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+			</ChildrenList>
+		</WorkUnit>
+	</Events>
+</WwiseDocument>
