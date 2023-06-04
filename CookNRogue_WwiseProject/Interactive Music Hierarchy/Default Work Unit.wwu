@@ -19,6 +19,9 @@
 					</ReferenceList>
 					<ChildrenList>
 						<MusicPlaylistContainer Name="Master_Fight" ID="{91339FFD-AAF4-4B03-AF15-88E66A43FC76}" ShortID="925301405">
+							<PropertyList>
+								<Property Name="OverrideEffect" Type="bool" Value="True"/>
+							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Conversion">
 									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DEC634C6-86E3-4DF9-96EE-F869BA355507}"/>
@@ -42,7 +45,7 @@
 										</Reference>
 									</ReferenceList>
 									<ChildrenList>
-										<MusicTrack Name="Instrumental_Section_Intro" ID="{A6384B7C-7171-422C-A25D-07AD94F8940C}" ShortID="869125689">
+										<MusicTrack Name="Base_Instrumentale" ID="{A6384B7C-7171-422C-A25D-07AD94F8940C}" ShortID="869125689">
 											<ReferenceList>
 												<Reference Name="OutputBus">
 													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{85B5C199-8628-4DDB-B756-DA8917395816}"/>
@@ -57,12 +60,47 @@
 													</MediaIDList>
 												</AudioFileSource>
 											</ChildrenList>
+											<StateInfo>
+												<StateGroupList>
+													<StateGroupInfo>
+														<StateGroupRef Name="Pause_Menu" ID="{DCC4536A-E318-48C6-AA1F-DF8580335888}"/>
+													</StateGroupInfo>
+													<StateGroupInfo>
+														<StateGroupRef Name="Cooking_Menu" ID="{480DC1F1-C4C9-4C3D-BC13-612628739BAC}"/>
+													</StateGroupInfo>
+												</StateGroupList>
+												<CustomStateList>
+													<CustomState>
+														<StateRef Name="OutCookingMenu" ID="{F48474B2-E070-43CA-9C12-219BE4A7071C}"/>
+														<CustomState Name="" ID="{BFDEC4A9-BB1D-4FF9-8D12-E4C09C3D1FDB}" ShortID="740411267"/>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="InCookingMenu" ID="{BD061B15-9DAF-4A28-A041-2AF277545DA4}"/>
+														<CustomState Name="" ID="{0F0F1315-2F30-477D-A465-CC4EDFC69B5A}" ShortID="577211095">
+															<PropertyList>
+																<Property Name="Volume" Type="Real64" Value="-10"/>
+															</PropertyList>
+														</CustomState>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="InPauseMenu" ID="{59CFFA60-D92A-4A95-BEC1-15870A188413}"/>
+														<CustomState Name="" ID="{4902BC01-A126-4B4B-AF49-14C64D10AA2D}" ShortID="621488081">
+															<PropertyList>
+																<Property Name="Volume" Type="Real64" Value="-10"/>
+															</PropertyList>
+														</CustomState>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="OutPauseMenu" ID="{2987396D-222D-4B27-A23D-F2A7ECE32AD1}"/>
+														<CustomState Name="" ID="{2B3559EC-E73A-4D98-BF15-8D3F76D109F3}" ShortID="618441290"/>
+													</CustomState>
+												</CustomStateList>
+											</StateInfo>
 											<TransitionList>
 												<MusicTransition Name="Root" ID="{C6BE7671-8F6A-4487-8DA1-A2AF68703D94}">
 													<PropertyList>
 														<Property Name="IsFolder" Type="bool" Value="True"/>
 													</PropertyList>
-													<ReferenceList/>
 													<TransitionInfo/>
 												</MusicTransition>
 											</TransitionList>
@@ -93,7 +131,7 @@
 												</ObjectList>
 											</ObjectLists>
 										</MusicTrack>
-										<MusicTrack Name="Balafon_Intro_01_02" ID="{84EC5209-A028-4BCB-957B-A9C37F7C5603}" ShortID="176854284">
+										<MusicTrack Name="Balafon" ID="{84EC5209-A028-4BCB-957B-A9C37F7C5603}" ShortID="176854284">
 											<PropertyList>
 												<Property Name="MusicTrackType" Type="int16" Value="3"/>
 											</PropertyList>
@@ -117,6 +155,34 @@
 													</MediaIDList>
 												</AudioFileSource>
 											</ChildrenList>
+											<StateInfo>
+												<StateGroupList>
+													<StateGroupInfo>
+														<StateGroupRef Name="Pause_Menu" ID="{DCC4536A-E318-48C6-AA1F-DF8580335888}"/>
+													</StateGroupInfo>
+													<StateGroupInfo>
+														<StateGroupRef Name="Cooking_Menu" ID="{480DC1F1-C4C9-4C3D-BC13-612628739BAC}"/>
+													</StateGroupInfo>
+												</StateGroupList>
+												<CustomStateList>
+													<CustomState>
+														<StateRef Name="OutCookingMenu" ID="{F48474B2-E070-43CA-9C12-219BE4A7071C}"/>
+														<CustomState Name="" ID="{0977CBD5-894C-4BCA-9D29-93EA27FF9B45}" ShortID="389434783"/>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="InCookingMenu" ID="{BD061B15-9DAF-4A28-A041-2AF277545DA4}"/>
+														<CustomState Name="" ID="{95BD96CE-A5DF-42D1-80AC-E53AE021FFE2}" ShortID="188369777"/>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="InPauseMenu" ID="{59CFFA60-D92A-4A95-BEC1-15870A188413}"/>
+														<CustomState Name="" ID="{D38B382A-99AE-4516-9A19-443C3EEECBCC}" ShortID="890404918"/>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="OutPauseMenu" ID="{2987396D-222D-4B27-A23D-F2A7ECE32AD1}"/>
+														<CustomState Name="" ID="{40A192B4-20DB-48A6-872C-8BC4468DC4DD}" ShortID="439752003"/>
+													</CustomState>
+												</CustomStateList>
+											</StateInfo>
 											<TransitionList>
 												<MusicTransition Name="Root" ID="{96F3993B-AC7E-4E9D-83E9-37C7073273DB}">
 													<PropertyList>
@@ -198,9 +264,14 @@
 												</ObjectList>
 											</ObjectLists>
 										</MusicTrack>
-										<MusicTrack Name="Castagnette_Intro_01_02" ID="{6A65BB8C-ADED-4222-B99D-280C90EB2A51}" ShortID="559936729">
+										<MusicTrack Name="Castagnette" ID="{6A65BB8C-ADED-4222-B99D-280C90EB2A51}" ShortID="559936729">
 											<PropertyList>
 												<Property Name="MusicTrackType" Type="int16" Value="3"/>
+												<Property Name="Volume" Type="Real64">
+													<ValueList>
+														<Value>-5</Value>
+													</ValueList>
+												</Property>
 											</PropertyList>
 											<ReferenceList>
 												<Reference Name="DefaultSwitchOrState">
@@ -222,6 +293,34 @@
 													</MediaIDList>
 												</AudioFileSource>
 											</ChildrenList>
+											<StateInfo>
+												<StateGroupList>
+													<StateGroupInfo>
+														<StateGroupRef Name="Pause_Menu" ID="{DCC4536A-E318-48C6-AA1F-DF8580335888}"/>
+													</StateGroupInfo>
+													<StateGroupInfo>
+														<StateGroupRef Name="Cooking_Menu" ID="{480DC1F1-C4C9-4C3D-BC13-612628739BAC}"/>
+													</StateGroupInfo>
+												</StateGroupList>
+												<CustomStateList>
+													<CustomState>
+														<StateRef Name="OutCookingMenu" ID="{F48474B2-E070-43CA-9C12-219BE4A7071C}"/>
+														<CustomState Name="" ID="{EA7BDF7B-B1A9-49D3-9502-5E98F1EB73D7}" ShortID="768995855"/>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="InCookingMenu" ID="{BD061B15-9DAF-4A28-A041-2AF277545DA4}"/>
+														<CustomState Name="" ID="{15C751EA-147C-4F53-A915-E21A3185D44B}" ShortID="783124799"/>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="InPauseMenu" ID="{59CFFA60-D92A-4A95-BEC1-15870A188413}"/>
+														<CustomState Name="" ID="{25C35685-D938-460E-A33C-741908F821D1}" ShortID="673876472"/>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="OutPauseMenu" ID="{2987396D-222D-4B27-A23D-F2A7ECE32AD1}"/>
+														<CustomState Name="" ID="{C41F81F8-D807-4BED-81BD-3B6E676197DF}" ShortID="377635069"/>
+													</CustomState>
+												</CustomStateList>
+											</StateInfo>
 											<TransitionList>
 												<MusicTransition Name="Root" ID="{F1BF5673-39F4-40F0-B94F-06FBFA3FEBFF}">
 													<PropertyList>
@@ -303,9 +402,14 @@
 												</ObjectList>
 											</ObjectLists>
 										</MusicTrack>
-										<MusicTrack Name="LogDrum_Intro_01_02" ID="{EB7F9C37-FE91-44DA-B6F5-05112A17794F}" ShortID="316378900">
+										<MusicTrack Name="LogDrum" ID="{EB7F9C37-FE91-44DA-B6F5-05112A17794F}" ShortID="316378900">
 											<PropertyList>
 												<Property Name="MusicTrackType" Type="int16" Value="3"/>
+												<Property Name="Volume" Type="Real64">
+													<ValueList>
+														<Value>3</Value>
+													</ValueList>
+												</Property>
 											</PropertyList>
 											<ReferenceList>
 												<Reference Name="DefaultSwitchOrState">
@@ -327,6 +431,34 @@
 													</MediaIDList>
 												</AudioFileSource>
 											</ChildrenList>
+											<StateInfo>
+												<StateGroupList>
+													<StateGroupInfo>
+														<StateGroupRef Name="Pause_Menu" ID="{DCC4536A-E318-48C6-AA1F-DF8580335888}"/>
+													</StateGroupInfo>
+													<StateGroupInfo>
+														<StateGroupRef Name="Cooking_Menu" ID="{480DC1F1-C4C9-4C3D-BC13-612628739BAC}"/>
+													</StateGroupInfo>
+												</StateGroupList>
+												<CustomStateList>
+													<CustomState>
+														<StateRef Name="OutCookingMenu" ID="{F48474B2-E070-43CA-9C12-219BE4A7071C}"/>
+														<CustomState Name="" ID="{5419FE0E-F336-48EB-A1E0-9CDBE37E8036}" ShortID="79966718"/>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="InCookingMenu" ID="{BD061B15-9DAF-4A28-A041-2AF277545DA4}"/>
+														<CustomState Name="" ID="{A133E866-8DA2-4776-8CDB-203B6F7DDD91}" ShortID="391011611"/>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="InPauseMenu" ID="{59CFFA60-D92A-4A95-BEC1-15870A188413}"/>
+														<CustomState Name="" ID="{58F67F26-DC8C-474D-9F7D-7A22CCBC325B}" ShortID="1048128996"/>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="OutPauseMenu" ID="{2987396D-222D-4B27-A23D-F2A7ECE32AD1}"/>
+														<CustomState Name="" ID="{0F87BF7B-9C04-4E31-9A36-BC0DA0F5CAAB}" ShortID="763390892"/>
+													</CustomState>
+												</CustomStateList>
+											</StateInfo>
 											<TransitionList>
 												<MusicTransition Name="Root" ID="{7449736E-DA80-4EAD-96E3-1045A34583BE}">
 													<PropertyList>
@@ -408,7 +540,7 @@
 												</ObjectList>
 											</ObjectLists>
 										</MusicTrack>
-										<MusicTrack Name="WaterDrum_Intro_01_02" ID="{F83D8018-B68F-4AA2-84EF-0D6C2E174B0F}" ShortID="271460602">
+										<MusicTrack Name="WaterDrum" ID="{F83D8018-B68F-4AA2-84EF-0D6C2E174B0F}" ShortID="271460602">
 											<PropertyList>
 												<Property Name="MusicTrackType" Type="int16" Value="3"/>
 											</PropertyList>
@@ -432,6 +564,42 @@
 													</MediaIDList>
 												</AudioFileSource>
 											</ChildrenList>
+											<StateInfo>
+												<StateGroupList>
+													<StateGroupInfo>
+														<StateGroupRef Name="Pause_Menu" ID="{DCC4536A-E318-48C6-AA1F-DF8580335888}"/>
+													</StateGroupInfo>
+													<StateGroupInfo>
+														<StateGroupRef Name="Cooking_Menu" ID="{480DC1F1-C4C9-4C3D-BC13-612628739BAC}"/>
+													</StateGroupInfo>
+												</StateGroupList>
+												<CustomStateList>
+													<CustomState>
+														<StateRef Name="OutCookingMenu" ID="{F48474B2-E070-43CA-9C12-219BE4A7071C}"/>
+														<CustomState Name="" ID="{B403F62C-2152-4B23-8F66-CF8E737C1E29}" ShortID="890257014"/>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="InCookingMenu" ID="{BD061B15-9DAF-4A28-A041-2AF277545DA4}"/>
+														<CustomState Name="" ID="{58DAB561-5BED-47A1-BE84-6236A494A340}" ShortID="1013406820">
+															<PropertyList>
+																<Property Name="Volume" Type="Real64" Value="-6"/>
+															</PropertyList>
+														</CustomState>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="InPauseMenu" ID="{59CFFA60-D92A-4A95-BEC1-15870A188413}"/>
+														<CustomState Name="" ID="{29FF0178-6A2B-496D-9EE0-E21A301D66AC}" ShortID="943575088">
+															<PropertyList>
+																<Property Name="Volume" Type="Real64" Value="-6"/>
+															</PropertyList>
+														</CustomState>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="OutPauseMenu" ID="{2987396D-222D-4B27-A23D-F2A7ECE32AD1}"/>
+														<CustomState Name="" ID="{025B69C7-36C3-4E9C-9CE6-978F8708C57A}" ShortID="701140299"/>
+													</CustomState>
+												</CustomStateList>
+											</StateInfo>
 											<TransitionList>
 												<MusicTransition Name="Root" ID="{54F12CFA-410D-4AB5-B79D-9479D3DA7843}">
 													<PropertyList>
@@ -525,9 +693,14 @@
 												</ObjectList>
 											</ObjectLists>
 										</MusicTrack>
-										<MusicTrack Name="WoodPerc_Intro_01_02" ID="{E442939D-4556-4931-B9A9-EDA0754642EB}" ShortID="170487605">
+										<MusicTrack Name="WoodPerc" ID="{E442939D-4556-4931-B9A9-EDA0754642EB}" ShortID="170487605">
 											<PropertyList>
 												<Property Name="MusicTrackType" Type="int16" Value="3"/>
+												<Property Name="Volume" Type="Real64">
+													<ValueList>
+														<Value>-2</Value>
+													</ValueList>
+												</Property>
 											</PropertyList>
 											<ReferenceList>
 												<Reference Name="DefaultSwitchOrState">
@@ -549,6 +722,34 @@
 													</MediaIDList>
 												</AudioFileSource>
 											</ChildrenList>
+											<StateInfo>
+												<StateGroupList>
+													<StateGroupInfo>
+														<StateGroupRef Name="Pause_Menu" ID="{DCC4536A-E318-48C6-AA1F-DF8580335888}"/>
+													</StateGroupInfo>
+													<StateGroupInfo>
+														<StateGroupRef Name="Cooking_Menu" ID="{480DC1F1-C4C9-4C3D-BC13-612628739BAC}"/>
+													</StateGroupInfo>
+												</StateGroupList>
+												<CustomStateList>
+													<CustomState>
+														<StateRef Name="OutCookingMenu" ID="{F48474B2-E070-43CA-9C12-219BE4A7071C}"/>
+														<CustomState Name="" ID="{6D298294-461C-47CD-8A75-27D62A783FDF}" ShortID="102567067"/>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="InCookingMenu" ID="{BD061B15-9DAF-4A28-A041-2AF277545DA4}"/>
+														<CustomState Name="" ID="{278F49BA-0E47-409B-A67A-F0406A395BB3}" ShortID="215948290"/>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="InPauseMenu" ID="{59CFFA60-D92A-4A95-BEC1-15870A188413}"/>
+														<CustomState Name="" ID="{B9CCF993-E747-4054-8C58-963A62351828}" ShortID="491345954"/>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="OutPauseMenu" ID="{2987396D-222D-4B27-A23D-F2A7ECE32AD1}"/>
+														<CustomState Name="" ID="{7855F798-09FE-46F1-AF06-9B3075FFADBD}" ShortID="797111945"/>
+													</CustomState>
+												</CustomStateList>
+											</StateInfo>
 											<TransitionList>
 												<MusicTransition Name="Root" ID="{19ACC902-F078-4D37-81B0-06ACFBD773E7}">
 													<PropertyList>
@@ -630,7 +831,7 @@
 												</ObjectList>
 											</ObjectLists>
 										</MusicTrack>
-										<MusicTrack Name="Xylopone_Intro_01_02" ID="{FE3EAA1A-3833-4A7F-A4D5-3A869ECA6FEF}" ShortID="878443430">
+										<MusicTrack Name="Xylophone" ID="{FE3EAA1A-3833-4A7F-A4D5-3A869ECA6FEF}" ShortID="878443430">
 											<PropertyList>
 												<Property Name="MusicTrackType" Type="int16" Value="3"/>
 											</PropertyList>
@@ -654,6 +855,42 @@
 													</MediaIDList>
 												</AudioFileSource>
 											</ChildrenList>
+											<StateInfo>
+												<StateGroupList>
+													<StateGroupInfo>
+														<StateGroupRef Name="Pause_Menu" ID="{DCC4536A-E318-48C6-AA1F-DF8580335888}"/>
+													</StateGroupInfo>
+													<StateGroupInfo>
+														<StateGroupRef Name="Cooking_Menu" ID="{480DC1F1-C4C9-4C3D-BC13-612628739BAC}"/>
+													</StateGroupInfo>
+												</StateGroupList>
+												<CustomStateList>
+													<CustomState>
+														<StateRef Name="OutCookingMenu" ID="{F48474B2-E070-43CA-9C12-219BE4A7071C}"/>
+														<CustomState Name="" ID="{25068A79-829B-4B0D-AA28-303F178526C6}" ShortID="280913260"/>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="InCookingMenu" ID="{BD061B15-9DAF-4A28-A041-2AF277545DA4}"/>
+														<CustomState Name="" ID="{8F8ABBF4-2BEC-4C60-8ADE-FB30FF78B840}" ShortID="31001773">
+															<PropertyList>
+																<Property Name="Volume" Type="Real64" Value="-6"/>
+															</PropertyList>
+														</CustomState>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="InPauseMenu" ID="{59CFFA60-D92A-4A95-BEC1-15870A188413}"/>
+														<CustomState Name="" ID="{D7ACCA93-F803-4000-9104-07D7D449680C}" ShortID="386076479">
+															<PropertyList>
+																<Property Name="Volume" Type="Real64" Value="-6"/>
+															</PropertyList>
+														</CustomState>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="OutPauseMenu" ID="{2987396D-222D-4B27-A23D-F2A7ECE32AD1}"/>
+														<CustomState Name="" ID="{5AC8CB6F-0AB1-4315-BDFA-B5203D8ADE64}" ShortID="122577556"/>
+													</CustomState>
+												</CustomStateList>
+											</StateInfo>
 											<TransitionList>
 												<MusicTransition Name="Root" ID="{2EDEF451-1433-41D2-922E-50DEB7AB9B94}">
 													<PropertyList>
@@ -747,7 +984,7 @@
 												</ObjectList>
 											</ObjectLists>
 										</MusicTrack>
-										<MusicTrack Name="Piano_Melo_01" ID="{46A5B09A-76EB-4795-8DC9-C90FC8341AC5}" ShortID="600044828">
+										<MusicTrack Name="Piano_Melo" ID="{46A5B09A-76EB-4795-8DC9-C90FC8341AC5}" ShortID="600044828">
 											<PropertyList>
 												<Property Name="MusicTrackType" Type="int16" Value="1"/>
 											</PropertyList>
@@ -772,6 +1009,42 @@
 													</MediaIDList>
 												</AudioFileSource>
 											</ChildrenList>
+											<StateInfo>
+												<StateGroupList>
+													<StateGroupInfo>
+														<StateGroupRef Name="Pause_Menu" ID="{DCC4536A-E318-48C6-AA1F-DF8580335888}"/>
+													</StateGroupInfo>
+													<StateGroupInfo>
+														<StateGroupRef Name="Cooking_Menu" ID="{480DC1F1-C4C9-4C3D-BC13-612628739BAC}"/>
+													</StateGroupInfo>
+												</StateGroupList>
+												<CustomStateList>
+													<CustomState>
+														<StateRef Name="OutCookingMenu" ID="{F48474B2-E070-43CA-9C12-219BE4A7071C}"/>
+														<CustomState Name="" ID="{F334E6BB-6D14-4B9F-B808-7B33883C446C}" ShortID="477614978"/>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="InCookingMenu" ID="{BD061B15-9DAF-4A28-A041-2AF277545DA4}"/>
+														<CustomState Name="" ID="{73B025C6-392F-412D-9018-8E4E1B5884CF}" ShortID="1025863798">
+															<PropertyList>
+																<Property Name="Volume" Type="Real64" Value="-15"/>
+															</PropertyList>
+														</CustomState>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="InPauseMenu" ID="{59CFFA60-D92A-4A95-BEC1-15870A188413}"/>
+														<CustomState Name="" ID="{15E534F9-9507-44E3-B5F3-C4FFF37D087A}" ShortID="196148727">
+															<PropertyList>
+																<Property Name="Volume" Type="Real64" Value="-15"/>
+															</PropertyList>
+														</CustomState>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="OutPauseMenu" ID="{2987396D-222D-4B27-A23D-F2A7ECE32AD1}"/>
+														<CustomState Name="" ID="{FB99164D-FDB8-43E4-A92A-B6B5758C15E4}" ShortID="184383405"/>
+													</CustomState>
+												</CustomStateList>
+											</StateInfo>
 											<TransitionList>
 												<MusicTransition Name="Root" ID="{B62901F2-1D34-48B4-A4C8-0F1BABBBF5D7}">
 													<PropertyList>
@@ -853,7 +1126,7 @@
 												</ObjectList>
 											</ObjectLists>
 										</MusicTrack>
-										<MusicTrack Name="WoodBlock_01_02" ID="{5D38955C-6255-4137-888D-C52E01965E82}" ShortID="1027643830">
+										<MusicTrack Name="WoodBlock" ID="{5D38955C-6255-4137-888D-C52E01965E82}" ShortID="1027643830">
 											<PropertyList>
 												<Property Name="MusicTrackType" Type="int16" Value="3"/>
 											</PropertyList>
@@ -877,6 +1150,42 @@
 													</MediaIDList>
 												</AudioFileSource>
 											</ChildrenList>
+											<StateInfo>
+												<StateGroupList>
+													<StateGroupInfo>
+														<StateGroupRef Name="Pause_Menu" ID="{DCC4536A-E318-48C6-AA1F-DF8580335888}"/>
+													</StateGroupInfo>
+													<StateGroupInfo>
+														<StateGroupRef Name="Cooking_Menu" ID="{480DC1F1-C4C9-4C3D-BC13-612628739BAC}"/>
+													</StateGroupInfo>
+												</StateGroupList>
+												<CustomStateList>
+													<CustomState>
+														<StateRef Name="OutCookingMenu" ID="{F48474B2-E070-43CA-9C12-219BE4A7071C}"/>
+														<CustomState Name="" ID="{DE56E489-63A5-4109-A66E-AE8FB596B872}" ShortID="35796594"/>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="InCookingMenu" ID="{BD061B15-9DAF-4A28-A041-2AF277545DA4}"/>
+														<CustomState Name="" ID="{13065CD1-8569-4770-BA96-63FE49CC2124}" ShortID="821866725">
+															<PropertyList>
+																<Property Name="Volume" Type="Real64" Value="-15"/>
+															</PropertyList>
+														</CustomState>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="InPauseMenu" ID="{59CFFA60-D92A-4A95-BEC1-15870A188413}"/>
+														<CustomState Name="" ID="{F51FC96E-833A-4D10-9698-AF75BD0C6540}" ShortID="592571274">
+															<PropertyList>
+																<Property Name="Volume" Type="Real64" Value="-15"/>
+															</PropertyList>
+														</CustomState>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="OutPauseMenu" ID="{2987396D-222D-4B27-A23D-F2A7ECE32AD1}"/>
+														<CustomState Name="" ID="{3027F53D-1CEC-47B2-934E-8D709FFED168}" ShortID="986270072"/>
+													</CustomState>
+												</CustomStateList>
+											</StateInfo>
 											<TransitionList>
 												<MusicTransition Name="Root" ID="{65737733-2650-42F3-BD6C-9A77F6101DE3}">
 													<PropertyList>
@@ -958,7 +1267,7 @@
 												</ObjectList>
 											</ObjectLists>
 										</MusicTrack>
-										<MusicTrack Name="WoodStick_01_02" ID="{ACCE44A9-F68A-4545-9702-62A8D2B12C9D}" ShortID="201725496">
+										<MusicTrack Name="WoodStick" ID="{ACCE44A9-F68A-4545-9702-62A8D2B12C9D}" ShortID="201725496">
 											<PropertyList>
 												<Property Name="MusicTrackType" Type="int16" Value="3"/>
 											</PropertyList>
@@ -982,6 +1291,42 @@
 													</MediaIDList>
 												</AudioFileSource>
 											</ChildrenList>
+											<StateInfo>
+												<StateGroupList>
+													<StateGroupInfo>
+														<StateGroupRef Name="Pause_Menu" ID="{DCC4536A-E318-48C6-AA1F-DF8580335888}"/>
+													</StateGroupInfo>
+													<StateGroupInfo>
+														<StateGroupRef Name="Cooking_Menu" ID="{480DC1F1-C4C9-4C3D-BC13-612628739BAC}"/>
+													</StateGroupInfo>
+												</StateGroupList>
+												<CustomStateList>
+													<CustomState>
+														<StateRef Name="OutCookingMenu" ID="{F48474B2-E070-43CA-9C12-219BE4A7071C}"/>
+														<CustomState Name="" ID="{E0597ED9-1FFD-41A1-B72E-22522D75D936}" ShortID="29806611"/>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="InCookingMenu" ID="{BD061B15-9DAF-4A28-A041-2AF277545DA4}"/>
+														<CustomState Name="" ID="{1BED96C4-4C80-458E-B831-34C245CC7293}" ShortID="96618007">
+															<PropertyList>
+																<Property Name="Volume" Type="Real64" Value="-15"/>
+															</PropertyList>
+														</CustomState>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="InPauseMenu" ID="{59CFFA60-D92A-4A95-BEC1-15870A188413}"/>
+														<CustomState Name="" ID="{C79C0A03-9DA0-4E7C-97A7-610AB434F954}" ShortID="949000293">
+															<PropertyList>
+																<Property Name="Volume" Type="Real64" Value="-15"/>
+															</PropertyList>
+														</CustomState>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="OutPauseMenu" ID="{2987396D-222D-4B27-A23D-F2A7ECE32AD1}"/>
+														<CustomState Name="" ID="{FCFEC40C-5A08-4698-9AA1-09215CDE4DCF}" ShortID="814718912"/>
+													</CustomState>
+												</CustomStateList>
+											</StateInfo>
 											<TransitionList>
 												<MusicTransition Name="Root" ID="{C0F88820-1E75-46F9-9171-14EE835BB187}">
 													<PropertyList>
@@ -1063,9 +1408,14 @@
 												</ObjectList>
 											</ObjectLists>
 										</MusicTrack>
-										<MusicTrack Name="Piano_Bass_02_A" ID="{B1B666D3-6499-47E2-B50B-7C41E4AA1411}" ShortID="1037218483">
+										<MusicTrack Name="Piano_Bass" ID="{B1B666D3-6499-47E2-B50B-7C41E4AA1411}" ShortID="1037218483">
 											<PropertyList>
 												<Property Name="MusicTrackType" Type="int16" Value="1"/>
+												<Property Name="Volume" Type="Real64">
+													<ValueList>
+														<Value>2</Value>
+													</ValueList>
+												</Property>
 											</PropertyList>
 											<ReferenceList>
 												<Reference Name="OutputBus">
@@ -1116,6 +1466,44 @@
 													</MediaIDList>
 												</AudioFileSource>
 											</ChildrenList>
+											<StateInfo>
+												<StateGroupList>
+													<StateGroupInfo>
+														<StateGroupRef Name="Pause_Menu" ID="{DCC4536A-E318-48C6-AA1F-DF8580335888}"/>
+													</StateGroupInfo>
+													<StateGroupInfo>
+														<StateGroupRef Name="Cooking_Menu" ID="{480DC1F1-C4C9-4C3D-BC13-612628739BAC}"/>
+													</StateGroupInfo>
+												</StateGroupList>
+												<CustomStateList>
+													<CustomState>
+														<StateRef Name="OutCookingMenu" ID="{F48474B2-E070-43CA-9C12-219BE4A7071C}"/>
+														<CustomState Name="" ID="{24C8A21B-046D-4846-B78D-D86BA12BED52}" ShortID="510228529"/>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="InCookingMenu" ID="{BD061B15-9DAF-4A28-A041-2AF277545DA4}"/>
+														<CustomState Name="" ID="{FE5460E7-1843-4DD6-B3A2-0B70CDB601A3}" ShortID="357579380">
+															<PropertyList>
+																<Property Name="Highpass" Type="int16" Value="45"/>
+																<Property Name="Volume" Type="Real64" Value="-3"/>
+															</PropertyList>
+														</CustomState>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="InPauseMenu" ID="{59CFFA60-D92A-4A95-BEC1-15870A188413}"/>
+														<CustomState Name="" ID="{2BDC8F98-EB67-43B0-B077-4670AE68B58F}" ShortID="776369038">
+															<PropertyList>
+																<Property Name="Highpass" Type="int16" Value="45"/>
+																<Property Name="Volume" Type="Real64" Value="-3"/>
+															</PropertyList>
+														</CustomState>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="OutPauseMenu" ID="{2987396D-222D-4B27-A23D-F2A7ECE32AD1}"/>
+														<CustomState Name="" ID="{F511EDA0-4ABB-4B8B-A5B1-AAC66A0C97E0}" ShortID="890604925"/>
+													</CustomState>
+												</CustomStateList>
+											</StateInfo>
 											<TransitionList>
 												<MusicTransition Name="Root" ID="{1D0383E7-7854-4F75-88CF-F5D8D35DAAB8}">
 													<PropertyList>
@@ -1368,7 +1756,14 @@
 										</Reference>
 									</ReferenceList>
 									<ChildrenList>
-										<MusicTrack Name="Piano_Bass_Intro_01" ID="{57636069-BB35-4BF2-B38E-33D19BF6C51F}" ShortID="320416044">
+										<MusicTrack Name="Piano_Bass" ID="{57636069-BB35-4BF2-B38E-33D19BF6C51F}" ShortID="320416044">
+											<PropertyList>
+												<Property Name="Volume" Type="Real64">
+													<ValueList>
+														<Value>2</Value>
+													</ValueList>
+												</Property>
+											</PropertyList>
 											<ReferenceList>
 												<Reference Name="OutputBus">
 													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{85B5C199-8628-4DDB-B756-DA8917395816}"/>
@@ -1383,6 +1778,44 @@
 													</MediaIDList>
 												</AudioFileSource>
 											</ChildrenList>
+											<StateInfo>
+												<StateGroupList>
+													<StateGroupInfo>
+														<StateGroupRef Name="Pause_Menu" ID="{DCC4536A-E318-48C6-AA1F-DF8580335888}"/>
+													</StateGroupInfo>
+													<StateGroupInfo>
+														<StateGroupRef Name="Cooking_Menu" ID="{480DC1F1-C4C9-4C3D-BC13-612628739BAC}"/>
+													</StateGroupInfo>
+												</StateGroupList>
+												<CustomStateList>
+													<CustomState>
+														<StateRef Name="OutCookingMenu" ID="{F48474B2-E070-43CA-9C12-219BE4A7071C}"/>
+														<CustomState Name="" ID="{7D027FBE-531D-486A-928D-22DBC80A3B14}" ShortID="961726182"/>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="InCookingMenu" ID="{BD061B15-9DAF-4A28-A041-2AF277545DA4}"/>
+														<CustomState Name="" ID="{6EA2BCE5-D59A-4675-A34E-B31453567B16}" ShortID="950347869">
+															<PropertyList>
+																<Property Name="Highpass" Type="int16" Value="45"/>
+																<Property Name="Volume" Type="Real64" Value="-3"/>
+															</PropertyList>
+														</CustomState>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="InPauseMenu" ID="{59CFFA60-D92A-4A95-BEC1-15870A188413}"/>
+														<CustomState Name="" ID="{A034E3C9-DE30-4396-B163-434CB8BBFA31}" ShortID="403767604">
+															<PropertyList>
+																<Property Name="Highpass" Type="int16" Value="45"/>
+																<Property Name="Volume" Type="Real64" Value="-3"/>
+															</PropertyList>
+														</CustomState>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="OutPauseMenu" ID="{2987396D-222D-4B27-A23D-F2A7ECE32AD1}"/>
+														<CustomState Name="" ID="{8278EA42-8BA5-4D8C-AAAC-745C647C9536}" ShortID="908357280"/>
+													</CustomState>
+												</CustomStateList>
+											</StateInfo>
 											<TransitionList>
 												<MusicTransition Name="Root" ID="{3FD3F235-A11C-489A-B38F-D7B4318BF6A1}">
 													<PropertyList>
@@ -1418,7 +1851,7 @@
 												</ObjectList>
 											</ObjectLists>
 										</MusicTrack>
-										<MusicTrack Name="Instrumental_Section_Intro" ID="{F27F0CF3-A68C-4248-9974-5B6BD7312FA2}" ShortID="22074826">
+										<MusicTrack Name="Base_Instrumentale" ID="{F27F0CF3-A68C-4248-9974-5B6BD7312FA2}" ShortID="22074826">
 											<ReferenceList>
 												<Reference Name="OutputBus">
 													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{85B5C199-8628-4DDB-B756-DA8917395816}"/>
@@ -1433,12 +1866,47 @@
 													</MediaIDList>
 												</AudioFileSource>
 											</ChildrenList>
+											<StateInfo>
+												<StateGroupList>
+													<StateGroupInfo>
+														<StateGroupRef Name="Pause_Menu" ID="{DCC4536A-E318-48C6-AA1F-DF8580335888}"/>
+													</StateGroupInfo>
+													<StateGroupInfo>
+														<StateGroupRef Name="Cooking_Menu" ID="{480DC1F1-C4C9-4C3D-BC13-612628739BAC}"/>
+													</StateGroupInfo>
+												</StateGroupList>
+												<CustomStateList>
+													<CustomState>
+														<StateRef Name="OutCookingMenu" ID="{F48474B2-E070-43CA-9C12-219BE4A7071C}"/>
+														<CustomState Name="" ID="{8F5C97B4-358C-4FB9-95FD-937E582C47E6}" ShortID="430517343"/>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="InCookingMenu" ID="{BD061B15-9DAF-4A28-A041-2AF277545DA4}"/>
+														<CustomState Name="" ID="{7B62A8B1-95F8-43CE-8A2B-87BB6C68077D}" ShortID="469529365">
+															<PropertyList>
+																<Property Name="Volume" Type="Real64" Value="-10"/>
+															</PropertyList>
+														</CustomState>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="InPauseMenu" ID="{59CFFA60-D92A-4A95-BEC1-15870A188413}"/>
+														<CustomState Name="" ID="{AB693FB8-C53F-4A43-813D-7486238AE525}" ShortID="894843344">
+															<PropertyList>
+																<Property Name="Volume" Type="Real64" Value="-10"/>
+															</PropertyList>
+														</CustomState>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="OutPauseMenu" ID="{2987396D-222D-4B27-A23D-F2A7ECE32AD1}"/>
+														<CustomState Name="" ID="{634373FF-2C09-4FFD-8068-1D8CC8B76754}" ShortID="281058421"/>
+													</CustomState>
+												</CustomStateList>
+											</StateInfo>
 											<TransitionList>
 												<MusicTransition Name="Root" ID="{204363B5-985A-470A-8517-14894A48C02A}">
 													<PropertyList>
 														<Property Name="IsFolder" Type="bool" Value="True"/>
 													</PropertyList>
-													<ReferenceList/>
 													<TransitionInfo/>
 												</MusicTransition>
 											</TransitionList>
@@ -1469,7 +1937,7 @@
 												</ObjectList>
 											</ObjectLists>
 										</MusicTrack>
-										<MusicTrack Name="Balafon_Intro_01_02" ID="{C4E88020-11C7-4D12-8216-C239F030982D}" ShortID="74561313">
+										<MusicTrack Name="Balafon" ID="{C4E88020-11C7-4D12-8216-C239F030982D}" ShortID="74561313">
 											<PropertyList>
 												<Property Name="MusicTrackType" Type="int16" Value="3"/>
 											</PropertyList>
@@ -1493,6 +1961,34 @@
 													</MediaIDList>
 												</AudioFileSource>
 											</ChildrenList>
+											<StateInfo>
+												<StateGroupList>
+													<StateGroupInfo>
+														<StateGroupRef Name="Pause_Menu" ID="{DCC4536A-E318-48C6-AA1F-DF8580335888}"/>
+													</StateGroupInfo>
+													<StateGroupInfo>
+														<StateGroupRef Name="Cooking_Menu" ID="{480DC1F1-C4C9-4C3D-BC13-612628739BAC}"/>
+													</StateGroupInfo>
+												</StateGroupList>
+												<CustomStateList>
+													<CustomState>
+														<StateRef Name="OutCookingMenu" ID="{F48474B2-E070-43CA-9C12-219BE4A7071C}"/>
+														<CustomState Name="" ID="{4317EEE2-2F29-4612-B83D-B8C915A22847}" ShortID="1050256984"/>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="InCookingMenu" ID="{BD061B15-9DAF-4A28-A041-2AF277545DA4}"/>
+														<CustomState Name="" ID="{800140E4-EBB9-420D-B824-EE86ADD1AB68}" ShortID="231317728"/>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="InPauseMenu" ID="{59CFFA60-D92A-4A95-BEC1-15870A188413}"/>
+														<CustomState Name="" ID="{173EA683-12C3-43E8-A0B4-76AA8E64BCB5}" ShortID="639310529"/>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="OutPauseMenu" ID="{2987396D-222D-4B27-A23D-F2A7ECE32AD1}"/>
+														<CustomState Name="" ID="{9BCB3E74-4C5A-4F33-9C61-8AA80B393CAC}" ShortID="549345849"/>
+													</CustomState>
+												</CustomStateList>
+											</StateInfo>
 											<TransitionList>
 												<MusicTransition Name="Root" ID="{DDDFF0BB-0D53-41CC-9184-3C1F7DCF3B46}">
 													<PropertyList>
@@ -1574,9 +2070,14 @@
 												</ObjectList>
 											</ObjectLists>
 										</MusicTrack>
-										<MusicTrack Name="Castagnette_Intro_01_02" ID="{1E5E0A50-3458-438E-951A-D29EBDEB5135}" ShortID="482802432">
+										<MusicTrack Name="Castagnette" ID="{1E5E0A50-3458-438E-951A-D29EBDEB5135}" ShortID="482802432">
 											<PropertyList>
 												<Property Name="MusicTrackType" Type="int16" Value="3"/>
+												<Property Name="Volume" Type="Real64">
+													<ValueList>
+														<Value>-5</Value>
+													</ValueList>
+												</Property>
 											</PropertyList>
 											<ReferenceList>
 												<Reference Name="DefaultSwitchOrState">
@@ -1598,6 +2099,34 @@
 													</MediaIDList>
 												</AudioFileSource>
 											</ChildrenList>
+											<StateInfo>
+												<StateGroupList>
+													<StateGroupInfo>
+														<StateGroupRef Name="Pause_Menu" ID="{DCC4536A-E318-48C6-AA1F-DF8580335888}"/>
+													</StateGroupInfo>
+													<StateGroupInfo>
+														<StateGroupRef Name="Cooking_Menu" ID="{480DC1F1-C4C9-4C3D-BC13-612628739BAC}"/>
+													</StateGroupInfo>
+												</StateGroupList>
+												<CustomStateList>
+													<CustomState>
+														<StateRef Name="OutCookingMenu" ID="{F48474B2-E070-43CA-9C12-219BE4A7071C}"/>
+														<CustomState Name="" ID="{A3C9D4A0-1178-4D0F-B5DB-59787BE9E232}" ShortID="804024141"/>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="InCookingMenu" ID="{BD061B15-9DAF-4A28-A041-2AF277545DA4}"/>
+														<CustomState Name="" ID="{956658C4-289D-41A4-B83C-CBF67AE56A4B}" ShortID="189629479"/>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="InPauseMenu" ID="{59CFFA60-D92A-4A95-BEC1-15870A188413}"/>
+														<CustomState Name="" ID="{56C4A4F0-B3DF-4FA3-B621-EA4893316A5D}" ShortID="762575810"/>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="OutPauseMenu" ID="{2987396D-222D-4B27-A23D-F2A7ECE32AD1}"/>
+														<CustomState Name="" ID="{AD993122-4A0F-4605-8506-BF7ADED841DB}" ShortID="259470075"/>
+													</CustomState>
+												</CustomStateList>
+											</StateInfo>
 											<TransitionList>
 												<MusicTransition Name="Root" ID="{AF641354-A3FF-44E0-B401-8E5C0AEC8213}">
 													<PropertyList>
@@ -1679,9 +2208,14 @@
 												</ObjectList>
 											</ObjectLists>
 										</MusicTrack>
-										<MusicTrack Name="LogDrum_Intro_01_02" ID="{E50C9703-51B8-41DD-973C-2F9B09764564}" ShortID="291771395">
+										<MusicTrack Name="LogDrum" ID="{E50C9703-51B8-41DD-973C-2F9B09764564}" ShortID="291771395">
 											<PropertyList>
 												<Property Name="MusicTrackType" Type="int16" Value="3"/>
+												<Property Name="Volume" Type="Real64">
+													<ValueList>
+														<Value>3</Value>
+													</ValueList>
+												</Property>
 											</PropertyList>
 											<ReferenceList>
 												<Reference Name="DefaultSwitchOrState">
@@ -1703,6 +2237,34 @@
 													</MediaIDList>
 												</AudioFileSource>
 											</ChildrenList>
+											<StateInfo>
+												<StateGroupList>
+													<StateGroupInfo>
+														<StateGroupRef Name="Pause_Menu" ID="{DCC4536A-E318-48C6-AA1F-DF8580335888}"/>
+													</StateGroupInfo>
+													<StateGroupInfo>
+														<StateGroupRef Name="Cooking_Menu" ID="{480DC1F1-C4C9-4C3D-BC13-612628739BAC}"/>
+													</StateGroupInfo>
+												</StateGroupList>
+												<CustomStateList>
+													<CustomState>
+														<StateRef Name="OutCookingMenu" ID="{F48474B2-E070-43CA-9C12-219BE4A7071C}"/>
+														<CustomState Name="" ID="{D213091D-9A44-4EE1-9188-AE95F3CBDF25}" ShortID="1036065244"/>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="InCookingMenu" ID="{BD061B15-9DAF-4A28-A041-2AF277545DA4}"/>
+														<CustomState Name="" ID="{CAB6590D-FA4B-451E-8F37-9896253A7EF5}" ShortID="39384186"/>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="InPauseMenu" ID="{59CFFA60-D92A-4A95-BEC1-15870A188413}"/>
+														<CustomState Name="" ID="{BCE649E9-3FA8-41C9-8097-E990176DE1C4}" ShortID="244712440"/>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="OutPauseMenu" ID="{2987396D-222D-4B27-A23D-F2A7ECE32AD1}"/>
+														<CustomState Name="" ID="{E64A2F6F-7D67-43A9-AF32-1674730942BB}" ShortID="482855112"/>
+													</CustomState>
+												</CustomStateList>
+											</StateInfo>
 											<TransitionList>
 												<MusicTransition Name="Root" ID="{4BB6670D-EEA0-4322-9F4C-E0607E5FF7D3}">
 													<PropertyList>
@@ -1784,7 +2346,7 @@
 												</ObjectList>
 											</ObjectLists>
 										</MusicTrack>
-										<MusicTrack Name="WaterDrum_Intro_01_02" ID="{35201FC1-2450-4ED7-9AE6-566828ACBEDC}" ShortID="489833579">
+										<MusicTrack Name="WaterDrum" ID="{35201FC1-2450-4ED7-9AE6-566828ACBEDC}" ShortID="489833579">
 											<PropertyList>
 												<Property Name="MusicTrackType" Type="int16" Value="3"/>
 											</PropertyList>
@@ -1808,6 +2370,42 @@
 													</MediaIDList>
 												</AudioFileSource>
 											</ChildrenList>
+											<StateInfo>
+												<StateGroupList>
+													<StateGroupInfo>
+														<StateGroupRef Name="Pause_Menu" ID="{DCC4536A-E318-48C6-AA1F-DF8580335888}"/>
+													</StateGroupInfo>
+													<StateGroupInfo>
+														<StateGroupRef Name="Cooking_Menu" ID="{480DC1F1-C4C9-4C3D-BC13-612628739BAC}"/>
+													</StateGroupInfo>
+												</StateGroupList>
+												<CustomStateList>
+													<CustomState>
+														<StateRef Name="OutCookingMenu" ID="{F48474B2-E070-43CA-9C12-219BE4A7071C}"/>
+														<CustomState Name="" ID="{CC22718B-1918-4262-B097-5A9BBD7A3CA0}" ShortID="942416946"/>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="InCookingMenu" ID="{BD061B15-9DAF-4A28-A041-2AF277545DA4}"/>
+														<CustomState Name="" ID="{6149BA18-FF4B-4390-BC29-0131BEFBB07A}" ShortID="607325910">
+															<PropertyList>
+																<Property Name="Volume" Type="Real64" Value="-6"/>
+															</PropertyList>
+														</CustomState>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="InPauseMenu" ID="{59CFFA60-D92A-4A95-BEC1-15870A188413}"/>
+														<CustomState Name="" ID="{D3F317FC-C4C6-4E6F-A968-D499B04C9534}" ShortID="1055466685">
+															<PropertyList>
+																<Property Name="Volume" Type="Real64" Value="-6"/>
+															</PropertyList>
+														</CustomState>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="OutPauseMenu" ID="{2987396D-222D-4B27-A23D-F2A7ECE32AD1}"/>
+														<CustomState Name="" ID="{6AB280CB-DAA4-4CAD-ABAE-EA5FB9F5D279}" ShortID="791495857"/>
+													</CustomState>
+												</CustomStateList>
+											</StateInfo>
 											<TransitionList>
 												<MusicTransition Name="Root" ID="{6CF67336-94D0-40BC-A129-7F2AB721B898}">
 													<PropertyList>
@@ -1901,9 +2499,14 @@
 												</ObjectList>
 											</ObjectLists>
 										</MusicTrack>
-										<MusicTrack Name="WoodPerc_Intro_01_02" ID="{8D11FCEE-67A7-4686-8EE5-6CC8DB3D1F6E}" ShortID="201711434">
+										<MusicTrack Name="WoodPerc" ID="{8D11FCEE-67A7-4686-8EE5-6CC8DB3D1F6E}" ShortID="201711434">
 											<PropertyList>
 												<Property Name="MusicTrackType" Type="int16" Value="3"/>
+												<Property Name="Volume" Type="Real64">
+													<ValueList>
+														<Value>-2</Value>
+													</ValueList>
+												</Property>
 											</PropertyList>
 											<ReferenceList>
 												<Reference Name="DefaultSwitchOrState">
@@ -1925,6 +2528,34 @@
 													</MediaIDList>
 												</AudioFileSource>
 											</ChildrenList>
+											<StateInfo>
+												<StateGroupList>
+													<StateGroupInfo>
+														<StateGroupRef Name="Pause_Menu" ID="{DCC4536A-E318-48C6-AA1F-DF8580335888}"/>
+													</StateGroupInfo>
+													<StateGroupInfo>
+														<StateGroupRef Name="Cooking_Menu" ID="{480DC1F1-C4C9-4C3D-BC13-612628739BAC}"/>
+													</StateGroupInfo>
+												</StateGroupList>
+												<CustomStateList>
+													<CustomState>
+														<StateRef Name="OutCookingMenu" ID="{F48474B2-E070-43CA-9C12-219BE4A7071C}"/>
+														<CustomState Name="" ID="{86ED7C44-74F5-4251-BFD7-A16306CFFE45}" ShortID="100228208"/>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="InCookingMenu" ID="{BD061B15-9DAF-4A28-A041-2AF277545DA4}"/>
+														<CustomState Name="" ID="{19ABEB60-034E-465A-A5B4-4B0E478AAF59}" ShortID="629809276"/>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="InPauseMenu" ID="{59CFFA60-D92A-4A95-BEC1-15870A188413}"/>
+														<CustomState Name="" ID="{1FF0BA1B-DD64-445C-8C25-BEE14A6CBA7E}" ShortID="415237119"/>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="OutPauseMenu" ID="{2987396D-222D-4B27-A23D-F2A7ECE32AD1}"/>
+														<CustomState Name="" ID="{4D4AC66F-FCA5-4644-A1B2-1C54A5BB894E}" ShortID="31907217"/>
+													</CustomState>
+												</CustomStateList>
+											</StateInfo>
 											<TransitionList>
 												<MusicTransition Name="Root" ID="{F92C18F2-8D2F-44CB-A11B-2B0CD556CBEF}">
 													<PropertyList>
@@ -2006,7 +2637,7 @@
 												</ObjectList>
 											</ObjectLists>
 										</MusicTrack>
-										<MusicTrack Name="Xylopone_Intro_01_02" ID="{070F9BA6-4B69-48AA-A63F-CAE5D9969993}" ShortID="415591585">
+										<MusicTrack Name="Xylophone" ID="{070F9BA6-4B69-48AA-A63F-CAE5D9969993}" ShortID="415591585">
 											<PropertyList>
 												<Property Name="MusicTrackType" Type="int16" Value="3"/>
 											</PropertyList>
@@ -2030,6 +2661,42 @@
 													</MediaIDList>
 												</AudioFileSource>
 											</ChildrenList>
+											<StateInfo>
+												<StateGroupList>
+													<StateGroupInfo>
+														<StateGroupRef Name="Pause_Menu" ID="{DCC4536A-E318-48C6-AA1F-DF8580335888}"/>
+													</StateGroupInfo>
+													<StateGroupInfo>
+														<StateGroupRef Name="Cooking_Menu" ID="{480DC1F1-C4C9-4C3D-BC13-612628739BAC}"/>
+													</StateGroupInfo>
+												</StateGroupList>
+												<CustomStateList>
+													<CustomState>
+														<StateRef Name="OutCookingMenu" ID="{F48474B2-E070-43CA-9C12-219BE4A7071C}"/>
+														<CustomState Name="" ID="{D6E24AB9-167A-446B-962D-30B93AC1499A}" ShortID="48439540"/>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="InCookingMenu" ID="{BD061B15-9DAF-4A28-A041-2AF277545DA4}"/>
+														<CustomState Name="" ID="{2EB9B6EE-A371-41B2-9C44-F3C4F10D2D27}" ShortID="879768457">
+															<PropertyList>
+																<Property Name="Volume" Type="Real64" Value="-6"/>
+															</PropertyList>
+														</CustomState>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="InPauseMenu" ID="{59CFFA60-D92A-4A95-BEC1-15870A188413}"/>
+														<CustomState Name="" ID="{BB6C3059-99CE-4CB5-AB0F-C980211A6009}" ShortID="894544336">
+															<PropertyList>
+																<Property Name="Volume" Type="Real64" Value="-6"/>
+															</PropertyList>
+														</CustomState>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="OutPauseMenu" ID="{2987396D-222D-4B27-A23D-F2A7ECE32AD1}"/>
+														<CustomState Name="" ID="{010F39F2-6F0D-4A53-81E7-A76E24F0DB92}" ShortID="898330823"/>
+													</CustomState>
+												</CustomStateList>
+											</StateInfo>
 											<TransitionList>
 												<MusicTransition Name="Root" ID="{4014CF4E-D75A-4816-897D-294E03EE62ED}">
 													<PropertyList>
@@ -2123,7 +2790,7 @@
 												</ObjectList>
 											</ObjectLists>
 										</MusicTrack>
-										<MusicTrack Name="Piano_Melo_01" ID="{93FA7C4F-C922-4DE7-A48E-5C169ABBAA61}" ShortID="990533978">
+										<MusicTrack Name="Piano_Melo" ID="{93FA7C4F-C922-4DE7-A48E-5C169ABBAA61}" ShortID="990533978">
 											<ReferenceList>
 												<Reference Name="OutputBus">
 													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{85B5C199-8628-4DDB-B756-DA8917395816}"/>
@@ -2138,6 +2805,42 @@
 													</MediaIDList>
 												</AudioFileSource>
 											</ChildrenList>
+											<StateInfo>
+												<StateGroupList>
+													<StateGroupInfo>
+														<StateGroupRef Name="Pause_Menu" ID="{DCC4536A-E318-48C6-AA1F-DF8580335888}"/>
+													</StateGroupInfo>
+													<StateGroupInfo>
+														<StateGroupRef Name="Cooking_Menu" ID="{480DC1F1-C4C9-4C3D-BC13-612628739BAC}"/>
+													</StateGroupInfo>
+												</StateGroupList>
+												<CustomStateList>
+													<CustomState>
+														<StateRef Name="OutCookingMenu" ID="{F48474B2-E070-43CA-9C12-219BE4A7071C}"/>
+														<CustomState Name="" ID="{DF33B285-75A7-49E8-B86B-430BE6BA23AE}" ShortID="991025660"/>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="InCookingMenu" ID="{BD061B15-9DAF-4A28-A041-2AF277545DA4}"/>
+														<CustomState Name="" ID="{4F374319-CB27-4AF5-B8E5-D0BFAB208A84}" ShortID="626605592">
+															<PropertyList>
+																<Property Name="Volume" Type="Real64" Value="-15"/>
+															</PropertyList>
+														</CustomState>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="InPauseMenu" ID="{59CFFA60-D92A-4A95-BEC1-15870A188413}"/>
+														<CustomState Name="" ID="{112A6203-7A92-4FFF-8FA3-2777D97B0C3E}" ShortID="639717483">
+															<PropertyList>
+																<Property Name="Volume" Type="Real64" Value="-15"/>
+															</PropertyList>
+														</CustomState>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="OutPauseMenu" ID="{2987396D-222D-4B27-A23D-F2A7ECE32AD1}"/>
+														<CustomState Name="" ID="{CEEFF664-BEF8-44E3-BBBC-933166A1FAE6}" ShortID="341610430"/>
+													</CustomState>
+												</CustomStateList>
+											</StateInfo>
 											<TransitionList>
 												<MusicTransition Name="Root" ID="{F8BAB7CD-A101-444A-805B-E59ECA462D26}">
 													<PropertyList>
@@ -2185,7 +2888,7 @@
 												</ObjectList>
 											</ObjectLists>
 										</MusicTrack>
-										<MusicTrack Name="WoodBlock_01_02" ID="{A20607A8-E989-4C23-9681-B27D396E5BD2}" ShortID="710143135">
+										<MusicTrack Name="WoodBlock" ID="{A20607A8-E989-4C23-9681-B27D396E5BD2}" ShortID="710143135">
 											<PropertyList>
 												<Property Name="MusicTrackType" Type="int16" Value="3"/>
 											</PropertyList>
@@ -2209,6 +2912,42 @@
 													</MediaIDList>
 												</AudioFileSource>
 											</ChildrenList>
+											<StateInfo>
+												<StateGroupList>
+													<StateGroupInfo>
+														<StateGroupRef Name="Pause_Menu" ID="{DCC4536A-E318-48C6-AA1F-DF8580335888}"/>
+													</StateGroupInfo>
+													<StateGroupInfo>
+														<StateGroupRef Name="Cooking_Menu" ID="{480DC1F1-C4C9-4C3D-BC13-612628739BAC}"/>
+													</StateGroupInfo>
+												</StateGroupList>
+												<CustomStateList>
+													<CustomState>
+														<StateRef Name="OutCookingMenu" ID="{F48474B2-E070-43CA-9C12-219BE4A7071C}"/>
+														<CustomState Name="" ID="{951C7F0A-FF1A-45C7-A2A7-7DEEC6CD2451}" ShortID="410169336"/>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="InCookingMenu" ID="{BD061B15-9DAF-4A28-A041-2AF277545DA4}"/>
+														<CustomState Name="" ID="{0DF0D66E-BE73-429C-A606-7F90983D5559}" ShortID="18986058">
+															<PropertyList>
+																<Property Name="Volume" Type="Real64" Value="-15"/>
+															</PropertyList>
+														</CustomState>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="InPauseMenu" ID="{59CFFA60-D92A-4A95-BEC1-15870A188413}"/>
+														<CustomState Name="" ID="{671126EF-42BC-4C9C-928F-7CE844AEE88E}" ShortID="858423603">
+															<PropertyList>
+																<Property Name="Volume" Type="Real64" Value="-15"/>
+															</PropertyList>
+														</CustomState>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="OutPauseMenu" ID="{2987396D-222D-4B27-A23D-F2A7ECE32AD1}"/>
+														<CustomState Name="" ID="{9D473B3B-53BF-4FC7-9FFB-037D291E1E3E}" ShortID="52521610"/>
+													</CustomState>
+												</CustomStateList>
+											</StateInfo>
 											<TransitionList>
 												<MusicTransition Name="Root" ID="{8FAE8444-CCB7-4035-9089-FF573D9B24EE}">
 													<PropertyList>
@@ -2290,7 +3029,7 @@
 												</ObjectList>
 											</ObjectLists>
 										</MusicTrack>
-										<MusicTrack Name="WoodStick_01_02" ID="{DA07108E-7D87-4BD3-AE3C-53D6A18BC0E8}" ShortID="632481409">
+										<MusicTrack Name="WoodStick" ID="{DA07108E-7D87-4BD3-AE3C-53D6A18BC0E8}" ShortID="632481409">
 											<PropertyList>
 												<Property Name="MusicTrackType" Type="int16" Value="3"/>
 											</PropertyList>
@@ -2314,6 +3053,42 @@
 													</MediaIDList>
 												</AudioFileSource>
 											</ChildrenList>
+											<StateInfo>
+												<StateGroupList>
+													<StateGroupInfo>
+														<StateGroupRef Name="Pause_Menu" ID="{DCC4536A-E318-48C6-AA1F-DF8580335888}"/>
+													</StateGroupInfo>
+													<StateGroupInfo>
+														<StateGroupRef Name="Cooking_Menu" ID="{480DC1F1-C4C9-4C3D-BC13-612628739BAC}"/>
+													</StateGroupInfo>
+												</StateGroupList>
+												<CustomStateList>
+													<CustomState>
+														<StateRef Name="OutCookingMenu" ID="{F48474B2-E070-43CA-9C12-219BE4A7071C}"/>
+														<CustomState Name="" ID="{621ACCB7-BC62-4456-AEF8-224B11A40980}" ShortID="260424862"/>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="InCookingMenu" ID="{BD061B15-9DAF-4A28-A041-2AF277545DA4}"/>
+														<CustomState Name="" ID="{27FDD7B6-6352-4968-84B9-62889323ECF4}" ShortID="498909721">
+															<PropertyList>
+																<Property Name="Volume" Type="Real64" Value="-15"/>
+															</PropertyList>
+														</CustomState>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="InPauseMenu" ID="{59CFFA60-D92A-4A95-BEC1-15870A188413}"/>
+														<CustomState Name="" ID="{53597CA1-2B75-4F8D-A2FA-F467000F1185}" ShortID="516013919">
+															<PropertyList>
+																<Property Name="Volume" Type="Real64" Value="-15"/>
+															</PropertyList>
+														</CustomState>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="OutPauseMenu" ID="{2987396D-222D-4B27-A23D-F2A7ECE32AD1}"/>
+														<CustomState Name="" ID="{84126E5D-78A4-4543-9168-BB67DAA2FBF7}" ShortID="82657772"/>
+													</CustomState>
+												</CustomStateList>
+											</StateInfo>
 											<TransitionList>
 												<MusicTransition Name="Root" ID="{3ECC3D69-B8EE-4340-A623-0A01E960A611}">
 													<PropertyList>
@@ -2430,7 +3205,7 @@
 										</Reference>
 									</ReferenceList>
 									<ChildrenList>
-										<MusicTrack Name="Transition_to_Fight" ID="{ED01CCAA-D0C4-4C8A-B65F-5AB2C04A7AB4}" ShortID="226117528">
+										<MusicTrack Name="Transition_To_Fight" ID="{ED01CCAA-D0C4-4C8A-B65F-5AB2C04A7AB4}" ShortID="226117528">
 											<ReferenceList>
 												<Reference Name="Conversion">
 													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DEC634C6-86E3-4DF9-96EE-F869BA355507}"/>
@@ -2448,6 +3223,34 @@
 													</MediaIDList>
 												</AudioFileSource>
 											</ChildrenList>
+											<StateInfo>
+												<StateGroupList>
+													<StateGroupInfo>
+														<StateGroupRef Name="Pause_Menu" ID="{DCC4536A-E318-48C6-AA1F-DF8580335888}"/>
+													</StateGroupInfo>
+													<StateGroupInfo>
+														<StateGroupRef Name="Cooking_Menu" ID="{480DC1F1-C4C9-4C3D-BC13-612628739BAC}"/>
+													</StateGroupInfo>
+												</StateGroupList>
+												<CustomStateList>
+													<CustomState>
+														<StateRef Name="OutCookingMenu" ID="{F48474B2-E070-43CA-9C12-219BE4A7071C}"/>
+														<CustomState Name="" ID="{FFA79885-9509-4954-8283-6A1FD0848A41}" ShortID="314793886"/>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="InCookingMenu" ID="{BD061B15-9DAF-4A28-A041-2AF277545DA4}"/>
+														<CustomState Name="" ID="{02E91D08-A52C-4AED-A8E0-B260B31CB12E}" ShortID="394903773"/>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="InPauseMenu" ID="{59CFFA60-D92A-4A95-BEC1-15870A188413}"/>
+														<CustomState Name="" ID="{84999614-0338-40F8-98CB-A2392411319F}" ShortID="187993890"/>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="OutPauseMenu" ID="{2987396D-222D-4B27-A23D-F2A7ECE32AD1}"/>
+														<CustomState Name="" ID="{AB22E316-778A-4803-9894-ECBA0F8DBF2E}" ShortID="125086112"/>
+													</CustomState>
+												</CustomStateList>
+											</StateInfo>
 											<TransitionList>
 												<MusicTransition Name="Root" ID="{9648489C-BABA-40A0-97ED-0FEE65547FF3}">
 													<PropertyList>
@@ -2483,7 +3286,14 @@
 												</ObjectList>
 											</ObjectLists>
 										</MusicTrack>
-										<MusicTrack Name="Piano_Bass_Intro_01" ID="{0E0052D2-1361-4EF6-8EF6-F9627C854A65}" ShortID="722845247">
+										<MusicTrack Name="Piano_Bass" ID="{0E0052D2-1361-4EF6-8EF6-F9627C854A65}" ShortID="722845247">
+											<PropertyList>
+												<Property Name="Volume" Type="Real64">
+													<ValueList>
+														<Value>3</Value>
+													</ValueList>
+												</Property>
+											</PropertyList>
 											<ReferenceList>
 												<Reference Name="OutputBus">
 													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{85B5C199-8628-4DDB-B756-DA8917395816}"/>
@@ -2498,6 +3308,44 @@
 													</MediaIDList>
 												</AudioFileSource>
 											</ChildrenList>
+											<StateInfo>
+												<StateGroupList>
+													<StateGroupInfo>
+														<StateGroupRef Name="Pause_Menu" ID="{DCC4536A-E318-48C6-AA1F-DF8580335888}"/>
+													</StateGroupInfo>
+													<StateGroupInfo>
+														<StateGroupRef Name="Cooking_Menu" ID="{480DC1F1-C4C9-4C3D-BC13-612628739BAC}"/>
+													</StateGroupInfo>
+												</StateGroupList>
+												<CustomStateList>
+													<CustomState>
+														<StateRef Name="OutCookingMenu" ID="{F48474B2-E070-43CA-9C12-219BE4A7071C}"/>
+														<CustomState Name="" ID="{181F5485-DAFF-446D-B7E1-DD835F5E4557}" ShortID="113717321"/>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="InCookingMenu" ID="{BD061B15-9DAF-4A28-A041-2AF277545DA4}"/>
+														<CustomState Name="" ID="{73989F2F-9D20-47EA-8879-A3BB7DBADC39}" ShortID="232796663">
+															<PropertyList>
+																<Property Name="Highpass" Type="int16" Value="45"/>
+																<Property Name="Volume" Type="Real64" Value="-3"/>
+															</PropertyList>
+														</CustomState>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="InPauseMenu" ID="{59CFFA60-D92A-4A95-BEC1-15870A188413}"/>
+														<CustomState Name="" ID="{1777731F-E1EF-4DB2-A6B6-2D6F83945CE3}" ShortID="716087450">
+															<PropertyList>
+																<Property Name="Highpass" Type="int16" Value="45"/>
+																<Property Name="Volume" Type="Real64" Value="-3"/>
+															</PropertyList>
+														</CustomState>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="OutPauseMenu" ID="{2987396D-222D-4B27-A23D-F2A7ECE32AD1}"/>
+														<CustomState Name="" ID="{A0206EEC-78A5-414A-AB66-6665433ECED1}" ShortID="91992819"/>
+													</CustomState>
+												</CustomStateList>
+											</StateInfo>
 											<TransitionList>
 												<MusicTransition Name="Root" ID="{A840CC4B-582D-44C2-AFC7-3E4450BE1E74}">
 													<PropertyList>
@@ -2523,6 +3371,27 @@
 																						<Property Name="PlayAt" Type="Real64" Value="2068.96551724138"/>
 																					</PropertyList>
 																					<AudioSourceRef Name="Piano_Bass_Intro_01" ID="{08290A3C-8449-458B-80AB-8C1A9BEE91DA}"/>
+																					<PropertyCurveList>
+																						<PropertyCurve PropertyName="Volume">
+																							<Curve Name="" ID="{A9C4ED56-8D08-4BFB-97F1-35D87FDA4B56}">
+																								<PropertyList>
+																									<Property Name="Flags" Type="int32" Value="3"/>
+																								</PropertyList>
+																								<PointList>
+																									<Point>
+																										<XPos>0</XPos>
+																										<YPos>0</YPos>
+																										<Flags>5</Flags>
+																									</Point>
+																									<Point>
+																										<XPos>18.6207083333333</XPos>
+																										<YPos>-0</YPos>
+																										<Flags>37</Flags>
+																									</Point>
+																								</PointList>
+																							</Curve>
+																						</PropertyCurve>
+																					</PropertyCurveList>
 																				</MusicClip>
 																			</Local>
 																		</Reference>
@@ -2534,7 +3403,7 @@
 												</ObjectList>
 											</ObjectLists>
 										</MusicTrack>
-										<MusicTrack Name="Instrumental_Section_Intro" ID="{1B5536F7-0BE1-4590-86A5-F8EB1852E2FA}" ShortID="648137062">
+										<MusicTrack Name="Base_Instrumentale" ID="{1B5536F7-0BE1-4590-86A5-F8EB1852E2FA}" ShortID="648137062">
 											<ReferenceList>
 												<Reference Name="OutputBus">
 													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{85B5C199-8628-4DDB-B756-DA8917395816}"/>
@@ -2549,12 +3418,47 @@
 													</MediaIDList>
 												</AudioFileSource>
 											</ChildrenList>
+											<StateInfo>
+												<StateGroupList>
+													<StateGroupInfo>
+														<StateGroupRef Name="Pause_Menu" ID="{DCC4536A-E318-48C6-AA1F-DF8580335888}"/>
+													</StateGroupInfo>
+													<StateGroupInfo>
+														<StateGroupRef Name="Cooking_Menu" ID="{480DC1F1-C4C9-4C3D-BC13-612628739BAC}"/>
+													</StateGroupInfo>
+												</StateGroupList>
+												<CustomStateList>
+													<CustomState>
+														<StateRef Name="OutCookingMenu" ID="{F48474B2-E070-43CA-9C12-219BE4A7071C}"/>
+														<CustomState Name="" ID="{84A44B89-EFF7-489F-B9A9-86080CF15BE5}" ShortID="448448456"/>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="InCookingMenu" ID="{BD061B15-9DAF-4A28-A041-2AF277545DA4}"/>
+														<CustomState Name="" ID="{23B70CCB-1567-4D87-A9B1-D3B2E2900D58}" ShortID="680880058">
+															<PropertyList>
+																<Property Name="Volume" Type="Real64" Value="-10"/>
+															</PropertyList>
+														</CustomState>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="InPauseMenu" ID="{59CFFA60-D92A-4A95-BEC1-15870A188413}"/>
+														<CustomState Name="" ID="{BC3EAFDA-7AE9-4DFE-8EA9-9E28C580B67E}" ShortID="784091377">
+															<PropertyList>
+																<Property Name="Volume" Type="Real64" Value="-10"/>
+															</PropertyList>
+														</CustomState>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="OutPauseMenu" ID="{2987396D-222D-4B27-A23D-F2A7ECE32AD1}"/>
+														<CustomState Name="" ID="{4904D89F-5AFA-49A4-BFC4-9DE07D4A6B7F}" ShortID="1034666448"/>
+													</CustomState>
+												</CustomStateList>
+											</StateInfo>
 											<TransitionList>
 												<MusicTransition Name="Root" ID="{818B77CC-C55D-4689-8BCD-20D522F39993}">
 													<PropertyList>
 														<Property Name="IsFolder" Type="bool" Value="True"/>
 													</PropertyList>
-													<ReferenceList/>
 													<TransitionInfo/>
 												</MusicTransition>
 											</TransitionList>
@@ -2586,7 +3490,7 @@
 												</ObjectList>
 											</ObjectLists>
 										</MusicTrack>
-										<MusicTrack Name="Balafon_Intro_01_02" ID="{3C96A2C4-8139-42FE-8B5A-B67BC7A1E007}" ShortID="674687349">
+										<MusicTrack Name="Balafon" ID="{3C96A2C4-8139-42FE-8B5A-B67BC7A1E007}" ShortID="674687349">
 											<PropertyList>
 												<Property Name="MusicTrackType" Type="int16" Value="3"/>
 											</PropertyList>
@@ -2610,6 +3514,34 @@
 													</MediaIDList>
 												</AudioFileSource>
 											</ChildrenList>
+											<StateInfo>
+												<StateGroupList>
+													<StateGroupInfo>
+														<StateGroupRef Name="Pause_Menu" ID="{DCC4536A-E318-48C6-AA1F-DF8580335888}"/>
+													</StateGroupInfo>
+													<StateGroupInfo>
+														<StateGroupRef Name="Cooking_Menu" ID="{480DC1F1-C4C9-4C3D-BC13-612628739BAC}"/>
+													</StateGroupInfo>
+												</StateGroupList>
+												<CustomStateList>
+													<CustomState>
+														<StateRef Name="OutCookingMenu" ID="{F48474B2-E070-43CA-9C12-219BE4A7071C}"/>
+														<CustomState Name="" ID="{671C6A9F-071A-4679-ABE0-2475F5AC550C}" ShortID="298526928"/>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="InCookingMenu" ID="{BD061B15-9DAF-4A28-A041-2AF277545DA4}"/>
+														<CustomState Name="" ID="{09869809-5C1A-4C42-BB9B-C44E90BDEEBD}" ShortID="683419992"/>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="InPauseMenu" ID="{59CFFA60-D92A-4A95-BEC1-15870A188413}"/>
+														<CustomState Name="" ID="{A65AA3D1-40A6-4647-B60C-EB24AD4F32C3}" ShortID="706144065"/>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="OutPauseMenu" ID="{2987396D-222D-4B27-A23D-F2A7ECE32AD1}"/>
+														<CustomState Name="" ID="{A7AB25B4-264D-440A-8D8F-01D0331CC962}" ShortID="422486097"/>
+													</CustomState>
+												</CustomStateList>
+											</StateInfo>
 											<TransitionList>
 												<MusicTransition Name="Root" ID="{EB471CC5-29C7-4F84-B346-F3E848CD4DB2}">
 													<PropertyList>
@@ -2692,9 +3624,14 @@
 												</ObjectList>
 											</ObjectLists>
 										</MusicTrack>
-										<MusicTrack Name="Castagnette_Intro_01_02" ID="{3F8E9790-BC24-412A-B775-9CD3E5CA7928}" ShortID="547021466">
+										<MusicTrack Name="Castagnette" ID="{3F8E9790-BC24-412A-B775-9CD3E5CA7928}" ShortID="547021466">
 											<PropertyList>
 												<Property Name="MusicTrackType" Type="int16" Value="3"/>
+												<Property Name="Volume" Type="Real64">
+													<ValueList>
+														<Value>-5</Value>
+													</ValueList>
+												</Property>
 											</PropertyList>
 											<ReferenceList>
 												<Reference Name="DefaultSwitchOrState">
@@ -2716,6 +3653,34 @@
 													</MediaIDList>
 												</AudioFileSource>
 											</ChildrenList>
+											<StateInfo>
+												<StateGroupList>
+													<StateGroupInfo>
+														<StateGroupRef Name="Pause_Menu" ID="{DCC4536A-E318-48C6-AA1F-DF8580335888}"/>
+													</StateGroupInfo>
+													<StateGroupInfo>
+														<StateGroupRef Name="Cooking_Menu" ID="{480DC1F1-C4C9-4C3D-BC13-612628739BAC}"/>
+													</StateGroupInfo>
+												</StateGroupList>
+												<CustomStateList>
+													<CustomState>
+														<StateRef Name="OutCookingMenu" ID="{F48474B2-E070-43CA-9C12-219BE4A7071C}"/>
+														<CustomState Name="" ID="{15C1A183-AFBF-4493-9F5F-57B2007DE1A4}" ShortID="1045654614"/>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="InCookingMenu" ID="{BD061B15-9DAF-4A28-A041-2AF277545DA4}"/>
+														<CustomState Name="" ID="{A3403D02-5B1D-4EE4-A4D6-97F1F1C8551D}" ShortID="775004381"/>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="InPauseMenu" ID="{59CFFA60-D92A-4A95-BEC1-15870A188413}"/>
+														<CustomState Name="" ID="{103A5A2F-4045-4D94-A29D-7D4396EAE65E}" ShortID="290300644"/>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="OutPauseMenu" ID="{2987396D-222D-4B27-A23D-F2A7ECE32AD1}"/>
+														<CustomState Name="" ID="{7F18D14E-7A42-4DA1-85DF-01986D083B24}" ShortID="517525323"/>
+													</CustomState>
+												</CustomStateList>
+											</StateInfo>
 											<TransitionList>
 												<MusicTransition Name="Root" ID="{A16361A0-DD92-4062-A075-F341354FB162}">
 													<PropertyList>
@@ -2798,9 +3763,14 @@
 												</ObjectList>
 											</ObjectLists>
 										</MusicTrack>
-										<MusicTrack Name="LogDrum_Intro_01_02" ID="{5F7DB8C9-21F2-4D6D-A091-39B5D7D1B496}" ShortID="1072476977">
+										<MusicTrack Name="LogDrum" ID="{5F7DB8C9-21F2-4D6D-A091-39B5D7D1B496}" ShortID="1072476977">
 											<PropertyList>
 												<Property Name="MusicTrackType" Type="int16" Value="3"/>
+												<Property Name="Volume" Type="Real64">
+													<ValueList>
+														<Value>3</Value>
+													</ValueList>
+												</Property>
 											</PropertyList>
 											<ReferenceList>
 												<Reference Name="DefaultSwitchOrState">
@@ -2822,6 +3792,34 @@
 													</MediaIDList>
 												</AudioFileSource>
 											</ChildrenList>
+											<StateInfo>
+												<StateGroupList>
+													<StateGroupInfo>
+														<StateGroupRef Name="Pause_Menu" ID="{DCC4536A-E318-48C6-AA1F-DF8580335888}"/>
+													</StateGroupInfo>
+													<StateGroupInfo>
+														<StateGroupRef Name="Cooking_Menu" ID="{480DC1F1-C4C9-4C3D-BC13-612628739BAC}"/>
+													</StateGroupInfo>
+												</StateGroupList>
+												<CustomStateList>
+													<CustomState>
+														<StateRef Name="OutCookingMenu" ID="{F48474B2-E070-43CA-9C12-219BE4A7071C}"/>
+														<CustomState Name="" ID="{BA298629-82E1-400F-BD77-ED50FCDC7718}" ShortID="971035827"/>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="InCookingMenu" ID="{BD061B15-9DAF-4A28-A041-2AF277545DA4}"/>
+														<CustomState Name="" ID="{B3BD1999-83B5-4B94-9D7D-B9A8EC40A6AE}" ShortID="929458679"/>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="InPauseMenu" ID="{59CFFA60-D92A-4A95-BEC1-15870A188413}"/>
+														<CustomState Name="" ID="{FD3358C8-3C6F-4805-AA42-836B26B06EF5}" ShortID="20208629"/>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="OutPauseMenu" ID="{2987396D-222D-4B27-A23D-F2A7ECE32AD1}"/>
+														<CustomState Name="" ID="{2BD921AF-E454-4CFB-B8DE-95BEB1115979}" ShortID="107102855"/>
+													</CustomState>
+												</CustomStateList>
+											</StateInfo>
 											<TransitionList>
 												<MusicTransition Name="Root" ID="{37B8CE9F-5239-4BA8-8FEA-8547D3034DFE}">
 													<PropertyList>
@@ -2904,7 +3902,7 @@
 												</ObjectList>
 											</ObjectLists>
 										</MusicTrack>
-										<MusicTrack Name="WaterDrum_Intro_01_02" ID="{E24DEF58-D9F8-404E-95BA-29713696D79E}" ShortID="969305191">
+										<MusicTrack Name="WaterDrum" ID="{E24DEF58-D9F8-404E-95BA-29713696D79E}" ShortID="969305191">
 											<PropertyList>
 												<Property Name="MusicTrackType" Type="int16" Value="3"/>
 											</PropertyList>
@@ -2928,6 +3926,42 @@
 													</MediaIDList>
 												</AudioFileSource>
 											</ChildrenList>
+											<StateInfo>
+												<StateGroupList>
+													<StateGroupInfo>
+														<StateGroupRef Name="Pause_Menu" ID="{DCC4536A-E318-48C6-AA1F-DF8580335888}"/>
+													</StateGroupInfo>
+													<StateGroupInfo>
+														<StateGroupRef Name="Cooking_Menu" ID="{480DC1F1-C4C9-4C3D-BC13-612628739BAC}"/>
+													</StateGroupInfo>
+												</StateGroupList>
+												<CustomStateList>
+													<CustomState>
+														<StateRef Name="OutCookingMenu" ID="{F48474B2-E070-43CA-9C12-219BE4A7071C}"/>
+														<CustomState Name="" ID="{0DD1B440-1A0A-48FB-AAEC-913809C1E178}" ShortID="18272977"/>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="InCookingMenu" ID="{BD061B15-9DAF-4A28-A041-2AF277545DA4}"/>
+														<CustomState Name="" ID="{3B5FB704-755E-405F-9586-AB5D5571D6F5}" ShortID="337880363">
+															<PropertyList>
+																<Property Name="Volume" Type="Real64" Value="-6"/>
+															</PropertyList>
+														</CustomState>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="InPauseMenu" ID="{59CFFA60-D92A-4A95-BEC1-15870A188413}"/>
+														<CustomState Name="" ID="{1F40E8A6-448E-42DB-B503-8103CE1FD130}" ShortID="119813259">
+															<PropertyList>
+																<Property Name="Volume" Type="Real64" Value="-6"/>
+															</PropertyList>
+														</CustomState>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="OutPauseMenu" ID="{2987396D-222D-4B27-A23D-F2A7ECE32AD1}"/>
+														<CustomState Name="" ID="{3FE44D7E-042A-4837-B1C7-3DD30C056B80}" ShortID="443289127"/>
+													</CustomState>
+												</CustomStateList>
+											</StateInfo>
 											<TransitionList>
 												<MusicTransition Name="Root" ID="{4879B924-4A7D-4603-B674-6307D52A079D}">
 													<PropertyList>
@@ -3022,9 +4056,14 @@
 												</ObjectList>
 											</ObjectLists>
 										</MusicTrack>
-										<MusicTrack Name="WoodPerc_Intro_01_02" ID="{65D3E86D-D78E-4E11-BBF7-519AA1B28077}" ShortID="575343031">
+										<MusicTrack Name="WoodPerc" ID="{65D3E86D-D78E-4E11-BBF7-519AA1B28077}" ShortID="575343031">
 											<PropertyList>
 												<Property Name="MusicTrackType" Type="int16" Value="3"/>
+												<Property Name="Volume" Type="Real64">
+													<ValueList>
+														<Value>-2</Value>
+													</ValueList>
+												</Property>
 											</PropertyList>
 											<ReferenceList>
 												<Reference Name="DefaultSwitchOrState">
@@ -3046,6 +4085,34 @@
 													</MediaIDList>
 												</AudioFileSource>
 											</ChildrenList>
+											<StateInfo>
+												<StateGroupList>
+													<StateGroupInfo>
+														<StateGroupRef Name="Pause_Menu" ID="{DCC4536A-E318-48C6-AA1F-DF8580335888}"/>
+													</StateGroupInfo>
+													<StateGroupInfo>
+														<StateGroupRef Name="Cooking_Menu" ID="{480DC1F1-C4C9-4C3D-BC13-612628739BAC}"/>
+													</StateGroupInfo>
+												</StateGroupList>
+												<CustomStateList>
+													<CustomState>
+														<StateRef Name="OutCookingMenu" ID="{F48474B2-E070-43CA-9C12-219BE4A7071C}"/>
+														<CustomState Name="" ID="{FF1D5C21-D18F-4900-ACCA-86C90815BEF7}" ShortID="639199663"/>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="InCookingMenu" ID="{BD061B15-9DAF-4A28-A041-2AF277545DA4}"/>
+														<CustomState Name="" ID="{1078E328-7ADE-47CC-B920-370073CDF2EB}" ShortID="66534672"/>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="InPauseMenu" ID="{59CFFA60-D92A-4A95-BEC1-15870A188413}"/>
+														<CustomState Name="" ID="{0F24A2E4-9661-42CA-A253-F3E10EAF221A}" ShortID="972559706"/>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="OutPauseMenu" ID="{2987396D-222D-4B27-A23D-F2A7ECE32AD1}"/>
+														<CustomState Name="" ID="{420BD2BA-CC06-424C-9FDD-C5BA44AA9F17}" ShortID="1000191237"/>
+													</CustomState>
+												</CustomStateList>
+											</StateInfo>
 											<TransitionList>
 												<MusicTransition Name="Root" ID="{85F55E24-354C-40E5-8104-385121C84734}">
 													<PropertyList>
@@ -3128,7 +4195,7 @@
 												</ObjectList>
 											</ObjectLists>
 										</MusicTrack>
-										<MusicTrack Name="Xylopone_Intro_01_02" ID="{57E8CDB4-3478-4C19-95D8-71D2D73A2CC3}" ShortID="287235241">
+										<MusicTrack Name="Xylophone" ID="{57E8CDB4-3478-4C19-95D8-71D2D73A2CC3}" ShortID="287235241">
 											<PropertyList>
 												<Property Name="MusicTrackType" Type="int16" Value="3"/>
 											</PropertyList>
@@ -3152,6 +4219,42 @@
 													</MediaIDList>
 												</AudioFileSource>
 											</ChildrenList>
+											<StateInfo>
+												<StateGroupList>
+													<StateGroupInfo>
+														<StateGroupRef Name="Pause_Menu" ID="{DCC4536A-E318-48C6-AA1F-DF8580335888}"/>
+													</StateGroupInfo>
+													<StateGroupInfo>
+														<StateGroupRef Name="Cooking_Menu" ID="{480DC1F1-C4C9-4C3D-BC13-612628739BAC}"/>
+													</StateGroupInfo>
+												</StateGroupList>
+												<CustomStateList>
+													<CustomState>
+														<StateRef Name="OutCookingMenu" ID="{F48474B2-E070-43CA-9C12-219BE4A7071C}"/>
+														<CustomState Name="" ID="{49D4C8E2-E10E-4F55-8D7E-AEB669C1240F}" ShortID="277961989"/>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="InCookingMenu" ID="{BD061B15-9DAF-4A28-A041-2AF277545DA4}"/>
+														<CustomState Name="" ID="{47A21B62-DA15-4113-8904-9A10F0F07EE9}" ShortID="151543581">
+															<PropertyList>
+																<Property Name="Volume" Type="Real64" Value="-6"/>
+															</PropertyList>
+														</CustomState>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="InPauseMenu" ID="{59CFFA60-D92A-4A95-BEC1-15870A188413}"/>
+														<CustomState Name="" ID="{9CD86291-18DF-4115-8380-5BE6E335B78F}" ShortID="102525433">
+															<PropertyList>
+																<Property Name="Volume" Type="Real64" Value="-6"/>
+															</PropertyList>
+														</CustomState>
+													</CustomState>
+													<CustomState>
+														<StateRef Name="OutPauseMenu" ID="{2987396D-222D-4B27-A23D-F2A7ECE32AD1}"/>
+														<CustomState Name="" ID="{21EFA2A9-4DB7-44FF-ACF6-C3180A3A9A76}" ShortID="539603309"/>
+													</CustomState>
+												</CustomStateList>
+											</StateInfo>
 											<TransitionList>
 												<MusicTransition Name="Root" ID="{E684DD25-03B3-4EA0-9B67-4D87357D836B}">
 													<PropertyList>
@@ -3268,6 +4371,40 @@
 									</ObjectLists>
 								</MusicSegment>
 							</ChildrenList>
+							<StateInfo>
+								<StatePropertyList>
+									<Property Name="Highpass"/>
+									<Property Name="Lowpass"/>
+									<Property Name="UserAuxSendVolume0"/>
+									<Property Name="Volume"/>
+								</StatePropertyList>
+								<StateGroupList>
+									<StateGroupInfo>
+										<StateGroupRef Name="Pause_Menu" ID="{DCC4536A-E318-48C6-AA1F-DF8580335888}"/>
+									</StateGroupInfo>
+									<StateGroupInfo>
+										<StateGroupRef Name="Cooking_Menu" ID="{480DC1F1-C4C9-4C3D-BC13-612628739BAC}"/>
+									</StateGroupInfo>
+								</StateGroupList>
+								<CustomStateList>
+									<CustomState>
+										<StateRef Name="OutCookingMenu" ID="{F48474B2-E070-43CA-9C12-219BE4A7071C}"/>
+										<CustomState Name="" ID="{B85576EE-CCE4-4784-9939-9A9327B0C381}" ShortID="721892919"/>
+									</CustomState>
+									<CustomState>
+										<StateRef Name="InCookingMenu" ID="{BD061B15-9DAF-4A28-A041-2AF277545DA4}"/>
+										<CustomState Name="" ID="{76A040A8-3B39-4F5B-B045-C4AA767013BE}" ShortID="655426951"/>
+									</CustomState>
+									<CustomState>
+										<StateRef Name="InPauseMenu" ID="{59CFFA60-D92A-4A95-BEC1-15870A188413}"/>
+										<CustomState Name="" ID="{D886696A-FE1B-4012-B375-C14F4EF25E20}" ShortID="854160236"/>
+									</CustomState>
+									<CustomState>
+										<StateRef Name="OutPauseMenu" ID="{2987396D-222D-4B27-A23D-F2A7ECE32AD1}"/>
+										<CustomState Name="" ID="{9F036B03-5E0B-4F0F-8051-D84BBED882E1}" ShortID="151604907"/>
+									</CustomState>
+								</CustomStateList>
+							</StateInfo>
 							<TransitionList>
 								<MusicTransition Name="Root" ID="{43BB2E40-6DB9-4E93-A1D9-6F5454C936C3}">
 									<PropertyList>
