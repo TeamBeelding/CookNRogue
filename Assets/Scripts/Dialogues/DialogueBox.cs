@@ -54,7 +54,6 @@ public class DialogueBox : MonoBehaviour
             isEnumeratorRunning = false;
             Debug.Log("Coroutine Ended");
         }
-        
 
         //INITIALISE THE TEXT TO DISPLAY AND THE PARAMETERS
         Lookat = lookat;
@@ -69,7 +68,8 @@ public class DialogueBox : MonoBehaviour
     {
         isEnumeratorRunning = true;
         int i = 0;
-        for(int j = 0; j < textToDisplay.Length; j++)
+
+        for (int j = 0; j < textToDisplay.Length; j++)
         {
             DialogueText.text = "";
             while (i < textToDisplay[j].Length)
@@ -92,7 +92,5 @@ public class DialogueBox : MonoBehaviour
         transform.position = defaultPosition;
 
         isEnumeratorRunning = false;
-
     }
-    
 }

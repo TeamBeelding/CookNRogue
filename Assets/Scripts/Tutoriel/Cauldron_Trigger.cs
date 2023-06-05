@@ -1,33 +1,31 @@
 using System.Collections;
+using NaughtyAttributes;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Cauldron_Trigger : MonoBehaviour
 {
-    private TutorialManager _tutorialManager;
+    [SerializeField] [Required("TutorialManager is required")]
+    private TutorialManager tutorialManager;
 
-    private void Awake()
-    {
-        _tutorialManager = FindObjectOfType<TutorialManager>();
-    }
-    
     private void OnTriggerEnter(Collider other)
     {
-        if (/*other.GetComponent<PlayerInventoryScript>().projectilesData.Count > 0*/ other.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
-            if (_tutorialManager.step == 0)
-                _tutorialManager.ApproachCauldron();
+            Debug.Log("Player entered Cauldron trigger");
             
-            if (_tutorialManager.step == 1)
-            {
+            if (tutorialManager.step == 0)
+                tutorialManager.ApproachCauldron();
+            
+            if (tutorialManager.step == 1)
                 StartCoroutine(ValidateIngredientRoutine());
-            }
         } 
     }
     
     IEnumerator ValidateIngredientRoutine()
     {
         yield return new WaitForSecondsRealtime(3);
-        _tutorialManager.ValidateIngredient();
+        tutorialManager.ValidateIngredient();
 
     }
 }

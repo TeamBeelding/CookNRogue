@@ -15,8 +15,6 @@ public class DialogueContainer : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (_dialogueBox != null && other.CompareTag("Player"))
-        {
             _dialogueBox.DisplayDialogueText(_dialogue, transform);
-        }
     }
 }
