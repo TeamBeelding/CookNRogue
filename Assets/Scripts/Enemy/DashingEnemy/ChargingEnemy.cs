@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -98,6 +99,20 @@ namespace Enemy.DashingEnemy
         /// </summary>
         private void Dashing()
         {
+            RaycastHit hit;
+            
+            if (Physics.Raycast(transform.position, transform.forward, out hit, Vector3.Distance(transform.position, Player.transform.position)))
+            {
+                Debug.Log(hit.collider.name);
+
+                if (!hit.collider.CompareTag("Player"))
+                {
+                    Debug.DrawRay(transform.position, transform.forward * hit.distance, Color.red);
+                    Debug.Log($"<color=red>{hit.collider.name}</color>");
+                    // SetState(State.Casting);
+                }
+            }
+
             _isCharging = true;
             StartCoroutine(ChargingToPlayer());
 
@@ -289,6 +304,12 @@ namespace Enemy.DashingEnemy
             SetState(State.Waiting);
 
             Debug.Log("collide with obstruction");
+        }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawRay(transform.position, transform.forward * Vector3.Distance(transform.position, Player.transform.position));
         }
     }
 }
