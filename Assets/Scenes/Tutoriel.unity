@@ -724,12 +724,6 @@ MonoBehaviour:
   cam: {fileID: 0}
   Lookat: {fileID: 0}
   _offset: {x: 5, y: 5, z: 0}
---- !u!4 &461804811 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8435914716660352083, guid: 4f1d931103cb2404580d27bd24717df0,
-    type: 3}
-  m_PrefabInstance: {fileID: 762389750}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &463841187
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1529,6 +1523,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 629043783, guid: 4f1d931103cb2404580d27bd24717df0, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 629043783, guid: 4f1d931103cb2404580d27bd24717df0, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8435914716660352081, guid: 4f1d931103cb2404580d27bd24717df0,
         type: 3}
       propertyPath: m_IsTrigger
@@ -2615,58 +2617,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1281232697}
   m_CullTransparentMesh: 1
---- !u!1 &1388016997
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1388016999}
-  - component: {fileID: 1388016998}
-  m_Layer: 0
-  m_Name: DialogueBox
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1388016998
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1388016997}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f14e0a80288b8f4d81e592f996da853, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  defaultPosition: {x: 0, y: 0, z: 0}
-  DialogueText: {fileID: 0}
-  TextSpeed: 0
-  TimeBtwTexts: 0
-  TextTimeOnScreen: 0
-  cam: {fileID: 1938838257}
-  Lookat: {fileID: 461804811}
-  _offset: {x: 0, y: 0, z: 0}
---- !u!4 &1388016999
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1388016997}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 17
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1545701469
 GameObject:
   m_ObjectHideFlags: 0
@@ -3045,12 +2995,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!20 &1938838257 stripped
-Camera:
-  m_CorrespondingSourceObject: {fileID: 1177456190, guid: 4f1d931103cb2404580d27bd24717df0,
-    type: 3}
-  m_PrefabInstance: {fileID: 762389750}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1976564362
 GameObject:
   m_ObjectHideFlags: 0
@@ -3104,6 +3048,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerAttack: {fileID: 0}
+  _ammoText: {fileID: 0}
 --- !u!1 &2117707027
 GameObject:
   m_ObjectHideFlags: 0

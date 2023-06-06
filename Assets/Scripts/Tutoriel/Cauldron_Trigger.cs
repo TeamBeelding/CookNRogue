@@ -1,31 +1,31 @@
 using System.Collections;
 using NaughtyAttributes;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-public class Cauldron_Trigger : MonoBehaviour
+namespace Tutoriel
 {
-    [SerializeField] [Required("TutorialManager is required")]
-    private TutorialManager tutorialManager;
-
-    private void OnTriggerEnter(Collider other)
+    public class Cauldron_Trigger : MonoBehaviour
     {
-        if (other.CompareTag("Player"))
+        [SerializeField] [Required("TutorialManager is required")]
+        private TutorialManager tutorialManager;
+
+        private void OnTriggerEnter(Collider other)
         {
-            Debug.Log("Player entered Cauldron trigger");
+            if (other.CompareTag("Player"))
+            {
+                if (tutorialManager.Step == 0)
+                    tutorialManager.ApproachCauldron();
             
-            if (tutorialManager.step == 0)
-                tutorialManager.ApproachCauldron();
-            
-            if (tutorialManager.step == 1)
-                StartCoroutine(ValidateIngredientRoutine());
-        } 
-    }
+                if (tutorialManager.Step == 1)
+                    StartCoroutine(ValidateIngredientRoutine());
+            } 
+        }
     
-    IEnumerator ValidateIngredientRoutine()
-    {
-        yield return new WaitForSecondsRealtime(3);
-        tutorialManager.ValidateIngredient();
+        IEnumerator ValidateIngredientRoutine()
+        {
+            yield return new WaitForSecondsRealtime(3);
+            tutorialManager.ValidateIngredient();
 
+        }
     }
 }
