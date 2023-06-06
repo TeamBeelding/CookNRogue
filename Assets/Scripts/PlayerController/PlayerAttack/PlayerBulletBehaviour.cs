@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PlayerBulletBehaviour : MonoBehaviour
@@ -23,7 +24,7 @@ public class PlayerBulletBehaviour : MonoBehaviour
     public LayerMask _sphereMask;
     public LayerMask _rayMask;
     public GameObject Explosion;
-
+    public GameObject DamageUI;
     protected virtual void Start()
     {
         /*ParticleSystem.MainModule part = GetComponentInChildren<ParticleSystem>().main;
@@ -78,6 +79,11 @@ public class PlayerBulletBehaviour : MonoBehaviour
 
              other.GetComponentInParent<EnemyController>().TakeDamage(_damage, _isCritical);
 
+            GameObject UIDAMAGE = Instantiate(DamageUI, other.transform.position + (Vector3.up * 3) + GetCameraDirection() * 2, Quaternion.identity);
+            UIDAMAGE.GetComponentInChildren<TextMeshProUGUI>().text = _damage.ToString();
+
+            Destroy(UIDAMAGE, 1);
+
             if (_ricochetNbr > 0)
             {
                 _ricochetNbr--;
@@ -118,6 +124,11 @@ public class PlayerBulletBehaviour : MonoBehaviour
         
 
 
+    }
+    Vector3 GetCameraDirection()
+    {
+        Vector3 dir = (Camera.main.transform.position - transform.position).normalized;
+        return dir;
     }
 
     void BulletRicochet(Vector3 Position, GameObject HitObject, Vector3 direction)
