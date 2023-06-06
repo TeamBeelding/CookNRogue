@@ -20,11 +20,11 @@ public class PlayerAttack : MonoBehaviour
     //[SerializeField]
     //PlayerKnockback m_knockbackScript;
 
+    
     [Header("Physic and Movements")]
-    public float _size;
-    public float _speed;
-    public float _drag;
-    [Space(20)]
+    [HideInInspector] public float _size;
+    [HideInInspector] public float _speed;
+    [HideInInspector] public float _drag;
 
     [Header("Attack")]
     public float _shootCooldown;
