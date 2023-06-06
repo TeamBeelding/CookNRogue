@@ -223,7 +223,7 @@ public class PlayerAttack : MonoBehaviour
         Material splashmat = Instantiate(RenderModule.sharedMaterials[0]);
         splashmat.SetColor("_Color",color);
         RenderModule.material = splashmat;
-
+        /*
         var ps = bullet.transform.GetChild(1).GetChild(0).GetComponent<ParticleSystem>();
         var psMain = ps.main;
         var grad = psMain.startColor.gradient;
@@ -233,6 +233,11 @@ public class PlayerAttack : MonoBehaviour
         grad.colorKeys = keys;
 
         psMain.startColor = grad;
+        */
+        var BubbleRenderModule = bullet.transform.GetChild(1).GetChild(0).GetComponent<ParticleSystemRenderer>();
+        Material Bubblemat = Instantiate(BubbleRenderModule.sharedMaterials[0]);
+        Bubblemat.SetColor("_EmissionColor", color);
+        BubbleRenderModule.material = Bubblemat;
     }
 
     void OnAmmunitionChange()
