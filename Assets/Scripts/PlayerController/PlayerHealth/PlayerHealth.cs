@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
-    int _health;
+    [SerializeField] int _health;
     [SerializeField] int _maxHealth;
     HeartBar _heartBar;
     private void Start()
@@ -32,11 +32,19 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        if (damage <= 0)
-            return;
+        if (damage <= 0) return;
 
         _health -= damage;
         _heartBar.UpdateHealthVisual(_health);
+
+        if (_health <= 0)
+        {
+            _health = _maxHealth;
+            _heartBar.UpdateHealthVisual(_health);
+            RoomManager.instance.RestartLevel();
+            return;
+        }
+
     }
 
     public void Heal(int heal)

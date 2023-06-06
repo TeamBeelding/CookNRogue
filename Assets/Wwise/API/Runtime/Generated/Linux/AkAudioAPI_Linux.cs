@@ -15,4 +15,4 @@ public enum AkAudioAPI {
   AkAPI_ALSA = 1 << 1,
   AkAPI_Default = AkAPI_PulseAudio|AkAPI_ALSA
 }
-#endif // #if (UNITY_STANDALONE_LINUX && !UNITY_EDITOR) || UNITY_EDITOR_LINUX
+#endif // #if UNITY_STANDALONE_LINUX && ! UNITY_EDITOR

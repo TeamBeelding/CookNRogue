@@ -7,6 +7,8 @@ namespace Enemy.DashingEnemy
     {
         private Coroutine _castingCoroutine;
         private Coroutine _waitingCoroutine;
+        private Coroutine _rotateToPlayerCoroutine;
+        private Coroutine _chargingToPlayerCoroutine;
         private RaycastHit _hit;
 
         private bool _isCharging = false;
@@ -33,8 +35,8 @@ namespace Enemy.DashingEnemy
         }
 
         public State state;
-        
-        private void Awake()
+
+        protected override void Awake()
         {
             base.Awake();
             Healthpoint = _data.GetHealth();
@@ -45,13 +47,8 @@ namespace Enemy.DashingEnemy
         {
             base.Start();
         
-            state = State.Casting;
+            SetState(State.Casting);
             _redLineMaterial = _redLine.GetComponent<Renderer>().material;
-        }
-
-        private void FixedUpdate()
-        {
-            StateManagement();
         }
 
         public override bool IsMoving()
@@ -59,14 +56,18 @@ namespace Enemy.DashingEnemy
             return false;
         }
 
-        public State GetState()
+        private State GetState()
         {
             return state;
         }
     
         private void SetState(State value)
         {
+            StopAllCoroutines();
+        
             state = value;
+            
+            StateManagement();
         }
     
         private void StateManagement()
@@ -98,18 +99,22 @@ namespace Enemy.DashingEnemy
         private void Dashing()
         {
             _isCharging = true;
-            ChargingToPlayer();
-        
-            void ChargingToPlayer()
+            StartCoroutine(ChargingToPlayer());
+
+            IEnumerator ChargingToPlayer()
             {
-                if (_changeStateToWaiting)
+                while (_isCharging)
                 {
-                    StopMoving();
-                    SetState(State.Waiting);
-                }
-                else
-                {
-                    transform.position += _direction * (_data.GetSpeed() * Time.deltaTime);
+                    if (_direction != Vector3.zero)
+                    {
+                        transform.position += _direction * (_data.GetSpeed() * Time.deltaTime);
+                    }
+                    else
+                    {
+                        _isCharging = false;
+                    }
+                
+                    yield return null;
                 }
             }
         }
@@ -117,8 +122,8 @@ namespace Enemy.DashingEnemy
         private void StopMoving()
         {
             _direction = Vector3.zero;
-
-            _canShowingRedLine = false;
+            
+            HideRedLine();
         }
 
         /// <summary>
@@ -127,11 +132,22 @@ namespace Enemy.DashingEnemy
         /// </summary>
         private void Casting()
         {
-            visual.transform.LookAt(new Vector3(Player.transform.position.x, visual.transform.position.y, Player.transform.position.z));
-            
             _changeStateToWaiting = false;
             _isCharging = false;
-            _castingCoroutine = StartCoroutine(ICasting());
+            
+            StartCoroutine(ICasting());
+            _rotateToPlayerCoroutine = StartCoroutine(RotateToPlayer());
+
+            IEnumerator RotateToPlayer()
+            {
+                while (GetState() == State.Casting)
+                {
+                    visual.transform.LookAt(new Vector3(Player.transform.position.x, visual.transform.position.y, Player.transform.position.z));
+                    yield return null;
+                }
+                
+                _rotateToPlayerCoroutine = null;
+            }
         
             IEnumerator ICasting()
             {
@@ -148,7 +164,6 @@ namespace Enemy.DashingEnemy
                 if (!_isCharging)
                     _direction = GetPlayerDirection();
             
-                _castingCoroutine = null;
                 SetState(State.Dashing);
             }
         }
@@ -191,9 +206,9 @@ namespace Enemy.DashingEnemy
         public override void TakeDamage(float damage = 1, bool isCritical = false)
         {
             base.TakeDamage(damage, isCritical);
-
-            // StopCasting();
-            // SetState(State.Waiting);
+            
+            if (GetState() == State.Casting)
+                SetState(State.Casting);
         }
 
         /// <summary>
@@ -201,8 +216,11 @@ namespace Enemy.DashingEnemy
         /// </summary>
         private void StopCasting()
         {
-            if (_castingCoroutine != null)
-                StopCoroutine(_castingCoroutine);
+            if (_castingCoroutine == null) 
+                return;
+            
+            StopCoroutine(_castingCoroutine);
+            _castingCoroutine = null;
         }
     
         /// <summary>
@@ -232,27 +250,19 @@ namespace Enemy.DashingEnemy
         /// </summary>
         private void ShowFullyRedLine()
         {
-            _isRedLineFullVisible = true;
             _redLineMaterial.SetFloat("_Alpha", 0.3f);
         }
-
-        /// <summary>
-        /// Reset line renderer color and hide it
-        /// </summary>
+        
         private void ShowLightRedLine()
         {
-            if (_isRedLineFullVisible) return;
-        
             _canShowingRedLine = true;
             _redLineMaterial.SetFloat("_Alpha", 0.85f);
         }
-    
-        /// <summary>
-        /// Put the red line to full alpha (invisible)
-        /// </summary>
+
         private void HideRedLine()
         {
-            _redLineMaterial.SetFloat("_Alpha", 1f);
+            if (_redLineMaterial)
+                _redLineMaterial.SetFloat("_Alpha", 1f);
         }
     
         /// <summary>
@@ -268,17 +278,15 @@ namespace Enemy.DashingEnemy
         public void CollideWithPlayer()
         {
             StopMoving();
-            // Player.GetComponent<PlayerController>().TakeDamage(_data.GetDamage());
-            _changeStateToWaiting = true;
+            Player.GetComponent<PlayerController>().TakeDamage(_data.GetDamage());
 
-
-            Debug.Log("collide with player");
+            SetState(State.Waiting);
         }
     
         public void CollideWithObstruction()
         {
             StopMoving();
-            _changeStateToWaiting = true;
+            SetState(State.Waiting);
 
             Debug.Log("collide with obstruction");
         }

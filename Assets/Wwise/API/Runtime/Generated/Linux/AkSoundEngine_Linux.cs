@@ -1570,4 +1570,4 @@ public partial class AkSoundEngine {
   public const double AK_DEFAULT_GEOMETRY_TOP_Y = (1.0);
   public const double AK_DEFAULT_GEOMETRY_TOP_Z = (0.0);
 }
-#endif // #if (UNITY_STANDALONE_LINUX && !UNITY_EDITOR) || UNITY_EDITOR_LINUX
+#endif // #if UNITY_STANDALONE_LINUX && ! UNITY_EDITOR

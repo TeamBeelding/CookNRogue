@@ -1,4 +1,4 @@
-#if UNITY_EDITOR && !UNITY_EDITOR_LINUX
+#if UNITY_EDITOR
 /*******************************************************************************
 The content of this file includes portions of the proprietary AUDIOKINETIC Wwise
 Technology released in source code form as part of the game integration package.

@@ -2552,4 +2552,4 @@ class AkSoundEnginePINVOKE {
   public static extern global::System.IntPtr CSharp_AkMusicSyncCallbackInfo_SWIGUpcast(global::System.IntPtr jarg1);
   [global::System.Runtime.InteropServices.DllImport("AkSoundEngine", EntryPoint="CSharp_AkMusicPlaylistCallbackInfo_SWIGUpcast")]
   public static extern global::System.IntPtr CSharp_AkMusicPlaylistCallbackInfo_SWIGUpcast(global::System.IntPtr jarg1);}
-#endif // #if (UNITY_STANDALONE_LINUX && !UNITY_EDITOR) || UNITY_EDITOR_LINUX
+#endif // #if UNITY_STANDALONE_LINUX && ! UNITY_EDITOR

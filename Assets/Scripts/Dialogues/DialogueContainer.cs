@@ -5,7 +5,7 @@ using UnityEngine;
 public class DialogueContainer : MonoBehaviour
 {
     private DialogueBox _dialogueBox;
-    [SerializeField] private string _dialogue;
+    [SerializeField] private string[] _dialogue;
     // Start is called before the first frame update
     void Start()
     {

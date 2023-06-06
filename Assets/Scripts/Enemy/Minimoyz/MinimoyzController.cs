@@ -1,230 +1,259 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Events;
 
-public class MinimoyzController : EnemyController
+namespace Enemy.Minimoyz
 {
-    [SerializeField] private MinimoyzData _data;
-    [SerializeField] private NavMeshAgent _agent;
+    public class MinimoyzController : EnemyController
+    {
+        [SerializeField] private MinimoyzData data;
+        [SerializeField] private NavMeshAgent agent;
 
-    private Coroutine _castingCoroutine;
-    private Coroutine _attackCoroutine;
-    private bool shouldChaseAndAttack;
+        private Coroutine _castingCoroutine;
+        private Coroutine _attackCoroutine;
+        private bool _shouldChaseAndAttack;
+        private bool _isThrowing;
     
-    public enum State
-    {
-        Neutral,
-        Chase,
-        Cast,
-        Attack,
-        ChaseAndAttack,
-        Dying,
-    }
-    
-    public State state;
-
-    protected override void Awake()
-    {
-        base.Awake();
-        
-        _agent = GetComponent<NavMeshAgent>();
-        _agent.speed = _data.GetSpeed();
-        _agent.stoppingDistance = _data.GetAttackRange();
-        FocusPlayer = _data.GetFocusPlayer();
-        Healthpoint = _data.GetHealth();
-    }
-
-    // Start is called before the first frame update
-    protected override void Start()
-    {
-        state = FocusPlayer ? State.Chase : State.Neutral;
-
-        base.Start();
-    }
-
-    // Update is called once per frame
-    protected override void Update()
-    {
-        base.Update();
-        
-        StateManagement();
-    }
-
-    protected void FixedUpdate()
-    {
-        if (state == State.Dying)
-            return;
-        
-        AreaDetection();
-    }
-
-    public void SetFocus(bool value = true)
-    {
-        FocusPlayer = value;
-    }
-
-    private void StateManagement()
-    {
-        switch (state)
+        public enum State
         {
-            case State.Neutral:
-                break;
-            case State.Chase:
-                Chase();
-                break;
-            case State.Cast:
-                Cast();
-                break;
-            case State.Attack:
-                Attack(Attack, _data.GetAttackSpeed());
-                break;
-            case State.ChaseAndAttack:
-                ChaseAndAttack();
-                break;
-            case State.Dying:
-                Dying();
-                break;
-            default:
-                Dying();
-                break;
+            Neutral,
+            Throw,
+            Chase,
+            Cast,
+            Attack,
+            ChaseAndAttack,
+            Dying,
         }
-    }
     
-    private void AreaDetection()
-    {
-        if (state == State.Dying)
-            return;
+        public State state;
 
-        if (Vector3.Distance(transform.position, Player.transform.position) <= _data.GetFocusRange())
+        protected override void Awake()
         {
-            FocusPlayer = true;
-            
-            if (shouldChaseAndAttack)
-                state = State.ChaseAndAttack;
-            else
+            base.Awake();
+        
+            agent = GetComponent<NavMeshAgent>();
+            agent.speed = data.GetSpeed();
+            agent.stoppingDistance = data.GetAttackRange();
+            FocusPlayer = data.GetFocusPlayer();
+            Healthpoint = data.GetHealth();
+        }
+
+        // Start is called before the first frame update
+        protected override void Start()
+        {
+            if (_isThrowing)
+                SetState(State.Throw);
+            else if (FocusPlayer)
                 state = State.Chase;
-        }
-        else
-        {
-            state = State.Neutral;
+
+            base.Start();
         }
 
-        if (Vector3.Distance(transform.position, Player.transform.position) <= _data.GetAttackRange())
+        // Update is called once per frame
+        protected override void Update()
         {
-            if (shouldChaseAndAttack)
-                state = State.ChaseAndAttack;
-            else
-                state = State.Attack;
-        }
-        else
-        {
-            if (FocusPlayer)
-                state = State.Chase;
-        }
-    }
-    
-    public State GetState()
-    {
-        return state;
-    }
-    
-    public void SetState(State value)
-    {
-        state = value;
-    }
-
-    public override bool IsMoving()
-    {
-        throw new System.NotImplementedException();
-    }
-    
-    private void Cast()
-    {
-        if (state == State.Dying)
-            return;
+            base.Update();
         
-        if (_castingCoroutine == null)
-        {
-            _castingCoroutine = StartCoroutine(CastAttack());
+            StateManagement();
         }
-    }
 
-    private IEnumerator CastAttack()
-    {
-        yield return new WaitForSeconds(0.5f);
-    }
-    
-    private void Attack()
-    {
-        if (state == State.Dying)
-            return;
-        
-        if (_attackCoroutine == null)
-            _attackCoroutine = StartCoroutine(ISettingAttack());
-        
-        IEnumerator ISettingAttack()
+        protected void FixedUpdate()
         {
-            yield return new WaitForSeconds(0.4f);
+            if (state == State.Dying)
+                return;
+        
+            AreaDetection();
+        }
 
-            if (Vector3.Distance(transform.position, Player.transform.position) > _data.GetAttackRange())
+        public void SetFocus(bool value = true)
+        {
+            FocusPlayer = value;
+        }
+
+        private void StateManagement()
+        {
+            switch (state)
             {
-                CancelCast();
-                _attackCoroutine = null;
+                case State.Neutral:
+                    break;
+                case State.Throw:
+                    Throw();
+                    break;
+                case State.Chase:
+                    Chase();
+                    break;
+                case State.Cast:
+                    Cast();
+                    break;
+                case State.Attack:
+                    Attack(Attack, data.GetAttackSpeed());
+                    break;
+                case State.ChaseAndAttack:
+                    ChaseAndAttack();
+                    break;
+                case State.Dying:
+                    Dying();
+                    break;
+                default:
+                    Dying();
+                    break;
+            }
+        }
+    
+        private void AreaDetection()
+        {
+            if (state == State.Dying)
+                return;
+
+            if (Vector3.Distance(transform.position, Player.transform.position) <= data.GetFocusRange())
+            {
+                FocusPlayer = true;
+            
+                if (_shouldChaseAndAttack)
+                    state = State.ChaseAndAttack;
+                else
+                    state = State.Chase;
+            }
+            else
+            {
+                state = State.Neutral;
+            }
+
+            if (Vector3.Distance(transform.position, Player.transform.position) <= data.GetAttackRange())
+            {
+                if (_shouldChaseAndAttack)
+                    state = State.ChaseAndAttack;
+                else
+                    state = State.Attack;
+            }
+            else
+            {
+                if (FocusPlayer)
+                    state = State.Chase;
+            }
+        }
+    
+        public State GetState()
+        {
+            return state;
+        }
+    
+        public void SetState(State value)
+        {
+            state = value;
+        }
+
+        public void SetIsThrowing(bool value)
+        {
+            _isThrowing = value;
+        }
+
+        public override bool IsMoving()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void Throw()
+        {
+            agent.enabled = false;
+            
+            StartCoroutine(IChangeState());
+            
+            IEnumerator IChangeState()
+            {
+                yield return new WaitForSeconds(2);
+                agent.enabled = true;
                 SetState(State.Chase);
             }
+        }
 
+        private void Cast()
+        {
+            if (state == State.Dying)
+                return;
+        
+            if (_castingCoroutine == null)
+            {
+                _castingCoroutine = StartCoroutine(CastAttack());
+            }
+        }
+
+        private IEnumerator CastAttack()
+        {
             yield return new WaitForSeconds(0.5f);
+        }
+    
+        private void Attack()
+        {
+            if (state == State.Dying)
+                return;
+        
+            if (_attackCoroutine == null)
+                _attackCoroutine = StartCoroutine(ISettingAttack());
+        
+            IEnumerator ISettingAttack()
+            {
+                yield return new WaitForSeconds(0.4f);
+
+                if (Vector3.Distance(transform.position, Player.transform.position) > data.GetAttackRange())
+                {
+                    CancelCast();
+                    _attackCoroutine = null;
+                    SetState(State.Chase);
+                }
+
+                yield return new WaitForSeconds(0.5f);
             
-            if (Vector3.Distance(transform.position, Player.transform.position) > _data.GetAttackRange())
-            {
-                shouldChaseAndAttack = true;
-                _attackCoroutine = null;
-                SetState(State.ChaseAndAttack);
+                if (Vector3.Distance(transform.position, Player.transform.position) > data.GetAttackRange())
+                {
+                    _shouldChaseAndAttack = true;
+                    _attackCoroutine = null;
+                    SetState(State.ChaseAndAttack);
+                }
+                else
+                {
+                    _attackCoroutine = null;
+                    HitPlayer();
+                }
             }
-            else
+        }
+    
+        private void CancelCast()
+        {
+            _castingCoroutine = null;
+            state = State.Chase;
+        }
+
+        private void HitPlayer()
+        {
+            Player.GetComponent<PlayerController>().TakeDamage(data.GetDamage());
+            SetState(State.Cast);
+        }
+
+        protected override void Chase()
+        {
+            agent.SetDestination(Player.transform.position);
+        }
+    
+        private void ChaseAndAttack()
+        {
+            Chase();
+        
+            if (Vector3.Distance(transform.position, Player.transform.position) <= data.GetAttackRange())
             {
-                _attackCoroutine = null;
                 HitPlayer();
+                _shouldChaseAndAttack = false;
             }
         }
-    }
     
-    private void CancelCast()
-    {
-        _castingCoroutine = null;
-        state = State.Chase;
-    }
-
-    private void HitPlayer()
-    {
-        Player.GetComponent<PlayerController>().TakeDamage(_data.GetDamage());
-        SetState(State.Cast);
-    }
-
-    protected override void Chase()
-    {
-        _agent.SetDestination(Player.transform.position);
-    }
-    
-    private void ChaseAndAttack()
-    {
-        Chase();
-        
-        if (Vector3.Distance(transform.position, Player.transform.position) <= _data.GetAttackRange())
+        public override void TakeDamage(float damage = 1, bool isCritical = false)
         {
-            HitPlayer();
-            shouldChaseAndAttack = false;
-        }
-    }
-    
-    public override void TakeDamage(float damage = 1, bool isCritical = false)
-    {
-        base.TakeDamage(damage, isCritical);
+            base.TakeDamage(damage, isCritical);
         
-        if (Healthpoint <= 0)
-        {
-            state = State.Dying;
+            if (Healthpoint <= 0)
+            {
+                state = State.Dying;
+            }
         }
     }
 }

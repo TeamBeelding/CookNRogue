@@ -2,21 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Rendering;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
-using UnityEngine.InputSystem.XR;
-using static System.Net.Mime.MediaTypeNames;
-using System.Linq;
+using System;
 
+
+[Serializable]
+public class Dialogue
+{
+    public string[] dialogues;
+}
 public class DialogueBox : MonoBehaviour
 {
-
+    [SerializeField] Vector3 defaultPosition;
     [SerializeField] private TextMeshProUGUI DialogueText;
     [SerializeField] private float TextSpeed;
     private float TimeBtwLetters;
+    public float TimeBtwTexts;
     IEnumerator DisplayEnumerable;
     private bool isEnumeratorRunning = false;
-    string textToDisplay;
+    string[] textToDisplay;
 
     [SerializeField] private float TextTimeOnScreen;
 
@@ -25,6 +29,7 @@ public class DialogueBox : MonoBehaviour
     [SerializeField] Vector3 _offset;
     private void Start()
     {
+        defaultPosition = GetComponent<RectTransform>().position;
         cam = Camera.main;
         DialogueText.text = "";
         TimeBtwLetters = 1 / TextSpeed;
@@ -40,14 +45,16 @@ public class DialogueBox : MonoBehaviour
         }
 
     }
-    public void DisplayDialogueText(string text, Transform lookat)
+    public void DisplayDialogueText(string[] text, Transform lookat)
     {
         //STOPS COROUTINE IF IT IS CURRENTLY RUNNING
         if (isEnumeratorRunning)
         {
             StopCoroutine(DisplayEnumerable);
             isEnumeratorRunning = false;
+            Debug.Log("Coroutine Ended");
         }
+        
 
         //INITIALISE THE TEXT TO DISPLAY AND THE PARAMETERS
         Lookat = lookat;
@@ -58,20 +65,34 @@ public class DialogueBox : MonoBehaviour
         StartCoroutine(DisplayEnumerable);
     }
     
-    IEnumerator Display(string textToDisplay)
+    IEnumerator Display(string[] textToDisplay)
     {
         isEnumeratorRunning = true;
         int i = 0;
-        while (i < textToDisplay.Length)
+        for(int j = 0; j < textToDisplay.Length; j++)
         {
-            DialogueText.text += textToDisplay[i];
-            i++;
-            yield return new WaitForSeconds(TimeBtwLetters);
+            DialogueText.text = "";
+            while (i < textToDisplay[j].Length)
+            {
+                
+                DialogueText.text += textToDisplay[j][i];
+                i++;
+                yield return new WaitForSecondsRealtime(TimeBtwLetters);
+            }
+
+            i = 0;
+            yield return new WaitForSecondsRealtime(TimeBtwTexts); 
         }
+        
+        
+
+        yield return new WaitForSecondsRealtime(TextTimeOnScreen);
+        DialogueText.text = "";
+        Lookat = null;
+        transform.position = defaultPosition;
+
         isEnumeratorRunning = false;
 
-        yield return new WaitForSeconds(TextTimeOnScreen);
-        DialogueText.text = "";
     }
     
 }

@@ -37,6 +37,8 @@ public class PlayerCookingInventory : MonoBehaviour
     float _curAnimProgress;
     Coroutine _curShowRoutine;
 
+    [SerializeField] int[] _damageFactor;
+
     public static PlayerCookingInventory Instance
     {
         get => _instance;
@@ -223,23 +225,48 @@ public class PlayerCookingInventory : MonoBehaviour
             return;
         }
 
+
+        m_playerAttackScript._color = _recipe[0].color;
+
         //Fuse ingredients's effects and stats
+        float averageDmg = 0;
         foreach (ProjectileData ingredient in _recipe)
         {
-
+            Debug.Log(m_playerAttackScript);
             m_playerAttackScript._size += ingredient._size;
             m_playerAttackScript._speed += ingredient._speed;
             m_playerAttackScript._drag += ingredient._drag;
             m_playerAttackScript._shootCooldown += ingredient._attackDelay;
-            m_playerAttackScript._damage += ingredient._damage;
-
-
+            averageDmg += ingredient._damage;
+            //m_playerAttackScript._damage += ingredient._damage;
+            m_playerAttackScript._ammunition += ingredient._ammunition;
+            AmmunitionBar.instance.AddIngredientAmmo(ingredient._ammunition);
             //Add effects
-            foreach (IIngredientEffects effect in ingredient._effects)
+            foreach (IIngredientEffects effect in ingredient.Effects)
             {
-                m_playerAttackScript._effects.Add(effect);
+                if(effect != null)
+                {
+                    
+                    m_playerAttackScript._effects.Add(effect);
+                }
             }
         }
+        averageDmg /= _recipe.Count;
+
+        switch (_recipe.Count)
+        {
+            case 1:
+                averageDmg *= _damageFactor[0];
+                break;
+            case 2:
+                averageDmg *= _damageFactor[1];
+                break;
+            case 3:
+                averageDmg *= _damageFactor[2];
+                break;
+
+        }
+        m_playerAttackScript._damage = averageDmg;
 
         //Average rate of fire
         m_playerAttackScript._shootCooldown /= _recipe.Count;
