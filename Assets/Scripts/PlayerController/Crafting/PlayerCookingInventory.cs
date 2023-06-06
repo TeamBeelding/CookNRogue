@@ -37,7 +37,7 @@ public class PlayerCookingInventory : MonoBehaviour
     float _curAnimProgress;
     Coroutine _curShowRoutine;
 
-    [SerializeField] int[] _damageFactor;
+    [SerializeField] float[] _damageFactor;
 
     public static PlayerCookingInventory Instance
     {
