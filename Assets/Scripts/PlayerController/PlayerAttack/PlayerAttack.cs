@@ -32,7 +32,13 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField]private bool _isShooting = false;
     [SerializeReference]
     public List<IIngredientEffects> _effects = new List<IIngredientEffects>();
+
     bool _shootOnCooldown = false;
+    public bool ShootOnCooldown
+    {
+        get => _shootOnCooldown;
+    }
+
     Coroutine _curShootDelay;
 
     PlayerController _playerController;
@@ -50,12 +56,15 @@ public class PlayerAttack : MonoBehaviour
 
         _ammunitionBar = AmmunitionBar.instance;
 
-        _ammunitionBar.InitAmmoBar(0);
+        if (_ammunitionBar)
+        {
+            _ammunitionBar.InitAmmoBar(0);
+        }
 
         ResetParameters();
     }
 
-   
+
 
     public void SetIsShooting(bool isShooting)
     {
@@ -76,7 +85,6 @@ public class PlayerAttack : MonoBehaviour
         //BulletInstantiate
         StartCoroutine(Shootbullets(_TimeBtwShotsRafale));
         
-
         //Shoot Bullet
         _curShootDelay = StartCoroutine(ShootDelay(_shootCooldown));
         
@@ -215,7 +223,7 @@ public class PlayerAttack : MonoBehaviour
         Material splashmat = Instantiate(RenderModule.sharedMaterials[0]);
         splashmat.SetColor("_Color",color);
         RenderModule.material = splashmat;
-
+        /*
         var ps = bullet.transform.GetChild(1).GetChild(0).GetComponent<ParticleSystem>();
         var psMain = ps.main;
         var grad = psMain.startColor.gradient;
@@ -225,6 +233,11 @@ public class PlayerAttack : MonoBehaviour
         grad.colorKeys = keys;
 
         psMain.startColor = grad;
+        */
+        var BubbleRenderModule = bullet.transform.GetChild(1).GetChild(0).GetComponent<ParticleSystemRenderer>();
+        Material Bubblemat = Instantiate(BubbleRenderModule.sharedMaterials[0]);
+        Bubblemat.SetColor("_EmissionColor", color);
+        BubbleRenderModule.material = Bubblemat;
     }
 
     void OnAmmunitionChange()
@@ -264,8 +277,6 @@ public class PlayerAttack : MonoBehaviour
         _drag = 0;
         _shootCooldown = 0.5f;
         _damage = 1;
-        //A CHANGER DANS LE FUTUR
-        _muzzle = GameObject.Find("CharacterModel").transform;
         //m_knockbackScript = GameObject.Find("CharacterModel").GetComponent<PlayerKnockback>();
     }
 

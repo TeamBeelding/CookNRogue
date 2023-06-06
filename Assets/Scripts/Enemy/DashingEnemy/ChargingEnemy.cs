@@ -63,6 +63,8 @@ namespace Enemy.DashingEnemy
     
         private void SetState(State value)
         {
+            StopAllCoroutines();
+        
             state = value;
             
             StateManagement();

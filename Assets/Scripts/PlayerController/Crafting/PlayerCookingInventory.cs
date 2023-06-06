@@ -223,12 +223,13 @@ public class PlayerCookingInventory : MonoBehaviour
             return;
         }
 
+
         m_playerAttackScript._color = _recipe[0].color;
 
         //Fuse ingredients's effects and stats
         foreach (ProjectileData ingredient in _recipe)
         {
-
+            Debug.Log(m_playerAttackScript);
             m_playerAttackScript._size += ingredient._size;
             m_playerAttackScript._speed += ingredient._speed;
             m_playerAttackScript._drag += ingredient._drag;
