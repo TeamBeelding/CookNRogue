@@ -27,21 +27,25 @@ public class AmmunitionBar : MonoBehaviour
     }
     public void InitAmmoBar(int ammoNbr)
     {
-        Debug.Log("init ammo");
         _ammoBar.maxValue= _playerAttack._ammunition;
         _ammoBar.value= _playerAttack._ammunition;
     }
 
     public void UpdateAmmoBar()
     {
-        Debug.Log("update ammo");
         _ammoBar.value = _playerAttack._ammunition;
-        _ammoText.text = _ammoBar.value.ToString();
+        UpdateAmmoText();
     }
     public void AddIngredientAmmo(int nbr)
     {
         _ammoBar.maxValue += nbr;
         _ammoBar.value += nbr;
-        _ammoText.text = _ammoBar.value.ToString();
+        UpdateAmmoText();
+    }
+
+    public void UpdateAmmoText()
+    {
+        if (_ammoText)
+            _ammoText.text = _ammoBar.value.ToString();
     }
 }
