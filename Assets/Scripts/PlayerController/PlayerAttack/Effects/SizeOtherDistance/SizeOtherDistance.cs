@@ -10,13 +10,16 @@ public class SizeOtherDistance : IIngredientEffects
     [SerializeField] float _minSize;
     [SerializeField] float _maxSize;
     [SerializeField] AnimationCurve _size;
-    
+    ChangeSizeOverDistance _changeSizeOverDistance;
+    PlayerBulletBehaviour _playerBulletBehaviour;
+
     //EFFET LORS DU SHOOT
     public void EffectOnShoot(Vector3 Position, GameObject bullet)
     {
         Debug.Log("SizeOtherDistanceShootEffect");
         //bullet.GetComponent<Transform>().localScale *= m_sizeFactor; //OLD
-        ChangeSizeOverDistance _changeSizeOverDistance = bullet.AddComponent<ChangeSizeOverDistance>();
+        _changeSizeOverDistance = bullet.AddComponent<ChangeSizeOverDistance>();
+        _playerBulletBehaviour = bullet.GetComponent<PlayerBulletBehaviour>();
         Keyframe[] keyframes = _size.keys;
 
         keyframes[0].value = _minSize;
@@ -30,6 +33,8 @@ public class SizeOtherDistance : IIngredientEffects
     public void EffectOnHit(Vector3 Position, GameObject HitObject, Vector3 direction)
     {
         Debug.Log("SizeOtherDistanceHitEffect");
+        Debug.Log(_changeSizeOverDistance.GetCurve().Evaluate(_changeSizeOverDistance.timePassed));
+        _playerBulletBehaviour._damage *= (int)_changeSizeOverDistance.GetCurve().Evaluate(_changeSizeOverDistance.timePassed);
 
     }
 }
