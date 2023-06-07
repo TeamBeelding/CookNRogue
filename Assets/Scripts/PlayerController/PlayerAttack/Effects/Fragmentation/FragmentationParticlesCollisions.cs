@@ -28,6 +28,7 @@ public class FragmentationParticlesCollisions : MonoBehaviour
     }
     void OnParticleCollision(GameObject other)
     {
+
         int numCollisionEvents = _part.GetCollisionEvents(other, _collisionEvents);
 
         int i = 0;
@@ -38,13 +39,12 @@ public class FragmentationParticlesCollisions : MonoBehaviour
             
             if (enemyController != null)
             {
-                Debug.Log("enemy");
                 float totalDamage = _damage * (_damage_percentage / 100);
                 enemyController.TakeDamage((int)_damage);
                 GameObject UIDAMAGE = Instantiate(DamageUI, other.transform.position + (Vector3.up * 3) + GetCameraDirection() * 0.5f, Quaternion.identity);
                 UIDAMAGE.GetComponentInChildren<TextMeshProUGUI>().text = _damage.ToString();
             }
-            kaboom(other.transform.position);
+            //kaboom(other.transform.position);
             i++;
         }
         
