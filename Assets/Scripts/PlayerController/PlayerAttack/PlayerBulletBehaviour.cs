@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering.VirtualTexturing;
 
 public class PlayerBulletBehaviour : MonoBehaviour
 {
@@ -25,6 +26,7 @@ public class PlayerBulletBehaviour : MonoBehaviour
     public LayerMask _rayMask;
     public GameObject Explosion;
     public GameObject DamageUI;
+
     protected virtual void Start()
     {
         /*ParticleSystem.MainModule part = GetComponentInChildren<ParticleSystem>().main;
@@ -32,10 +34,11 @@ public class PlayerBulletBehaviour : MonoBehaviour
 
         rb.drag = drag;
         rb.velocity = direction * speed;*/
+
         Invoke("DestroyBullet", 1);
         _initialSpeed = _speed;
     }
-
+   
     protected virtual void FixedUpdate()
     {
         //rb.AddForce(gravity * rb.mass);
@@ -80,8 +83,8 @@ public class PlayerBulletBehaviour : MonoBehaviour
              other.GetComponentInParent<EnemyController>().TakeDamage(_damage, _isCritical);
 
             GameObject UIDAMAGE = Instantiate(DamageUI, other.transform.position + (Vector3.up * 3) + GetCameraDirection() * 0.5f, Quaternion.identity);
-            //UIDAMAGE.GetComponentInChildren<TextMeshProUGUI>().text = _damage.ToString();
-            UIDAMAGE.GetComponentInChildren<TextMeshProUGUI>().text = "RATIO";
+            UIDAMAGE.GetComponentInChildren<TextMeshProUGUI>().text = _damage.ToString();
+            //UIDAMAGE.GetComponentInChildren<TextMeshProUGUI>().text = "RATIO";
 
             Destroy(UIDAMAGE, 1);
 
