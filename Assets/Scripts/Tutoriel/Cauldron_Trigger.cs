@@ -13,17 +13,9 @@ namespace Tutoriel
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Player"))
-            {
                 tutorialManager.DisplayText();
-                
-                // if (tutorialManager.Step == 0)
-                //     tutorialManager.ApproachCauldron();
-                //
-                // if (tutorialManager.Step == 1)
-                //     StartCoroutine(ValidateIngredientRoutine());
-            } 
         }
-
+        
         IEnumerator ValidateIngredientRoutine()
         {
             yield return new WaitForSecondsRealtime(3);

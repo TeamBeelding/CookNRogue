@@ -796,6 +796,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8084719152466889935, guid: 25b058fb35590c347a45a7e70a99f2ec,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 92796d51abf541d4b896d9d317e5e849, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 25b058fb35590c347a45a7e70a99f2ec, type: 3}
 --- !u!1 &485295503
@@ -1591,6 +1596,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8435914716660352086, guid: 4f1d931103cb2404580d27bd24717df0,
+        type: 3}
+      propertyPath: isOnTutorial
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8435914716660352086, guid: 4f1d931103cb2404580d27bd24717df0,
+        type: 3}
+      propertyPath: tutorialManager
+      value: 
+      objectReference: {fileID: 1547541243}
     - target: {fileID: 8435914716660352095, guid: 4f1d931103cb2404580d27bd24717df0,
         type: 3}
       propertyPath: m_Name
@@ -2796,7 +2811,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 727902d1cf818cc4892dc4e1863842f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _tutorialStep: 0
+  _tutorialStep: 1
+  distanceToCauldron: 5
+  distanceCloseEnough: 3
   isMoving: 0
   isCooking: 0
   isAiming: 0
@@ -2806,7 +2823,7 @@ MonoBehaviour:
   cauldron: {fileID: 101830236}
   dialogue:
   - Ratio Leo
-  - Ratio
+  - Ratio Tom
 --- !u!1 &1610159281
 GameObject:
   m_ObjectHideFlags: 0

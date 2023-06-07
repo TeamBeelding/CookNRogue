@@ -11,6 +11,7 @@ public class Dialogue
 {
     public string[] dialogues;
 }
+
 public class DialogueBox : MonoBehaviour
 {
     [SerializeField] Vector3 defaultPosition;
@@ -83,8 +84,6 @@ public class DialogueBox : MonoBehaviour
             i = 0;
             yield return new WaitForSecondsRealtime(TimeBtwTexts); 
         }
-        
-        
 
         yield return new WaitForSecondsRealtime(TextTimeOnScreen);
         DialogueText.text = "";

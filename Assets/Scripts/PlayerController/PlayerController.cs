@@ -1,6 +1,7 @@
 using UnityEngine.InputSystem;
 using UnityEngine;
 using System.Collections;
+using Tutoriel;
 using static UnityEngine.ParticleSystem;
 
 [RequireComponent(typeof(Rigidbody), typeof(Collider))]
@@ -138,6 +139,12 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 
+    #region Tutorial
+    [Header("Tutorial")]
+    [SerializeField] private bool isOnTutorial = false;
+    [SerializeField] private TutorialManager tutorialManager;
+    #endregion
+    
     private void Awake()
     {
         if(_instance != null)
@@ -387,6 +394,17 @@ public class PlayerController : MonoBehaviour
         {
             _rb.velocity = new Vector3(direction.x, 0, direction.z) * m_maxMoveSpeed;
         }
+        
+        CheckingIfPlayerIsMovingForTutorial();
+    }
+
+    private void CheckingIfPlayerIsMovingForTutorial()
+    {
+        if (!tutorialManager)
+            return;
+        
+        if (isOnTutorial)
+            tutorialManager.SetIsMoving(true);
     }
 
     //Dash

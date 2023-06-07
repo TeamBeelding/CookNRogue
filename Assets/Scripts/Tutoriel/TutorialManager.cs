@@ -23,6 +23,9 @@ namespace Tutoriel
         }
         
         [SerializeField] private TutorialStep _tutorialStep;
+        [SerializeField] private float distanceToCauldron = 2f;
+        [SerializeField] private float distanceCloseEnough = 1f;
+        private bool isCloseEnough = false;
         
         [SerializeField]
         private bool isMoving = false;
@@ -49,10 +52,12 @@ namespace Tutoriel
         [SerializeField] private string[] dialogue;
         private DialogueBox _dialogueBox;
         private string textToDisplay = "";
+        private GameObject player;
 
         private void Start()
         {
             _dialogueBox = GameObject.FindObjectOfType<DialogueBox>();
+            player = GameObject.FindGameObjectWithTag("Player");
             
             SetTutorialState(TutorialStep.Move);
         }
@@ -60,6 +65,7 @@ namespace Tutoriel
         private void Update()
         {
             StateManagement();
+            DistanceCheck();
         }
 
         // public int Step => _step;
@@ -107,6 +113,15 @@ namespace Tutoriel
             }
         }
         
+        private void DistanceCheck()
+        {
+            if (Vector3.Distance(player.transform.position, cauldron.transform.position) <= distanceToCauldron)
+            {
+                if (Vector3.Distance(player.transform.position, cauldron.transform.position) <= distanceCloseEnough)
+                    isCloseEnough = true;
+            }
+        }
+        
         public void DisplayText()
         {
             if (string.IsNullOrEmpty(textToDisplay))
@@ -121,11 +136,25 @@ namespace Tutoriel
             if (GetIsMoving())
                 SetTutorialState(TutorialStep.ApproachCauldron);
         }
+        
+        public void SetIsMoving(bool value)
+        {
+            isMoving = value;
+        }
 
         private void ApproachCauldron()
         {
             _step = 1;
-            textToDisplay = dialogue[0];
+
+            if (!isCloseEnough)
+            {
+                textToDisplay = dialogue[0];
+            }
+            else
+            {
+                textToDisplay = dialogue[1];
+            }
+            
             // string[] dialogueToDisplay = { dialogue[0] };
             // _dialogueBox.DisplayDialogueText(dialogueToDisplay, cauldron.transform);
         }
@@ -188,6 +217,14 @@ namespace Tutoriel
         public void ShowInteractButton()
         {
         
+        }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(cauldron.transform.position, distanceToCauldron);
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireSphere(cauldron.transform.position, distanceCloseEnough);
         }
     }
 }
