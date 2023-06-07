@@ -6,6 +6,74 @@
 				<Property Name="Color" Type="int16" Value="10"/>
 				<Property Name="OverrideColor" Type="bool" Value="True"/>
 			</PropertyList>
+			<ChildrenList>
+				<Event Name="Play_SFX_Carrot_Attack" ID="{0520D982-DB91-4F13-A39D-B20AAC96AC02}">
+					<ChildrenList>
+						<Action Name="" ID="{531EB6D6-FA8F-40D2-AF37-47891219E914}" ShortID="331081826">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="RC_Carrot_Attack" ID="{7ABF1192-FAEF-4FE5-BF80-D52B37D78D1F}" WorkUnitID="{23B15D27-5212-492F-AB18-D64924507D5D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_SFX_Carrot_Death" ID="{D67F8858-8C80-48BC-B033-91802B61AA84}">
+					<ChildrenList>
+						<Action Name="" ID="{79553540-97FD-4B37-8931-A60AAD83F71C}" ShortID="49736054">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+								<Property Name="FadeTime" Type="Real64" Value="0.5"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="AM_Carrot" ID="{C292DA15-71E5-437A-B440-5F84CC5F0A39}" WorkUnitID="{23B15D27-5212-492F-AB18-D64924507D5D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+						<Action Name="" ID="{B1A02AC2-A81E-4BBB-9824-FD238142D7D3}" ShortID="57904893">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="RC_Carrot_Death" ID="{641F647D-88BC-4EB1-924F-4F7379F91B44}" WorkUnitID="{23B15D27-5212-492F-AB18-D64924507D5D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_SFX_Carrot_Dive" ID="{1F78F662-F03F-4891-9A54-469AE73667E9}">
+					<ChildrenList>
+						<Action Name="" ID="{11DB1871-13E8-463E-AD97-63FA68580655}" ShortID="772763654">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="RC_Carrot_Dive" ID="{FEAF7D72-E1F1-4A10-89A7-7AF2448A71FD}" WorkUnitID="{23B15D27-5212-492F-AB18-D64924507D5D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_SFX_Carrot_Erupt" ID="{E96E4173-77D7-4396-8752-45B867803833}">
+					<ChildrenList>
+						<Action Name="" ID="{DBFCCD0E-7CA4-4D20-A2B4-F61AAC927BA1}" ShortID="346986723">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="RC_Carrot_Erupt" ID="{1B9DCB5B-9E37-4771-A074-5335ED40A72D}" WorkUnitID="{23B15D27-5212-492F-AB18-D64924507D5D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_SFX_Carrot_Hit" ID="{A93A05E1-3E1F-48BC-A2F4-D26FB1752132}">
+					<ChildrenList>
+						<Action Name="" ID="{8E942903-D0AE-41AC-B8CC-3F9CFBF11279}" ShortID="289701834">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="RC_Carrot_Hit" ID="{375AAE42-D864-4960-B892-B9F42FD80850}" WorkUnitID="{23B15D27-5212-492F-AB18-D64924507D5D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+			</ChildrenList>
 		</WorkUnit>
 	</Events>
 </WwiseDocument>

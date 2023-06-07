@@ -79,6 +79,28 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="Play_SFX_Cabbage_Death" ID="{AD9715DB-F5E9-4633-BF74-3A5379302E06}">
+					<ChildrenList>
+						<Action Name="" ID="{7CBF9700-4D9B-4C77-B42E-519E510E9C02}" ShortID="135442947">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+								<Property Name="Delay" Type="Real64" Value="0.5"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="AM_Cabagge" ID="{2E0EBD3B-4854-4EAE-B096-93C3C436047E}" WorkUnitID="{23B15D27-5212-492F-AB18-D64924507D5D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+						<Action Name="" ID="{87500CED-092F-46A0-BC29-F9EE09A6790F}" ShortID="586306469">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="RC_Cabbage_Death" ID="{B27BFC50-0249-4143-967B-480896D8002D}" WorkUnitID="{23B15D27-5212-492F-AB18-D64924507D5D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

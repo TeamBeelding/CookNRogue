@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{44FC754A-57DD-4F1A-98CC-E00951906E12}" SchemaVersion="110" RootDocumentID="{899603F8-092E-4FB8-93A5-00C3DC23A21E}" ParentDocumentID="{899603F8-092E-4FB8-93A5-00C3DC23A21E}">
+	<Events>
+		<WorkUnit Name="SFX_Other" ID="{44FC754A-57DD-4F1A-98CC-E00951906E12}" OwnerID="{899603F8-092E-4FB8-93A5-00C3DC23A21E}" PersistMode="Nested">
+			<PropertyList>
+				<Property Name="Color" Type="int16" Value="8"/>
+				<Property Name="OverrideColor" Type="bool" Value="True"/>
+			</PropertyList>
+			<ChildrenList>
+				<Event Name="Play_SFX_Ingredient_Collect" ID="{0D70963F-62BB-4542-B19F-14C14DD30A61}">
+					<ChildrenList>
+						<Action Name="" ID="{26DA7352-1E49-43CC-951B-91CEA4C45271}" ShortID="649299509">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="RC_Ingredient_Collect" ID="{08B67F05-D573-4D28-B908-9908DF91C035}" WorkUnitID="{3CE9A9BC-F960-482A-AEE6-287A4C6E7543}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_SFX_Cook" ID="{D3972F85-A11E-4713-9E41-F46ED0800A55}">
+					<ChildrenList>
+						<Action Name="" ID="{9B260BFD-E0C2-46EF-B62D-5621E5C62A43}" ShortID="555816987">
+							<PropertyList>
+								<Property Name="FadeTime" Type="Real64" Value="0.2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="SFX_Cook" ID="{71008A78-E35A-4E4B-A3FB-1839BC0C3014}" WorkUnitID="{3CE9A9BC-F960-482A-AEE6-287A4C6E7543}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Stop_SFX_Cook" ID="{F687D5B9-6DD4-4E56-B924-5FFCF21CED29}">
+					<ChildrenList>
+						<Action Name="" ID="{86FB6FDC-F921-485D-B9D5-B8E53152F11C}" ShortID="22045301">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+								<Property Name="FadeTime" Type="Real64" Value="0.2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="SFX_Cook" ID="{71008A78-E35A-4E4B-A3FB-1839BC0C3014}" WorkUnitID="{3CE9A9BC-F960-482A-AEE6-287A4C6E7543}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_SFX_Door_Open" ID="{DDDB33C6-D5E8-4EE8-B87B-37C8A0634210}">
+					<ChildrenList>
+						<Action Name="" ID="{3A944A52-C9C5-444C-8EC4-1C215EEE4CAE}" ShortID="494025102">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="SFX_Door_Open" ID="{3E135ABF-0DDB-4807-A39E-09BA2161B044}" WorkUnitID="{3CE9A9BC-F960-482A-AEE6-287A4C6E7543}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+			</ChildrenList>
+		</WorkUnit>
+	</Events>
+</WwiseDocument>

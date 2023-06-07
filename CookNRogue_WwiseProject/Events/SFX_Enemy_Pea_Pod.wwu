@@ -6,6 +6,70 @@
 				<Property Name="Color" Type="int16" Value="10"/>
 				<Property Name="OverrideColor" Type="bool" Value="True"/>
 			</PropertyList>
+			<ChildrenList>
+				<Event Name="Play_SFX_Pea_Pod_Footsteps" ID="{B4AC8EE7-70F8-452F-A4D8-E974AF71E4C0}">
+					<ChildrenList>
+						<Action Name="" ID="{C5E32049-C051-4A9E-A1FE-539D503A86B7}" ShortID="924323817">
+							<PropertyList>
+								<Property Name="FadeTime" Type="Real64" Value="0.1"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="SFX_Pea_Pod_Movement_V1" ID="{1E597F50-4468-4C40-A508-DBC04CB53E9D}" WorkUnitID="{23B15D27-5212-492F-AB18-D64924507D5D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Stop_SFX_Pea_Pod_Footsteps" ID="{C99F1B97-BC26-4557-91DD-FCA99DEBF7A8}">
+					<ChildrenList>
+						<Action Name="" ID="{DD6345F7-57A8-4FF1-B00F-A4595E9E2B64}" ShortID="625840572">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+								<Property Name="FadeTime" Type="Real64" Value="0.2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="SFX_Pea_Pod_Movement_V1" ID="{1E597F50-4468-4C40-A508-DBC04CB53E9D}" WorkUnitID="{23B15D27-5212-492F-AB18-D64924507D5D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_SFX_Pea_Pod_Hit" ID="{22F2511F-64E3-4419-BFD9-E8C7075B082F}">
+					<ChildrenList>
+						<Action Name="" ID="{54B3A442-AADE-45EF-AC99-E76630051FAB}" ShortID="612615894">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="RC_Pea_Pod_Hit" ID="{6DC5772E-52C1-4378-8636-D1B3D40349F4}" WorkUnitID="{23B15D27-5212-492F-AB18-D64924507D5D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_SFX_Pea_Pod_Death" ID="{AE7DBF1C-7354-4D38-BEFD-B864941C8C4D}">
+					<ChildrenList>
+						<Action Name="" ID="{3FE4FDF9-4F35-4986-8951-05DF0DB883A8}" ShortID="404192469">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+								<Property Name="FadeTime" Type="Real64" Value="0.5"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="AM_Pea_Pod" ID="{FD88AE07-5AEA-4C97-801A-402D466C7B3D}" WorkUnitID="{23B15D27-5212-492F-AB18-D64924507D5D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+						<Action Name="" ID="{92DACB79-89C4-423A-8715-95EB211D1089}" ShortID="106697416">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="BLD_Pea_Pod_Death" ID="{B021F3F2-5994-459F-8264-5BC7B65CC94C}" WorkUnitID="{23B15D27-5212-492F-AB18-D64924507D5D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+			</ChildrenList>
 		</WorkUnit>
 	</Events>
 </WwiseDocument>

@@ -51,6 +51,39 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="Play_SFX_Corn_Hit" ID="{54E42E76-38E8-4311-9E61-9E1DB1CFD033}">
+					<ChildrenList>
+						<Action Name="" ID="{ED4C4B42-C13E-41C0-864C-DB43A580CB1D}" ShortID="456300403">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="RC_Corn_Hit" ID="{342D1BBE-98E9-403F-9622-2A731B91625C}" WorkUnitID="{23B15D27-5212-492F-AB18-D64924507D5D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_SFX_Corn_Death" ID="{A1F70922-F5AC-4641-B9C1-9E695FBA393A}">
+					<ChildrenList>
+						<Action Name="" ID="{2F0F61FC-827E-4B78-86BB-D65B9283F6A8}" ShortID="734590884">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="RC_Corn_Death" ID="{E42A7FFF-5DBF-473F-8B4F-70D4FC25521D}" WorkUnitID="{23B15D27-5212-492F-AB18-D64924507D5D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+						<Action Name="" ID="{E07347C3-B092-4599-9693-08CC9CA7396B}" ShortID="619447771">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+								<Property Name="FadeTime" Type="Real64" Value="0.5"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="AM_Corn" ID="{5B405CE8-E109-4B45-B900-551AD5FCCD1C}" WorkUnitID="{23B15D27-5212-492F-AB18-D64924507D5D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

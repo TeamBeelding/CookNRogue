@@ -6,6 +6,52 @@
 				<Property Name="Color" Type="int16" Value="10"/>
 				<Property Name="OverrideColor" Type="bool" Value="True"/>
 			</PropertyList>
+			<ChildrenList>
+				<Event Name="Play_SFX_Pea_Spawn" ID="{9D4A9317-750B-429E-AC6B-3EC01E7FFF76}">
+					<ChildrenList>
+						<Action Name="" ID="{B9D4264B-B4CA-46D1-9132-6138F426F8FB}" ShortID="181431189">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="RC_Pea_Spawn" ID="{076EBAD9-4A3C-4219-9DF3-CA03E2E4445F}" WorkUnitID="{23B15D27-5212-492F-AB18-D64924507D5D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_SFX_Pea_Footsteps" ID="{A4AC2106-42AC-4695-A11A-A050D6267A27}">
+					<ChildrenList>
+						<Action Name="" ID="{0FD2491F-E5BB-4E7A-A15A-AFE614B3B979}" ShortID="710936466">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="RC_Pea_Footsteps" ID="{4D6EBA44-42A4-4977-95E9-62891CDACCEC}" WorkUnitID="{23B15D27-5212-492F-AB18-D64924507D5D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_SFX_Pea_Death" ID="{345A60E6-50E5-4048-A52E-294C32095267}">
+					<ChildrenList>
+						<Action Name="" ID="{0BD43FA2-F30D-4496-AD98-077D2EE3D4E2}" ShortID="110712754">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="RC_Pea_Death" ID="{DD7CDA29-F0E2-4E7A-9095-0FFB6D554E55}" WorkUnitID="{23B15D27-5212-492F-AB18-D64924507D5D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+						<Action Name="" ID="{31070A52-6318-4ED6-9A18-1E776331CEA6}" ShortID="1042244148">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+								<Property Name="FadeTime" Type="Real64" Value="0.5"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="AM_Pea" ID="{49D79977-0B91-40D0-88CD-FF8A7470F2B4}" WorkUnitID="{23B15D27-5212-492F-AB18-D64924507D5D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+			</ChildrenList>
 		</WorkUnit>
 	</Events>
 </WwiseDocument>

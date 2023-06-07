@@ -42,7 +42,7 @@
 						<CurrentStateRef Name="NotInFight" ID="{99F50B97-DF6B-4507-AEA0-78A4EF50F02C}"/>
 						<CurrentStateRef Name="No" ID="{5C125057-6040-4683-8869-8BE92D7819E3}"/>
 						<CurrentStateRef Name="No" ID="{4493FE48-50C5-47F8-B43F-4E09DDB6A24C}"/>
-						<CurrentStateRef Name="No" ID="{500BBCD4-41DD-4114-A7B7-E80DDD1FDFF5}"/>
+						<CurrentStateRef Name="Yes" ID="{E46FF56A-B42F-4DFB-86FB-7A6D397AD57A}"/>
 						<CurrentStateRef Name="OutCookingMenu" ID="{F48474B2-E070-43CA-9C12-219BE4A7071C}"/>
 						<CurrentStateRef Name="No" ID="{BE8C6E05-AFD6-4581-B2B1-1A1C0FF99FC7}"/>
 						<CurrentStateRef Name="No" ID="{0C657B57-07C5-44B3-A91A-B6D8300B0D1A}"/>
@@ -96,8 +96,16 @@
 							<Position X="0" Y="2"/>
 						</Module>
 						<Module>
+							<ObjectRef Name="Play_Weapon_Shot" ID="{AB7691CF-8CE4-44B3-AC9C-F27B4D3F8C65}" WorkUnitID="{3ACD8602-9C03-4508-96EF-687EE3AEFC09}"/>
+							<Position X="0" Y="3"/>
+						</Module>
+						<Module>
 							<ObjectRef Name="Play_MC_Run_Foley" ID="{3F4F1D00-958A-466B-AFD1-5038900B1F19}" WorkUnitID="{3ACD8602-9C03-4508-96EF-687EE3AEFC09}"/>
 							<Position X="1" Y="1"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Play_Weapon_Hit" ID="{F4FD84F7-45C5-4882-9432-AEC842F63B86}" WorkUnitID="{3ACD8602-9C03-4508-96EF-687EE3AEFC09}"/>
+							<Position X="1" Y="3"/>
 						</Module>
 						<Module>
 							<ObjectRef Name="Play_MC_Run_Footstep" ID="{2DA1DB7D-D75B-49C4-B3BF-8F8CF7DB6011}" WorkUnitID="{3ACD8602-9C03-4508-96EF-687EE3AEFC09}"/>
@@ -105,7 +113,15 @@
 						</Module>
 					</ModuleList>
 					<RTPCValueList ShowAll="true"/>
-					<CurrentStateList ShowAll="true"/>
+					<CurrentStateList ShowAll="true">
+						<CurrentStateRef Name="No" ID="{144C7942-6F35-4615-B074-23BA89CFF7FA}"/>
+						<CurrentStateRef Name="No" ID="{AC9A68A1-322E-4D8D-A79A-13D7E55C1355}"/>
+						<CurrentStateRef Name="No" ID="{5C125057-6040-4683-8869-8BE92D7819E3}"/>
+						<CurrentStateRef Name="No" ID="{500BBCD4-41DD-4114-A7B7-E80DDD1FDFF5}"/>
+						<CurrentStateRef Name="No" ID="{BE8C6E05-AFD6-4581-B2B1-1A1C0FF99FC7}"/>
+						<CurrentStateRef Name="No" ID="{0C657B57-07C5-44B3-A91A-B6D8300B0D1A}"/>
+						<CurrentStateRef Name="No" ID="{74F4D147-F738-4089-A311-99C6F683B723}"/>
+					</CurrentStateList>
 					<CurrentSwitchList ShowAll="true"/>
 				</SoundcasterSession>
 				<SoundcasterSession Name="Music_TEST" ID="{244ACE6D-982A-46F2-92ED-BD3B00D7BB96}">

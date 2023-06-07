@@ -98,6 +98,79 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="Play_Weapon_Hit" ID="{F4FD84F7-45C5-4882-9432-AEC842F63B86}">
+					<ChildrenList>
+						<Action Name="" ID="{48BB7C01-7B04-4949-84A0-6C6C8824EE82}" ShortID="147648741">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="BLD_Weapon_Hit" ID="{948DF6B3-06E8-4675-9758-2C769EB86BF1}" WorkUnitID="{95800B67-52C6-48DF-823F-E0CBD975D443}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_Weapon_Shot" ID="{AB7691CF-8CE4-44B3-AC9C-F27B4D3F8C65}">
+					<ChildrenList>
+						<Action Name="" ID="{741DD381-50CA-4193-AFD4-90057D391E8B}" ShortID="252875947">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+								<Property Name="FadeTime" Type="Real64" Value="0.5"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="BLD_Weapon_Shot" ID="{343EBD37-BD43-40F3-9794-90FBC5CD4E37}" WorkUnitID="{95800B67-52C6-48DF-823F-E0CBD975D443}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+						<Action Name="" ID="{BDE56F2C-DE10-43A6-9671-7106989AF4E3}" ShortID="931052521">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="BLD_Weapon_Shot" ID="{343EBD37-BD43-40F3-9794-90FBC5CD4E37}" WorkUnitID="{95800B67-52C6-48DF-823F-E0CBD975D443}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_Weapon_Bounce_Wall" ID="{7709B261-2298-4392-93BA-2D7147933C45}">
+					<ChildrenList>
+						<Action Name="" ID="{9675B845-FE7B-491E-8EE3-633E5F709DB3}" ShortID="1058714967">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="RC_Weapon_Hit_Tomato" ID="{C2814A0E-C14F-4154-8371-A5F405E4D81A}" WorkUnitID="{95800B67-52C6-48DF-823F-E0CBD975D443}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_MC_Death" ID="{18CCBCCF-8BFF-41DF-BAC2-1CB22FCA164C}">
+					<ChildrenList>
+						<Action Name="" ID="{4BB7AC30-EFE5-4540-A373-B0679FEACBB3}" ShortID="741049763">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="3"/>
+								<Property Name="FadeTime" Type="Real64" Value="2"/>
+							</PropertyList>
+							<ReferenceList/>
+						</Action>
+						<Action Name="" ID="{8D617386-19C1-43DF-8136-30C78585D03B}" ShortID="168086363">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="MC_Death" ID="{8C4A2ED5-1E59-40BD-9465-B9839A955C1C}" WorkUnitID="{95800B67-52C6-48DF-823F-E0CBD975D443}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_MC_Hit" ID="{B1EEA9B2-E45E-413B-AA6B-CC673BF9CB53}">
+					<ChildrenList>
+						<Action Name="" ID="{87237D28-39E5-4EB0-88B9-63B8DCCCC29B}" ShortID="284456857">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="RC_MC_Hit" ID="{4DE3E567-1203-476B-AB7A-6FA3853BC85E}" WorkUnitID="{95800B67-52C6-48DF-823F-E0CBD975D443}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

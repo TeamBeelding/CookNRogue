@@ -38,6 +38,27 @@
 							</ReferenceList>
 						</ActorMixer>
 					</ChildrenList>
+					<StateInfo>
+						<StateGroupList>
+							<StateGroupInfo>
+								<StateGroupRef Name="InFight" ID="{FE1DCA5E-8784-48FF-8945-E0036FCA005B}"/>
+							</StateGroupInfo>
+						</StateGroupList>
+						<CustomStateList>
+							<CustomState>
+								<StateRef Name="NotInFight" ID="{99F50B97-DF6B-4507-AEA0-78A4EF50F02C}"/>
+								<CustomState Name="" ID="{1DB914F8-0C74-474F-8442-2ADB05EF9EB3}" ShortID="556153676"/>
+							</CustomState>
+							<CustomState>
+								<StateRef Name="InFight" ID="{520D31D5-B746-4935-AFA5-95AFFA570329}"/>
+								<CustomState Name="" ID="{48EA145E-1815-4CF9-87AF-EC3D07BE5B66}" ShortID="252746519">
+									<PropertyList>
+										<Property Name="Volume" Type="Real64" Value="-5"/>
+									</PropertyList>
+								</CustomState>
+							</CustomState>
+						</CustomStateList>
+					</StateInfo>
 				</ActorMixer>
 			</ChildrenList>
 		</WorkUnit>
