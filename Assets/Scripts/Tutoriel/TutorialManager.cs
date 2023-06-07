@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -5,6 +6,22 @@ namespace Tutoriel
 {
     public class TutorialManager : MonoBehaviour
     {
+        public enum TutorialStep
+        {
+            ApproachCauldron,
+            ValidateIngredient,
+            UnValidateIngredient,
+            CookMenuOpen,
+            FoodSpawn,
+            LowTimeSpeed,
+            NormalTimeSpeed,
+            Aiming,
+            Shooting,
+            End
+        }
+        
+        [SerializeField] private TutorialStep _tutorialStep;
+        
         [SerializeField]
         private bool isMoving = false;
         [SerializeField]
@@ -35,7 +52,48 @@ namespace Tutoriel
             _dialogueBox = GameObject.FindObjectOfType<DialogueBox>();
         }
         
-        public int Step => _step;
+        // public int Step => _step;
+
+        public TutorialStep GetTutorialState()
+        {
+            return _tutorialStep;
+        }
+        
+        private void SetTutorialState(TutorialStep tutorialStep)
+        {
+            _tutorialStep = tutorialStep;
+            
+            StateManagement();
+        }
+
+        private void StateManagement()
+        {
+            switch (_tutorialStep)
+            {
+                case TutorialStep.ApproachCauldron:
+                    break;
+                case TutorialStep.ValidateIngredient:
+                    break;
+                case TutorialStep.UnValidateIngredient:
+                    break;
+                case TutorialStep.CookMenuOpen:
+                    break;
+                case TutorialStep.FoodSpawn:
+                    break;
+                case TutorialStep.LowTimeSpeed:
+                    break;
+                case TutorialStep.NormalTimeSpeed:
+                    break;
+                case TutorialStep.Aiming:
+                    break;
+                case TutorialStep.Shooting:
+                    break;
+                case TutorialStep.End:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
 
         public void ApproachCauldron()
         {

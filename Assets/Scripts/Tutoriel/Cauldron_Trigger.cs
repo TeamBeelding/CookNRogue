@@ -13,11 +13,11 @@ namespace Tutoriel
         {
             if (other.CompareTag("Player"))
             {
-                if (tutorialManager.Step == 0)
-                    tutorialManager.ApproachCauldron();
-            
-                if (tutorialManager.Step == 1)
-                    StartCoroutine(ValidateIngredientRoutine());
+                // if (tutorialManager.Step == 0)
+                //     tutorialManager.ApproachCauldron();
+                //
+                // if (tutorialManager.Step == 1)
+                //     StartCoroutine(ValidateIngredientRoutine());
             } 
         }
     
