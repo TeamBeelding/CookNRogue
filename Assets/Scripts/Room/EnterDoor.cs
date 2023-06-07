@@ -11,13 +11,14 @@ public class EnterDoor : MonoBehaviour
     [SerializeField]
     private bool m_isOpenOnStart = false;
 
+    [SerializeField]
+    private float m_doorOpeningDuration = 2f;
+    [SerializeField]
+    private AnimationCurve m_doorOpeningCurve;
+    [SerializeField]
+    private float m_refreshRate = 0.025f;
+
     private Material[] SkinnedMaterials;
-
-    [SerializeField]
-    private float dissolveRate = 0.0125f;
-
-    [SerializeField]
-    private float refreshRate = 0.025f;
 
     private void Start()
     {
@@ -58,17 +59,14 @@ public class EnterDoor : MonoBehaviour
     {
         if (SkinnedMaterials.Length > 0)
         {
-            float counter = 0;
-
-            while (SkinnedMaterials[0].GetFloat("_DissolveAmount") < 1)
+            for (float f = 0; f < m_doorOpeningDuration; f += m_refreshRate)
             {
-                counter += dissolveRate;
-                for (int i = 0; i < SkinnedMaterials.Length; i++)
-                {
-                    SkinnedMaterials[0].SetFloat("_DissolveAmount", counter);
-                }
-                yield return new WaitForSeconds(refreshRate);
+                float progress = f / m_doorOpeningDuration;
+                float animProgress = Mathf.Lerp(1, 0, m_doorOpeningCurve.Evaluate(progress));
+                SkinnedMaterials[0].SetFloat("_GrowValue", animProgress);
+                yield return new WaitForSeconds(m_refreshRate);
             }
+            SkinnedMaterials[0].SetFloat("_GrowValue", 0);
         }
         //OPEN GNE GNOOOOOR
         m_door.SetActive(false);
