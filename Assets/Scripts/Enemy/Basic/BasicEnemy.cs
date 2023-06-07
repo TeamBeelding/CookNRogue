@@ -23,6 +23,7 @@ namespace Enemy.Basic
         private Renderer stateRenderer;
 
         private Coroutine _chaseCoroutine;
+        [SerializeField]
         private Animator animator;
         public enum State
         {
@@ -44,7 +45,7 @@ namespace Enemy.Basic
             _agent.stoppingDistance = data.GetAttackRange;
             FocusPlayer = data.GetFocusPlayer;
             Healthpoint = data.GetHealth;
-        
+            animator = GetComponentInChildren<Animator>();
             stateRenderer = m_stateSystem.GetComponent<Renderer>();
         }
 
@@ -52,8 +53,8 @@ namespace Enemy.Basic
         protected override void Start()
         {
             SetState(FocusPlayer ? State.Chase : State.Neutral);
-            animator = GetComponentInChildren<Animator>();
             base.Start();
+            
         }
 
         private void FixedUpdate()
@@ -90,13 +91,14 @@ namespace Enemy.Basic
             switch (state)
             {
                 case State.Neutral:
-                    //animator.SetBool("isWalking", false);
+                    animator.SetBool("isWalking", false);
                     break;
                 case State.Chase:
-                    //animator.SetBool("isWalking", true);
+                    animator.SetBool("isWalking", true);
                     Chase();
                     break;
                 case State.Attack:
+                    animator.SetBool("isWalking", false);
                     Attack(Shot, data.GetAttackSpeed);
                     break;
                 case State.Dying:
@@ -120,6 +122,7 @@ namespace Enemy.Basic
 
             if (FocusPlayer)
             {
+                transform.LookAt(Player.transform);
                 if (Vector3.Distance(transform.position, Player.transform.position) <= data.GetRangeDetection && 
                     Vector3.Distance(transform.position, Player.transform.position) > data.GetAttackRange)
                 {
