@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
@@ -14,7 +13,6 @@ namespace Enemy.DashingEnemy
 
         private bool _isCharging = false;
         private bool _canShowingRedLine = false;
-        private bool _changeStateToWaiting = false;
     
         private Vector3 _direction;
 
@@ -22,7 +20,6 @@ namespace Enemy.DashingEnemy
         [SerializeField] private EnemyDashingData _data;
     
         private Material _redLineMaterial;
-        private bool _isRedLineFullVisible = false;
 
         [SerializeField]
         private GameObject visual;
@@ -99,24 +96,8 @@ namespace Enemy.DashingEnemy
         /// </summary>
         private void Dashing()
         {
-            RaycastHit hit;
-            Vector3 direction = (Player.transform.position - transform.position).normalized;
-            
-            if (Physics.Raycast(transform.position, direction, out hit, Vector3.Distance(transform.position, Player.transform.position)))
-            {
-                if (!hit.collider.CompareTag("Player"))
-                {
-                    Debug.DrawRay(transform.position, direction * hit.distance, Color.red);
-                    Debug.Log($"<color=red>{hit.collider.name}</color>");
-                    
-                    SetState(State.Casting);
-                    
-                    return;
-                }
-                
-                _isCharging = true;
-                StartCoroutine(ChargingToPlayer());
-            }
+            _isCharging = true;
+            StartCoroutine(ChargingToPlayer());
 
             IEnumerator ChargingToPlayer()
             {
@@ -149,9 +130,6 @@ namespace Enemy.DashingEnemy
         /// </summary>
         private void Casting()
         {
-            HideRedLine();
-            
-            _changeStateToWaiting = false;
             _isCharging = false;
             
             StartCoroutine(ICasting());
@@ -193,7 +171,6 @@ namespace Enemy.DashingEnemy
         private void WaitingAnotherDash()
         {
             _isCharging = false;
-            _isRedLineFullVisible = false;
             _canShowingRedLine = false;
 
             _waitingCoroutine = StartCoroutine(IWaiting());
