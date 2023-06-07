@@ -11,8 +11,6 @@ public class FragmentationParticlesCollisions : MonoBehaviour
     [SerializeField] private float m_ExplosionForce;
     [SerializeField] private float m_ExplosionRadius;
     private float _damage = 0f;
-    [Range(0f, 100f)]
-    [SerializeField] private float _damage_percentage;
     [SerializeField] private LayerMask _mask;
     PlayerAttack _playerAttack;
     public GameObject DamageUI;
@@ -38,9 +36,8 @@ public class FragmentationParticlesCollisions : MonoBehaviour
             
             if (enemyController != null)
             {
-                Debug.Log("enemy");
-                float totalDamage = _damage * (_damage_percentage / 100);
-                enemyController.TakeDamage((int)_damage);
+               Debug.Log("enemy");
+                enemyController.TakeDamage(_damage);
                 GameObject UIDAMAGE = Instantiate(DamageUI, other.transform.position + (Vector3.up * 3) + GetCameraDirection() * 0.5f, Quaternion.identity);
                 UIDAMAGE.GetComponentInChildren<TextMeshProUGUI>().text = _damage.ToString();
             }
