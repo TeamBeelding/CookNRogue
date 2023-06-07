@@ -240,6 +240,8 @@ public class PlayerAttack : MonoBehaviour
         Material Bubblemat = Instantiate(BubbleRenderModule.sharedMaterials[0]);
         Bubblemat.SetColor("_EmissionColor", color);
         BubbleRenderModule.material = Bubblemat;
+
+        bullet.transform.GetChild(0).GetComponent<MeshRenderer>().material.SetColor("_BaseColor",color);
     }
 
     void OnAmmunitionChange()
@@ -276,7 +278,7 @@ public class PlayerAttack : MonoBehaviour
         _size = 1;
         _speed = 1;
         _drag = 0;
-        _shootCooldown = 0.5f;
+        _shootCooldown = 0.1f;
         _damage = 1;
         //m_knockbackScript = GameObject.Find("CharacterModel").GetComponent<PlayerKnockback>();
     }
