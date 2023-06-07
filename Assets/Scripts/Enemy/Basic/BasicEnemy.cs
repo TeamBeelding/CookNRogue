@@ -7,7 +7,11 @@ using UnityEngine.AI;
 namespace Enemy.Basic
 {
     public class BasicEnemy : EnemyController
-    {
+    {[Header("Sound")]
+        [SerializeField]
+        private AK.Wwise.Event _Play_Weapon_Hit;
+        [SerializeField]
+        private AK.Wwise.Event _Play_SFX_Corn_Death;
         [SerializeField]
         private EnemyData data;
         [SerializeField]
@@ -183,11 +187,14 @@ namespace Enemy.Basic
         
             if (state == State.Neutral)
                 SetState(State.Chase);
-        
+               // _Play_Weapon_Hit.Post(gameObject);
+              
+
             if (Healthpoint <= 0)
             {
+                _Play_SFX_Corn_Death.Post(gameObject);
                 SetState(State.Dying);
-            }
+                           }
         }
     }
 }

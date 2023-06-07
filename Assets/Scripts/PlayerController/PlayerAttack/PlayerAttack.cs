@@ -34,6 +34,9 @@ public class PlayerAttack : MonoBehaviour
     [SerializeReference]
     public List<IIngredientEffects> _effects = new List<IIngredientEffects>();
 
+    [Header("Sound")]
+    [SerializeField] private AK.Wwise.Event _Play_Weapon_Shot;
+
     bool _shootOnCooldown = false;
     public bool ShootOnCooldown
     {
@@ -84,6 +87,7 @@ public class PlayerAttack : MonoBehaviour
             _shootingParticles.Play();
 
         _shootOnCooldown = true;
+        _Play_Weapon_Shot.Post(gameObject);
         //BulletInstantiate
         StartCoroutine(Shootbullets(_TimeBtwShotsRafale));
         

@@ -185,7 +185,7 @@ MonoBehaviour:
     ParentPath: SoundBanks\Default Work Unit
     guid: 079b2369da99e848b74f08b1453fc49a
     GuidInternal: 
-    m_lastTime: -8585161564976442221
+    m_lastTime: -8585154625931838072
     List:
     - name: AMB_Level
       guid: b3470b1d5cdeed4c9b1fe4825cd111dd
@@ -229,9 +229,9 @@ MonoBehaviour:
         ObjectType: 7
         guid: c5fdaa1e7711be4d95cccca9fc3bfd94
       Path: SoundBanks\Default Work Unit\AMB_Tuto
-    - name: SFX_Collectibles
-      guid: 63a2b92ba637da4eabec4982236d7e54
-      id: 1531576492
+    - name: MUSIC
+      guid: 2c9ae2faac27a44da2de2c9ebe0b0ca4
+      id: 3991942870
       PathAndIcons:
       - ElementName: SoundBanks
         ObjectType: 5
@@ -239,24 +239,10 @@ MonoBehaviour:
       - ElementName: Default Work Unit
         ObjectType: 12
         guid: 079b2369da99e848b74f08b1453fc49a
-      - ElementName: SFX_Collectibles
+      - ElementName: MUSIC
         ObjectType: 7
-        guid: 63a2b92ba637da4eabec4982236d7e54
-      Path: SoundBanks\Default Work Unit\SFX_Collectibles
-    - name: SFX_Cook
-      guid: 606c58d0fc052640998439a5407fe9e2
-      id: 3565386241
-      PathAndIcons:
-      - ElementName: SoundBanks
-        ObjectType: 5
-        guid: 00000000000000000000000000000000
-      - ElementName: Default Work Unit
-        ObjectType: 12
-        guid: 079b2369da99e848b74f08b1453fc49a
-      - ElementName: SFX_Cook
-        ObjectType: 7
-        guid: 606c58d0fc052640998439a5407fe9e2
-      Path: SoundBanks\Default Work Unit\SFX_Cook
+        guid: 2c9ae2faac27a44da2de2c9ebe0b0ca4
+      Path: SoundBanks\Default Work Unit\MUSIC
     - name: SFX_Enemy_Cabbage
       guid: 91c84d275d19544a96d35841bab5e6cc
       id: 2385921979
@@ -285,20 +271,6 @@ MonoBehaviour:
         ObjectType: 7
         guid: a25f1b2569ff784790cce684e9015837
       Path: SoundBanks\Default Work Unit\SFX_Enemy_Carrot
-    - name: SFX_Enemy_Common
-      guid: 42b4541784cb874188a12f32178b145d
-      id: 1828121741
-      PathAndIcons:
-      - ElementName: SoundBanks
-        ObjectType: 5
-        guid: 00000000000000000000000000000000
-      - ElementName: Default Work Unit
-        ObjectType: 12
-        guid: 079b2369da99e848b74f08b1453fc49a
-      - ElementName: SFX_Enemy_Common
-        ObjectType: 7
-        guid: 42b4541784cb874188a12f32178b145d
-      Path: SoundBanks\Default Work Unit\SFX_Enemy_Common
     - name: SFX_Enemy_Corn
       guid: 43bdedf38e8f724b9fd4807b310948d9
       id: 3871269544
@@ -355,6 +327,20 @@ MonoBehaviour:
         ObjectType: 7
         guid: d768ce7237c0c54ca099133bf02508fd
       Path: SoundBanks\Default Work Unit\SFX_MC
+    - name: SFX_Other
+      guid: c823984a0693d94f9fc7e5380a82bfa5
+      id: 2374353081
+      PathAndIcons:
+      - ElementName: SoundBanks
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 079b2369da99e848b74f08b1453fc49a
+      - ElementName: SFX_Other
+        ObjectType: 7
+        guid: c823984a0693d94f9fc7e5380a82bfa5
+      Path: SoundBanks\Default Work Unit\SFX_Other
     - name: SFX_UI
       guid: f9020fff9a9bae40a8326550d123e60a
       id: 3862737079
@@ -429,7 +415,7 @@ MonoBehaviour:
     ParentPath: Events\Default Work Unit
     guid: f80396892e09b84f93a500c3dc23a21e
     GuidInternal: 
-    m_lastTime: -8585161553849055772
+    m_lastTime: -8585154629226566944
     List: []
   - PhysicalPath: Events\MUSIC.wwu
     PathAndIcons:
@@ -445,40 +431,28 @@ MonoBehaviour:
     ParentPath: Events\Default Work Unit\MUSIC
     guid: 3d083c6b66596b4f922f5ccd77795c06
     GuidInternal: 
-    m_lastTime: -8585161553848906171
-    List: []
-  - PhysicalPath: Events\SFX_Collectibles.wwu
-    PathAndIcons:
-    - ElementName: Events
-      ObjectType: 5
-      guid: 00000000000000000000000000000000
-    - ElementName: Default Work Unit
-      ObjectType: 12
-      guid: f80396892e09b84f93a500c3dc23a21e
-    - ElementName: SFX_Collectibles
-      ObjectType: 12
-      guid: eaf5977de1f9f64eb5f6fc4fdcf6db83
-    ParentPath: Events\Default Work Unit\SFX_Collectibles
-    guid: eaf5977de1f9f64eb5f6fc4fdcf6db83
-    GuidInternal: 
-    m_lastTime: -8585161553848995932
-    List: []
-  - PhysicalPath: Events\SFX_Cook.wwu
-    PathAndIcons:
-    - ElementName: Events
-      ObjectType: 5
-      guid: 00000000000000000000000000000000
-    - ElementName: Default Work Unit
-      ObjectType: 12
-      guid: f80396892e09b84f93a500c3dc23a21e
-    - ElementName: SFX_Cook
-      ObjectType: 12
-      guid: 1e803f1363da20438308f2acadb3dcb0
-    ParentPath: Events\Default Work Unit\SFX_Cook
-    guid: 1e803f1363da20438308f2acadb3dcb0
-    GuidInternal: 
-    m_lastTime: -8585161553849035822
-    List: []
+    m_lastTime: -8585154628729040286
+    List:
+    - name: Play_Music_Fight
+      guid: bbf7f658b9726a428cf5bff998a881cd
+      id: 2427409920
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: f80396892e09b84f93a500c3dc23a21e
+      - ElementName: MUSIC
+        ObjectType: 12
+        guid: 3d083c6b66596b4f922f5ccd77795c06
+      - ElementName: Play_Music_Fight
+        ObjectType: 3
+        guid: bbf7f658b9726a428cf5bff998a881cd
+      Path: Events\Default Work Unit\MUSIC\Play_Music_Fight
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
   - PhysicalPath: Events\SFX_Enemy_Cabbage.wwu
     PathAndIcons:
     - ElementName: Events
@@ -493,7 +467,7 @@ MonoBehaviour:
     ParentPath: Events\Default Work Unit\SFX_Enemy_Cabbage
     guid: fc2dffabf27af545a49e711f8d02b4f4
     GuidInternal: 
-    m_lastTime: -8585161551746926688
+    m_lastTime: -8585154631646417944
     List:
     - name: Play_SFX_Cabbage_Charge_Impact
       guid: 228fd27e017e1343bc381d1062b45e50
@@ -532,6 +506,26 @@ MonoBehaviour:
         ObjectType: 3
         guid: 6114c48473cda146a694ff3e59a30932
       Path: Events\Default Work Unit\SFX_Enemy_Cabbage\Play_SFX_Cabbage_Charge_LP
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Play_SFX_Cabbage_Death
+      guid: db1597ade9f53346bf743a5379302e06
+      id: 1817239028
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: f80396892e09b84f93a500c3dc23a21e
+      - ElementName: SFX_Enemy_Cabbage
+        ObjectType: 12
+        guid: fc2dffabf27af545a49e711f8d02b4f4
+      - ElementName: Play_SFX_Cabbage_Death
+        ObjectType: 3
+        guid: db1597ade9f53346bf743a5379302e06
+      Path: Events\Default Work Unit\SFX_Enemy_Cabbage\Play_SFX_Cabbage_Death
       maxAttenuation: 0
       maxDuration: -1
       minDuration: -1
@@ -589,24 +583,108 @@ MonoBehaviour:
     ParentPath: Events\Default Work Unit\SFX_Enemy_Carrot
     guid: b2257d1ea9370542ab3fd3848b2bc72d
     GuidInternal: 
-    m_lastTime: -8585161553849025844
-    List: []
-  - PhysicalPath: Events\SFX_Enemy_Common.wwu
-    PathAndIcons:
-    - ElementName: Events
-      ObjectType: 5
-      guid: 00000000000000000000000000000000
-    - ElementName: Default Work Unit
-      ObjectType: 12
-      guid: f80396892e09b84f93a500c3dc23a21e
-    - ElementName: SFX_Enemy_Common
-      ObjectType: 12
-      guid: ec6911cbb0ee5f459567e4325cec94b4
-    ParentPath: Events\Default Work Unit\SFX_Enemy_Common
-    guid: ec6911cbb0ee5f459567e4325cec94b4
-    GuidInternal: 
-    m_lastTime: -8585161553848926117
-    List: []
+    m_lastTime: -8585154631646407973
+    List:
+    - name: Play_SFX_Carrot_Attack
+      guid: 82d9200591db134fa39db20aac96ac02
+      id: 1290249346
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: f80396892e09b84f93a500c3dc23a21e
+      - ElementName: SFX_Enemy_Carrot
+        ObjectType: 12
+        guid: b2257d1ea9370542ab3fd3848b2bc72d
+      - ElementName: Play_SFX_Carrot_Attack
+        ObjectType: 3
+        guid: 82d9200591db134fa39db20aac96ac02
+      Path: Events\Default Work Unit\SFX_Enemy_Carrot\Play_SFX_Carrot_Attack
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Play_SFX_Carrot_Death
+      guid: 58887fd6808cbc48b03391802b61aa84
+      id: 2741581544
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: f80396892e09b84f93a500c3dc23a21e
+      - ElementName: SFX_Enemy_Carrot
+        ObjectType: 12
+        guid: b2257d1ea9370542ab3fd3848b2bc72d
+      - ElementName: Play_SFX_Carrot_Death
+        ObjectType: 3
+        guid: 58887fd6808cbc48b03391802b61aa84
+      Path: Events\Default Work Unit\SFX_Enemy_Carrot\Play_SFX_Carrot_Death
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Play_SFX_Carrot_Dive
+      guid: 62f6781f3ff091489a54469ae73667e9
+      id: 2282737784
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: f80396892e09b84f93a500c3dc23a21e
+      - ElementName: SFX_Enemy_Carrot
+        ObjectType: 12
+        guid: b2257d1ea9370542ab3fd3848b2bc72d
+      - ElementName: Play_SFX_Carrot_Dive
+        ObjectType: 3
+        guid: 62f6781f3ff091489a54469ae73667e9
+      Path: Events\Default Work Unit\SFX_Enemy_Carrot\Play_SFX_Carrot_Dive
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Play_SFX_Carrot_Erupt
+      guid: 73416ee9d7779643875245b867803833
+      id: 1413782892
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: f80396892e09b84f93a500c3dc23a21e
+      - ElementName: SFX_Enemy_Carrot
+        ObjectType: 12
+        guid: b2257d1ea9370542ab3fd3848b2bc72d
+      - ElementName: Play_SFX_Carrot_Erupt
+        ObjectType: 3
+        guid: 73416ee9d7779643875245b867803833
+      Path: Events\Default Work Unit\SFX_Enemy_Carrot\Play_SFX_Carrot_Erupt
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Play_SFX_Carrot_Hit
+      guid: e1053aa91f3ebc48a2f4d26fb1752132
+      id: 1869131017
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: f80396892e09b84f93a500c3dc23a21e
+      - ElementName: SFX_Enemy_Carrot
+        ObjectType: 12
+        guid: b2257d1ea9370542ab3fd3848b2bc72d
+      - ElementName: Play_SFX_Carrot_Hit
+        ObjectType: 3
+        guid: e1053aa91f3ebc48a2f4d26fb1752132
+      Path: Events\Default Work Unit\SFX_Enemy_Carrot\Play_SFX_Carrot_Hit
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
   - PhysicalPath: Events\SFX_Enemy_Corn.wwu
     PathAndIcons:
     - ElementName: Events
@@ -621,7 +699,7 @@ MonoBehaviour:
     ParentPath: Events\Default Work Unit\SFX_Enemy_Corn
     guid: 404e5f6e2634e0478c4284c9f73e2b8a
     GuidInternal: 
-    m_lastTime: -8585161551746946637
+    m_lastTime: -8585154631646398000
     List:
     - name: Play_SFX_Corn_Attack_Charge
       guid: f3eaaade4c7a9746a0e17d10be1eff4f
@@ -663,6 +741,26 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: -1
       minDuration: -1
+    - name: Play_SFX_Corn_Death
+      guid: 2209f7a1acf54146b9c19e695fba393a
+      id: 638584899
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: f80396892e09b84f93a500c3dc23a21e
+      - ElementName: SFX_Enemy_Corn
+        ObjectType: 12
+        guid: 404e5f6e2634e0478c4284c9f73e2b8a
+      - ElementName: Play_SFX_Corn_Death
+        ObjectType: 3
+        guid: 2209f7a1acf54146b9c19e695fba393a
+      Path: Events\Default Work Unit\SFX_Enemy_Corn\Play_SFX_Corn_Death
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
     - name: Play_SFX_Corn_Footsteps
       guid: 6d3332418bcd9b48b14b9315f6b8862b
       id: 317530092
@@ -683,6 +781,26 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: -1
       minDuration: -1
+    - name: Play_SFX_Corn_Hit
+      guid: 762ee454e83811439e619e1db1cfd033
+      id: 866431378
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: f80396892e09b84f93a500c3dc23a21e
+      - ElementName: SFX_Enemy_Corn
+        ObjectType: 12
+        guid: 404e5f6e2634e0478c4284c9f73e2b8a
+      - ElementName: Play_SFX_Corn_Hit
+        ObjectType: 3
+        guid: 762ee454e83811439e619e1db1cfd033
+      Path: Events\Default Work Unit\SFX_Enemy_Corn\Play_SFX_Corn_Hit
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
   - PhysicalPath: Events\SFX_Enemy_Pea.wwu
     PathAndIcons:
     - ElementName: Events
@@ -697,8 +815,68 @@ MonoBehaviour:
     ParentPath: Events\Default Work Unit\SFX_Enemy_Pea
     guid: 204285a3967f9446b19a8bae8f779396
     GuidInternal: 
-    m_lastTime: -8585161553848946065
-    List: []
+    m_lastTime: -8585154631646378014
+    List:
+    - name: Play_SFX_Pea_Death
+      guid: e6605a34e5504840a52e294c32095267
+      id: 2393289231
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: f80396892e09b84f93a500c3dc23a21e
+      - ElementName: SFX_Enemy_Pea
+        ObjectType: 12
+        guid: 204285a3967f9446b19a8bae8f779396
+      - ElementName: Play_SFX_Pea_Death
+        ObjectType: 3
+        guid: e6605a34e5504840a52e294c32095267
+      Path: Events\Default Work Unit\SFX_Enemy_Pea\Play_SFX_Pea_Death
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Play_SFX_Pea_Footsteps
+      guid: 0621aca4ac429546a11aa050d6267a27
+      id: 1246702048
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: f80396892e09b84f93a500c3dc23a21e
+      - ElementName: SFX_Enemy_Pea
+        ObjectType: 12
+        guid: 204285a3967f9446b19a8bae8f779396
+      - ElementName: Play_SFX_Pea_Footsteps
+        ObjectType: 3
+        guid: 0621aca4ac429546a11aa050d6267a27
+      Path: Events\Default Work Unit\SFX_Enemy_Pea\Play_SFX_Pea_Footsteps
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Play_SFX_Pea_Spawn
+      guid: 17934a9d0b759e42ac6b3ec01e7fff76
+      id: 831679224
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: f80396892e09b84f93a500c3dc23a21e
+      - ElementName: SFX_Enemy_Pea
+        ObjectType: 12
+        guid: 204285a3967f9446b19a8bae8f779396
+      - ElementName: Play_SFX_Pea_Spawn
+        ObjectType: 3
+        guid: 17934a9d0b759e42ac6b3ec01e7fff76
+      Path: Events\Default Work Unit\SFX_Enemy_Pea\Play_SFX_Pea_Spawn
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
   - PhysicalPath: Events\SFX_Enemy_Pea_Pod.wwu
     PathAndIcons:
     - ElementName: Events
@@ -713,8 +891,88 @@ MonoBehaviour:
     ParentPath: Events\Default Work Unit\SFX_Enemy_Pea_Pod
     guid: 6f6c2203520f7d42adfd5bf4406ec4a1
     GuidInternal: 
-    m_lastTime: -8585161553849015873
-    List: []
+    m_lastTime: -8585154631646387988
+    List:
+    - name: Play_SFX_Pea_Pod_Death
+      guid: 1cbf7dae5473384dbefdb864941c8c4d
+      id: 4141938667
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: f80396892e09b84f93a500c3dc23a21e
+      - ElementName: SFX_Enemy_Pea_Pod
+        ObjectType: 12
+        guid: 6f6c2203520f7d42adfd5bf4406ec4a1
+      - ElementName: Play_SFX_Pea_Pod_Death
+        ObjectType: 3
+        guid: 1cbf7dae5473384dbefdb864941c8c4d
+      Path: Events\Default Work Unit\SFX_Enemy_Pea_Pod\Play_SFX_Pea_Pod_Death
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Play_SFX_Pea_Pod_Footsteps
+      guid: e78eacb4f8702f45a4d8e974af71e4c0
+      id: 2885932196
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: f80396892e09b84f93a500c3dc23a21e
+      - ElementName: SFX_Enemy_Pea_Pod
+        ObjectType: 12
+        guid: 6f6c2203520f7d42adfd5bf4406ec4a1
+      - ElementName: Play_SFX_Pea_Pod_Footsteps
+        ObjectType: 3
+        guid: e78eacb4f8702f45a4d8e974af71e4c0
+      Path: Events\Default Work Unit\SFX_Enemy_Pea_Pod\Play_SFX_Pea_Pod_Footsteps
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Play_SFX_Pea_Pod_Hit
+      guid: 1f51f222e3641944bfd9e8c7075b082f
+      id: 3281359690
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: f80396892e09b84f93a500c3dc23a21e
+      - ElementName: SFX_Enemy_Pea_Pod
+        ObjectType: 12
+        guid: 6f6c2203520f7d42adfd5bf4406ec4a1
+      - ElementName: Play_SFX_Pea_Pod_Hit
+        ObjectType: 3
+        guid: 1f51f222e3641944bfd9e8c7075b082f
+      Path: Events\Default Work Unit\SFX_Enemy_Pea_Pod\Play_SFX_Pea_Pod_Hit
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Stop_SFX_Pea_Pod_Footsteps
+      guid: 971b9fc926bc574591ddfca99debf7a8
+      id: 749319194
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: f80396892e09b84f93a500c3dc23a21e
+      - ElementName: SFX_Enemy_Pea_Pod
+        ObjectType: 12
+        guid: 6f6c2203520f7d42adfd5bf4406ec4a1
+      - ElementName: Stop_SFX_Pea_Pod_Footsteps
+        ObjectType: 3
+        guid: 971b9fc926bc574591ddfca99debf7a8
+      Path: Events\Default Work Unit\SFX_Enemy_Pea_Pod\Stop_SFX_Pea_Pod_Footsteps
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
   - PhysicalPath: Events\SFX_MC.wwu
     PathAndIcons:
     - ElementName: Events
@@ -729,8 +987,304 @@ MonoBehaviour:
     ParentPath: Events\Default Work Unit\SFX_MC
     guid: 0286cd3a039c084596ef687ee3aefc09
     GuidInternal: 
-    m_lastTime: -8585161553848936090
-    List: []
+    m_lastTime: -8585154627058762689
+    List:
+    - name: Play_MC_Cauldron_Idle
+      guid: 7fa0ea198a83834faee4b5cebcc65af3
+      id: 2012076284
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: f80396892e09b84f93a500c3dc23a21e
+      - ElementName: SFX_MC
+        ObjectType: 12
+        guid: 0286cd3a039c084596ef687ee3aefc09
+      - ElementName: Play_MC_Cauldron_Idle
+        ObjectType: 3
+        guid: 7fa0ea198a83834faee4b5cebcc65af3
+      Path: Events\Default Work Unit\SFX_MC\Play_MC_Cauldron_Idle
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Play_MC_Dash
+      guid: 14d84141b1c55446b4d0d17e30b80054
+      id: 2996328093
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: f80396892e09b84f93a500c3dc23a21e
+      - ElementName: SFX_MC
+        ObjectType: 12
+        guid: 0286cd3a039c084596ef687ee3aefc09
+      - ElementName: Play_MC_Dash
+        ObjectType: 3
+        guid: 14d84141b1c55446b4d0d17e30b80054
+      Path: Events\Default Work Unit\SFX_MC\Play_MC_Dash
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Play_MC_Death
+      guid: cfbccc18ff8bdf41bac21cb22fca164c
+      id: 107675701
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: f80396892e09b84f93a500c3dc23a21e
+      - ElementName: SFX_MC
+        ObjectType: 12
+        guid: 0286cd3a039c084596ef687ee3aefc09
+      - ElementName: Play_MC_Death
+        ObjectType: 3
+        guid: cfbccc18ff8bdf41bac21cb22fca164c
+      Path: Events\Default Work Unit\SFX_MC\Play_MC_Death
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Play_MC_Hit
+      guid: b2a9eeb15ee43b41aa6bcc673bf9cb53
+      id: 1065585556
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: f80396892e09b84f93a500c3dc23a21e
+      - ElementName: SFX_MC
+        ObjectType: 12
+        guid: 0286cd3a039c084596ef687ee3aefc09
+      - ElementName: Play_MC_Hit
+        ObjectType: 3
+        guid: b2a9eeb15ee43b41aa6bcc673bf9cb53
+      Path: Events\Default Work Unit\SFX_MC\Play_MC_Hit
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Play_MC_Run
+      guid: 8997abbb9dd5c54aa1dceea9b1e408eb
+      id: 1600895284
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: f80396892e09b84f93a500c3dc23a21e
+      - ElementName: SFX_MC
+        ObjectType: 12
+        guid: 0286cd3a039c084596ef687ee3aefc09
+      - ElementName: Play_MC_Run
+        ObjectType: 3
+        guid: 8997abbb9dd5c54aa1dceea9b1e408eb
+      Path: Events\Default Work Unit\SFX_MC\Play_MC_Run
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Play_MC_Run_Foley
+      guid: 001d4f3f8a956b46afd15038900b1f19
+      id: 3682234456
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: f80396892e09b84f93a500c3dc23a21e
+      - ElementName: SFX_MC
+        ObjectType: 12
+        guid: 0286cd3a039c084596ef687ee3aefc09
+      - ElementName: Play_MC_Run_Foley
+        ObjectType: 3
+        guid: 001d4f3f8a956b46afd15038900b1f19
+      Path: Events\Default Work Unit\SFX_MC\Play_MC_Run_Foley
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Play_MC_Run_Footstep
+      guid: 7ddba12d5bd7c449b3bf8f8cf7db6011
+      id: 104751245
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: f80396892e09b84f93a500c3dc23a21e
+      - ElementName: SFX_MC
+        ObjectType: 12
+        guid: 0286cd3a039c084596ef687ee3aefc09
+      - ElementName: Play_MC_Run_Footstep
+        ObjectType: 3
+        guid: 7ddba12d5bd7c449b3bf8f8cf7db6011
+      Path: Events\Default Work Unit\SFX_MC\Play_MC_Run_Footstep
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Play_Weapon_Bounce_Wall
+      guid: 61b209779822924393ba2d7147933c45
+      id: 530264000
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: f80396892e09b84f93a500c3dc23a21e
+      - ElementName: SFX_MC
+        ObjectType: 12
+        guid: 0286cd3a039c084596ef687ee3aefc09
+      - ElementName: Play_Weapon_Bounce_Wall
+        ObjectType: 3
+        guid: 61b209779822924393ba2d7147933c45
+      Path: Events\Default Work Unit\SFX_MC\Play_Weapon_Bounce_Wall
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Play_Weapon_Hit
+      guid: f784fdf4c54582489432aec842f63b86
+      id: 701036212
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: f80396892e09b84f93a500c3dc23a21e
+      - ElementName: SFX_MC
+        ObjectType: 12
+        guid: 0286cd3a039c084596ef687ee3aefc09
+      - ElementName: Play_Weapon_Hit
+        ObjectType: 3
+        guid: f784fdf4c54582489432aec842f63b86
+      Path: Events\Default Work Unit\SFX_MC\Play_Weapon_Hit
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Play_Weapon_Shot
+      guid: cf9176abe48cb344ac9cf27b4d3f8c65
+      id: 3889646233
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: f80396892e09b84f93a500c3dc23a21e
+      - ElementName: SFX_MC
+        ObjectType: 12
+        guid: 0286cd3a039c084596ef687ee3aefc09
+      - ElementName: Play_Weapon_Shot
+        ObjectType: 3
+        guid: cf9176abe48cb344ac9cf27b4d3f8c65
+      Path: Events\Default Work Unit\SFX_MC\Play_Weapon_Shot
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+  - PhysicalPath: Events\SFX_Other.wwu
+    PathAndIcons:
+    - ElementName: Events
+      ObjectType: 5
+      guid: 00000000000000000000000000000000
+    - ElementName: Default Work Unit
+      ObjectType: 12
+      guid: f80396892e09b84f93a500c3dc23a21e
+    - ElementName: SFX_Other
+      ObjectType: 12
+      guid: 4a75fc44dd571a4f98cce00951906e12
+    ParentPath: Events\Default Work Unit\SFX_Other
+    guid: 4a75fc44dd571a4f98cce00951906e12
+    GuidInternal: 
+    m_lastTime: -8585154629226586961
+    List:
+    - name: Play_SFX_Cook
+      guid: 852f97d31ea113479e41f46ed0800a55
+      id: 3800044410
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: f80396892e09b84f93a500c3dc23a21e
+      - ElementName: SFX_Other
+        ObjectType: 12
+        guid: 4a75fc44dd571a4f98cce00951906e12
+      - ElementName: Play_SFX_Cook
+        ObjectType: 3
+        guid: 852f97d31ea113479e41f46ed0800a55
+      Path: Events\Default Work Unit\SFX_Other\Play_SFX_Cook
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Play_SFX_Door_Open
+      guid: c633dbdde8d5e84eb87b37c8a0634210
+      id: 1312371701
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: f80396892e09b84f93a500c3dc23a21e
+      - ElementName: SFX_Other
+        ObjectType: 12
+        guid: 4a75fc44dd571a4f98cce00951906e12
+      - ElementName: Play_SFX_Door_Open
+        ObjectType: 3
+        guid: c633dbdde8d5e84eb87b37c8a0634210
+      Path: Events\Default Work Unit\SFX_Other\Play_SFX_Door_Open
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Play_SFX_Ingredient_Collect
+      guid: 3f96700dbb624245b19f14c14dd30a61
+      id: 3954090412
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: f80396892e09b84f93a500c3dc23a21e
+      - ElementName: SFX_Other
+        ObjectType: 12
+        guid: 4a75fc44dd571a4f98cce00951906e12
+      - ElementName: Play_SFX_Ingredient_Collect
+        ObjectType: 3
+        guid: 3f96700dbb624245b19f14c14dd30a61
+      Path: Events\Default Work Unit\SFX_Other\Play_SFX_Ingredient_Collect
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Stop_SFX_Cook
+      guid: b9d587f6d46d564eb9245ffcf21ced29
+      id: 4293892292
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: f80396892e09b84f93a500c3dc23a21e
+      - ElementName: SFX_Other
+        ObjectType: 12
+        guid: 4a75fc44dd571a4f98cce00951906e12
+      - ElementName: Stop_SFX_Cook
+        ObjectType: 3
+        guid: b9d587f6d46d564eb9245ffcf21ced29
+      Path: Events\Default Work Unit\SFX_Other\Stop_SFX_Cook
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
   - PhysicalPath: Events\SFX_UI.wwu
     PathAndIcons:
     - ElementName: Events
@@ -745,7 +1299,7 @@ MonoBehaviour:
     ParentPath: Events\Default Work Unit\SFX_UI
     guid: 9ebf4470554ca443898346d41d6dfcdf
     GuidInternal: 
-    m_lastTime: -8585161553848985958
+    m_lastTime: -8585154629226547074
     List:
     - name: Play_UI_Settings_Close
       guid: 3177291132daef49944fc7b5f6a53147
@@ -893,7 +1447,7 @@ MonoBehaviour:
     ParentPath: States\Default Work Unit
     guid: afd1b4dfce7c3c408c338aa08826b601
     GuidInternal: 
-    m_lastTime: -8585161567455013403
+    m_lastTime: -8585157133634473950
     List:
     - name: Cooking_Menu
       guid: f1c10d48c9c43d4cbc13612628739bac
@@ -958,6 +1512,72 @@ MonoBehaviour:
         - ElementName: OutCookingMenu
           ObjectType: 8
           guid: b27484f470e0ca439c12219be4a7071c
+      ValueGuids: []
+      ValueIcons: []
+      valuesInternal: []
+    - name: InFight
+      guid: 5eca1dfe8487ff488945e0036fca005b
+      id: 2181612614
+      PathAndIcons:
+      - ElementName: States
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: afd1b4dfce7c3c408c338aa08826b601
+      - ElementName: InFight
+        ObjectType: 9
+        guid: 5eca1dfe8487ff488945e0036fca005b
+      Path: States\Default Work Unit\InFight
+      values:
+      - name: InFight
+        guid: d5310d5246b73549afa595affa570329
+        id: 2181612614
+        PathAndIcons:
+        - ElementName: States
+          ObjectType: 5
+          guid: 00000000000000000000000000000000
+        - ElementName: Default Work Unit
+          ObjectType: 12
+          guid: afd1b4dfce7c3c408c338aa08826b601
+        - ElementName: InFight
+          ObjectType: 9
+          guid: 5eca1dfe8487ff488945e0036fca005b
+        - ElementName: InFight
+          ObjectType: 8
+          guid: d5310d5246b73549afa595affa570329
+      - name: None
+        guid: 478304e4fd3a4542ac4f3270e465723b
+        id: 748895195
+        PathAndIcons:
+        - ElementName: States
+          ObjectType: 5
+          guid: 00000000000000000000000000000000
+        - ElementName: Default Work Unit
+          ObjectType: 12
+          guid: afd1b4dfce7c3c408c338aa08826b601
+        - ElementName: InFight
+          ObjectType: 9
+          guid: 5eca1dfe8487ff488945e0036fca005b
+        - ElementName: None
+          ObjectType: 8
+          guid: 478304e4fd3a4542ac4f3270e465723b
+      - name: NotInFight
+        guid: 970bf5996bdf0745aea078a4ef50f02c
+        id: 2218077717
+        PathAndIcons:
+        - ElementName: States
+          ObjectType: 5
+          guid: 00000000000000000000000000000000
+        - ElementName: Default Work Unit
+          ObjectType: 12
+          guid: afd1b4dfce7c3c408c338aa08826b601
+        - ElementName: InFight
+          ObjectType: 9
+          guid: 5eca1dfe8487ff488945e0036fca005b
+        - ElementName: NotInFight
+          ObjectType: 8
+          guid: 970bf5996bdf0745aea078a4ef50f02c
       ValueGuids: []
       ValueIcons: []
       valuesInternal: []
@@ -1745,7 +2365,7 @@ MonoBehaviour:
     ParentPath: Switches\Default Work Unit
     guid: a700a1cdafac3547a99319c6e8191c2d
     GuidInternal: 
-    m_lastTime: -8585161578656921646
+    m_lastTime: -8585157195504892803
     List: []
   TriggerWwu:
   - PhysicalPath: Triggers\Default Work Unit.wwu
@@ -1762,7 +2382,7 @@ MonoBehaviour:
     m_lastTime: -8585162173893833952
     List: []
   ExpandedFileSystemItemIds: 
-  ExpandedWaapiItemIds: 
+  ExpandedWaapiItemIds: 05000000060000000d000000100000001a0000001b000000
   AutoSyncSelection: 0
   autoPopulateEnabled: 1
   currentDataSource: 0
