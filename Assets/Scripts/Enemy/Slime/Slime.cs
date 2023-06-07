@@ -18,6 +18,8 @@ namespace Enemy.Slime
         [SerializeField, Required("Prefabs minimoyz")] private GameObject minimoyz;
         [FormerlySerializedAs("_minimoyzSpawnChecker")] [SerializeField, Required("Minimoyz spawn checker")] private CheckingSpawn spawnChecker;
 
+        private Animator animator;
+
         public enum State
         {
             Neutral,
@@ -53,7 +55,7 @@ namespace Enemy.Slime
         {
             state = data.GetFocusPlayer ? State.Chase : State.Neutral;
             spawnChecker = GetComponentInChildren<CheckingSpawn>();
-
+            animator = GetComponentInChildren<Animator>();
             base.Start();
         }
 
@@ -77,14 +79,17 @@ namespace Enemy.Slime
             switch (state)
             {
                 case State.Neutral:
+                    animator.SetBool("isWalking", false);
                     break;
                 case State.Chase:
                     Chase();
+                    animator.SetBool("isWalking", true);
                     break;
                 case State.KeepingDistance:
                     KeepDistance();
                     break;
                 case State.Attack:
+                    //animator.SetBool("isWalking", false);
                     Attack(ThrowMinimoyz, data.GetAttackSpeed);
                     break;
                 case State.Dying:

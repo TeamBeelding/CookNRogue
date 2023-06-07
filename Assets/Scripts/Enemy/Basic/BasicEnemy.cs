@@ -23,7 +23,7 @@ namespace Enemy.Basic
         private Renderer stateRenderer;
 
         private Coroutine _chaseCoroutine;
-        
+        private Animator animator;
         public enum State
         {
             Neutral,
@@ -52,7 +52,7 @@ namespace Enemy.Basic
         protected override void Start()
         {
             SetState(FocusPlayer ? State.Chase : State.Neutral);
-            
+            animator = GetComponentInChildren<Animator>();
             base.Start();
         }
 
@@ -90,8 +90,10 @@ namespace Enemy.Basic
             switch (state)
             {
                 case State.Neutral:
+                    //animator.SetBool("isWalking", false);
                     break;
                 case State.Chase:
+                    //animator.SetBool("isWalking", true);
                     Chase();
                     break;
                 case State.Attack:
