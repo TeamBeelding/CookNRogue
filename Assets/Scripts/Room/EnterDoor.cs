@@ -11,12 +11,27 @@ public class EnterDoor : MonoBehaviour
     [SerializeField]
     private bool m_isOpenOnStart = false;
 
+    [Space]
+
     [SerializeField]
     private float m_doorOpeningDuration = 2f;
     [SerializeField]
     private AnimationCurve m_doorOpeningCurve;
     [SerializeField]
     private float m_refreshRate = 0.025f;
+
+    [Space]
+
+    [SerializeField]
+    private Color m_portalClosedColor;
+    [SerializeField]
+    private Color m_portalOpenedColor;
+    [SerializeField]
+    private float m_portalAnimDuration;
+    [SerializeField]
+    private AnimationCurve m_portalAnimCurve;
+    [SerializeField]
+    private Material m_portalMaterial;
 
     private Material[] SkinnedMaterials;
 
@@ -27,11 +42,14 @@ public class EnterDoor : MonoBehaviour
             if (m_mesh != null)
             {
                 SkinnedMaterials = m_mesh.materials;
+                SkinnedMaterials[0].SetFloat("_GrowValue", 1f);
+                m_portalMaterial.SetColor("_EmissionColor", m_portalClosedColor);
             }
 
             if (m_isOpenOnStart)
             {
                 m_door.SetActive(false);
+                m_portalMaterial.SetColor("_EmissionColor", m_portalOpenedColor);
             }
             else
             {
@@ -70,5 +88,14 @@ public class EnterDoor : MonoBehaviour
         }
         //OPEN GNE GNOOOOOR
         m_door.SetActive(false);
+
+        for (float f = 0; f < m_portalAnimDuration; f += m_refreshRate)
+        {
+            float progress = f / m_portalAnimDuration;
+            Color animProgress = Color.Lerp(m_portalClosedColor, m_portalOpenedColor, m_portalAnimCurve.Evaluate(progress));
+            m_portalMaterial.SetColor("_EmissionColor", animProgress);
+            yield return new WaitForSeconds(m_refreshRate);
+        }
+        m_portalMaterial.SetColor("_EmissionColor", m_portalOpenedColor);
     }
 }
