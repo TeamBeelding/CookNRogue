@@ -219,18 +219,6 @@ namespace Enemy.DashingEnemy
         }
     
         /// <summary>
-        /// Enemy Take Damage
-        /// </summary>
-        /// <param name="damage"></param>
-        public override void TakeDamage(float damage = 1, bool isCritical = false)
-        {
-            base.TakeDamage(damage, isCritical);
-            
-            if (GetState() == State.Casting)
-                SetState(State.Casting);
-        }
-
-        /// <summary>
         /// Stop casting coroutine
         /// </summary>
         private void StopCasting()
@@ -306,8 +294,6 @@ namespace Enemy.DashingEnemy
         {
             StopMoving();
             SetState(State.Waiting);
-
-            Debug.Log("collide with obstruction");
         }
     }
 }

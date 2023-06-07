@@ -240,6 +240,8 @@ public class PlayerAttack : MonoBehaviour
         Material Bubblemat = Instantiate(BubbleRenderModule.sharedMaterials[0]);
         Bubblemat.SetColor("_EmissionColor", color);
         BubbleRenderModule.material = Bubblemat;
+
+        bullet.transform.GetChild(0).GetComponent<MeshRenderer>().material.SetColor("_BaseColor",color);
     }
 
     void OnAmmunitionChange()

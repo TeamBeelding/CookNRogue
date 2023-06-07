@@ -79,8 +79,9 @@ public class PlayerBulletBehaviour : MonoBehaviour
 
              other.GetComponentInParent<EnemyController>().TakeDamage(_damage, _isCritical);
 
-            GameObject UIDAMAGE = Instantiate(DamageUI, other.transform.position + (Vector3.up * 3) + GetCameraDirection() * 2, Quaternion.identity);
-            UIDAMAGE.GetComponentInChildren<TextMeshProUGUI>().text = _damage.ToString();
+            GameObject UIDAMAGE = Instantiate(DamageUI, other.transform.position + (Vector3.up * 3) + GetCameraDirection() * 0.5f, Quaternion.identity);
+            //UIDAMAGE.GetComponentInChildren<TextMeshProUGUI>().text = _damage.ToString();
+            UIDAMAGE.GetComponentInChildren<TextMeshProUGUI>().text = "RATIO";
 
             Destroy(UIDAMAGE, 1);
 
@@ -127,7 +128,7 @@ public class PlayerBulletBehaviour : MonoBehaviour
     }
     Vector3 GetCameraDirection()
     {
-        Vector3 dir = (Camera.main.transform.position - transform.position).normalized;
+        Vector3 dir = Camera.main.transform.position - transform.position;
         return dir;
     }
 
