@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,6 +9,7 @@ namespace Tutoriel
     {
         public enum TutorialStep
         {
+            Move,
             ApproachCauldron,
             ValidateIngredient,
             UnValidateIngredient,
@@ -46,12 +48,20 @@ namespace Tutoriel
         [SerializeField] private GameObject cauldron;
         [SerializeField] private string[] dialogue;
         private DialogueBox _dialogueBox;
+        private string textToDisplay = "";
 
         private void Start()
         {
             _dialogueBox = GameObject.FindObjectOfType<DialogueBox>();
+            
+            SetTutorialState(TutorialStep.Move);
         }
-        
+
+        private void Update()
+        {
+            StateManagement();
+        }
+
         // public int Step => _step;
 
         public TutorialStep GetTutorialState()
@@ -62,15 +72,17 @@ namespace Tutoriel
         private void SetTutorialState(TutorialStep tutorialStep)
         {
             _tutorialStep = tutorialStep;
-            
-            StateManagement();
         }
 
         private void StateManagement()
         {
             switch (_tutorialStep)
             {
+                case TutorialStep.Move:
+                    Move();
+                    break;
                 case TutorialStep.ApproachCauldron:
+                    ApproachCauldron();
                     break;
                 case TutorialStep.ValidateIngredient:
                     break;
@@ -94,12 +106,28 @@ namespace Tutoriel
                     throw new ArgumentOutOfRangeException();
             }
         }
+        
+        public void DisplayText()
+        {
+            if (string.IsNullOrEmpty(textToDisplay))
+                return;
+            
+            string[] dialogueToDisplay = { textToDisplay };
+            _dialogueBox.DisplayDialogueText(dialogueToDisplay, cauldron.transform);
+        }
 
-        public void ApproachCauldron()
+        private void Move()
+        {
+            if (GetIsMoving())
+                SetTutorialState(TutorialStep.ApproachCauldron);
+        }
+
+        private void ApproachCauldron()
         {
             _step = 1;
-            string[] dialogueToDisplay = { dialogue[0] };
-            _dialogueBox.DisplayDialogueText(dialogueToDisplay, cauldron.transform);
+            textToDisplay = dialogue[0];
+            // string[] dialogueToDisplay = { dialogue[0] };
+            // _dialogueBox.DisplayDialogueText(dialogueToDisplay, cauldron.transform);
         }
 
         public void ValidateIngredient()

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using NaughtyAttributes;
 using UnityEngine;
@@ -13,6 +14,8 @@ namespace Tutoriel
         {
             if (other.CompareTag("Player"))
             {
+                tutorialManager.DisplayText();
+                
                 // if (tutorialManager.Step == 0)
                 //     tutorialManager.ApproachCauldron();
                 //
@@ -20,12 +23,11 @@ namespace Tutoriel
                 //     StartCoroutine(ValidateIngredientRoutine());
             } 
         }
-    
+
         IEnumerator ValidateIngredientRoutine()
         {
             yield return new WaitForSecondsRealtime(3);
             tutorialManager.ValidateIngredient();
-
         }
     }
 }
