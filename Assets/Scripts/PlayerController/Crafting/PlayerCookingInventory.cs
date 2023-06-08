@@ -232,21 +232,19 @@ public class PlayerCookingInventory : MonoBehaviour
         float averageDmg = 0;
         foreach (ProjectileData ingredient in _recipe)
         {
-            Debug.Log(m_playerAttackScript);
             m_playerAttackScript._size += ingredient._size;
             m_playerAttackScript._speed += ingredient._speed;
             m_playerAttackScript._drag += ingredient._drag;
             m_playerAttackScript._shootCooldown += ingredient._attackDelay;
             averageDmg += ingredient._damage;
-            //m_playerAttackScript._damage += ingredient._damage;
             m_playerAttackScript._ammunition += ingredient._ammunition;
             AmmunitionBar.instance.AddIngredientAmmo(ingredient._ammunition);
+
             //Add effects
             foreach (IIngredientEffects effect in ingredient.Effects)
             {
                 if(effect != null)
-                {
-                    
+                {                   
                     m_playerAttackScript._effects.Add(effect);
                 }
             }
