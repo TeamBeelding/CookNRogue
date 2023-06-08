@@ -40,7 +40,7 @@ public class FragmentationParticlesCollisions : MonoBehaviour
             if (enemyController != null)
             {
                 float totalDamage = _damage * (_damage_percentage / 100);
-                enemyController.TakeDamage((int)_damage);
+                enemyController.TakeDamage((int)totalDamage);
                 GameObject UIDAMAGE = Instantiate(DamageUI, other.transform.position + (Vector3.up * 3) + GetCameraDirection() * 0.5f, Quaternion.identity);
                 UIDAMAGE.GetComponentInChildren<TextMeshProUGUI>().text = _damage.ToString();
             }
