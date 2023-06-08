@@ -31,6 +31,12 @@ public class AmmunitionBar : MonoBehaviour
         _ammoBar.value= _playerAttack._ammunition;
     }
 
+    public void ResetAmmoBar()
+    {
+        _ammoBar.maxValue = 0;
+        _ammoBar.value = 0;
+    }
+
     public void UpdateAmmoBar()
     {
         _ammoBar.value = _playerAttack._ammunition;
