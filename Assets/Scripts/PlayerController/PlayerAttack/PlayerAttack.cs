@@ -20,13 +20,14 @@ public class PlayerAttack : MonoBehaviour
     //[SerializeField]
     //PlayerKnockback m_knockbackScript;
 
+    
     [Header("Physic and Movements")]
-    public float _size;
-    public float _speed;
-    public float _drag;
-    [Space(20)]
+    [HideInInspector] public float _size;
+    [HideInInspector] public float _speed;
+    [HideInInspector] public float _drag;
 
     [Header("Attack")]
+    private float _defaultShootCooldown;
     public float _shootCooldown;
     public float _damage;
     [SerializeField]private bool _isShooting = false;
@@ -51,7 +52,8 @@ public class PlayerAttack : MonoBehaviour
 
     private void Start()
     {
-        
+        _defaultShootCooldown = _shootCooldown;
+
         _playerController = GetComponent<PlayerController>();
 
         _ammunitionBar = AmmunitionBar.instance;
@@ -258,8 +260,7 @@ public class PlayerAttack : MonoBehaviour
         _TimeBtwShotsRafale = 0;
         _damage = 0;
         _ammunition = 0;
-        _shootCooldown = 0.5f;
-        
+        _shootCooldown = _defaultShootCooldown;
     }
 
     public void FixedUpdate()
