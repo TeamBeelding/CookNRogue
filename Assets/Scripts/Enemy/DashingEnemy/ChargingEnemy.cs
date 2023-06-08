@@ -5,6 +5,18 @@ namespace Enemy.DashingEnemy
 {
     public class ChargingEnemy : EnemyController
     {
+        [Header("Sound")]
+        [SerializeField]
+        private AK.Wwise.Event _Play_SFX_Cabbage_Footsteps;
+        [SerializeField]
+        private AK.Wwise.Event _Play_SFX_Cabbage_Charge_LP;
+        [SerializeField]
+        private AK.Wwise.Event _Play_SFX_Cabbage_Charge_Impact;
+        [SerializeField]
+        private AK.Wwise.Event _Play_SFX_Cabbage_Hit;
+        [SerializeField]
+        private AK.Wwise.Event _Play_SFX_Cabbage_Death;
+
         private Coroutine _castingCoroutine;
         private Coroutine _waitingCoroutine;
         private Coroutine _rotateToPlayerCoroutine;

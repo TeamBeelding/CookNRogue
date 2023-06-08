@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8520773372871248478}
   - component: {fileID: 3633154287134589384}
   - component: {fileID: 8115613155748835701}
+  - component: {fileID: 8021884753707496196}
   m_Layer: 0
   m_Name: DashingIA
   m_TagString: Untagged
@@ -67,6 +68,26 @@ MonoBehaviour:
   _effectHandlers: []
   explosion: {fileID: 466446929295881914, guid: 3fb8a478fb9325d40bc6d96484133a99,
     type: 3}
+  _Play_SFX_Cabbage_Footsteps:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
+  _Play_SFX_Cabbage_Charge_LP:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
+  _Play_SFX_Cabbage_Charge_Impact:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
+  _Play_SFX_Cabbage_Hit:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
+  _Play_SFX_Cabbage_Death:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
   _redLine: {fileID: 6108361974556150891}
   _data: {fileID: 11400000, guid: 26487e152450d55438d24d6cd1e63093, type: 2}
   visual: {fileID: 3747529388696228734}
@@ -83,6 +104,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b28b50808076adf48b35bd4e48771628, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8021884753707496196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3633154287134589382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2698c394a636bc479a5e90f55e626a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerList: f7e1664c
+  useOtherObject: 0
+  data:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 9f5db9292e78ebe4ea55cd50c515cd6a,
+      type: 2}
+  decodeBank: 0
+  loadAsynchronous: 0
+  saveDecodedBank: 0
+  unloadTriggerList: 
+  bankNameInternal: 
+  valueGuidInternal: 
 --- !u!1 &3650257289919461018
 GameObject:
   m_ObjectHideFlags: 0

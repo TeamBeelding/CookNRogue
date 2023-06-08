@@ -13,6 +13,12 @@ namespace Enemy.Basic
         [SerializeField]
         private AK.Wwise.Event _Play_SFX_Corn_Death;
         [SerializeField]
+        private AK.Wwise.Event _Play_SFX_Corn_Footsteps;
+        [SerializeField]
+        private AK.Wwise.Event _Play_SFX_Corn_Attack_Charge;
+        [SerializeField]
+        private AK.Wwise.Event _Play_SFX_Corn_Attack_Shot;
+        [SerializeField]
         private EnemyData data;
         [SerializeField]
         private NavMeshAgent _agent;
@@ -168,6 +174,7 @@ namespace Enemy.Basic
         {
             GameObject shot = Instantiate(m_bullet, m_gun.transform.position, Quaternion.identity);
             shot.GetComponent<EnemyBulletController>().SetDirection(Player.transform);
+            _Play_SFX_Corn_Attack_Shot.Post(gameObject);
         }
     
         private new void Dying()
@@ -187,7 +194,7 @@ namespace Enemy.Basic
         
             if (state == State.Neutral)
                 SetState(State.Chase);
-               // _Play_Weapon_Hit.Post(gameObject);
+               _Play_Weapon_Hit.Post(gameObject);
               
 
             if (Healthpoint <= 0)

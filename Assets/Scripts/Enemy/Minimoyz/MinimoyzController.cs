@@ -6,6 +6,14 @@ namespace Enemy.Minimoyz
 {
     public class MinimoyzController : EnemyController
     {
+        [Header("Sound")]
+        [SerializeField]
+        private AK.Wwise.Event _Play_SFX_Pea_Footsteps;
+        [SerializeField]
+        private AK.Wwise.Event _Play_SFX_Pea_Spawn;
+        [SerializeField]
+        private AK.Wwise.Event _Play_SFX_Pea_Death;
+        
         [SerializeField] private MinimoyzData data;
         [SerializeField] private NavMeshAgent agent;
 

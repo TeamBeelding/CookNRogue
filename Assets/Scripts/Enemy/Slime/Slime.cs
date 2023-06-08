@@ -11,7 +11,18 @@ using Random = UnityEngine.Random;
 namespace Enemy.Slime
 {
     public class Slime : EnemyController
-    {
+    {   [Header("Sound")]
+        [SerializeField]
+        private AK.Wwise.Event _Play_SFX_Pea_Pod_Footsteps;
+        [SerializeField]
+        private AK.Wwise.Event _Stop_SFX_Pea_Pod_Footsteps;
+        [SerializeField]
+        private AK.Wwise.Event _Play_SFX_Pea_Pod_Hit;
+        [SerializeField]
+        private AK.Wwise.Event _Play_SFX_Pea_Pod_Death;
+        [SerializeField]
+        private AK.Wwise.Event _Play_SFX_Pea_Spawn;
+
         [SerializeField] private SlimeData data;
         [SerializeField] private NavMeshAgent agent;
         [SerializeField] private GameObject gun;
