@@ -23,11 +23,9 @@ public class EnterDoor : MonoBehaviour
     [Space]
 
     [SerializeField]
-    private Color m_portalClosedColor;
-    [SerializeField]
-    private Color m_portalOpenedColor;
-    [SerializeField]
     private float m_portalAnimDuration;
+    [SerializeField]
+    private float m_portalAnimOffset;
     [SerializeField]
     private AnimationCurve m_portalAnimCurve;
     [SerializeField]
@@ -42,14 +40,15 @@ public class EnterDoor : MonoBehaviour
             if (m_mesh != null)
             {
                 SkinnedMaterials = m_mesh.materials;
-                SkinnedMaterials[0].SetFloat("_GrowValue", 1f);
-                m_portalMaterial.SetColor("_EmissionColor", m_portalClosedColor);
+                SetDoor(0f);
+                SetPortal(0f);
             }
 
             if (m_isOpenOnStart)
             {
                 m_door.SetActive(false);
-                m_portalMaterial.SetColor("_EmissionColor", m_portalOpenedColor);
+                SetDoor(1f);
+                SetPortal(1f);
             }
             else
             {
@@ -77,25 +76,34 @@ public class EnterDoor : MonoBehaviour
     {
         if (SkinnedMaterials.Length > 0)
         {
-            for (float f = 0; f < m_doorOpeningDuration; f += m_refreshRate)
+            float duration = m_portalAnimDuration + m_portalAnimOffset < m_doorOpeningDuration ? m_doorOpeningDuration : m_portalAnimDuration + m_portalAnimOffset;
+            Debug.Log(duration);
+
+            for (float f = 0f; f < duration; f += m_refreshRate)
             {
-                float progress = f / m_doorOpeningDuration;
-                float animProgress = Mathf.Lerp(1, 0, m_doorOpeningCurve.Evaluate(progress));
-                SkinnedMaterials[0].SetFloat("_GrowValue", animProgress);
+                SetDoor(f < m_doorOpeningDuration ? f : m_doorOpeningDuration);
+                SetPortal(f <= m_portalAnimOffset ? 0f : f - m_portalAnimOffset);
                 yield return new WaitForSeconds(m_refreshRate);
             }
-            SkinnedMaterials[0].SetFloat("_GrowValue", 0);
+            SetDoor(1f);
+            SetPortal(1f);
         }
+
         //OPEN GNE GNOOOOOR
         m_door.SetActive(false);
+    }
 
-        for (float f = 0; f < m_portalAnimDuration; f += m_refreshRate)
-        {
-            float progress = f / m_portalAnimDuration;
-            Color animProgress = Color.Lerp(m_portalClosedColor, m_portalOpenedColor, m_portalAnimCurve.Evaluate(progress));
-            m_portalMaterial.SetColor("_EmissionColor", animProgress);
-            yield return new WaitForSeconds(m_refreshRate);
-        }
-        m_portalMaterial.SetColor("_EmissionColor", m_portalOpenedColor);
+    void SetPortal(float value)
+    {
+        float progress = m_portalAnimCurve.Evaluate(value / m_portalAnimDuration);
+        m_portalMaterial.SetFloat("_EmissionIntensity", Mathf.Lerp(0.3f, 0f, progress));
+        m_portalMaterial.SetFloat("_Transition", progress);
+    }
+
+    void SetDoor (float value)
+    {
+        float progress = m_doorOpeningCurve.Evaluate(value / m_doorOpeningDuration);
+        float animProgress = Mathf.Lerp(1f, 0f, progress);
+        SkinnedMaterials[0].SetFloat("_GrowValue", animProgress);
     }
 }
