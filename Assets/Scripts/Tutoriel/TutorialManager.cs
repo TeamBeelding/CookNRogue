@@ -62,6 +62,7 @@ namespace Tutoriel
 
         public TutorialStep GetTutorialState() => tutorialStep;
         
+        // ReSharper disable Unity.PerformanceAnalysis
         private void SetTutorialState(TutorialStep tutorialStep)
         {
             StopAllCoroutines();
@@ -90,6 +91,7 @@ namespace Tutoriel
                     Fighting();
                     break;
                 case TutorialStep.End:
+                    EndTutorial();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -188,7 +190,7 @@ namespace Tutoriel
 
         private void Cooking()
         {
-            _textToDisplay = "Appuye sur X pour ouvrir le menu de cuisine";
+            _textToDisplay = "Maintenez X pour ouvrir le menu de cuisine";
             _dialogueBox.DisplayText(_textToDisplay, cauldron.transform);
             
             StartCoroutine(ICooking());
@@ -200,7 +202,8 @@ namespace Tutoriel
                     if (GetIsCooking())
                     {
                         Debug.Log("Player is cooking");
-                        
+                        // Changing state
+                        SetTutorialState(TutorialStep.FightingPhase);
                     }
                     
                     yield return null;
@@ -210,6 +213,8 @@ namespace Tutoriel
         
         private void Fighting()
         {
+            SpawnEnemy();
+
             StartCoroutine(IFighting());
             
             IEnumerator IFighting()
@@ -223,23 +228,11 @@ namespace Tutoriel
                 }
             }
         }
-
-        public void ValidateIngredient()
+        
+        private void EndTutorial()
         {
-            _step = 2;
-            string[] dialogueToDisplay = { dialogue[2] };
-            _dialogueBox.DisplayDialogueText(dialogueToDisplay, cauldron.transform);
-
-            FindObjectOfType<PlayerController>().GetPlayerAction().Default.Cook.performed += this.CookMenuOpen;
+            FoodSpawn();
         }
-
-        public void UnValidateIngredient()
-        {
-            _step = 1;
-            string[] dialogueToDisplay = { dialogue[1] };
-            _dialogueBox.DisplayDialogueText(dialogueToDisplay, cauldron.transform);
-        }
-
 
         public void CookMenuOpen(InputAction.CallbackContext context)
         {
@@ -270,18 +263,13 @@ namespace Tutoriel
         {
             Time.timeScale = 1f;
         }
-    
-        public void SpawnEnemy()
+
+        private void SpawnEnemy()
         {
             if (enemy == null)
                 return;
         
             enemy.SetActive(true);
-        }
-    
-        public void ShowInteractButton()
-        {
-        
         }
 
         private void OnDrawGizmos()
