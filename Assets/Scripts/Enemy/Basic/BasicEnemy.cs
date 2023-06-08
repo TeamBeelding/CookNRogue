@@ -101,7 +101,6 @@ namespace Enemy.Basic
                     break;
                 case State.Attack:
                     animator.SetBool("isWalking", false);
-                    
                     Attack(Shot, data.GetAttackSpeed);
                     break;
                 case State.Dying:
@@ -165,10 +164,9 @@ namespace Enemy.Basic
 
         private void Shot()
         {
-            animator.SetBool("isAttack", true);
             GameObject shot = Instantiate(m_bullet, m_gun.transform.position, Quaternion.identity);
             shot.GetComponent<EnemyBulletController>().SetDirection(Player.transform);
-            animator.SetBool("isAttack", false);
+            animator.SetBool("isAttack", true);
         }
     
         private new void Dying()
