@@ -23,13 +23,11 @@ public class Ricochet : IIngredientEffects
     //EFFET LORS DE LA COLLISION
     public void EffectOnHit(Vector3 Position, GameObject HitObject, Vector3 direction)
     {
-        /*
+        
         if (!HitObject)
             return;
 
-        Debug.Log("RicochetHitEffect");
-
-        Collider[] hitColliders = Physics.OverlapSphere(Position, maxDistance, _sphereMask);
+        Collider[] hitColliders = Physics.OverlapSphere(Position, _maxDistance, _sphereMask);
         float closest = 999f;
         float distance = 0f;
         GameObject closestEnemy = HitObject;
@@ -49,12 +47,13 @@ public class Ricochet : IIngredientEffects
                 Vector3 rayDirection = (hitCollider.gameObject.transform.position - Position).normalized;
                 RaycastHit hit;
                 Physics.Raycast(Position, rayDirection, out hit, _rayMask);
-                
-                if (distance < closest && !Physics.Raycast(Position, rayDirection, _rayMask))
+
+                Debug.Log(hitCollider.gameObject);
+
+                if (distance < closest /*&& !Physics.Raycast(Position, rayDirection, _rayMask)*/)
                 {
                     closest = distance;
                     closestEnemy = hitCollider.gameObject;
-                
 
 
                 }
@@ -63,7 +62,6 @@ public class Ricochet : IIngredientEffects
             
         }
         
-        Debug.DrawLine(Position, closestEnemy.transform.position, Color.red, 999);
         HitObject.layer = 0;
         if (closestEnemy != HitObject)
         {
@@ -73,6 +71,6 @@ public class Ricochet : IIngredientEffects
             _bulletBehaviour._direction = (closestEnemy.gameObject.transform.position - HitObject.transform.position).normalized;
             _bulletBehaviour.destroyOnHit = true;
         }
-        */
+        
     }
 }
