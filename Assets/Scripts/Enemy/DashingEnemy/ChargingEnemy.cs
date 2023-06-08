@@ -13,7 +13,6 @@ namespace Enemy.DashingEnemy
 
         private bool _isCharging = false;
         private bool _canShowingRedLine = false;
-        private bool _changeStateToWaiting = false;
     
         private Vector3 _direction;
 
@@ -21,7 +20,6 @@ namespace Enemy.DashingEnemy
         [SerializeField] private EnemyDashingData _data;
     
         private Material _redLineMaterial;
-        private bool _isRedLineFullVisible = false;
 
         [SerializeField]
         private GameObject visual;
@@ -132,7 +130,6 @@ namespace Enemy.DashingEnemy
         /// </summary>
         private void Casting()
         {
-            _changeStateToWaiting = false;
             _isCharging = false;
             
             StartCoroutine(ICasting());
@@ -174,7 +171,6 @@ namespace Enemy.DashingEnemy
         private void WaitingAnotherDash()
         {
             _isCharging = false;
-            _isRedLineFullVisible = false;
             _canShowingRedLine = false;
 
             _waitingCoroutine = StartCoroutine(IWaiting());
@@ -199,18 +195,6 @@ namespace Enemy.DashingEnemy
             StopCasting();
         }
     
-        /// <summary>
-        /// Enemy Take Damage
-        /// </summary>
-        /// <param name="damage"></param>
-        public override void TakeDamage(float damage = 1, bool isCritical = false)
-        {
-            base.TakeDamage(damage, isCritical);
-            
-            if (GetState() == State.Casting)
-                SetState(State.Casting);
-        }
-
         /// <summary>
         /// Stop casting coroutine
         /// </summary>
@@ -287,8 +271,6 @@ namespace Enemy.DashingEnemy
         {
             StopMoving();
             SetState(State.Waiting);
-
-            Debug.Log("collide with obstruction");
         }
     }
 }

@@ -37,7 +37,7 @@ public class PlayerCookingInventory : MonoBehaviour
     float _curAnimProgress;
     Coroutine _curShowRoutine;
 
-    [SerializeField] int[] _damageFactor;
+    [SerializeField] float[] _damageFactor;
 
     public static PlayerCookingInventory Instance
     {
@@ -227,7 +227,7 @@ public class PlayerCookingInventory : MonoBehaviour
 
 
         m_playerAttackScript._color = _recipe[0].color;
-
+        AmmunitionBar.instance.ResetAmmoBar();
         //Fuse ingredients's effects and stats
         float averageDmg = 0;
         foreach (ProjectileData ingredient in _recipe)
