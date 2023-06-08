@@ -14,14 +14,8 @@ namespace Tutoriel
             Move,
             ApproachCauldron,
             ApproachCloser,
-            ValidateIngredient,
-            UnValidateIngredient,
             CookMenuOpen,
-            FoodSpawn,
-            LowTimeSpeed,
-            NormalTimeSpeed,
-            Aiming,
-            Shooting,
+            FightingPhase,
             End
         }
         
@@ -49,8 +43,6 @@ namespace Tutoriel
     
         public bool GetIsMoving() => isMoving;
         public bool GetIsCooking() => isCooking;
-        public bool GetIsAiming() => isAiming;
-        public bool GetIsShooting() => isShooting;
 
         private int _step;
 
@@ -74,12 +66,7 @@ namespace Tutoriel
         {
             StopAllCoroutines();
             
-            // StopCoroutine(_coroutineState);
-
             this.tutorialStep = tutorialStep;
-
-            Debug.Log("<color=red>Current tutorial step: " + tutorialStep + "</color>");
-            
             StateManagement();
         }
 
@@ -96,21 +83,11 @@ namespace Tutoriel
                 case TutorialStep.ApproachCloser:
                     ApproachMoreClose();
                     break;
-                case TutorialStep.ValidateIngredient:
-                    break;
-                case TutorialStep.UnValidateIngredient:
-                    break;
                 case TutorialStep.CookMenuOpen:
+                    Cooking();
                     break;
-                case TutorialStep.FoodSpawn:
-                    break;
-                case TutorialStep.LowTimeSpeed:
-                    break;
-                case TutorialStep.NormalTimeSpeed:
-                    break;
-                case TutorialStep.Aiming:
-                    break;
-                case TutorialStep.Shooting:
+                case TutorialStep.FightingPhase:
+                    Fighting();
                     break;
                 case TutorialStep.End:
                     break;
@@ -118,18 +95,7 @@ namespace Tutoriel
                     throw new ArgumentOutOfRangeException();
             }
         }
-        
-        private void DistanceCheck()
-        {
-            if (tutorialStep != TutorialStep.ApproachCauldron) return;
-            
-            if (Vector3.Distance(_player.transform.position, cauldron.transform.position) <= distanceToCauldron)
-            {
-                if (Vector3.Distance(_player.transform.position, cauldron.transform.position) <= distanceCloseEnough)
-                    SetTutorialState(TutorialStep.ApproachCloser);
-            }
-        }
-        
+
         public void DisplayText()
         {
             if (string.IsNullOrEmpty(_textToDisplay))
@@ -143,22 +109,14 @@ namespace Tutoriel
 
         private void Move()
         {
-            // if (_coroutineState == null)
-            //     _coroutineState = StartCoroutine(IChekingMovement());
-
-            // _coroutineState = StartCoroutine(IChekingMovement());
-
             StartCoroutine(IChekingMovement());
             
             IEnumerator IChekingMovement()
             {
                 while (tutorialStep == TutorialStep.Move)
                 {
-                    if (isMoving)
-                    {
-                        Debug.Log($"<color=green>Exit state {GetTutorialState()}</color>");
+                    if (GetIsMoving())
                         SetTutorialState(TutorialStep.ApproachCauldron);
-                    }
 
                     yield return null;
                 }
@@ -172,33 +130,23 @@ namespace Tutoriel
 
         private void ApproachCauldron()
         {
-            // _step = 1;
-            
-            // if (_coroutineState == null)
-            //     _coroutineState = StartCoroutine(IApproaching());
-
-            // _coroutineState = StartCoroutine(IApproaching());
-
             StartCoroutine(IApproaching());
             
             IEnumerator IApproaching()
             {
                 while (tutorialStep == TutorialStep.ApproachCauldron)
                 {
-                    Debug.Log("ApproachCauldron");
-
                     if (Vector3.Distance(_player.transform.position, cauldron.transform.position) <= distanceToCauldron)
                     {
                         if (Vector3.Distance(_player.transform.position, cauldron.transform.position) <= distanceCloseEnough)
-                        {
-                            Debug.Log($"<color=green>Exit state {GetTutorialState()}</color>");
                             SetTutorialState(TutorialStep.ApproachCloser);
-                        }
                         else
+                        {
                             _textToDisplay = dialogue[0];
+                            _dialogueBox.DisplayText(_textToDisplay, cauldron.transform);
+                        }
                     }
                     
-                    _dialogueBox.DisplayText(_textToDisplay, cauldron.transform);
                     yield return null;
                 }
             }
@@ -206,20 +154,73 @@ namespace Tutoriel
         
         private void ApproachMoreClose()
         {
-            // si ingredient alors texte 0 sinon texte 1
-            
-            // if (_coroutineState == null)
-            //     _coroutineState = StartCoroutine(IValidateIngredient());
+            StartCoroutine(IValidateIngredient());
             
             IEnumerator IValidateIngredient()
             {
-                while (GetTutorialState() == TutorialStep.ApproachCloser)
+                while (tutorialStep == TutorialStep.ApproachCloser)
                 {
-                    // si le joueur a des ingredients alors on passe a l'étape de cuisine
-                    // sinon on demande au joueur de prendre un ingredient
+                    // si nombre ingrédient > 0 alors 
+                    // sinon afficher texte "il n'y a pas d'ingrédient"
+
+                    if ( 1 > 0)
+                    {
+                        _textToDisplay = dialogue[1];
+                        _dialogueBox.DisplayText(_textToDisplay, cauldron.transform);
+                        
+                        yield return new WaitForSeconds(0.5f);
+                        
+                        // surbrillance chaudron
+                        SetTutorialState(TutorialStep.CookMenuOpen);
+                    }
+                    else
+                    {
+                        // surbrillance ingrédient
+                        
+                        _textToDisplay = dialogue[4];
+                        _dialogueBox.DisplayText(_textToDisplay, cauldron.transform);
+                    }
+                    
+                    yield return null;
                 }
-                
-                yield return null;
+            }
+        }
+
+        private void Cooking()
+        {
+            _textToDisplay = "Appuye sur X pour ouvrir le menu de cuisine";
+            _dialogueBox.DisplayText(_textToDisplay, cauldron.transform);
+            
+            StartCoroutine(ICooking());
+
+            IEnumerator ICooking()
+            {
+                while (tutorialStep == TutorialStep.CookMenuOpen)
+                {
+                    if (GetIsCooking())
+                    {
+                        Debug.Log("Player is cooking");
+                        
+                    }
+                    
+                    yield return null;
+                }
+            }
+        }
+        
+        private void Fighting()
+        {
+            StartCoroutine(IFighting());
+            
+            IEnumerator IFighting()
+            {
+                while (tutorialStep == TutorialStep.FightingPhase)
+                {
+                    if (!enemy)
+                        SetTutorialState(TutorialStep.End);
+                    
+                    yield return null;
+                }
             }
         }
 
