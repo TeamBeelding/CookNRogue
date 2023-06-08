@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53abb120a886f884a82d268ea4771c0d, type: 3}
+  m_Name: poisson
+  m_EditorClassIdentifier: 
+  _effects:
+  - rid: 4485747390005641223
+  _plat: 0
+  inventorySprite: {fileID: 21300000, guid: 6f934a3f661f33c4585716a786be9bc4, type: 3}
+  _size: 1
+  _speed: 2
+  _drag: 0
+  _ammunition: 30
+  _attackDelay: 0.2
+  _damage: 105
+  color: {r: 0, g: 1, b: 1, a: 1}
+  references:
+    version: 2
+    RefIds:
+    - rid: 4485747390005641223
+      type: {class: Ricochet, ns: , asm: Assembly-CSharp}
+      data:
+        _maxDistance: 20
+        _sphereMask:
+          serializedVersion: 2
+          m_Bits: 0
+        _rayMask:
+          serializedVersion: 2
+          m_Bits: 0
+        _ricochetCount: 2

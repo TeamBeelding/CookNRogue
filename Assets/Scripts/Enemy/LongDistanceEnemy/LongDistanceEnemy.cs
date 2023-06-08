@@ -20,6 +20,8 @@ namespace Enemy.LongDistanceEnemy
         private Coroutine _movingAnotherPositionCoroutine;
         private Coroutine _takingDistanceCoroutine;
 
+        private bool _needTakeDistance = false;
+
         public enum State
         {
             Chasing,
