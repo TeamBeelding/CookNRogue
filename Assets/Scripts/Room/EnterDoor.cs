@@ -35,6 +35,8 @@ public class EnterDoor : MonoBehaviour
 
     private Material[] SkinnedMaterials;
 
+    [SerializeField] GameObject _godRays;
+
     private void Start()
     {
         if (m_door != null)
@@ -51,6 +53,7 @@ public class EnterDoor : MonoBehaviour
                 m_door.SetActive(false);
                 SetDoor(1f);
                 SetPortal(1f);
+                _godRays.SetActive(true);
             }
             else
             {
@@ -92,6 +95,8 @@ public class EnterDoor : MonoBehaviour
         }
 
         //OPEN GNE GNOOOOOR
+        _godRays.SetActive(true);
+
         m_door.SetActive(false);
     }
 
