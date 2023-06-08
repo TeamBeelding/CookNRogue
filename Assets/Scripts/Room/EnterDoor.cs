@@ -32,6 +32,10 @@ public class EnterDoor : MonoBehaviour
     private AnimationCurve m_portalIntensityCurve;
     [SerializeField]
     private Material m_portalMaterial;
+    [SerializeField]
+    private Material m_rayMaterial;
+    [SerializeField]
+    private AnimationCurve m_rayCurve;
 
     private Material[] SkinnedMaterials;
 
@@ -41,6 +45,8 @@ public class EnterDoor : MonoBehaviour
     {
         if (m_door != null)
         {
+            _godRays.SetActive(true);
+
             if (m_mesh != null)
             {
                 SkinnedMaterials = m_mesh.materials;
@@ -53,7 +59,6 @@ public class EnterDoor : MonoBehaviour
                 m_door.SetActive(false);
                 SetDoor(1f);
                 SetPortal(1f);
-                _godRays.SetActive(true);
             }
             else
             {
@@ -95,7 +100,6 @@ public class EnterDoor : MonoBehaviour
         }
 
         //OPEN GNE GNOOOOOR
-        _godRays.SetActive(true);
 
         m_door.SetActive(false);
     }
@@ -105,6 +109,9 @@ public class EnterDoor : MonoBehaviour
         float progress = value / m_portalAnimDuration;
         m_portalMaterial.SetFloat("_EmissionIntensity", Mathf.Lerp(0.1f, 0.5f, m_portalIntensityCurve.Evaluate(progress)));
         m_portalMaterial.SetFloat("_Transition", m_portalAnimCurve.Evaluate(progress));
+        Color tempColor = m_rayMaterial.color;
+        tempColor.a = Mathf.Lerp(0f, 0.3f, m_rayCurve.Evaluate(progress));
+        m_rayMaterial.color = tempColor;
     }
 
     void SetDoor (float value)
