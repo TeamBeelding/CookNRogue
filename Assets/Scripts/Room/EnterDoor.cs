@@ -29,6 +29,8 @@ public class EnterDoor : MonoBehaviour
     [SerializeField]
     private AnimationCurve m_portalAnimCurve;
     [SerializeField]
+    private AnimationCurve m_portalIntensityCurve;
+    [SerializeField]
     private Material m_portalMaterial;
 
     private Material[] SkinnedMaterials;
@@ -95,9 +97,9 @@ public class EnterDoor : MonoBehaviour
 
     void SetPortal(float value)
     {
-        float progress = m_portalAnimCurve.Evaluate(value / m_portalAnimDuration);
-        m_portalMaterial.SetFloat("_EmissionIntensity", Mathf.Lerp(0.3f, 0f, progress));
-        m_portalMaterial.SetFloat("_Transition", progress);
+        float progress = value / m_portalAnimDuration;
+        m_portalMaterial.SetFloat("_EmissionIntensity", Mathf.Lerp(0.1f, 0.5f, m_portalIntensityCurve.Evaluate(progress)));
+        m_portalMaterial.SetFloat("_Transition", m_portalAnimCurve.Evaluate(progress));
     }
 
     void SetDoor (float value)
