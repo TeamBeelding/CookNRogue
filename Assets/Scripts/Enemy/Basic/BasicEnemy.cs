@@ -92,13 +92,16 @@ namespace Enemy.Basic
             {
                 case State.Neutral:
                     animator.SetBool("isWalking", false);
+                    animator.SetBool("isAttack", false);
                     break;
                 case State.Chase:
                     animator.SetBool("isWalking", true);
+                    animator.SetBool("isAttack", false);
                     Chase();
                     break;
                 case State.Attack:
                     animator.SetBool("isWalking", false);
+                    animator.SetBool("isAttack", true);
                     Attack(Shot, data.GetAttackSpeed);
                     break;
                 case State.Dying:
