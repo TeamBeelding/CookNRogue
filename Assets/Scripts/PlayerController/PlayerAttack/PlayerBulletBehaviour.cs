@@ -80,7 +80,7 @@ public class PlayerBulletBehaviour : MonoBehaviour
             _hitObject = other.gameObject;
             ApplyCorrectOnHitEffects();
 
-             other.GetComponentInParent<EnemyController>().TakeDamage(_damage, _isCritical);
+             other.GetComponentInParent<EnemyController>().TakeDamage((int)_damage, _isCritical);
 
             GameObject UIDAMAGE = Instantiate(DamageUI, other.transform.position + (Vector3.up * 3) + GetCameraDirection() * 0.5f, Quaternion.identity);
             UIDAMAGE.GetComponentInChildren<TextMeshProUGUI>().text = _damage.ToString();
