@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using AK.Wwise;
 
 public class PlayerCookingInventory : MonoBehaviour
 {
@@ -238,9 +239,10 @@ public class PlayerCookingInventory : MonoBehaviour
             m_playerAttackScript._drag += ingredient._drag;
             m_playerAttackScript._shootCooldown += ingredient._attackDelay;
             averageDmg += ingredient._damage;
-            //m_playerAttackScript._damage += ingredient._damage;
             m_playerAttackScript._ammunition += ingredient._ammunition;
             AmmunitionBar.instance.AddIngredientAmmo(ingredient._ammunition);
+            ingredient.audioState.SetValue();
+
             //Add effects
             foreach (IIngredientEffects effect in ingredient.Effects)
             {
