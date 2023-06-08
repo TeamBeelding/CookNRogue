@@ -50,7 +50,7 @@ public class EnemyManager : MonoBehaviour
             {
                 _enemiesInLevel.RemoveAt(i);
                 numOfEnemies--;
-
+                break;
             }
         }
 
@@ -68,7 +68,6 @@ public class EnemyManager : MonoBehaviour
             for (int i = StartCount - 1; i >= 0; i--)
             {
                 var current = _enemiesInLevel[i];
-                RemoveEnemyFromLevel(current);
                 Destroy(current.gameObject);
             }
         }
