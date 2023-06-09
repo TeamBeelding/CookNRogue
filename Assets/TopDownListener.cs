@@ -9,7 +9,7 @@ public class TopDownListener : AkGameObj
 
     public override Vector3 GetPosition()
     {
-        return player.GetComponent<AkGameObj>().GetPosition();
+        return player.GetComponentInChildren<AkGameObj>().GetPosition();
     }
 
 }
