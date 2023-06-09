@@ -58,6 +58,7 @@ public abstract class EnemyController : MonoBehaviour
         
     }
     
+    // ReSharper disable Unity.PerformanceAnalysis
     protected virtual void Attack(UnityAction OnAction, float delay = 0.5f)
     {
         if (_canAttack)
@@ -71,7 +72,6 @@ public abstract class EnemyController : MonoBehaviour
         {
             yield return new WaitForSeconds(delay);
             _canAttack = true;
-            _rend.material.color = Color.white;
         }
     }
 

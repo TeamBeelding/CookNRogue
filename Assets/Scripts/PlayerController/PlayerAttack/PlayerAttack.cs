@@ -158,15 +158,25 @@ public class PlayerAttack : MonoBehaviour
                 j = 0;
             }
             
+
+
             for (int k = j;k < 3; k++)
             {
 
                 GameObject Bullet = Instantiate(_Projectile, _muzzle.position, Quaternion.identity);
+
+
                 _projectileBehaviour = Bullet.GetComponent<PlayerBulletBehaviour>();
                 _projectileBehaviour.ResetStats();
                 _projectileBehaviour._playerAttack = this;
                 _projectileBehaviour._speed += _speed;
                 _projectileBehaviour._drag -= _drag;
+
+                if(_effects.Count > 0)
+                {
+                    _projectileBehaviour._damage = 0;
+                }
+
                 _projectileBehaviour._damage += _damage;
                 Vector3 direction = Quaternion.Euler(0, totalAngle, 0) * _playerController.PlayerAimDirection;
 
@@ -178,7 +188,7 @@ public class PlayerAttack : MonoBehaviour
 
                 _projectileBehaviour._direction = direction;
 
-                Debug.Log(_projectileBehaviour._speed);
+                
 
                 foreach (IIngredientEffects effect in _effects)
                 {

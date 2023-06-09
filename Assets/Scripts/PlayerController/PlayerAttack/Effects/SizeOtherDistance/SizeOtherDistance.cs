@@ -19,7 +19,7 @@ public class SizeOtherDistance : IIngredientEffects
     //EFFET LORS DU SHOOT
     public void EffectOnShoot(Vector3 Position, GameObject bullet)
     {
-        Debug.Log("SizeOtherDistanceShootEffect");
+
         //bullet.GetComponent<Transform>().localScale *= m_sizeFactor; //OLD
 
         //SIZE
@@ -42,8 +42,7 @@ public class SizeOtherDistance : IIngredientEffects
     //EFFET LORS DE LA COLLISION
     public void EffectOnHit(Vector3 Position, GameObject HitObject, Vector3 direction)
     {
-        Debug.Log("SizeOtherDistanceHitEffect");
-        Debug.Log(_changeSizeOverDistance.GetCurve().Evaluate(_changeSizeOverDistance.timePassed));
+
         _playerBulletBehaviour._damage *= (int)_changeSizeOverDistance.GetCurve().Evaluate(_changeSizeOverDistance.timePassed);
 
         _playerBulletBehaviour._damage *= _damageOtherDistance.Evaluate(_changeSizeOverDistance.timePassed);
