@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using Dialogues;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -28,9 +29,11 @@ namespace Tutoriel
         private bool isMoving = false;
         [SerializeField]
         private bool isCookingDone = false;
+        [SerializeField]
+        private bool playerHasIngredients = false;
         
         [SerializeField] 
-        private GameObject[] ingredients;
+        private List<GameObject> ingredients;
         [SerializeField]
         private GameObject enemy;
 
@@ -157,24 +160,20 @@ namespace Tutoriel
             {
                 while (tutorialStep == TutorialStep.ApproachCloser)
                 {
-                    // si nombre ingrédient > 0 alors 
-                    // sinon afficher texte "il n'y a pas d'ingrédient"
-
-                    if ( 1 > 0)
+                    if (playerHasIngredients)
                     {
+                        OutlineCauldron(true);
+                        
                         _textToDisplay = dialogue[1];
                         _dialogueBox.DisplayText(_textToDisplay, cauldron.transform);
                         
-                        yield return new WaitForSeconds(0.5f);
-                        
-                        // surbrillance chaudron
                         SetTutorialState(TutorialStep.CookMenuOpen);
                     }
                     else
                     {
-                        // surbrillance ingrédient
+                        OutlineIngredient(true);
                         
-                        _textToDisplay = dialogue[4];
+                        _textToDisplay = "Approchez vous de l'ingrédient pour le ramasser";
                         _dialogueBox.DisplayText(_textToDisplay, cauldron.transform);
                     }
                     
@@ -258,7 +257,35 @@ namespace Tutoriel
         {
             Time.timeScale = 1f;
         }
+        
+        private void OutlineCauldron(bool value)
+        {
+            if (cauldron == null)
+                return;
+            
+            if (value)
+            {
+                OutlineIngredient(false);
+                cauldron.GetComponent<Outline>().enabled = true;
+            }
+        }
 
+        private void OutlineIngredient(bool value)
+        {
+            if (ingredients == null || ingredients.Count <= 0)
+                return;
+
+            if (value)
+            {
+                OutlineCauldron(false);
+                
+                foreach (GameObject ingredient in GameObject.FindGameObjectsWithTag("IngredientTutorial"))
+                {
+                    ingredient.GetComponent<Outline>().enabled = true;
+                }
+            }
+        }
+        
         private void SpawnEnemy()
         {
             if (enemy == null)
