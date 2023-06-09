@@ -27,12 +27,8 @@ namespace Tutoriel
         [SerializeField]
         private bool isMoving = false;
         [SerializeField]
-        private bool isCooking = false;
-        [SerializeField]
-        private bool isAiming = false;
-        [SerializeField]
-        private bool isShooting = false;
-    
+        private bool isCookingDone = false;
+        
         [SerializeField] 
         private GameObject[] ingredients;
         [SerializeField]
@@ -42,7 +38,7 @@ namespace Tutoriel
         private IEnumerator _enumeratorState;
     
         public bool GetIsMoving() => isMoving;
-        public bool GetIsCooking() => isCooking;
+        public bool GetIsCookingDone() => isCookingDone;
 
         private int _step;
 
@@ -125,10 +121,9 @@ namespace Tutoriel
             }
         }
         
-        public void SetIsMoving(bool value)
-        {
-            isMoving = value;
-        }
+        public void SetIsMoving(bool value) => isMoving = value;
+        
+        public void SetIsCookingDone(bool value) => isCookingDone = value;
 
         private void ApproachCauldron()
         {
@@ -199,7 +194,7 @@ namespace Tutoriel
             {
                 while (tutorialStep == TutorialStep.CookMenuOpen)
                 {
-                    if (GetIsCooking())
+                    if (GetIsCookingDone())
                     {
                         Debug.Log("Player is cooking");
                         // Changing state

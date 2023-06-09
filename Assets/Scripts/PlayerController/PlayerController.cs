@@ -140,9 +140,11 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region Tutorial
+    
     [Header("Tutorial")]
     [SerializeField] private bool isOnTutorial = false;
     [SerializeField] private TutorialManager tutorialManager;
+    
     #endregion
     
     private void Awake()
@@ -157,6 +159,9 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        if (isOnTutorial)
+            tutorialManager = GameObject.FindGameObjectWithTag("TutorialManager").GetComponent<TutorialManager>();
+        
         _relativeTransform = m_mainCamera.transform;
         _inventoryScript = PlayerCookingInventory.Instance;
         _enemyManager = EnemyManager.Instance;
@@ -405,6 +410,15 @@ public class PlayerController : MonoBehaviour
         
         if (isOnTutorial)
             tutorialManager.SetIsMoving(true);
+    }
+
+    public void CheckingIfCookingIsDone()
+    {
+        if (!tutorialManager)
+            return;
+        
+        if (isOnTutorial)
+            tutorialManager.SetIsCookingDone(true);
     }
 
     //Dash

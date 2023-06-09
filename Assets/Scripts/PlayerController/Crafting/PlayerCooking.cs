@@ -187,6 +187,8 @@ public class PlayerCooking : MonoBehaviour
 
         //Hide UI
         m_cookingProgressVisuals.SetActive(false);
+        
+        _playerController.CheckingIfCookingIsDone();
     }
 
     IEnumerator ICraftingLoop(float delay)
@@ -231,6 +233,8 @@ public class PlayerCooking : MonoBehaviour
         {
             StopCoroutine(_craftingRoutine);
             CompleteCrafting();
+            
+            _playerController.CheckingIfCookingIsDone();
         }
     }
     #endregion
