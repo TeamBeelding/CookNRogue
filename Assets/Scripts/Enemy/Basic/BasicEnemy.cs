@@ -19,6 +19,8 @@ namespace Enemy.Basic
 
         private Coroutine _stateCoroutine;
 
+        [SerializeField]
+        private Animator animator;
         public enum State
         {
             Neutral,
@@ -37,8 +39,8 @@ namespace Enemy.Basic
             agent.speed = data.GetSpeed;
             agent.stoppingDistance = data.GetAttackRange;
             FocusPlayer = data.GetFocusPlayer;
-            Healthpoint = data.GetHealth;
-
+            Healthpoint = data.GetHealth;
+            animator = GetComponentInChildren<Animator>();
             stateRenderer = m_stateSystem.GetComponent<Renderer>();
         }
 
@@ -88,12 +90,17 @@ namespace Enemy.Basic
         {
             switch (state)
             {
-                case State.Neutral:
+                case State.Neutral:
+                    animator.SetBool("isWalking", false);
+                    animator.SetBool("isAttack", false);
                     break;
-                case State.Chase:
+                case State.Chase:
+                    animator.SetBool("isWalking", true);
+                    animator.SetBool("isAttack", false);
                     Chase();
                     break;
                 case State.Attack:
+                    animator.SetBool("isWalking", false);
                     Attack(Shot, data.GetAttackSpeed);
                     break;
                 case State.Dying:
@@ -149,7 +156,7 @@ namespace Enemy.Basic
         {
             GameObject shot = Instantiate(m_bullet, m_gun.transform.position, Quaternion.identity);
             shot.GetComponent<EnemyBulletController>().SetDirection(Player.transform);
-            Debug.Log("Shooting");
+            animator.SetBool("isAttack", true);
         }
 
         private new void Dying()
