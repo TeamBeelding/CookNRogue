@@ -850,6 +850,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8633912298131013864, guid: b13879b8e162c4143a9244bb16b679e0,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b13879b8e162c4143a9244bb16b679e0, type: 3}
 --- !u!1 &318011294 stripped
@@ -858,6 +863,19 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1636904992}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &318011299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 318011294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07495c0f77c54e541bc359c3f34ff5a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tutorialManager: {fileID: 0}
 --- !u!1 &364877753
 GameObject:
   m_ObjectHideFlags: 0
@@ -11111,6 +11129,19 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1881899872}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &396486796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 396486790}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07495c0f77c54e541bc359c3f34ff5a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tutorialManager: {fileID: 0}
 --- !u!1001 &463841187
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11915,6 +11946,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3829400288195922266, guid: aeb5d46d825ca98439897a010d2bae0a,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5983993937568670979, guid: aeb5d46d825ca98439897a010d2bae0a,
         type: 3}
       propertyPath: m_RootOrder
@@ -12561,6 +12597,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3857169665195504619, guid: 822eb7c3586f48c45be7949b870d9df1,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5701870422733786250, guid: 822eb7c3586f48c45be7949b870d9df1,
         type: 3}
       propertyPath: m_Name
@@ -13097,6 +13138,19 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 370283305}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1254571960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1254571955}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07495c0f77c54e541bc359c3f34ff5a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tutorialManager: {fileID: 0}
 --- !u!1 &1281232697
 GameObject:
   m_ObjectHideFlags: 0
@@ -13356,17 +13410,32 @@ MonoBehaviour:
   distanceToCauldron: 10
   distanceCloseEnough: 5
   isMoving: 0
+  isQTE: 0
   isCookingDone: 0
   playerHasIngredients: 0
   ingredients:
-  - {fileID: 396486790}
-  - {fileID: 1254571955}
-  - {fileID: 318011294}
-  enemy: {fileID: 1846455491}
+  - {fileID: 1616590645}
+  - {fileID: 1993329630}
+  - {fileID: 1895778383}
+  enemies: []
   cauldron: {fileID: 101830236}
   dialogue:
   - Ratio Leo
   - Ratio Tom
+  textWhenPlayerApproachCauldron: "H\xE9 toi l\xE0, viens me voir"
+  textWhenPlayerHasIngredients: Parfait, tu as tout ce qu'il faut, viens m'utiliser
+    pour qu'on avance
+  textWhenPlayerHasntIngredients: "Mais attend, t'as pas d'ingr\xE9dients toi ! Vas
+    en r\xE9cup\xE9rer un par terre, ca fera l'affaire !"
+  textWhenMenuIsOpen: "Choisi ton ingr\xE9dient et lance tout dans la marmite pour
+    le transformer en d\xE9licieux repas"
+  textWhenPlayerCooking: "Et bah l\xE0 tu attends que ca cuise"
+  textWhenQTE: "PAUUUUSE, tu savais qu'en \xE9tant assez vif tu pouvais mettre fin
+    a la cuisson en un \xE9clair ? Essaue d'appuyer sur Bouton Gauche pour voir"
+  textWhenFighting: Ah juste ce qu'il nous fallait pour tester ta nouvelle recette
+  textWhenPlayerHasntAmmo: "Ah, bon bah tu n'as deja plus que de l'eau \xE0 tirer,
+    maintenant tout ce que tu vas tirer sera nul est fade"
+  textWhenEnd: Tiens on ne vas pas y aller les mains vides quand meme
 --- !u!1 &1610159281
 GameObject:
   m_ObjectHideFlags: 0
@@ -13413,6 +13482,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1616590645 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5701870422733786250, guid: 822eb7c3586f48c45be7949b870d9df1,
+    type: 3}
+  m_PrefabInstance: {fileID: 907294866}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1636904992
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22665,12 +22740,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8f122f7d0dcb1494bbb4bee103e77d82, type: 3}
---- !u!1 &1846455491 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 490897484666988982, guid: 8f122f7d0dcb1494bbb4bee103e77d82,
-    type: 3}
-  m_PrefabInstance: {fileID: 1846455490}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1877017934
 GameObject:
   m_ObjectHideFlags: 0
@@ -35087,6 +35156,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 822eb7c3586f48c45be7949b870d9df1, type: 3}
+--- !u!1 &1895778383 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2585201009604102891, guid: b13879b8e162c4143a9244bb16b679e0,
+    type: 3}
+  m_PrefabInstance: {fileID: 271776693}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1976564362
 GameObject:
   m_ObjectHideFlags: 0
@@ -35141,6 +35216,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerAttack: {fileID: 0}
   _ammoText: {fileID: 0}
+--- !u!1 &1993329630 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5983993937568671101, guid: aeb5d46d825ca98439897a010d2bae0a,
+    type: 3}
+  m_PrefabInstance: {fileID: 665643753}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2117707027
 GameObject:
   m_ObjectHideFlags: 0

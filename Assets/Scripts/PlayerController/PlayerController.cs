@@ -624,9 +624,12 @@ public class PlayerController : MonoBehaviour
         //Cooking cancel
         StopCookingState();
 
+        if (tutorialManager)
+            return;
+        
         _playerHealth.TakeDamage(1);
     }
-
+    
     void Spawn()
     {
         //transform.position = _roomManager.SpawnPoint.position;

@@ -2,9 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Dialogues;
+using Sirenix.Utilities;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 
 namespace Tutoriel
 {
@@ -24,9 +24,11 @@ namespace Tutoriel
         [SerializeField] private float distanceToCauldron = 2f;
         [SerializeField] private float distanceCloseEnough = 1f;
         private bool _isCloseEnough = false;
-        
+
         [SerializeField]
         private bool isMoving = false;
+        [SerializeField]
+        private bool isQTE = false;
         [SerializeField]
         private bool isCookingDone = false;
         [SerializeField]
@@ -35,13 +37,10 @@ namespace Tutoriel
         [SerializeField] 
         private List<GameObject> ingredients;
         [SerializeField]
-        private GameObject enemy;
+        private List<GameObject> enemies = null;
 
         private Coroutine _coroutineState;
         private IEnumerator _enumeratorState;
-    
-        public bool GetIsMoving() => isMoving;
-        public bool GetIsCookingDone() => isCookingDone;
 
         private int _step;
 
@@ -50,14 +49,39 @@ namespace Tutoriel
         private DialogueBox _dialogueBox;
         private string _textToDisplay = "";
         private GameObject _player;
+        
+        [Header("Text to display")]
+        [SerializeField]
+        private string textWhenPlayerApproachCauldron = "Approach the cauldron";
+        [SerializeField]
+        private string textWhenPlayerHasIngredients = "Press E to open the cooking menu";
+        [SerializeField]
+        private string textWhenPlayerHasntIngredients = "You need ingredients to cook";
+        [SerializeField]
+        private string textWhenMenuIsOpen = "Press E to close the cooking menu";
+        [SerializeField]
+        private string textWhenPlayerCooking = "Press E to cook";
+        [SerializeField]
+        private string textWhenQTE = "Press E to fight";
+        [SerializeField]
+        private string textWhenFighting = "Press E to fight";
+        [SerializeField]
+        private string textWhenPlayerHasntAmmo = "You need ammo to fight";
+        [SerializeField]
+        private string textWhenEnd = "Tutorial is over";
 
         private void Start()
         {
             _dialogueBox = GameObject.FindObjectOfType<DialogueBox>();
             _player = GameObject.FindGameObjectWithTag("Player");
-            
+
             SetTutorialState(TutorialStep.Move);
         }
+
+        // private void Update()
+        // {
+        //     Debug.Log(enemies.IsNullOrEmpty());
+        // }
 
         public TutorialStep GetTutorialState() => tutorialStep;
         
@@ -116,7 +140,7 @@ namespace Tutoriel
             {
                 while (tutorialStep == TutorialStep.Move)
                 {
-                    if (GetIsMoving())
+                    if (isMoving)
                         SetTutorialState(TutorialStep.ApproachCauldron);
 
                     yield return null;
@@ -127,6 +151,8 @@ namespace Tutoriel
         public void SetIsMoving(bool value) => isMoving = value;
         
         public void SetIsCookingDone(bool value) => isCookingDone = value;
+        
+        public void SetPlayerHasIngredients(bool value) => playerHasIngredients = value;
 
         private void ApproachCauldron()
         {
@@ -142,7 +168,7 @@ namespace Tutoriel
                             SetTutorialState(TutorialStep.ApproachCloser);
                         else
                         {
-                            _textToDisplay = dialogue[0];
+                            _textToDisplay = textWhenPlayerApproachCauldron;
                             _dialogueBox.DisplayText(_textToDisplay, cauldron.transform);
                         }
                     }
@@ -164,7 +190,7 @@ namespace Tutoriel
                     {
                         OutlineCauldron(true);
                         
-                        _textToDisplay = dialogue[1];
+                        _textToDisplay = textWhenPlayerHasIngredients;
                         _dialogueBox.DisplayText(_textToDisplay, cauldron.transform);
                         
                         SetTutorialState(TutorialStep.CookMenuOpen);
@@ -173,7 +199,7 @@ namespace Tutoriel
                     {
                         OutlineIngredient(true);
                         
-                        _textToDisplay = "Approchez vous de l'ingrédient pour le ramasser";
+                        _textToDisplay = textWhenPlayerHasntIngredients;
                         _dialogueBox.DisplayText(_textToDisplay, cauldron.transform);
                     }
                     
@@ -184,19 +210,27 @@ namespace Tutoriel
 
         private void Cooking()
         {
-            _textToDisplay = "Maintenez X pour ouvrir le menu de cuisine";
+            _textToDisplay = textWhenMenuIsOpen;
             _dialogueBox.DisplayText(_textToDisplay, cauldron.transform);
             
             StartCoroutine(ICooking());
 
             IEnumerator ICooking()
             {
+                yield return new WaitForSeconds(1);
+                
+                _textToDisplay = textWhenPlayerCooking;
+                _dialogueBox.DisplayText(_textToDisplay, cauldron.transform);
+
                 while (tutorialStep == TutorialStep.CookMenuOpen)
                 {
-                    if (GetIsCookingDone())
+                    if (isQTE)
                     {
-                        Debug.Log("Player is cooking");
-                        // Changing state
+                        _textToDisplay = textWhenQTE;
+                        _dialogueBox.DisplayText(_textToDisplay, cauldron.transform);
+                    }
+                    if (isCookingDone)
+                    {
                         SetTutorialState(TutorialStep.FightingPhase);
                     }
                     
@@ -213,9 +247,12 @@ namespace Tutoriel
             
             IEnumerator IFighting()
             {
+                _textToDisplay = textWhenFighting;
+                _dialogueBox.DisplayText(_textToDisplay, cauldron.transform);
+
                 while (tutorialStep == TutorialStep.FightingPhase)
                 {
-                    if (!enemy)
+                    if (GameObject.FindGameObjectsWithTag("Enemy").IsNullOrEmpty())
                         SetTutorialState(TutorialStep.End);
                     
                     yield return null;
@@ -225,7 +262,22 @@ namespace Tutoriel
         
         private void EndTutorial()
         {
-            FoodSpawn();
+            StartCoroutine(IEndTutorial());
+            
+            IEnumerator IEndTutorial()
+            {
+                _textToDisplay = textWhenPlayerHasntAmmo;
+                _dialogueBox.DisplayText(_textToDisplay, cauldron.transform);
+                
+                yield return new WaitForSeconds(2);
+                
+                FoodSpawn();
+                
+                _textToDisplay = textWhenEnd;
+                _dialogueBox.DisplayText(_textToDisplay, cauldron.transform);
+
+                Debug.Log("Open door");
+            }
         }
 
         public void CookMenuOpen(InputAction.CallbackContext context)
@@ -288,10 +340,21 @@ namespace Tutoriel
         
         private void SpawnEnemy()
         {
-            if (enemy == null)
+            if (enemies == null || enemies.Count == 0)
                 return;
+
+            foreach (GameObject enemy in enemies)
+            {
+                enemy.SetActive(true);
+            }
+        }
         
-            enemy.SetActive(true);
+        private void ShowingUI()
+        {
+            // if (ui == null)
+            //     return;
+            //
+            // ui.SetActive(true);
         }
 
         private void OnDrawGizmos()
