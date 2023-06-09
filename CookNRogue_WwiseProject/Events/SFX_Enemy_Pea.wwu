@@ -51,6 +51,35 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="Play_SFX_Pea_Movement" ID="{8D650E59-0D8D-41C9-958B-D833D45BA916}">
+					<ChildrenList>
+						<Action Name="" ID="{1602202A-768A-4E98-A2C6-194CA775CAD5}" ShortID="338528730">
+							<PropertyList>
+								<Property Name="FadeTime" Type="Real64" Value="0.1"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="RC_Pea_Movement" ID="{A7205CCB-95F0-41B0-97E9-96755BCCEF2F}" WorkUnitID="{23B15D27-5212-492F-AB18-D64924507D5D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Stop_SFX_Pea_Movement" ID="{63877B8A-FF7E-4D8D-9B65-24A5FC7C5985}">
+					<ChildrenList>
+						<Action Name="" ID="{8BEA1313-BC10-492F-8AC5-98D19398FC39}" ShortID="312234367">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+								<Property Name="FadeTime" Type="Real64" Value="0.2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="RC_Pea_Movement" ID="{A7205CCB-95F0-41B0-97E9-96755BCCEF2F}" WorkUnitID="{23B15D27-5212-492F-AB18-D64924507D5D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

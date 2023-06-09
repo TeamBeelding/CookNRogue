@@ -19,9 +19,13 @@ namespace Enemy.Slime
         [SerializeField]
         private AK.Wwise.Event _Play_SFX_Pea_Pod_Hit;
         [SerializeField]
+        private AK.Wwise.Event _Play_Weapon_Hit;
+        [SerializeField]
         private AK.Wwise.Event _Play_SFX_Pea_Pod_Death;
         [SerializeField]
         private AK.Wwise.Event _Play_SFX_Pea_Spawn;
+
+        [Space]
 
         [SerializeField] private SlimeData data;
         [SerializeField] private NavMeshAgent agent;
@@ -88,25 +92,29 @@ namespace Enemy.Slime
         private void StateManagement()
         {
             animator.SetBool("isAttack", _canAttackAnim);
-
+           
             switch (state)
             {
                 case State.Neutral:
                     animator.SetBool("isWalking", false);
                     animator.SetBool("isAttack", false);
+                    _Stop_SFX_Pea_Pod_Footsteps.Post(gameObject);
                     break;
                 case State.Chase:
                     Chase();
                     animator.SetBool("isWalking", true);
                     animator.SetBool("isAttack", false);
+                    _Play_SFX_Pea_Pod_Footsteps.Post(gameObject);
                     break;
                 case State.KeepingDistance:
                     animator.SetBool("isWalking", false);
                     animator.SetBool("isAttack", false);
+                    _Stop_SFX_Pea_Pod_Footsteps.Post(gameObject);
                     KeepDistance();
                     break;
                 case State.Attack:
                     animator.SetBool("isWalking", false);
+                    _Stop_SFX_Pea_Pod_Footsteps.Post(gameObject);
                     //animator.SetBool("isAttack", true);
                     Attack(ThrowMinimoyz, data.GetAttackSpeed);
                     break;
@@ -116,6 +124,7 @@ namespace Enemy.Slime
                 default:
                     Dying();
                     break;
+                    //_Stop_SFX_Pea_Pod_Footsteps.IsValid
             }
         }
 
@@ -173,10 +182,15 @@ namespace Enemy.Slime
             
             if (!spawnChecker.IsPathValid(Player.transform.position))
                 ThrowMinimoyz();
-
+                     
             GameObject minimoyz = Instantiate(this.minimoyz, gun.transform.position, quaternion.identity);
             minimoyz.GetComponent<MinimoyzController>().SetIsThrowing(true);
             minimoyz.GetComponent<ThrowingEffect>().ThrowMinimoyz(point, data.GetThrowingMaxHeight, data.GetThrowingSpeed);
+            if (_canAttackAnim)
+            {
+                _Play_SFX_Pea_Spawn.Post(minimoyz);
+            }
+
         }
 
         private Transform RandomPoint()
@@ -204,10 +218,13 @@ namespace Enemy.Slime
         public override void TakeDamage(float damage = 1, bool isCritical = false)
         {
             base.TakeDamage(damage, isCritical);
-        
+            _Play_SFX_Pea_Pod_Hit.Post(gameObject);
+            _Play_Weapon_Hit.Post(gameObject);
+
             if (Healthpoint <= 0)
             {
                 state = State.Dying;
+                _Play_SFX_Pea_Pod_Death.Post(gameObject);
             }
         }
 

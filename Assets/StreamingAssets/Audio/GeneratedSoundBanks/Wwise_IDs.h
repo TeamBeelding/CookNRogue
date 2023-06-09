@@ -41,6 +41,7 @@ namespace AK
         static const AkUniqueID PLAY_SFX_INGREDIENT_COLLECT = 3954090412U;
         static const AkUniqueID PLAY_SFX_PEA_DEATH = 2393289231U;
         static const AkUniqueID PLAY_SFX_PEA_FOOTSTEPS = 1246702048U;
+        static const AkUniqueID PLAY_SFX_PEA_MOVEMENT = 3395898104U;
         static const AkUniqueID PLAY_SFX_PEA_POD_DEATH = 4141938667U;
         static const AkUniqueID PLAY_SFX_PEA_POD_FOOTSTEPS = 2885932196U;
         static const AkUniqueID PLAY_SFX_PEA_POD_HIT = 3281359690U;
@@ -55,6 +56,7 @@ namespace AK
         static const AkUniqueID PLAY_WEAPON_HIT = 701036212U;
         static const AkUniqueID PLAY_WEAPON_SHOT = 3889646233U;
         static const AkUniqueID STOP_SFX_COOK = 4293892292U;
+        static const AkUniqueID STOP_SFX_PEA_MOVEMENT = 2301333962U;
         static const AkUniqueID STOP_SFX_PEA_POD_FOOTSTEPS = 749319194U;
     } // namespace EVENTS
 

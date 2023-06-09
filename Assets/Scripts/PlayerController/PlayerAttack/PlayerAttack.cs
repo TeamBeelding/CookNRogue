@@ -87,7 +87,6 @@ public class PlayerAttack : MonoBehaviour
             _shootingParticles.Play();
 
         _shootOnCooldown = true;
-        _Play_Weapon_Shot.Post(gameObject);
         //BulletInstantiate
         StartCoroutine(Shootbullets(_TimeBtwShotsRafale));
         
@@ -175,8 +174,9 @@ public class PlayerAttack : MonoBehaviour
                 _projectileBehaviour._playerAttack = this;
                 _projectileBehaviour._speed += _speed;
                 _projectileBehaviour._drag -= _drag;
+                _Play_Weapon_Shot.Post(Bullet);
 
-                if(_effects.Count > 0)
+                if (_effects.Count > 0)
                 {
                     _projectileBehaviour._damage = 0;
                 }

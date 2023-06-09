@@ -117,7 +117,7 @@
 				</StateGroup>
 			</StateGroups>
 		</SoundBank>
-		<SoundBank Id="1563047448" Type="User" Language="SFX" Hash="{D70D881C-491E-18F2-ECBE-1FCD34CDFA10}">
+		<SoundBank Id="1563047448" Type="User" Language="SFX" Hash="{BFD1BD77-F4A9-F9DA-EBC1-BD3320145D4E}">
 			<ShortName>SFX_Enemy_Pea_Pod</ShortName>
 			<Path>SFX_Enemy_Pea_Pod.bnk</Path>
 			<Media>
@@ -309,7 +309,7 @@
 				</Event>
 			</Events>
 		</SoundBank>
-		<SoundBank Id="1923254948" Type="User" Language="SFX" Hash="{94B44BCF-AF99-294E-80CF-EBFE2D3B4DB7}">
+		<SoundBank Id="1923254948" Type="User" Language="SFX" Hash="{1A79C060-679A-35F3-E220-80C3A72B9AB0}">
 			<ShortName>SFX_Enemy_Pea</ShortName>
 			<Path>SFX_Enemy_Pea.bnk</Path>
 			<Media>
@@ -324,6 +324,10 @@
 				<File Id="305897649" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>Throw_v2-002.wav</ShortName>
 					<CachePath>SFX/Throw_v2-002_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="321340653" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Pea_Pod_Movement_V1.wav</ShortName>
+					<CachePath>SFX/SFX_Pea_Pod_Movement_V1_9EDFC787.wem</CachePath>
 				</File>
 				<File Id="334568147" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>Cook'n'Rogue_Pea_Jump_07.wav</ShortName>
@@ -373,6 +377,10 @@
 					<ShortName>Cook'n'Rogue_Pea_Jump_01.wav</ShortName>
 					<CachePath>SFX/Cook'n'Rogue_Pea_Jump_01_3F75BDB9.wem</CachePath>
 				</File>
+				<File Id="1055722959" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Pea_Pod_Movement_V2.wav</ShortName>
+					<CachePath>SFX/SFX_Pea_Pod_Movement_V2_3F75BDB9.wem</CachePath>
+				</File>
 				<File Id="1071645651" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>SFX_Pea_Pod_Hit_V1-001.wav</ShortName>
 					<CachePath>SFX/SFX_Pea_Pod_Hit_V1-001_3F75BDB9.wem</CachePath>
@@ -400,13 +408,20 @@
 						<MediaRef Id="1022762267"/>
 					</MediaRefs>
 				</Event>
-				<Event Id="831679224" Name="Play_SFX_Pea_Spawn" MaxAttenuation="10" DurationType="OneShot" DurationMin="1.4316607" DurationMax="1.7286686">
+				<Event Id="3395898104" Name="Play_SFX_Pea_Movement" MaxAttenuation="10" DurationType="Mixed" DurationMin="1.7675376" DurationMax="Infinite">
+					<MediaRefs>
+						<MediaRef Id="321340653"/>
+						<MediaRef Id="1055722959"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="831679224" Name="Play_SFX_Pea_Spawn" MaxAttenuation="15" DurationType="OneShot" DurationMin="1.4316607" DurationMax="1.7286686">
 					<MediaRefs>
 						<MediaRef Id="26913529"/>
 						<MediaRef Id="305897649"/>
 						<MediaRef Id="1013287905"/>
 					</MediaRefs>
 				</Event>
+				<Event Id="2301333962" Name="Stop_SFX_Pea_Movement" MaxAttenuation="0" DurationType="OneShot" DurationMin="0" DurationMax="0"/>
 			</Events>
 		</SoundBank>
 		<SoundBank Id="2374353081" Type="User" Language="SFX" Hash="{B1AF475A-3A3F-F6A9-527B-328396E3BC4A}">
@@ -659,7 +674,7 @@
 				</Event>
 			</Events>
 		</SoundBank>
-		<SoundBank Id="3871269544" Type="User" Language="SFX" Hash="{824324C0-3A5D-258E-5ADE-8BC24BD06242}">
+		<SoundBank Id="3871269544" Type="User" Language="SFX" Hash="{6C62D585-A850-B307-EBB9-C7EFAB9EB5C0}">
 			<ShortName>SFX_Enemy_Corn</ShortName>
 			<Path>SFX_Enemy_Corn.bnk</Path>
 			<Media>
@@ -797,7 +812,7 @@
 				</Event>
 			</Events>
 		</SoundBank>
-		<SoundBank Id="3991942870" Type="User" Language="SFX" Hash="{CB797E8B-4E4F-608C-8D74-4F75C0855A08}">
+		<SoundBank Id="3991942870" Type="User" Language="SFX" Hash="{28D46AE2-CF93-2F05-1B43-BBBC149858C1}">
 			<ShortName>MUSIC</ShortName>
 			<Path>MUSIC.bnk</Path>
 			<Media>
@@ -1494,5 +1509,5 @@
 			</Events>
 		</SoundBank>
 	</SoundBanks>
-	<FileHash>{6E2060C7-191B-2234-962F-E9A6C991B449}</FileHash>
+	<FileHash>{55BDDE7F-2263-2358-5122-A3D34F9DCBBF}</FileHash>
 </SoundBanksInfo>
