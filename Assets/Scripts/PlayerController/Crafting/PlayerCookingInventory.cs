@@ -38,7 +38,7 @@ public class PlayerCookingInventory : MonoBehaviour
     float _curAnimProgress;
     Coroutine _curShowRoutine;
 
-    [SerializeField] int[] _damageFactor;
+    [SerializeField] float[] _damageFactor;
 
     public static PlayerCookingInventory Instance
     {
@@ -228,12 +228,11 @@ public class PlayerCookingInventory : MonoBehaviour
 
 
         m_playerAttackScript._color = _recipe[0].color;
-
+        AmmunitionBar.instance.ResetAmmoBar();
         //Fuse ingredients's effects and stats
         float averageDmg = 0;
         foreach (ProjectileData ingredient in _recipe)
         {
-            Debug.Log(m_playerAttackScript);
             m_playerAttackScript._size += ingredient._size;
             m_playerAttackScript._speed += ingredient._speed;
             m_playerAttackScript._drag += ingredient._drag;
@@ -247,8 +246,7 @@ public class PlayerCookingInventory : MonoBehaviour
             foreach (IIngredientEffects effect in ingredient.Effects)
             {
                 if(effect != null)
-                {
-                    
+                {                   
                     m_playerAttackScript._effects.Add(effect);
                 }
             }

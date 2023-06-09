@@ -14,7 +14,7 @@ public class IngredientSpawner : MonoBehaviour
 
     private void SpawnIngredient()
     {   
-            int rand = Random.Range(0, _ingredients.Length - 1);
+            int rand = Random.Range(0, _ingredients.Length);
             GameObject ingredient = Instantiate(_ingredients[rand], transform.position, Quaternion.identity);
             ingredient.transform.localScale = Vector3.one * _ingredientScale;
 

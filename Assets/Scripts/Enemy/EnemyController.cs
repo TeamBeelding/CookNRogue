@@ -18,6 +18,7 @@ public abstract class EnemyController : MonoBehaviour
     
     protected bool FocusPlayer = false;
     private bool _canAttack = true;
+    protected bool _canAttackAnim = true;
     
     protected float Healthpoint;
     
@@ -58,21 +59,32 @@ public abstract class EnemyController : MonoBehaviour
         
     }
     
+    // ReSharper disable Unity.PerformanceAnalysis
     protected virtual void Attack(UnityAction OnAction, float delay = 0.5f)
     {
         if (_canAttack)
         {
             OnAction?.Invoke();
             _canAttack = false;
+            _canAttackAnim = false;
             StartCoroutine(IAttackTimer(delay));
+            //StartCoroutine(IAttackAnimTimer(delay/2));
         }
         
         IEnumerator IAttackTimer(float delay = 0.5f)
         {
-            yield return new WaitForSeconds(delay);
+            yield return new WaitForSeconds(delay * 0.95f);
+            _canAttackAnim = true;
+
+            yield return new WaitForSeconds(delay * 0.05f);
             _canAttack = true;
-            _rend.material.color = Color.white;
         }
+
+        //IEnumerator IAttackAnimTimer(float delay = 0.5f)
+        //{
+        //    yield return new WaitForSeconds(delay * 1.5f);
+        //    _canAttackAnim = true;
+        //}
     }
 
     #endregion

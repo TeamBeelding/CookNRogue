@@ -87,20 +87,27 @@ namespace Enemy.Slime
         // ReSharper disable Unity.PerformanceAnalysis
         private void StateManagement()
         {
+            animator.SetBool("isAttack", _canAttackAnim);
+
             switch (state)
             {
                 case State.Neutral:
                     animator.SetBool("isWalking", false);
+                    animator.SetBool("isAttack", false);
                     break;
                 case State.Chase:
                     Chase();
                     animator.SetBool("isWalking", true);
+                    animator.SetBool("isAttack", false);
                     break;
                 case State.KeepingDistance:
+                    animator.SetBool("isWalking", false);
+                    animator.SetBool("isAttack", false);
                     KeepDistance();
                     break;
                 case State.Attack:
-                    //animator.SetBool("isWalking", false);
+                    animator.SetBool("isWalking", false);
+                    //animator.SetBool("isAttack", true);
                     Attack(ThrowMinimoyz, data.GetAttackSpeed);
                     break;
                 case State.Dying:

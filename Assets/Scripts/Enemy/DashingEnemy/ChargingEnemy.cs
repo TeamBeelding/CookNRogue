@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -110,8 +111,24 @@ namespace Enemy.DashingEnemy
         /// </summary>
         private void Dashing()
         {
-            _isCharging = true;
-            StartCoroutine(ChargingToPlayer());
+            RaycastHit hit;
+            Vector3 direction = (Player.transform.position - transform.position).normalized;
+            
+            if (Physics.Raycast(transform.position, direction, out hit, Vector3.Distance(transform.position, Player.transform.position)))
+            {
+                if (!hit.collider.CompareTag("Player"))
+                {
+                    Debug.DrawRay(transform.position, direction * hit.distance, Color.red);
+                    Debug.Log($"<color=red>{hit.collider.name}</color>");
+                    
+                    SetState(State.Casting);
+                    
+                    return;
+                }
+                
+                _isCharging = true;
+                StartCoroutine(ChargingToPlayer());
+            }
 
             IEnumerator ChargingToPlayer()
             {
@@ -144,6 +161,8 @@ namespace Enemy.DashingEnemy
         /// </summary>
         private void Casting()
         {
+            HideRedLine();
+            
             _changeStateToWaiting = false;
             _isCharging = false;
             
@@ -211,18 +230,6 @@ namespace Enemy.DashingEnemy
             StopCasting();
         }
     
-        /// <summary>
-        /// Enemy Take Damage
-        /// </summary>
-        /// <param name="damage"></param>
-        public override void TakeDamage(float damage = 1, bool isCritical = false)
-        {
-            base.TakeDamage(damage, isCritical);
-            
-            if (GetState() == State.Casting)
-                SetState(State.Casting);
-        }
-
         /// <summary>
         /// Stop casting coroutine
         /// </summary>
@@ -299,8 +306,6 @@ namespace Enemy.DashingEnemy
         {
             StopMoving();
             SetState(State.Waiting);
-
-            Debug.Log("collide with obstruction");
         }
     }
 }
