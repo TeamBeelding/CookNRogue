@@ -218,6 +218,8 @@ namespace Enemy.Slime
 
         protected override void Dying()
         {
+            //dying anim + sounds
+
             for (int i = 0; i < data.GetSlimeSpawnWhenDying; i++)
             {
                 Vector2 origin = new Vector2(transform.position.x, transform.position.z);
@@ -226,7 +228,7 @@ namespace Enemy.Slime
             
                 Instantiate(minimoyz, point, Quaternion.identity);
             }
-        
+            
             base.Dying();
         }
 

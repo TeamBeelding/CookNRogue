@@ -20,14 +20,14 @@ namespace Enemy.Basic
         [SerializeField]
         private AK.Wwise.Event _Play_SFX_Corn_Attack_Shot;
     
-        [SerializeField]
-        private GameObject m_gun;
-        [SerializeField]
-        private GameObject m_bullet;
-        [SerializeField]
-        private ParticleSystem m_stateSystem;
-        [SerializeField]
-        private Renderer stateRenderer;
+        //[SerializeField]
+        //private GameObject m_gun;
+        //[SerializeField]
+        //private GameObject m_bullet;
+        //[SerializeField]
+        //private ParticleSystem m_stateSystem;
+        //[SerializeField]
+        //private Renderer stateRenderer;
         [SerializeField] private EnemyData data;
         [SerializeField] private NavMeshAgent agent;
 
@@ -194,16 +194,18 @@ namespace Enemy.Basic
         {
             base.TakeDamage(damage, isCritical);
 
-            if (state == State.Neutral)
-                SetState(State.Chase);
-               _Play_Weapon_Hit.Post(gameObject);
-              
-
+            if (state == State.Neutral) 
+            {
+                SetState(State.Chase);
+
+                _Play_Weapon_Hit.Post(gameObject);
+            }
+
             if (Healthpoint <= 0)
             {
                 _Play_SFX_Corn_Death.Post(gameObject);
                 SetState(State.Dying);
-                           }
+            }
         }
     }
 }
