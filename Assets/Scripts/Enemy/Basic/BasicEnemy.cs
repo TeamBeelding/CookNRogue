@@ -14,6 +14,8 @@ namespace Enemy.Basic
         [SerializeField]
         private AK.Wwise.Event _Play_SFX_Corn_Death;
         [SerializeField]
+        private AK.Wwise.Event _Play_SFX_Corn_Hit;
+        [SerializeField]
         private AK.Wwise.Event _Play_SFX_Corn_Footsteps;
         [SerializeField]
         private AK.Wwise.Event _Play_SFX_Corn_Attack_Charge;
@@ -197,7 +199,7 @@ namespace Enemy.Basic
             if (state == State.Neutral) 
             {
                 SetState(State.Chase);
-
+                _Play_SFX_Corn_Hit.Post(gameObject);
                 _Play_Weapon_Hit.Post(gameObject);
             }
 
