@@ -38,7 +38,9 @@ namespace Enemy.DashingEnemy
 
         [SerializeField]
         private GameObject visual;
-    
+
+        private Animator animator;
+
         public enum State
         {
             Casting,
@@ -59,7 +61,7 @@ namespace Enemy.DashingEnemy
         protected override void Start()
         {
             base.Start();
-        
+            animator = GetComponentInChildren<Animator>();
             SetState(State.Casting);
             _redLineMaterial = _redLine.GetComponent<Renderer>().material;
         }
@@ -91,9 +93,11 @@ namespace Enemy.DashingEnemy
                     Casting();
                     break;
                 case State.Waiting:
+                    animator.SetBool("isAttack", false);
                     WaitingAnotherDash();
                     break;
                 case State.Dashing:
+                    animator.SetBool("isAttack", true);
                     Dashing();
                     break;
                 case State.Dying:
@@ -227,9 +231,16 @@ namespace Enemy.DashingEnemy
         /// </summary>
         protected override void Dying()
         {
-            base.Dying();
+            animator.SetBool("isDead", true);
 
-            StopCasting();
+            StartCoroutine(IDeathAnim());
+
+            IEnumerator IDeathAnim()
+            {
+                yield return new WaitForSeconds(3f);
+                StopCasting();
+                base.Dying();
+            }
         }
     
         /// <summary>

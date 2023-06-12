@@ -13,6 +13,7 @@ namespace AK
 {
     namespace EVENTS
     {
+        static const AkUniqueID PLAY_AMB_LEVEL = 1968870321U;
         static const AkUniqueID PLAY_MC_CAULDRON_IDLE = 2012076284U;
         static const AkUniqueID PLAY_MC_DASH = 2996328093U;
         static const AkUniqueID PLAY_MC_DEATH = 107675701U;
@@ -38,6 +39,7 @@ namespace AK
         static const AkUniqueID PLAY_SFX_CORN_FOOTSTEPS = 317530092U;
         static const AkUniqueID PLAY_SFX_CORN_HIT = 866431378U;
         static const AkUniqueID PLAY_SFX_DOOR_OPEN = 1312371701U;
+        static const AkUniqueID PLAY_SFX_HEALTH_COLLECT = 1136621035U;
         static const AkUniqueID PLAY_SFX_INGREDIENT_COLLECT = 3954090412U;
         static const AkUniqueID PLAY_SFX_PEA_DEATH = 2393289231U;
         static const AkUniqueID PLAY_SFX_PEA_FOOTSTEPS = 1246702048U;
@@ -46,6 +48,11 @@ namespace AK
         static const AkUniqueID PLAY_SFX_PEA_POD_FOOTSTEPS = 2885932196U;
         static const AkUniqueID PLAY_SFX_PEA_POD_HIT = 3281359690U;
         static const AkUniqueID PLAY_SFX_PEA_SPAWN = 831679224U;
+        static const AkUniqueID PLAY_UI_COOK_CANCEL = 3922793512U;
+        static const AkUniqueID PLAY_UI_COOK_CLOSE = 1208534994U;
+        static const AkUniqueID PLAY_UI_COOK_HOVER = 186493428U;
+        static const AkUniqueID PLAY_UI_COOK_OPEN = 4203446662U;
+        static const AkUniqueID PLAY_UI_COOK_SELECT = 2393118694U;
         static const AkUniqueID PLAY_UI_SETTINGS_CLOSE = 1077241273U;
         static const AkUniqueID PLAY_UI_SETTINGS_DECLINE = 4050841243U;
         static const AkUniqueID PLAY_UI_SETTINGS_NAVIGATE = 1842946906U;
@@ -55,6 +62,7 @@ namespace AK
         static const AkUniqueID PLAY_WEAPON_BOUNCE_WALL = 530264000U;
         static const AkUniqueID PLAY_WEAPON_HIT = 701036212U;
         static const AkUniqueID PLAY_WEAPON_SHOT = 3889646233U;
+        static const AkUniqueID STOP_AMB_LEVEL = 3214656583U;
         static const AkUniqueID STOP_SFX_COOK = 4293892292U;
         static const AkUniqueID STOP_SFX_PEA_MOVEMENT = 2301333962U;
         static const AkUniqueID STOP_SFX_PEA_POD_FOOTSTEPS = 749319194U;

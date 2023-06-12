@@ -75,7 +75,6 @@ public abstract class EnemyController : MonoBehaviour
             _canAttack = false;
             _canAttackAnim = false;
             StartCoroutine(IAttackTimer(delay));
-            //StartCoroutine(IAttackAnimTimer(delay/2));
         }
         
         IEnumerator IAttackTimer(float delay = 0.5f)
