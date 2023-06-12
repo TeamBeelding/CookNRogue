@@ -2,6 +2,7 @@ using UnityEngine.InputSystem;
 using UnityEngine;
 using System.Collections;
 using Tutoriel;
+using UnityEngine.SceneManagement;
 using static UnityEngine.ParticleSystem;
 
 [RequireComponent(typeof(Rigidbody), typeof(Collider))]
@@ -51,6 +52,10 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField]
     private GameObject pauseMenu;
+    [SerializeField]
+    private GameObject deathMenu;
+    [SerializeField]
+    private GameObject victoryMenu;
 
     [SerializeField]
     private PlayerAnimStates PlayerAnimStates;
@@ -172,6 +177,7 @@ public class PlayerController : MonoBehaviour
 
 
         pauseMenu.SetActive(false);
+        deathMenu.SetActive(false);
 
         //Set Input Actions Map
         _playerActions = new PlayerActions();
@@ -188,6 +194,7 @@ public class PlayerController : MonoBehaviour
         _playerActions.Default.Aim.canceled += Aim_Canceled;
         _playerActions.Default.Dash.performed += Dash;
         _playerActions.Default.Cook.performed += Cook_Performed;
+        _playerActions.Default.Pause.performed += OnPauseGame;
         _playerActions.Default.Quit.performed += Quit;
 
         //Set Cooking Events
@@ -635,11 +642,21 @@ public class PlayerController : MonoBehaviour
 
         //Cooking cancel
         StopCookingState();
-
+        
         if (tutorialManager)
             return;
-        
-        _playerHealth.TakeDamage(1);
+            
+        if (!_playerHealth.TakeDamage(1))
+        {
+            PauseGame();
+            _playerActions.UI.Enable();
+            _playerActions.Default.Disable();
+            _playerActions.Cooking.Disable();
+            pauseMenu.SetActive(false);
+            victoryMenu.SetActive(false);
+            deathMenu.SetActive(true);
+        }
+
     }
     
     void Spawn()
@@ -680,6 +697,35 @@ public class PlayerController : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+    
+    
+    public void RestartGame()
+    {
+        SceneManager.LoadScene("Prototype");
+    }
+
+    public void EndGame()
+    {
+        _playerActions.UI.Enable();
+        _playerActions.Default.Disable();
+        _playerActions.Cooking.Disable();
+        pauseMenu.SetActive(false);
+        deathMenu.SetActive(false);
+        victoryMenu.SetActive(true);
+        PauseGame();
+    }
+
+    public void RestartLevel()
+    {
+        _playerActions.UI.Disable();
+        _playerActions.Default.Enable();
+        _playerActions.Cooking.Disable();
+        pauseMenu.SetActive(false);
+        deathMenu.SetActive(false);
+        victoryMenu.SetActive(false);
+        PauseGame();
+        RoomManager.instance.RestartLevel();
     }
 
     #endregion
