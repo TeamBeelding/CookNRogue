@@ -232,7 +232,8 @@ namespace Enemy.Minimoyz
 
         protected override void Chase()
         {
-            agent.SetDestination(Player.transform.position);
+            if (agent.enabled)
+                agent.SetDestination(Player.transform.position);
         }
     
         private void ChaseAndAttack()
