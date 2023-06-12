@@ -82,8 +82,7 @@ public class RoomManager : MonoBehaviour
     {
         if (m_currentLevelIndex >= m_amountOfLevels - 1)
         {
-            
-            RestartLevel();
+            m_player.EndGame();
         }
         else
         {
