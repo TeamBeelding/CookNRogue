@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 490897484666988986}
   - component: {fileID: 490897484666988988}
   - component: {fileID: 2622071322217477621}
+  - component: {fileID: 1126600364199252671}
   m_Layer: 0
   m_Name: BasicEnemy 1
   m_TagString: Enemy
@@ -74,8 +75,38 @@ MonoBehaviour:
   _effectHandlers: []
   explosion: {fileID: 466446929295881914, guid: 3fb8a478fb9325d40bc6d96484133a99,
     type: 3}
+  _Play_Weapon_Hit:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: a15d4b8ee5a9a404cbbbedb89ceaa826,
+      type: 2}
+  _Play_SFX_Corn_Death:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 06bb7ffaf94c9374198612481d8d5670,
+      type: 2}
+  _Play_SFX_Corn_Hit:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 6d84681594175624e8d0b8ed40151b4a,
+      type: 2}
+  _Play_SFX_Corn_Footsteps:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: f1b515f2a1614944497df5c81d4574b6,
+      type: 2}
+  _Play_SFX_Corn_Attack_Charge:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: aeb6af17771ea3b41a334b4b33becce9,
+      type: 2}
+  _Play_SFX_Corn_Attack_Shot:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: d2d34e51e7cba5849848ac22b2820b9a,
+      type: 2}
   data: {fileID: 11400000, guid: 402439512b08727408d48838f0447ae2, type: 2}
-  _agent: {fileID: 490897484666988988}
+  agent: {fileID: 0}
   m_gun: {fileID: 490897484910083895}
   m_bullet: {fileID: 1646218331480662972, guid: c0ed5f524013bca43882139c5df1db26,
     type: 3}
@@ -83,6 +114,31 @@ MonoBehaviour:
   stateRenderer: {fileID: 1721084446442806952}
   animator: {fileID: 0}
   state: 0
+--- !u!114 &1126600364199252671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 490897484666988982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2698c394a636bc479a5e90f55e626a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerList: f7e1664c
+  useOtherObject: 0
+  data:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: bff42cb6e74e6b341a05ce0006690dc1,
+      type: 2}
+  decodeBank: 0
+  loadAsynchronous: 0
+  saveDecodedBank: 0
+  unloadTriggerList: 
+  bankNameInternal: 
+  valueGuidInternal: 
 --- !u!1 &490897484910083895
 GameObject:
   m_ObjectHideFlags: 0

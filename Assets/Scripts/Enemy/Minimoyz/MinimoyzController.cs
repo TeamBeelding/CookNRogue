@@ -6,6 +6,20 @@ namespace Enemy.Minimoyz
 {
     public class MinimoyzController : EnemyController
     {
+        [Header("Sound")]
+        [SerializeField]
+        private AK.Wwise.Event _Play_SFX_Pea_Footsteps;
+        [SerializeField]
+        private AK.Wwise.Event _Play_SFX_Pea_Spawn;
+        [SerializeField]
+        private AK.Wwise.Event _Play_SFX_Pea_Death;
+        [SerializeField]
+        private AK.Wwise.Event _Play_Weapon_Hit;
+        [SerializeField]
+        private AK.Wwise.Event _Play_SFX_Pea_Movement;
+        [SerializeField]
+        private AK.Wwise.Event _Stop_SFX_Pea_Movement;
+
         [SerializeField] private MinimoyzData data;
         [SerializeField] private NavMeshAgent agent;
 
@@ -81,18 +95,22 @@ namespace Enemy.Minimoyz
                     break;
                 case State.Chase:
                     Chase();
+                    _Play_SFX_Pea_Movement.Post(gameObject);
                     break;
                 case State.Cast:
                     Cast();
                     break;
                 case State.Attack:
                     Attack(Attack, data.GetAttackSpeed());
+                    _Stop_SFX_Pea_Movement.Post(gameObject);
                     break;
                 case State.ChaseAndAttack:
                     ChaseAndAttack();
+                    _Stop_SFX_Pea_Movement.Post(gameObject);
                     break;
                 case State.Dying:
                     Dying();
+                    _Stop_SFX_Pea_Movement.Post(gameObject);
                     break;
                 default:
                     Dying();
@@ -250,10 +268,14 @@ namespace Enemy.Minimoyz
         public override void TakeDamage(float damage = 1, bool isCritical = false)
         {
             base.TakeDamage(damage, isCritical);
-        
+            _Play_SFX_Pea_Death.Post(gameObject);
+            _Play_Weapon_Hit.Post(gameObject);
+
             if (Healthpoint <= 0)
             {
                 state = State.Dying;
+                _Play_SFX_Pea_Death.Post(gameObject);
+                _Play_Weapon_Hit.Post(gameObject);
             }
         }
     }

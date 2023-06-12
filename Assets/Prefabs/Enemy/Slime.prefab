@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 8374838445234050373}
   - component: {fileID: 8374838445234050372}
   - component: {fileID: 8374838445234050374}
+  - component: {fileID: 4727922601000954265}
   m_Layer: 0
   m_Name: Slime
   m_TagString: Untagged
@@ -106,6 +107,36 @@ MonoBehaviour:
   _effectHandlers: []
   explosion: {fileID: 466446929295881914, guid: 3fb8a478fb9325d40bc6d96484133a99,
     type: 3}
+  _Play_SFX_Pea_Pod_Footsteps:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 314195dfdefeca6409b33f6afcd2c560,
+      type: 2}
+  _Stop_SFX_Pea_Pod_Footsteps:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 170f8620d2e85a24ab4834618b52286d,
+      type: 2}
+  _Play_SFX_Pea_Pod_Hit:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 4b75a4ebc6a651a41a7b446f2d36fdba,
+      type: 2}
+  _Play_Weapon_Hit:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 3ae68197cbaab0947a9e09eb4d59bb88,
+      type: 2}
+  _Play_SFX_Pea_Pod_Death:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 1c4270df3bd6ffd48ad10a8fa7aa1c57,
+      type: 2}
+  _Play_SFX_Pea_Spawn:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: ceef912e1820d194ba905bde41f63783,
+      type: 2}
   data: {fileID: 11400000, guid: c347bd2a1957383469ec63fdaaa779da, type: 2}
   agent: {fileID: 8374838445234050372}
   gun: {fileID: 1526352955}
@@ -113,6 +144,31 @@ MonoBehaviour:
     type: 3}
   spawnChecker: {fileID: 5900735735034971508}
   state: 0
+--- !u!114 &4727922601000954265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8374838445234050371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2698c394a636bc479a5e90f55e626a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerList: f7e1664c
+  useOtherObject: 0
+  data:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: a059bbf66d0c51547acffa4c23a7e604,
+      type: 2}
+  decodeBank: 0
+  loadAsynchronous: 0
+  saveDecodedBank: 0
+  unloadTriggerList: 
+  bankNameInternal: 
+  valueGuidInternal: 
 --- !u!1 &9170120249770325098
 GameObject:
   m_ObjectHideFlags: 0
