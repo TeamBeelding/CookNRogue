@@ -130,6 +130,9 @@ namespace Enemy.Basic
 
         protected override void Chase()
         {
+            if (Player.GetComponent<PlayerController>().GetIsOnTutorial())
+                return;
+            
             if (state == State.Dying)
                 return;
 

@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using TNRD;
-
 
 public class Ingredient : MonoBehaviour, IInteractable
 {
@@ -31,7 +27,5 @@ public class Ingredient : MonoBehaviour, IInteractable
             PlayerCookingInventory.Instance.AddIngredientToInventory(_projectileData);
             Destroy(gameObject);
         }
-
     }
-
 }
