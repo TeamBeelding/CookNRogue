@@ -384,6 +384,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _heart: {fileID: 4345580288583077177, guid: 8e14aa32b5ee2504d88e928c8cf34e46, type: 3}
+  _fullHeart: {fileID: 0}
+  _semiHeart: {fileID: 0}
+  _noHeart: {fileID: 0}
 --- !u!1 &629043782
 GameObject:
   m_ObjectHideFlags: 0
@@ -17190,7 +17193,7 @@ MonoBehaviour:
   m_maxMoveSpeed: 7
   m_moveDrag: 5
   m_dashDuration: 0.35
-  m_dashForce: 2
+  m_dashForce: 1.5
   m_interactionRange: 0.5
   m_mainCamera: {fileID: 1177456190}
   m_model: {fileID: 8435914715738197458}
@@ -17208,6 +17211,8 @@ MonoBehaviour:
   PlayerAnimStates: {fileID: 5661605051567498819}
   DashingParticles: {fileID: 1825427510}
   _isAiming: 0
+  isOnTutorial: 0
+  tutorialManager: {fileID: 0}
 --- !u!114 &8435914716660352085
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18604,12 +18609,12 @@ PrefabInstance:
     - target: {fileID: 3452839196401527289, guid: 21c6504aa05bbae47b8c7e27a587ea54,
         type: 3}
       propertyPath: _damageFactor.Array.data[1]
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 3452839196401527289, guid: 21c6504aa05bbae47b8c7e27a587ea54,
         type: 3}
       propertyPath: _damageFactor.Array.data[2]
-      value: 3
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 3452839196684701412, guid: 21c6504aa05bbae47b8c7e27a587ea54,
         type: 3}
