@@ -378,6 +378,11 @@ public class PlayerController : MonoBehaviour
         }
         #endregion
     }
+    
+    public bool GetIsOnTutorial()
+    {
+        return isOnTutorial;
+    }
 
     #region Movement
     void Move_Performed(InputAction.CallbackContext context)
