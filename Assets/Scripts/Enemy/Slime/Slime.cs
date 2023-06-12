@@ -7,6 +7,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
+using System.Collections;
 using Random = UnityEngine.Random;
 
 namespace Enemy.Slime
@@ -116,6 +117,7 @@ namespace Enemy.Slime
                 case State.Attack:
                     animator.SetBool("isWalking", false);
                     _Stop_SFX_Pea_Pod_Footsteps.Post(gameObject);
+                    transform.LookAt(Player.transform.position);
                     //animator.SetBool("isAttack", true);
                     Attack(ThrowMinimoyz, data.GetAttackSpeed);
                     break;
@@ -236,18 +238,27 @@ namespace Enemy.Slime
 
         protected override void Dying()
         {
-            //dying anim + sounds
+            agent.SetDestination(transform.position);
 
-            for (int i = 0; i < data.GetSlimeSpawnWhenDying; i++)
+            animator.SetBool("isDead", true);
+
+            StartCoroutine(IDeathAnim());
+
+            IEnumerator IDeathAnim()
             {
-                Vector2 origin = new Vector2(transform.position.x, transform.position.z);
-                Vector3 point = Random.insideUnitCircle * data.GetRadiusMinimoyzSpawnPoint + origin;
-                point = new Vector3(point.x, 0, point.y);
-            
-                Instantiate(minimoyz, point, Quaternion.identity);
+                yield return new WaitForSeconds(3f);
+
+                for (int i = 0; i < data.GetSlimeSpawnWhenDying; i++)
+                {
+                    Vector2 origin = new Vector2(transform.position.x, transform.position.z);
+                    Vector3 point = Random.insideUnitCircle * data.GetRadiusMinimoyzSpawnPoint + origin;
+                    point = new Vector3(point.x, 0, point.y);
+
+                    Instantiate(minimoyz, point, Quaternion.identity);
+                }
+
+                base.Dying();
             }
-            
-            base.Dying();
         }
 
         public override bool IsMoving()
