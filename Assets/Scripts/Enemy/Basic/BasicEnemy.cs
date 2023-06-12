@@ -23,14 +23,6 @@ namespace Enemy.Basic
         [SerializeField]
         private AK.Wwise.Event _Play_SFX_Corn_Attack_Shot;
     
-        //[SerializeField]
-        //private GameObject m_gun;
-        //[SerializeField]
-        //private GameObject m_bullet;
-        //[SerializeField]
-        //private ParticleSystem m_stateSystem;
-        //[SerializeField]
-        //private Renderer stateRenderer;
         [SerializeField] private EnemyData data;
         [SerializeField] private NavMeshAgent agent;
 
@@ -182,10 +174,18 @@ namespace Enemy.Basic
             _Play_SFX_Corn_Attack_Shot.Post(gameObject);
         }
 
-        private new void Dying()
+        protected override void Dying()
         {
-            base.Dying();
-            m_stateSystem.gameObject.SetActive(false);
+            animator.SetBool("isDead", true);
+            
+            StartCoroutine(IDeathAnim());
+
+            IEnumerator IDeathAnim()
+            {
+                yield return new WaitForSeconds(5f);
+                base.Dying();
+                m_stateSystem.gameObject.SetActive(false);
+            }
         }
 
         public override bool IsMoving()
