@@ -570,7 +570,7 @@ public class PlayerController : MonoBehaviour
     }
         #endregion
 
-        #region Utilities
+    #region Utilities
         public void Lock(bool isLocked)
     {
         _isLocked = isLocked;

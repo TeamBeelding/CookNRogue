@@ -1,6 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <WwiseDocument Type="WorkUnit" ID="{DFB4D1AF-7CCE-403C-8C33-8AA08826B601}" SchemaVersion="110">
 	<States>
-		<WorkUnit Name="Default Work Unit" ID="{DFB4D1AF-7CCE-403C-8C33-8AA08826B601}" PersistMode="Standalone"/>
+		<WorkUnit Name="Default Work Unit" ID="{DFB4D1AF-7CCE-403C-8C33-8AA08826B601}" PersistMode="Standalone">
+			<ChildrenList>
+				<WorkUnit Name="Food" ID="{EBF792E4-E572-46BF-A724-622D596571C2}" PersistMode="Reference"/>
+				<StateGroup Name="Player_Health" ID="{48EAE0BD-F275-4085-9975-85EBB5051AF0}">
+					<ChildrenList>
+						<State Name="None" ID="{B71A3398-C579-42B9-8481-6891FCBA5B48}"/>
+						<State Name="LowHealth" ID="{021B69B8-5F50-4A59-9D0C-EAD6E55165D6}"/>
+						<State Name="NotLowHealth" ID="{082E906E-2983-4C55-9E7C-D7A013EE0225}"/>
+					</ChildrenList>
+				</StateGroup>
+				<StateGroup Name="Pause_Menu" ID="{DCC4536A-E318-48C6-AA1F-DF8580335888}">
+					<PropertyList>
+						<Property Name="DefaultTransitionTime" Type="Real64" Value="0.2"/>
+					</PropertyList>
+					<ChildrenList>
+						<State Name="None" ID="{9C38B275-AEBD-43A0-9CF5-88AE5857FD93}"/>
+						<State Name="InPauseMenu" ID="{59CFFA60-D92A-4A95-BEC1-15870A188413}"/>
+						<State Name="OutPauseMenu" ID="{2987396D-222D-4B27-A23D-F2A7ECE32AD1}"/>
+					</ChildrenList>
+				</StateGroup>
+				<StateGroup Name="Cooking_Menu" ID="{480DC1F1-C4C9-4C3D-BC13-612628739BAC}">
+					<PropertyList>
+						<Property Name="DefaultTransitionTime" Type="Real64" Value="0.2"/>
+					</PropertyList>
+					<ChildrenList>
+						<State Name="None" ID="{3EEACF1A-2DB9-44E5-9811-C9A6D26446DF}"/>
+						<State Name="InCookingMenu" ID="{BD061B15-9DAF-4A28-A041-2AF277545DA4}"/>
+						<State Name="OutCookingMenu" ID="{F48474B2-E070-43CA-9C12-219BE4A7071C}"/>
+					</ChildrenList>
+				</StateGroup>
+				<StateGroup Name="InFight" ID="{FE1DCA5E-8784-48FF-8945-E0036FCA005B}">
+					<ChildrenList>
+						<State Name="None" ID="{E4048347-3AFD-4245-AC4F-3270E465723B}"/>
+						<State Name="InFight" ID="{520D31D5-B746-4935-AFA5-95AFFA570329}"/>
+						<State Name="NotInFight" ID="{99F50B97-DF6B-4507-AEA0-78A4EF50F02C}"/>
+					</ChildrenList>
+				</StateGroup>
+			</ChildrenList>
+		</WorkUnit>
 	</States>
 </WwiseDocument>

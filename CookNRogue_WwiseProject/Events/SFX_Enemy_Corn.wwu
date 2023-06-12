@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{6E5F4E40-3426-47E0-8C42-84C9F73E2B8A}" SchemaVersion="110" RootDocumentID="{899603F8-092E-4FB8-93A5-00C3DC23A21E}" ParentDocumentID="{899603F8-092E-4FB8-93A5-00C3DC23A21E}">
+	<Events>
+		<WorkUnit Name="SFX_Enemy_Corn" ID="{6E5F4E40-3426-47E0-8C42-84C9F73E2B8A}" OwnerID="{899603F8-092E-4FB8-93A5-00C3DC23A21E}" PersistMode="Nested">
+			<PropertyList>
+				<Property Name="Color" Type="int16" Value="10"/>
+				<Property Name="OverrideColor" Type="bool" Value="True"/>
+			</PropertyList>
+			<ChildrenList>
+				<Event Name="Play_SFX_Corn_Footsteps" ID="{4132336D-CD8B-489B-B14B-9315F6B8862B}">
+					<ChildrenList>
+						<Action Name="" ID="{7C9E76C3-BD74-4EC9-AF12-BE5B37A7EB36}" ShortID="615343383">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="RC_Corn_Footsteps" ID="{5A4C3DA8-C6B9-467D-B51D-745CA87326E1}" WorkUnitID="{23B15D27-5212-492F-AB18-D64924507D5D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_SFX_Corn_Attack_Charge" ID="{DEAAEAF3-7A4C-4697-A0E1-7D10BE1EFF4F}">
+					<ChildrenList>
+						<Action Name="" ID="{1A69A92C-CB5A-4618-9E7F-7540A453E5ED}" ShortID="659172416">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="RC_Corn_Attack_Charge" ID="{B8860153-1F46-4EE3-9052-92446CD67523}" WorkUnitID="{23B15D27-5212-492F-AB18-D64924507D5D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_SFX_Corn_Attack_Shot" ID="{801B2D94-1CEA-4024-B878-3174B13D15CC}">
+					<ChildrenList>
+						<Action Name="" ID="{77AC9E37-B0B2-4B21-9AFE-23923573E1D4}" ShortID="237104175">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+								<Property Name="FadeTime" Type="Real64" Value="0.1"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="RC_Corn_Attack_Charge" ID="{B8860153-1F46-4EE3-9052-92446CD67523}" WorkUnitID="{23B15D27-5212-492F-AB18-D64924507D5D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+						<Action Name="" ID="{EA485765-97D8-42EB-9FB6-E23117F9C36E}" ShortID="913188286">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="RC_Corn_Attack_Shot" ID="{BEF6E9D6-9305-4D4D-9927-8158BB9C00F6}" WorkUnitID="{23B15D27-5212-492F-AB18-D64924507D5D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_SFX_Corn_Hit" ID="{54E42E76-38E8-4311-9E61-9E1DB1CFD033}">
+					<ChildrenList>
+						<Action Name="" ID="{ED4C4B42-C13E-41C0-864C-DB43A580CB1D}" ShortID="456300403">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="RC_Corn_Hit" ID="{342D1BBE-98E9-403F-9622-2A731B91625C}" WorkUnitID="{23B15D27-5212-492F-AB18-D64924507D5D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_SFX_Corn_Death" ID="{A1F70922-F5AC-4641-B9C1-9E695FBA393A}">
+					<ChildrenList>
+						<Action Name="" ID="{2F0F61FC-827E-4B78-86BB-D65B9283F6A8}" ShortID="734590884">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="RC_Corn_Death" ID="{E42A7FFF-5DBF-473F-8B4F-70D4FC25521D}" WorkUnitID="{23B15D27-5212-492F-AB18-D64924507D5D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+						<Action Name="" ID="{E07347C3-B092-4599-9693-08CC9CA7396B}" ShortID="619447771">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+								<Property Name="FadeTime" Type="Real64" Value="0.5"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="AM_Corn" ID="{5B405CE8-E109-4B45-B900-551AD5FCCD1C}" WorkUnitID="{23B15D27-5212-492F-AB18-D64924507D5D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+			</ChildrenList>
+		</WorkUnit>
+	</Events>
+</WwiseDocument>
