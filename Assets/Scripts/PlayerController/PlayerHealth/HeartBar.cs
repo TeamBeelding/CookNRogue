@@ -6,6 +6,11 @@ using UnityEngine.UI;
 public class HeartBar : MonoBehaviour
 {
     [SerializeField] RectTransform _heart;
+
+    [SerializeField] Sprite _fullHeart;
+    [SerializeField] Sprite _semiHeart;
+    [SerializeField] Sprite _noHeart;
+
     List<Image> _heartsRenderer = new List<Image>();
     public static HeartBar instance;
 
@@ -36,18 +41,18 @@ public class HeartBar : MonoBehaviour
             if ((i * 2) - 1 <= (health))
             {
                 // FULL HEART
-                _heartsRenderer[i - 1].color = Color.white;
+                _heartsRenderer[i - 1].sprite = _fullHeart;
 
                 if ((i * 2) - 1 == health)
                 {
                     // HALF HEART
-                    _heartsRenderer[i - 1].color = Color.grey;
+                    _heartsRenderer[i - 1].sprite = _semiHeart;
                 }
             }
             else
             {
                 // NO HEART
-                _heartsRenderer[i - 1].color = Color.black;
+                _heartsRenderer[i - 1].sprite = _noHeart;
             }
         }
     }
