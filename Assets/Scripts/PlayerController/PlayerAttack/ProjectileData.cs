@@ -33,6 +33,7 @@ public class ProjectileData : ScriptableObject
     [Header("Inventory")]
     [FormerlySerializedAs("sprite")]
     public Sprite inventorySprite;
+    public string description;
     [Space(20)]
 
     [Header("Physic and Movements")]

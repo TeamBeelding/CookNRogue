@@ -17,7 +17,7 @@ public class PlayerCookingInventory : MonoBehaviour
     List<PlayerCookingInventoryWheel> m_inventoryWheels;
 
     [SerializeField]
-    List<Image> m_RecipeSlots;
+    List<PlayerCookingRecipeSlot> m_RecipeSlots;
 
     [SerializeField]
     RectTransform m_UIHolder;
@@ -207,9 +207,10 @@ public class PlayerCookingInventory : MonoBehaviour
         _recipe.Clear();
 
         //Reset UI
-        foreach (Image image in m_RecipeSlots)
+        foreach (PlayerCookingRecipeSlot slot in m_RecipeSlots)
         {
-            image.sprite = null;
+            slot.Sprite = null;
+            slot.Description = null;
         }
     }
 
@@ -305,9 +306,16 @@ public class PlayerCookingInventory : MonoBehaviour
             {
                 _currentSlot.Highlight(false);
             }
+            
+            //Item Description
+            if (_recipe.Count < m_RecipeSlots.Count)
+            {
+                ProjectileData slotData = slot.GetData();
+                m_RecipeSlots[_recipe.Count].Sprite = slotData.inventorySprite;
+                m_RecipeSlots[_recipe.Count].Description = slotData.description;
+            }
 
             slot.Highlight(true);
-
             _currentSlot = slot;
         }
     }
@@ -317,6 +325,13 @@ public class PlayerCookingInventory : MonoBehaviour
         if (_areControlsLocked)
         {
             return;
+        }
+
+        //Item Description
+        if (_recipe.Count < m_RecipeSlots.Count)
+        {
+            m_RecipeSlots[_recipe.Count].Sprite = null;
+            m_RecipeSlots[_recipe.Count].Description = null;
         }
 
         _currentSlot.Highlight(false);
@@ -402,8 +417,8 @@ public class PlayerCookingInventory : MonoBehaviour
 
         ProjectileData data = selectedSlot.GetData();
         _recipe.Add(data);
-        m_RecipeSlots[_recipe.Count - 1].sprite = data.inventorySprite;
-        
+        m_RecipeSlots[_recipe.Count - 1].Sprite = data.inventorySprite;
+        m_RecipeSlots[_recipe.Count - 1].Description = data.description;
     }
     #endregion
 
