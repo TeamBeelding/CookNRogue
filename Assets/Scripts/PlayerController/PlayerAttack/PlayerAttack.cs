@@ -165,15 +165,25 @@ public class PlayerAttack : MonoBehaviour
                 j = 0;
             }
             
+
+
             for (int k = j;k < 3; k++)
             {
 
                 GameObject Bullet = Instantiate(_Projectile, _muzzle.position, Quaternion.identity);
+
+
                 _projectileBehaviour = Bullet.GetComponent<PlayerBulletBehaviour>();
                 _projectileBehaviour.ResetStats();
                 _projectileBehaviour._playerAttack = this;
                 _projectileBehaviour._speed += _speed;
                 _projectileBehaviour._drag -= _drag;
+
+                if(_effects.Count > 0)
+                {
+                    _projectileBehaviour._damage = 0;
+                }
+
                 _projectileBehaviour._damage += _damage;
                 Vector3 direction = Quaternion.Euler(0, totalAngle, 0) * _playerController.PlayerAimDirection;
 
@@ -185,7 +195,7 @@ public class PlayerAttack : MonoBehaviour
 
                 _projectileBehaviour._direction = direction;
 
-                Debug.Log(_projectileBehaviour._speed);
+                
 
                 foreach (IIngredientEffects effect in _effects)
                 {
@@ -247,6 +257,8 @@ public class PlayerAttack : MonoBehaviour
         Material Bubblemat = Instantiate(BubbleRenderModule.sharedMaterials[0]);
         Bubblemat.SetColor("_EmissionColor", color);
         BubbleRenderModule.material = Bubblemat;
+
+        bullet.transform.GetChild(0).GetComponent<MeshRenderer>().material.SetColor("_BaseColor",color);
     }
 
     void OnAmmunitionChange()
@@ -283,7 +295,7 @@ public class PlayerAttack : MonoBehaviour
         _size = 1;
         _speed = 1;
         _drag = 0;
-        _shootCooldown = 0.5f;
+        _shootCooldown = 0.1f;
         _damage = 1;
         //m_knockbackScript = GameObject.Find("CharacterModel").GetComponent<PlayerKnockback>();
     }

@@ -16,7 +16,7 @@ public class PlayerCookingInventory : MonoBehaviour
     List<PlayerCookingInventoryWheel> m_inventoryWheels;
 
     [SerializeField]
-    List<Image> m_RecipeSlots;
+    List<PlayerCookingRecipeSlot> m_RecipeSlots;
 
     [SerializeField]
     RectTransform m_UIHolder;
@@ -37,7 +37,7 @@ public class PlayerCookingInventory : MonoBehaviour
     float _curAnimProgress;
     Coroutine _curShowRoutine;
 
-    [SerializeField] int[] _damageFactor;
+    [SerializeField] float[] _damageFactor;
 
     public static PlayerCookingInventory Instance
     {
@@ -206,9 +206,10 @@ public class PlayerCookingInventory : MonoBehaviour
         _recipe.Clear();
 
         //Reset UI
-        foreach (Image image in m_RecipeSlots)
+        foreach (PlayerCookingRecipeSlot slot in m_RecipeSlots)
         {
-            image.sprite = null;
+            slot.Sprite = null;
+            slot.Description = null;
         }
     }
 
@@ -227,26 +228,24 @@ public class PlayerCookingInventory : MonoBehaviour
 
 
         m_playerAttackScript._color = _recipe[0].color;
-
+        AmmunitionBar.instance.ResetAmmoBar();
         //Fuse ingredients's effects and stats
         float averageDmg = 0;
         foreach (ProjectileData ingredient in _recipe)
         {
-            Debug.Log(m_playerAttackScript);
             m_playerAttackScript._size += ingredient._size;
             m_playerAttackScript._speed += ingredient._speed;
             m_playerAttackScript._drag += ingredient._drag;
             m_playerAttackScript._shootCooldown += ingredient._attackDelay;
             averageDmg += ingredient._damage;
-            //m_playerAttackScript._damage += ingredient._damage;
             m_playerAttackScript._ammunition += ingredient._ammunition;
             AmmunitionBar.instance.AddIngredientAmmo(ingredient._ammunition);
+
             //Add effects
             foreach (IIngredientEffects effect in ingredient.Effects)
             {
                 if(effect != null)
-                {
-                    
+                {                   
                     m_playerAttackScript._effects.Add(effect);
                 }
             }
@@ -305,9 +304,16 @@ public class PlayerCookingInventory : MonoBehaviour
             {
                 _currentSlot.Highlight(false);
             }
+            
+            //Item Description
+            if (_recipe.Count < m_RecipeSlots.Count)
+            {
+                ProjectileData slotData = slot.GetData();
+                m_RecipeSlots[_recipe.Count].Sprite = slotData.inventorySprite;
+                m_RecipeSlots[_recipe.Count].Description = slotData.description;
+            }
 
             slot.Highlight(true);
-
             _currentSlot = slot;
         }
     }
@@ -317,6 +323,13 @@ public class PlayerCookingInventory : MonoBehaviour
         if (_areControlsLocked)
         {
             return;
+        }
+
+        //Item Description
+        if (_recipe.Count < m_RecipeSlots.Count)
+        {
+            m_RecipeSlots[_recipe.Count].Sprite = null;
+            m_RecipeSlots[_recipe.Count].Description = null;
         }
 
         _currentSlot.Highlight(false);
@@ -402,8 +415,8 @@ public class PlayerCookingInventory : MonoBehaviour
 
         ProjectileData data = selectedSlot.GetData();
         _recipe.Add(data);
-        m_RecipeSlots[_recipe.Count - 1].sprite = data.inventorySprite;
-        
+        m_RecipeSlots[_recipe.Count - 1].Sprite = data.inventorySprite;
+        m_RecipeSlots[_recipe.Count - 1].Description = data.description;
     }
     #endregion
 

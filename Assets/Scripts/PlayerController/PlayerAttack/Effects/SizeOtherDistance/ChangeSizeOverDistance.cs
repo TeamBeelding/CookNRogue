@@ -7,11 +7,15 @@ public class ChangeSizeOverDistance : MonoBehaviour
     [SerializeField] float _speed;
     [SerializeField] AnimationCurve _sizeOverDistanceFactor;
     Transform sphere;
-    float timePassed;
+    public float timePassed;
 
     private void Start()
     {
         sphere = transform.GetChild(0);
+    }
+    public AnimationCurve GetCurve()
+    {
+        return _sizeOverDistanceFactor;
     }
     // Update is called once per frame
     private void Update()
