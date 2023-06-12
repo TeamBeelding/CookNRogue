@@ -6,6 +6,33 @@
 				<Property Name="Color" Type="int16" Value="4"/>
 				<Property Name="OverrideColor" Type="bool" Value="True"/>
 			</PropertyList>
+			<ChildrenList>
+				<Event Name="Play_AMB_Level" ID="{AAA5E683-2081-4FE4-8122-B3D4D96E449C}">
+					<ChildrenList>
+						<Action Name="" ID="{EEB385F3-06C7-4F76-A1FF-F9790836D4A8}" ShortID="863668183">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="BLD_AMB_Level" ID="{1F552C68-0038-401A-94A3-AD7D16AA0CA1}" WorkUnitID="{A6BD6CE3-125F-4BFD-81EA-A7129412700C}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Stop_AMB_Level" ID="{0F8C7D88-BB7D-4626-88DF-C3DA33A6E2C3}">
+					<ChildrenList>
+						<Action Name="" ID="{18CB5A3D-217F-4CE3-9331-435EC2294F3E}" ShortID="404830953">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="BLD_AMB_Level" ID="{1F552C68-0038-401A-94A3-AD7D16AA0CA1}" WorkUnitID="{A6BD6CE3-125F-4BFD-81EA-A7129412700C}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+			</ChildrenList>
 		</WorkUnit>
 	</Events>
 </WwiseDocument>
