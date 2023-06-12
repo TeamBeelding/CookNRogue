@@ -97,17 +97,22 @@ public class PlayerAttack : MonoBehaviour
         //Shoot Bullet
         _curShootDelay = StartCoroutine(ShootDelay(_shootCooldown));
         
-        _ammunition--;
-        if(_asEmptiedAmmo && _ammunition <= 0)
+        if(!_asEmptiedAmmo)
         {
-            _asEmptiedAmmo = true;
+            _ammunition--;
 
-            //Reset Audio
-            foreach (ProjectileData data in _inventory.EquippedRecipe)
+            if (_ammunition <= 0)
             {
-                data.audioState.SetValue();
+                _asEmptiedAmmo = true;
+
+                //Reset Audio
+                foreach (ProjectileData data in _inventory.EquippedRecipe)
+                {
+                    data.audioState.SetValue();
+                }
+
+                ResetParameters();
             }
-            ResetParameters();
         }
 
         if(_ammunitionBar)
@@ -115,6 +120,13 @@ public class PlayerAttack : MonoBehaviour
         //Animation
         //m_knockbackScript.StartKnockback();
 
+    }
+
+    public void ResetAmunation()
+    {
+        _ammunition = 0;
+        ResetParameters();
+        _ammunitionBar.UpdateAmmoBar();
     }
 
     #region OnHitEffects

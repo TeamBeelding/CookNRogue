@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Tutoriel;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -24,6 +25,9 @@ public abstract class EnemyController : MonoBehaviour
     
     [SerializeField]
     protected GameObject explosion;
+
+    [SerializeField] 
+    private TutorialManager tutorial;
 
     protected virtual void Awake()
     {
@@ -62,6 +66,9 @@ public abstract class EnemyController : MonoBehaviour
     // ReSharper disable Unity.PerformanceAnalysis
     protected virtual void Attack(UnityAction OnAction, float delay = 0.5f)
     {
+        if (Player.GetComponent<PlayerController>().GetIsOnTutorial())
+            return;
+        
         if (_canAttack)
         {
             OnAction?.Invoke();
@@ -85,7 +92,7 @@ public abstract class EnemyController : MonoBehaviour
         //    _canAttackAnim = true;
         //}
     }
-
+    
     #endregion
 
     #region TakeDamage

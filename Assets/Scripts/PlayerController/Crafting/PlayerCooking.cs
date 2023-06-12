@@ -192,6 +192,8 @@ public class PlayerCooking : MonoBehaviour
 
         //Hide UI
         m_cookingProgressVisuals.SetActive(false);
+        
+        _playerController.CheckingIfCookingIsDone();
     }
 
     IEnumerator ICraftingLoop(float delay)
@@ -220,6 +222,8 @@ public class PlayerCooking : MonoBehaviour
     #region QTE
     void SpawnQTE()
     {
+        _playerController.QTEAppear();
+        
         m_QTEScript.StartQTE();
         _spawnedQTE = true;
     }
@@ -236,6 +240,8 @@ public class PlayerCooking : MonoBehaviour
         {
             StopCoroutine(_craftingRoutine);
             CompleteCrafting();
+            
+            _playerController.CheckingIfCookingIsDone();
         }
     }
     #endregion
