@@ -705,6 +705,17 @@ public class PlayerController : MonoBehaviour
         SceneManager.LoadScene("Prototype");
     }
 
+    public void EndGame()
+    {
+        _playerActions.UI.Enable();
+        _playerActions.Default.Disable();
+        _playerActions.Cooking.Disable();
+        pauseMenu.SetActive(false);
+        deathMenu.SetActive(false);
+        victoryMenu.SetActive(true);
+        PauseGame();
+    }
+
     public void RestartLevel()
     {
         _playerActions.UI.Disable();
