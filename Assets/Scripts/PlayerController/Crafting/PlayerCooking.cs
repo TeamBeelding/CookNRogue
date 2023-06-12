@@ -114,6 +114,10 @@ public class PlayerCooking : MonoBehaviour
 
             //Reset last bullet parametters
             m_attackScript.ResetParameters();
+            foreach(ProjectileData data in _inventoryScript.EquippedRecipe)
+            {
+                data.audioState.SetValue();
+            }
 
             _inventoryScript.Show(false);
 
@@ -179,6 +183,7 @@ public class PlayerCooking : MonoBehaviour
     {
         _inventoryScript.CraftBullet();
         _playerController.StopCookingState();
+        m_attackScript.OnAmmunitionChange();
 
         //reset
         _craftingRoutine = null;
@@ -187,6 +192,8 @@ public class PlayerCooking : MonoBehaviour
 
         //Hide UI
         m_cookingProgressVisuals.SetActive(false);
+        
+        _playerController.CheckingIfCookingIsDone();
     }
 
     IEnumerator ICraftingLoop(float delay)
@@ -215,6 +222,8 @@ public class PlayerCooking : MonoBehaviour
     #region QTE
     void SpawnQTE()
     {
+        _playerController.QTEAppear();
+        
         m_QTEScript.StartQTE();
         _spawnedQTE = true;
     }
@@ -231,6 +240,8 @@ public class PlayerCooking : MonoBehaviour
         {
             StopCoroutine(_craftingRoutine);
             CompleteCrafting();
+            
+            _playerController.CheckingIfCookingIsDone();
         }
     }
     #endregion

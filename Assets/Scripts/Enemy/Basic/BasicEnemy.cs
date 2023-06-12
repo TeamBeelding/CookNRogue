@@ -8,7 +8,28 @@ using UnityEngine.Serialization;
 namespace Enemy.Basic
 {
     public class BasicEnemy : EnemyController
-    {
+    {[Header("Sound")]
+        [SerializeField]
+        private AK.Wwise.Event _Play_Weapon_Hit;
+        [SerializeField]
+        private AK.Wwise.Event _Play_SFX_Corn_Death;
+        [SerializeField]
+        private AK.Wwise.Event _Play_SFX_Corn_Hit;
+        [SerializeField]
+        private AK.Wwise.Event _Play_SFX_Corn_Footsteps;
+        [SerializeField]
+        private AK.Wwise.Event _Play_SFX_Corn_Attack_Charge;
+        [SerializeField]
+        private AK.Wwise.Event _Play_SFX_Corn_Attack_Shot;
+    
+        //[SerializeField]
+        //private GameObject m_gun;
+        //[SerializeField]
+        //private GameObject m_bullet;
+        //[SerializeField]
+        //private ParticleSystem m_stateSystem;
+        //[SerializeField]
+        //private Renderer stateRenderer;
         [SerializeField] private EnemyData data;
         [SerializeField] private NavMeshAgent agent;
 
@@ -130,6 +151,9 @@ namespace Enemy.Basic
 
         protected override void Chase()
         {
+            if (Player.GetComponent<PlayerController>().GetIsOnTutorial())
+                return;
+            
             if (state == State.Dying)
                 return;
 
@@ -157,6 +181,7 @@ namespace Enemy.Basic
             GameObject shot = Instantiate(m_bullet, m_gun.transform.position, Quaternion.identity);
             shot.GetComponent<EnemyBulletController>().SetDirection(Player.transform);
             animator.SetBool("isAttack", true);
+            _Play_SFX_Corn_Attack_Shot.Post(gameObject);
         }
 
         private new void Dying()
@@ -174,11 +199,16 @@ namespace Enemy.Basic
         {
             base.TakeDamage(damage, isCritical);
 
-            if (state == State.Neutral)
+            if (state == State.Neutral) 
+            {
                 SetState(State.Chase);
+                _Play_SFX_Corn_Hit.Post(gameObject);
+                _Play_Weapon_Hit.Post(gameObject);
+            }
 
             if (Healthpoint <= 0)
-            {
+            {
+                _Play_SFX_Corn_Death.Post(gameObject);
                 SetState(State.Dying);
             }
         }
