@@ -23,6 +23,7 @@ namespace Tutoriel
         [SerializeField] private TutorialStep tutorialStep;
         [SerializeField] private float distanceToCauldron = 2f;
         [SerializeField] private float distanceCloseEnough = 1f;
+        [SerializeField] private float slowMotionFactor = 0.25f;
         private bool _isCloseEnough = false;
 
         [SerializeField]
@@ -40,9 +41,6 @@ namespace Tutoriel
         private List<GameObject> enemies = null;
 
         private Coroutine _coroutineState;
-        private IEnumerator _enumeratorState;
-
-        private int _step;
 
         [SerializeField] private GameObject cauldron;
         [SerializeField] private string[] dialogue;
@@ -77,12 +75,7 @@ namespace Tutoriel
 
             SetTutorialState(TutorialStep.Move);
         }
-
-        // private void Update()
-        // {
-        //     Debug.Log(enemies.IsNullOrEmpty());
-        // }
-
+        
         public TutorialStep GetTutorialState() => tutorialStep;
         
         // ReSharper disable Unity.PerformanceAnalysis
@@ -149,6 +142,7 @@ namespace Tutoriel
         }
         
         public void SetIsMoving(bool value) => isMoving = value;
+        public void SetIsQTE(bool value) => isQTE = value;
         
         public void SetIsCookingDone(bool value) => isCookingDone = value;
         
@@ -224,13 +218,19 @@ namespace Tutoriel
 
                 while (tutorialStep == TutorialStep.CookMenuOpen)
                 {
-                    if (isQTE)
+                    if (!isCookingDone)
                     {
-                        _textToDisplay = textWhenQTE;
-                        _dialogueBox.DisplayText(_textToDisplay, cauldron.transform);
+                        if (isQTE)
+                        {
+                            _textToDisplay = textWhenQTE;
+                            _dialogueBox.DisplayText(_textToDisplay, cauldron.transform);
+
+                            Time.timeScale = slowMotionFactor;
+                        }
                     }
-                    if (isCookingDone)
+                    else
                     {
+                        Time.timeScale = 1f;
                         SetTutorialState(TutorialStep.FightingPhase);
                     }
                     
@@ -275,18 +275,7 @@ namespace Tutoriel
                 
                 _textToDisplay = textWhenEnd;
                 _dialogueBox.DisplayText(_textToDisplay, cauldron.transform);
-
-                Debug.Log("Open door");
             }
-        }
-
-        public void CookMenuOpen(InputAction.CallbackContext context)
-        {
-            FindObjectOfType<PlayerController>().GetPlayerAction().Default.Cook.performed -= this.CookMenuOpen;
-            _step = 3;
-            string[] dialogueToDisplay = { dialogue[3] };
-            Time.timeScale = 0;
-            _dialogueBox.DisplayDialogueText(dialogueToDisplay, cauldron.transform);
         }
 
         public void FoodSpawn()
@@ -298,16 +287,6 @@ namespace Tutoriel
             
                 food.SetActive(true);
             }
-        }
-
-        public void LowTimeSpeed()
-        {
-            Time.timeScale = 0.5f;
-        }
-    
-        public void NormalTimeSpeed()
-        {
-            Time.timeScale = 1f;
         }
         
         private void OutlineCauldron(bool value)

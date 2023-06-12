@@ -217,6 +217,8 @@ public class PlayerCooking : MonoBehaviour
     #region QTE
     void SpawnQTE()
     {
+        _playerController.QTEAppear();
+        
         m_QTEScript.StartQTE();
         _spawnedQTE = true;
     }

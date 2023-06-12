@@ -575,6 +575,13 @@ public class PlayerController : MonoBehaviour
             _cookingScript.CheckQTE();
         }
     }
+
+    public void QTEAppear()
+    {
+        if (isOnTutorial)
+            tutorialManager.SetIsQTE(true);
+    }
+    
     #endregion
 
     #region Other Actions
