@@ -1,6 +1,7 @@
 using UnityEngine.InputSystem;
 using UnityEngine;
 using System.Collections;
+using Tutoriel;
 using static UnityEngine.ParticleSystem;
 
 [RequireComponent(typeof(Rigidbody), typeof(Collider))]
@@ -138,6 +139,14 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 
+    #region Tutorial
+    
+    [Header("Tutorial")]
+    [SerializeField] private bool isOnTutorial = false;
+    [SerializeField] private TutorialManager tutorialManager;
+    
+    #endregion
+    
     private void Awake()
     {
         if(_instance != null)
@@ -150,6 +159,9 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        if (isOnTutorial)
+            tutorialManager = GameObject.FindGameObjectWithTag("TutorialManager").GetComponent<TutorialManager>();
+        
         _relativeTransform = m_mainCamera.transform;
         _inventoryScript = PlayerCookingInventory.Instance;
         _enemyManager = EnemyManager.Instance;
@@ -366,6 +378,11 @@ public class PlayerController : MonoBehaviour
         }
         #endregion
     }
+    
+    public bool GetIsOnTutorial()
+    {
+        return isOnTutorial;
+    }
 
     #region Movement
     void Move_Performed(InputAction.CallbackContext context)
@@ -387,6 +404,26 @@ public class PlayerController : MonoBehaviour
         {
             _rb.velocity = new Vector3(direction.x, 0, direction.z) * m_maxMoveSpeed;
         }
+        
+        CheckingIfPlayerIsMovingForTutorial();
+    }
+
+    private void CheckingIfPlayerIsMovingForTutorial()
+    {
+        if (!tutorialManager)
+            return;
+        
+        if (isOnTutorial)
+            tutorialManager.SetIsMoving(true);
+    }
+
+    public void CheckingIfCookingIsDone()
+    {
+        if (!tutorialManager)
+            return;
+        
+        if (isOnTutorial)
+            tutorialManager.SetIsCookingDone(true);
     }
 
     //Dash
@@ -543,6 +580,13 @@ public class PlayerController : MonoBehaviour
             _cookingScript.CheckQTE();
         }
     }
+
+    public void QTEAppear()
+    {
+        if (isOnTutorial)
+            tutorialManager.SetIsQTE(true);
+    }
+    
     #endregion
 
     #region Other Actions
@@ -570,7 +614,7 @@ public class PlayerController : MonoBehaviour
     }
         #endregion
 
-        #region Utilities
+    #region Utilities
         public void Lock(bool isLocked)
     {
         _isLocked = isLocked;
@@ -592,9 +636,12 @@ public class PlayerController : MonoBehaviour
         //Cooking cancel
         StopCookingState();
 
+        if (tutorialManager)
+            return;
+        
         _playerHealth.TakeDamage(1);
     }
-
+    
     void Spawn()
     {
         //transform.position = _roomManager.SpawnPoint.position;

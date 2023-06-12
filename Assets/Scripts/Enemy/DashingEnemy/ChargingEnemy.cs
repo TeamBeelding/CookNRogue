@@ -6,6 +6,18 @@ namespace Enemy.DashingEnemy
 {
     public class ChargingEnemy : EnemyController
     {
+        [Header("Sound")]
+        [SerializeField]
+        private AK.Wwise.Event _Play_SFX_Cabbage_Footsteps;
+        [SerializeField]
+        private AK.Wwise.Event _Play_SFX_Cabbage_Charge_LP;
+        [SerializeField]
+        private AK.Wwise.Event _Play_SFX_Cabbage_Charge_Impact;
+        [SerializeField]
+        private AK.Wwise.Event _Play_SFX_Cabbage_Hit;
+        [SerializeField]
+        private AK.Wwise.Event _Play_SFX_Cabbage_Death;
+
         private Coroutine _castingCoroutine;
         private Coroutine _waitingCoroutine;
         private Coroutine _rotateToPlayerCoroutine;
@@ -99,6 +111,8 @@ namespace Enemy.DashingEnemy
         /// </summary>
         private void Dashing()
         {
+            ShowFullyRedLine();
+            
             RaycastHit hit;
             Vector3 direction = (Player.transform.position - transform.position).normalized;
             
@@ -172,11 +186,11 @@ namespace Enemy.DashingEnemy
             {
                 yield return StartCoroutine(ICanShowingRedLine());
         
-                ShowLightRedLine();
+                // ShowLightRedLine();
         
                 yield return new WaitForSeconds(_data.GetTimeBeforeLerpRedLine());
         
-                ShowFullyRedLine();
+                // ShowFullyRedLine();
         
                 yield return new WaitForSeconds(_data.GetRemainingForDash());
 
