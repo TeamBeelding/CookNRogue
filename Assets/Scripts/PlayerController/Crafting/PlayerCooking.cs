@@ -114,6 +114,10 @@ public class PlayerCooking : MonoBehaviour
 
             //Reset last bullet parametters
             m_attackScript.ResetParameters();
+            foreach(ProjectileData data in _inventoryScript.EquippedRecipe)
+            {
+                data.audioState.SetValue();
+            }
 
             _inventoryScript.Show(false);
 
@@ -179,6 +183,7 @@ public class PlayerCooking : MonoBehaviour
     {
         _inventoryScript.CraftBullet();
         _playerController.StopCookingState();
+        m_attackScript.OnAmmunitionChange();
 
         //reset
         _craftingRoutine = null;

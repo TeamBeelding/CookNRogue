@@ -20,6 +20,14 @@ public class PlayerCookingRecipeSlot : MonoBehaviour
         }
     }
 
+    public Color Color
+    {
+        set
+        {
+            m_ingredientImage.color = value;
+        }
+    }
+
     public string Description
     {
         set
