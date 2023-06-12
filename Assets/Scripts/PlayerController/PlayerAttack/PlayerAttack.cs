@@ -103,6 +103,13 @@ public class PlayerAttack : MonoBehaviour
 
     }
 
+    public void ResetAmunation()
+    {
+        _ammunition = 0;
+        ResetParameters();
+        _ammunitionBar.UpdateAmmoBar();
+    }
+
     #region OnHitEffects
     public void ApplyOnHitEffects(Vector3 Position)
     {

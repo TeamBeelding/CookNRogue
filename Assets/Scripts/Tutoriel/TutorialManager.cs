@@ -267,12 +267,12 @@ namespace Tutoriel
             
             IEnumerator IEndTutorial()
             {
+                _player.GetComponent<PlayerAttack>().ResetAmunation();
+                
                 _textToDisplay = textWhenPlayerHasntAmmo;
                 _dialogueBox.DisplayText(_textToDisplay, cauldron.transform);
                 
                 yield return new WaitForSeconds(2);
-                
-                FoodSpawn();
                 
                 _textToDisplay = textWhenEnd;
                 _dialogueBox.DisplayText(_textToDisplay, cauldron.transform);
