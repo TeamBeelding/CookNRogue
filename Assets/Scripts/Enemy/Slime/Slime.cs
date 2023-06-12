@@ -2,6 +2,7 @@ using Enemy.Data;
 using Enemy.Effect_And_Juiciness;
 using Enemy.Minimoyz;
 using NaughtyAttributes;
+using Newtonsoft.Json.Linq;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.AI;
@@ -207,6 +208,7 @@ namespace Enemy.Slime
 
         protected override void Dying()
         {
+
             for (int i = 0; i < data.GetSlimeSpawnWhenDying; i++)
             {
                 Vector2 origin = new Vector2(transform.position.x, transform.position.z);
