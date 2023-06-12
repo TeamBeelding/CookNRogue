@@ -122,7 +122,7 @@ namespace Enemy.Basic
                     Chase();
                     break;
                 case State.Attack:
-                    animator.SetBool("isWalking", false);
+                    animator.SetBool("isWalking", false);                    animator.SetBool("isAttack", false);                    transform.LookAt(Player.transform.position);
                     Attack(Shot, data.GetAttackSpeed);
                     break;
                 case State.Dying:
