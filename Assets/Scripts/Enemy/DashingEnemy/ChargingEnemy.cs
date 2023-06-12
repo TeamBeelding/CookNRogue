@@ -99,6 +99,8 @@ namespace Enemy.DashingEnemy
         /// </summary>
         private void Dashing()
         {
+            ShowFullyRedLine();
+            
             RaycastHit hit;
             Vector3 direction = (Player.transform.position - transform.position).normalized;
             
@@ -172,11 +174,11 @@ namespace Enemy.DashingEnemy
             {
                 yield return StartCoroutine(ICanShowingRedLine());
         
-                ShowLightRedLine();
+                // ShowLightRedLine();
         
                 yield return new WaitForSeconds(_data.GetTimeBeforeLerpRedLine());
         
-                ShowFullyRedLine();
+                // ShowFullyRedLine();
         
                 yield return new WaitForSeconds(_data.GetRemainingForDash());
 
