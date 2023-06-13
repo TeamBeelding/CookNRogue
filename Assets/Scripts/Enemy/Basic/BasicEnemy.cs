@@ -185,7 +185,7 @@ namespace Enemy.Basic
 
             IEnumerator IDeathAnim()
             {
-                yield return new WaitForSeconds(5f);
+                yield return new WaitForSeconds(2f);
                 base.Dying();
                 m_stateSystem.gameObject.SetActive(false);
             }

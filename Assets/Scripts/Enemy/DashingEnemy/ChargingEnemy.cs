@@ -237,9 +237,9 @@ namespace Enemy.DashingEnemy
 
             IEnumerator IDeathAnim()
             {
-                yield return new WaitForSeconds(3f);
-                StopCasting();
+                yield return new WaitForSeconds(2f);
                 base.Dying();
+                StopCasting();
             }
         }
     
