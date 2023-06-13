@@ -17,11 +17,6 @@ namespace Enemy.Slime
             player = GameObject.FindGameObjectWithTag("Player").transform;
         }
 
-        public void Update()
-        {
-            
-        }
-        
         public void SetTransformPosition(Vector3 position)
         {
             spawnPosition.enabled = false;
