@@ -14,6 +14,7 @@ namespace AK
     namespace EVENTS
     {
         static const AkUniqueID PLAY_AMB_LEVEL = 1968870321U;
+        static const AkUniqueID PLAY_EMPTY_AMO = 495286721U;
         static const AkUniqueID PLAY_MC_CAULDRON_IDLE = 2012076284U;
         static const AkUniqueID PLAY_MC_DASH = 2996328093U;
         static const AkUniqueID PLAY_MC_DEATH = 107675701U;
@@ -167,6 +168,18 @@ namespace AK
             } // namespace STATE
         } // namespace LETUCE
 
+        namespace NOSOUND_TEST
+        {
+            static const AkUniqueID GROUP = 1793259384U;
+
+            namespace STATE
+            {
+                static const AkUniqueID NONE = 748895195U;
+                static const AkUniqueID OFF = 930712164U;
+                static const AkUniqueID ON = 1651971902U;
+            } // namespace STATE
+        } // namespace NOSOUND_TEST
+
         namespace PAUSE_MENU
         {
             static const AkUniqueID GROUP = 3422541661U;
@@ -217,6 +230,11 @@ namespace AK
 
     } // namespace STATES
 
+    namespace GAME_PARAMETERS
+    {
+        static const AkUniqueID PLAYER_HIT = 871813740U;
+    } // namespace GAME_PARAMETERS
+
     namespace BANKS
     {
         static const AkUniqueID INIT = 1355168291U;
@@ -243,6 +261,7 @@ namespace AK
         static const AkUniqueID MUSIC = 3991942870U;
         static const AkUniqueID OTHER = 2376466361U;
         static const AkUniqueID PEA_MOVEMENTS = 3977179618U;
+        static const AkUniqueID TAKEHIT = 2866165515U;
         static const AkUniqueID UI = 1551306167U;
     } // namespace BUSSES
 

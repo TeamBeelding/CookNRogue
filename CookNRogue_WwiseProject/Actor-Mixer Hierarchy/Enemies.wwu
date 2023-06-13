@@ -2628,9 +2628,6 @@
 													</ModifierList>
 												</Property>
 												<Property Name="Volume" Type="Real64">
-													<ValueList>
-														<Value>3</Value>
-													</ValueList>
 													<ModifierList>
 														<ModifierInfo>
 															<Modifier Name="" ID="{827F3E22-3A9C-48F6-9F3C-9C299F3DE3F6}">
@@ -2722,7 +2719,19 @@
 											</ChildrenList>
 										</RandomSequenceContainer>
 										<BlendContainer Name="BLD_Cabbage_Charge_LP" ID="{15995089-32D7-4328-BEF2-82464036AF6B}" ShortID="751599696">
+											<PropertyList>
+												<Property Name="3DSpatialization" Type="int16" Value="1"/>
+												<Property Name="OverridePositioning" Type="bool" Value="True"/>
+												<Property Name="Volume" Type="Real64">
+													<ValueList>
+														<Value>3</Value>
+													</ValueList>
+												</Property>
+											</PropertyList>
 											<ReferenceList>
+												<Reference Name="Attenuation">
+													<ObjectRef Name="ATN_Cabbage_Charge" ID="{C75935A0-E725-4DC8-A32F-32889EF32662}" WorkUnitID="{A99C7566-826F-4E9D-A733-5652D69BE57C}"/>
+												</Reference>
 												<Reference Name="Conversion">
 													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DEC634C6-86E3-4DF9-96EE-F869BA355507}"/>
 												</Reference>
@@ -2736,7 +2745,7 @@
 														<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
 														<Property Name="Volume" Type="Real64">
 															<ValueList>
-																<Value>-8</Value>
+																<Value>-6</Value>
 															</ValueList>
 														</Property>
 													</PropertyList>
@@ -2766,7 +2775,7 @@
 														<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
 														<Property Name="Volume" Type="Real64">
 															<ValueList>
-																<Value>-12</Value>
+																<Value>-10</Value>
 															</ValueList>
 														</Property>
 													</PropertyList>

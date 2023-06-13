@@ -38,7 +38,7 @@ MonoBehaviour:
     ParentPath: Master-Mixer Hierarchy\Default Work Unit
     guid: 99c1b5852886db4db756da8917395816
     GuidInternal: 
-    m_lastTime: -8585149425036967224
+    m_lastTime: -8585149245573041616
     List:
     - name: AMB
       guid: 3e9beb7cac042749b4bec298c5a1f406
@@ -176,6 +176,23 @@ MonoBehaviour:
         ObjectType: 1
         guid: f642f48badf2874db997cd16b934c32b
       Path: Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\Reverbs
+    - name: TakeHit
+      guid: 3b80a3124ddd5842bf8cc6df4e27f532
+      id: 2866165515
+      PathAndIcons:
+      - ElementName: Master-Mixer Hierarchy
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 99c1b5852886db4db756da8917395816
+      - ElementName: Master Audio Bus
+        ObjectType: 2
+        guid: d8a41415a61d2a41a17e75ca0c2149f3
+      - ElementName: TakeHit
+        ObjectType: 2
+        guid: 3b80a3124ddd5842bf8cc6df4e27f532
+      Path: Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\TakeHit
     - name: UI
       guid: c4108a27d0ebb04eb7eac952bbe3ef6a
       id: 1551306167
@@ -527,7 +544,7 @@ MonoBehaviour:
     ParentPath: Events\Default Work Unit\SFX_Enemy_Cabbage
     guid: fc2dffabf27af545a49e711f8d02b4f4
     GuidInternal: 
-    m_lastTime: -8585149433702924872
+    m_lastTime: -8585149343242352564
     List:
     - name: Play_SFX_Cabbage_Charge_Impact
       guid: 228fd27e017e1343bc381d1062b45e50
@@ -1107,8 +1124,28 @@ MonoBehaviour:
     ParentPath: Events\Default Work Unit\SFX_MC
     guid: 0286cd3a039c084596ef687ee3aefc09
     GuidInternal: 
-    m_lastTime: -8585153664849203130
+    m_lastTime: -8585149302715203103
     List:
+    - name: Play_Empty_Amo
+      guid: cb866e0921028440aea9077c7aba8571
+      id: 495286721
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: f80396892e09b84f93a500c3dc23a21e
+      - ElementName: SFX_MC
+        ObjectType: 12
+        guid: 0286cd3a039c084596ef687ee3aefc09
+      - ElementName: Play_Empty_Amo
+        ObjectType: 3
+        guid: cb866e0921028440aea9077c7aba8571
+      Path: Events\Default Work Unit\SFX_MC\Play_Empty_Amo
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
     - name: Play_MC_Cauldron_Idle
       guid: 7fa0ea198a83834faee4b5cebcc65af3
       id: 2012076284
@@ -1673,8 +1710,22 @@ MonoBehaviour:
     ParentPath: Game Parameters\Default Work Unit
     guid: 93035a04258fec4c9cfde2bf13f7b399
     GuidInternal: 
-    m_lastTime: -8585153664849193195
-    List: []
+    m_lastTime: -8585149249490206033
+    List:
+    - name: Player_Hit
+      guid: b0c61b08cac5674c9cf4623e03ad1ed8
+      id: 871813740
+      PathAndIcons:
+      - ElementName: Game Parameters
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 93035a04258fec4c9cfde2bf13f7b399
+      - ElementName: Player_Hit
+        ObjectType: 13
+        guid: b0c61b08cac5674c9cf4623e03ad1ed8
+      Path: Game Parameters\Default Work Unit\Player_Hit
   StateWwu:
   - PhysicalPath: States\Default Work Unit.wwu
     PathAndIcons:
@@ -1687,7 +1738,7 @@ MonoBehaviour:
     ParentPath: States\Default Work Unit
     guid: afd1b4dfce7c3c408c338aa08826b601
     GuidInternal: 
-    m_lastTime: -8585153664821310243
+    m_lastTime: -8585149311823461970
     List:
     - name: Cooking_Menu
       guid: f1c10d48c9c43d4cbc13612628739bac
@@ -1818,6 +1869,72 @@ MonoBehaviour:
         - ElementName: NotInFight
           ObjectType: 8
           guid: 970bf5996bdf0745aea078a4ef50f02c
+      ValueGuids: []
+      ValueIcons: []
+      valuesInternal: []
+    - name: NoSound_TEST
+      guid: b64a30d2fa0803418cefc2712d4a9bdc
+      id: 1793259384
+      PathAndIcons:
+      - ElementName: States
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: afd1b4dfce7c3c408c338aa08826b601
+      - ElementName: NoSound_TEST
+        ObjectType: 9
+        guid: b64a30d2fa0803418cefc2712d4a9bdc
+      Path: States\Default Work Unit\NoSound_TEST
+      values:
+      - name: None
+        guid: efc34b32119066419e0aa46395564ed3
+        id: 748895195
+        PathAndIcons:
+        - ElementName: States
+          ObjectType: 5
+          guid: 00000000000000000000000000000000
+        - ElementName: Default Work Unit
+          ObjectType: 12
+          guid: afd1b4dfce7c3c408c338aa08826b601
+        - ElementName: NoSound_TEST
+          ObjectType: 9
+          guid: b64a30d2fa0803418cefc2712d4a9bdc
+        - ElementName: None
+          ObjectType: 8
+          guid: efc34b32119066419e0aa46395564ed3
+      - name: Off
+        guid: dbb56982f5267d4989d759b3bf0c7021
+        id: 930712164
+        PathAndIcons:
+        - ElementName: States
+          ObjectType: 5
+          guid: 00000000000000000000000000000000
+        - ElementName: Default Work Unit
+          ObjectType: 12
+          guid: afd1b4dfce7c3c408c338aa08826b601
+        - ElementName: NoSound_TEST
+          ObjectType: 9
+          guid: b64a30d2fa0803418cefc2712d4a9bdc
+        - ElementName: Off
+          ObjectType: 8
+          guid: dbb56982f5267d4989d759b3bf0c7021
+      - name: On
+        guid: 7fb92267b732064d948f2e4193a51190
+        id: 1651971902
+        PathAndIcons:
+        - ElementName: States
+          ObjectType: 5
+          guid: 00000000000000000000000000000000
+        - ElementName: Default Work Unit
+          ObjectType: 12
+          guid: afd1b4dfce7c3c408c338aa08826b601
+        - ElementName: NoSound_TEST
+          ObjectType: 9
+          guid: b64a30d2fa0803418cefc2712d4a9bdc
+        - ElementName: On
+          ObjectType: 8
+          guid: 7fb92267b732064d948f2e4193a51190
       ValueGuids: []
       ValueIcons: []
       valuesInternal: []
@@ -2622,7 +2739,7 @@ MonoBehaviour:
     m_lastTime: -8585153664821300257
     List: []
   ExpandedFileSystemItemIds: 
-  ExpandedWaapiItemIds: 0500000006000000100000001a0000001b000000
+  ExpandedWaapiItemIds: 010000000500000006000000110000001300000014000000160000001a0000001b00000088000000
   AutoSyncSelection: 0
   autoPopulateEnabled: 1
   currentDataSource: 0

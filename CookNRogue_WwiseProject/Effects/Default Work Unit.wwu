@@ -4,6 +4,14 @@
 		<WorkUnit Name="Default Work Unit" ID="{5063C897-C4E2-4F24-B819-F22106701854}" PersistMode="Standalone">
 			<ChildrenList>
 				<Effect Name="New_Time_Stretch" ID="{D5A36D37-30BD-4440-8277-DDF964FA7726}" PluginName="Wwise Time Stretch" CompanyID="0" PluginID="130" PluginType="3"/>
+				<Effect Name="Sidechain_Meter" ID="{8CAEDFEA-D478-4794-A098-C6F688A3E7A5}" PluginName="Wwise Meter" CompanyID="0" PluginID="129" PluginType="3">
+					<PropertyList>
+						<Property Name="ReleaseTime" Type="Real32" Value="0.5"/>
+					</PropertyList>
+					<PluginData>
+	<GameParameter Name="Player_Hit" ID="{081BC6B0-C5CA-4C67-9CF4-623E03AD1ED8}"/>
+</PluginData>
+				</Effect>
 			</ChildrenList>
 		</WorkUnit>
 	</Effects>

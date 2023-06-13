@@ -7,6 +7,9 @@ public class PlayerHealth : MonoBehaviour
 {
     [SerializeField] int _health;
     [SerializeField] int _maxHealth;
+    [SerializeField] private AK.Wwise.Event _Play_SFX_Health_Collect;
+    [SerializeField] private AK.Wwise.Event _Play_MC_Hit;
+    [SerializeField] private AK.Wwise.Event _Play_MC_Death;
     HeartBar _heartBar;
     private void Start()
     {
@@ -39,12 +42,15 @@ public class PlayerHealth : MonoBehaviour
 
         _health -= damage;
         _heartBar.UpdateHealthVisual(_health);
+        _Play_MC_Hit.Post(gameObject);
+        _Play_SFX_Health_Collect.Post(gameObject);
 
         if (_health <= 0)
         {
             _health = _maxHealth;
             _heartBar.UpdateHealthVisual(_health);
-            
+            _Play_MC_Death.Post(gameObject);
+
             // RoomManager.instance.RestartLevel();
             return false;
         }

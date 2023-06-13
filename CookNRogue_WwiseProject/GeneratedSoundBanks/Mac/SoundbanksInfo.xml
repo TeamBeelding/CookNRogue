@@ -9,10 +9,13 @@
 	</RootPaths>
 	<DialogueEvents/>
 	<SoundBanks>
-		<SoundBank Id="1355168291" Type="User" Language="SFX" Hash="{0CB773DC-E2E1-AE6D-436D-CBCF4844D925}">
+		<SoundBank Id="1355168291" Type="User" Language="SFX" Hash="{7053B061-F5FF-E9C4-84A2-DB95A9251888}">
 			<ShortName>Init</ShortName>
 			<Path>Init.bnk</Path>
 			<Plugins>
+				<ShareSets>
+					<Plugin Id="1992114213" Name="Sidechain_Meter" LibName="Wwise Meter" LibId="8454147"/>
+				</ShareSets>
 				<AudioDevices>
 					<Plugin Id="2317455096" Name="No_Output" LibName="No Output" LibId="11862023"/>
 					<Plugin Id="3859886410" Name="System" LibName="System" LibId="11403271"/>
@@ -24,6 +27,13 @@
 				<Bus Id="1685527061" Name="MC"/>
 				<Bus Id="2242381963" Name="Enemies"/>
 				<Bus Id="2376466361" Name="Other"/>
+				<Bus Id="2866165515" Name="TakeHit">
+					<PluginRefs>
+						<ShareSets>
+							<PluginRef Id="1992114213"/>
+						</ShareSets>
+					</PluginRefs>
+				</Bus>
 				<Bus Id="3803692087" Name="Master Audio Bus"/>
 				<Bus Id="3977179618" Name="Pea_Movements"/>
 				<Bus Id="3991942870" Name="Music"/>
@@ -31,6 +41,9 @@
 			<AuxBusses>
 				<AuxBus Id="3545700988" Name="Reverbs"/>
 			</AuxBusses>
+			<GameParameters>
+				<GameParameter Id="871813740" Name="Player_Hit"/>
+			</GameParameters>
 			<StateGroups>
 				<StateGroup Id="215992295" Name="Player_Health">
 					<States>
@@ -58,6 +71,13 @@
 						<State Id="571224461" Name="InCookingMenu"/>
 						<State Id="748895195" Name="None"/>
 						<State Id="3732417588" Name="OutCookingMenu"/>
+					</States>
+				</StateGroup>
+				<StateGroup Id="1793259384" Name="NoSound_TEST">
+					<States>
+						<State Id="748895195" Name="None"/>
+						<State Id="930712164" Name="Off"/>
+						<State Id="1651971902" Name="On"/>
 					</States>
 				</StateGroup>
 				<StateGroup Id="2181612614" Name="InFight">
@@ -193,7 +213,7 @@
 			<ShortName>AMB_Main_Menu</ShortName>
 			<Path>AMB_Main_Menu.bnk</Path>
 		</SoundBank>
-		<SoundBank Id="1806359924" Type="User" Language="SFX" Hash="{CFBB2E00-4404-D173-2419-88EB4E9BFE79}">
+		<SoundBank Id="1806359924" Type="User" Language="SFX" Hash="{6035AFF8-5CE1-95E7-6E2E-CE5C3DD4F42B}">
 			<ShortName>AMB_Level</ShortName>
 			<Path>AMB_Level.bnk</Path>
 			<Media>
@@ -462,29 +482,29 @@
 				<Event Id="2301333962" Name="Stop_SFX_Pea_Movement" MaxAttenuation="0" DurationType="OneShot" DurationMin="0" DurationMax="0"/>
 			</Events>
 		</SoundBank>
-		<SoundBank Id="2374353081" Type="User" Language="SFX" Hash="{C79C9606-21E3-AB03-2C26-41E54DB19D86}">
+		<SoundBank Id="2374353081" Type="User" Language="SFX" Hash="{A5CA8FCA-C98D-1A6A-BF76-B0989CF0BDD0}">
 			<ShortName>SFX_Other</ShortName>
 			<Path>SFX_Other.bnk</Path>
 			<Media>
 				<File Id="165755857" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>SFX_Health_Collect_06.wav</ShortName>
-					<CachePath>SFX/SFX_Health_Collect_06_3F75BDB9.wem</CachePath>
+					<CachePath>SFX/SFX_Health_Collect_06_561D6D35.wem</CachePath>
 				</File>
 				<File Id="270090931" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>SFX_Health_Collect_02.wav</ShortName>
-					<CachePath>SFX/SFX_Health_Collect_02_3F75BDB9.wem</CachePath>
+					<CachePath>SFX/SFX_Health_Collect_02_BBA4C809.wem</CachePath>
 				</File>
 				<File Id="286391470" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>SFX_Health_Collect_04.wav</ShortName>
-					<CachePath>SFX/SFX_Health_Collect_04_3F75BDB9.wem</CachePath>
+					<CachePath>SFX/SFX_Health_Collect_04_AF505610.wem</CachePath>
 				</File>
 				<File Id="455666064" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>SFX_Health_Collect_01.wav</ShortName>
-					<CachePath>SFX/SFX_Health_Collect_01_3F75BDB9.wem</CachePath>
+					<CachePath>SFX/SFX_Health_Collect_01_3DECF754.wem</CachePath>
 				</File>
 				<File Id="465709329" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>SFX_Health_Collect_03.wav</ShortName>
-					<CachePath>SFX/SFX_Health_Collect_03_3F75BDB9.wem</CachePath>
+					<CachePath>SFX/SFX_Health_Collect_03_D5D16FDA.wem</CachePath>
 				</File>
 				<File Id="468458881" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>SFX_Cook.wav</ShortName>
@@ -496,11 +516,11 @@
 				</File>
 				<File Id="832782286" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>SFX_Health_Collect_05.wav</ShortName>
-					<CachePath>SFX/SFX_Health_Collect_05_3F75BDB9.wem</CachePath>
+					<CachePath>SFX/SFX_Health_Collect_05_91CE0A04.wem</CachePath>
 				</File>
 				<File Id="876536733" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>SFX_Door_Open.wav</ShortName>
-					<CachePath>SFX/SFX_Door_Open_3F75BDB9.wem</CachePath>
+					<CachePath>SFX/SFX_Door_Open_7B85F0C4.wem</CachePath>
 				</File>
 				<File Id="939273688" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>SFX_Ingredient_Collect_01.wav</ShortName>
@@ -513,12 +533,12 @@
 						<MediaRef Id="468458881"/>
 					</MediaRefs>
 				</Event>
-				<Event Id="1312371701" Name="Play_SFX_Door_Open" MaxAttenuation="40" DurationType="OneShot" DurationMin="4.3333335" DurationMax="4.3333335">
+				<Event Id="1312371701" Name="Play_SFX_Door_Open" MaxAttenuation="40" DurationType="OneShot" DurationMin="3.6283069" DurationMax="3.6283069">
 					<MediaRefs>
 						<MediaRef Id="876536733"/>
 					</MediaRefs>
 				</Event>
-				<Event Id="1136621035" Name="Play_SFX_Health_Collect" DurationType="OneShot" DurationMin="0.7550994" DurationMax="0.9412447">
+				<Event Id="1136621035" Name="Play_SFX_Health_Collect" DurationType="OneShot" DurationMin="0.32785895" DurationMax="0.5137555">
 					<MediaRefs>
 						<MediaRef Id="165755857"/>
 						<MediaRef Id="270090931"/>
@@ -537,7 +557,7 @@
 				<Event Id="4293892292" Name="Stop_SFX_Cook" MaxAttenuation="0" DurationType="OneShot" DurationMin="0" DurationMax="0"/>
 			</Events>
 		</SoundBank>
-		<SoundBank Id="2385921979" Type="User" Language="SFX" Hash="{83BBD810-AB50-6B50-3FF6-7BAF8A3A1B33}">
+		<SoundBank Id="2385921979" Type="User" Language="SFX" Hash="{3F6F9BED-69B1-8991-48F8-9554E703D583}">
 			<ShortName>SFX_Enemy_Cabbage</ShortName>
 			<Path>SFX_Enemy_Cabbage.bnk</Path>
 			<Media>
@@ -619,14 +639,14 @@
 				</File>
 			</Media>
 			<Events>
-				<Event Id="1246023875" Name="Play_SFX_Cabbage_Charge_Impact" MaxAttenuation="15" DurationType="OneShot" DurationMin="1.5268935" DurationMax="1.926126">
+				<Event Id="1246023875" Name="Play_SFX_Cabbage_Charge_Impact" MaxAttenuation="40" DurationType="OneShot" DurationMin="1.5268935" DurationMax="1.926126">
 					<MediaRefs>
 						<MediaRef Id="74706734"/>
 						<MediaRef Id="285934693"/>
 						<MediaRef Id="309533961"/>
 					</MediaRefs>
 				</Event>
-				<Event Id="2535875021" Name="Play_SFX_Cabbage_Charge_LP" MaxAttenuation="15" DurationType="Infinite">
+				<Event Id="2535875021" Name="Play_SFX_Cabbage_Charge_LP" MaxAttenuation="60" DurationType="Infinite">
 					<MediaRefs>
 						<MediaRef Id="23003283"/>
 						<MediaRef Id="104554849"/>
@@ -636,14 +656,14 @@
 						<MediaRef Id="989581029"/>
 					</MediaRefs>
 				</Event>
-				<Event Id="1817239028" Name="Play_SFX_Cabbage_Death" MaxAttenuation="15" DurationType="OneShot" DurationMin="0.4598634" DurationMax="0.5297316">
+				<Event Id="1817239028" Name="Play_SFX_Cabbage_Death" MaxAttenuation="25" DurationType="OneShot" DurationMin="0.4598634" DurationMax="0.5297316">
 					<MediaRefs>
 						<MediaRef Id="131593754"/>
 						<MediaRef Id="489666360"/>
 						<MediaRef Id="891010953"/>
 					</MediaRefs>
 				</Event>
-				<Event Id="1028192719" Name="Play_SFX_Cabbage_Footsteps" MaxAttenuation="15" DurationType="OneShot" DurationMin="0.47193712" DurationMax="0.5297316">
+				<Event Id="1028192719" Name="Play_SFX_Cabbage_Footsteps" MaxAttenuation="25" DurationType="OneShot" DurationMin="0.47193712" DurationMax="0.5297316">
 					<MediaRefs>
 						<MediaRef Id="198124096"/>
 						<MediaRef Id="685345126"/>
@@ -651,7 +671,7 @@
 						<MediaRef Id="837044873"/>
 					</MediaRefs>
 				</Event>
-				<Event Id="1635451477" Name="Play_SFX_Cabbage_Hit" MaxAttenuation="15" DurationType="OneShot" DurationMin="0.44889086" DurationMax="0.5297316">
+				<Event Id="1635451477" Name="Play_SFX_Cabbage_Hit" MaxAttenuation="25" DurationType="OneShot" DurationMin="0.44889086" DurationMax="0.5297316">
 					<MediaRefs>
 						<MediaRef Id="96714747"/>
 						<MediaRef Id="318770995"/>
@@ -950,7 +970,7 @@
 				</Event>
 			</Events>
 		</SoundBank>
-		<SoundBank Id="3991942870" Type="User" Language="SFX" Hash="{FCB14281-E417-C90E-5560-4F0EE0253365}">
+		<SoundBank Id="3991942870" Type="User" Language="SFX" Hash="{6037C51E-73E1-E2D9-D89C-613995C94DD8}">
 			<ShortName>MUSIC</ShortName>
 			<Path>MUSIC.bnk</Path>
 			<Media>
@@ -1147,7 +1167,7 @@
 				</StateGroup>
 			</StateGroups>
 		</SoundBank>
-		<SoundBank Id="3996957973" Type="User" Language="SFX" Hash="{18980C1D-F263-2FAB-3937-BCCFC2769536}">
+		<SoundBank Id="3996957973" Type="User" Language="SFX" Hash="{678876D0-BCC0-E805-9A23-790474501750}">
 			<ShortName>SFX_MC</ShortName>
 			<Path>SFX_MC.bnk</Path>
 			<Media>
@@ -1269,7 +1289,7 @@
 				</File>
 				<File Id="476596561" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>SFX_Shot_Banana_05.wav</ShortName>
-					<CachePath>SFX/SFX_Shot_Banana_05_3F75BDB9.wem</CachePath>
+					<CachePath>SFX/SFX_Shot_Banana_05_0001B589.wem</CachePath>
 				</File>
 				<File Id="489391792" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>FT_MC_Run_05.wav</ShortName>
@@ -1313,7 +1333,7 @@
 				</File>
 				<File Id="603330166" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>SFX_Shot_Banana_03.wav</ShortName>
-					<CachePath>SFX/SFX_Shot_Banana_03_3F75BDB9.wem</CachePath>
+					<CachePath>SFX/SFX_Shot_Banana_03_B1947CE2.wem</CachePath>
 				</File>
 				<File Id="617178781" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>SFX_Impact_Empty_02.wav</ShortName>
@@ -1469,11 +1489,11 @@
 				</File>
 				<File Id="1021509899" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>SFX_Shot_Banana_02.wav</ShortName>
-					<CachePath>SFX/SFX_Shot_Banana_02_3F75BDB9.wem</CachePath>
+					<CachePath>SFX/SFX_Shot_Banana_02_C562BE4D.wem</CachePath>
 				</File>
 				<File Id="1033904407" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>SFX_Shot_Banana_01.wav</ShortName>
-					<CachePath>SFX/SFX_Shot_Banana_01_3F75BDB9.wem</CachePath>
+					<CachePath>SFX/SFX_Shot_Banana_01_62F0AA68.wem</CachePath>
 				</File>
 				<File Id="1043108297" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>SFX_Impact_Corn_01.wav</ShortName>
@@ -1489,7 +1509,7 @@
 				</File>
 				<File Id="1066352579" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>SFX_Shot_Banana_04.wav</ShortName>
-					<CachePath>SFX/SFX_Shot_Banana_04_3F75BDB9.wem</CachePath>
+					<CachePath>SFX/SFX_Shot_Banana_04_0A72A579.wem</CachePath>
 				</File>
 				<File Id="1066457049" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>SFX_Impact_Beef_01.wav</ShortName>
@@ -1497,6 +1517,12 @@
 				</File>
 			</Media>
 			<Events>
+				<Event Id="495286721" Name="Play_Empty_Amo" MaxAttenuation="0" DurationType="OneShot" DurationMin="0" DurationMax="0">
+					<ActionSetState>
+						<ActionSetStateEntry GroupId="1793259384" Id="1651971902" Name="On"/>
+						<ActionSetStateEntry GroupId="3933301714" Id="1668749452" Name="No"/>
+					</ActionSetState>
+				</Event>
 				<Event Id="2012076284" Name="Play_MC_Cauldron_Idle" DurationType="Infinite">
 					<MediaRefs>
 						<MediaRef Id="568604304"/>
@@ -1608,7 +1634,7 @@
 						<MediaRef Id="1066457049"/>
 					</MediaRefs>
 				</Event>
-				<Event Id="3889646233" Name="Play_Weapon_Shot" MaxAttenuation="10" DurationType="OneShot" DurationMin="1.3308823" DurationMax="1.5804983">
+				<Event Id="3889646233" Name="Play_Weapon_Shot" MaxAttenuation="25" DurationType="OneShot" DurationMin="1.2613503" DurationMax="1.5804983">
 					<MediaRefs>
 						<MediaRef Id="24705584"/>
 						<MediaRef Id="43861836"/>
@@ -1645,7 +1671,72 @@
 					</MediaRefs>
 				</Event>
 			</Events>
+			<StateGroups>
+				<StateGroup Id="941442537" Name="Bread">
+					<States>
+						<State Id="748895195" Name="None"/>
+						<State Id="979470758" Name="Yes"/>
+						<State Id="1668749452" Name="No"/>
+					</States>
+				</StateGroup>
+				<StateGroup Id="1123068863" Name="Beef">
+					<States>
+						<State Id="748895195" Name="None"/>
+						<State Id="979470758" Name="Yes"/>
+						<State Id="1668749452" Name="No"/>
+					</States>
+				</StateGroup>
+				<StateGroup Id="1793259384" Name="NoSound_TEST">
+					<States>
+						<State Id="748895195" Name="None"/>
+						<State Id="930712164" Name="Off"/>
+						<State Id="1651971902" Name="On"/>
+					</States>
+				</StateGroup>
+				<StateGroup Id="2682233438" Name="Rice">
+					<States>
+						<State Id="748895195" Name="None"/>
+						<State Id="979470758" Name="Yes"/>
+						<State Id="1668749452" Name="No"/>
+					</States>
+				</StateGroup>
+				<StateGroup Id="2695658327" Name="Fish">
+					<States>
+						<State Id="748895195" Name="None"/>
+						<State Id="979470758" Name="Yes"/>
+						<State Id="1668749452" Name="No"/>
+					</States>
+				</StateGroup>
+				<StateGroup Id="3220806263" Name="Tomato">
+					<States>
+						<State Id="748895195" Name="None"/>
+						<State Id="979470758" Name="Yes"/>
+						<State Id="1668749452" Name="No"/>
+					</States>
+				</StateGroup>
+				<StateGroup Id="3787826983" Name="Corn">
+					<States>
+						<State Id="748895195" Name="None"/>
+						<State Id="979470758" Name="Yes"/>
+						<State Id="1668749452" Name="No"/>
+					</States>
+				</StateGroup>
+				<StateGroup Id="3933301714" Name="Banana">
+					<States>
+						<State Id="748895195" Name="None"/>
+						<State Id="979470758" Name="Yes"/>
+						<State Id="1668749452" Name="No"/>
+					</States>
+				</StateGroup>
+				<StateGroup Id="4083202225" Name="Letuce">
+					<States>
+						<State Id="748895195" Name="None"/>
+						<State Id="979470758" Name="Yes"/>
+						<State Id="1668749452" Name="No"/>
+					</States>
+				</StateGroup>
+			</StateGroups>
 		</SoundBank>
 	</SoundBanks>
-	<FileHash>{EEDD6D69-DA81-381E-18F2-FDCF2AE4FC2D}</FileHash>
+	<FileHash>{EDB0783C-2F3D-3336-9AA9-B6EF6D54DAF5}</FileHash>
 </SoundBanksInfo>

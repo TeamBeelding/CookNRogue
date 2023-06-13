@@ -41,6 +41,8 @@ public class EnterDoor : MonoBehaviour
 
     [SerializeField] GameObject _godRays;
 
+    [SerializeField] private AK.Wwise.Event _Play_SFX_Door_Open;
+
     private void Start()
     {
         if (m_door != null)
@@ -78,6 +80,7 @@ public class EnterDoor : MonoBehaviour
     {
         if (m_door != null)
         {
+            _Play_SFX_Door_Open.Post(gameObject);
             StartCoroutine(IOpenDoor());
         }
     }
