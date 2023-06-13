@@ -246,7 +246,7 @@ namespace Enemy.Slime
 
             IEnumerator IDeathAnim()
             {
-                yield return new WaitForSeconds(3f);
+                yield return new WaitForSeconds(2f);
 
                 for (int i = 0; i < data.GetSlimeSpawnWhenDying; i++)
                 {

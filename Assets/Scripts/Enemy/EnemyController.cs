@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Tutoriel;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -28,6 +29,8 @@ public abstract class EnemyController : MonoBehaviour
 
     [SerializeField] 
     private TutorialManager tutorial;
+
+    private bool isDead;
 
     protected virtual void Awake()
     {
@@ -103,9 +106,14 @@ public abstract class EnemyController : MonoBehaviour
         Healthpoint -= damage;
 
         if (Healthpoint > 0)
+        {
             TakeDamageEffect();
-        else
+        }
+        else if (!isDead) 
+        {
+            isDead = true;
             Dying();
+        }
 
         // Color the enemy red for a short time to indicate that he has been hit
         IEnumerator IColorationFeedback()
