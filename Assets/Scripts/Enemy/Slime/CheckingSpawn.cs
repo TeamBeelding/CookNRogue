@@ -19,12 +19,14 @@ namespace Enemy.Slime
 
         public void Update()
         {
-            print(IsPathValid() ? "<color=green>Path available</color>" : "<color=red>Path not available</color>");
+            
         }
         
         public void SetTransformPosition(Vector3 position)
         {
+            spawnPosition.enabled = false;
             spawnPosition.transform.position = position;
+            spawnPosition.enabled = true;
         }
 
         public bool IsPathValid()
