@@ -179,9 +179,9 @@ namespace Enemy.Slime
         // ReSharper disable Unity.PerformanceAnalysis
         private void ThrowMinimoyz()
         {
-            Transform point = RandomPoint();
+            Vector3 point = RandomPoint();
             
-            spawnChecker.SetTransformPosition(point.position);
+            spawnChecker.SetTransformPosition(point);
             
             if (!spawnChecker.IsPathValid(Player.transform.position))
                 ThrowMinimoyz();
@@ -196,7 +196,7 @@ namespace Enemy.Slime
 
         }
 
-        private Transform RandomPoint()
+        private Vector3 RandomPoint()
         {
             Vector3 center = Player.transform.position;
             float distanceBetweenRadius = data.GetOuterRadius - data.GetInnerRadius;
@@ -212,10 +212,7 @@ namespace Enemy.Slime
 
             Vector3 position = new Vector3(x, y, z);
 
-            GameObject pointObject = new GameObject("RandomPoint");
-            pointObject.transform.position = position;
-
-            return pointObject.transform;
+            return position;
         }
 
         public override void TakeDamage(float damage = 1, bool isCritical = false)
