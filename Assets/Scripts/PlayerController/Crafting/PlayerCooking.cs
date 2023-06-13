@@ -45,6 +45,9 @@ public class PlayerCooking : MonoBehaviour
 
     Coroutine _craftingRoutine;
 
+    [SerializeField]
+    private AK.Wwise.Event _Play_SFX_Cook;
+
     #endregion
 
     private void Reset()
@@ -111,6 +114,7 @@ public class PlayerCooking : MonoBehaviour
 
             //Start crafting
             _craftingInProgress = true;
+            _Play_SFX_Cook.Post(gameObject);
 
             //Reset last bullet parametters
             m_attackScript.ResetParameters();
@@ -177,6 +181,8 @@ public class PlayerCooking : MonoBehaviour
 
         //Show UI
         m_cookingProgressVisuals.SetActive(true);
+
+        _Play_SFX_Cook.Post(gameObject);
     }
 
     void CompleteCrafting()

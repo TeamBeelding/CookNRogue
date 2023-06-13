@@ -138,6 +138,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    
+    [SerializeField]
+    private AK.Wwise.Event _Stop_SFX_Cook;
+    
     public float PlayerAimMagnitude
     {
         get => _aimMagnitude;
@@ -520,7 +524,6 @@ public class PlayerController : MonoBehaviour
     {
         playerAnimStatesScript._animator.SetBool("cooking", true);
         playerAnimStatesScript.Marmite(false, true);
-
         Debug.Log("cook");
 
         //Input state check
@@ -538,6 +541,7 @@ public class PlayerController : MonoBehaviour
     {
         playerAnimStatesScript._animator.SetBool("cooking", false);
         playerAnimStatesScript.Marmite(false, false);
+        _Stop_SFX_Cook.Post(gameObject);
         Debug.Log("stop cook");
         
         //Input state check
