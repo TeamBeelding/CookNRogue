@@ -58,7 +58,7 @@ public class PlayerController : MonoBehaviour
     private GameObject victoryMenu;
 
     [SerializeField]
-    private PlayerAnimStates PlayerAnimStates;
+    private PlayerAnimStates playerAnimStatesScript;
 
     static PlayerController _instance;
 
@@ -286,11 +286,11 @@ public class PlayerController : MonoBehaviour
                 //Stop if input is null
                 _rb.velocity = Vector3.zero;
 
-                PlayerAnimStates.animStates = PlayerAnimStates.playerAnimStates.IDLE;
+                playerAnimStatesScript.animStates = PlayerAnimStates.playerAnimStates.IDLE;
 
                 if (_isAiming)
                 {
-                    PlayerAnimStates.animStates = PlayerAnimStates.playerAnimStates.IDLEATTACK;
+                    playerAnimStatesScript.animStates = PlayerAnimStates.playerAnimStates.IDLEATTACK;
                 }
             }
             else
@@ -311,11 +311,11 @@ public class PlayerController : MonoBehaviour
                     //Set Aiming Variables
                     _aimDirection = moveInputDir;
 
-                    PlayerAnimStates.animStates = PlayerAnimStates.playerAnimStates.RUNNING;
+                    playerAnimStatesScript.animStates = PlayerAnimStates.playerAnimStates.RUNNING;
                 }
                 else
                 {
-                    PlayerAnimStates.animStates = PlayerAnimStates.playerAnimStates.RUNNINGATTACK;
+                    playerAnimStatesScript.animStates = PlayerAnimStates.playerAnimStates.RUNNINGATTACK;
                 }
             }
         }
@@ -518,8 +518,11 @@ public class PlayerController : MonoBehaviour
 
     void StartCookingState()
     {
+        playerAnimStatesScript._animator.SetBool("cooking", true);
+        playerAnimStatesScript.Marmite(false, true);
+
         Debug.Log("cook");
-        PlayerAnimStates.Animator.SetBool("cooking", true);
+
         //Input state check
         if (_curState != playerStates.Default)
             return;
@@ -533,8 +536,10 @@ public class PlayerController : MonoBehaviour
 
     public void StopCookingState()
     {
+        playerAnimStatesScript._animator.SetBool("cooking", false);
+        playerAnimStatesScript.Marmite(false, false);
         Debug.Log("stop cook");
-        PlayerAnimStates.Animator.SetBool("cooking", false);
+        
         //Input state check
         if (_curState != playerStates.Cooking)
             return;

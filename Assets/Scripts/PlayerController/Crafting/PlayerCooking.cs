@@ -45,9 +45,6 @@ public class PlayerCooking : MonoBehaviour
 
     Coroutine _craftingRoutine;
 
-    [SerializeField]
-    Animator animator;
-
     #endregion
 
     private void Reset()
@@ -69,7 +66,7 @@ public class PlayerCooking : MonoBehaviour
 
         _inventoryScript = PlayerCookingInventory.Instance;
         _playerController = PlayerController.Instance;
-        animator = GetComponentInChildren<Animator>();
+        //animator = GetComponentInChildren<Animator>();
         m_cookingProgressVisuals.SetActive(false);
     }
 
