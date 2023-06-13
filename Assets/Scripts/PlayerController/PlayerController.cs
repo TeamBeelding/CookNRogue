@@ -184,6 +184,7 @@ public class PlayerController : MonoBehaviour
         _playerActions.Default.Enable();
         _playerActions.Cooking.Enable();
         _playerActions.UI.Enable();
+        _playerActions.Debug.Enable();
 
         //Set Default Events
         _playerActions.Default.Shoot.performed += Shoot_Performed;
@@ -196,6 +197,7 @@ public class PlayerController : MonoBehaviour
         _playerActions.Default.Cook.performed += Cook_Performed;
         _playerActions.Default.Pause.performed += OnPauseGame;
         _playerActions.Default.Quit.performed += Quit;
+        _playerActions.Default.EnterDebug.performed += EnterDebug;
 
         //Set Cooking Events
         _playerActions.Cooking.Cook.canceled += Cook_Canceled;
@@ -209,8 +211,13 @@ public class PlayerController : MonoBehaviour
         //Set UI Events
         _playerActions.UI.Pause.performed += OnPauseGame;
 
+        //Set Debug Events
+        _playerActions.Debug.EnterDebug.canceled += QuitDebug;
+        _playerActions.Debug.KillAllEnemies.performed += KillAllEnemies;
+
         _playerActions.Cooking.Disable();
         _playerActions.UI.Disable();
+        _playerActions.Debug.Disable();
 
         _roomManager.OnRoomStart += Spawn;
 
@@ -593,7 +600,7 @@ public class PlayerController : MonoBehaviour
         if (isOnTutorial)
             tutorialManager.SetIsQTE(true);
     }
-    
+
     #endregion
 
     #region Other Actions
@@ -667,6 +674,27 @@ public class PlayerController : MonoBehaviour
     void Quit(InputAction.CallbackContext context)
     {
         Application.Quit();
+    }
+
+    #endregion
+
+    #region Debug
+
+    void EnterDebug(InputAction.CallbackContext context)
+    {
+        _playerActions.Default.Disable();
+        _playerActions.Debug.Enable();
+    }
+
+    void QuitDebug(InputAction.CallbackContext context)
+    {
+        _playerActions.Debug.Disable();
+        _playerActions.Default.Enable();
+    }
+
+    void KillAllEnemies(InputAction.CallbackContext context)
+    {
+        _enemyManager.DestroyAll();
     }
 
     #endregion

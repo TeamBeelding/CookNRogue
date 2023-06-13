@@ -95,6 +95,8 @@ Material:
     m_Ints: []
     m_Floats:
     - REQUIRE_DEPTH_TEXTURE: 1
+    - _AcuteAngleStartDot: 0
+    - _AcuteDepthThreshold: 2
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -103,9 +105,9 @@ Material:
     - _ClearCoatSmoothness: 0
     - _Cull: 2
     - _Cutoff: 0.5
-    - _DepthStrength: 0.85
+    - _DepthStrength: 1
     - _DepthThickness: 1
-    - _DepthThreshold: 0.003
+    - _DepthThreshold: 0.001
     - _DepthTightenning: 1
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
@@ -115,9 +117,12 @@ Material:
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _Metallic: 0
+    - _NormalAdjustFarDepth: 0
+    - _NormalAdjustNearDepth: 0
+    - _NormalsFarThreshold: 2
     - _NormalsStrength: 0.5
-    - _NormalsThreshold: 5
-    - _NormalsTightenning: 1
+    - _NormalsThreshold: 3
+    - _NormalsTightenning: 10
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueControl: 0
