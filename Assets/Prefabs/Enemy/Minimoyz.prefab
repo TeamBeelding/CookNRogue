@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3843937293996089471}
   - component: {fileID: 3843937293996089468}
   - component: {fileID: 8360992018894168495}
+  - component: {fileID: 3656562205103930754}
   m_Layer: 0
   m_Name: Minimoyz
   m_TagString: Enemy
@@ -73,6 +74,31 @@ MonoBehaviour:
   _effectHandlers: []
   explosion: {fileID: 466446929295881914, guid: 3fb8a478fb9325d40bc6d96484133a99,
     type: 3}
+  _Play_SFX_Pea_Footsteps:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 27aded6975160f7408e3a9e4c6d3355e,
+      type: 2}
+  _Play_SFX_Pea_Spawn:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: ceef912e1820d194ba905bde41f63783,
+      type: 2}
+  _Play_SFX_Pea_Death:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 313c0264e1510ba4492688e2b1f575d7,
+      type: 2}
+  _Play_SFX_Pea_Movement:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: b823f156494d2fe449b50861e32cc682,
+      type: 2}
+  _Stop_SFX_Pea_Movement:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: f30f1b35ab4e9d44d97dd4a74d0d59de,
+      type: 2}
   data: {fileID: 11400000, guid: 6de0997aeb190e840a9e56c9d0162cd9, type: 2}
   agent: {fileID: 3843937293996089471}
   state: 0
@@ -136,6 +162,31 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &3656562205103930754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3843937293996089466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2698c394a636bc479a5e90f55e626a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerList: f7e1664c
+  useOtherObject: 0
+  data:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: f51b4efc377affc4c97a293a4f17cad7,
+      type: 2}
+  decodeBank: 0
+  loadAsynchronous: 0
+  saveDecodedBank: 0
+  unloadTriggerList: 
+  bankNameInternal: 
+  valueGuidInternal: 
 --- !u!1 &6181562568036319627
 GameObject:
   m_ObjectHideFlags: 0
@@ -259,6 +310,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 585e766713df702459aa63bbce63b344,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 32a86fd6221115742ac215763419b88f, type: 2}
     - target: {fileID: 919132149155446097, guid: 585e766713df702459aa63bbce63b344,
         type: 3}
       propertyPath: m_Name

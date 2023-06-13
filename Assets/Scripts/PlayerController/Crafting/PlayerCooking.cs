@@ -45,6 +45,9 @@ public class PlayerCooking : MonoBehaviour
 
     Coroutine _craftingRoutine;
 
+    [SerializeField]
+    Animator animator;
+
     #endregion
 
     private void Reset()
@@ -66,7 +69,7 @@ public class PlayerCooking : MonoBehaviour
 
         _inventoryScript = PlayerCookingInventory.Instance;
         _playerController = PlayerController.Instance;
-
+        animator = GetComponentInChildren<Animator>();
         m_cookingProgressVisuals.SetActive(false);
     }
 
@@ -114,6 +117,10 @@ public class PlayerCooking : MonoBehaviour
 
             //Reset last bullet parametters
             m_attackScript.ResetParameters();
+            foreach(ProjectileData data in _inventoryScript.EquippedRecipe)
+            {
+                data.audioState.SetValue();
+            }
 
             _inventoryScript.Show(false);
 
@@ -179,6 +186,7 @@ public class PlayerCooking : MonoBehaviour
     {
         _inventoryScript.CraftBullet();
         _playerController.StopCookingState();
+        m_attackScript.OnAmmunitionChange();
 
         //reset
         _craftingRoutine = null;
@@ -199,9 +207,9 @@ public class PlayerCooking : MonoBehaviour
             //Check QTE spawn time
             if (!_spawnedQTE && _curProgressTime >= delay)
             {
+                
                 SpawnQTE();
             }
-
             //UI
             m_cookingProgressBarFill.fillAmount = _curProgressTime / _totalCookTime;
 
@@ -209,7 +217,7 @@ public class PlayerCooking : MonoBehaviour
             _curProgressTime += Time.deltaTime;
             yield return new WaitForSeconds(Time.deltaTime);
         }
-
+        
         CompleteCrafting();
     }
     #endregion

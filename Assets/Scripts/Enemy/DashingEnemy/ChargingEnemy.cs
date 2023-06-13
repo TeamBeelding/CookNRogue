@@ -6,6 +6,18 @@ namespace Enemy.DashingEnemy
 {
     public class ChargingEnemy : EnemyController
     {
+        [Header("Sound")]
+        [SerializeField]
+        private AK.Wwise.Event _Play_SFX_Cabbage_Footsteps;
+        [SerializeField]
+        private AK.Wwise.Event _Play_SFX_Cabbage_Charge_LP;
+        [SerializeField]
+        private AK.Wwise.Event _Play_SFX_Cabbage_Charge_Impact;
+        [SerializeField]
+        private AK.Wwise.Event _Play_SFX_Cabbage_Hit;
+        [SerializeField]
+        private AK.Wwise.Event _Play_SFX_Cabbage_Death;
+
         private Coroutine _castingCoroutine;
         private Coroutine _waitingCoroutine;
         private Coroutine _rotateToPlayerCoroutine;
@@ -26,7 +38,9 @@ namespace Enemy.DashingEnemy
 
         [SerializeField]
         private GameObject visual;
-    
+
+        private Animator animator;
+
         public enum State
         {
             Casting,
@@ -47,7 +61,7 @@ namespace Enemy.DashingEnemy
         protected override void Start()
         {
             base.Start();
-        
+            animator = GetComponentInChildren<Animator>();
             SetState(State.Casting);
             _redLineMaterial = _redLine.GetComponent<Renderer>().material;
         }
@@ -76,12 +90,15 @@ namespace Enemy.DashingEnemy
             switch (state)
             {
                 case State.Casting:
+                    animator.SetBool("isAttack", false);
                     Casting();
                     break;
                 case State.Waiting:
+                    animator.SetBool("isAttack", false);
                     WaitingAnotherDash();
                     break;
                 case State.Dashing:
+                    animator.SetBool("isAttack", true);
                     Dashing();
                     break;
                 case State.Dying:
@@ -215,9 +232,22 @@ namespace Enemy.DashingEnemy
         /// </summary>
         protected override void Dying()
         {
+            StopCasting();
             base.Dying();
 
-            StopCasting();
+            //animator.SetBool("isDead", true);
+
+            //Debug.Log("Dead Anim");
+
+            //StartCoroutine(IDeathAnim());
+
+            //IEnumerator IDeathAnim()
+            //{
+            //    Debug.Log("Wait");
+            //    yield return new WaitForSeconds(2f);
+            //    Debug.Log("Destroyed");
+            //    base.Dying();
+            //}
         }
     
         /// <summary>

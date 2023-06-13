@@ -34,6 +34,11 @@ public class PlayerAttack : MonoBehaviour
     [SerializeReference]
     public List<IIngredientEffects> _effects = new List<IIngredientEffects>();
 
+    bool _asEmptiedAmmo;
+
+    [Header("Sound")]
+    [SerializeField] private AK.Wwise.Event _Play_Weapon_Shot;
+
     bool _shootOnCooldown = false;
     public bool ShootOnCooldown
     {
@@ -43,6 +48,7 @@ public class PlayerAttack : MonoBehaviour
     Coroutine _curShootDelay;
 
     PlayerController _playerController;
+    PlayerCookingInventory _inventory;
     [SerializeField] ParticleSystem _shootingParticles;
     [ColorUsage(true, true)]
     public Color _color;
@@ -55,6 +61,7 @@ public class PlayerAttack : MonoBehaviour
         _defaultShootCooldown = _shootCooldown;
 
         _playerController = GetComponent<PlayerController>();
+        _inventory = PlayerCookingInventory.Instance;
 
         _ammunitionBar = AmmunitionBar.instance;
 
@@ -90,10 +97,22 @@ public class PlayerAttack : MonoBehaviour
         //Shoot Bullet
         _curShootDelay = StartCoroutine(ShootDelay(_shootCooldown));
         
-        _ammunition--;
-        if(_ammunition <= 0)
+        if(!_asEmptiedAmmo)
         {
-            ResetParameters();
+            _ammunition--;
+
+            if (_ammunition <= 0)
+            {
+                _asEmptiedAmmo = true;
+
+                //Reset Audio
+                foreach (ProjectileData data in _inventory.EquippedRecipe)
+                {
+                    data.audioState.SetValue();
+                }
+
+                ResetParameters();
+            }
         }
 
         if(_ammunitionBar)
@@ -178,8 +197,9 @@ public class PlayerAttack : MonoBehaviour
                 _projectileBehaviour._playerAttack = this;
                 _projectileBehaviour._speed += _speed;
                 _projectileBehaviour._drag -= _drag;
+                _Play_Weapon_Shot.Post(Bullet);
 
-                if(_effects.Count > 0)
+                if (_effects.Count > 0)
                 {
                     _projectileBehaviour._damage = 0;
                 }
@@ -188,7 +208,7 @@ public class PlayerAttack : MonoBehaviour
                 Vector3 direction = Quaternion.Euler(0, totalAngle, 0) * _playerController.PlayerAimDirection;
 
                 if(_color != null)
-                    SetGadientInParticle(Bullet, _color);
+                    SetGradientInParticle(Bullet, _color);
 
                 if (direction == Vector3.zero)
                     direction = transform.forward;
@@ -235,7 +255,7 @@ public class PlayerAttack : MonoBehaviour
 
     }
 
-    void SetGadientInParticle(GameObject bullet, Color color)
+    void SetGradientInParticle(GameObject bullet, Color color)
     {
 
         var RenderModule = bullet.transform.GetChild(1).GetChild(1).GetComponent<ParticleSystemRenderer>();
@@ -261,11 +281,9 @@ public class PlayerAttack : MonoBehaviour
         bullet.transform.GetChild(0).GetComponent<MeshRenderer>().material.SetColor("_BaseColor",color);
     }
 
-    void OnAmmunitionChange()
+    public void OnAmmunitionChange()
     {
-        StopCoroutine(_curShootDelay);
-        _shootOnCooldown = false;
-        _shootCooldown = 1f;
+        _asEmptiedAmmo = false;
     }
 
     public void ResetParameters()

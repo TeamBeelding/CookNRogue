@@ -3,12 +3,26 @@ using System.Collections;
 using Enemy.Data;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Animations;
 using UnityEngine.Serialization;
 
 namespace Enemy.Basic
 {
     public class BasicEnemy : EnemyController
-    {
+    {[Header("Sound")]
+        [SerializeField]
+        private AK.Wwise.Event _Play_Weapon_Hit;
+        [SerializeField]
+        private AK.Wwise.Event _Play_SFX_Corn_Death;
+        [SerializeField]
+        private AK.Wwise.Event _Play_SFX_Corn_Hit;
+        [SerializeField]
+        private AK.Wwise.Event _Play_SFX_Corn_Footsteps;
+        [SerializeField]
+        private AK.Wwise.Event _Play_SFX_Corn_Attack_Charge;
+        [SerializeField]
+        private AK.Wwise.Event _Play_SFX_Corn_Attack_Shot;
+    
         [SerializeField] private EnemyData data;
         [SerializeField] private NavMeshAgent agent;
 
@@ -100,7 +114,7 @@ namespace Enemy.Basic
                     Chase();
                     break;
                 case State.Attack:
-                    animator.SetBool("isWalking", false);
+                    animator.SetBool("isWalking", false);                    animator.SetBool("isAttack", false);                    transform.LookAt(Player.transform.position);
                     Attack(Shot, data.GetAttackSpeed);
                     break;
                 case State.Dying:
@@ -160,12 +174,21 @@ namespace Enemy.Basic
             GameObject shot = Instantiate(m_bullet, m_gun.transform.position, Quaternion.identity);
             shot.GetComponent<EnemyBulletController>().SetDirection(Player.transform);
             animator.SetBool("isAttack", true);
+            _Play_SFX_Corn_Attack_Shot.Post(gameObject);
         }
 
-        private new void Dying()
+        protected override void Dying()
         {
-            base.Dying();
-            m_stateSystem.gameObject.SetActive(false);
+            animator.SetBool("isDead", true);
+            
+            StartCoroutine(IDeathAnim());
+
+            IEnumerator IDeathAnim()
+            {
+                yield return new WaitForSeconds(2f);
+                base.Dying();
+                m_stateSystem.gameObject.SetActive(false);
+            }
         }
 
         public override bool IsMoving()
@@ -177,11 +200,16 @@ namespace Enemy.Basic
         {
             base.TakeDamage(damage, isCritical);
 
-            if (state == State.Neutral)
+            if (state == State.Neutral) 
+            {
                 SetState(State.Chase);
+                _Play_SFX_Corn_Hit.Post(gameObject);
+                _Play_Weapon_Hit.Post(gameObject);
+            }
 
             if (Healthpoint <= 0)
-            {
+            {
+                _Play_SFX_Corn_Death.Post(gameObject);
                 SetState(State.Dying);
             }
         }
