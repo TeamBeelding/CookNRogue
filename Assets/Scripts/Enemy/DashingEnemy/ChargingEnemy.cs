@@ -333,5 +333,11 @@ namespace Enemy.DashingEnemy
             StopMoving();
             SetState(State.Waiting);
         }
+
+        public override void TakeDamage(float damage = 1, bool isCritical = false)
+        {
+            _Play_SFX_Cabbage_Hit.Post(gameObject);
+            base.TakeDamage(damage, isCritical);
+        }
     }
 }
