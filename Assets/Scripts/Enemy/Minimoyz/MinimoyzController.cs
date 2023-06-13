@@ -1,4 +1,5 @@
 using System.Collections;
+using Enemy.Data;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -21,12 +22,15 @@ namespace Enemy.Minimoyz
         private AK.Wwise.Event _Stop_SFX_Pea_Movement;
 
         [SerializeField] private MinimoyzData data;
+        [SerializeField] private SlimeData slimeData;
         [SerializeField] private NavMeshAgent agent;
 
         private Coroutine _castingCoroutine;
         private Coroutine _attackCoroutine;
         private bool _shouldChaseAndAttack;
         private bool _isThrowing;
+        
+        [SerializeField] private GameObject physicsMinimoyz;
     
         public enum State
         {
@@ -60,6 +64,7 @@ namespace Enemy.Minimoyz
             else if (FocusPlayer)
                 state = State.Chase;
 
+            physicsMinimoyz.SetActive(false);
             base.Start();
         }
 
@@ -179,8 +184,9 @@ namespace Enemy.Minimoyz
             
             IEnumerator IChangeState()
             {
-                yield return new WaitForSeconds(2);
+                yield return new WaitForSeconds(slimeData.GetThrowingSpeed);
                 agent.enabled = true;
+                physicsMinimoyz.SetActive(true);
                 SetState(State.Chase);
             }
         }
@@ -250,6 +256,9 @@ namespace Enemy.Minimoyz
 
         protected override void Chase()
         {
+            if (!physicsMinimoyz.activeSelf)
+                physicsMinimoyz.SetActive(true);
+            
             if (agent.enabled)
                 agent.SetDestination(Player.transform.position);
         }
