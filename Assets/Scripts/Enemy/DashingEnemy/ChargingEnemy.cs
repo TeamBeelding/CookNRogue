@@ -90,6 +90,7 @@ namespace Enemy.DashingEnemy
             switch (state)
             {
                 case State.Casting:
+                    animator.SetBool("isAttack", false);
                     Casting();
                     break;
                 case State.Waiting:
@@ -231,16 +232,22 @@ namespace Enemy.DashingEnemy
         /// </summary>
         protected override void Dying()
         {
-            animator.SetBool("isDead", true);
+            StopCasting();
+            base.Dying();
 
-            StartCoroutine(IDeathAnim());
+            //animator.SetBool("isDead", true);
 
-            IEnumerator IDeathAnim()
-            {
-                yield return new WaitForSeconds(2f);
-                base.Dying();
-                StopCasting();
-            }
+            //Debug.Log("Dead Anim");
+
+            //StartCoroutine(IDeathAnim());
+
+            //IEnumerator IDeathAnim()
+            //{
+            //    Debug.Log("Wait");
+            //    yield return new WaitForSeconds(2f);
+            //    Debug.Log("Destroyed");
+            //    base.Dying();
+            //}
         }
     
         /// <summary>
