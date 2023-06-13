@@ -16,6 +16,10 @@ public class PlayerAnimStates : MonoBehaviour
     public playerAnimStates animStates;
 
     private Animator _animator;
+    public Animator Animator 
+    { 
+        get { return _animator; }
+    }
 
     [SerializeField]
     private Transform m_marmite;

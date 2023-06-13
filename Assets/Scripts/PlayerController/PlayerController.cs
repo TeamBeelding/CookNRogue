@@ -512,9 +512,9 @@ public class PlayerController : MonoBehaviour
     void StartCookingState()
     {
         Debug.Log("cook");
-
+        PlayerAnimStates.Animator.SetBool("cooking", true);
         //Input state check
-        if(_curState != playerStates.Default)
+        if (_curState != playerStates.Default)
             return;
 
         //Set input state
@@ -527,7 +527,7 @@ public class PlayerController : MonoBehaviour
     public void StopCookingState()
     {
         Debug.Log("stop cook");
-
+        PlayerAnimStates.Animator.SetBool("cooking", false);
         //Input state check
         if (_curState != playerStates.Cooking)
             return;
