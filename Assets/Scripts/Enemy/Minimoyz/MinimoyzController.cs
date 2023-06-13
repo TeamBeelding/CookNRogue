@@ -29,6 +29,8 @@ namespace Enemy.Minimoyz
         private bool _isThrowing = true;
         private Coroutine coroutineState;
         
+        private NavMeshPath navMeshPath;
+        
         [SerializeField] private GameObject physicsMinimoyz;
     
         public enum State
@@ -58,6 +60,8 @@ namespace Enemy.Minimoyz
         // Start is called before the first frame update
         protected override void Start()
         {
+            navMeshPath = new NavMeshPath();
+            
             if (_isThrowing)
                 SetState(State.Throw);
             else if (FocusPlayer)
@@ -206,6 +210,9 @@ namespace Enemy.Minimoyz
             
             if (agent.enabled == false)
                 agent.enabled = true;
+            
+            if (!agent.hasPath)
+                SetState(State.Dying);
             
             coroutineState = StartCoroutine(IChase());
 
