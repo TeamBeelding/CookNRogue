@@ -38,7 +38,9 @@ namespace Enemy.DashingEnemy
 
         [SerializeField]
         private GameObject visual;
-    
+
+        private Animator animator;
+
         public enum State
         {
             Casting,
@@ -59,7 +61,7 @@ namespace Enemy.DashingEnemy
         protected override void Start()
         {
             base.Start();
-        
+            animator = GetComponentInChildren<Animator>();
             SetState(State.Casting);
             _redLineMaterial = _redLine.GetComponent<Renderer>().material;
         }
@@ -88,12 +90,15 @@ namespace Enemy.DashingEnemy
             switch (state)
             {
                 case State.Casting:
+                    animator.SetBool("isAttack", false);
                     Casting();
                     break;
                 case State.Waiting:
+                    animator.SetBool("isAttack", false);
                     WaitingAnotherDash();
                     break;
                 case State.Dashing:
+                    animator.SetBool("isAttack", true);
                     Dashing();
                     break;
                 case State.Dying:
@@ -111,6 +116,8 @@ namespace Enemy.DashingEnemy
         /// </summary>
         private void Dashing()
         {
+            ShowFullyRedLine();
+            
             RaycastHit hit;
             Vector3 direction = (Player.transform.position - transform.position).normalized;
             
@@ -184,11 +191,11 @@ namespace Enemy.DashingEnemy
             {
                 yield return StartCoroutine(ICanShowingRedLine());
         
-                ShowLightRedLine();
+                // ShowLightRedLine();
         
                 yield return new WaitForSeconds(_data.GetTimeBeforeLerpRedLine());
         
-                ShowFullyRedLine();
+                // ShowFullyRedLine();
         
                 yield return new WaitForSeconds(_data.GetRemainingForDash());
 
@@ -225,9 +232,22 @@ namespace Enemy.DashingEnemy
         /// </summary>
         protected override void Dying()
         {
+            StopCasting();
             base.Dying();
 
-            StopCasting();
+            //animator.SetBool("isDead", true);
+
+            //Debug.Log("Dead Anim");
+
+            //StartCoroutine(IDeathAnim());
+
+            //IEnumerator IDeathAnim()
+            //{
+            //    Debug.Log("Wait");
+            //    yield return new WaitForSeconds(2f);
+            //    Debug.Log("Destroyed");
+            //    base.Dying();
+            //}
         }
     
         /// <summary>

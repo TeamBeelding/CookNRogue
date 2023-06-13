@@ -1,6 +1,8 @@
 using UnityEngine.InputSystem;
 using UnityEngine;
 using System.Collections;
+using Tutoriel;
+using UnityEngine.SceneManagement;
 using static UnityEngine.ParticleSystem;
 
 [RequireComponent(typeof(Rigidbody), typeof(Collider))]
@@ -50,6 +52,10 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField]
     private GameObject pauseMenu;
+    [SerializeField]
+    private GameObject deathMenu;
+    [SerializeField]
+    private GameObject victoryMenu;
 
     [SerializeField]
     private PlayerAnimStates PlayerAnimStates;
@@ -138,6 +144,14 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 
+    #region Tutorial
+    
+    [Header("Tutorial")]
+    [SerializeField] private bool isOnTutorial = false;
+    [SerializeField] private TutorialManager tutorialManager;
+    
+    #endregion
+    
     private void Awake()
     {
         if(_instance != null)
@@ -150,6 +164,9 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        if (isOnTutorial)
+            tutorialManager = GameObject.FindGameObjectWithTag("TutorialManager").GetComponent<TutorialManager>();
+        
         _relativeTransform = m_mainCamera.transform;
         _inventoryScript = PlayerCookingInventory.Instance;
         _enemyManager = EnemyManager.Instance;
@@ -160,6 +177,7 @@ public class PlayerController : MonoBehaviour
 
 
         pauseMenu.SetActive(false);
+        deathMenu.SetActive(false);
 
         //Set Input Actions Map
         _playerActions = new PlayerActions();
@@ -176,6 +194,7 @@ public class PlayerController : MonoBehaviour
         _playerActions.Default.Aim.canceled += Aim_Canceled;
         _playerActions.Default.Dash.performed += Dash;
         _playerActions.Default.Cook.performed += Cook_Performed;
+        _playerActions.Default.Pause.performed += OnPauseGame;
         _playerActions.Default.Quit.performed += Quit;
 
         //Set Cooking Events
@@ -366,6 +385,11 @@ public class PlayerController : MonoBehaviour
         }
         #endregion
     }
+    
+    public bool GetIsOnTutorial()
+    {
+        return isOnTutorial;
+    }
 
     #region Movement
     void Move_Performed(InputAction.CallbackContext context)
@@ -387,6 +411,26 @@ public class PlayerController : MonoBehaviour
         {
             _rb.velocity = new Vector3(direction.x, 0, direction.z) * m_maxMoveSpeed;
         }
+        
+        CheckingIfPlayerIsMovingForTutorial();
+    }
+
+    private void CheckingIfPlayerIsMovingForTutorial()
+    {
+        if (!tutorialManager)
+            return;
+        
+        if (isOnTutorial)
+            tutorialManager.SetIsMoving(true);
+    }
+
+    public void CheckingIfCookingIsDone()
+    {
+        if (!tutorialManager)
+            return;
+        
+        if (isOnTutorial)
+            tutorialManager.SetIsCookingDone(true);
     }
 
     //Dash
@@ -468,9 +512,9 @@ public class PlayerController : MonoBehaviour
     void StartCookingState()
     {
         Debug.Log("cook");
-
+        PlayerAnimStates.Animator.SetBool("cooking", true);
         //Input state check
-        if(_curState != playerStates.Default)
+        if (_curState != playerStates.Default)
             return;
 
         //Set input state
@@ -483,7 +527,7 @@ public class PlayerController : MonoBehaviour
     public void StopCookingState()
     {
         Debug.Log("stop cook");
-
+        PlayerAnimStates.Animator.SetBool("cooking", false);
         //Input state check
         if (_curState != playerStates.Cooking)
             return;
@@ -543,6 +587,13 @@ public class PlayerController : MonoBehaviour
             _cookingScript.CheckQTE();
         }
     }
+
+    public void QTEAppear()
+    {
+        if (isOnTutorial)
+            tutorialManager.SetIsQTE(true);
+    }
+    
     #endregion
 
     #region Other Actions
@@ -591,10 +642,23 @@ public class PlayerController : MonoBehaviour
 
         //Cooking cancel
         StopCookingState();
+        
+        if (tutorialManager)
+            return;
+            
+        if (!_playerHealth.TakeDamage(1))
+        {
+            PauseGame();
+            _playerActions.UI.Enable();
+            _playerActions.Default.Disable();
+            _playerActions.Cooking.Disable();
+            pauseMenu.SetActive(false);
+            victoryMenu.SetActive(false);
+            deathMenu.SetActive(true);
+        }
 
-        _playerHealth.TakeDamage(1);
     }
-
+    
     void Spawn()
     {
         //transform.position = _roomManager.SpawnPoint.position;
@@ -633,6 +697,35 @@ public class PlayerController : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+    
+    
+    public void RestartGame()
+    {
+        SceneManager.LoadScene("Prototype");
+    }
+
+    public void EndGame()
+    {
+        _playerActions.UI.Enable();
+        _playerActions.Default.Disable();
+        _playerActions.Cooking.Disable();
+        pauseMenu.SetActive(false);
+        deathMenu.SetActive(false);
+        victoryMenu.SetActive(true);
+        PauseGame();
+    }
+
+    public void RestartLevel()
+    {
+        _playerActions.UI.Disable();
+        _playerActions.Default.Enable();
+        _playerActions.Cooking.Disable();
+        pauseMenu.SetActive(false);
+        deathMenu.SetActive(false);
+        victoryMenu.SetActive(false);
+        PauseGame();
+        RoomManager.instance.RestartLevel();
     }
 
     #endregion

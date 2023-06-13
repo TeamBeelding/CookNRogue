@@ -24,7 +24,7 @@ MonoBehaviour:
     ParentPath: Virtual Acoustics\Default Work Unit
     guid: 28ed2d4c03113644a3579cb34493b534
     GuidInternal: 
-    m_lastTime: -8585153664821040948
+    m_lastTime: -8585150087850998395
     List: []
   AuxBusWwu:
   - PhysicalPath: Master-Mixer Hierarchy\Default Work Unit.wwu
@@ -38,7 +38,7 @@ MonoBehaviour:
     ParentPath: Master-Mixer Hierarchy\Default Work Unit
     guid: 99c1b5852886db4db756da8917395816
     GuidInternal: 
-    m_lastTime: -8585152914451895313
+    m_lastTime: -8585150072330847653
     List:
     - name: AMB
       guid: 3e9beb7cac042749b4bec298c5a1f406
@@ -185,7 +185,7 @@ MonoBehaviour:
     ParentPath: SoundBanks\Default Work Unit
     guid: 079b2369da99e848b74f08b1453fc49a
     GuidInternal: 
-    m_lastTime: -8585153664821320213
+    m_lastTime: -8585149933696296612
     List:
     - name: AMB_Level
       guid: b3470b1d5cdeed4c9b1fe4825cd111dd
@@ -370,8 +370,48 @@ MonoBehaviour:
     ParentPath: Events\Default Work Unit\AMB_Level
     guid: f8f62fb550591d438132b4151c218cfa
     GuidInternal: 
-    m_lastTime: -8585153664849223113
-    List: []
+    m_lastTime: -8585149933698234296
+    List:
+    - name: Play_AMB_Level
+      guid: 83e6a5aa8120e44f8122b3d4d96e449c
+      id: 1968870321
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: f80396892e09b84f93a500c3dc23a21e
+      - ElementName: AMB_Level
+        ObjectType: 12
+        guid: f8f62fb550591d438132b4151c218cfa
+      - ElementName: Play_AMB_Level
+        ObjectType: 3
+        guid: 83e6a5aa8120e44f8122b3d4d96e449c
+      Path: Events\Default Work Unit\AMB_Level\Play_AMB_Level
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Stop_AMB_Level
+      guid: 887d8c0f7dbb264688dfc3da33a6e2c3
+      id: 3214656583
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: f80396892e09b84f93a500c3dc23a21e
+      - ElementName: AMB_Level
+        ObjectType: 12
+        guid: f8f62fb550591d438132b4151c218cfa
+      - ElementName: Stop_AMB_Level
+        ObjectType: 3
+        guid: 887d8c0f7dbb264688dfc3da33a6e2c3
+      Path: Events\Default Work Unit\AMB_Level\Stop_AMB_Level
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
   - PhysicalPath: Events\AMB_Main_Menu.wwu
     PathAndIcons:
     - ElementName: Events
@@ -386,7 +426,7 @@ MonoBehaviour:
     ParentPath: Events\Default Work Unit\AMB_Main_Menu
     guid: b175dc147a6bbe4f8321eee58cb37545
     GuidInternal: 
-    m_lastTime: -8585153664849223113
+    m_lastTime: -8585150072339914937
     List: []
   - PhysicalPath: Events\AMB_Tuto.wwu
     PathAndIcons:
@@ -402,7 +442,7 @@ MonoBehaviour:
     ParentPath: Events\Default Work Unit\AMB_Tuto
     guid: 22d5c6767360be4ebafb3d630e550cc8
     GuidInternal: 
-    m_lastTime: -8585153664849223113
+    m_lastTime: -8585150072339924936
     List: []
   - PhysicalPath: Events\Default Work Unit.wwu
     PathAndIcons:
@@ -415,7 +455,7 @@ MonoBehaviour:
     ParentPath: Events\Default Work Unit
     guid: f80396892e09b84f93a500c3dc23a21e
     GuidInternal: 
-    m_lastTime: -8585152807147919303
+    m_lastTime: -8585150072339909936
     List: []
   - PhysicalPath: Events\MUSIC.wwu
     PathAndIcons:
@@ -431,11 +471,11 @@ MonoBehaviour:
     ParentPath: Events\Default Work Unit\MUSIC
     guid: 3d083c6b66596b4f922f5ccd77795c06
     GuidInternal: 
-    m_lastTime: -8585153664849213142
+    m_lastTime: -8585149933698234296
     List:
-    - name: Play_Music_Fight
+    - name: Play_Music
       guid: bbf7f658b9726a428cf5bff998a881cd
-      id: 2427409920
+      id: 2932040671
       PathAndIcons:
       - ElementName: Events
         ObjectType: 5
@@ -446,10 +486,10 @@ MonoBehaviour:
       - ElementName: MUSIC
         ObjectType: 12
         guid: 3d083c6b66596b4f922f5ccd77795c06
-      - ElementName: Play_Music_Fight
+      - ElementName: Play_Music
         ObjectType: 3
         guid: bbf7f658b9726a428cf5bff998a881cd
-      Path: Events\Default Work Unit\MUSIC\Play_Music_Fight
+      Path: Events\Default Work Unit\MUSIC\Play_Music
       maxAttenuation: 0
       maxDuration: -1
       minDuration: -1
@@ -467,7 +507,7 @@ MonoBehaviour:
     ParentPath: Events\Default Work Unit\SFX_Enemy_Cabbage
     guid: fc2dffabf27af545a49e711f8d02b4f4
     GuidInternal: 
-    m_lastTime: -8585153664849213142
+    m_lastTime: -8585150072339909936
     List:
     - name: Play_SFX_Cabbage_Charge_Impact
       guid: 228fd27e017e1343bc381d1062b45e50
@@ -583,7 +623,7 @@ MonoBehaviour:
     ParentPath: Events\Default Work Unit\SFX_Enemy_Carrot
     guid: b2257d1ea9370542ab3fd3848b2bc72d
     GuidInternal: 
-    m_lastTime: -8585153664849213142
+    m_lastTime: -8585150072339904932
     List:
     - name: Play_SFX_Carrot_Attack
       guid: 82d9200591db134fa39db20aac96ac02
@@ -699,7 +739,7 @@ MonoBehaviour:
     ParentPath: Events\Default Work Unit\SFX_Enemy_Corn
     guid: 404e5f6e2634e0478c4284c9f73e2b8a
     GuidInternal: 
-    m_lastTime: -8585153664849213142
+    m_lastTime: -8585150072339899935
     List:
     - name: Play_SFX_Corn_Attack_Charge
       guid: f3eaaade4c7a9746a0e17d10be1eff4f
@@ -815,7 +855,7 @@ MonoBehaviour:
     ParentPath: Events\Default Work Unit\SFX_Enemy_Pea
     guid: 204285a3967f9446b19a8bae8f779396
     GuidInternal: 
-    m_lastTime: -8585152807147899362
+    m_lastTime: -8585150072337232947
     List:
     - name: Play_SFX_Pea_Death
       guid: e6605a34e5504840a52e294c32095267
@@ -931,7 +971,7 @@ MonoBehaviour:
     ParentPath: Events\Default Work Unit\SFX_Enemy_Pea_Pod
     guid: 6f6c2203520f7d42adfd5bf4406ec4a1
     GuidInternal: 
-    m_lastTime: -8585153664849203130
+    m_lastTime: -8585150072339853728
     List:
     - name: Play_SFX_Pea_Pod_Death
       guid: 1cbf7dae5473384dbefdb864941c8c4d
@@ -1027,7 +1067,7 @@ MonoBehaviour:
     ParentPath: Events\Default Work Unit\SFX_MC
     guid: 0286cd3a039c084596ef687ee3aefc09
     GuidInternal: 
-    m_lastTime: -8585153664849203130
+    m_lastTime: -8585150072339833524
     List:
     - name: Play_MC_Cauldron_Idle
       guid: 7fa0ea198a83834faee4b5cebcc65af3
@@ -1243,7 +1283,7 @@ MonoBehaviour:
     ParentPath: Events\Default Work Unit\SFX_Other
     guid: 4a75fc44dd571a4f98cce00951906e12
     GuidInternal: 
-    m_lastTime: -8585153664849203130
+    m_lastTime: -8585149933698229300
     List:
     - name: Play_SFX_Cook
       guid: 852f97d31ea113479e41f46ed0800a55
@@ -1282,6 +1322,26 @@ MonoBehaviour:
         ObjectType: 3
         guid: c633dbdde8d5e84eb87b37c8a0634210
       Path: Events\Default Work Unit\SFX_Other\Play_SFX_Door_Open
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Play_SFX_Health_Collect
+      guid: b4e6988de1e80a4cb86b4814a2ee7aed
+      id: 1136621035
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: f80396892e09b84f93a500c3dc23a21e
+      - ElementName: SFX_Other
+        ObjectType: 12
+        guid: 4a75fc44dd571a4f98cce00951906e12
+      - ElementName: Play_SFX_Health_Collect
+        ObjectType: 3
+        guid: b4e6988de1e80a4cb86b4814a2ee7aed
+      Path: Events\Default Work Unit\SFX_Other\Play_SFX_Health_Collect
       maxAttenuation: 0
       maxDuration: -1
       minDuration: -1
@@ -1339,8 +1399,108 @@ MonoBehaviour:
     ParentPath: Events\Default Work Unit\SFX_UI
     guid: 9ebf4470554ca443898346d41d6dfcdf
     GuidInternal: 
-    m_lastTime: -8585153664849203130
+    m_lastTime: -8585149933698264423
     List:
+    - name: Play_UI_Cook_Cancel
+      guid: f813568d21eb6f4696076c7c6edcc816
+      id: 3922793512
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: f80396892e09b84f93a500c3dc23a21e
+      - ElementName: SFX_UI
+        ObjectType: 12
+        guid: 9ebf4470554ca443898346d41d6dfcdf
+      - ElementName: Play_UI_Cook_Cancel
+        ObjectType: 3
+        guid: f813568d21eb6f4696076c7c6edcc816
+      Path: Events\Default Work Unit\SFX_UI\Play_UI_Cook_Cancel
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Play_UI_Cook_Close
+      guid: c4d51e018cd5dc4fac7418dc3b6a8a57
+      id: 1208534994
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: f80396892e09b84f93a500c3dc23a21e
+      - ElementName: SFX_UI
+        ObjectType: 12
+        guid: 9ebf4470554ca443898346d41d6dfcdf
+      - ElementName: Play_UI_Cook_Close
+        ObjectType: 3
+        guid: c4d51e018cd5dc4fac7418dc3b6a8a57
+      Path: Events\Default Work Unit\SFX_UI\Play_UI_Cook_Close
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Play_UI_Cook_Hover
+      guid: 8579d80828d51441be01dfa5a22976df
+      id: 186493428
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: f80396892e09b84f93a500c3dc23a21e
+      - ElementName: SFX_UI
+        ObjectType: 12
+        guid: 9ebf4470554ca443898346d41d6dfcdf
+      - ElementName: Play_UI_Cook_Hover
+        ObjectType: 3
+        guid: 8579d80828d51441be01dfa5a22976df
+      Path: Events\Default Work Unit\SFX_UI\Play_UI_Cook_Hover
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Play_UI_Cook_Open
+      guid: febdf448785f4d49a236923389bc68e9
+      id: 4203446662
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: f80396892e09b84f93a500c3dc23a21e
+      - ElementName: SFX_UI
+        ObjectType: 12
+        guid: 9ebf4470554ca443898346d41d6dfcdf
+      - ElementName: Play_UI_Cook_Open
+        ObjectType: 3
+        guid: febdf448785f4d49a236923389bc68e9
+      Path: Events\Default Work Unit\SFX_UI\Play_UI_Cook_Open
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Play_UI_Cook_Select
+      guid: 992b54fa2e3d104f99f74d11271a058c
+      id: 2393118694
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: f80396892e09b84f93a500c3dc23a21e
+      - ElementName: SFX_UI
+        ObjectType: 12
+        guid: 9ebf4470554ca443898346d41d6dfcdf
+      - ElementName: Play_UI_Cook_Select
+        ObjectType: 3
+        guid: 992b54fa2e3d104f99f74d11271a058c
+      Path: Events\Default Work Unit\SFX_UI\Play_UI_Cook_Select
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
     - name: Play_UI_Settings_Close
       guid: 3177291132daef49944fc7b5f6a53147
       id: 1077241273
@@ -1473,7 +1633,7 @@ MonoBehaviour:
     ParentPath: Game Parameters\Default Work Unit
     guid: 93035a04258fec4c9cfde2bf13f7b399
     GuidInternal: 
-    m_lastTime: -8585153664849193195
+    m_lastTime: -8585150087851390573
     List: []
   StateWwu:
   - PhysicalPath: States\Default Work Unit.wwu
@@ -1487,7 +1647,7 @@ MonoBehaviour:
     ParentPath: States\Default Work Unit
     guid: afd1b4dfce7c3c408c338aa08826b601
     GuidInternal: 
-    m_lastTime: -8585153664821310243
+    m_lastTime: -8585150072311966808
     List:
     - name: Cooking_Menu
       guid: f1c10d48c9c43d4cbc13612628739bac
@@ -1767,7 +1927,7 @@ MonoBehaviour:
     ParentPath: States\Default Work Unit\Food
     guid: e492f7eb72e5bf46a724622d596571c2
     GuidInternal: 
-    m_lastTime: -8585153664821310243
+    m_lastTime: -8585150072311961807
     List:
     - name: Banana
       guid: e4dd869653e37b419854970cacb18d60
@@ -2405,7 +2565,7 @@ MonoBehaviour:
     ParentPath: Switches\Default Work Unit
     guid: a700a1cdafac3547a99319c6e8191c2d
     GuidInternal: 
-    m_lastTime: -8585153664821310243
+    m_lastTime: -8585150087850953385
     List: []
   TriggerWwu:
   - PhysicalPath: Triggers\Default Work Unit.wwu
@@ -2419,10 +2579,10 @@ MonoBehaviour:
     ParentPath: Triggers\Default Work Unit
     guid: 0f05179a78853c4b90a8267db83fed50
     GuidInternal: 
-    m_lastTime: -8585153664821300257
+    m_lastTime: -8585150087850998395
     List: []
   ExpandedFileSystemItemIds: 
-  ExpandedWaapiItemIds: 05000000060000000e0000000f00000010000000
+  ExpandedWaapiItemIds: 
   AutoSyncSelection: 0
   autoPopulateEnabled: 1
   currentDataSource: 0

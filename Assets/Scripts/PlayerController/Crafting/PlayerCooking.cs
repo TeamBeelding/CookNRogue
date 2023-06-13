@@ -45,6 +45,9 @@ public class PlayerCooking : MonoBehaviour
 
     Coroutine _craftingRoutine;
 
+    [SerializeField]
+    Animator animator;
+
     #endregion
 
     private void Reset()
@@ -66,7 +69,7 @@ public class PlayerCooking : MonoBehaviour
 
         _inventoryScript = PlayerCookingInventory.Instance;
         _playerController = PlayerController.Instance;
-
+        animator = GetComponentInChildren<Animator>();
         m_cookingProgressVisuals.SetActive(false);
     }
 
@@ -192,6 +195,8 @@ public class PlayerCooking : MonoBehaviour
 
         //Hide UI
         m_cookingProgressVisuals.SetActive(false);
+        
+        _playerController.CheckingIfCookingIsDone();
     }
 
     IEnumerator ICraftingLoop(float delay)
@@ -202,9 +207,9 @@ public class PlayerCooking : MonoBehaviour
             //Check QTE spawn time
             if (!_spawnedQTE && _curProgressTime >= delay)
             {
+                
                 SpawnQTE();
             }
-
             //UI
             m_cookingProgressBarFill.fillAmount = _curProgressTime / _totalCookTime;
 
@@ -212,7 +217,7 @@ public class PlayerCooking : MonoBehaviour
             _curProgressTime += Time.deltaTime;
             yield return new WaitForSeconds(Time.deltaTime);
         }
-
+        
         CompleteCrafting();
     }
     #endregion
@@ -220,6 +225,8 @@ public class PlayerCooking : MonoBehaviour
     #region QTE
     void SpawnQTE()
     {
+        _playerController.QTEAppear();
+        
         m_QTEScript.StartQTE();
         _spawnedQTE = true;
     }
@@ -236,6 +243,8 @@ public class PlayerCooking : MonoBehaviour
         {
             StopCoroutine(_craftingRoutine);
             CompleteCrafting();
+            
+            _playerController.CheckingIfCookingIsDone();
         }
     }
     #endregion

@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Tutoriel;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -24,6 +26,11 @@ public abstract class EnemyController : MonoBehaviour
     
     [SerializeField]
     protected GameObject explosion;
+
+    [SerializeField] 
+    private TutorialManager tutorial;
+
+    private bool isDead;
 
     protected virtual void Awake()
     {
@@ -62,13 +69,15 @@ public abstract class EnemyController : MonoBehaviour
     // ReSharper disable Unity.PerformanceAnalysis
     protected virtual void Attack(UnityAction OnAction, float delay = 0.5f)
     {
+        if (Player.GetComponent<PlayerController>().GetIsOnTutorial())
+            return;
+        
         if (_canAttack)
         {
             OnAction?.Invoke();
             _canAttack = false;
             _canAttackAnim = false;
             StartCoroutine(IAttackTimer(delay));
-            //StartCoroutine(IAttackAnimTimer(delay/2));
         }
         
         IEnumerator IAttackTimer(float delay = 0.5f)
@@ -86,7 +95,7 @@ public abstract class EnemyController : MonoBehaviour
         //    _canAttackAnim = true;
         //}
     }
-
+    
     #endregion
 
     #region TakeDamage
@@ -97,9 +106,14 @@ public abstract class EnemyController : MonoBehaviour
         Healthpoint -= damage;
 
         if (Healthpoint > 0)
+        {
             TakeDamageEffect();
-        else
+        }
+        else if (!isDead) 
+        {
+            isDead = true;
             Dying();
+        }
 
         // Color the enemy red for a short time to indicate that he has been hit
         IEnumerator IColorationFeedback()

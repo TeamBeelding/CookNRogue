@@ -30,9 +30,12 @@ public class PlayerHealth : MonoBehaviour
 
     }
 
-    public void TakeDamage(int damage)
+    /*
+     * return: true if player is alive after taking damage
+     */
+    public bool TakeDamage(int damage)
     {
-        if (damage <= 0) return;
+        if (damage <= 0) return true;
 
         _health -= damage;
         _heartBar.UpdateHealthVisual(_health);
@@ -41,10 +44,12 @@ public class PlayerHealth : MonoBehaviour
         {
             _health = _maxHealth;
             _heartBar.UpdateHealthVisual(_health);
-            RoomManager.instance.RestartLevel();
-            return;
+            
+            // RoomManager.instance.RestartLevel();
+            return false;
         }
 
+        return true;
     }
 
     public void Heal(int heal)
