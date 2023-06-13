@@ -43,6 +43,13 @@ public class PlayerAnimStates : MonoBehaviour
     Vector2 _aimInputValue;
     float _moveInputMagnitude;
 
+    [SerializeField]
+    private AK.Wwise.Event _Play_MC_Run_Footstep;
+    [SerializeField]
+    private AK.Wwise.Event _Play_MC_Run_Foley;
+    [SerializeField]
+    private AK.Wwise.Event _Play_MC_Run;
+
     void Start()
     {
         _animator = GetComponent<Animator>();
@@ -136,9 +143,8 @@ public class PlayerAnimStates : MonoBehaviour
     }
 
     // Update is called once per frame
-    public void FixedUpdate()
+    private void FixedUpdate()
     {
-
         _moveInputValue = _player.MoveInputValue;
         _moveInputMagnitude = _player.MoveInputValue.magnitude;
 
@@ -155,5 +161,10 @@ public class PlayerAnimStates : MonoBehaviour
 
         _animator.SetFloat("right", _moveInputMagnitude * dir.x);
         _animator.SetFloat("forward", _moveInputMagnitude * dir.y);
+    }
+
+    public void PlayerFootstep()
+    {
+        _Play_MC_Run.Post(gameObject);
     }
 }

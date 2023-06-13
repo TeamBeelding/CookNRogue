@@ -2589,6 +2589,11 @@
 											</ReferenceList>
 											<ChildrenList>
 												<AudioFileSource Name="FT_MC_Dash_01" ID="{61BC22D7-30B2-4882-B719-DD7BE96AA657}">
+													<PropertyList>
+														<Property Name="FadeOutDuration" Type="Real64" Value="0.275132275132275"/>
+														<Property Name="LoopBegin" Type="Real64" Value="0"/>
+														<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+													</PropertyList>
 													<Language>SFX</Language>
 													<AudioFile>FT_MC_Dash_01.wav</AudioFile>
 													<MediaIDList>
@@ -2611,6 +2616,11 @@
 											</ReferenceList>
 											<ChildrenList>
 												<AudioFileSource Name="FT_MC_Dash_02" ID="{8EB811A9-F990-4272-B09D-E61A11828BE7}">
+													<PropertyList>
+														<Property Name="FadeOutDuration" Type="Real64" Value="0.154761904761905"/>
+														<Property Name="LoopBegin" Type="Real64" Value="0"/>
+														<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+													</PropertyList>
 													<Language>SFX</Language>
 													<AudioFile>FT_MC_Dash_02.wav</AudioFile>
 													<MediaIDList>
@@ -2633,6 +2643,11 @@
 											</ReferenceList>
 											<ChildrenList>
 												<AudioFileSource Name="FT_MC_Dash_03" ID="{9706B208-B55A-4DAE-B559-0D701CE9270E}">
+													<PropertyList>
+														<Property Name="FadeOutDuration" Type="Real64" Value="0.285714285714286"/>
+														<Property Name="LoopBegin" Type="Real64" Value="0"/>
+														<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+													</PropertyList>
 													<Language>SFX</Language>
 													<AudioFile>FT_MC_Dash_03.wav</AudioFile>
 													<MediaIDList>
@@ -2655,6 +2670,11 @@
 											</ReferenceList>
 											<ChildrenList>
 												<AudioFileSource Name="FT_MC_Dash_04" ID="{6C8FA22D-C760-4897-BC71-D09959854DEF}">
+													<PropertyList>
+														<Property Name="FadeOutDuration" Type="Real64" Value="0.244708994708995"/>
+														<Property Name="LoopBegin" Type="Real64" Value="0"/>
+														<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+													</PropertyList>
 													<Language>SFX</Language>
 													<AudioFile>FT_MC_Dash_04.wav</AudioFile>
 													<MediaIDList>
@@ -2731,6 +2751,24 @@
 									</ChildrenList>
 								</BlendContainer>
 								<BlendContainer Name="RC_MC_Run" ID="{47B4AD92-A14D-4147-9FF4-F6707F84199E}" ShortID="556936934">
+									<PropertyList>
+										<Property Name="Lowpass" Type="int16">
+											<ValueList>
+												<Value>32</Value>
+											</ValueList>
+										</Property>
+										<Property Name="MaxReachedBehavior" Type="int16" Value="1"/>
+										<Property Name="MaxSoundPerInstance" Type="int16">
+											<ValueList>
+												<Value>3</Value>
+											</ValueList>
+										</Property>
+										<Property Name="Volume" Type="Real64">
+											<ValueList>
+												<Value>-15</Value>
+											</ValueList>
+										</Property>
+									</PropertyList>
 									<ReferenceList>
 										<Reference Name="Conversion">
 											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DEC634C6-86E3-4DF9-96EE-F869BA355507}"/>
@@ -2742,6 +2780,13 @@
 									<ChildrenList>
 										<RandomSequenceContainer Name="RC_MC_Footstep" ID="{B3732425-67FC-4E88-8FD1-B9A3B55DAC8B}" ShortID="1065689042">
 											<PropertyList>
+												<Property Name="IsGlobalLimit" Type="int16" Value="1"/>
+												<Property Name="MaxReachedBehavior" Type="int16" Value="1"/>
+												<Property Name="MaxSoundPerInstance" Type="int16">
+													<ValueList>
+														<Value>3</Value>
+													</ValueList>
+												</Property>
 												<Property Name="NormalOrShuffle" Type="int16" Value="0"/>
 												<Property Name="Pitch" Type="int32">
 													<ModifierList>
@@ -2757,6 +2802,11 @@
 													</ModifierList>
 												</Property>
 												<Property Name="RandomAvoidRepeatingCount" Type="int32" Value="5"/>
+												<Property Name="UseMaxSoundPerInstance" Type="bool">
+													<ValueList>
+														<Value>True</Value>
+													</ValueList>
+												</Property>
 												<Property Name="Volume" Type="Real64">
 													<ModifierList>
 														<ModifierInfo>
@@ -2982,6 +3032,13 @@
 										</RandomSequenceContainer>
 										<RandomSequenceContainer Name="RC_MC_Foley" ID="{6F8B1DA2-5A3B-4D03-A339-4C613EA0AB89}" ShortID="369648338">
 											<PropertyList>
+												<Property Name="IsGlobalLimit" Type="int16" Value="1"/>
+												<Property Name="MaxReachedBehavior" Type="int16" Value="1"/>
+												<Property Name="MaxSoundPerInstance" Type="int16">
+													<ValueList>
+														<Value>3</Value>
+													</ValueList>
+												</Property>
 												<Property Name="NormalOrShuffle" Type="int16" Value="0"/>
 												<Property Name="Pitch" Type="int32">
 													<ModifierList>
@@ -2997,6 +3054,11 @@
 													</ModifierList>
 												</Property>
 												<Property Name="RandomAvoidRepeatingCount" Type="int32" Value="4"/>
+												<Property Name="UseMaxSoundPerInstance" Type="bool">
+													<ValueList>
+														<Value>True</Value>
+													</ValueList>
+												</Property>
 												<Property Name="Volume" Type="Real64">
 													<ModifierList>
 														<ModifierInfo>

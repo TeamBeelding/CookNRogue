@@ -141,7 +141,10 @@ public class PlayerController : MonoBehaviour
     
     [SerializeField]
     private AK.Wwise.Event _Stop_SFX_Cook;
-    
+    [SerializeField]
+    private AK.Wwise.Event _Play_MC_Dash;
+
+
     public float PlayerAimMagnitude
     {
         get => _aimMagnitude;
@@ -448,6 +451,7 @@ public class PlayerController : MonoBehaviour
     private void Dash(InputAction.CallbackContext context)
     {
         m_isDashing = true;
+        _Play_MC_Dash.Post(gameObject);
     }
 
     //Dash Casting

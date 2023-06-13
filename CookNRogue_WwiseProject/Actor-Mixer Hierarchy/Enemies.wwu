@@ -634,6 +634,12 @@
 							<ChildrenList>
 								<RandomSequenceContainer Name="RC_Corn_Footsteps" ID="{5A4C3DA8-C6B9-467D-B51D-745CA87326E1}" ShortID="165525173">
 									<PropertyList>
+										<Property Name="IsGlobalLimit" Type="int16" Value="1"/>
+										<Property Name="MaxSoundPerInstance" Type="int16">
+											<ValueList>
+												<Value>6</Value>
+											</ValueList>
+										</Property>
 										<Property Name="NormalOrShuffle" Type="int16" Value="0"/>
 										<Property Name="Pitch" Type="int32">
 											<ModifierList>
@@ -649,7 +655,15 @@
 											</ModifierList>
 										</Property>
 										<Property Name="RandomAvoidRepeatingCount" Type="int32" Value="2"/>
+										<Property Name="UseMaxSoundPerInstance" Type="bool">
+											<ValueList>
+												<Value>True</Value>
+											</ValueList>
+										</Property>
 										<Property Name="Volume" Type="Real64">
+											<ValueList>
+												<Value>-12</Value>
+											</ValueList>
 											<ModifierList>
 												<ModifierInfo>
 													<Modifier Name="" ID="{3A8C1EA7-92B2-4E89-B648-4AE86B04DE71}">
