@@ -17,6 +17,8 @@ namespace Enemy.DashingEnemy
         private AK.Wwise.Event _Play_SFX_Cabbage_Hit;
         [SerializeField]
         private AK.Wwise.Event _Play_SFX_Cabbage_Death;
+        [SerializeField]
+        private AK.Wwise.Event _Play_Weapon_Hit;
 
         private Coroutine _castingCoroutine;
         private Coroutine _waitingCoroutine;
@@ -99,6 +101,7 @@ namespace Enemy.DashingEnemy
                     break;
                 case State.Dashing:
                     animator.SetBool("isAttack", true);
+                    _Play_SFX_Cabbage_Charge_LP.Post(gameObject);
                     Dashing();
                     break;
                 case State.Dying:
@@ -232,6 +235,7 @@ namespace Enemy.DashingEnemy
         /// </summary>
         protected override void Dying()
         {
+            _Play_SFX_Cabbage_Death.Post(gameObject);
             StopCasting();
             base.Dying();
 
@@ -316,6 +320,7 @@ namespace Enemy.DashingEnemy
     
         public void CollideWithPlayer()
         {
+            _Play_SFX_Cabbage_Charge_Impact.Post(gameObject);
             StopMoving();
             Player.GetComponent<PlayerController>().TakeDamage(_data.GetDamage());
 
@@ -324,6 +329,7 @@ namespace Enemy.DashingEnemy
     
         public void CollideWithObstruction()
         {
+            _Play_SFX_Cabbage_Charge_Impact.Post(gameObject);
             StopMoving();
             SetState(State.Waiting);
         }

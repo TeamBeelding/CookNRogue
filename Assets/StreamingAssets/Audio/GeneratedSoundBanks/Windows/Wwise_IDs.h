@@ -63,6 +63,7 @@ namespace AK
         static const AkUniqueID PLAY_WEAPON_HIT = 701036212U;
         static const AkUniqueID PLAY_WEAPON_SHOT = 3889646233U;
         static const AkUniqueID STOP_AMB_LEVEL = 3214656583U;
+        static const AkUniqueID STOP_SFX_CABBAGE_CHARGE_LP = 3742019055U;
         static const AkUniqueID STOP_SFX_COOK = 4293892292U;
         static const AkUniqueID STOP_SFX_PEA_MOVEMENT = 2301333962U;
         static const AkUniqueID STOP_SFX_PEA_POD_FOOTSTEPS = 749319194U;
@@ -241,6 +242,7 @@ namespace AK
         static const AkUniqueID MC = 1685527061U;
         static const AkUniqueID MUSIC = 3991942870U;
         static const AkUniqueID OTHER = 2376466361U;
+        static const AkUniqueID PEA_MOVEMENTS = 3977179618U;
         static const AkUniqueID UI = 1551306167U;
     } // namespace BUSSES
 
