@@ -143,6 +143,14 @@ public class PlayerController : MonoBehaviour
     private AK.Wwise.Event _Stop_SFX_Cook;
     [SerializeField]
     private AK.Wwise.Event _Play_MC_Dash;
+    [SerializeField]
+    private AK.Wwise.Event _Play_UI_Settings_Open;
+    [SerializeField]
+    private AK.Wwise.Event _Play_UI_Settings_Close;
+    [SerializeField]
+    private AK.Wwise.Event _Play_UI_Settings_Validate;
+    public AK.Wwise.State _Pause_Menu_ON;
+    public AK.Wwise.State _Pause_Menu_OFF;
 
 
     public float PlayerAimMagnitude
@@ -725,11 +733,15 @@ public class PlayerController : MonoBehaviour
         {
             Time.timeScale = 1;
             pauseMenu.SetActive(false);
+            _Play_UI_Settings_Close.Post(gameObject);
+            _Pause_Menu_OFF.SetValue();
         }
         else
         {
             Time.timeScale = 0;
             pauseMenu.SetActive(true);
+            _Play_UI_Settings_Open.Post(gameObject);
+            _Pause_Menu_ON.SetValue();
         }
 
         m_isGamePaused = !m_isGamePaused;
@@ -738,12 +750,14 @@ public class PlayerController : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+        _Play_UI_Settings_Validate.Post(gameObject);
     }
     
     
     public void RestartGame()
     {
         SceneManager.LoadScene("Prototype");
+        _Play_UI_Settings_Validate.Post(gameObject);
     }
 
     public void EndGame()

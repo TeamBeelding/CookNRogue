@@ -27,6 +27,23 @@
 								<Property Name="Color" Type="int16" Value="26"/>
 								<Property Name="OverrideColor" Type="bool" Value="True"/>
 							</PropertyList>
+							<StateInfo>
+								<StateGroupList>
+									<StateGroupInfo>
+										<StateGroupRef Name="Pause_Menu" ID="{DCC4536A-E318-48C6-AA1F-DF8580335888}"/>
+									</StateGroupInfo>
+								</StateGroupList>
+								<CustomStateList>
+									<CustomState>
+										<StateRef Name="InPauseMenu" ID="{59CFFA60-D92A-4A95-BEC1-15870A188413}"/>
+										<CustomState Name="" ID="{E0121A71-136E-4D33-AA17-6943EF4E94DE}" ShortID="155568600"/>
+									</CustomState>
+									<CustomState>
+										<StateRef Name="OutPauseMenu" ID="{2987396D-222D-4B27-A23D-F2A7ECE32AD1}"/>
+										<CustomState Name="" ID="{A424114C-6D85-486E-B3E9-61501C7DB1E3}" ShortID="229250772"/>
+									</CustomState>
+								</CustomStateList>
+							</StateInfo>
 							<ObjectLists>
 								<ObjectList Name="RTPC">
 									<Reference>
@@ -83,6 +100,9 @@
 									<StateGroupInfo>
 										<StateGroupRef Name="Cooking_Menu" ID="{480DC1F1-C4C9-4C3D-BC13-612628739BAC}"/>
 									</StateGroupInfo>
+									<StateGroupInfo>
+										<StateGroupRef Name="Pause_Menu" ID="{DCC4536A-E318-48C6-AA1F-DF8580335888}"/>
+									</StateGroupInfo>
 								</StateGroupList>
 								<CustomStateList>
 									<CustomState>
@@ -96,6 +116,18 @@
 												<Property Name="BusVolume" Type="Real64" Value="5"/>
 											</PropertyList>
 										</CustomState>
+									</CustomState>
+									<CustomState>
+										<StateRef Name="InPauseMenu" ID="{59CFFA60-D92A-4A95-BEC1-15870A188413}"/>
+										<CustomState Name="" ID="{0FC1440C-E89B-408F-8E5B-09BD2028E0DF}" ShortID="914431999">
+											<PropertyList>
+												<Property Name="BusVolume" Type="Real64" Value="-100"/>
+											</PropertyList>
+										</CustomState>
+									</CustomState>
+									<CustomState>
+										<StateRef Name="OutPauseMenu" ID="{2987396D-222D-4B27-A23D-F2A7ECE32AD1}"/>
+										<CustomState Name="" ID="{2CB9D5AC-D3E7-467E-B313-BC8234DA7C82}" ShortID="607122253"/>
 									</CustomState>
 								</CustomStateList>
 							</StateInfo>
@@ -155,6 +187,9 @@
 									<StateGroupInfo>
 										<StateGroupRef Name="Cooking_Menu" ID="{480DC1F1-C4C9-4C3D-BC13-612628739BAC}"/>
 									</StateGroupInfo>
+									<StateGroupInfo>
+										<StateGroupRef Name="Pause_Menu" ID="{DCC4536A-E318-48C6-AA1F-DF8580335888}"/>
+									</StateGroupInfo>
 								</StateGroupList>
 								<CustomStateList>
 									<CustomState>
@@ -168,6 +203,18 @@
 												<Property Name="BusVolume" Type="Real64" Value="-10"/>
 											</PropertyList>
 										</CustomState>
+									</CustomState>
+									<CustomState>
+										<StateRef Name="InPauseMenu" ID="{59CFFA60-D92A-4A95-BEC1-15870A188413}"/>
+										<CustomState Name="" ID="{C98AF79D-CCD5-48BE-8D4E-4368BA79FEBB}" ShortID="790567975">
+											<PropertyList>
+												<Property Name="BusVolume" Type="Real64" Value="-100"/>
+											</PropertyList>
+										</CustomState>
+									</CustomState>
+									<CustomState>
+										<StateRef Name="OutPauseMenu" ID="{2987396D-222D-4B27-A23D-F2A7ECE32AD1}"/>
+										<CustomState Name="" ID="{85AF93A6-7F7F-4EA3-8F6A-EA30E54D824C}" ShortID="372052129"/>
 									</CustomState>
 								</CustomStateList>
 							</StateInfo>
@@ -227,6 +274,9 @@
 									<StateGroupInfo>
 										<StateGroupRef Name="Cooking_Menu" ID="{480DC1F1-C4C9-4C3D-BC13-612628739BAC}"/>
 									</StateGroupInfo>
+									<StateGroupInfo>
+										<StateGroupRef Name="Pause_Menu" ID="{DCC4536A-E318-48C6-AA1F-DF8580335888}"/>
+									</StateGroupInfo>
 								</StateGroupList>
 								<CustomStateList>
 									<CustomState>
@@ -240,6 +290,18 @@
 												<Property Name="BusVolume" Type="Real64" Value="-10"/>
 											</PropertyList>
 										</CustomState>
+									</CustomState>
+									<CustomState>
+										<StateRef Name="InPauseMenu" ID="{59CFFA60-D92A-4A95-BEC1-15870A188413}"/>
+										<CustomState Name="" ID="{983B1AC2-8EE6-43CF-8311-C36E438E22E3}" ShortID="412907675">
+											<PropertyList>
+												<Property Name="BusVolume" Type="Real64" Value="-100"/>
+											</PropertyList>
+										</CustomState>
+									</CustomState>
+									<CustomState>
+										<StateRef Name="OutPauseMenu" ID="{2987396D-222D-4B27-A23D-F2A7ECE32AD1}"/>
+										<CustomState Name="" ID="{139EFA65-3663-4BAA-B472-69F00105A83B}" ShortID="187050988"/>
 									</CustomState>
 								</CustomStateList>
 							</StateInfo>
@@ -327,6 +389,9 @@
 									<StateGroupInfo>
 										<StateGroupRef Name="Cooking_Menu" ID="{480DC1F1-C4C9-4C3D-BC13-612628739BAC}"/>
 									</StateGroupInfo>
+									<StateGroupInfo>
+										<StateGroupRef Name="Pause_Menu" ID="{DCC4536A-E318-48C6-AA1F-DF8580335888}"/>
+									</StateGroupInfo>
 								</StateGroupList>
 								<CustomStateList>
 									<CustomState>
@@ -340,6 +405,18 @@
 												<Property Name="BusVolume" Type="Real64" Value="-10"/>
 											</PropertyList>
 										</CustomState>
+									</CustomState>
+									<CustomState>
+										<StateRef Name="InPauseMenu" ID="{59CFFA60-D92A-4A95-BEC1-15870A188413}"/>
+										<CustomState Name="" ID="{7ED223F2-87AA-49AE-889D-348287312D82}" ShortID="316598102">
+											<PropertyList>
+												<Property Name="BusVolume" Type="Real64" Value="-100"/>
+											</PropertyList>
+										</CustomState>
+									</CustomState>
+									<CustomState>
+										<StateRef Name="OutPauseMenu" ID="{2987396D-222D-4B27-A23D-F2A7ECE32AD1}"/>
+										<CustomState Name="" ID="{7AE00AEF-EE4C-4039-BD19-9E06E9123E9C}" ShortID="88871410"/>
 									</CustomState>
 								</CustomStateList>
 							</StateInfo>
@@ -400,6 +477,27 @@
 									<ObjectRef Name="Sidechain_Meter" ID="{8CAEDFEA-D478-4794-A098-C6F688A3E7A5}" WorkUnitID="{5063C897-C4E2-4F24-B819-F22106701854}"/>
 								</Reference>
 							</ReferenceList>
+							<StateInfo>
+								<StateGroupList>
+									<StateGroupInfo>
+										<StateGroupRef Name="Pause_Menu" ID="{DCC4536A-E318-48C6-AA1F-DF8580335888}"/>
+									</StateGroupInfo>
+								</StateGroupList>
+								<CustomStateList>
+									<CustomState>
+										<StateRef Name="InPauseMenu" ID="{59CFFA60-D92A-4A95-BEC1-15870A188413}"/>
+										<CustomState Name="" ID="{C60BD434-CF36-4D53-A604-594DB843199E}" ShortID="522441179">
+											<PropertyList>
+												<Property Name="BusVolume" Type="Real64" Value="-100"/>
+											</PropertyList>
+										</CustomState>
+									</CustomState>
+									<CustomState>
+										<StateRef Name="OutPauseMenu" ID="{2987396D-222D-4B27-A23D-F2A7ECE32AD1}"/>
+										<CustomState Name="" ID="{C0219841-E5A2-45F7-8576-6BFC434742DB}" ShortID="281913343"/>
+									</CustomState>
+								</CustomStateList>
+							</StateInfo>
 							<DuckingList>
 								<DuckItem>
 									<BusRef Name="Music" ID="{7BB7EC33-157E-4888-BD94-A74363B1A383}"/>
