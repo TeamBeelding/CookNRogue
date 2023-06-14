@@ -14,7 +14,6 @@ namespace AK
     namespace EVENTS
     {
         static const AkUniqueID PLAY_AMB_LEVEL = 1968870321U;
-        static const AkUniqueID PLAY_EMPTY_AMO = 495286721U;
         static const AkUniqueID PLAY_MC_CAULDRON_IDLE = 2012076284U;
         static const AkUniqueID PLAY_MC_DASH = 2996328093U;
         static const AkUniqueID PLAY_MC_DEATH = 107675701U;
@@ -23,6 +22,7 @@ namespace AK
         static const AkUniqueID PLAY_MC_RUN_FOLEY = 3682234456U;
         static const AkUniqueID PLAY_MC_RUN_FOOTSTEP = 104751245U;
         static const AkUniqueID PLAY_MUSIC = 2932040671U;
+        static const AkUniqueID PLAY_RESET_INGREDIENT = 3223052211U;
         static const AkUniqueID PLAY_SFX_CABBAGE_CHARGE_IMPACT = 1246023875U;
         static const AkUniqueID PLAY_SFX_CABBAGE_CHARGE_LP = 2535875021U;
         static const AkUniqueID PLAY_SFX_CABBAGE_DEATH = 1817239028U;

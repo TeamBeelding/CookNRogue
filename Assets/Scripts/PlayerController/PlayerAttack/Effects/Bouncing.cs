@@ -8,6 +8,8 @@ public class Bouncing : IIngredientEffects
     [SerializeField] int m_bouncingNbr;
     private PlayerBulletBehaviour bulletBehaviour;
     public GameObject TomatoSplash;
+    [SerializeField]
+    private AK.Wwise.Event _Play_Weapon_Bounce_Wall;
     public void EffectOnShoot(Vector3 Position, GameObject bullet)
     {
 
@@ -23,6 +25,7 @@ public class Bouncing : IIngredientEffects
         {
             GameObject SplashEffect = GameObject.Instantiate(TomatoSplash, Position, Quaternion.identity);
             GameObject.Destroy(SplashEffect, 1);
+            _Play_Weapon_Bounce_Wall.Post(bulletBehaviour.gameObject);
         }
 
     }

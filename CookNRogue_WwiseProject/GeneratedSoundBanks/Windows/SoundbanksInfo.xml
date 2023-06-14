@@ -1167,7 +1167,7 @@
 				</StateGroup>
 			</StateGroups>
 		</SoundBank>
-		<SoundBank Id="3996957973" Type="User" Language="SFX" Hash="{C86EEF5E-55FB-A511-B2C9-19B69A1B6527}">
+		<SoundBank Id="3996957973" Type="User" Language="SFX" Hash="{026B8479-0517-EF63-5A8F-4A4D2C87B9EA}">
 			<ShortName>SFX_MC</ShortName>
 			<Path>SFX_MC.bnk</Path>
 			<Media>
@@ -1517,12 +1517,6 @@
 				</File>
 			</Media>
 			<Events>
-				<Event Id="495286721" Name="Play_Empty_Amo" MaxAttenuation="0" DurationType="OneShot" DurationMin="0" DurationMax="0">
-					<ActionSetState>
-						<ActionSetStateEntry GroupId="1793259384" Id="1651971902" Name="On"/>
-						<ActionSetStateEntry GroupId="3933301714" Id="1668749452" Name="No"/>
-					</ActionSetState>
-				</Event>
 				<Event Id="2012076284" Name="Play_MC_Cauldron_Idle" DurationType="Infinite">
 					<MediaRefs>
 						<MediaRef Id="568604304"/>
@@ -1591,6 +1585,11 @@
 						<MediaRef Id="954430273"/>
 						<MediaRef Id="1002726550"/>
 					</MediaRefs>
+				</Event>
+				<Event Id="3223052211" Name="Play_Reset_Ingredient" MaxAttenuation="0" DurationType="OneShot" DurationMin="0" DurationMax="0">
+					<ActionSetState>
+						<ActionSetStateEntry GroupId="3933301714" Id="1668749452" Name="No"/>
+					</ActionSetState>
 				</Event>
 				<Event Id="530264000" Name="Play_Weapon_Bounce_Wall" MaxAttenuation="25" DurationType="OneShot" DurationMin="0.6697181" DurationMax="0.81708884">
 					<MediaRefs>
@@ -1686,13 +1685,6 @@
 						<State Id="1668749452" Name="No"/>
 					</States>
 				</StateGroup>
-				<StateGroup Id="1793259384" Name="NoSound_TEST">
-					<States>
-						<State Id="748895195" Name="None"/>
-						<State Id="930712164" Name="Off"/>
-						<State Id="1651971902" Name="On"/>
-					</States>
-				</StateGroup>
 				<StateGroup Id="2682233438" Name="Rice">
 					<States>
 						<State Id="748895195" Name="None"/>
@@ -1738,5 +1730,5 @@
 			</StateGroups>
 		</SoundBank>
 	</SoundBanks>
-	<FileHash>{F9A5AA3D-F034-3F55-06A4-550331AE4087}</FileHash>
+	<FileHash>{4A2F1EB9-3E94-37D8-5969-40B5505ED47A}</FileHash>
 </SoundBanksInfo>

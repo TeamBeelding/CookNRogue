@@ -44,6 +44,13 @@ public class PlayerCookingInventory : MonoBehaviour
     List<ProjectileData> _equippedRecipe = new();
 
     [SerializeField] private AK.Wwise.Event _Play_SFX_Ingredient_Collect;
+    [SerializeField] private AK.Wwise.Event _Play_UI_Cook_Open;
+    [SerializeField] private AK.Wwise.Event _Play_UI_Cook_Close;
+    [SerializeField] private AK.Wwise.Event _Play_UI_Cook_Hover;
+    [SerializeField] private AK.Wwise.Event _Play_UI_Cook_Select;
+    [SerializeField] private AK.Wwise.Event _Play_UI_Cook_Cancel;
+    public AK.Wwise.State _Cooking_Menu_ON;
+    public AK.Wwise.State _Cooking_Menu_OFF;
 
     public List<ProjectileData> EquippedRecipe
     {
@@ -86,7 +93,9 @@ public class PlayerCookingInventory : MonoBehaviour
         if (value)
         {
             gameObject.SetActive(true);
-            if(_curShowRoutine != null)
+            _Play_UI_Cook_Open.Post(gameObject);
+            _Cooking_Menu_ON.SetValue();
+            if (_curShowRoutine != null)
             {
                 StopCoroutine(_curShowRoutine);
             }
@@ -94,6 +103,8 @@ public class PlayerCookingInventory : MonoBehaviour
         }
         else
         {
+            _Play_UI_Cook_Close.Post(gameObject);
+            _Cooking_Menu_OFF.SetValue();
             if (_curShowRoutine != null)
             {
                 StopCoroutine(_curShowRoutine);
@@ -314,7 +325,9 @@ public class PlayerCookingInventory : MonoBehaviour
         //Check for slot change
         if(slot != _currentSlot)
         {
-            if(_currentSlot != null)
+            _Play_UI_Cook_Hover.Post(gameObject);
+
+            if (_currentSlot != null)
             {
                 _currentSlot.Highlight(false);
             }
@@ -363,6 +376,7 @@ public class PlayerCookingInventory : MonoBehaviour
         {
             return;
         }
+        _Play_UI_Cook_Select.Post(gameObject);
         AddToRecipe(_currentSlot);
     }
 

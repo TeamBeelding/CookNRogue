@@ -47,6 +47,8 @@ public class PlayerCooking : MonoBehaviour
 
     [SerializeField]
     private AK.Wwise.Event _Play_SFX_Cook;
+    [SerializeField]
+    private AK.Wwise.Event _Play_Reset_Ingredient;
 
     #endregion
 
@@ -120,7 +122,7 @@ public class PlayerCooking : MonoBehaviour
             m_attackScript.ResetParameters();
             foreach(ProjectileData data in _inventoryScript.EquippedRecipe)
             {
-                data.audioState.SetValue();
+                _Play_Reset_Ingredient.Post(gameObject);
             }
 
             _inventoryScript.Show(false);
