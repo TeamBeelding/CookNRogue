@@ -46,7 +46,7 @@ public class PlayerCooking : MonoBehaviour
     Coroutine _craftingRoutine;
 
     [SerializeField]
-    Animator animator;
+    private AK.Wwise.Event _Play_SFX_Cook;
 
     #endregion
 
@@ -69,7 +69,7 @@ public class PlayerCooking : MonoBehaviour
 
         _inventoryScript = PlayerCookingInventory.Instance;
         _playerController = PlayerController.Instance;
-        animator = GetComponentInChildren<Animator>();
+        //animator = GetComponentInChildren<Animator>();
         m_cookingProgressVisuals.SetActive(false);
     }
 
@@ -114,6 +114,7 @@ public class PlayerCooking : MonoBehaviour
 
             //Start crafting
             _craftingInProgress = true;
+            _Play_SFX_Cook.Post(gameObject);
 
             //Reset last bullet parametters
             m_attackScript.ResetParameters();
@@ -180,6 +181,8 @@ public class PlayerCooking : MonoBehaviour
 
         //Show UI
         m_cookingProgressVisuals.SetActive(true);
+
+        _Play_SFX_Cook.Post(gameObject);
     }
 
     void CompleteCrafting()
