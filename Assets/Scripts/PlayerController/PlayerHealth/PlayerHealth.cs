@@ -10,6 +10,7 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private AK.Wwise.Event _Play_SFX_Health_Collect;
     [SerializeField] private AK.Wwise.Event _Play_MC_Hit;
     [SerializeField] private AK.Wwise.Event _Play_MC_Death;
+    [SerializeField] private AK.Wwise.Event _Play_Reset_Ingredient;
     HeartBar _heartBar;
     private void Start()
     {
@@ -50,6 +51,7 @@ public class PlayerHealth : MonoBehaviour
             _health = _maxHealth;
             _heartBar.UpdateHealthVisual(_health);
             _Play_MC_Death.Post(gameObject);
+            _Play_Reset_Ingredient.Post(gameObject);
 
             // RoomManager.instance.RestartLevel();
             return false;

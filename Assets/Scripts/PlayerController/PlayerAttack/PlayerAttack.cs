@@ -57,6 +57,9 @@ public class PlayerAttack : MonoBehaviour
     [ColorUsage(true, true)]
     [SerializeField] Color defaultcolor;
 
+    [SerializeField]
+    private AK.Wwise.Event _Play_Reset_Ingredient;
+
     private void Start()
     {
         _defaultShootCooldown = _shootCooldown;
@@ -109,7 +112,7 @@ public class PlayerAttack : MonoBehaviour
                 //Reset Audio
                 foreach (ProjectileData data in _inventory.EquippedRecipe)
                 {
-                    data.audioState.SetValue();
+                    _Play_Reset_Ingredient.Post(gameObject);
                 }
 
                 ResetParameters();
