@@ -44,7 +44,7 @@ public class PlayerCookingInventory : MonoBehaviour
     List<ProjectileData> _equippedRecipe = new();
 
     [SerializeField] private AK.Wwise.Event _Play_SFX_Ingredient_Collect;
-
+    [SerializeField] private GameObject Cooking_Particles;
     public List<ProjectileData> EquippedRecipe
     {
         get => _equippedRecipe;
@@ -180,6 +180,21 @@ public class PlayerCookingInventory : MonoBehaviour
         //Activate next wheel
         m_inventoryWheels[_currentWheelIndex].SetActive(true);
     }
+
+    void PlayParticlesCooking()
+    {
+
+        if (Cooking_Particles == null)
+            return;
+
+        ParticleSystem[] particles = Cooking_Particles.transform.GetComponentsInChildren<ParticleSystem>();
+
+        foreach (ParticleSystem part in particles)
+        {
+            part.Play();
+        }
+
+    }
     #endregion
 
     #region Inventory Management
@@ -223,10 +238,13 @@ public class PlayerCookingInventory : MonoBehaviour
 
     public void CraftBullet()
     {
+
         if (_areControlsLocked)
         {
             return;
         }
+
+        PlayParticlesCooking();
 
         if (_recipe.Count <= 0)
         {
