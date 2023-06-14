@@ -31,34 +31,40 @@ public class EnterDoor : MonoBehaviour
     [SerializeField]
     private AnimationCurve m_portalIntensityCurve;
     [SerializeField]
-    private Material m_portalMaterial;
+    private MeshRenderer m_portalRenderer;
     [SerializeField]
-    private Material m_rayMaterial;
+    private ParticleSystemRenderer m_raysRenderer;
     [SerializeField]
     private AnimationCurve m_rayCurve;
 
     private Material[] SkinnedMaterials;
+    private Material _portalMaterial;
+    private Material _raysMaterial;
 
     [SerializeField] GameObject _godRays;
+
+    bool _doorIsOpened = false;
+    bool _raysAreActive = false;
 
     private void Start()
     {
         if (m_door != null)
         {
-            _godRays.SetActive(true);
+            _godRays.SetActive(false);
 
             if (m_mesh != null)
             {
                 SkinnedMaterials = m_mesh.materials;
+                _portalMaterial = m_portalRenderer.material;
+                _raysMaterial = m_raysRenderer.material;
                 SetDoor(0f);
                 SetPortal(0f);
             }
 
             if (m_isOpenOnStart)
             {
-                m_door.SetActive(false);
-                SetDoor(1f);
-                SetPortal(1f);
+                SetDoor(m_doorOpeningDuration);
+                SetPortal(m_portalAnimDuration);
             }
             else
             {
@@ -69,7 +75,7 @@ public class EnterDoor : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && !m_door.activeInHierarchy)
+        if (other.CompareTag("Player") && !m_door.GetComponent<Collider>().enabled)
         {
             RoomManager.instance.LoadNextLevel();
         }
@@ -95,29 +101,49 @@ public class EnterDoor : MonoBehaviour
                 SetPortal(f <= m_portalAnimOffset ? 0f : f - m_portalAnimOffset);
                 yield return new WaitForSeconds(m_refreshRate);
             }
-            SetDoor(1f);
-            SetPortal(1f);
+            SetDoor(m_doorOpeningDuration);
+            SetPortal(m_portalAnimDuration);
         }
-
-        //OPEN GNE GNOOOOOR
-
-        m_door.SetActive(false);
     }
 
     void SetPortal(float value)
     {
+        if(value > 0)
+        {
+            m_door.GetComponent<Collider>().enabled = false;
+        }
+
         float progress = value / m_portalAnimDuration;
-        m_portalMaterial.SetFloat("_EmissionIntensity", Mathf.Lerp(0.1f, 0.5f, m_portalIntensityCurve.Evaluate(progress)));
-        m_portalMaterial.SetFloat("_Transition", m_portalAnimCurve.Evaluate(progress));
-        Color tempColor = m_rayMaterial.color;
+        _portalMaterial.SetFloat("_EmissionIntensity", Mathf.Lerp(0.1f, 0.5f, m_portalIntensityCurve.Evaluate(progress)));
+        _portalMaterial.SetFloat("_Transition", m_portalAnimCurve.Evaluate(progress));
+
+        //Activate rays
+        if (!_raysAreActive && m_rayCurve.Evaluate(progress) > 0)
+        {
+            _godRays.SetActive(true);
+            _raysAreActive = true;
+        }
+
+        Color tempColor = _raysMaterial.color;
         tempColor.a = Mathf.Lerp(0f, 0.3f, m_rayCurve.Evaluate(progress));
-        m_rayMaterial.color = tempColor;
+        _raysMaterial.color = tempColor;
     }
 
     void SetDoor (float value)
     {
+        if (_doorIsOpened)
+            return;
+
         float progress = m_doorOpeningCurve.Evaluate(value / m_doorOpeningDuration);
         float animProgress = Mathf.Lerp(1f, 0f, progress);
         SkinnedMaterials[0].SetFloat("_GrowValue", animProgress);
+
+        //Open Door
+        if(value >= m_doorOpeningDuration)
+        {
+            Debug.Log("?");
+            m_door.SetActive(false);
+            _doorIsOpened = true;
+        }
     }
 }
