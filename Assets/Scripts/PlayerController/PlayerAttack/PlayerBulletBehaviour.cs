@@ -153,17 +153,17 @@ public class PlayerBulletBehaviour : MonoBehaviour
         
         foreach (Collider hitCollider in hitColliders)
         {
-            Debug.Log("foreach");
+            
             if (hitCollider.gameObject != HitObject && hitCollider.CompareTag("Enemy"))
             {
-                Debug.Log("valid target");
+                
                 distance = Vector3.Distance(hitCollider.gameObject.transform.position, Position);
 
                 Vector3 rayDirection = (hitCollider.gameObject.transform.position - Position).normalized;
                 
                 if (distance < closest)
                 {
-                    Debug.Log("closest");
+                    
                     closest = distance;
                     closestEnemy = hitCollider.gameObject;
                     Debug.Log(closestEnemy);
@@ -179,12 +179,24 @@ public class PlayerBulletBehaviour : MonoBehaviour
             Invoke("DestroyBullet", 1);
             _direction = (closestEnemy.gameObject.transform.position - HitObject.transform.position).normalized;
             destroyOnHit = true;
+
+            //VFX
+            foreach (IIngredientEffects effect in _playerAttack._effects)
+            {
+                if (effect is Ricochet ricochet)
+                {
+                    GameObject RicochetPart = GameObject.Instantiate(ricochet.RicochetParticles, Position, Quaternion.identity);
+                    GameObject.Destroy(RicochetPart, 0.5f);
+                    Debug.Log("ricochet");
+                }
+            }
         }
         else
         {
             DestroyBullet();
         }
-
+        
+        
     }
 
 

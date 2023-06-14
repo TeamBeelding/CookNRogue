@@ -6,6 +6,20 @@ namespace Enemy.DashingEnemy
 {
     public class ChargingEnemy : EnemyController
     {
+        [Header("Sound")]
+        [SerializeField]
+        private AK.Wwise.Event _Play_SFX_Cabbage_Footsteps;
+        [SerializeField]
+        private AK.Wwise.Event _Play_SFX_Cabbage_Charge_LP;
+        [SerializeField]
+        private AK.Wwise.Event _Play_SFX_Cabbage_Charge_Impact;
+        [SerializeField]
+        private AK.Wwise.Event _Play_SFX_Cabbage_Hit;
+        [SerializeField]
+        private AK.Wwise.Event _Play_SFX_Cabbage_Death;
+        [SerializeField]
+        private AK.Wwise.Event _Play_Weapon_Hit;
+
         private Coroutine _castingCoroutine;
         private Coroutine _waitingCoroutine;
         private Coroutine _rotateToPlayerCoroutine;
@@ -26,7 +40,9 @@ namespace Enemy.DashingEnemy
 
         [SerializeField]
         private GameObject visual;
-    
+
+        private Animator animator;
+
         public enum State
         {
             Casting,
@@ -47,7 +63,7 @@ namespace Enemy.DashingEnemy
         protected override void Start()
         {
             base.Start();
-        
+            animator = GetComponentInChildren<Animator>();
             SetState(State.Casting);
             _redLineMaterial = _redLine.GetComponent<Renderer>().material;
         }
@@ -76,12 +92,16 @@ namespace Enemy.DashingEnemy
             switch (state)
             {
                 case State.Casting:
+                    animator.SetBool("isAttack", false);
                     Casting();
                     break;
                 case State.Waiting:
+                    animator.SetBool("isAttack", false);
                     WaitingAnotherDash();
                     break;
                 case State.Dashing:
+                    animator.SetBool("isAttack", true);
+                    _Play_SFX_Cabbage_Charge_LP.Post(gameObject);
                     Dashing();
                     break;
                 case State.Dying:
@@ -99,6 +119,8 @@ namespace Enemy.DashingEnemy
         /// </summary>
         private void Dashing()
         {
+            ShowFullyRedLine();
+            
             RaycastHit hit;
             Vector3 direction = (Player.transform.position - transform.position).normalized;
             
@@ -172,11 +194,11 @@ namespace Enemy.DashingEnemy
             {
                 yield return StartCoroutine(ICanShowingRedLine());
         
-                ShowLightRedLine();
+                // ShowLightRedLine();
         
                 yield return new WaitForSeconds(_data.GetTimeBeforeLerpRedLine());
         
-                ShowFullyRedLine();
+                // ShowFullyRedLine();
         
                 yield return new WaitForSeconds(_data.GetRemainingForDash());
 
@@ -213,9 +235,23 @@ namespace Enemy.DashingEnemy
         /// </summary>
         protected override void Dying()
         {
+            _Play_SFX_Cabbage_Death.Post(gameObject);
+            StopCasting();
             base.Dying();
 
-            StopCasting();
+            //animator.SetBool("isDead", true);
+
+            //Debug.Log("Dead Anim");
+
+            //StartCoroutine(IDeathAnim());
+
+            //IEnumerator IDeathAnim()
+            //{
+            //    Debug.Log("Wait");
+            //    yield return new WaitForSeconds(2f);
+            //    Debug.Log("Destroyed");
+            //    base.Dying();
+            //}
         }
     
         /// <summary>
@@ -284,6 +320,7 @@ namespace Enemy.DashingEnemy
     
         public void CollideWithPlayer()
         {
+            _Play_SFX_Cabbage_Charge_Impact.Post(gameObject);
             StopMoving();
             Player.GetComponent<PlayerController>().TakeDamage(_data.GetDamage());
 
@@ -292,8 +329,15 @@ namespace Enemy.DashingEnemy
     
         public void CollideWithObstruction()
         {
+            _Play_SFX_Cabbage_Charge_Impact.Post(gameObject);
             StopMoving();
             SetState(State.Waiting);
+        }
+
+        public override void TakeDamage(float damage = 1, bool isCritical = false)
+        {
+            _Play_SFX_Cabbage_Hit.Post(gameObject);
+            base.TakeDamage(damage, isCritical);
         }
     }
 }

@@ -7,6 +7,11 @@ public class SceneLoader : MonoBehaviour
 {
     public void LoadGame()
     {
-        SceneManager.LoadScene("Prototype");
+        SceneManager.LoadScene(1);
+    }
+
+    public void Exit()
+    {
+        Application.Quit();
     }
 }

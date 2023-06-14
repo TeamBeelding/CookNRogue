@@ -9,7 +9,7 @@ public class Ricochet : IIngredientEffects
     [SerializeField] LayerMask _sphereMask;
     [SerializeField] LayerMask _rayMask;
     [SerializeField] int _ricochetCount;
-    [SerializeField] GameObject RicochetParticles;
+    public GameObject RicochetParticles;
 
     //EFFET LORS DU SHOOT
     public void EffectOnShoot(Vector3 Position, GameObject bullet)
@@ -49,7 +49,6 @@ public class Ricochet : IIngredientEffects
                 RaycastHit hit;
                 Physics.Raycast(Position, rayDirection, out hit, _rayMask);
 
-                Debug.Log(hitCollider.gameObject);
 
                 if (distance < closest /*&& !Physics.Raycast(Position, rayDirection, _rayMask)*/)
                 {
@@ -66,12 +65,14 @@ public class Ricochet : IIngredientEffects
         HitObject.layer = 0;
         if (closestEnemy != HitObject)
         {
-            GameObject RicochetPart = GameObject.Instantiate(RicochetParticles, Position,Quaternion.identity);
-            GameObject.Destroy(RicochetPart,0.5f);
+
             _bulletBehaviour.CancelInvoke("DestroyBullet");
             _bulletBehaviour.Invoke("DestroyBullet",1);
             _bulletBehaviour._direction = (closestEnemy.gameObject.transform.position - HitObject.transform.position).normalized;
             _bulletBehaviour.destroyOnHit = true;
+            GameObject RicochetPart = GameObject.Instantiate(RicochetParticles, Position, Quaternion.identity);
+            GameObject.Destroy(RicochetPart, 0.5f);
+            Debug.Log("ricochet");
         }
         
     }
