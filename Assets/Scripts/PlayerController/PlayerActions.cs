@@ -98,6 +98,15 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""EnterDebug"",
+                    ""type"": ""Button"",
+                    ""id"": ""4adb3a5d-ca14-4a19-8342-45d1457b5257"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -331,6 +340,17 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                     ""action"": ""Dash"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""92323129-6e4d-4d3c-a92d-9a0cdca0a0d6"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""GamePad"",
+                    ""action"": ""EnterDebug"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -513,6 +533,54 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Debug"",
+            ""id"": ""483bae16-c1e2-4a10-ac49-19a9050c9a9e"",
+            ""actions"": [
+                {
+                    ""name"": ""EnterDebug"",
+                    ""type"": ""Button"",
+                    ""id"": ""da525827-64c4-4f3b-8f83-3a6c20e742cb"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""KillAllEnemies"",
+                    ""type"": ""Button"",
+                    ""id"": ""1765443e-ec90-439d-be29-13910dceb756"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""9d5445d9-9492-46ba-9e42-09527da19a6c"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""GamePad"",
+                    ""action"": ""EnterDebug"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""be9dd907-e03f-46d9-9423-0b3e8957064f"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""GamePad"",
+                    ""action"": ""KillAllEnemies"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -555,6 +623,7 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
         m_Default_Cook = m_Default.FindAction("Cook", throwIfNotFound: true);
         m_Default_Quit = m_Default.FindAction("Quit", throwIfNotFound: true);
         m_Default_Pause = m_Default.FindAction("Pause", throwIfNotFound: true);
+        m_Default_EnterDebug = m_Default.FindAction("EnterDebug", throwIfNotFound: true);
         // Cooking
         m_Cooking = asset.FindActionMap("Cooking", throwIfNotFound: true);
         m_Cooking_Cook = m_Cooking.FindAction("Cook", throwIfNotFound: true);
@@ -565,6 +634,10 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Pause = m_UI.FindAction("Pause", throwIfNotFound: true);
+        // Debug
+        m_Debug = asset.FindActionMap("Debug", throwIfNotFound: true);
+        m_Debug_EnterDebug = m_Debug.FindAction("EnterDebug", throwIfNotFound: true);
+        m_Debug_KillAllEnemies = m_Debug.FindAction("KillAllEnemies", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -632,6 +705,7 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Default_Cook;
     private readonly InputAction m_Default_Quit;
     private readonly InputAction m_Default_Pause;
+    private readonly InputAction m_Default_EnterDebug;
     public struct DefaultActions
     {
         private @PlayerActions m_Wrapper;
@@ -644,6 +718,7 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
         public InputAction @Cook => m_Wrapper.m_Default_Cook;
         public InputAction @Quit => m_Wrapper.m_Default_Quit;
         public InputAction @Pause => m_Wrapper.m_Default_Pause;
+        public InputAction @EnterDebug => m_Wrapper.m_Default_EnterDebug;
         public InputActionMap Get() { return m_Wrapper.m_Default; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -677,6 +752,9 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                 @Pause.started -= m_Wrapper.m_DefaultActionsCallbackInterface.OnPause;
                 @Pause.performed -= m_Wrapper.m_DefaultActionsCallbackInterface.OnPause;
                 @Pause.canceled -= m_Wrapper.m_DefaultActionsCallbackInterface.OnPause;
+                @EnterDebug.started -= m_Wrapper.m_DefaultActionsCallbackInterface.OnEnterDebug;
+                @EnterDebug.performed -= m_Wrapper.m_DefaultActionsCallbackInterface.OnEnterDebug;
+                @EnterDebug.canceled -= m_Wrapper.m_DefaultActionsCallbackInterface.OnEnterDebug;
             }
             m_Wrapper.m_DefaultActionsCallbackInterface = instance;
             if (instance != null)
@@ -705,6 +783,9 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                 @Pause.started += instance.OnPause;
                 @Pause.performed += instance.OnPause;
                 @Pause.canceled += instance.OnPause;
+                @EnterDebug.started += instance.OnEnterDebug;
+                @EnterDebug.performed += instance.OnEnterDebug;
+                @EnterDebug.canceled += instance.OnEnterDebug;
             }
         }
     }
@@ -807,6 +888,47 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
         }
     }
     public UIActions @UI => new UIActions(this);
+
+    // Debug
+    private readonly InputActionMap m_Debug;
+    private IDebugActions m_DebugActionsCallbackInterface;
+    private readonly InputAction m_Debug_EnterDebug;
+    private readonly InputAction m_Debug_KillAllEnemies;
+    public struct DebugActions
+    {
+        private @PlayerActions m_Wrapper;
+        public DebugActions(@PlayerActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @EnterDebug => m_Wrapper.m_Debug_EnterDebug;
+        public InputAction @KillAllEnemies => m_Wrapper.m_Debug_KillAllEnemies;
+        public InputActionMap Get() { return m_Wrapper.m_Debug; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(DebugActions set) { return set.Get(); }
+        public void SetCallbacks(IDebugActions instance)
+        {
+            if (m_Wrapper.m_DebugActionsCallbackInterface != null)
+            {
+                @EnterDebug.started -= m_Wrapper.m_DebugActionsCallbackInterface.OnEnterDebug;
+                @EnterDebug.performed -= m_Wrapper.m_DebugActionsCallbackInterface.OnEnterDebug;
+                @EnterDebug.canceled -= m_Wrapper.m_DebugActionsCallbackInterface.OnEnterDebug;
+                @KillAllEnemies.started -= m_Wrapper.m_DebugActionsCallbackInterface.OnKillAllEnemies;
+                @KillAllEnemies.performed -= m_Wrapper.m_DebugActionsCallbackInterface.OnKillAllEnemies;
+                @KillAllEnemies.canceled -= m_Wrapper.m_DebugActionsCallbackInterface.OnKillAllEnemies;
+            }
+            m_Wrapper.m_DebugActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @EnterDebug.started += instance.OnEnterDebug;
+                @EnterDebug.performed += instance.OnEnterDebug;
+                @EnterDebug.canceled += instance.OnEnterDebug;
+                @KillAllEnemies.started += instance.OnKillAllEnemies;
+                @KillAllEnemies.performed += instance.OnKillAllEnemies;
+                @KillAllEnemies.canceled += instance.OnKillAllEnemies;
+            }
+        }
+    }
+    public DebugActions @Debug => new DebugActions(this);
     private int m_GamePadSchemeIndex = -1;
     public InputControlScheme GamePadScheme
     {
@@ -835,6 +957,7 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
         void OnCook(InputAction.CallbackContext context);
         void OnQuit(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
+        void OnEnterDebug(InputAction.CallbackContext context);
     }
     public interface ICookingActions
     {
@@ -847,5 +970,10 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
     public interface IUIActions
     {
         void OnPause(InputAction.CallbackContext context);
+    }
+    public interface IDebugActions
+    {
+        void OnEnterDebug(InputAction.CallbackContext context);
+        void OnKillAllEnemies(InputAction.CallbackContext context);
     }
 }

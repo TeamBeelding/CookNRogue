@@ -21,7 +21,7 @@ namespace AK
         static const AkUniqueID PLAY_MC_RUN = 1600895284U;
         static const AkUniqueID PLAY_MC_RUN_FOLEY = 3682234456U;
         static const AkUniqueID PLAY_MC_RUN_FOOTSTEP = 104751245U;
-        static const AkUniqueID PLAY_MUSIC_FIGHT = 2427409920U;
+        static const AkUniqueID PLAY_MUSIC = 2932040671U;
         static const AkUniqueID PLAY_SFX_CABBAGE_CHARGE_IMPACT = 1246023875U;
         static const AkUniqueID PLAY_SFX_CABBAGE_CHARGE_LP = 2535875021U;
         static const AkUniqueID PLAY_SFX_CABBAGE_DEATH = 1817239028U;

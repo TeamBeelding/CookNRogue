@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3843937293996089468}
   - component: {fileID: 8360992018894168495}
   - component: {fileID: 3656562205103930754}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Minimoyz
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -49,7 +49,7 @@ NavMeshAgent:
   m_Radius: 1
   m_Speed: 3.5
   m_Acceleration: 8
-  avoidancePriority: 50
+  avoidancePriority: 99
   m_AngularSpeed: 120
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
@@ -74,6 +74,7 @@ MonoBehaviour:
   _effectHandlers: []
   explosion: {fileID: 466446929295881914, guid: 3fb8a478fb9325d40bc6d96484133a99,
     type: 3}
+  tutorial: {fileID: 0}
   _Play_SFX_Pea_Footsteps:
     idInternal: 0
     valueGuidInternal: 
@@ -89,6 +90,10 @@ MonoBehaviour:
     valueGuidInternal: 
     WwiseObjectReference: {fileID: 11400000, guid: 313c0264e1510ba4492688e2b1f575d7,
       type: 2}
+  _Play_Weapon_Hit:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
   _Play_SFX_Pea_Movement:
     idInternal: 0
     valueGuidInternal: 
@@ -100,7 +105,9 @@ MonoBehaviour:
     WwiseObjectReference: {fileID: 11400000, guid: f30f1b35ab4e9d44d97dd4a74d0d59de,
       type: 2}
   data: {fileID: 11400000, guid: 6de0997aeb190e840a9e56c9d0162cd9, type: 2}
+  slimeData: {fileID: 11400000, guid: c347bd2a1957383469ec63fdaaa779da, type: 2}
   agent: {fileID: 3843937293996089471}
+  physicsMinimoyz: {fileID: 6181562568036319627}
   state: 0
 --- !u!114 &8360992018894168495
 MonoBehaviour:
@@ -197,13 +204,13 @@ GameObject:
   m_Component:
   - component: {fileID: 1118434557981321234}
   - component: {fileID: 4959453777126668209}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Physics
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1118434557981321234
 Transform:
   m_ObjectHideFlags: 0
@@ -319,6 +326,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Visual
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 585e766713df702459aa63bbce63b344,
+        type: 3}
+      propertyPath: m_Layer
+      value: 13
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 585e766713df702459aa63bbce63b344, type: 3}

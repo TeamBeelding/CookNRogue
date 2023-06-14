@@ -1,3 +1,4 @@
+using System;
 using Enemy.Data;
 using Enemy.Effect_And_Juiciness;
 using Enemy.Minimoyz;
@@ -36,11 +37,12 @@ namespace Enemy.Slime
         [FormerlySerializedAs("_minimoyzSpawnChecker")] [SerializeField, Required("Minimoyz spawn checker")] private CheckingSpawn spawnChecker;
 
         private Animator animator;
+        private Coroutine stateCoroutine;
 
         public enum State
         {
             Neutral,
-            KeepingDistance,
+            // KeepingDistance,
             Chase,
             Attack,
             Dying,
@@ -79,15 +81,20 @@ namespace Enemy.Slime
         // Update is called once per frame
         protected override void Update()
         {
-            StateManagement();
-        }
-
-        private void FixedUpdate()
-        {
             if (state == State.Dying)
                 return;
         
             AreaDetection();
+        }
+        
+        private void SetState(State value)
+        {
+            if (stateCoroutine != null)
+                stateCoroutine = null;
+         
+            state = value;
+            
+            StateManagement();
         }
 
         // ReSharper disable Unity.PerformanceAnalysis
@@ -108,12 +115,12 @@ namespace Enemy.Slime
                     animator.SetBool("isAttack", false);
                     _Play_SFX_Pea_Pod_Footsteps.Post(gameObject);
                     break;
-                case State.KeepingDistance:
-                    animator.SetBool("isWalking", false);
-                    animator.SetBool("isAttack", false);
-                    _Stop_SFX_Pea_Pod_Footsteps.Post(gameObject);
-                    KeepDistance();
-                    break;
+                // case State.KeepingDistance:
+                //     animator.SetBool("isWalking", false);
+                //     animator.SetBool("isAttack", false);
+                //     _Stop_SFX_Pea_Pod_Footsteps.Post(gameObject);
+                //     // KeepDistance();
+                //     break;
                 case State.Attack:
                     animator.SetBool("isWalking", false);
                     _Stop_SFX_Pea_Pod_Footsteps.Post(gameObject);
@@ -135,68 +142,73 @@ namespace Enemy.Slime
         {
             if (state == State.Dying)
                 return;
-        
-            if (Vector3.Distance(transform.position, Player.transform.position) <= data.GetFocusRange)
-            {
-                FocusPlayer = true;
-                state = State.Chase;
-            }
-            else
-            {
-                state = State.Neutral;
-            }
 
-            if (Vector3.Distance(transform.position, Player.transform.position) <= data.GetAttackRange)
-            {
-                if (Vector3.Distance(transform.position, Player.transform.position) <= data.GetMinimumDistanceToKeep)
-                    state = State.KeepingDistance;
-                else
-                    state = State.Attack;
-            }
+            if (Vector3.Distance(transform.position, Player.transform.position) > data.GetAttackRange)
+                SetState(State.Chase);
             else
-            {
-                if (FocusPlayer)
-                    state = State.Chase;
-            }
+                SetState(State.Attack);
         }
     
-        private void KeepDistance()
-        {
-            if (Vector3.Distance(transform.position, Player.transform.position) <= data.GetMinimumDistanceToKeep)
-            {
-                Vector3 target = transform.position - (Player.transform.position - transform.position);
-                agent.stoppingDistance = 0;
-                agent.SetDestination(target);
-            }
-        }
+        // private void KeepDistance()
+        // {
+        //     float r = data.GetAttackRange * Mathf.Sqrt(Random.Range(0f, 1f));
+        //     float theta = Random.Range(0f, 1f) * 2 * Mathf.PI;
+        //     Vector3 target = new Vector3(Mathf.Cos(theta), 0, Mathf.Sin(theta));
+        //     
+        //     stateCoroutine = StartCoroutine(IKeepDistance());
+        //
+        //     IEnumerator IKeepDistance()
+        //     {
+        //         while (state == State.KeepingDistance)
+        //         {
+        //             if (Vector3.Distance(transform.position, Player.transform.position) < data.GetMinimumDistanceToKeep)
+        //             {
+        //                 agent.stoppingDistance = 0;
+        //                 agent.SetDestination(target);
+        //             }
+        //             
+        //             yield return null;
+        //         }
+        //     }
+        // }
     
         protected override void Chase()
         {
             agent.stoppingDistance = data.GetAttackRange;
-            agent.SetDestination(Player.transform.position);
+            stateCoroutine = StartCoroutine(IChase());
+
+            IEnumerator IChase()
+            {
+                while (state == State.Chase)
+                {
+                    agent.SetDestination(Player.transform.position);
+                    
+                    yield return null;
+                }
+            }
         }
 
         // ReSharper disable Unity.PerformanceAnalysis
         private void ThrowMinimoyz()
         {
-            Transform point = RandomPoint();
+            Vector3 point = RandomPoint();
             
-            spawnChecker.SetTransformPosition(point.position);
+            spawnChecker.SetTransformPosition(point);
             
-            if (!spawnChecker.IsPathValid(Player.transform.position))
-                ThrowMinimoyz();
+            if (!spawnChecker.IsPathValid())
+                return;
                      
             GameObject minimoyz = Instantiate(this.minimoyz, gun.transform.position, quaternion.identity);
             minimoyz.GetComponent<MinimoyzController>().SetIsThrowing(true);
             minimoyz.GetComponent<ThrowingEffect>().ThrowMinimoyz(point, data.GetThrowingMaxHeight, data.GetThrowingSpeed);
+            
             if (_canAttackAnim)
             {
                 _Play_SFX_Pea_Spawn.Post(minimoyz);
             }
-
         }
 
-        private Transform RandomPoint()
+        private Vector3 RandomPoint()
         {
             Vector3 center = Player.transform.position;
             float distanceBetweenRadius = data.GetOuterRadius - data.GetInnerRadius;
@@ -209,13 +221,10 @@ namespace Enemy.Slime
             float x = center.x + (distanceFromCenter * Mathf.Cos(angleInRadians));
             float y = center.y;
             float z = center.z + (distanceFromCenter * Mathf.Sin(angleInRadians));
-
+            
             Vector3 position = new Vector3(x, y, z);
-
-            GameObject pointObject = new GameObject("RandomPoint");
-            pointObject.transform.position = position;
-
-            return pointObject.transform;
+            
+            return position;
         }
 
         public override void TakeDamage(float damage = 1, bool isCritical = false)
@@ -231,18 +240,13 @@ namespace Enemy.Slime
             }
         }
 
-        private void SetState(State value)
-        {
-            state = value;
-        }
-
         protected override void Dying()
         {
             agent.SetDestination(transform.position);
 
             animator.SetBool("isDead", true);
 
-            StartCoroutine(IDeathAnim());
+            stateCoroutine = StartCoroutine(IDeathAnim());
 
             IEnumerator IDeathAnim()
             {
@@ -264,6 +268,16 @@ namespace Enemy.Slime
         public override bool IsMoving()
         {
             throw new System.NotImplementedException();
+        }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, 2);
+            Gizmos.color = Color.blue;
+            Gizmos.DrawWireSphere(transform.position, data.GetInnerRadius);
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireSphere(transform.position, data.GetOuterRadius);
         }
     }
 }

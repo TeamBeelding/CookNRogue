@@ -135,7 +135,7 @@ public abstract class EnemyController : MonoBehaviour
 
     protected virtual void Dying()
     {
-        DestroyEffect();
+        // DestroyEffect();
         Destroy(gameObject);
     }
 

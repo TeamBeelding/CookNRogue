@@ -29,7 +29,7 @@ namespace Enemy.Basic
         [SerializeField] private GameObject m_gun;
         [SerializeField] private GameObject m_bullet;
         [SerializeField] private ParticleSystem m_stateSystem;
-        [SerializeField] private Renderer stateRenderer;
+        [SerializeField] private GameObject physics;
 
         private Coroutine _stateCoroutine;
 
@@ -53,9 +53,9 @@ namespace Enemy.Basic
             agent.speed = data.GetSpeed;
             agent.stoppingDistance = data.GetAttackRange;
             FocusPlayer = data.GetFocusPlayer;
-            Healthpoint = data.GetHealth;
-            animator = GetComponentInChildren<Animator>();
-            stateRenderer = m_stateSystem.GetComponent<Renderer>();
+            Healthpoint = data.GetHealth;
+
+            animator = GetComponentInChildren<Animator>();
         }
 
         // Start is called before the first frame update
@@ -104,17 +104,21 @@ namespace Enemy.Basic
         {
             switch (state)
             {
-                case State.Neutral:
+                case State.Neutral:
+
                     animator.SetBool("isWalking", false);
                     animator.SetBool("isAttack", false);
                     break;
-                case State.Chase:
+                case State.Chase:
+
                     animator.SetBool("isWalking", true);
                     animator.SetBool("isAttack", false);
                     Chase();
                     break;
                 case State.Attack:
-                    animator.SetBool("isWalking", false);                    animator.SetBool("isAttack", false);                    transform.LookAt(Player.transform.position);
+                    animator.SetBool("isWalking", false);
+                    animator.SetBool("isAttack", false);
+                    transform.LookAt(Player.transform.position);
                     Attack(Shot, data.GetAttackSpeed);
                     break;
                 case State.Dying:
@@ -179,6 +183,8 @@ namespace Enemy.Basic
 
         protected override void Dying()
         {
+            physics.SetActive(false);
+            
             animator.SetBool("isDead", true);
             
             StartCoroutine(IDeathAnim());
@@ -208,7 +214,8 @@ namespace Enemy.Basic
             }
 
             if (Healthpoint <= 0)
-            {
+            {
+
                 _Play_SFX_Corn_Death.Post(gameObject);
                 SetState(State.Dying);
             }
