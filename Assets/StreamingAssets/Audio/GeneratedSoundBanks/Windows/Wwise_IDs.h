@@ -232,6 +232,7 @@ namespace AK
 
     namespace GAME_PARAMETERS
     {
+        static const AkUniqueID CABBAGE_CHARGE = 2550010857U;
         static const AkUniqueID PLAYER_HIT = 871813740U;
     } // namespace GAME_PARAMETERS
 
@@ -255,11 +256,14 @@ namespace AK
     namespace BUSSES
     {
         static const AkUniqueID AMB = 1117531639U;
+        static const AkUniqueID CABBAGE = 142728178U;
+        static const AkUniqueID CABBAGE_CHARGE = 2550010857U;
         static const AkUniqueID ENEMIES = 2242381963U;
         static const AkUniqueID MASTER_AUDIO_BUS = 3803692087U;
         static const AkUniqueID MC = 1685527061U;
         static const AkUniqueID MUSIC = 3991942870U;
         static const AkUniqueID OTHER = 2376466361U;
+        static const AkUniqueID OTHER_ENEMIES = 2696797660U;
         static const AkUniqueID PEA_MOVEMENTS = 3977179618U;
         static const AkUniqueID TAKEHIT = 2866165515U;
         static const AkUniqueID UI = 1551306167U;

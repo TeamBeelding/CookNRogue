@@ -15,7 +15,14 @@ public class TBH : EnemyController
     [SerializeField] private CheckingSpawn _checkingSpawn;
 
     [SerializeField] private Animator _animator;
-    
+
+    [SerializeField] private AK.Wwise.Event _Play_SFX_Carrot_Dive;
+    [SerializeField] private AK.Wwise.Event _Play_SFX_Carrot_Erupt;
+    [SerializeField] private AK.Wwise.Event _Play_SFX_Carrot_Attack;
+    [SerializeField] private AK.Wwise.Event _Play_SFX_Carrot_Hit;
+    [SerializeField] private AK.Wwise.Event _Play_SFX_Carrot_Death;
+
+
     public enum State
     {
         Neutral,
@@ -68,6 +75,7 @@ public class TBH : EnemyController
             case State.Attacking:
 
                 _animator.SetBool("isTeleport", false);
+                
 
                 StartCoroutine(Waiting());
 
@@ -121,6 +129,8 @@ public class TBH : EnemyController
             
             GameObject bullet = Instantiate(_bullet, _gun.transform.position, Quaternion.identity);
 
+            _Play_SFX_Carrot_Attack.Post(bullet);
+
             bullet.GetComponent<EnemyBulletController>().SetDirection(new Vector3(Player.transform.position.x + spread, Player.transform.position.y, Player.transform.position.z + spread));
             bullet.GetComponent<EnemyBulletController>().SetDamage(_data.DamagePerBullet);
         }
@@ -128,7 +138,7 @@ public class TBH : EnemyController
 
     private void Teleport()
     {
-
+        //_Play_SFX_Carrot_Erupt.Post(gameObject);
         Vector3 randomPosition = UnityEngine.Random.insideUnitSphere.normalized * _data.AttackRange + Player.transform.position;
         
         if (Vector3.Distance(transform.position, randomPosition) <= _data.MinimumRadius)
@@ -161,12 +171,14 @@ public class TBH : EnemyController
 
     private void Casting()
     {
-        _animator.SetBool("isTeleport", true);
-        StartCoroutine(Waiting());
+        _animator.SetBool("isTeleport", true);    
 
+        StartCoroutine(Waiting());
+       
         IEnumerator Waiting()
         {
             yield return new WaitForSeconds(_data.DelayBetweenTeleport);
+            
             SetState(State.Teleporting);
         }
     }
@@ -193,6 +205,7 @@ public class TBH : EnemyController
         StopAllCoroutines();
 
         _animator.SetBool("isDead", true);
+        _Play_SFX_Carrot_Death.Post(gameObject);
 
         StartCoroutine(IDeathAnim());
 
@@ -206,6 +219,7 @@ public class TBH : EnemyController
     public override void TakeDamage(float damage = 1, bool isCritical = false)
     {
         base.TakeDamage(damage, isCritical);
+        _Play_SFX_Carrot_Hit.Post(gameObject);
 
         if (Healthpoint <= 0)
             SetState(State.Dying);

@@ -13,6 +13,9 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] private int numOfEnemies;
     public event Action OnAllEnnemiesKilled;
 
+    public AK.Wwise.State _In_Fight_ON;
+    public AK.Wwise.State _In_Fight_OFF;
+
     public static EnemyManager Instance
     {
         get { return _instance; }
@@ -35,6 +38,7 @@ public class EnemyManager : MonoBehaviour
 
     public void AddEnemyToLevel(EnemyController enemy)
     {
+        _In_Fight_ON.SetValue();
         _enemiesInLevel.Add(enemy);
         numOfEnemies++;
     }
@@ -57,6 +61,7 @@ public class EnemyManager : MonoBehaviour
         if (numOfEnemies <= 0 && OnAllEnnemiesKilled != null)
         {
             OnAllEnnemiesKilled?.Invoke();
+            _In_Fight_OFF.SetValue();
         }
     }
 
