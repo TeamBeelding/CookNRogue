@@ -113,8 +113,8 @@ namespace Enemy.Minimoyz
                     _Stop_SFX_Pea_Movement.Post(gameObject);
                     break;
                 case State.Dying:
-                    Dying();
                     _Stop_SFX_Pea_Movement.Post(gameObject);
+                    Dying();
                     break;
                 default:
                     Dying();
@@ -273,6 +273,13 @@ namespace Enemy.Minimoyz
                 _Play_SFX_Pea_Death.Post(gameObject);
                 _Play_Weapon_Hit.Post(gameObject);
             }
+        }
+
+        protected override void Dying()
+        {
+            Destroy(gameObject);
+            
+            base.Dying();
         }
     }
 }
