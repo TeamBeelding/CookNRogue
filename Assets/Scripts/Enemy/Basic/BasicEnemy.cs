@@ -105,7 +105,6 @@ namespace Enemy.Basic
             switch (state)
             {
                 case State.Neutral:
-
                     animator.SetBool("isWalking", false);
                     animator.SetBool("isAttack", false);
                     break;
@@ -134,15 +133,21 @@ namespace Enemy.Basic
             if (state == State.Dying)
                 return;
 
-            if (!FocusPlayer)
+            if (FocusPlayer)
+            {
+                if (Vector3.Distance(transform.position, Player.transform.position) <= data.GetRangeDetection)
+                    if (Vector3.Distance(transform.position, Player.transform.position) > data.GetAttackRange)
+                        SetState(State.Chase);
+                    else
+                        SetState(State.Attack);
+            }
+            else
+            {
                 if (Vector3.Distance(transform.position, Player.transform.position) <= data.GetRangeDetection)
                     FocusPlayer = true;
-
-            if (Vector3.Distance(transform.position, Player.transform.position) <= data.GetRangeDetection &&
-                Vector3.Distance(transform.position, Player.transform.position) > data.GetAttackRange)
-                SetState(State.Chase);
-            else
-                SetState(State.Attack);
+                else 
+                    SetState(State.Neutral);
+            }
         }
 
         protected override void Chase()
@@ -219,6 +224,14 @@ namespace Enemy.Basic
                 _Play_SFX_Corn_Death.Post(gameObject);
                 SetState(State.Dying);
             }
+        }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, data.GetRangeDetection);
+            Gizmos.color = Color.blue;
+            Gizmos.DrawWireSphere(transform.position, data.GetAttackRange);
         }
     }
 }
