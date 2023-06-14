@@ -38,13 +38,14 @@ public class PlayerAttack : MonoBehaviour
 
     [Header("Sound")]
     [SerializeField] private AK.Wwise.Event _Play_Weapon_Shot;
+    [SerializeField] private AK.Wwise.Event _Play_Weapon_Empty;
 
     bool _shootOnCooldown = false;
     public bool ShootOnCooldown
     {
         get => _shootOnCooldown;
     }
-
+        
     Coroutine _curShootDelay;
 
     PlayerController _playerController;
@@ -127,7 +128,9 @@ public class PlayerAttack : MonoBehaviour
         _ammunition = 0;
         ResetParameters();
         _ammunitionBar.UpdateAmmoBar();
+        _Play_Weapon_Empty.Post(gameObject);
     }
+           
 
     #region OnHitEffects
     public void ApplyOnHitEffects(Vector3 Position)

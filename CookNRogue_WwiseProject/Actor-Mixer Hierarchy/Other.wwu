@@ -30,6 +30,11 @@
 								<Sound Name="SFX_Cook" ID="{71008A78-E35A-4E4B-A3FB-1839BC0C3014}" ShortID="604237967">
 									<PropertyList>
 										<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+										<Property Name="Volume" Type="Real64">
+											<ValueList>
+												<Value>-3</Value>
+											</ValueList>
+										</Property>
 									</PropertyList>
 									<ReferenceList>
 										<Reference Name="Conversion">
@@ -91,7 +96,7 @@
 												</Property>
 												<Property Name="Volume" Type="Real64">
 													<ValueList>
-														<Value>-2</Value>
+														<Value>-4</Value>
 													</ValueList>
 													<ModifierList>
 														<ModifierInfo>
@@ -131,7 +136,7 @@
 											<PropertyList>
 												<Property Name="Volume" Type="Real64">
 													<ValueList>
-														<Value>2</Value>
+														<Value>4</Value>
 													</ValueList>
 												</Property>
 											</PropertyList>
@@ -161,6 +166,7 @@
 								<RandomSequenceContainer Name="RC_Health_Collect" ID="{ACE5999F-B421-45DD-A4ED-2E963F39BA12}" ShortID="959034794">
 									<PropertyList>
 										<Property Name="NormalOrShuffle" Type="int16" Value="0"/>
+										<Property Name="OverrideOutput" Type="bool" Value="True"/>
 										<Property Name="Pitch" Type="int32">
 											<ModifierList>
 												<ModifierInfo>
@@ -176,6 +182,9 @@
 										</Property>
 										<Property Name="RandomAvoidRepeatingCount" Type="int32" Value="3"/>
 										<Property Name="Volume" Type="Real64">
+											<ValueList>
+												<Value>-7</Value>
+											</ValueList>
 											<ModifierList>
 												<ModifierInfo>
 													<Modifier Name="" ID="{A7150CA5-FBDD-42DD-82FF-CBF25317ACD9}">
@@ -194,7 +203,7 @@
 											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DEC634C6-86E3-4DF9-96EE-F869BA355507}"/>
 										</Reference>
 										<Reference Name="OutputBus">
-											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{85B5C199-8628-4DDB-B756-DA8917395816}"/>
+											<ObjectRef Name="TakeHit" ID="{12A3803B-DD4D-4258-BF8C-C6DF4E27F532}" WorkUnitID="{85B5C199-8628-4DDB-B756-DA8917395816}"/>
 										</Reference>
 									</ReferenceList>
 									<ChildrenList>
@@ -209,6 +218,13 @@
 											</ReferenceList>
 											<ChildrenList>
 												<AudioFileSource Name="SFX_Health_Collect_01" ID="{2173FA25-05B6-4BD2-93D6-A726FCA2CDE3}">
+													<PropertyList>
+														<Property Name="FadeInDuration" Type="Real64" Value="0.0361111111111111"/>
+														<Property Name="FadeOutDuration" Type="Real64" Value="0.33531746031746"/>
+														<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+														<Property Name="TrimBegin" Type="Real64" Value="0.216666666666667"/>
+														<Property Name="TrimEnd" Type="Real64" Value="0.701587301587302"/>
+													</PropertyList>
 													<Language>SFX</Language>
 													<AudioFile>SFX_Health_Collect_01.wav</AudioFile>
 													<MediaIDList>
@@ -231,6 +247,13 @@
 											</ReferenceList>
 											<ChildrenList>
 												<AudioFileSource Name="SFX_Health_Collect_02" ID="{34A42577-8F31-43CD-9CA5-615A4B171427}">
+													<PropertyList>
+														<Property Name="FadeInDuration" Type="Real64" Value="0.0154761904761905"/>
+														<Property Name="FadeOutDuration" Type="Real64" Value="0.261375661375661"/>
+														<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+														<Property Name="TrimBegin" Type="Real64" Value="0.208068783068783"/>
+														<Property Name="TrimEnd" Type="Real64" Value="0.65"/>
+													</PropertyList>
 													<Language>SFX</Language>
 													<AudioFile>SFX_Health_Collect_02.wav</AudioFile>
 													<MediaIDList>
@@ -253,6 +276,12 @@
 											</ReferenceList>
 											<ChildrenList>
 												<AudioFileSource Name="SFX_Health_Collect_03" ID="{A0775C31-1B95-4945-B850-64AB8EE1036A}">
+													<PropertyList>
+														<Property Name="FadeOutDuration" Type="Real64" Value="0.29790162037037"/>
+														<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+														<Property Name="TrimBegin" Type="Real64" Value="0.246782407407408"/>
+														<Property Name="TrimEnd" Type="Real64" Value="0.67865162037037"/>
+													</PropertyList>
 													<Language>SFX</Language>
 													<AudioFile>SFX_Health_Collect_03.wav</AudioFile>
 													<MediaIDList>
@@ -275,6 +304,12 @@
 											</ReferenceList>
 											<ChildrenList>
 												<AudioFileSource Name="SFX_Health_Collect_04" ID="{0B455F2D-03EA-40E3-9486-EDEDEF2A50F1}">
+													<PropertyList>
+														<Property Name="FadeOutDuration" Type="Real64" Value="0.280291005291005"/>
+														<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+														<Property Name="TrimBegin" Type="Real64" Value="0.178835978835979"/>
+														<Property Name="TrimEnd" Type="Real64" Value="0.526190476190476"/>
+													</PropertyList>
 													<Language>SFX</Language>
 													<AudioFile>SFX_Health_Collect_04.wav</AudioFile>
 													<MediaIDList>
@@ -287,6 +322,13 @@
 											</ActiveSourceList>
 										</Sound>
 										<Sound Name="SFX_Health_Collect_05" ID="{54D74448-CF9B-42BC-9D1D-BC7BDB87F644}" ShortID="720156736">
+											<PropertyList>
+												<Property Name="Volume" Type="Real64">
+													<ValueList>
+														<Value>-1</Value>
+													</ValueList>
+												</Property>
+											</PropertyList>
 											<ReferenceList>
 												<Reference Name="Conversion">
 													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DEC634C6-86E3-4DF9-96EE-F869BA355507}"/>
@@ -297,6 +339,13 @@
 											</ReferenceList>
 											<ChildrenList>
 												<AudioFileSource Name="SFX_Health_Collect_05" ID="{34493FBA-0469-4787-BB2C-7CABF2F032E8}">
+													<PropertyList>
+														<Property Name="FadeInDuration" Type="Real64" Value="0.0142857142857143"/>
+														<Property Name="FadeOutDuration" Type="Real64" Value="0.282539682539682"/>
+														<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+														<Property Name="TrimBegin" Type="Real64" Value="0.179365079365079"/>
+														<Property Name="TrimEnd" Type="Real64" Value="0.585714285714286"/>
+													</PropertyList>
 													<Language>SFX</Language>
 													<AudioFile>SFX_Health_Collect_05.wav</AudioFile>
 													<MediaIDList>
@@ -309,6 +358,13 @@
 											</ActiveSourceList>
 										</Sound>
 										<Sound Name="SFX_Health_Collect_06" ID="{CB0316D5-38C9-45A9-91D1-CEEE7847BAEB}" ShortID="526648919">
+											<PropertyList>
+												<Property Name="Volume" Type="Real64">
+													<ValueList>
+														<Value>-1</Value>
+													</ValueList>
+												</Property>
+											</PropertyList>
 											<ReferenceList>
 												<Reference Name="Conversion">
 													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DEC634C6-86E3-4DF9-96EE-F869BA355507}"/>
@@ -319,6 +375,13 @@
 											</ReferenceList>
 											<ChildrenList>
 												<AudioFileSource Name="SFX_Health_Collect_06" ID="{76211CCB-F981-4216-AB21-A20C472C111E}">
+													<PropertyList>
+														<Property Name="FadeInDuration" Type="Real64" Value="0.0103174603174603"/>
+														<Property Name="FadeOutDuration" Type="Real64" Value="0.405820105820106"/>
+														<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+														<Property Name="TrimBegin" Type="Real64" Value="0.173677248677249"/>
+														<Property Name="TrimEnd" Type="Real64" Value="0.646560846560847"/>
+													</PropertyList>
 													<Language>SFX</Language>
 													<AudioFile>SFX_Health_Collect_06.wav</AudioFile>
 													<MediaIDList>
@@ -351,7 +414,7 @@
 									</PropertyList>
 									<ReferenceList>
 										<Reference Name="Attenuation">
-											<ObjectRef Name="ATN_50M" ID="{3ABC1B5A-6934-45A5-9CE0-C7633D3E1A57}" WorkUnitID="{A99C7566-826F-4E9D-A733-5652D69BE57C}"/>
+											<ObjectRef Name="ATN_40M" ID="{3ABC1B5A-6934-45A5-9CE0-C7633D3E1A57}" WorkUnitID="{A99C7566-826F-4E9D-A733-5652D69BE57C}"/>
 										</Reference>
 										<Reference Name="Conversion">
 											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DEC634C6-86E3-4DF9-96EE-F869BA355507}"/>
@@ -362,6 +425,12 @@
 									</ReferenceList>
 									<ChildrenList>
 										<AudioFileSource Name="SFX_Door_Open" ID="{D868EC28-FAF0-404C-9412-7F63032F9A01}">
+											<PropertyList>
+												<Property Name="FadeOutDuration" Type="Real64" Value="1.91732804232804"/>
+												<Property Name="FadeOutShape" Type="int16" Value="2"/>
+												<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+												<Property Name="TrimEnd" Type="Real64" Value="3.62830687830688"/>
+											</PropertyList>
 											<Language>SFX</Language>
 											<AudioFile>SFX_Door_Open.wav</AudioFile>
 											<MediaIDList>
