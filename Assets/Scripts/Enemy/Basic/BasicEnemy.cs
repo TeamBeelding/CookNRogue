@@ -110,7 +110,6 @@ namespace Enemy.Basic
                     animator.SetBool("isAttack", false);
                     break;
                 case State.Chase:
-
                     animator.SetBool("isWalking", true);
                     animator.SetBool("isAttack", false);
                     Chase();
@@ -184,9 +183,10 @@ namespace Enemy.Basic
         protected override void Dying()
         {
             physics.SetActive(false);
-            
+
+            StopAllCoroutines();
             animator.SetBool("isDead", true);
-            
+
             StartCoroutine(IDeathAnim());
 
             IEnumerator IDeathAnim()
