@@ -189,7 +189,6 @@ namespace Enemy.Basic
         {
             physics.SetActive(false);
 
-            StopAllCoroutines();
             animator.SetBool("isDead", true);
 
             StartCoroutine(IDeathAnim());
