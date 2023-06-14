@@ -5,24 +5,49 @@ namespace Enemy.Slime
 {
     public class CheckingSpawn : MonoBehaviour
     {
-        private NavMeshAgent _agent;
+        private NavMeshAgent agent;
+        private NavMeshPath navMeshPath;
+        private Transform player;
         
         // Start is called before the first frame update
         private void Start()
         {
-            _agent = GetComponent<NavMeshAgent>();
+            agent = GetComponent<NavMeshAgent>();
+            navMeshPath = new NavMeshPath();
+            player = GameObject.FindGameObjectWithTag("Player").transform;
         }
-        
+
         public void SetTransformPosition(Vector3 position)
         {
-            transform.position = position;
+            agent.ResetPath();
+            
+            agent.enabled = false;
+            agent.transform.position = position;
+            agent.enabled = true;
         }
 
-        public bool IsPathValid(Vector3 destination)
+        public bool IsPathValid()
         {
-            _agent.SetDestination(destination);
+            agent.SetDestination(player.position);
 
-            return _agent.pathStatus == NavMeshPathStatus.PathComplete;
+            NavMeshPath path = new NavMeshPath();
+            
+            agent.CalculatePath(player.position, path);
+            
+            if (!agent.CalculatePath(player.transform.position, navMeshPath))
+            {
+                return false;
+            }
+
+            switch (navMeshPath.status)
+            {
+                case NavMeshPathStatus.PathPartial:
+                case NavMeshPathStatus.PathInvalid:
+                    return false;
+                    break;
+            }
+
+            return true;
         }
     }
 }

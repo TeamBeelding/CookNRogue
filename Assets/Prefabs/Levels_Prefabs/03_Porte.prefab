@@ -61,34 +61,34 @@ MonoBehaviour:
   m_door: {fileID: 9153521562028842739}
   m_mesh: {fileID: 4251318634952822087}
   m_isOpenOnStart: 0
-  m_doorOpeningDuration: 4
+  m_doorOpeningDuration: 3.25
   m_doorOpeningCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 2
-      outSlope: 2
+      inSlope: 1.1094881
+      outSlope: 1.1094881
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0
+      outWeight: 0.064280964
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 0
-      outSlope: 0
+      inSlope: 0.60516256
+      outSlope: 0.60516256
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0
+      inWeight: 0.075748086
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
   m_refreshRate: 0.025
-  m_portalAnimDuration: 0.5
-  m_portalAnimOffset: 3
+  m_portalAnimDuration: 0.75
+  m_portalAnimOffset: 2.5
   m_portalAnimCurve:
     serializedVersion: 2
     m_Curve:
@@ -146,8 +146,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  m_portalMaterial: {fileID: 2100000, guid: 1a3f022b510c8f949803940de8893817, type: 2}
-  m_rayMaterial: {fileID: 2100000, guid: ec0b607ae7c04ec4d9b2fd8d1c14b0fa, type: 2}
+  m_portalRenderer: {fileID: 8367243037311844304}
+  m_raysRenderer: {fileID: 2056464035364714702}
   m_rayCurve:
     serializedVersion: 2
     m_Curve:
@@ -226,7 +226,7 @@ GameObject:
   - component: {fileID: 8643676333816554522}
   - component: {fileID: 8367243037311844304}
   m_Layer: 0
-  m_Name: Door Light
+  m_Name: Portal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -613,6 +613,12 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: ec0b607ae7c04ec4d9b2fd8d1c14b0fa, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6e15d1503c8411d41a70fad80401edbd, type: 3}
+--- !u!199 &2056464035364714702 stripped
+ParticleSystemRenderer:
+  m_CorrespondingSourceObject: {fileID: 6184198899272873593, guid: 6e15d1503c8411d41a70fad80401edbd,
+    type: 3}
+  m_PrefabInstance: {fileID: 5285175404263558839}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2056464036419744623 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6184198900336360920, guid: 6e15d1503c8411d41a70fad80401edbd,
