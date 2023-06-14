@@ -182,7 +182,9 @@ public abstract class EnemyController : MonoBehaviour
             return;
         
         Instantiate(explosion, transform.position, Quaternion.identity);
-        _collider.enabled = false;
+        
+        if (_collider)
+            _collider.enabled = false;
     }
 
     // Lerp color of the enemy
