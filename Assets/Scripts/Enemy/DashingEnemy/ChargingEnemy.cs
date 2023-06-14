@@ -20,10 +20,8 @@ namespace Enemy.DashingEnemy
         [SerializeField]
         private AK.Wwise.Event _Play_Weapon_Hit;
 
-        private Coroutine _castingCoroutine;
-        private Coroutine _waitingCoroutine;
-        private Coroutine _rotateToPlayerCoroutine;
-        private Coroutine _chargingToPlayerCoroutine;
+        private Coroutine _coroutineState;
+        private Coroutine _rotateCoroutine;
         private RaycastHit _hit;
 
         private bool _isCharging = false;
@@ -80,7 +78,11 @@ namespace Enemy.DashingEnemy
     
         private void SetState(State value)
         {
-            StopAllCoroutines();
+            if (_coroutineState != null)
+                StopCoroutine(_coroutineState);
+            
+            if (_rotateCoroutine != null)
+                StopCoroutine(_rotateCoroutine);
         
             state = value;
             
@@ -137,7 +139,7 @@ namespace Enemy.DashingEnemy
                 }
                 
                 _isCharging = true;
-                StartCoroutine(ChargingToPlayer());
+                _coroutineState = StartCoroutine(ChargingToPlayer());
             }
 
             IEnumerator ChargingToPlayer()
@@ -176,8 +178,8 @@ namespace Enemy.DashingEnemy
             _changeStateToWaiting = false;
             _isCharging = false;
             
-            StartCoroutine(ICasting());
-            _rotateToPlayerCoroutine = StartCoroutine(RotateToPlayer());
+            _coroutineState = StartCoroutine(ICasting());
+            _rotateCoroutine = StartCoroutine(RotateToPlayer());
 
             IEnumerator RotateToPlayer()
             {
@@ -186,8 +188,6 @@ namespace Enemy.DashingEnemy
                     visual.transform.LookAt(new Vector3(Player.transform.position.x, visual.transform.position.y, Player.transform.position.z));
                     yield return null;
                 }
-                
-                _rotateToPlayerCoroutine = null;
             }
         
             IEnumerator ICasting()
@@ -218,14 +218,13 @@ namespace Enemy.DashingEnemy
             _isRedLineFullVisible = false;
             _canShowingRedLine = false;
 
-            _waitingCoroutine = StartCoroutine(IWaiting());
+            _coroutineState = StartCoroutine(IWaiting());
             StopCoroutine(ICanShowingRedLine());
         
             IEnumerator IWaiting()
             {
                 yield return new WaitForSeconds(_data.GetTimeWaitingDash());
         
-                _waitingCoroutine = null;
                 SetState(State.Casting);
             }
         }
@@ -235,9 +234,10 @@ namespace Enemy.DashingEnemy
         /// </summary>
         protected override void Dying()
         {
+            StopCoroutine(_coroutineState);
+            
             _Play_SFX_Cabbage_Death.Post(gameObject);
-            //StopCasting();
-            //base.Dying();
+            // base.Dying();
 
             animator.SetBool("isDead", true);
 
@@ -253,19 +253,7 @@ namespace Enemy.DashingEnemy
                 base.Dying();
             }
         }
-    
-        /// <summary>
-        /// Stop casting coroutine
-        /// </summary>
-        private void StopCasting()
-        {
-            if (_castingCoroutine == null) 
-                return;
-            
-            StopCoroutine(_castingCoroutine);
-            _castingCoroutine = null;
-        }
-    
+
         /// <summary>
         /// Return the direction to player
         /// </summary>
@@ -306,16 +294,6 @@ namespace Enemy.DashingEnemy
         {
             if (_redLineMaterial)
                 _redLineMaterial.SetFloat("_Alpha", 1f);
-        }
-    
-        /// <summary>
-        /// If he gets stun or knockback during the cast,
-        /// he will restart his charge from the beginning. 
-        /// </summary>
-        public void RestartHisCharge()
-        {
-            StopCasting();
-            SetState(State.Casting);
         }
     
         public void CollideWithPlayer()
