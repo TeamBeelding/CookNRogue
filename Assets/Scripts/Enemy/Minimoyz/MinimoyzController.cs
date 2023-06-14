@@ -210,10 +210,7 @@ namespace Enemy.Minimoyz
             
             if (agent.enabled == false)
                 agent.enabled = true;
-            
-            if (!agent.hasPath)
-                SetState(State.Dying);
-            
+
             coroutineState = StartCoroutine(IChase());
 
             IEnumerator IChase()
@@ -221,7 +218,12 @@ namespace Enemy.Minimoyz
                 while (state == State.Chase)
                 {
                     agent.SetDestination(Player.transform.position);
-                    
+
+                    if (!agent.CalculatePath(Player.transform.position, navMeshPath))
+                    {
+                        SetState(State.Dying);
+                    }
+
                     yield return null;
                 }
             }

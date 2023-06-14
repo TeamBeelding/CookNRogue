@@ -19,6 +19,8 @@ namespace Enemy.Slime
 
         public void SetTransformPosition(Vector3 position)
         {
+            spawnPosition.ResetPath();
+            
             spawnPosition.enabled = false;
             spawnPosition.transform.position = position;
             spawnPosition.enabled = true;
@@ -26,9 +28,13 @@ namespace Enemy.Slime
 
         public bool IsPathValid()
         {
-            spawnPosition.CalculatePath(player.position, navMeshPath);
-        
-            return navMeshPath.status == NavMeshPathStatus.PathComplete;
+            spawnPosition.SetDestination(player.position);
+
+            NavMeshPath path = new NavMeshPath();
+            
+            bool hasPath = spawnPosition.CalculatePath(player.position, path);
+
+            return hasPath;
         }
     }
 }
