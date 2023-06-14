@@ -66,14 +66,24 @@ public class TBH : EnemyController
             case State.Neutral:
                 break;
             case State.Attacking:
-                Attack(Shot, _data.AttackSpeed);
+
+                _animator.SetBool("isTeleport", false);
+
+                StartCoroutine(Waiting());
+
+                IEnumerator Waiting() 
+                {
+                    yield return new WaitForSeconds(1f);
+                    _animator.SetBool("isShoot", true);
+                    Attack(Shot, _data.AttackSpeed);
+                }
                 break;
             case State.Teleporting:
-                _animator.SetBool("isShoot", false);
+                //_animator.SetBool("isShoot", false);
                 Teleport();
                 break;
             case State.Casting:
-                _animator.SetBool("isShoot", false);
+                //_animator.SetBool("isShoot", false);
                 Casting();
                 break;
             case State.Dying:
@@ -111,8 +121,6 @@ public class TBH : EnemyController
             
             GameObject bullet = Instantiate(_bullet, _gun.transform.position, Quaternion.identity);
 
-            _animator.SetBool("isShoot", true);
-
             bullet.GetComponent<EnemyBulletController>().SetDirection(new Vector3(Player.transform.position.x + spread, Player.transform.position.y, Player.transform.position.z + spread));
             bullet.GetComponent<EnemyBulletController>().SetDamage(_data.DamagePerBullet);
         }
@@ -120,7 +128,6 @@ public class TBH : EnemyController
 
     private void Teleport()
     {
-        _animator.SetBool("isTeleport", true);
 
         Vector3 randomPosition = UnityEngine.Random.insideUnitSphere.normalized * _data.AttackRange + Player.transform.position;
         
@@ -133,6 +140,7 @@ public class TBH : EnemyController
             transform.position = new Vector3(randomPosition.x, transform.position.y, randomPosition.z);
         else
             Teleport();
+
         
         SetState(State.Attacking);
     }
@@ -153,13 +161,13 @@ public class TBH : EnemyController
 
     private void Casting()
     {
+        _animator.SetBool("isTeleport", true);
         StartCoroutine(Waiting());
 
         IEnumerator Waiting()
         {
             yield return new WaitForSeconds(_data.DelayBetweenTeleport);
             SetState(State.Teleporting);
-            _animator.SetBool("isTeleport", false);
         }
     }
 
@@ -182,13 +190,15 @@ public class TBH : EnemyController
 
     protected override void Dying()
     {
+        StopAllCoroutines();
+
         _animator.SetBool("isDead", true);
 
         StartCoroutine(IDeathAnim());
 
         IEnumerator IDeathAnim()
         {
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(2f);
             base.Dying();
         }
     }
