@@ -15,6 +15,7 @@ public class TBH : EnemyController
     [SerializeField] private CheckingSpawn _checkingSpawn;
 
     [SerializeField] private Animator _animator;
+    [SerializeField] private GameObject physics;
     
     public enum State
     {
@@ -190,6 +191,7 @@ public class TBH : EnemyController
 
     protected override void Dying()
     {
+        physics.SetActive(false);
         StopAllCoroutines();
 
         _animator.SetBool("isDead", true);

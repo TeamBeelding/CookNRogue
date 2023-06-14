@@ -40,6 +40,7 @@ namespace Enemy.DashingEnemy
         private GameObject visual;
 
         private Animator animator;
+        [SerializeField] private GameObject physics;
 
         public enum State
         {
@@ -234,6 +235,7 @@ namespace Enemy.DashingEnemy
         /// </summary>
         protected override void Dying()
         {
+            physics.SetActive(false);
             StopCoroutine(_coroutineState);
             
             _Play_SFX_Cabbage_Death.Post(gameObject);

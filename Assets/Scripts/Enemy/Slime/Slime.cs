@@ -1,9 +1,7 @@
-using System;
 using Enemy.Data;
 using Enemy.Effect_And_Juiciness;
 using Enemy.Minimoyz;
 using NaughtyAttributes;
-using Newtonsoft.Json.Linq;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.AI;
@@ -38,6 +36,7 @@ namespace Enemy.Slime
 
         private Animator animator;
         private Coroutine stateCoroutine;
+        [SerializeField] private GameObject physics;
 
         public enum State
         {
@@ -242,6 +241,7 @@ namespace Enemy.Slime
 
         protected override void Dying()
         {
+            physics.SetActive(false);
             agent.SetDestination(transform.position);
 
             animator.SetBool("isDead", true);
