@@ -17208,9 +17208,19 @@ MonoBehaviour:
   pauseMenu: {fileID: 2385128766419158318}
   deathMenu: {fileID: 6019552635519093619}
   victoryMenu: {fileID: 6019552635582678804}
-  PlayerAnimStates: {fileID: 5661605051567498819}
+  playerAnimStatesScript: {fileID: 5661605051567498819}
   DashingParticles: {fileID: 1825427510}
   _isAiming: 0
+  _Stop_SFX_Cook:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 7970c0b13bc1c554095df6e9641b02c3,
+      type: 2}
+  _Play_MC_Dash:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: e640ffd2deb190345bae5d495677357d,
+      type: 2}
   isOnTutorial: 0
   tutorialManager: {fileID: 0}
 --- !u!114 &8435914716660352085
@@ -17243,6 +17253,11 @@ MonoBehaviour:
     valueGuidInternal: 
     WwiseObjectReference: {fileID: 11400000, guid: 4813f57f8d3142f43bce0820282898c5,
       type: 2}
+  _Play_Weapon_Empty:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 6460952090bbe8a4f8b66e4f37966580,
+      type: 2}
   _shootingParticles: {fileID: 1025718787}
   _color: {r: 0, g: 0.41039923, b: 1.4142135, a: 1}
   defaultcolor: {r: 0, g: 0.41039923, b: 1.0592737, a: 1}
@@ -17269,6 +17284,11 @@ MonoBehaviour:
   m_QTEScript: {fileID: 8435914716660352040}
   m_cookingProgressVisuals: {fileID: 5548440836250469752}
   m_cookingProgressBarFill: {fileID: 4582907567251045571}
+  _Play_SFX_Cook:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 3c39646dfd215a84eb83092369c16eae,
+      type: 2}
 --- !u!114 &8435914716660352040
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17328,6 +17348,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _health: 0
   _maxHealth: 12
+  _Play_SFX_Health_Collect:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: a11175ff5922b5c41b7cc2fae442d39d,
+      type: 2}
+  _Play_MC_Hit:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 3ae68197cbaab0947a9e09eb4d59bb88,
+      type: 2}
+  _Play_MC_Death:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 1f86c2b49f77cb3488346a181ed6e5cb,
+      type: 2}
 --- !u!114 &8735979666070591228
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18426,6 +18461,34 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 5611391004613052829, guid: 935abec9df5cd3147811b979982f645a,
+        type: 3}
+      propertyPath: m_cookingSpoon
+      value: 
+      objectReference: {fileID: 3204962584445486938}
+    - target: {fileID: 5611391004613052829, guid: 935abec9df5cd3147811b979982f645a,
+        type: 3}
+      propertyPath: m_cookingMarmite
+      value: 
+      objectReference: {fileID: 9010527008602823680}
+    - target: {fileID: 5611391004613052829, guid: 935abec9df5cd3147811b979982f645a,
+        type: 3}
+      propertyPath: _Play_MC_Run.WwiseObjectReference
+      value: 
+      objectReference: {fileID: 11400000, guid: e8a629c508415c1429ff3f1cd7b9f90e,
+        type: 2}
+    - target: {fileID: 5611391004613052829, guid: 935abec9df5cd3147811b979982f645a,
+        type: 3}
+      propertyPath: _Play_MC_Run_Foley.WwiseObjectReference
+      value: 
+      objectReference: {fileID: 11400000, guid: ceade8fc305e8eb45a308947936e113b,
+        type: 2}
+    - target: {fileID: 5611391004613052829, guid: 935abec9df5cd3147811b979982f645a,
+        type: 3}
+      propertyPath: _Play_MC_Run_Footstep.WwiseObjectReference
+      value: 
+      objectReference: {fileID: 11400000, guid: 6b4465da3145f2c458284ff054c19969,
+        type: 2}
     - target: {fileID: 5719901115708892548, guid: 935abec9df5cd3147811b979982f645a,
         type: 3}
       propertyPath: m_Layer
@@ -18518,6 +18581,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 935abec9df5cd3147811b979982f645a, type: 3}
+--- !u!4 &3204962584445486938 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3402458327081216132, guid: 935abec9df5cd3147811b979982f645a,
+    type: 3}
+  m_PrefabInstance: {fileID: 238028526911254494}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4783315040807375732 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4696157102516681898, guid: 935abec9df5cd3147811b979982f645a,
@@ -18548,6 +18617,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a5706da74587a84c8bd4739235911b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &9010527008602823680 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 9099091197571494878, guid: 935abec9df5cd3147811b979982f645a,
+    type: 3}
+  m_PrefabInstance: {fileID: 238028526911254494}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7163483498006857840
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19221,6 +19296,12 @@ PrefabInstance:
       propertyPath: _damageFactor.Array.data[2]
       value: 1.8
       objectReference: {fileID: 0}
+    - target: {fileID: 3452839196401527289, guid: 21c6504aa05bbae47b8c7e27a587ea54,
+        type: 3}
+      propertyPath: _Play_SFX_Ingredient_Collect.WwiseObjectReference
+      value: 
+      objectReference: {fileID: 11400000, guid: e6f89b4385f936441866a55ad9823725,
+        type: 2}
     - target: {fileID: 3452839196684701412, guid: 21c6504aa05bbae47b8c7e27a587ea54,
         type: 3}
       propertyPath: m_Color.b

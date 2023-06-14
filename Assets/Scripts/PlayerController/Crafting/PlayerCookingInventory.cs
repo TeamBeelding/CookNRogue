@@ -43,6 +43,8 @@ public class PlayerCookingInventory : MonoBehaviour
 
     List<ProjectileData> _equippedRecipe = new();
 
+    [SerializeField] private AK.Wwise.Event _Play_SFX_Ingredient_Collect;
+
     public List<ProjectileData> EquippedRecipe
     {
         get => _equippedRecipe;
@@ -183,7 +185,9 @@ public class PlayerCookingInventory : MonoBehaviour
     #region Inventory Management
     public void AddIngredientToInventory(ProjectileData data)
     {
-        foreach(PlayerCookingInventoryWheel wheel in m_inventoryWheels)
+        _Play_SFX_Ingredient_Collect.Post(gameObject);
+
+        foreach (PlayerCookingInventoryWheel wheel in m_inventoryWheels)
         {
             for(int i = 0; i < 8; i++)
             {
