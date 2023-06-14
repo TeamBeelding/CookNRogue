@@ -236,22 +236,22 @@ namespace Enemy.DashingEnemy
         protected override void Dying()
         {
             _Play_SFX_Cabbage_Death.Post(gameObject);
-            StopCasting();
-            base.Dying();
+            //StopCasting();
+            //base.Dying();
 
-            //animator.SetBool("isDead", true);
+            animator.SetBool("isDead", true);
 
-            //Debug.Log("Dead Anim");
+            Debug.Log("Dead Anim");
 
-            //StartCoroutine(IDeathAnim());
+            StartCoroutine(IDeathAnim());
 
-            //IEnumerator IDeathAnim()
-            //{
-            //    Debug.Log("Wait");
-            //    yield return new WaitForSeconds(2f);
-            //    Debug.Log("Destroyed");
-            //    base.Dying();
-            //}
+            IEnumerator IDeathAnim()
+            {
+                Debug.Log("Wait");
+                yield return new WaitForSeconds(2f);
+                Debug.Log("Destroyed");
+                base.Dying();
+            }
         }
     
         /// <summary>
