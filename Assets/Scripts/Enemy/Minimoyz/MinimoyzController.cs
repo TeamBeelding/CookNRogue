@@ -223,6 +223,16 @@ namespace Enemy.Minimoyz
                     {
                         SetState(State.Dying);
                     }
+                    else
+                    {
+                        switch (navMeshPath.status)
+                        {
+                            case NavMeshPathStatus.PathPartial:
+                            case NavMeshPathStatus.PathInvalid:
+                                SetState(State.Dying);
+                                break;
+                        }
+                    }
 
                     yield return null;
                 }
