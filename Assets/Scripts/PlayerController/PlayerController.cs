@@ -805,7 +805,7 @@ public class PlayerController : MonoBehaviour
     
     public void RestartGame()
     {
-        SceneManager.LoadScene("Prototype");
+        SceneManager.LoadScene(1);
     }
 
     public void EndGame()
