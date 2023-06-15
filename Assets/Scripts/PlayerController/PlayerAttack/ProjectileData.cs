@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 using TNRD;
+using AK.Wwise;
 
 public enum INGREDIENT
 {
@@ -32,6 +33,7 @@ public class ProjectileData : ScriptableObject
     [Header("Inventory")]
     [FormerlySerializedAs("sprite")]
     public Sprite inventorySprite;
+    public string description;
     [Space(20)]
 
     [Header("Physic and Movements")]
@@ -44,6 +46,11 @@ public class ProjectileData : ScriptableObject
     public int _ammunition;
     public float _attackDelay;
     public float _damage;
+
+    [Space(20)]
+
+    [Header("Audio")]
+    public State audioState;
 
     [Space(20)]
 

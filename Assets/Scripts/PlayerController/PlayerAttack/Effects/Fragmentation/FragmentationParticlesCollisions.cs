@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 
 [RequireComponent(typeof(ParticleSystem))]
@@ -9,37 +10,58 @@ public class FragmentationParticlesCollisions : MonoBehaviour
     List<ParticleCollisionEvent> _collisionEvents;
     [SerializeField] private float m_ExplosionForce;
     [SerializeField] private float m_ExplosionRadius;
-    [SerializeField] private float damage;
+    private float _damage = 0f;
+    [Range(0f, 100f)]
+    [SerializeField] private float _damage_percentage;
     [SerializeField] private LayerMask _mask;
-
+    PlayerAttack _playerAttack;
+    public GameObject DamageUI;
     void Start()
     {
+        _playerAttack = FindObjectOfType<PlayerAttack>();
+        float damage = _playerAttack._damage;
+        SetDamage(damage);
+
         _part = GetComponent<ParticleSystem>();
         _collisionEvents = new List<ParticleCollisionEvent>();
         Destroy(gameObject,_part.main.duration);
     }
     void OnParticleCollision(GameObject other)
     {
+
         int numCollisionEvents = _part.GetCollisionEvents(other, _collisionEvents);
 
-        Rigidbody rb = other.GetComponent<Rigidbody>();
         int i = 0;
 
         while (i < numCollisionEvents)
         {
-           EnemyController enemyController = other.GetComponent<EnemyController>();
-
+            EnemyController enemyController = other.GetComponentInParent<EnemyController>();
+            
             if (enemyController != null)
             {
-                enemyController.TakeDamage(damage);
+                Debug.Log((_damage_percentage / 100));
+                float totalDamage = _damage * (_damage_percentage / 100);
+                totalDamage = (int)totalDamage;
+                enemyController.TakeDamage(totalDamage);
+                GameObject UIDAMAGE = Instantiate(DamageUI, other.transform.position + (Vector3.up * 3) + GetCameraDirection() * 0.5f, Quaternion.identity);
+                UIDAMAGE.GetComponentInChildren<TextMeshProUGUI>().text = totalDamage.ToString();
             }
-            kaboom(other.transform.position);
+            //kaboom(other.transform.position);
             i++;
         }
         
     }
 
-    
+    Vector3 GetCameraDirection()
+    {
+        Vector3 dir = Camera.main.transform.position - transform.position;
+        return dir;
+    }
+
+    public void SetDamage(float damage)
+    {
+        _damage = damage;
+    }
 
     void kaboom(Vector3 Position)
     {

@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Tutoriel;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -18,11 +20,17 @@ public abstract class EnemyController : MonoBehaviour
     
     protected bool FocusPlayer = false;
     private bool _canAttack = true;
+    protected bool _canAttackAnim = true;
     
     protected float Healthpoint;
     
     [SerializeField]
     protected GameObject explosion;
+
+    [SerializeField] 
+    private TutorialManager tutorial;
+
+    private bool isDead;
 
     protected virtual void Awake()
     {
@@ -58,23 +66,36 @@ public abstract class EnemyController : MonoBehaviour
         
     }
     
+    // ReSharper disable Unity.PerformanceAnalysis
     protected virtual void Attack(UnityAction OnAction, float delay = 0.5f)
     {
+        if (Player.GetComponent<PlayerController>().GetIsOnTutorial())
+            return;
+        
         if (_canAttack)
         {
             OnAction?.Invoke();
             _canAttack = false;
+            _canAttackAnim = false;
             StartCoroutine(IAttackTimer(delay));
         }
         
         IEnumerator IAttackTimer(float delay = 0.5f)
         {
-            yield return new WaitForSeconds(delay);
-            _canAttack = true;
-            _rend.material.color = Color.white;
-        }
-    }
+            yield return new WaitForSeconds(delay * 0.95f);
+            _canAttackAnim = true;
 
+            yield return new WaitForSeconds(delay * 0.05f);
+            _canAttack = true;
+        }
+
+        //IEnumerator IAttackAnimTimer(float delay = 0.5f)
+        //{
+        //    yield return new WaitForSeconds(delay * 1.5f);
+        //    _canAttackAnim = true;
+        //}
+    }
+    
     #endregion
 
     #region TakeDamage
@@ -85,9 +106,14 @@ public abstract class EnemyController : MonoBehaviour
         Healthpoint -= damage;
 
         if (Healthpoint > 0)
+        {
             TakeDamageEffect();
-        else
+        }
+        else if (!isDead) 
+        {
+            isDead = true;
             Dying();
+        }
 
         // Color the enemy red for a short time to indicate that he has been hit
         IEnumerator IColorationFeedback()
@@ -156,7 +182,9 @@ public abstract class EnemyController : MonoBehaviour
             return;
         
         Instantiate(explosion, transform.position, Quaternion.identity);
-        _collider.enabled = false;
+        
+        if (_collider)
+            _collider.enabled = false;
     }
 
     // Lerp color of the enemy

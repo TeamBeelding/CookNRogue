@@ -13,6 +13,9 @@ public class TBH : EnemyController
     [SerializeField] private GameObject _bullet;
     [SerializeField] private ParticleSystem m_stateSystem;
     [SerializeField] private CheckingSpawn _checkingSpawn;
+
+    [SerializeField] private Animator _animator;
+    [SerializeField] private GameObject physics;
     
     public enum State
     {
@@ -28,7 +31,7 @@ public class TBH : EnemyController
     protected override void Awake()
     {
         base.Awake();
-        
+        _animator = GetComponentInChildren<Animator>();
         Healthpoint = _data.Health;
         _checkingSpawn = GetComponentInChildren<CheckingSpawn>();
     }
@@ -40,7 +43,10 @@ public class TBH : EnemyController
 
     private void FixedUpdate()
     {
-        AreaDetection();
+        if (_state != State.Dying) 
+        {
+            AreaDetection();
+        }
     }
 
     private void AreaDetection()
@@ -61,12 +67,24 @@ public class TBH : EnemyController
             case State.Neutral:
                 break;
             case State.Attacking:
-                Attack(Shot, _data.AttackSpeed);
+
+                _animator.SetBool("isTeleport", false);
+
+                StartCoroutine(Waiting());
+
+                IEnumerator Waiting() 
+                {
+                    yield return new WaitForSeconds(1f);
+                    _animator.SetBool("isShoot", true);
+                    Attack(Shot, _data.AttackSpeed);
+                }
                 break;
             case State.Teleporting:
+                //_animator.SetBool("isShoot", false);
                 Teleport();
                 break;
             case State.Casting:
+                //_animator.SetBool("isShoot", false);
                 Casting();
                 break;
             case State.Dying:
@@ -83,7 +101,7 @@ public class TBH : EnemyController
     {
         float angleStep = _data.AngleShot / _data.NumberOfBullet;
         
-        transform.LookAt(Player.transform);
+        transform.LookAt(new Vector3(Player.transform.position.x, transform.position.y, Player.transform.position.z));
 
         for (int i = 0; i < _data.NumberOfBullet; i++)
         {
@@ -103,7 +121,7 @@ public class TBH : EnemyController
             yield return new WaitForSeconds(randomDelay);
             
             GameObject bullet = Instantiate(_bullet, _gun.transform.position, Quaternion.identity);
-            
+
             bullet.GetComponent<EnemyBulletController>().SetDirection(new Vector3(Player.transform.position.x + spread, Player.transform.position.y, Player.transform.position.z + spread));
             bullet.GetComponent<EnemyBulletController>().SetDamage(_data.DamagePerBullet);
         }
@@ -111,6 +129,7 @@ public class TBH : EnemyController
 
     private void Teleport()
     {
+
         Vector3 randomPosition = UnityEngine.Random.insideUnitSphere.normalized * _data.AttackRange + Player.transform.position;
         
         if (Vector3.Distance(transform.position, randomPosition) <= _data.MinimumRadius)
@@ -122,6 +141,7 @@ public class TBH : EnemyController
             transform.position = new Vector3(randomPosition.x, transform.position.y, randomPosition.z);
         else
             Teleport();
+
         
         SetState(State.Attacking);
     }
@@ -142,8 +162,9 @@ public class TBH : EnemyController
 
     private void Casting()
     {
+        _animator.SetBool("isTeleport", true);
         StartCoroutine(Waiting());
-        
+
         IEnumerator Waiting()
         {
             yield return new WaitForSeconds(_data.DelayBetweenTeleport);
@@ -166,6 +187,22 @@ public class TBH : EnemyController
     public override bool IsMoving()
     {
         return false;
+    }
+
+    protected override void Dying()
+    {
+        physics.SetActive(false);
+        StopAllCoroutines();
+
+        _animator.SetBool("isDead", true);
+
+        StartCoroutine(IDeathAnim());
+
+        IEnumerator IDeathAnim()
+        {
+            yield return new WaitForSeconds(2f);
+            base.Dying();
+        }
     }
 
     public override void TakeDamage(float damage = 1, bool isCritical = false)
