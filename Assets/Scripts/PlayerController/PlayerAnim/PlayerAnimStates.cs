@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerAnimStates : MonoBehaviour
 {
-
+    
     public enum playerAnimStates
     {
         IDLE,
