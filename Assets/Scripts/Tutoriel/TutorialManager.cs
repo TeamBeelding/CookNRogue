@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using Dialogues;
 using Sirenix.Utilities;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 
 namespace Tutoriel
 {
@@ -73,8 +71,10 @@ namespace Tutoriel
         {
             _dialogueBox = GameObject.FindObjectOfType<DialogueBox>();
             _player = GameObject.FindGameObjectWithTag("Player");
-
+            
             SetTutorialState(TutorialStep.Move);
+            
+            ActiveEnemies(false);
         }
         
         public TutorialStep GetTutorialState() => tutorialStep;
@@ -242,7 +242,7 @@ namespace Tutoriel
         
         private void Fighting()
         {
-            SpawnEnemy();
+            ActiveEnemies(true);
 
             StartCoroutine(IFighting());
             
@@ -318,14 +318,14 @@ namespace Tutoriel
             }
         }
         
-        private void SpawnEnemy()
+        private void ActiveEnemies(bool value)
         {
             if (enemies == null || enemies.Count == 0)
                 return;
 
             foreach (GameObject enemy in enemies)
             {
-                enemy.SetActive(true);
+                enemy.SetActive(value);
             }
         }
         
