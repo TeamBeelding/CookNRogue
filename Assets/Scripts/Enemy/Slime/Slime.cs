@@ -246,23 +246,16 @@ namespace Enemy.Slime
 
             animator.SetBool("isDead", true);
 
-            stateCoroutine = StartCoroutine(IDeathAnim());
-
-            IEnumerator IDeathAnim()
+            for (int i = 0; i < data.GetSlimeSpawnWhenDying; i++)
             {
-                yield return new WaitForSeconds(2f);
+                Vector2 origin = new Vector2(transform.position.x, transform.position.z);
+                Vector3 point = Random.insideUnitCircle * data.GetRadiusMinimoyzSpawnPoint + origin;
+                point = new Vector3(point.x, 0, point.y);
 
-                for (int i = 0; i < data.GetSlimeSpawnWhenDying; i++)
-                {
-                    Vector2 origin = new Vector2(transform.position.x, transform.position.z);
-                    Vector3 point = Random.insideUnitCircle * data.GetRadiusMinimoyzSpawnPoint + origin;
-                    point = new Vector3(point.x, 0, point.y);
-
-                    Instantiate(minimoyz, point, Quaternion.identity);
-                }
-
-                base.Dying();
+                Instantiate(minimoyz, point, Quaternion.identity);
             }
+            
+            base.Dying();
         }
 
         public override bool IsMoving()
