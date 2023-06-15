@@ -43,7 +43,6 @@ namespace Dialogues
                 if (transform.position != pos)
                     transform.position = pos;
             }
-
         }
 
         public void DisplayText(string text, Transform lookAt)
