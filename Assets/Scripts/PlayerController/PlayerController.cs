@@ -237,8 +237,9 @@ public class PlayerController : MonoBehaviour
         _playerActions.UI.Disable();
         _playerActions.Debug.Disable();
         #endregion
-
-        _roomManager.OnRoomStart += Spawn;
+        
+        if (_roomManager)
+            _roomManager.OnRoomStart += Spawn;
 
         m_currentHealthValue = m_maxHealthValue;
 
