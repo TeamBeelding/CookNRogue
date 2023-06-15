@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Enemy;
 using Tutoriel;
 using Unity.VisualScripting;
 using UnityEngine;

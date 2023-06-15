@@ -90,10 +90,12 @@ public class PlayerCookingInventory : MonoBehaviour
         gameObject.SetActive(false);
         _recipe = new List<ProjectileData>();
 
-        _shownPosition = m_UIHolder.position;
+        _shownPosition = m_UIHolder.localPosition;
+        Debug.Log(_shownPosition);
         _hiddenPosition = _shownPosition;
         _hiddenPosition.y -= gameObject.GetComponent<RectTransform>().rect.height;
-        m_UIHolder.position = _hiddenPosition;
+        m_UIHolder.localPosition = _hiddenPosition;
+        Debug.Log(_hiddenPosition);
 
         ResetRecipeUI();
     }
@@ -128,13 +130,13 @@ public class PlayerCookingInventory : MonoBehaviour
 
         float time = m_showAnimDuration;
         Vector3 targetPos = _shownPosition;
-        Vector3 initPos = m_UIHolder.position;
+        Vector3 initPos = m_UIHolder.localPosition;
 
 
         for (float f = _curAnimProgress > 0 ? (1 - _curAnimProgress) * time : 0; f < time; f += Time.unscaledDeltaTime)
         {
             _curAnimProgress = f / time;
-            m_UIHolder.position = Vector3.Lerp(initPos, targetPos, m_showAnimPosCurve.Evaluate(_curAnimProgress));
+            m_UIHolder.localPosition = Vector3.Lerp(initPos, targetPos, m_showAnimPosCurve.Evaluate(_curAnimProgress));
             m_UIHolder.localScale = Vector3.Lerp(Vector3.one * 0.5f, Vector3.one, m_showAnimPosCurve.Evaluate(_curAnimProgress));
             Time.timeScale = Mathf.Lerp(1, 0, m_showAnimPosCurve.Evaluate(_curAnimProgress));
             Color tempc = m_transition.color;
@@ -143,7 +145,7 @@ public class PlayerCookingInventory : MonoBehaviour
             yield return null;
         }
 
-        m_UIHolder.position = targetPos;
+        m_UIHolder.localPosition = targetPos;
         _areControlsLocked = false;
         _curAnimProgress = 0;
         _curShowRoutine = null;
@@ -154,13 +156,13 @@ public class PlayerCookingInventory : MonoBehaviour
         _areControlsLocked = true;
 
         float time = m_showAnimDuration;
-        Vector3 initPos = m_UIHolder.position;
+        Vector3 initPos = m_UIHolder.localPosition;
         Vector3 targetPos = _hiddenPosition;
 
         for (float f = _curAnimProgress > 0 ? (1 - _curAnimProgress) * time : 0; f < time; f += Time.unscaledDeltaTime)
         {
             _curAnimProgress = f / time;
-            m_UIHolder.position = Vector3.Lerp(targetPos, initPos, 1 - m_showAnimPosCurve.Evaluate(_curAnimProgress));
+            m_UIHolder.localPosition = Vector3.Lerp(targetPos, initPos, 1 - m_showAnimPosCurve.Evaluate(_curAnimProgress));
             m_UIHolder.localScale = Vector3.Lerp(Vector3.one * 0.5f, Vector3.one, 1 - m_showAnimPosCurve.Evaluate(_curAnimProgress));
             Time.timeScale = Mathf.Lerp(1, 0, 1 - m_showAnimPosCurve.Evaluate(_curAnimProgress));
             Color tempc = m_transition.color;
@@ -169,7 +171,7 @@ public class PlayerCookingInventory : MonoBehaviour
             yield return null;
         }
 
-        m_UIHolder.position = targetPos;
+        m_UIHolder.localPosition = targetPos;
         _areControlsLocked = false;
         _curAnimProgress = 0;
         _curShowRoutine = null;

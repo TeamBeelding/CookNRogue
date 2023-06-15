@@ -1,6 +1,7 @@
 using UnityEngine.InputSystem;
 using UnityEngine;
 using System.Collections;
+using Enemy;
 using Tutoriel;
 using UnityEngine.SceneManagement;
 using static UnityEngine.ParticleSystem;
@@ -236,8 +237,9 @@ public class PlayerController : MonoBehaviour
         _playerActions.UI.Disable();
         _playerActions.Debug.Disable();
         #endregion
-
-        _roomManager.OnRoomStart += Spawn;
+        
+        if (_roomManager)
+            _roomManager.OnRoomStart += Spawn;
 
         m_currentHealthValue = m_maxHealthValue;
 
@@ -804,7 +806,7 @@ public class PlayerController : MonoBehaviour
     
     public void RestartGame()
     {
-        SceneManager.LoadScene("Prototype");
+        SceneManager.LoadScene(1);
     }
 
     public void EndGame()
