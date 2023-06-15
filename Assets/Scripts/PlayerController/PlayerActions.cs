@@ -555,6 +555,42 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ReloadLevel"",
+                    ""type"": ""Button"",
+                    ""id"": ""25739d98-662d-479a-a24e-699520ac22b5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""GoToNextLevel"",
+                    ""type"": ""Button"",
+                    ""id"": ""7b3cbdd1-4088-4899-b6ba-424593aed7a1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""GoToPreviousLevel"",
+                    ""type"": ""Button"",
+                    ""id"": ""7cd4477a-f228-4660-8fad-d189f5b3a015"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SkipTuto"",
+                    ""type"": ""Button"",
+                    ""id"": ""a5fb2b67-89d3-4cec-a96a-684e4430cc35"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -577,6 +613,50 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""GamePad"",
                     ""action"": ""KillAllEnemies"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1349a239-4bf9-4da3-aa59-dc8be77fca7e"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""GamePad"",
+                    ""action"": ""GoToNextLevel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7d27d9af-43b9-4763-bac6-48faf7c775bd"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""GamePad"",
+                    ""action"": ""GoToPreviousLevel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""84020daa-31ba-4386-b361-88acf0b62f60"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""GamePad"",
+                    ""action"": ""SkipTuto"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""aed4e5b5-4cf2-4e6c-8d14-286d29c06c7f"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""GamePad"",
+                    ""action"": ""ReloadLevel"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -638,6 +718,10 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
         m_Debug = asset.FindActionMap("Debug", throwIfNotFound: true);
         m_Debug_EnterDebug = m_Debug.FindAction("EnterDebug", throwIfNotFound: true);
         m_Debug_KillAllEnemies = m_Debug.FindAction("KillAllEnemies", throwIfNotFound: true);
+        m_Debug_ReloadLevel = m_Debug.FindAction("ReloadLevel", throwIfNotFound: true);
+        m_Debug_GoToNextLevel = m_Debug.FindAction("GoToNextLevel", throwIfNotFound: true);
+        m_Debug_GoToPreviousLevel = m_Debug.FindAction("GoToPreviousLevel", throwIfNotFound: true);
+        m_Debug_SkipTuto = m_Debug.FindAction("SkipTuto", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -894,12 +978,20 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
     private IDebugActions m_DebugActionsCallbackInterface;
     private readonly InputAction m_Debug_EnterDebug;
     private readonly InputAction m_Debug_KillAllEnemies;
+    private readonly InputAction m_Debug_ReloadLevel;
+    private readonly InputAction m_Debug_GoToNextLevel;
+    private readonly InputAction m_Debug_GoToPreviousLevel;
+    private readonly InputAction m_Debug_SkipTuto;
     public struct DebugActions
     {
         private @PlayerActions m_Wrapper;
         public DebugActions(@PlayerActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @EnterDebug => m_Wrapper.m_Debug_EnterDebug;
         public InputAction @KillAllEnemies => m_Wrapper.m_Debug_KillAllEnemies;
+        public InputAction @ReloadLevel => m_Wrapper.m_Debug_ReloadLevel;
+        public InputAction @GoToNextLevel => m_Wrapper.m_Debug_GoToNextLevel;
+        public InputAction @GoToPreviousLevel => m_Wrapper.m_Debug_GoToPreviousLevel;
+        public InputAction @SkipTuto => m_Wrapper.m_Debug_SkipTuto;
         public InputActionMap Get() { return m_Wrapper.m_Debug; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -915,6 +1007,18 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                 @KillAllEnemies.started -= m_Wrapper.m_DebugActionsCallbackInterface.OnKillAllEnemies;
                 @KillAllEnemies.performed -= m_Wrapper.m_DebugActionsCallbackInterface.OnKillAllEnemies;
                 @KillAllEnemies.canceled -= m_Wrapper.m_DebugActionsCallbackInterface.OnKillAllEnemies;
+                @ReloadLevel.started -= m_Wrapper.m_DebugActionsCallbackInterface.OnReloadLevel;
+                @ReloadLevel.performed -= m_Wrapper.m_DebugActionsCallbackInterface.OnReloadLevel;
+                @ReloadLevel.canceled -= m_Wrapper.m_DebugActionsCallbackInterface.OnReloadLevel;
+                @GoToNextLevel.started -= m_Wrapper.m_DebugActionsCallbackInterface.OnGoToNextLevel;
+                @GoToNextLevel.performed -= m_Wrapper.m_DebugActionsCallbackInterface.OnGoToNextLevel;
+                @GoToNextLevel.canceled -= m_Wrapper.m_DebugActionsCallbackInterface.OnGoToNextLevel;
+                @GoToPreviousLevel.started -= m_Wrapper.m_DebugActionsCallbackInterface.OnGoToPreviousLevel;
+                @GoToPreviousLevel.performed -= m_Wrapper.m_DebugActionsCallbackInterface.OnGoToPreviousLevel;
+                @GoToPreviousLevel.canceled -= m_Wrapper.m_DebugActionsCallbackInterface.OnGoToPreviousLevel;
+                @SkipTuto.started -= m_Wrapper.m_DebugActionsCallbackInterface.OnSkipTuto;
+                @SkipTuto.performed -= m_Wrapper.m_DebugActionsCallbackInterface.OnSkipTuto;
+                @SkipTuto.canceled -= m_Wrapper.m_DebugActionsCallbackInterface.OnSkipTuto;
             }
             m_Wrapper.m_DebugActionsCallbackInterface = instance;
             if (instance != null)
@@ -925,6 +1029,18 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                 @KillAllEnemies.started += instance.OnKillAllEnemies;
                 @KillAllEnemies.performed += instance.OnKillAllEnemies;
                 @KillAllEnemies.canceled += instance.OnKillAllEnemies;
+                @ReloadLevel.started += instance.OnReloadLevel;
+                @ReloadLevel.performed += instance.OnReloadLevel;
+                @ReloadLevel.canceled += instance.OnReloadLevel;
+                @GoToNextLevel.started += instance.OnGoToNextLevel;
+                @GoToNextLevel.performed += instance.OnGoToNextLevel;
+                @GoToNextLevel.canceled += instance.OnGoToNextLevel;
+                @GoToPreviousLevel.started += instance.OnGoToPreviousLevel;
+                @GoToPreviousLevel.performed += instance.OnGoToPreviousLevel;
+                @GoToPreviousLevel.canceled += instance.OnGoToPreviousLevel;
+                @SkipTuto.started += instance.OnSkipTuto;
+                @SkipTuto.performed += instance.OnSkipTuto;
+                @SkipTuto.canceled += instance.OnSkipTuto;
             }
         }
     }
@@ -975,5 +1091,9 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
     {
         void OnEnterDebug(InputAction.CallbackContext context);
         void OnKillAllEnemies(InputAction.CallbackContext context);
+        void OnReloadLevel(InputAction.CallbackContext context);
+        void OnGoToNextLevel(InputAction.CallbackContext context);
+        void OnGoToPreviousLevel(InputAction.CallbackContext context);
+        void OnSkipTuto(InputAction.CallbackContext context);
     }
 }

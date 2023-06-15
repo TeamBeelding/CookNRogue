@@ -58,6 +58,9 @@ public class PlayerController : MonoBehaviour
     private GameObject victoryMenu;
 
     [SerializeField]
+    private GameObject m_debugModeUI;
+
+    [SerializeField]
     private PlayerAnimStates playerAnimStatesScript;
 
     static PlayerController _instance;
@@ -186,6 +189,9 @@ public class PlayerController : MonoBehaviour
         pauseMenu.SetActive(false);
         deathMenu.SetActive(false);
 
+        m_debugModeUI.SetActive(false);
+
+        #region Set Inputs
         //Set Input Actions Map
         _playerActions = new PlayerActions();
         _playerActions.Default.Enable();
@@ -201,10 +207,10 @@ public class PlayerController : MonoBehaviour
         _playerActions.Default.Aim.performed += Aim_Performed;
         _playerActions.Default.Aim.canceled += Aim_Canceled;
         _playerActions.Default.Dash.performed += Dash;
-        _playerActions.Default.Cook.performed += Cook_Performed;
+        _playerActions.Default.Cook.started += Cook_Performed;
         _playerActions.Default.Pause.performed += OnPauseGame;
         _playerActions.Default.Quit.performed += Quit;
-        _playerActions.Default.EnterDebug.performed += EnterDebug;
+        _playerActions.Default.EnterDebug.started += EnterDebug;
 
         //Set Cooking Events
         _playerActions.Cooking.Cook.canceled += Cook_Canceled;
@@ -219,12 +225,17 @@ public class PlayerController : MonoBehaviour
         _playerActions.UI.Pause.performed += OnPauseGame;
 
         //Set Debug Events
-        _playerActions.Debug.EnterDebug.canceled += QuitDebug;
-        _playerActions.Debug.KillAllEnemies.performed += KillAllEnemies;
+        _playerActions.Debug.EnterDebug.started += QuitDebug;
+        _playerActions.Debug.KillAllEnemies.started += KillAllEnemies;
+        _playerActions.Debug.ReloadLevel.started += ReloadLevel;
+        _playerActions.Debug.GoToNextLevel.started += GotToNextLevel;
+        _playerActions.Debug.GoToPreviousLevel.started += GotToPreviousLevel;
+        _playerActions.Debug.SkipTuto.started += SkipTuto;
 
         _playerActions.Cooking.Disable();
         _playerActions.UI.Disable();
         _playerActions.Debug.Disable();
+        #endregion
 
         _roomManager.OnRoomStart += Spawn;
 
@@ -641,7 +652,7 @@ public class PlayerController : MonoBehaviour
         #endregion
 
     #region Utilities
-        public void Lock(bool isLocked)
+    public void Lock(bool isLocked)
     {
         _isLocked = isLocked;
     }
@@ -696,17 +707,68 @@ public class PlayerController : MonoBehaviour
     {
         _playerActions.Default.Disable();
         _playerActions.Debug.Enable();
+
+        Time.timeScale = 0;
+
+        m_debugModeUI.SetActive(true);
     }
 
     void QuitDebug(InputAction.CallbackContext context)
     {
         _playerActions.Debug.Disable();
         _playerActions.Default.Enable();
+
+        Time.timeScale = 1;
+
+        m_debugModeUI.SetActive(false);
+    }
+
+    void QuitDebug()
+    {
+        _playerActions.Debug.Disable();
+        _playerActions.Default.Enable();
+
+        Time.timeScale = 1;
+
+        m_debugModeUI.SetActive(false);
     }
 
     void KillAllEnemies(InputAction.CallbackContext context)
     {
         _enemyManager.DestroyAll();
+        QuitDebug();
+    }
+
+    void GotToNextLevel(InputAction.CallbackContext context)
+    {
+        _roomManager.LoadNextLevel();
+        QuitDebug();
+    }
+
+    void GotToPreviousLevel(InputAction.CallbackContext context)
+    {
+        _roomManager.LoadPreviousLevel();
+        QuitDebug();
+    }
+
+    void ReloadLevel(InputAction.CallbackContext context)
+    {
+        _roomManager.RestartLevel();
+        QuitDebug();
+    }
+
+    void SkipTuto(InputAction.CallbackContext context)
+    {
+        if(tutorialManager != null && SceneManager.sceneCountInBuildSettings > 2)
+        {
+            SceneManager.LoadScene(2);
+        }
+        else
+        {
+            Debug.LogWarning("Not in tutorial !");
+        }
+
+        QuitDebug();
     }
 
     #endregion

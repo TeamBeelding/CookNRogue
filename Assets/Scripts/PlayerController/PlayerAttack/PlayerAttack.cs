@@ -126,7 +126,7 @@ public class PlayerAttack : MonoBehaviour
 
     }
 
-    public void ResetAmunation()
+    public void ResetAmunition()
     {
         _ammunition = 0;
         ResetParameters();

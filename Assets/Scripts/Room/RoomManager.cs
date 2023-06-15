@@ -93,6 +93,22 @@ public class RoomManager : MonoBehaviour
         }
     }
 
+    public void LoadPreviousLevel()
+    {
+        if (m_currentLevelIndex <= 0)
+        {
+            Debug.LogWarning("No previous level !");
+            return;
+        }
+        else
+        {
+            TransitionToLevel();
+            m_currentLevelIndex += -1;
+            m_currentLevelType = m_Levels.OrderList[m_currentLevelIndex];
+            PickFromType(m_currentLevelType);
+        }
+    }
+
     public void RestartLevel()
     {
         TransitionToLevel();
