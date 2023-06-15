@@ -45,6 +45,9 @@ public class PlayerCooking : MonoBehaviour
 
     Coroutine _craftingRoutine;
 
+    [SerializeField]
+    private AK.Wwise.Event _Play_SFX_Cook;
+
     #endregion
 
     private void Reset()
@@ -66,7 +69,7 @@ public class PlayerCooking : MonoBehaviour
 
         _inventoryScript = PlayerCookingInventory.Instance;
         _playerController = PlayerController.Instance;
-
+        //animator = GetComponentInChildren<Animator>();
         m_cookingProgressVisuals.SetActive(false);
     }
 
@@ -76,6 +79,7 @@ public class PlayerCooking : MonoBehaviour
         if (!_craftingInProgress)
         {
             _inventoryScript.Show(true);
+            Debug.Log("true");
         }
         else
         {
@@ -87,8 +91,12 @@ public class PlayerCooking : MonoBehaviour
     {
         if (!_craftingInProgress)
         {
-            _inventoryScript.Show(false);
-            _inventoryScript.CancelCraft();
+            if (_inventoryScript.IsDisplayed())
+            {
+                _inventoryScript.Show(false);
+                Debug.Log("false");
+                _inventoryScript.CancelCraft();
+            }
         }
         else
         {
@@ -111,9 +119,14 @@ public class PlayerCooking : MonoBehaviour
 
             //Start crafting
             _craftingInProgress = true;
+            _Play_SFX_Cook.Post(gameObject);
 
             //Reset last bullet parametters
             m_attackScript.ResetParameters();
+            foreach(ProjectileData data in _inventoryScript.EquippedRecipe)
+            {
+                data.audioState.SetValue();
+            }
 
             _inventoryScript.Show(false);
 
@@ -173,12 +186,15 @@ public class PlayerCooking : MonoBehaviour
 
         //Show UI
         m_cookingProgressVisuals.SetActive(true);
+
+        _Play_SFX_Cook.Post(gameObject);
     }
 
     void CompleteCrafting()
     {
         _inventoryScript.CraftBullet();
         _playerController.StopCookingState();
+        m_attackScript.OnAmmunitionChange();
 
         //reset
         _craftingRoutine = null;
@@ -199,9 +215,9 @@ public class PlayerCooking : MonoBehaviour
             //Check QTE spawn time
             if (!_spawnedQTE && _curProgressTime >= delay)
             {
+                
                 SpawnQTE();
             }
-
             //UI
             m_cookingProgressBarFill.fillAmount = _curProgressTime / _totalCookTime;
 
@@ -209,7 +225,7 @@ public class PlayerCooking : MonoBehaviour
             _curProgressTime += Time.deltaTime;
             yield return new WaitForSeconds(Time.deltaTime);
         }
-
+        
         CompleteCrafting();
     }
     #endregion

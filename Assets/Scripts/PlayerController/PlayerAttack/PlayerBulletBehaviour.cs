@@ -125,10 +125,6 @@ public class PlayerBulletBehaviour : MonoBehaviour
                 Destroy(gameObject);
             }
         }
-
-        
-
-
     }
     Vector3 GetCameraDirection()
     {

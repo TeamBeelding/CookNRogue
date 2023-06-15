@@ -1,0 +1,1742 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SoundBanksInfo Platform="Linux" BasePlatform="Linux" SchemaVersion="16" SoundBankVersion="145">
+	<RootPaths>
+		<ProjectRoot>../..</ProjectRoot>
+		<SourceFilesRoot>../../.cache/Linux</SourceFilesRoot>
+		<SoundBanksRoot>.</SoundBanksRoot>
+		<ExternalSourcesInputFile></ExternalSourcesInputFile>
+		<ExternalSourcesOutputRoot>.</ExternalSourcesOutputRoot>
+	</RootPaths>
+	<DialogueEvents/>
+	<SoundBanks>
+		<SoundBank Id="1355168291" Type="User" Language="SFX" Hash="{4F1F684F-CD20-B90D-1CA2-9B032240FB5E}">
+			<ShortName>Init</ShortName>
+			<Path>Init.bnk</Path>
+			<Plugins>
+				<ShareSets>
+					<Plugin Id="1992114213" Name="Sidechain_Meter" LibName="Wwise Meter" LibId="8454147"/>
+				</ShareSets>
+				<AudioDevices>
+					<Plugin Id="2317455096" Name="No_Output" LibName="No Output" LibId="11862023"/>
+					<Plugin Id="3859886410" Name="System" LibName="System" LibId="11403271"/>
+				</AudioDevices>
+			</Plugins>
+			<Busses>
+				<Bus Id="1117531639" Name="AMB"/>
+				<Bus Id="1551306167" Name="UI"/>
+				<Bus Id="1685527061" Name="MC"/>
+				<Bus Id="2242381963" Name="Enemies"/>
+				<Bus Id="2376466361" Name="Other"/>
+				<Bus Id="2866165515" Name="TakeHit">
+					<PluginRefs>
+						<ShareSets>
+							<PluginRef Id="1992114213"/>
+						</ShareSets>
+					</PluginRefs>
+				</Bus>
+				<Bus Id="3803692087" Name="Master Audio Bus"/>
+				<Bus Id="3977179618" Name="Pea_Movements"/>
+				<Bus Id="3991942870" Name="Music"/>
+			</Busses>
+			<AuxBusses>
+				<AuxBus Id="3545700988" Name="Reverbs"/>
+			</AuxBusses>
+			<GameParameters>
+				<GameParameter Id="871813740" Name="Player_Hit"/>
+			</GameParameters>
+			<StateGroups>
+				<StateGroup Id="215992295" Name="Player_Health">
+					<States>
+						<State Id="748895195" Name="None"/>
+						<State Id="1017222595" Name="LowHealth"/>
+						<State Id="3710911768" Name="NotLowHealth"/>
+					</States>
+				</StateGroup>
+				<StateGroup Id="941442537" Name="Bread">
+					<States>
+						<State Id="748895195" Name="None"/>
+						<State Id="979470758" Name="Yes"/>
+						<State Id="1668749452" Name="No"/>
+					</States>
+				</StateGroup>
+				<StateGroup Id="1123068863" Name="Beef">
+					<States>
+						<State Id="748895195" Name="None"/>
+						<State Id="979470758" Name="Yes"/>
+						<State Id="1668749452" Name="No"/>
+					</States>
+				</StateGroup>
+				<StateGroup Id="1672785595" Name="Cooking_Menu">
+					<States>
+						<State Id="571224461" Name="InCookingMenu"/>
+						<State Id="748895195" Name="None"/>
+						<State Id="3732417588" Name="OutCookingMenu"/>
+					</States>
+				</StateGroup>
+				<StateGroup Id="1793259384" Name="NoSound_TEST">
+					<States>
+						<State Id="748895195" Name="None"/>
+						<State Id="930712164" Name="Off"/>
+						<State Id="1651971902" Name="On"/>
+					</States>
+				</StateGroup>
+				<StateGroup Id="2181612614" Name="InFight">
+					<States>
+						<State Id="748895195" Name="None"/>
+						<State Id="2181612614" Name="InFight"/>
+						<State Id="2218077717" Name="NotInFight"/>
+					</States>
+				</StateGroup>
+				<StateGroup Id="2682233438" Name="Rice">
+					<States>
+						<State Id="748895195" Name="None"/>
+						<State Id="979470758" Name="Yes"/>
+						<State Id="1668749452" Name="No"/>
+					</States>
+				</StateGroup>
+				<StateGroup Id="2695658327" Name="Fish">
+					<States>
+						<State Id="748895195" Name="None"/>
+						<State Id="979470758" Name="Yes"/>
+						<State Id="1668749452" Name="No"/>
+					</States>
+				</StateGroup>
+				<StateGroup Id="3220806263" Name="Tomato">
+					<States>
+						<State Id="748895195" Name="None"/>
+						<State Id="979470758" Name="Yes"/>
+						<State Id="1668749452" Name="No"/>
+					</States>
+				</StateGroup>
+				<StateGroup Id="3422541661" Name="Pause_Menu">
+					<States>
+						<State Id="748895195" Name="None"/>
+						<State Id="2876317275" Name="InPauseMenu"/>
+						<State Id="3956870258" Name="OutPauseMenu"/>
+					</States>
+				</StateGroup>
+				<StateGroup Id="3787826983" Name="Corn">
+					<States>
+						<State Id="748895195" Name="None"/>
+						<State Id="979470758" Name="Yes"/>
+						<State Id="1668749452" Name="No"/>
+					</States>
+				</StateGroup>
+				<StateGroup Id="3933301714" Name="Banana">
+					<States>
+						<State Id="748895195" Name="None"/>
+						<State Id="979470758" Name="Yes"/>
+						<State Id="1668749452" Name="No"/>
+					</States>
+				</StateGroup>
+				<StateGroup Id="4083202225" Name="Letuce">
+					<States>
+						<State Id="748895195" Name="None"/>
+						<State Id="979470758" Name="Yes"/>
+						<State Id="1668749452" Name="No"/>
+					</States>
+				</StateGroup>
+			</StateGroups>
+		</SoundBank>
+		<SoundBank Id="1563047448" Type="User" Language="SFX" Hash="{462948B2-39A9-33DC-8B01-245423DE6C73}">
+			<ShortName>SFX_Enemy_Pea_Pod</ShortName>
+			<Path>SFX_Enemy_Pea_Pod.bnk</Path>
+			<Media>
+				<File Id="73195517" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Pea_Pod_Death_v2-001.wav</ShortName>
+					<CachePath>SFX/SFX_Pea_Pod_Death_v2-001_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="103867056" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Pea_Pod_Death_v2-002.wav</ShortName>
+					<CachePath>SFX/SFX_Pea_Pod_Death_v2-002_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="321340653" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Pea_Pod_Movement_V1.wav</ShortName>
+					<CachePath>SFX/SFX_Pea_Pod_Movement_V1_9EDFC787.wem</CachePath>
+				</File>
+				<File Id="357955521" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Pea_Pod_Hit_V2-002.wav</ShortName>
+					<CachePath>SFX/SFX_Pea_Pod_Hit_V2-002_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="461438222" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Pea_Pod_Death_Voice-001.wav</ShortName>
+					<CachePath>SFX/SFX_Pea_Pod_Death_Voice-001_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="492575088" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Pea_Pod_Death_v2-003.wav</ShortName>
+					<CachePath>SFX/SFX_Pea_Pod_Death_v2-003_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="495575348" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Pea_Pod_Death_Voice-003.wav</ShortName>
+					<CachePath>SFX/SFX_Pea_Pod_Death_Voice-003_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="819078254" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Pea_Pod_Hit_V2-003.wav</ShortName>
+					<CachePath>SFX/SFX_Pea_Pod_Hit_V2-003_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="886830696" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Pea_Pod_Hit_V2-001.wav</ShortName>
+					<CachePath>SFX/SFX_Pea_Pod_Hit_V2-001_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="1072209923" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Pea_Pod_Death_Voice-002.wav</ShortName>
+					<CachePath>SFX/SFX_Pea_Pod_Death_Voice-002_3F75BDB9.wem</CachePath>
+				</File>
+			</Media>
+			<Events>
+				<Event Id="4141938667" Name="Play_SFX_Pea_Pod_Death" MaxAttenuation="25" DurationType="OneShot" DurationMin="1.4950181" DurationMax="1.8548551">
+					<MediaRefs>
+						<MediaRef Id="73195517"/>
+						<MediaRef Id="103867056"/>
+						<MediaRef Id="461438222"/>
+						<MediaRef Id="492575088"/>
+						<MediaRef Id="495575348"/>
+						<MediaRef Id="1072209923"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="2885932196" Name="Play_SFX_Pea_Pod_Footsteps" MaxAttenuation="25" DurationType="Infinite">
+					<MediaRefs>
+						<MediaRef Id="321340653"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="3281359690" Name="Play_SFX_Pea_Pod_Hit" MaxAttenuation="25" DurationType="OneShot" DurationMin="1.2224941" DurationMax="1.5542765">
+					<MediaRefs>
+						<MediaRef Id="357955521"/>
+						<MediaRef Id="819078254"/>
+						<MediaRef Id="886830696"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="749319194" Name="Stop_SFX_Pea_Pod_Footsteps" MaxAttenuation="0" DurationType="OneShot" DurationMin="0" DurationMax="0"/>
+			</Events>
+		</SoundBank>
+		<SoundBank Id="1720558757" Type="User" Language="SFX" Hash="{990466D6-8A32-1477-2B16-3A9C9E762F05}">
+			<ShortName>AMB_Main_Menu</ShortName>
+			<Path>AMB_Main_Menu.bnk</Path>
+		</SoundBank>
+		<SoundBank Id="1806359924" Type="User" Language="SFX" Hash="{6035AFF8-5CE1-95E7-6E2E-CE5C3DD4F42B}">
+			<ShortName>AMB_Level</ShortName>
+			<Path>AMB_Level.bnk</Path>
+			<Media>
+				<File Id="404432906" Language="SFX" Streaming="true" Location="Loose">
+					<ShortName>Amb_Wind_LP.wav</ShortName>
+					<Path>Media/404432906.wem</Path>
+					<CachePath>SFX/Amb_Wind_LP_9EDFC787.wem</CachePath>
+				</File>
+				<File Id="625970191" Language="SFX" Streaming="true" Location="Loose">
+					<ShortName>Amb_Room_Tone_LP.wav</ShortName>
+					<Path>Media/625970191.wem</Path>
+					<CachePath>SFX/Amb_Room_Tone_LP_9EDFC787.wem</CachePath>
+				</File>
+				<File Id="701813146" Language="SFX" Streaming="true" Location="Loose">
+					<ShortName>Amb_Magical_Forest_LP.wav</ShortName>
+					<Path>Media/701813146.wem</Path>
+					<CachePath>SFX/Amb_Magical_Forest_LP_9EDFC787.wem</CachePath>
+				</File>
+			</Media>
+			<Events>
+				<Event Id="1968870321" Name="Play_AMB_Level" DurationType="Infinite">
+					<MediaRefs>
+						<MediaRef Id="404432906"/>
+						<MediaRef Id="625970191"/>
+						<MediaRef Id="701813146"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="3214656583" Name="Stop_AMB_Level" MaxAttenuation="0" DurationType="OneShot" DurationMin="0" DurationMax="0"/>
+			</Events>
+		</SoundBank>
+		<SoundBank Id="1810232503" Type="User" Language="SFX" Hash="{9F77CD11-E03B-AAD5-D04D-1666964939A6}">
+			<ShortName>SFX_Enemy_Carrot</ShortName>
+			<Path>SFX_Enemy_Carrot.bnk</Path>
+			<Media>
+				<File Id="43137823" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Carrot_Attack-002.wav</ShortName>
+					<CachePath>SFX/SFX_Carrot_Attack-002_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="127364051" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Carrot_Dive_V2_03.wav</ShortName>
+					<CachePath>SFX/SFX_Carrot_Dive_V2_03_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="156303663" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Carrot_Attack-005.wav</ShortName>
+					<CachePath>SFX/SFX_Carrot_Attack-005_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="175971949" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Carrot_Attack-003.wav</ShortName>
+					<CachePath>SFX/SFX_Carrot_Attack-003_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="226409657" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Carrot_Erupt_V2_02.wav</ShortName>
+					<CachePath>SFX/SFX_Carrot_Erupt_V2_02_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="234091123" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Carrot_Attack-004.wav</ShortName>
+					<CachePath>SFX/SFX_Carrot_Attack-004_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="339251672" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Carrot_Death-002.wav</ShortName>
+					<CachePath>SFX/SFX_Carrot_Death-002_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="368969602" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Carrot_Erupt_V2_01.wav</ShortName>
+					<CachePath>SFX/SFX_Carrot_Erupt_V2_01_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="424300560" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Carrot_Hit-003.wav</ShortName>
+					<CachePath>SFX/SFX_Carrot_Hit-003_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="454503578" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Carrot_Death-003.wav</ShortName>
+					<CachePath>SFX/SFX_Carrot_Death-003_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="587087094" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Carrot_Dive_V2_01.wav</ShortName>
+					<CachePath>SFX/SFX_Carrot_Dive_V2_01_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="745994779" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Carrot_Death-001.wav</ShortName>
+					<CachePath>SFX/SFX_Carrot_Death-001_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="775776261" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Carrot_Hit-001.wav</ShortName>
+					<CachePath>SFX/SFX_Carrot_Hit-001_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="825723910" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Carrot_Dive_V2_02.wav</ShortName>
+					<CachePath>SFX/SFX_Carrot_Dive_V2_02_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="951643207" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Carrot_Erupt_V2_03.wav</ShortName>
+					<CachePath>SFX/SFX_Carrot_Erupt_V2_03_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="953913345" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Carrot_Hit-002.wav</ShortName>
+					<CachePath>SFX/SFX_Carrot_Hit-002_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="1061955124" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Carrot_Attack-001.wav</ShortName>
+					<CachePath>SFX/SFX_Carrot_Attack-001_3F75BDB9.wem</CachePath>
+				</File>
+			</Media>
+			<Events>
+				<Event Id="1290249346" Name="Play_SFX_Carrot_Attack" MaxAttenuation="25" DurationType="OneShot" DurationMin="0.5113635" DurationMax="0.68770194">
+					<MediaRefs>
+						<MediaRef Id="43137823"/>
+						<MediaRef Id="156303663"/>
+						<MediaRef Id="175971949"/>
+						<MediaRef Id="234091123"/>
+						<MediaRef Id="1061955124"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="2741581544" Name="Play_SFX_Carrot_Death" MaxAttenuation="25" DurationType="OneShot" DurationMin="0.7292412" DurationMax="0.91297024">
+					<MediaRefs>
+						<MediaRef Id="339251672"/>
+						<MediaRef Id="454503578"/>
+						<MediaRef Id="745994779"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="2282737784" Name="Play_SFX_Carrot_Dive" MaxAttenuation="25" DurationType="OneShot" DurationMin="0.94387424" DurationMax="1.2229958">
+					<MediaRefs>
+						<MediaRef Id="127364051"/>
+						<MediaRef Id="587087094"/>
+						<MediaRef Id="825723910"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="1413782892" Name="Play_SFX_Carrot_Erupt" MaxAttenuation="25" DurationType="OneShot" DurationMin="0.5871881" DurationMax="0.7691923">
+					<MediaRefs>
+						<MediaRef Id="226409657"/>
+						<MediaRef Id="368969602"/>
+						<MediaRef Id="951643207"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="1869131017" Name="Play_SFX_Carrot_Hit" MaxAttenuation="25" DurationType="OneShot" DurationMin="0.7550994" DurationMax="1.0712277">
+					<MediaRefs>
+						<MediaRef Id="424300560"/>
+						<MediaRef Id="775776261"/>
+						<MediaRef Id="953913345"/>
+					</MediaRefs>
+				</Event>
+			</Events>
+		</SoundBank>
+		<SoundBank Id="1923254948" Type="User" Language="SFX" Hash="{B7E530FE-F583-91B2-9E44-13AE06FCBA6D}">
+			<ShortName>SFX_Enemy_Pea</ShortName>
+			<Path>SFX_Enemy_Pea.bnk</Path>
+			<Media>
+				<File Id="26913529" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Throw_v2-003.wav</ShortName>
+					<CachePath>SFX/Throw_v2-003_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="154912847" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Cook'n'Rogue_Pea_Jump_02.wav</ShortName>
+					<CachePath>SFX/Cook'n'Rogue_Pea_Jump_02_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="305897649" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Throw_v2-002.wav</ShortName>
+					<CachePath>SFX/Throw_v2-002_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="321340653" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Pea_Pod_Movement_V1.wav</ShortName>
+					<CachePath>SFX/SFX_Pea_Pod_Movement_V1_9EDFC787.wem</CachePath>
+				</File>
+				<File Id="333197331" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Pea_Movement_04.wav</ShortName>
+					<CachePath>SFX/SFX_Pea_Movement_04_9EDFC787.wem</CachePath>
+				</File>
+				<File Id="334568147" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Cook'n'Rogue_Pea_Jump_07.wav</ShortName>
+					<CachePath>SFX/Cook'n'Rogue_Pea_Jump_07_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="348033780" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Cook'n'Rogue_Pea_Jump_10.wav</ShortName>
+					<CachePath>SFX/Cook'n'Rogue_Pea_Jump_10_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="358690741" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Cook'n'Rogue_Pea_Jump_06.wav</ShortName>
+					<CachePath>SFX/Cook'n'Rogue_Pea_Jump_06_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="411336006" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Pea_Pod_Hit_V1-002.wav</ShortName>
+					<CachePath>SFX/SFX_Pea_Pod_Hit_V1-002_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="511522553" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Cook'n'Rogue_Pea_Jump_04.wav</ShortName>
+					<CachePath>SFX/Cook'n'Rogue_Pea_Jump_04_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="532931488" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Cook'n'Rogue_Pea_Jump_09.wav</ShortName>
+					<CachePath>SFX/Cook'n'Rogue_Pea_Jump_09_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="581731344" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Cook'n'Rogue_Pea_Jump_05.wav</ShortName>
+					<CachePath>SFX/Cook'n'Rogue_Pea_Jump_05_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="595240566" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Pea_Movement_03.wav</ShortName>
+					<CachePath>SFX/SFX_Pea_Movement_03_9EDFC787.wem</CachePath>
+				</File>
+				<File Id="720230732" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Cook'n'Rogue_Pea_Jump_03.wav</ShortName>
+					<CachePath>SFX/Cook'n'Rogue_Pea_Jump_03_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="841777434" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Pea_Pod_Hit_V1-003.wav</ShortName>
+					<CachePath>SFX/SFX_Pea_Pod_Hit_V1-003_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="944870012" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Cook'n'Rogue_Pea_Jump_08.wav</ShortName>
+					<CachePath>SFX/Cook'n'Rogue_Pea_Jump_08_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="1013287905" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Throw_v2-001.wav</ShortName>
+					<CachePath>SFX/Throw_v2-001_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="1022762267" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Cook'n'Rogue_Pea_Jump_01.wav</ShortName>
+					<CachePath>SFX/Cook'n'Rogue_Pea_Jump_01_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="1055722959" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Pea_Pod_Movement_V2.wav</ShortName>
+					<CachePath>SFX/SFX_Pea_Pod_Movement_V2_9EDFC787.wem</CachePath>
+				</File>
+				<File Id="1071645651" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Pea_Pod_Hit_V1-001.wav</ShortName>
+					<CachePath>SFX/SFX_Pea_Pod_Hit_V1-001_3F75BDB9.wem</CachePath>
+				</File>
+			</Media>
+			<Events>
+				<Event Id="2393289231" Name="Play_SFX_Pea_Death" MaxAttenuation="10" DurationType="OneShot" DurationMin="1.3280901" DurationMax="1.5484054">
+					<MediaRefs>
+						<MediaRef Id="411336006"/>
+						<MediaRef Id="841777434"/>
+						<MediaRef Id="1071645651"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="1246702048" Name="Play_SFX_Pea_Footsteps" MaxAttenuation="10" DurationType="OneShot" DurationMin="0.16651514" DurationMax="0.25910497">
+					<MediaRefs>
+						<MediaRef Id="154912847"/>
+						<MediaRef Id="334568147"/>
+						<MediaRef Id="348033780"/>
+						<MediaRef Id="358690741"/>
+						<MediaRef Id="511522553"/>
+						<MediaRef Id="532931488"/>
+						<MediaRef Id="581731344"/>
+						<MediaRef Id="720230732"/>
+						<MediaRef Id="944870012"/>
+						<MediaRef Id="1022762267"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="3395898104" Name="Play_SFX_Pea_Movement" MaxAttenuation="10" DurationType="Infinite">
+					<MediaRefs>
+						<MediaRef Id="321340653"/>
+						<MediaRef Id="333197331"/>
+						<MediaRef Id="595240566"/>
+						<MediaRef Id="1055722959"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="831679224" Name="Play_SFX_Pea_Spawn" MaxAttenuation="15" DurationType="OneShot" DurationMin="1.4316607" DurationMax="1.7286686">
+					<MediaRefs>
+						<MediaRef Id="26913529"/>
+						<MediaRef Id="305897649"/>
+						<MediaRef Id="1013287905"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="2301333962" Name="Stop_SFX_Pea_Movement" MaxAttenuation="0" DurationType="OneShot" DurationMin="0" DurationMax="0"/>
+			</Events>
+		</SoundBank>
+		<SoundBank Id="2374353081" Type="User" Language="SFX" Hash="{EA69CF52-ACCE-0FE2-B387-F3FF196C6388}">
+			<ShortName>SFX_Other</ShortName>
+			<Path>SFX_Other.bnk</Path>
+			<Media>
+				<File Id="165755857" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Health_Collect_06.wav</ShortName>
+					<CachePath>SFX/SFX_Health_Collect_06_2F5C3EC7.wem</CachePath>
+				</File>
+				<File Id="270090931" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Health_Collect_02.wav</ShortName>
+					<CachePath>SFX/SFX_Health_Collect_02_C30F7BD9.wem</CachePath>
+				</File>
+				<File Id="286391470" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Health_Collect_04.wav</ShortName>
+					<CachePath>SFX/SFX_Health_Collect_04_A5A8CA80.wem</CachePath>
+				</File>
+				<File Id="455666064" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Health_Collect_01.wav</ShortName>
+					<CachePath>SFX/SFX_Health_Collect_01_67177734.wem</CachePath>
+				</File>
+				<File Id="465709329" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Health_Collect_03.wav</ShortName>
+					<CachePath>SFX/SFX_Health_Collect_03_5333DB72.wem</CachePath>
+				</File>
+				<File Id="468458881" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Cook.wav</ShortName>
+					<CachePath>SFX/SFX_Cook_9EDFC787.wem</CachePath>
+				</File>
+				<File Id="805171404" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Ingredient_Collect_02.wav</ShortName>
+					<CachePath>SFX/SFX_Ingredient_Collect_02_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="832782286" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Health_Collect_05.wav</ShortName>
+					<CachePath>SFX/SFX_Health_Collect_05_BF01E481.wem</CachePath>
+				</File>
+				<File Id="876536733" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Door_Open.wav</ShortName>
+					<CachePath>SFX/SFX_Door_Open_8C508E34.wem</CachePath>
+				</File>
+				<File Id="939273688" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Ingredient_Collect_01.wav</ShortName>
+					<CachePath>SFX/SFX_Ingredient_Collect_01_3F75BDB9.wem</CachePath>
+				</File>
+			</Media>
+			<Events>
+				<Event Id="3800044410" Name="Play_SFX_Cook" DurationType="Infinite">
+					<MediaRefs>
+						<MediaRef Id="468458881"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="1312371701" Name="Play_SFX_Door_Open" MaxAttenuation="40" DurationType="OneShot" DurationMin="3.6283069" DurationMax="3.6283069">
+					<MediaRefs>
+						<MediaRef Id="876536733"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="1136621035" Name="Play_SFX_Health_Collect" DurationType="OneShot" DurationMin="0.32785895" DurationMax="0.5137555">
+					<MediaRefs>
+						<MediaRef Id="165755857"/>
+						<MediaRef Id="270090931"/>
+						<MediaRef Id="286391470"/>
+						<MediaRef Id="455666064"/>
+						<MediaRef Id="465709329"/>
+						<MediaRef Id="832782286"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="3954090412" Name="Play_SFX_Ingredient_Collect" DurationType="OneShot" DurationMin="0.52714586" DurationMax="0.7325702">
+					<MediaRefs>
+						<MediaRef Id="805171404"/>
+						<MediaRef Id="939273688"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="4293892292" Name="Stop_SFX_Cook" MaxAttenuation="0" DurationType="OneShot" DurationMin="0" DurationMax="0"/>
+			</Events>
+		</SoundBank>
+		<SoundBank Id="2385921979" Type="User" Language="SFX" Hash="{774A29A6-0911-A0B3-7B09-D458B2AFC598}">
+			<ShortName>SFX_Enemy_Cabbage</ShortName>
+			<Path>SFX_Enemy_Cabbage.bnk</Path>
+			<Media>
+				<File Id="23003283" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Cabbage_Charge_Layer_F_LP.wav</ShortName>
+					<CachePath>SFX/SFX_Cabbage_Charge_Layer_F_LP_9EDFC787.wem</CachePath>
+				</File>
+				<File Id="74706734" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Cabbage_Charge_Impact_02.wav</ShortName>
+					<CachePath>SFX/SFX_Cabbage_Charge_Impact_02_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="96714747" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Cabbage_Hit_02.wav</ShortName>
+					<CachePath>SFX/SFX_Cabbage_Hit_02_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="104554849" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Cabbage_Charge_Layer_B_LP.wav</ShortName>
+					<CachePath>SFX/SFX_Cabbage_Charge_Layer_B_LP_9EDFC787.wem</CachePath>
+				</File>
+				<File Id="126129336" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Cabbage_Charge_Layer_D_LP.wav</ShortName>
+					<CachePath>SFX/SFX_Cabbage_Charge_Layer_D_LP_9EDFC787.wem</CachePath>
+				</File>
+				<File Id="131593754" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Cabbage_Death_01.wav</ShortName>
+					<CachePath>SFX/SFX_Cabbage_Death_01_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="198124096" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Cabbage_Movement_01.wav</ShortName>
+					<CachePath>SFX/SFX_Cabbage_Movement_01_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="285934693" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Cabbage_Charge_Impact_01.wav</ShortName>
+					<CachePath>SFX/SFX_Cabbage_Charge_Impact_01_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="309533961" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Cabbage_Charge_Impact_03.wav</ShortName>
+					<CachePath>SFX/SFX_Cabbage_Charge_Impact_03_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="318770995" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Cabbage_Hit_01.wav</ShortName>
+					<CachePath>SFX/SFX_Cabbage_Hit_01_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="489666360" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Cabbage_Death_03.wav</ShortName>
+					<CachePath>SFX/SFX_Cabbage_Death_03_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="547691711" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Cabbage_Hit_03.wav</ShortName>
+					<CachePath>SFX/SFX_Cabbage_Hit_03_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="685345126" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Cabbage_Movement_02.wav</ShortName>
+					<CachePath>SFX/SFX_Cabbage_Movement_02_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="794045388" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Cabbage_Charge_Layer_C_LP.wav</ShortName>
+					<CachePath>SFX/SFX_Cabbage_Charge_Layer_C_LP_9EDFC787.wem</CachePath>
+				</File>
+				<File Id="805382305" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Cabbage_Movement_04.wav</ShortName>
+					<CachePath>SFX/SFX_Cabbage_Movement_04_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="827913392" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Cabbage_Charge_Layer_E_LP.wav</ShortName>
+					<CachePath>SFX/SFX_Cabbage_Charge_Layer_E_LP_9EDFC787.wem</CachePath>
+				</File>
+				<File Id="837044873" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Cabbage_Movement_03.wav</ShortName>
+					<CachePath>SFX/SFX_Cabbage_Movement_03_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="891010953" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Cabbage_Death_02.wav</ShortName>
+					<CachePath>SFX/SFX_Cabbage_Death_02_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="989581029" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Cabbage_Charge_Layer_A_LP.wav</ShortName>
+					<CachePath>SFX/SFX_Cabbage_Charge_Layer_A_LP_9EDFC787.wem</CachePath>
+				</File>
+			</Media>
+			<Events>
+				<Event Id="1246023875" Name="Play_SFX_Cabbage_Charge_Impact" MaxAttenuation="40" DurationType="OneShot" DurationMin="1.5268935" DurationMax="1.926126">
+					<MediaRefs>
+						<MediaRef Id="74706734"/>
+						<MediaRef Id="285934693"/>
+						<MediaRef Id="309533961"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="2535875021" Name="Play_SFX_Cabbage_Charge_LP" MaxAttenuation="60" DurationType="Infinite">
+					<MediaRefs>
+						<MediaRef Id="23003283"/>
+						<MediaRef Id="104554849"/>
+						<MediaRef Id="126129336"/>
+						<MediaRef Id="794045388"/>
+						<MediaRef Id="827913392"/>
+						<MediaRef Id="989581029"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="1817239028" Name="Play_SFX_Cabbage_Death" MaxAttenuation="25" DurationType="OneShot" DurationMin="0.4598634" DurationMax="0.5297316">
+					<MediaRefs>
+						<MediaRef Id="131593754"/>
+						<MediaRef Id="489666360"/>
+						<MediaRef Id="891010953"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="1028192719" Name="Play_SFX_Cabbage_Footsteps" MaxAttenuation="25" DurationType="OneShot" DurationMin="0.47193712" DurationMax="0.5297316">
+					<MediaRefs>
+						<MediaRef Id="198124096"/>
+						<MediaRef Id="685345126"/>
+						<MediaRef Id="805382305"/>
+						<MediaRef Id="837044873"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="1635451477" Name="Play_SFX_Cabbage_Hit" MaxAttenuation="25" DurationType="OneShot" DurationMin="0.44889086" DurationMax="0.5297316">
+					<MediaRefs>
+						<MediaRef Id="96714747"/>
+						<MediaRef Id="318770995"/>
+						<MediaRef Id="547691711"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="3742019055" Name="Stop_SFX_Cabbage_Charge_LP" MaxAttenuation="0" DurationType="OneShot" DurationMin="0" DurationMax="0"/>
+			</Events>
+		</SoundBank>
+		<SoundBank Id="3398709072" Type="User" Language="SFX" Hash="{CAF94487-7922-0150-7003-5F56D3873E29}">
+			<ShortName>AMB_Tuto</ShortName>
+			<Path>AMB_Tuto.bnk</Path>
+		</SoundBank>
+		<SoundBank Id="3862737079" Type="User" Language="SFX" Hash="{11441095-6C48-F0A0-49A1-6AA6880F3B28}">
+			<ShortName>SFX_UI</ShortName>
+			<Path>SFX_UI.bnk</Path>
+			<Media>
+				<File Id="49258277" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>UI_Cook_Select.wav</ShortName>
+					<CachePath>SFX/UI_Cook_Select_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="96734072" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>UI_Settings_Validate_01.wav</ShortName>
+					<CachePath>SFX/UI_Settings_Validate_01_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="149163332" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>UI_Settings_Select_01.wav</ShortName>
+					<CachePath>SFX/UI_Settings_Select_01_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="206112599" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>UI_Cook_Open.wav</ShortName>
+					<CachePath>SFX/UI_Cook_Open_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="340388707" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>UI_Settings_Select_03.wav</ShortName>
+					<CachePath>SFX/UI_Settings_Select_03_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="370626639" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>UI_Cook_Close.wav</ShortName>
+					<CachePath>SFX/UI_Cook_Close_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="382981366" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>UI_Cook_Hover_05.wav</ShortName>
+					<CachePath>SFX/UI_Cook_Hover_05_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="488411357" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>UI_Settings_Navigate_02.wav</ShortName>
+					<CachePath>SFX/UI_Settings_Navigate_02_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="518267998" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>UI_Cook_Hover_04.wav</ShortName>
+					<CachePath>SFX/UI_Cook_Hover_04_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="522574411" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>UI_Cook_Hover_01.wav</ShortName>
+					<CachePath>SFX/UI_Cook_Hover_01_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="668144595" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>UI_Cook_Hover_02.wav</ShortName>
+					<CachePath>SFX/UI_Cook_Hover_02_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="703146463" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>UI_Settings_Navigate_03.wav</ShortName>
+					<CachePath>SFX/UI_Settings_Navigate_03_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="784735572" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>UI_Cook_Cancel.wav</ShortName>
+					<CachePath>SFX/UI_Cook_Cancel_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="806627013" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>UI_Settings_Decline_01.wav</ShortName>
+					<CachePath>SFX/UI_Settings_Decline_01_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="837939720" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>UI_Settings_Navigate_01.wav</ShortName>
+					<CachePath>SFX/UI_Settings_Navigate_01_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="857645943" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>UI_Settings_Select_02.wav</ShortName>
+					<CachePath>SFX/UI_Settings_Select_02_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="927650744" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>UI_Settings_Open_01.wav</ShortName>
+					<CachePath>SFX/UI_Settings_Open_01_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="945743603" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>UI_Settings_Close_01.wav</ShortName>
+					<CachePath>SFX/UI_Settings_Close_01_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="993287777" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>UI_Cook_Hover_03.wav</ShortName>
+					<CachePath>SFX/UI_Cook_Hover_03_3F75BDB9.wem</CachePath>
+				</File>
+			</Media>
+			<Events>
+				<Event Id="3922793512" Name="Play_UI_Cook_Cancel" DurationType="OneShot" DurationMin="0.46047917" DurationMax="0.46047917">
+					<MediaRefs>
+						<MediaRef Id="784735572"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="1208534994" Name="Play_UI_Cook_Close" DurationType="OneShot" DurationMin="0.39075" DurationMax="0.39075">
+					<MediaRefs>
+						<MediaRef Id="370626639"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="186493428" Name="Play_UI_Cook_Hover" DurationType="OneShot" DurationMin="0.06869507" DurationMax="0.17426461">
+					<MediaRefs>
+						<MediaRef Id="382981366"/>
+						<MediaRef Id="518267998"/>
+						<MediaRef Id="522574411"/>
+						<MediaRef Id="668144595"/>
+						<MediaRef Id="993287777"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="4203446662" Name="Play_UI_Cook_Open" DurationType="OneShot" DurationMin="0.355" DurationMax="0.355">
+					<MediaRefs>
+						<MediaRef Id="206112599"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="2393118694" Name="Play_UI_Cook_Select" DurationType="OneShot" DurationMin="0.40452084" DurationMax="0.40452084">
+					<MediaRefs>
+						<MediaRef Id="49258277"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="1077241273" Name="Play_UI_Settings_Close" DurationType="OneShot" DurationMin="0.432845" DurationMax="0.48585212">
+					<MediaRefs>
+						<MediaRef Id="945743603"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="4050841243" Name="Play_UI_Settings_Decline" DurationType="OneShot" DurationMin="0.53387886" DurationMax="0.59925884">
+					<MediaRefs>
+						<MediaRef Id="806627013"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="1842946906" Name="Play_UI_Settings_Navigate" DurationType="OneShot" DurationMin="0.3492138" DurationMax="0.39235452">
+					<MediaRefs>
+						<MediaRef Id="488411357"/>
+						<MediaRef Id="703146463"/>
+						<MediaRef Id="837939720"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="1815376747" Name="Play_UI_Settings_Open" DurationType="OneShot" DurationMin="0.5637879" DurationMax="0.63283056">
+					<MediaRefs>
+						<MediaRef Id="927650744"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="500000487" Name="Play_UI_Settings_Select" DurationType="OneShot" DurationMin="0.15377285" DurationMax="0.1726042">
+					<MediaRefs>
+						<MediaRef Id="149163332"/>
+						<MediaRef Id="340388707"/>
+						<MediaRef Id="857645943"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="1167692961" Name="Play_UI_Settings_Validate" DurationType="OneShot" DurationMin="0.41023135" DurationMax="0.46046916">
+					<MediaRefs>
+						<MediaRef Id="96734072"/>
+					</MediaRefs>
+				</Event>
+			</Events>
+		</SoundBank>
+		<SoundBank Id="3871269544" Type="User" Language="SFX" Hash="{202C75D7-D8C5-B954-879A-EE9708A24EE2}">
+			<ShortName>SFX_Enemy_Corn</ShortName>
+			<Path>SFX_Enemy_Corn.bnk</Path>
+			<Media>
+				<File Id="89513632" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Corn_Movement_03.wav</ShortName>
+					<CachePath>SFX/SFX_Corn_Movement_03_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="89582080" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Corn_Attack_Charge_04.wav</ShortName>
+					<CachePath>SFX/SFX_Corn_Attack_Charge_04_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="127155149" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Corn_Hit_01.wav</ShortName>
+					<CachePath>SFX/SFX_Corn_Hit_01_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="221434807" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Corn_Attack_Shot_V2_04.wav</ShortName>
+					<CachePath>SFX/SFX_Corn_Attack_Shot_V2_04_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="244025360" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Corn_Death_03.wav</ShortName>
+					<CachePath>SFX/SFX_Corn_Death_03_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="250258662" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Corn_Attack_Shot_V2_05.wav</ShortName>
+					<CachePath>SFX/SFX_Corn_Attack_Shot_V2_05_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="284263818" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Corn_Hit_03.wav</ShortName>
+					<CachePath>SFX/SFX_Corn_Hit_03_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="285269462" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Corn_Movement_02.wav</ShortName>
+					<CachePath>SFX/SFX_Corn_Movement_02_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="371114761" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Corn_Death_02.wav</ShortName>
+					<CachePath>SFX/SFX_Corn_Death_02_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="426839673" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Corn_Attack_Charge_03.wav</ShortName>
+					<CachePath>SFX/SFX_Corn_Attack_Charge_03_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="451633883" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Corn_Attack_Charge_05.wav</ShortName>
+					<CachePath>SFX/SFX_Corn_Attack_Charge_05_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="562206014" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Corn_Attack_Charge_02.wav</ShortName>
+					<CachePath>SFX/SFX_Corn_Attack_Charge_02_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="574864690" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Corn_Attack_Shot_V2_03.wav</ShortName>
+					<CachePath>SFX/SFX_Corn_Attack_Shot_V2_03_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="581437994" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Corn_Movement_04.wav</ShortName>
+					<CachePath>SFX/SFX_Corn_Movement_04_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="598810826" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Corn_Attack_Shot_V2_01.wav</ShortName>
+					<CachePath>SFX/SFX_Corn_Attack_Shot_V2_01_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="620371065" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Corn_Movement_01.wav</ShortName>
+					<CachePath>SFX/SFX_Corn_Movement_01_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="729210195" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Corn_Death_04.wav</ShortName>
+					<CachePath>SFX/SFX_Corn_Death_04_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="770725611" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Corn_Death_01.wav</ShortName>
+					<CachePath>SFX/SFX_Corn_Death_01_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="818181180" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Corn_Hit_02.wav</ShortName>
+					<CachePath>SFX/SFX_Corn_Hit_02_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="947055422" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Corn_Attack_Charge_01.wav</ShortName>
+					<CachePath>SFX/SFX_Corn_Attack_Charge_01_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="949516313" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Corn_Hit_04.wav</ShortName>
+					<CachePath>SFX/SFX_Corn_Hit_04_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="967853619" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Corn_Attack_Shot_V2_02.wav</ShortName>
+					<CachePath>SFX/SFX_Corn_Attack_Shot_V2_02_3F75BDB9.wem</CachePath>
+				</File>
+			</Media>
+			<Events>
+				<Event Id="3879041558" Name="Play_SFX_Corn_Attack_Charge" MaxAttenuation="40" DurationType="OneShot" DurationMin="0.74316335" DurationMax="0.8341727">
+					<MediaRefs>
+						<MediaRef Id="89582080"/>
+						<MediaRef Id="426839673"/>
+						<MediaRef Id="451633883"/>
+						<MediaRef Id="562206014"/>
+						<MediaRef Id="947055422"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="1485707806" Name="Play_SFX_Corn_Attack_Shot" MaxAttenuation="40" DurationType="OneShot" DurationMin="0.5690972" DurationMax="0.6387901">
+					<MediaRefs>
+						<MediaRef Id="221434807"/>
+						<MediaRef Id="250258662"/>
+						<MediaRef Id="574864690"/>
+						<MediaRef Id="598810826"/>
+						<MediaRef Id="967853619"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="638584899" Name="Play_SFX_Corn_Death" MaxAttenuation="40" DurationType="OneShot" DurationMin="0.37870988" DurationMax="0.5157158">
+					<MediaRefs>
+						<MediaRef Id="244025360"/>
+						<MediaRef Id="371114761"/>
+						<MediaRef Id="729210195"/>
+						<MediaRef Id="770725611"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="317530092" Name="Play_SFX_Corn_Footsteps" MaxAttenuation="40" DurationType="OneShot" DurationMin="0.47193712" DurationMax="0.5297316">
+					<MediaRefs>
+						<MediaRef Id="89513632"/>
+						<MediaRef Id="285269462"/>
+						<MediaRef Id="581437994"/>
+						<MediaRef Id="620371065"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="866431378" Name="Play_SFX_Corn_Hit" MaxAttenuation="40" DurationType="OneShot" DurationMin="0.22782764" DurationMax="0.29883483">
+					<MediaRefs>
+						<MediaRef Id="127155149"/>
+						<MediaRef Id="284263818"/>
+						<MediaRef Id="818181180"/>
+						<MediaRef Id="949516313"/>
+					</MediaRefs>
+				</Event>
+			</Events>
+		</SoundBank>
+		<SoundBank Id="3991942870" Type="User" Language="SFX" Hash="{6037C51E-73E1-E2D9-D89C-613995C94DD8}">
+			<ShortName>MUSIC</ShortName>
+			<Path>MUSIC.bnk</Path>
+			<Media>
+				<File Id="5823022" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Xylopone_Intro_01_02.wav</ShortName>
+					<CachePath>SFX/Xylopone_Intro_01_02_D79FB2B7.wem</CachePath>
+				</File>
+				<File Id="38019068" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>LogDrum_Intro_01_02.wav</ShortName>
+					<CachePath>SFX/LogDrum_Intro_01_02_D79FB2B7.wem</CachePath>
+				</File>
+				<File Id="98237533" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Piano_Bass_02_C.wav</ShortName>
+					<CachePath>SFX/Piano_Bass_02_C_D79FB2B7.wem</CachePath>
+				</File>
+				<File Id="204852398" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Instrumental_Section_01_02.wav</ShortName>
+					<CachePath>SFX/Instrumental_Section_01_02_D79FB2B7.wem</CachePath>
+				</File>
+				<File Id="205583249" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Piano_Bass_02_E.wav</ShortName>
+					<CachePath>SFX/Piano_Bass_02_E_D79FB2B7.wem</CachePath>
+				</File>
+				<File Id="217044229" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Balafon_Intro_01_02.wav</ShortName>
+					<CachePath>SFX/Balafon_Intro_01_02_D79FB2B7.wem</CachePath>
+				</File>
+				<File Id="224719326" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>WaterDrum_Intro_01_02.wav</ShortName>
+					<CachePath>SFX/WaterDrum_Intro_01_02_D79FB2B7.wem</CachePath>
+				</File>
+				<File Id="228013946" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Piano_Melo_01.wav</ShortName>
+					<CachePath>SFX/Piano_Melo_01_D79FB2B7.wem</CachePath>
+				</File>
+				<File Id="280390225" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Transition_to_Fight.wav</ShortName>
+					<CachePath>SFX/Transition_to_Fight_D79FB2B7.wem</CachePath>
+				</File>
+				<File Id="283349972" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Instrumental_Section_Intro.wav</ShortName>
+					<CachePath>SFX/Instrumental_Section_Intro_D79FB2B7.wem</CachePath>
+				</File>
+				<File Id="295760673" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Piano_Bass_02_B.wav</ShortName>
+					<CachePath>SFX/Piano_Bass_02_B_D79FB2B7.wem</CachePath>
+				</File>
+				<File Id="423374554" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Piano_Bass_Intro_01.wav</ShortName>
+					<CachePath>SFX/Piano_Bass_Intro_01_D79FB2B7.wem</CachePath>
+				</File>
+				<File Id="436582919" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Music_Exploration_V2.wav</ShortName>
+					<CachePath>SFX/Music_Exploration_V2_D79FB2B7.wem</CachePath>
+				</File>
+				<File Id="611635544" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>WoodBlock_01_02.wav</ShortName>
+					<CachePath>SFX/WoodBlock_01_02_D79FB2B7.wem</CachePath>
+				</File>
+				<File Id="613207208" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Piano_Bass_02_F.wav</ShortName>
+					<CachePath>SFX/Piano_Bass_02_F_D79FB2B7.wem</CachePath>
+				</File>
+				<File Id="620080086" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>WoodStick_01_02.wav</ShortName>
+					<CachePath>SFX/WoodStick_01_02_D79FB2B7.wem</CachePath>
+				</File>
+				<File Id="789831653" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Piano_Melo_02_B.wav</ShortName>
+					<CachePath>SFX/Piano_Melo_02_B_D79FB2B7.wem</CachePath>
+				</File>
+				<File Id="831205939" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Piano_Bass_02_D.wav</ShortName>
+					<CachePath>SFX/Piano_Bass_02_D_D79FB2B7.wem</CachePath>
+				</File>
+				<File Id="909604397" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Piano_Melo_02_A.wav</ShortName>
+					<CachePath>SFX/Piano_Melo_02_A_D79FB2B7.wem</CachePath>
+				</File>
+				<File Id="1003454703" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>WoodPerc_Intro_01_02.wav</ShortName>
+					<CachePath>SFX/WoodPerc_Intro_01_02_D79FB2B7.wem</CachePath>
+				</File>
+				<File Id="1042873704" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Castagnette_Intro_01_02.wav</ShortName>
+					<CachePath>SFX/Castagnette_Intro_01_02_D79FB2B7.wem</CachePath>
+				</File>
+				<File Id="1067837035" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Piano_Bass_02_A.wav</ShortName>
+					<CachePath>SFX/Piano_Bass_02_A_D79FB2B7.wem</CachePath>
+				</File>
+			</Media>
+			<Events>
+				<Event Id="2932040671" Name="Play_Music" DurationType="Infinite">
+					<SwitchContainers>
+						<SwitchContainer>
+							<SwitchValue GroupType="State" GroupId="2181612614" Id="2181612614"/>
+							<MediaRefs>
+								<MediaRef Id="5823022"/>
+								<MediaRef Id="38019068"/>
+								<MediaRef Id="98237533"/>
+								<MediaRef Id="204852398"/>
+								<MediaRef Id="205583249"/>
+								<MediaRef Id="217044229"/>
+								<MediaRef Id="224719326"/>
+								<MediaRef Id="228013946"/>
+								<MediaRef Id="280390225"/>
+								<MediaRef Id="283349972"/>
+								<MediaRef Id="295760673"/>
+								<MediaRef Id="423374554"/>
+								<MediaRef Id="611635544"/>
+								<MediaRef Id="613207208"/>
+								<MediaRef Id="620080086"/>
+								<MediaRef Id="789831653"/>
+								<MediaRef Id="831205939"/>
+								<MediaRef Id="909604397"/>
+								<MediaRef Id="1003454703"/>
+								<MediaRef Id="1042873704"/>
+								<MediaRef Id="1067837035"/>
+							</MediaRefs>
+						</SwitchContainer>
+						<SwitchContainer>
+							<SwitchValue GroupType="State" GroupId="2181612614" Id="2218077717"/>
+							<MediaRefs>
+								<MediaRef Id="436582919"/>
+							</MediaRefs>
+						</SwitchContainer>
+					</SwitchContainers>
+				</Event>
+			</Events>
+			<StateGroups>
+				<StateGroup Id="941442537" Name="Bread">
+					<States>
+						<State Id="748895195" Name="None"/>
+						<State Id="979470758" Name="Yes"/>
+						<State Id="1668749452" Name="No"/>
+					</States>
+				</StateGroup>
+				<StateGroup Id="1123068863" Name="Beef">
+					<States>
+						<State Id="748895195" Name="None"/>
+						<State Id="979470758" Name="Yes"/>
+						<State Id="1668749452" Name="No"/>
+					</States>
+				</StateGroup>
+				<StateGroup Id="2181612614" Name="InFight">
+					<States>
+						<State Id="748895195" Name="None"/>
+						<State Id="2181612614" Name="InFight"/>
+						<State Id="2218077717" Name="NotInFight"/>
+					</States>
+				</StateGroup>
+				<StateGroup Id="2682233438" Name="Rice">
+					<States>
+						<State Id="748895195" Name="None"/>
+						<State Id="979470758" Name="Yes"/>
+						<State Id="1668749452" Name="No"/>
+					</States>
+				</StateGroup>
+				<StateGroup Id="2695658327" Name="Fish">
+					<States>
+						<State Id="748895195" Name="None"/>
+						<State Id="979470758" Name="Yes"/>
+						<State Id="1668749452" Name="No"/>
+					</States>
+				</StateGroup>
+				<StateGroup Id="3220806263" Name="Tomato">
+					<States>
+						<State Id="748895195" Name="None"/>
+						<State Id="979470758" Name="Yes"/>
+						<State Id="1668749452" Name="No"/>
+					</States>
+				</StateGroup>
+				<StateGroup Id="3787826983" Name="Corn">
+					<States>
+						<State Id="748895195" Name="None"/>
+						<State Id="979470758" Name="Yes"/>
+						<State Id="1668749452" Name="No"/>
+					</States>
+				</StateGroup>
+				<StateGroup Id="3933301714" Name="Banana">
+					<States>
+						<State Id="748895195" Name="None"/>
+						<State Id="979470758" Name="Yes"/>
+						<State Id="1668749452" Name="No"/>
+					</States>
+				</StateGroup>
+				<StateGroup Id="4083202225" Name="Letuce">
+					<States>
+						<State Id="748895195" Name="None"/>
+						<State Id="979470758" Name="Yes"/>
+						<State Id="1668749452" Name="No"/>
+					</States>
+				</StateGroup>
+			</StateGroups>
+		</SoundBank>
+		<SoundBank Id="3996957973" Type="User" Language="SFX" Hash="{C86EEF5E-55FB-A511-B2C9-19B69A1B6527}">
+			<ShortName>SFX_MC</ShortName>
+			<Path>SFX_MC.bnk</Path>
+			<Media>
+				<File Id="2431564" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>FT_MC_Dash_01.wav</ShortName>
+					<CachePath>SFX/FT_MC_Dash_01_F4E801A0.wem</CachePath>
+				</File>
+				<File Id="24705584" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Shot_Corn_01.wav</ShortName>
+					<CachePath>SFX/SFX_Shot_Corn_01_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="43861836" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Shot_Beef_03.wav</ShortName>
+					<CachePath>SFX/SFX_Shot_Beef_03_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="112679822" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Impact_Tomato_01.wav</ShortName>
+					<CachePath>SFX/SFX_Impact_Tomato_01_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="142524061" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>FOL_MC_Run_03.wav</ShortName>
+					<CachePath>SFX/FOL_MC_Run_03_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="155910010" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Impact_Corn_04.wav</ShortName>
+					<CachePath>SFX/SFX_Impact_Corn_04_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="176688115" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>MC_Death.wav</ShortName>
+					<CachePath>SFX/MC_Death_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="177358101" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Shot_Beef_05.wav</ShortName>
+					<CachePath>SFX/SFX_Shot_Beef_05_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="184909835" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>FT_MC_Run_03.wav</ShortName>
+					<CachePath>SFX/FT_MC_Run_03_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="190267688" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Impact_Tomato_04.wav</ShortName>
+					<CachePath>SFX/SFX_Impact_Tomato_04_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="225695204" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Impact_Empty_03.wav</ShortName>
+					<CachePath>SFX/SFX_Impact_Empty_03_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="242676378" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Shot_Bread_01.wav</ShortName>
+					<CachePath>SFX/SFX_Shot_Bread_01_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="278670876" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Shot_Fish_01.wav</ShortName>
+					<CachePath>SFX/SFX_Shot_Fish_01_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="296686737" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Shot_Fish_02.wav</ShortName>
+					<CachePath>SFX/SFX_Shot_Fish_02_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="303265375" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Impact_Fish_01.wav</ShortName>
+					<CachePath>SFX/SFX_Impact_Fish_01_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="304956199" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Shot_Empty_05.wav</ShortName>
+					<CachePath>SFX/SFX_Shot_Empty_05_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="333564494" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Impact_Tomato_03.wav</ShortName>
+					<CachePath>SFX/SFX_Impact_Tomato_03_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="335984748" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Shot_Fish_04.wav</ShortName>
+					<CachePath>SFX/SFX_Shot_Fish_04_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="366403547" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>FT_MC_Dash_02.wav</ShortName>
+					<CachePath>SFX/FT_MC_Dash_02_A6D1AE42.wem</CachePath>
+				</File>
+				<File Id="395078062" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Impact_Corn_02.wav</ShortName>
+					<CachePath>SFX/SFX_Impact_Corn_02_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="401885596" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Impact_Letuce_04.wav</ShortName>
+					<CachePath>SFX/SFX_Impact_Letuce_04_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="412349863" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Shot_Letuce_03.wav</ShortName>
+					<CachePath>SFX/SFX_Shot_Letuce_03_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="419363131" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Impact_Fish_04.wav</ShortName>
+					<CachePath>SFX/SFX_Impact_Fish_04_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="423740514" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>FT_MC_Run_08.wav</ShortName>
+					<CachePath>SFX/FT_MC_Run_08_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="426732423" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Impact_Tomato_02.wav</ShortName>
+					<CachePath>SFX/SFX_Impact_Tomato_02_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="432765713" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Shot_Corn_02.wav</ShortName>
+					<CachePath>SFX/SFX_Shot_Corn_02_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="445181237" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>MC_Hit_01.wav</ShortName>
+					<CachePath>SFX/MC_Hit_01_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="459299395" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Shot_Beef_01.wav</ShortName>
+					<CachePath>SFX/SFX_Shot_Beef_01_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="470549974" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Impact_Empty_04.wav</ShortName>
+					<CachePath>SFX/SFX_Impact_Empty_04_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="476596561" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Shot_Banana_05.wav</ShortName>
+					<CachePath>SFX/SFX_Shot_Banana_05_50AA5AC3.wem</CachePath>
+				</File>
+				<File Id="489391792" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>FT_MC_Run_05.wav</ShortName>
+					<CachePath>SFX/FT_MC_Run_05_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="494601561" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Impact_Letuce_02.wav</ShortName>
+					<CachePath>SFX/SFX_Impact_Letuce_02_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="497007614" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>FOL_MC_Run_07.wav</ShortName>
+					<CachePath>SFX/FOL_MC_Run_07_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="528379071" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Impact_Empty_05.wav</ShortName>
+					<CachePath>SFX/SFX_Impact_Empty_05_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="560042173" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Shot_Letuce_04.wav</ShortName>
+					<CachePath>SFX/SFX_Shot_Letuce_04_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="568604304" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>FOL_MC_Cauldron_Idle_Layer_A.wav</ShortName>
+					<CachePath>SFX/FOL_MC_Cauldron_Idle_Layer_A_9EDFC787.wem</CachePath>
+				</File>
+				<File Id="592565102" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>FT_MC_Run_02.wav</ShortName>
+					<CachePath>SFX/FT_MC_Run_02_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="593207132" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Impact_Fish_02.wav</ShortName>
+					<CachePath>SFX/SFX_Impact_Fish_02_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="593723440" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Impact_Corn_03.wav</ShortName>
+					<CachePath>SFX/SFX_Impact_Corn_03_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="601251504" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Impact_Beef_05.wav</ShortName>
+					<CachePath>SFX/SFX_Impact_Beef_05_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="603330166" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Shot_Banana_03.wav</ShortName>
+					<CachePath>SFX/SFX_Shot_Banana_03_B849AA7F.wem</CachePath>
+				</File>
+				<File Id="617178781" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Impact_Empty_02.wav</ShortName>
+					<CachePath>SFX/SFX_Impact_Empty_02_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="627617775" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Impact_Fish_05.wav</ShortName>
+					<CachePath>SFX/SFX_Impact_Fish_05_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="639507786" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Impact_Fish_03.wav</ShortName>
+					<CachePath>SFX/SFX_Impact_Fish_03_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="645474173" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Shot_Empty_04.wav</ShortName>
+					<CachePath>SFX/SFX_Shot_Empty_04_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="650529177" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Shot_Corn_04.wav</ShortName>
+					<CachePath>SFX/SFX_Shot_Corn_04_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="657219531" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Impact_Empty_01.wav</ShortName>
+					<CachePath>SFX/SFX_Impact_Empty_01_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="669612588" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Shot_Empty_02.wav</ShortName>
+					<CachePath>SFX/SFX_Shot_Empty_02_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="670788433" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Shot_Empty_01.wav</ShortName>
+					<CachePath>SFX/SFX_Shot_Empty_01_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="680574009" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>MC_Hit_02.wav</ShortName>
+					<CachePath>SFX/MC_Hit_02_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="688112428" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Shot_Fish_03.wav</ShortName>
+					<CachePath>SFX/SFX_Shot_Fish_03_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="691901110" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Shot_Bread_04.wav</ShortName>
+					<CachePath>SFX/SFX_Shot_Bread_04_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="692159223" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>FT_MC_Run_04.wav</ShortName>
+					<CachePath>SFX/FT_MC_Run_04_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="696804675" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Impact_Letuce_01.wav</ShortName>
+					<CachePath>SFX/SFX_Impact_Letuce_01_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="703557080" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>FT_MC_Run_06.wav</ShortName>
+					<CachePath>SFX/FT_MC_Run_06_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="724893029" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>FOL_MC_Run_04.wav</ShortName>
+					<CachePath>SFX/FOL_MC_Run_04_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="728928794" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Shot_Beef_02.wav</ShortName>
+					<CachePath>SFX/SFX_Shot_Beef_02_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="730078103" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>FT_MC_Run_01.wav</ShortName>
+					<CachePath>SFX/FT_MC_Run_01_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="751318324" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Shot_Fish_05.wav</ShortName>
+					<CachePath>SFX/SFX_Shot_Fish_05_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="775231481" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>FOL_MC_Run_06.wav</ShortName>
+					<CachePath>SFX/FOL_MC_Run_06_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="806195296" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Shot_Corn_03.wav</ShortName>
+					<CachePath>SFX/SFX_Shot_Corn_03_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="829483925" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>FT_MC_Dash_04.wav</ShortName>
+					<CachePath>SFX/FT_MC_Dash_04_F4ED0410.wem</CachePath>
+				</File>
+				<File Id="836296097" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>FT_MC_Dash_03.wav</ShortName>
+					<CachePath>SFX/FT_MC_Dash_03_4530B45D.wem</CachePath>
+				</File>
+				<File Id="854154003" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>FOL_MC_Run_02.wav</ShortName>
+					<CachePath>SFX/FOL_MC_Run_02_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="863118741" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Impact_Beef_02.wav</ShortName>
+					<CachePath>SFX/SFX_Impact_Beef_02_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="875517275" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>FOL_MC_Run_01.wav</ShortName>
+					<CachePath>SFX/FOL_MC_Run_01_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="879729711" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Impact_Corn_05.wav</ShortName>
+					<CachePath>SFX/SFX_Impact_Corn_05_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="910053020" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Impact_Beef_04.wav</ShortName>
+					<CachePath>SFX/SFX_Impact_Beef_04_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="915271046" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>FOL_MC_Run_05.wav</ShortName>
+					<CachePath>SFX/FOL_MC_Run_05_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="917800306" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>FOL_MC_Cauldron_Idle_Layer_B.wav</ShortName>
+					<CachePath>SFX/FOL_MC_Cauldron_Idle_Layer_B_9EDFC787.wem</CachePath>
+				</File>
+				<File Id="918196208" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Shot_Empty_03.wav</ShortName>
+					<CachePath>SFX/SFX_Shot_Empty_03_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="929893298" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Shot_Letuce_01.wav</ShortName>
+					<CachePath>SFX/SFX_Shot_Letuce_01_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="938797538" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Shot_Beef_04.wav</ShortName>
+					<CachePath>SFX/SFX_Shot_Beef_04_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="946312301" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Impact_Letuce_03.wav</ShortName>
+					<CachePath>SFX/SFX_Impact_Letuce_03_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="954430273" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>FT_MC_Run_07.wav</ShortName>
+					<CachePath>SFX/FT_MC_Run_07_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="985070586" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Shot_Bread_02.wav</ShortName>
+					<CachePath>SFX/SFX_Shot_Bread_02_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="994906114" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Impact_Tomato_05.wav</ShortName>
+					<CachePath>SFX/SFX_Impact_Tomato_05_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="1000019556" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Shot_Letuce_02.wav</ShortName>
+					<CachePath>SFX/SFX_Shot_Letuce_02_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="1002726550" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>FT_MC_Run_09.wav</ShortName>
+					<CachePath>SFX/FT_MC_Run_09_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="1021509899" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Shot_Banana_02.wav</ShortName>
+					<CachePath>SFX/SFX_Shot_Banana_02_13C0AF85.wem</CachePath>
+				</File>
+				<File Id="1033904407" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Shot_Banana_01.wav</ShortName>
+					<CachePath>SFX/SFX_Shot_Banana_01_BC93115B.wem</CachePath>
+				</File>
+				<File Id="1043108297" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Impact_Corn_01.wav</ShortName>
+					<CachePath>SFX/SFX_Impact_Corn_01_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="1045561180" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Shot_Bread_03.wav</ShortName>
+					<CachePath>SFX/SFX_Shot_Bread_03_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="1053486478" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Impact_Beef_03.wav</ShortName>
+					<CachePath>SFX/SFX_Impact_Beef_03_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="1066352579" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Shot_Banana_04.wav</ShortName>
+					<CachePath>SFX/SFX_Shot_Banana_04_13184997.wem</CachePath>
+				</File>
+				<File Id="1066457049" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Impact_Beef_01.wav</ShortName>
+					<CachePath>SFX/SFX_Impact_Beef_01_3F75BDB9.wem</CachePath>
+				</File>
+			</Media>
+			<Events>
+				<Event Id="495286721" Name="Play_Empty_Amo" MaxAttenuation="0" DurationType="OneShot" DurationMin="0" DurationMax="0">
+					<ActionSetState>
+						<ActionSetStateEntry GroupId="1793259384" Id="1651971902" Name="On"/>
+						<ActionSetStateEntry GroupId="3933301714" Id="1668749452" Name="No"/>
+					</ActionSetState>
+				</Event>
+				<Event Id="2012076284" Name="Play_MC_Cauldron_Idle" DurationType="Infinite">
+					<MediaRefs>
+						<MediaRef Id="568604304"/>
+						<MediaRef Id="917800306"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="2996328093" Name="Play_MC_Dash" DurationType="OneShot" DurationMin="0.6292495" DurationMax="0.7063088">
+					<MediaRefs>
+						<MediaRef Id="2431564"/>
+						<MediaRef Id="366403547"/>
+						<MediaRef Id="829483925"/>
+						<MediaRef Id="836296097"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="107675701" Name="Play_MC_Death" DurationType="OneShot" DurationMin="1.3108333" DurationMax="1.3108333">
+					<MediaRefs>
+						<MediaRef Id="176688115"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="1065585556" Name="Play_MC_Hit" DurationType="OneShot" DurationMin="0.6716845" DurationMax="0.80294067">
+					<MediaRefs>
+						<MediaRef Id="445181237"/>
+						<MediaRef Id="680574009"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="1600895284" Name="Play_MC_Run" DurationType="OneShot" DurationMin="0.34105322" DurationMax="0.38281935">
+					<MediaRefs>
+						<MediaRef Id="142524061"/>
+						<MediaRef Id="184909835"/>
+						<MediaRef Id="423740514"/>
+						<MediaRef Id="489391792"/>
+						<MediaRef Id="497007614"/>
+						<MediaRef Id="592565102"/>
+						<MediaRef Id="692159223"/>
+						<MediaRef Id="703557080"/>
+						<MediaRef Id="724893029"/>
+						<MediaRef Id="730078103"/>
+						<MediaRef Id="775231481"/>
+						<MediaRef Id="854154003"/>
+						<MediaRef Id="875517275"/>
+						<MediaRef Id="915271046"/>
+						<MediaRef Id="954430273"/>
+						<MediaRef Id="1002726550"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="3682234456" Name="Play_MC_Run_Foley" DurationType="OneShot" DurationMin="0.34105322" DurationMax="0.38281935">
+					<MediaRefs>
+						<MediaRef Id="142524061"/>
+						<MediaRef Id="497007614"/>
+						<MediaRef Id="724893029"/>
+						<MediaRef Id="775231481"/>
+						<MediaRef Id="854154003"/>
+						<MediaRef Id="875517275"/>
+						<MediaRef Id="915271046"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="104751245" Name="Play_MC_Run_Footstep" DurationType="OneShot" DurationMin="0.18877485" DurationMax="0.21189263">
+					<MediaRefs>
+						<MediaRef Id="184909835"/>
+						<MediaRef Id="423740514"/>
+						<MediaRef Id="489391792"/>
+						<MediaRef Id="592565102"/>
+						<MediaRef Id="692159223"/>
+						<MediaRef Id="703557080"/>
+						<MediaRef Id="730078103"/>
+						<MediaRef Id="954430273"/>
+						<MediaRef Id="1002726550"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="530264000" Name="Play_Weapon_Bounce_Wall" MaxAttenuation="25" DurationType="OneShot" DurationMin="0.6697181" DurationMax="0.81708884">
+					<MediaRefs>
+						<MediaRef Id="112679822"/>
+						<MediaRef Id="190267688"/>
+						<MediaRef Id="333564494"/>
+						<MediaRef Id="426732423"/>
+						<MediaRef Id="994906114"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="701036212" Name="Play_Weapon_Hit" MaxAttenuation="25" DurationType="OneShot" DurationMin="0.6697181" DurationMax="0.81708884">
+					<MediaRefs>
+						<MediaRef Id="112679822"/>
+						<MediaRef Id="155910010"/>
+						<MediaRef Id="190267688"/>
+						<MediaRef Id="225695204"/>
+						<MediaRef Id="303265375"/>
+						<MediaRef Id="333564494"/>
+						<MediaRef Id="395078062"/>
+						<MediaRef Id="401885596"/>
+						<MediaRef Id="419363131"/>
+						<MediaRef Id="426732423"/>
+						<MediaRef Id="470549974"/>
+						<MediaRef Id="494601561"/>
+						<MediaRef Id="528379071"/>
+						<MediaRef Id="593207132"/>
+						<MediaRef Id="593723440"/>
+						<MediaRef Id="601251504"/>
+						<MediaRef Id="617178781"/>
+						<MediaRef Id="627617775"/>
+						<MediaRef Id="639507786"/>
+						<MediaRef Id="657219531"/>
+						<MediaRef Id="696804675"/>
+						<MediaRef Id="863118741"/>
+						<MediaRef Id="879729711"/>
+						<MediaRef Id="910053020"/>
+						<MediaRef Id="946312301"/>
+						<MediaRef Id="994906114"/>
+						<MediaRef Id="1043108297"/>
+						<MediaRef Id="1053486478"/>
+						<MediaRef Id="1066457049"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="3889646233" Name="Play_Weapon_Shot" MaxAttenuation="25" DurationType="OneShot" DurationMin="1.2613503" DurationMax="1.5804983">
+					<MediaRefs>
+						<MediaRef Id="24705584"/>
+						<MediaRef Id="43861836"/>
+						<MediaRef Id="177358101"/>
+						<MediaRef Id="242676378"/>
+						<MediaRef Id="278670876"/>
+						<MediaRef Id="296686737"/>
+						<MediaRef Id="304956199"/>
+						<MediaRef Id="335984748"/>
+						<MediaRef Id="412349863"/>
+						<MediaRef Id="432765713"/>
+						<MediaRef Id="459299395"/>
+						<MediaRef Id="476596561"/>
+						<MediaRef Id="560042173"/>
+						<MediaRef Id="603330166"/>
+						<MediaRef Id="645474173"/>
+						<MediaRef Id="650529177"/>
+						<MediaRef Id="669612588"/>
+						<MediaRef Id="670788433"/>
+						<MediaRef Id="688112428"/>
+						<MediaRef Id="691901110"/>
+						<MediaRef Id="728928794"/>
+						<MediaRef Id="751318324"/>
+						<MediaRef Id="806195296"/>
+						<MediaRef Id="918196208"/>
+						<MediaRef Id="929893298"/>
+						<MediaRef Id="938797538"/>
+						<MediaRef Id="985070586"/>
+						<MediaRef Id="1000019556"/>
+						<MediaRef Id="1021509899"/>
+						<MediaRef Id="1033904407"/>
+						<MediaRef Id="1045561180"/>
+						<MediaRef Id="1066352579"/>
+					</MediaRefs>
+				</Event>
+			</Events>
+			<StateGroups>
+				<StateGroup Id="941442537" Name="Bread">
+					<States>
+						<State Id="748895195" Name="None"/>
+						<State Id="979470758" Name="Yes"/>
+						<State Id="1668749452" Name="No"/>
+					</States>
+				</StateGroup>
+				<StateGroup Id="1123068863" Name="Beef">
+					<States>
+						<State Id="748895195" Name="None"/>
+						<State Id="979470758" Name="Yes"/>
+						<State Id="1668749452" Name="No"/>
+					</States>
+				</StateGroup>
+				<StateGroup Id="1793259384" Name="NoSound_TEST">
+					<States>
+						<State Id="748895195" Name="None"/>
+						<State Id="930712164" Name="Off"/>
+						<State Id="1651971902" Name="On"/>
+					</States>
+				</StateGroup>
+				<StateGroup Id="2682233438" Name="Rice">
+					<States>
+						<State Id="748895195" Name="None"/>
+						<State Id="979470758" Name="Yes"/>
+						<State Id="1668749452" Name="No"/>
+					</States>
+				</StateGroup>
+				<StateGroup Id="2695658327" Name="Fish">
+					<States>
+						<State Id="748895195" Name="None"/>
+						<State Id="979470758" Name="Yes"/>
+						<State Id="1668749452" Name="No"/>
+					</States>
+				</StateGroup>
+				<StateGroup Id="3220806263" Name="Tomato">
+					<States>
+						<State Id="748895195" Name="None"/>
+						<State Id="979470758" Name="Yes"/>
+						<State Id="1668749452" Name="No"/>
+					</States>
+				</StateGroup>
+				<StateGroup Id="3787826983" Name="Corn">
+					<States>
+						<State Id="748895195" Name="None"/>
+						<State Id="979470758" Name="Yes"/>
+						<State Id="1668749452" Name="No"/>
+					</States>
+				</StateGroup>
+				<StateGroup Id="3933301714" Name="Banana">
+					<States>
+						<State Id="748895195" Name="None"/>
+						<State Id="979470758" Name="Yes"/>
+						<State Id="1668749452" Name="No"/>
+					</States>
+				</StateGroup>
+				<StateGroup Id="4083202225" Name="Letuce">
+					<States>
+						<State Id="748895195" Name="None"/>
+						<State Id="979470758" Name="Yes"/>
+						<State Id="1668749452" Name="No"/>
+					</States>
+				</StateGroup>
+			</StateGroups>
+		</SoundBank>
+	</SoundBanks>
+	<FileHash>{9C8847FD-088C-0C58-F02A-8366C28CA4C1}</FileHash>
+</SoundBanksInfo>

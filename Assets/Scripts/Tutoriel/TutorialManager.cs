@@ -267,7 +267,7 @@ namespace Tutoriel
             
             IEnumerator IEndTutorial()
             {
-                _player.GetComponent<PlayerAttack>().ResetAmunation();
+                _player.GetComponent<PlayerAttack>().ResetAmunition();
                 
                 _textToDisplay = textWhenPlayerHasntAmmo;
                 _dialogueBox.DisplayText(_textToDisplay, cauldron.transform);

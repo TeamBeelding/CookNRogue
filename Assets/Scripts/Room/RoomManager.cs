@@ -82,12 +82,28 @@ public class RoomManager : MonoBehaviour
     {
         if (m_currentLevelIndex >= m_amountOfLevels - 1)
         {
-            RestartLevel();
+            m_player.EndGame();
         }
         else
         {
             TransitionToLevel();
             m_currentLevelIndex += 1;
+            m_currentLevelType = m_Levels.OrderList[m_currentLevelIndex];
+            PickFromType(m_currentLevelType);
+        }
+    }
+
+    public void LoadPreviousLevel()
+    {
+        if (m_currentLevelIndex <= 0)
+        {
+            Debug.LogWarning("No previous level !");
+            return;
+        }
+        else
+        {
+            TransitionToLevel();
+            m_currentLevelIndex += -1;
             m_currentLevelType = m_Levels.OrderList[m_currentLevelIndex];
             PickFromType(m_currentLevelType);
         }
