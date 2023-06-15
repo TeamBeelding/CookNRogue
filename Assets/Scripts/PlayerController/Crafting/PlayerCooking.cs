@@ -79,6 +79,7 @@ public class PlayerCooking : MonoBehaviour
         if (!_craftingInProgress)
         {
             _inventoryScript.Show(true);
+            Debug.Log("true");
         }
         else
         {
@@ -90,8 +91,12 @@ public class PlayerCooking : MonoBehaviour
     {
         if (!_craftingInProgress)
         {
-            _inventoryScript.Show(false);
-            _inventoryScript.CancelCraft();
+            if (_inventoryScript.IsDisplayed())
+            {
+                _inventoryScript.Show(false);
+                Debug.Log("false");
+                _inventoryScript.CancelCraft();
+            }
         }
         else
         {

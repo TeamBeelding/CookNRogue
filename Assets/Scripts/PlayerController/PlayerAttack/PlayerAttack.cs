@@ -112,6 +112,9 @@ public class PlayerAttack : MonoBehaviour
                     data.audioState.SetValue();
                 }
 
+                _inventory.EquippedRecipe.Clear();
+                _inventory.UpdateEquipedRecipeUI();
+
                 ResetParameters();
             }
         }

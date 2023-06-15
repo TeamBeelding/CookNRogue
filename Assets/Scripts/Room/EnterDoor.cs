@@ -144,7 +144,6 @@ public class EnterDoor : MonoBehaviour
         //Open Door
         if(value >= m_doorOpeningDuration)
         {
-            Debug.Log("?");
             m_door.SetActive(false);
             _doorIsOpened = true;
         }

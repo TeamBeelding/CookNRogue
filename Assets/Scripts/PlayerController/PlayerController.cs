@@ -528,7 +528,6 @@ public class PlayerController : MonoBehaviour
     {
         playerAnimStatesScript._animator.SetBool("cooking", true);
         playerAnimStatesScript.Marmite(false, true);
-        Debug.Log("cook");
 
         //Input state check
         if (_curState != playerStates.Default)
