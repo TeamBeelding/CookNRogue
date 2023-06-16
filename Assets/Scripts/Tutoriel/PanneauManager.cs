@@ -7,22 +7,17 @@ using UnityEngine;
 public class PanneauManager : MonoBehaviour
 {
     [SerializeField] private GameObject image;
-    
-    private void OnTriggerEnter(Collider other)
+    [SerializeField] private float range = 5f;
+
+    private void Update()
     {
-        if (other.CompareTag("Player"))
+        if (Vector3.Distance(transform.position, PlayerController.Instance.transform.position) <= range)
         {
-            if (image)
-                DisplayImage(true);
+            DisplayImage(true);
         }
-    }
-    
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
+        else
         {
-            if (image)
-                DisplayImage(false);
+            DisplayImage(false);
         }
     }
 
