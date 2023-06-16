@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Dialogues;
 using Sirenix.Utilities;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Tutoriel
 {
@@ -46,7 +47,9 @@ namespace Tutoriel
         private DialogueBox _dialogueBox;
         private string _textToDisplay = "";
         private GameObject _player;
-        
+
+        [SerializeField] private float timeBeforeLoadingScene = 1f;
+        [SerializeField] private string sceneToLoad = "Run";
         [Header("Text to display")]
         [SerializeField]
         private string textWhenPlayerApproachCauldron = "Approach the cauldron";
@@ -183,7 +186,7 @@ namespace Tutoriel
                 {
                     if (playerHasIngredients)
                     {
-                        OutlineCauldron(true);
+                        // OutlineCauldron(true);
                         
                         _textToDisplay = textWhenPlayerHasIngredients;
                         _dialogueBox.DisplayText(_textToDisplay, cauldron.transform);
@@ -192,7 +195,7 @@ namespace Tutoriel
                     }
                     else
                     {
-                        OutlineIngredient(true);
+                        // OutlineIngredient(true);
                         
                         _textToDisplay = textWhenPlayerHasntIngredients;
                         _dialogueBox.DisplayText(_textToDisplay, cauldron.transform);
@@ -271,11 +274,10 @@ namespace Tutoriel
                 
                 _textToDisplay = textWhenPlayerHasntAmmo;
                 _dialogueBox.DisplayText(_textToDisplay, cauldron.transform);
-                
-                yield return new WaitForSeconds(2);
-                
-                _textToDisplay = textWhenEnd;
-                _dialogueBox.DisplayText(_textToDisplay, cauldron.transform);
+
+                yield return new WaitForSeconds(timeBeforeLoadingScene);
+
+                SceneManager.LoadScene(sceneToLoad);
             }
         }
 
@@ -297,7 +299,7 @@ namespace Tutoriel
             
             if (value)
             {
-                OutlineIngredient(false);
+                // OutlineIngredient(false);
                 cauldron.GetComponent<Outline>().enabled = true;
             }
         }
@@ -309,7 +311,7 @@ namespace Tutoriel
 
             if (value)
             {
-                OutlineCauldron(false);
+                // OutlineCauldron(false);
                 
                 foreach (GameObject ingredient in GameObject.FindGameObjectsWithTag("IngredientTutorial"))
                 {

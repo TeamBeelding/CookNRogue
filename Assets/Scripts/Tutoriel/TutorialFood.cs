@@ -1,24 +1,23 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Sirenix.OdinInspector;
-using Tutoriel;
 using UnityEngine;
 
-public class TutorialFood : MonoBehaviour
+namespace Tutoriel
 {
-    [SerializeField] [Required]
-    private TutorialManager _tutorialManager;
-
-    private void Awake()
+    public class TutorialFood : MonoBehaviour
     {
-        if (_tutorialManager == null)
-            _tutorialManager = GameObject.FindGameObjectWithTag("TutorialManager").GetComponent<TutorialManager>();
-    }
+        [SerializeField] [Required]
+        private TutorialManager tutorialManager;
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-            _tutorialManager.SetPlayerHasIngredients(true);
+        private void Awake()
+        {
+            if (tutorialManager == null)
+                tutorialManager = GameObject.FindGameObjectWithTag("TutorialManager").GetComponent<TutorialManager>();
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag("Player"))
+                tutorialManager.SetPlayerHasIngredients(true);
+        }
     }
 }
