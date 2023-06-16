@@ -28,6 +28,8 @@ namespace Tutoriel
 
         [SerializeField]
         private bool isMoving = false;
+        [SerializeField] 
+        private bool isPlayerCooking = false;
         [SerializeField]
         private bool isQte = false;
         [SerializeField]
@@ -215,15 +217,16 @@ namespace Tutoriel
 
             IEnumerator ICooking()
             {
-                yield return new WaitForSeconds(1);
-                
-                _textToDisplay = textWhenPlayerCooking;
-                _dialogueBox.DisplayText(_textToDisplay, cauldron.transform);
-
                 while (tutorialStep == TutorialStep.CookMenuOpen)
                 {
                     if (!isCookingDone)
                     {
+                        if (_player.GetComponent<PlayerCooking>().GetCraftingInProgress() && !isQte)
+                        {
+                            _textToDisplay = textWhenPlayerCooking;
+                            _dialogueBox.DisplayText(_textToDisplay, cauldron.transform);
+                        }
+
                         if (isQte)
                         {
                             _textToDisplay = textWhenQTE;

@@ -781,6 +781,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: ChaudronTuto
       objectReference: {fileID: 0}
+    - target: {fileID: 8106262193092187603, guid: 38e0aebd78a78e34fbbf3a3d7f7c4b00,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 82b12286d634760459cd07a758af7592, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 38e0aebd78a78e34fbbf3a3d7f7c4b00, type: 3}
 --- !u!1001 &463841187
@@ -1867,6 +1872,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4f1d931103cb2404580d27bd24717df0, type: 3}
+--- !u!114 &680547303 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1496564380, guid: 4f1d931103cb2404580d27bd24717df0,
+    type: 3}
+  m_PrefabInstance: {fileID: 649542924}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &762437770
 GameObject:
   m_ObjectHideFlags: 0
@@ -2526,6 +2543,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 934188260}
   m_CullTransparentMesh: 1
+--- !u!114 &966721743 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8435914716660352085, guid: 4f1d931103cb2404580d27bd24717df0,
+    type: 3}
+  m_PrefabInstance: {fileID: 649542924}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a34558ecc9aa7f34e83646aee1d9a244, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1029812501
 GameObject:
   m_ObjectHideFlags: 0
@@ -2754,8 +2783,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: e9d849f0a00acd249bf0d0be7157b567, type: 2}
+  m_sharedMaterial: {fileID: -2538939295349968595, guid: e9d849f0a00acd249bf0d0be7157b567,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3536,8 +3566,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 342ebfe61ec09b94e8b014a405d261ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerAttack: {fileID: 0}
-  _ammoText: {fileID: 0}
+  _playerAttack: {fileID: 966721743}
+  _ammoText: {fileID: 680547303}
 --- !u!1001 &2042373623
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3999,6 +4029,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7830899782318110669, guid: 1b02798667e6634408b21385ca40d55c,
         type: 3}
+      propertyPath: textWhenQTE
+      value: "PAUUUUSE, tu savais qu'en \xE9tant assez vif tu pouvais mettre fin
+        a la cuisson en un \xE9clair ? Essaue d'appuyer sur le bouton X pour voir"
+      objectReference: {fileID: 0}
+    - target: {fileID: 7830899782318110669, guid: 1b02798667e6634408b21385ca40d55c,
+        type: 3}
       propertyPath: enemies.Array.data[0]
       value: 
       objectReference: {fileID: 1357366522}
@@ -4022,6 +4058,16 @@ PrefabInstance:
       propertyPath: ingredients.Array.data[2]
       value: 
       objectReference: {fileID: 1387364459}
+    - target: {fileID: 7830899782318110669, guid: 1b02798667e6634408b21385ca40d55c,
+        type: 3}
+      propertyPath: textWhenPlayerHasIngredients
+      value: Great, tu as tout ce qu'il faut, viens m'utiliser pour qu'on avance
+      objectReference: {fileID: 0}
+    - target: {fileID: 7830899782318110669, guid: 1b02798667e6634408b21385ca40d55c,
+        type: 3}
+      propertyPath: textWhenPlayerApproachCauldron
+      value: 'Hey you, come closer '
+      objectReference: {fileID: 0}
     - target: {fileID: 7830899782318110670, guid: 1b02798667e6634408b21385ca40d55c,
         type: 3}
       propertyPath: m_Name
