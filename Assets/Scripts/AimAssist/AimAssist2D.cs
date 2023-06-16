@@ -14,6 +14,7 @@ public class AimAssist2D
             //Check distance
             if (Vector3.Distance(origin, target.transform.position) > preset.GetMaxDistance)
             {
+                Debug.Log("diastanc");
                 continue;
             }
 
@@ -22,12 +23,14 @@ public class AimAssist2D
             float angle = Vector3.SignedAngle(tempTargetDir, baseDirection, Vector3.up);
             if ((angle < 0 && angle < -preset.GetMaxAngle) || (angle > 0 && angle > preset.GetMaxAngle))
             {
+                Debug.Log("angle");
                 continue;
             }
 
             //Check line of sight
             if (!Physics.Raycast(origin, tempTargetDir, out RaycastHit hit, preset.GetMaxDistance) || hit.collider.gameObject != target)
             {
+                Debug.Log("raycast");
                 continue;
             }
 

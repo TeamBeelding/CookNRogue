@@ -6,10 +6,14 @@ using TMPro;
 
 public class AmmunitionBar : MonoBehaviour
 {
-    private Slider _ammoBar;
+    [SerializeField]
+    private Image m_ammoBar;
+    private Material _ammoMat;
+    private float _maxAmmo;
     public PlayerAttack _playerAttack;
     public TextMeshProUGUI _ammoText;
     public static AmmunitionBar instance;
+
 
     public void Awake()
     {
@@ -21,37 +25,40 @@ public class AmmunitionBar : MonoBehaviour
 
         instance = this;
     }
+
     private void Start()
     {
-        _ammoBar = GetComponentInChildren<Slider>();
+        _ammoMat = m_ammoBar.material;
+        _ammoMat.SetFloat("_FillAmount", 0f);
     }
+
     public void InitAmmoBar(int ammoNbr)
     {
-        _ammoBar.maxValue= _playerAttack._ammunition;
-        _ammoBar.value= _playerAttack._ammunition;
+        _maxAmmo = _playerAttack._ammunition;
+        _ammoMat.SetFloat("_FillAmount", 1f);
     }
 
     public void ResetAmmoBar()
     {
-        _ammoBar.maxValue = 0;
-        _ammoBar.value = 0;
+        _maxAmmo = 0f;
+        _ammoMat.SetFloat("_FillAmount", 0f);
     }
 
     public void UpdateAmmoBar()
     {
-        _ammoBar.value = _playerAttack._ammunition;
+        _ammoMat.SetFloat("_FillAmount", _playerAttack._ammunition / _maxAmmo);
         UpdateAmmoText();
     }
     public void AddIngredientAmmo(int nbr)
     {
-        _ammoBar.maxValue += nbr;
-        _ammoBar.value += nbr;
+        _maxAmmo += nbr;
+        _ammoMat.SetFloat("_FillAmount", _playerAttack._ammunition);
         UpdateAmmoText();
     }
 
     public void UpdateAmmoText()
     {
         if (_ammoText)
-            _ammoText.text = _ammoBar.value.ToString();
+            _ammoText.text = _playerAttack._ammunition.ToString();
     }
 }

@@ -160,8 +160,8 @@ public class PlayerController : MonoBehaviour
     #region Tutorial
 
     [Header("Tutorial")]
-    [SerializeField] private bool isOnTutorial = false;
-    [SerializeField] private TutorialManager tutorialManager;
+    [SerializeField] private bool _isOnTutorial = false;
+    [SerializeField] private TutorialManager _tutorialManager;
 
     #endregion
 
@@ -177,8 +177,8 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        if (isOnTutorial)
-            tutorialManager = GameObject.FindGameObjectWithTag("TutorialManager").GetComponent<TutorialManager>();
+        if (_isOnTutorial)
+            _tutorialManager = GameObject.FindGameObjectWithTag("TutorialManager").GetComponent<TutorialManager>();
 
         _relativeTransform = m_mainCamera.transform;
         _inventoryScript = PlayerCookingInventory.Instance;
@@ -434,7 +434,7 @@ public class PlayerController : MonoBehaviour
 
     public bool GetIsOnTutorial()
     {
-        return isOnTutorial;
+        return _isOnTutorial;
     }
 
     #region Movement
@@ -463,20 +463,20 @@ public class PlayerController : MonoBehaviour
 
     private void CheckingIfPlayerIsMovingForTutorial()
     {
-        if (!tutorialManager)
+        if (!_tutorialManager)
             return;
 
-        if (isOnTutorial)
-            tutorialManager.SetIsMoving(true);
+        if (_isOnTutorial)
+            _tutorialManager.SetIsMoving(true);
     }
 
     public void CheckingIfCookingIsDone()
     {
-        if (!tutorialManager)
+        if (!_tutorialManager)
             return;
 
-        if (isOnTutorial)
-            tutorialManager.SetIsCookingDone(true);
+        if (_isOnTutorial)
+            _tutorialManager.SetIsCookingDone(true);
     }
 
     //Dash
@@ -672,8 +672,8 @@ public class PlayerController : MonoBehaviour
 
     public void QTEAppear()
     {
-        if (isOnTutorial)
-            tutorialManager.SetIsQTE(true);
+        if (_isOnTutorial)
+            _tutorialManager.SetIsQTE(true);
     }
 
     #endregion
@@ -725,7 +725,7 @@ public class PlayerController : MonoBehaviour
         //Cooking cancel
         StopCookingState();
         
-        if (tutorialManager)
+        if (_tutorialManager)
             return;
             
         if (!_playerHealth.TakeDamage(1))
@@ -806,7 +806,7 @@ public class PlayerController : MonoBehaviour
 
     void SkipTuto(InputAction.CallbackContext context)
     {
-        if(tutorialManager != null && SceneManager.sceneCountInBuildSettings > 2)
+        if(_isOnTutorial && SceneManager.sceneCountInBuildSettings > 2)
         {
             SceneManager.LoadScene(2);
         }
