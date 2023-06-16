@@ -83,8 +83,19 @@ public class RoomManager : MonoBehaviour
     {
         if (m_currentLevelIndex >= m_amountOfLevels - 1)
         {
-            m_player.EndGame();
-        }
+            if (m_Levels.NextLevelOrder == null)
+            {
+                m_player.EndGame();
+                return;
+            }
+
+            m_Levels = m_Levels.NextLevelOrder;
+            RemoveIngredientsFromRoom();
+            TransitionToLevel();
+            m_currentLevelIndex = 0;
+            m_currentLevelType = m_Levels.OrderList[m_currentLevelIndex];
+            PickFromType(m_currentLevelType);
+        } 
         else
         {
             TransitionToLevel();
@@ -112,6 +123,11 @@ public class RoomManager : MonoBehaviour
 
     public void RestartLevel()
     {
+        if (m_Levels.PrevLevelOrder != null && m_currentLevelIndex != -1)
+        {
+            m_Levels = m_Levels.PrevLevelOrder;
+        }
+
         TransitionToLevel();
 
         m_currentLevelIndex = 0;
