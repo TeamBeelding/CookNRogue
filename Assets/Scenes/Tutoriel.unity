@@ -1872,6 +1872,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4f1d931103cb2404580d27bd24717df0, type: 3}
+--- !u!114 &680547303 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1496564380, guid: 4f1d931103cb2404580d27bd24717df0,
+    type: 3}
+  m_PrefabInstance: {fileID: 649542924}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &762437770
 GameObject:
   m_ObjectHideFlags: 0
@@ -2531,6 +2543,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 934188260}
   m_CullTransparentMesh: 1
+--- !u!114 &966721743 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8435914716660352085, guid: 4f1d931103cb2404580d27bd24717df0,
+    type: 3}
+  m_PrefabInstance: {fileID: 649542924}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a34558ecc9aa7f34e83646aee1d9a244, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1029812501
 GameObject:
   m_ObjectHideFlags: 0
@@ -3541,8 +3565,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 342ebfe61ec09b94e8b014a405d261ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerAttack: {fileID: 0}
-  _ammoText: {fileID: 0}
+  _playerAttack: {fileID: 966721743}
+  _ammoText: {fileID: 680547303}
 --- !u!1001 &2042373623
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4001,6 +4025,11 @@ PrefabInstance:
         type: 3}
       propertyPath: sceneToLoad
       value: 02_P_Normal
+      objectReference: {fileID: 0}
+    - target: {fileID: 7830899782318110669, guid: 1b02798667e6634408b21385ca40d55c,
+        type: 3}
+      propertyPath: slowMotionFactor
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 7830899782318110669, guid: 1b02798667e6634408b21385ca40d55c,
         type: 3}
