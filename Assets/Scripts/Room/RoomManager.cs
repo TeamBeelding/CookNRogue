@@ -119,6 +119,13 @@ public class RoomManager : MonoBehaviour
         PickFromType(m_currentLevelType);
     }
 
+    public void RestartRoom()
+    {
+        TransitionToLevel();
+        m_currentLevelType = m_Levels.OrderList[m_currentLevelIndex];
+        PickFromType(m_currentLevelType);
+    }
+
     private void PickFromType(string currentLevelType)
     {
         switch (currentLevelType)
