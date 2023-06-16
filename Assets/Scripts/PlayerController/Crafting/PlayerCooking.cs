@@ -43,6 +43,8 @@ public class PlayerCooking : MonoBehaviour
     float _totalCookTime;
     float _randQTEDelay;
 
+    Material _fillMaterial;
+
     Coroutine _craftingRoutine;
 
     [SerializeField]
@@ -70,6 +72,7 @@ public class PlayerCooking : MonoBehaviour
         _inventoryScript = PlayerCookingInventory.Instance;
         _playerController = PlayerController.Instance;
         //animator = GetComponentInChildren<Animator>();
+        _fillMaterial = m_cookingProgressBarFill.material;
         m_cookingProgressVisuals.SetActive(false);
     }
 
@@ -219,7 +222,7 @@ public class PlayerCooking : MonoBehaviour
                 SpawnQTE();
             }
             //UI
-            m_cookingProgressBarFill.fillAmount = _curProgressTime / _totalCookTime;
+            _fillMaterial.SetFloat("_FillAmount", _curProgressTime / _totalCookTime);
 
             //Advance Time
             _curProgressTime += Time.deltaTime;
