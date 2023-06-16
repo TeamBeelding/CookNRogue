@@ -91,7 +91,6 @@ public class RoomManager : MonoBehaviour
         }
         else
         {
-            RemoveIngredientsFromRoom();
             TransitionToLevel();
             m_currentLevelIndex += 1;
             m_currentLevelType = m_Levels.OrderList[m_currentLevelIndex];
@@ -108,7 +107,6 @@ public class RoomManager : MonoBehaviour
         }
         else
         {
-            RemoveIngredientsFromRoom();
             TransitionToLevel();
             m_currentLevelIndex += -1;
             m_currentLevelType = m_Levels.OrderList[m_currentLevelIndex];
@@ -119,7 +117,6 @@ public class RoomManager : MonoBehaviour
     public void RestartLevel()
     {
         TransitionToLevel();
-        RemoveIngredientsFromRoom();
         m_currentLevelIndex = 0;
         m_currentLevelType = m_Levels.OrderList[m_currentLevelIndex];
         PickFromType(m_currentLevelType);
@@ -134,6 +131,7 @@ public class RoomManager : MonoBehaviour
 
     private void PickFromType(string currentLevelType)
     {
+        RemoveIngredientsFromRoom();
         switch (currentLevelType)
         {
             case "Hub":
@@ -177,6 +175,7 @@ public class RoomManager : MonoBehaviour
     }
     public void PickFromTypeAndIndex(string currentLevelType, int index)
     {
+        RemoveIngredientsFromRoom();
         TransitionToLevel();
         m_currentLevelType = currentLevelType;
 
