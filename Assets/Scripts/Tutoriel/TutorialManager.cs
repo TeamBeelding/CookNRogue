@@ -5,6 +5,7 @@ using Dialogues;
 using Sirenix.Utilities;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 
 namespace Tutoriel
 {
@@ -32,6 +33,8 @@ namespace Tutoriel
         private bool isPlayerCooking = false;
         [SerializeField]
         private bool isQte = false;
+        [FormerlySerializedAs("isQteDone")] [SerializeField]
+        private bool isQteFailed = false;
         [SerializeField]
         private bool isCookingDone = false;
         [SerializeField]
@@ -149,6 +152,7 @@ namespace Tutoriel
         
         public void SetIsMoving(bool value) => isMoving = value;
         public void SetIsQTE(bool value) => isQte = value;
+        public void SetIsQTEFailed(bool value) => isQteFailed = value;
         
         public void SetIsCookingDone(bool value) => isCookingDone = value;
         
@@ -233,6 +237,11 @@ namespace Tutoriel
                             _dialogueBox.DisplayText(_textToDisplay, cauldron.transform);
 
                             Time.timeScale = slowMotionFactor;
+                        }
+
+                        if (isQteFailed)
+                        {
+                            Time.timeScale = 1f;
                         }
                     }
                     else

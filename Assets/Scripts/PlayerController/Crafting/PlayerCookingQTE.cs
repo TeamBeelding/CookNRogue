@@ -13,6 +13,8 @@ public class PlayerCookingQTE : MonoBehaviour
 
     [SerializeField]
     GameObject m_QTEVisuals;
+    
+    private PlayerController _playerController;
 
     float _progress;
     bool _isActive;
@@ -28,6 +30,7 @@ public class PlayerCookingQTE : MonoBehaviour
 
     private void Start()
     {
+        _playerController = GetComponent<PlayerController>();
         m_playerCookingScript = m_playerCookingScript != null ? m_playerCookingScript : GetComponent<PlayerCooking>();
         m_QTEVisuals.SetActive(false);
     }
@@ -45,6 +48,8 @@ public class PlayerCookingQTE : MonoBehaviour
     {
         _isActive = false;
         m_QTEVisuals.SetActive(false);
+        
+        _playerController.QTEFailed();
     }
 
     private void CompleteQTE()

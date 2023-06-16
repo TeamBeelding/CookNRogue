@@ -678,6 +678,12 @@ public class PlayerController : MonoBehaviour
             _tutorialManager.SetIsQTE(true);
     }
 
+    public void QTEFailed()
+    {
+        if (_isOnTutorial)
+            _tutorialManager.SetIsQTEFailed(true);
+    }
+
     #endregion
 
     #region Other Actions
