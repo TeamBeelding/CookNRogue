@@ -89,11 +89,6 @@ public class PlayerCooking : MonoBehaviour
             RestartCrafting();
         }
     }
-    
-    public bool GetCraftingInProgress()
-    {
-        return _craftingInProgress;
-    }
 
     public void StopCooking()
     {
