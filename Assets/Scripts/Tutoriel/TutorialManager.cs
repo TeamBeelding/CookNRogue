@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Dialogues;
 using Sirenix.Utilities;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Tutoriel
 {
@@ -27,6 +28,8 @@ namespace Tutoriel
 
         [SerializeField]
         private bool isMoving = false;
+        [SerializeField] 
+        private bool isPlayerCooking = false;
         [SerializeField]
         private bool isQte = false;
         [SerializeField]
@@ -46,7 +49,9 @@ namespace Tutoriel
         private DialogueBox _dialogueBox;
         private string _textToDisplay = "";
         private GameObject _player;
-        
+
+        [SerializeField] private float timeBeforeLoadingScene = 1f;
+        [SerializeField] private string sceneToLoad = "Run";
         [Header("Text to display")]
         [SerializeField]
         private string textWhenPlayerApproachCauldron = "Approach the cauldron";
@@ -183,7 +188,7 @@ namespace Tutoriel
                 {
                     if (playerHasIngredients)
                     {
-                        OutlineCauldron(true);
+                        // OutlineCauldron(true);
                         
                         _textToDisplay = textWhenPlayerHasIngredients;
                         _dialogueBox.DisplayText(_textToDisplay, cauldron.transform);
@@ -192,7 +197,7 @@ namespace Tutoriel
                     }
                     else
                     {
-                        OutlineIngredient(true);
+                        // OutlineIngredient(true);
                         
                         _textToDisplay = textWhenPlayerHasntIngredients;
                         _dialogueBox.DisplayText(_textToDisplay, cauldron.transform);
@@ -212,15 +217,16 @@ namespace Tutoriel
 
             IEnumerator ICooking()
             {
-                yield return new WaitForSeconds(1);
-                
-                _textToDisplay = textWhenPlayerCooking;
-                _dialogueBox.DisplayText(_textToDisplay, cauldron.transform);
-
                 while (tutorialStep == TutorialStep.CookMenuOpen)
                 {
                     if (!isCookingDone)
                     {
+                        if (_player.GetComponent<PlayerCooking>().GetCraftingInProgress() && !isQte)
+                        {
+                            _textToDisplay = textWhenPlayerCooking;
+                            _dialogueBox.DisplayText(_textToDisplay, cauldron.transform);
+                        }
+
                         if (isQte)
                         {
                             _textToDisplay = textWhenQTE;
@@ -271,11 +277,10 @@ namespace Tutoriel
                 
                 _textToDisplay = textWhenPlayerHasntAmmo;
                 _dialogueBox.DisplayText(_textToDisplay, cauldron.transform);
-                
-                yield return new WaitForSeconds(2);
-                
-                _textToDisplay = textWhenEnd;
-                _dialogueBox.DisplayText(_textToDisplay, cauldron.transform);
+
+                yield return new WaitForSeconds(timeBeforeLoadingScene);
+
+                SceneManager.LoadScene(sceneToLoad);
             }
         }
 
@@ -297,7 +302,7 @@ namespace Tutoriel
             
             if (value)
             {
-                OutlineIngredient(false);
+                // OutlineIngredient(false);
                 cauldron.GetComponent<Outline>().enabled = true;
             }
         }
@@ -309,7 +314,7 @@ namespace Tutoriel
 
             if (value)
             {
-                OutlineCauldron(false);
+                // OutlineCauldron(false);
                 
                 foreach (GameObject ingredient in GameObject.FindGameObjectsWithTag("IngredientTutorial"))
                 {

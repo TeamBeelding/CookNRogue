@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -9,7 +8,6 @@ namespace Enemy.Slime
         private NavMeshAgent agent;
         private NavMeshPath navMeshPath;
         private Transform player;
-        [SerializeField] private Material validMaterial;
         
         // Start is called before the first frame update
         private void Start()
@@ -17,14 +15,6 @@ namespace Enemy.Slime
             agent = GetComponent<NavMeshAgent>();
             navMeshPath = new NavMeshPath();
             player = GameObject.FindGameObjectWithTag("Player").transform;
-        }
-
-        private void Update()
-        {
-            if (IsPathValid())
-                GetComponentInChildren<Renderer>().material.color = Color.blue;
-            else
-                GetComponentInChildren<Renderer>().material.color = Color.red;
         }
 
         public void SetTransformPosition(Vector3 position)
@@ -38,14 +28,26 @@ namespace Enemy.Slime
 
         public bool IsPathValid()
         {
-            // agent.SetDestination(player.position);
+            agent.SetDestination(player.position);
 
-            agent.CalculatePath(player.position, navMeshPath);
+            NavMeshPath path = new NavMeshPath();
+            
+            agent.CalculatePath(player.position, path);
+            
+            if (!agent.CalculatePath(player.transform.position, navMeshPath))
+            {
+                return false;
+            }
 
-            if (navMeshPath.status == NavMeshPathStatus.PathComplete)
-                return true;
+            switch (navMeshPath.status)
+            {
+                case NavMeshPathStatus.PathPartial:
+                case NavMeshPathStatus.PathInvalid:
+                    return false;
+                    break;
+            }
 
-            return false;
+            return true;
         }
     }
 }
