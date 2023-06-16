@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] internal float m_dashDuration = .2f;
     [SerializeField] internal float m_dashForce = 2f;
-    [SerializeField] float m_dashCooldown = 2f;
+    [SerializeField] float m_dashCooldown = 1f;
 
     [SerializeField]
     internal float m_interactionRange = 0.5f;
@@ -160,14 +160,10 @@ public class PlayerController : MonoBehaviour
     #region Tutorial
 
     [Header("Tutorial")]
-<<<<<<< HEAD
 
     [SerializeField] private bool _isOnTutorial = false;
     [SerializeField] private TutorialManager _tutorialManager;
-=======
-    [SerializeField] private bool isOnTutorial = false;
-    [SerializeField] private TutorialManager tutorialManager;
->>>>>>> parent of c4498263 (Revert "Merge branch 'develop' into LD_Demo")
+
 
     #endregion
 
@@ -183,13 +179,8 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-<<<<<<< HEAD
         if (_isOnTutorial)
             _tutorialManager = GameObject.FindGameObjectWithTag("TutorialManager").GetComponent<TutorialManager>();
-=======
-        if (isOnTutorial)
-            tutorialManager = GameObject.FindGameObjectWithTag("TutorialManager").GetComponent<TutorialManager>();
->>>>>>> parent of c4498263 (Revert "Merge branch 'develop' into LD_Demo")
 
         _relativeTransform = m_mainCamera.transform;
         _inventoryScript = PlayerCookingInventory.Instance;
@@ -477,13 +468,8 @@ public class PlayerController : MonoBehaviour
         if (!_tutorialManager)
             return;
 
-<<<<<<< HEAD
         if (_isOnTutorial)
             _tutorialManager.SetIsMoving(true);
-=======
-        if (isOnTutorial)
-            tutorialManager.SetIsMoving(true);
->>>>>>> parent of c4498263 (Revert "Merge branch 'develop' into LD_Demo")
     }
 
     public void CheckingIfCookingIsDone()
@@ -491,13 +477,8 @@ public class PlayerController : MonoBehaviour
         if (!_tutorialManager)
             return;
 
-<<<<<<< HEAD
         if (_isOnTutorial)
             _tutorialManager.SetIsCookingDone(true);
-=======
-        if (isOnTutorial)
-            tutorialManager.SetIsCookingDone(true);
->>>>>>> parent of c4498263 (Revert "Merge branch 'develop' into LD_Demo")
     }
 
     //Dash
