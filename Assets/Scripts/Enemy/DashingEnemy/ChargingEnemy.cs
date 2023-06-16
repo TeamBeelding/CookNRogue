@@ -235,11 +235,13 @@ namespace Enemy.DashingEnemy
         /// </summary>
         protected override void Dying()
         {
+            HideRedLine();
             physics.SetActive(false);
+            
+            StopCoroutine(_rotateCoroutine);
             StopCoroutine(_coroutineState);
             
             _Play_SFX_Cabbage_Death.Post(gameObject);
-            // base.Dying();
 
             animator.SetBool("isDead", true);
 
