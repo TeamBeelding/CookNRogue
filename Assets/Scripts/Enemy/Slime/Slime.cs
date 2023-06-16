@@ -193,12 +193,9 @@ namespace Enemy.Slime
             Vector3 point = RandomPoint();
             
             spawnChecker.SetTransformPosition(point);
-
+            
             if (!spawnChecker.IsPathValid())
-            {
-                Debug.Log("Path is not valid");
                 return;
-            }
                      
             GameObject minimoyz = Instantiate(this.minimoyz, gun.transform.position, quaternion.identity);
             minimoyz.GetComponent<MinimoyzController>().SetIsThrowing(true);
