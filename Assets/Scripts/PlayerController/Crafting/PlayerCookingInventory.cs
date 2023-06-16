@@ -91,11 +91,9 @@ public class PlayerCookingInventory : MonoBehaviour
         _recipe = new List<ProjectileData>();
 
         _shownPosition = m_UIHolder.localPosition;
-        Debug.Log(_shownPosition);
         _hiddenPosition = _shownPosition;
         _hiddenPosition.y -= gameObject.GetComponent<RectTransform>().rect.height;
         m_UIHolder.localPosition = _hiddenPosition;
-        Debug.Log(_hiddenPosition);
 
         ResetRecipeUI();
     }

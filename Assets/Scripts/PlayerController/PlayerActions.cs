@@ -82,15 +82,6 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Quit"",
-                    ""type"": ""Button"",
-                    ""id"": ""e81f954d-c622-4de1-94d2-70d625d37ce3"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""Pause"",
                     ""type"": ""Button"",
                     ""id"": ""a12c7b46-b438-496d-a6ea-cc0fc8f0eab4"",
@@ -266,28 +257,6 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""440facc4-16b7-42ea-9908-03e8aa57f182"",
-                    ""path"": ""<Keyboard>/escape"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard"",
-                    ""action"": ""Quit"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""c266a7ab-47fe-47e9-ae99-d83ed5fceeab"",
-                    ""path"": ""<Gamepad>/start"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""GamePad"",
-                    ""action"": ""Quit"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""715b5077-20f8-4990-ae12-e62cdf900623"",
                     ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
@@ -326,6 +295,17 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7d735e76-7d6a-4aa3-b4c2-d770ce795908"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""GamePad"",
                     ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -531,6 +511,17 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                     ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8646a162-c74f-401b-97ba-80b5540535bb"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -701,7 +692,6 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
         m_Default_Dash = m_Default.FindAction("Dash", throwIfNotFound: true);
         m_Default_Interact = m_Default.FindAction("Interact", throwIfNotFound: true);
         m_Default_Cook = m_Default.FindAction("Cook", throwIfNotFound: true);
-        m_Default_Quit = m_Default.FindAction("Quit", throwIfNotFound: true);
         m_Default_Pause = m_Default.FindAction("Pause", throwIfNotFound: true);
         m_Default_EnterDebug = m_Default.FindAction("EnterDebug", throwIfNotFound: true);
         // Cooking
@@ -787,7 +777,6 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Default_Dash;
     private readonly InputAction m_Default_Interact;
     private readonly InputAction m_Default_Cook;
-    private readonly InputAction m_Default_Quit;
     private readonly InputAction m_Default_Pause;
     private readonly InputAction m_Default_EnterDebug;
     public struct DefaultActions
@@ -800,7 +789,6 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
         public InputAction @Dash => m_Wrapper.m_Default_Dash;
         public InputAction @Interact => m_Wrapper.m_Default_Interact;
         public InputAction @Cook => m_Wrapper.m_Default_Cook;
-        public InputAction @Quit => m_Wrapper.m_Default_Quit;
         public InputAction @Pause => m_Wrapper.m_Default_Pause;
         public InputAction @EnterDebug => m_Wrapper.m_Default_EnterDebug;
         public InputActionMap Get() { return m_Wrapper.m_Default; }
@@ -830,9 +818,6 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                 @Cook.started -= m_Wrapper.m_DefaultActionsCallbackInterface.OnCook;
                 @Cook.performed -= m_Wrapper.m_DefaultActionsCallbackInterface.OnCook;
                 @Cook.canceled -= m_Wrapper.m_DefaultActionsCallbackInterface.OnCook;
-                @Quit.started -= m_Wrapper.m_DefaultActionsCallbackInterface.OnQuit;
-                @Quit.performed -= m_Wrapper.m_DefaultActionsCallbackInterface.OnQuit;
-                @Quit.canceled -= m_Wrapper.m_DefaultActionsCallbackInterface.OnQuit;
                 @Pause.started -= m_Wrapper.m_DefaultActionsCallbackInterface.OnPause;
                 @Pause.performed -= m_Wrapper.m_DefaultActionsCallbackInterface.OnPause;
                 @Pause.canceled -= m_Wrapper.m_DefaultActionsCallbackInterface.OnPause;
@@ -861,9 +846,6 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                 @Cook.started += instance.OnCook;
                 @Cook.performed += instance.OnCook;
                 @Cook.canceled += instance.OnCook;
-                @Quit.started += instance.OnQuit;
-                @Quit.performed += instance.OnQuit;
-                @Quit.canceled += instance.OnQuit;
                 @Pause.started += instance.OnPause;
                 @Pause.performed += instance.OnPause;
                 @Pause.canceled += instance.OnPause;
@@ -1071,7 +1053,6 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
         void OnDash(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnCook(InputAction.CallbackContext context);
-        void OnQuit(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
         void OnEnterDebug(InputAction.CallbackContext context);
     }
