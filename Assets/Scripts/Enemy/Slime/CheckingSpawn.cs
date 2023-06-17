@@ -54,10 +54,15 @@ namespace Enemy.Slime
             return false;
         }
 
+        #if UNITY_EDITOR
         private void OnDrawGizmos()
         {
+            if (player == null)
+                return;
+            
             Gizmos.color = Color.red;
             Gizmos.DrawRay(transform.position, player.position - transform.position);
         }
+        #endif
     }
 }
