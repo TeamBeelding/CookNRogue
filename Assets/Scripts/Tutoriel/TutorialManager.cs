@@ -29,8 +29,6 @@ namespace Tutoriel
 
         [SerializeField]
         private bool isMoving = false;
-        [SerializeField] 
-        private bool isPlayerCooking = false;
         [SerializeField]
         private bool isQte = false;
         [FormerlySerializedAs("isQteDone")] [SerializeField]
