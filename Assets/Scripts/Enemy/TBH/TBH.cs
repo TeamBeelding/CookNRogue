@@ -129,7 +129,6 @@ public class TBH : EnemyController
 
     private void Teleport()
     {
-
         Vector3 randomPosition = UnityEngine.Random.insideUnitSphere.normalized * _data.AttackRange + Player.transform.position;
         
         if (Vector3.Distance(transform.position, randomPosition) <= _data.MinimumRadius)
@@ -142,7 +141,6 @@ public class TBH : EnemyController
         else
             Teleport();
 
-        
         SetState(State.Attacking);
     }
 
