@@ -18,19 +18,6 @@ namespace Enemy.Slime
             player = GameObject.FindGameObjectWithTag("Player").transform;
         }
 
-        private void Update()
-        {
-            // if (IsPathValid())
-            //     GetComponentInChildren<Renderer>().material.color = Color.blue;
-            // else
-            //     GetComponentInChildren<Renderer>().material.color = Color.red;
-            
-            if (CanThrowHere())
-                GetComponentInChildren<Renderer>().material.color = Color.blue;
-            else
-                GetComponentInChildren<Renderer>().material.color = Color.red;
-        }
-
         public void SetTransformPosition(Vector3 position)
         {
             // agent.ResetPath();
