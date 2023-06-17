@@ -1,5 +1,6 @@
 #if UNITY_EDITOR
 
+using Enemy;
 using Sirenix.OdinInspector;
 using UnityEngine;
 

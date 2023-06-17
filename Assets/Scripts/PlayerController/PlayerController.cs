@@ -1,6 +1,9 @@
 using UnityEngine.InputSystem;
 using UnityEngine;
 using System.Collections;
+using Enemy;
+using Tutoriel;
+using UnityEngine.SceneManagement;
 using static UnityEngine.ParticleSystem;
 
 [RequireComponent(typeof(Rigidbody), typeof(Collider))]
@@ -23,6 +26,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] internal float m_dashDuration = .2f;
     [SerializeField] internal float m_dashForce = 2f;
+    [SerializeField] float m_dashCooldown = 1f;
 
     [SerializeField]
     internal float m_interactionRange = 0.5f;
@@ -50,9 +54,16 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField]
     private GameObject pauseMenu;
+    [SerializeField]
+    private GameObject deathMenu;
+    [SerializeField]
+    private GameObject victoryMenu;
 
     [SerializeField]
-    private PlayerAnimStates PlayerAnimStates;
+    private GameObject m_debugModeUI;
+
+    [SerializeField]
+    private PlayerAnimStates playerAnimStatesScript;
 
     static PlayerController _instance;
 
@@ -75,11 +86,12 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    private bool m_isDashing = false;
+    private bool _isDashing = false;
     public bool IsDashing
     {
-        get => m_isDashing;
+        get => _isDashing;
     }
+    bool _dashOnCooldown = false;
 
     [SerializeField] ParticleSystem DashingParticles;
 
@@ -132,15 +144,32 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+
+    [SerializeField]
+    private AK.Wwise.Event _Stop_SFX_Cook;
+    [SerializeField]
+    private AK.Wwise.Event _Play_MC_Dash;
+
+
     public float PlayerAimMagnitude
     {
         get => _aimMagnitude;
     }
     #endregion
 
+    #region Tutorial
+
+    [Header("Tutorial")]
+
+    [SerializeField] private bool _isOnTutorial = false;
+    [SerializeField] private TutorialManager _tutorialManager;
+
+
+    #endregion
+
     private void Awake()
     {
-        if(_instance != null)
+        if (_instance != null)
         {
             Destroy(gameObject);
         }
@@ -150,6 +179,9 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        if (_isOnTutorial)
+            _tutorialManager = GameObject.FindGameObjectWithTag("TutorialManager").GetComponent<TutorialManager>();
+
         _relativeTransform = m_mainCamera.transform;
         _inventoryScript = PlayerCookingInventory.Instance;
         _enemyManager = EnemyManager.Instance;
@@ -160,12 +192,17 @@ public class PlayerController : MonoBehaviour
 
 
         pauseMenu.SetActive(false);
+        deathMenu.SetActive(false);
 
+        m_debugModeUI.SetActive(false);
+
+        #region Set Inputs
         //Set Input Actions Map
         _playerActions = new PlayerActions();
         _playerActions.Default.Enable();
         _playerActions.Cooking.Enable();
         _playerActions.UI.Enable();
+        _playerActions.Debug.Enable();
 
         //Set Default Events
         _playerActions.Default.Shoot.performed += Shoot_Performed;
@@ -175,8 +212,9 @@ public class PlayerController : MonoBehaviour
         _playerActions.Default.Aim.performed += Aim_Performed;
         _playerActions.Default.Aim.canceled += Aim_Canceled;
         _playerActions.Default.Dash.performed += Dash;
-        _playerActions.Default.Cook.performed += Cook_Performed;
-        _playerActions.Default.Quit.performed += Quit;
+        _playerActions.Default.Cook.started += Cook_Performed;
+        _playerActions.Default.Pause.performed += OnPauseGame;
+        _playerActions.Default.EnterDebug.started += EnterDebug;
 
         //Set Cooking Events
         _playerActions.Cooking.Cook.canceled += Cook_Canceled;
@@ -190,10 +228,21 @@ public class PlayerController : MonoBehaviour
         //Set UI Events
         _playerActions.UI.Pause.performed += OnPauseGame;
 
+        //Set Debug Events
+        _playerActions.Debug.EnterDebug.started += QuitDebug;
+        _playerActions.Debug.KillAllEnemies.started += KillAllEnemies;
+        _playerActions.Debug.ReloadLevel.started += ReloadLevel;
+        _playerActions.Debug.GoToNextLevel.started += GotToNextLevel;
+        _playerActions.Debug.GoToPreviousLevel.started += GotToPreviousLevel;
+        _playerActions.Debug.SkipTuto.started += SkipTuto;
+
         _playerActions.Cooking.Disable();
         _playerActions.UI.Disable();
+        _playerActions.Debug.Disable();
+        #endregion
 
-        _roomManager.OnRoomStart += Spawn;
+        if (_roomManager)
+            _roomManager.OnRoomStart += Spawn;
 
         m_currentHealthValue = m_maxHealthValue;
 
@@ -203,7 +252,7 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         //Block player actions
-        if(_isLocked)
+        if (_isLocked)
         {
             return;
         }
@@ -215,44 +264,49 @@ public class PlayerController : MonoBehaviour
         relativeRight.y = 0;
         relativeForward.Normalize();
         relativeRight.Normalize();
-        
 
         #region Aim
-        //Mouse Inputs Check
-        if (_isAimingOnMouse)
+
+        //Dash Check
+        if (!_isDashing)
         {
-            _aimInputValue = Input.mousePosition - m_mainCamera.WorldToScreenPoint(transform.position);
-            _aimMagnitude = 1f;
-        }
-
-        //Null Input Check
-        if (_aimMagnitude > 0)
-        {
-            //Rotate Player Model
-            Vector3 aimInputDir = relativeForward * _aimInputValue.y + relativeRight * _aimInputValue.x;
-            aimInputDir = aimInputDir.normalized;
-            aimInputDir = new Vector3(aimInputDir.x, 0, aimInputDir.z);
-
-            Rotate(aimInputDir);
-
-            //Set Aim Variables
-            _aimDirection = aimInputDir;
-
-            //Correct Aim
-            EnemyController[] enemiesInLevel = _enemyManager.EnemiesInLevel;
-            GameObject[] aimTargets = new GameObject[enemiesInLevel.Length];
-            for(int i =  0; i < enemiesInLevel.Length; i++)
+            //Mouse Inputs Check
+            if (_isAimingOnMouse)
             {
-                aimTargets[i] = enemiesInLevel[i].gameObject; 
+                _aimInputValue = Input.mousePosition - m_mainCamera.WorldToScreenPoint(transform.position);
+                _aimMagnitude = 1f;
             }
-            _correctedAimDirection = AimAssist2D.CorrectAimDirection(_aimDirection, transform.position, aimTargets, m_aimAssistPresset);
+
+            //Null Input Check
+            if (_aimMagnitude > 0)
+            {
+                //Rotate Player Model
+                Vector3 aimInputDir = relativeForward * _aimInputValue.y + relativeRight * _aimInputValue.x;
+                aimInputDir = aimInputDir.normalized;
+                aimInputDir = new Vector3(aimInputDir.x, 0, aimInputDir.z);
+
+                Rotate(aimInputDir);
+
+                //Set Aim Variables
+                _aimDirection = aimInputDir;
+
+                //Correct Aim
+                EnemyController[] enemiesInLevel = _enemyManager.EnemiesInLevel;
+                GameObject[] aimTargets = new GameObject[enemiesInLevel.Length];
+                for (int i = 0; i < enemiesInLevel.Length; i++)
+                {
+                    aimTargets[i] = enemiesInLevel[i].gameObject;
+                }
+                _correctedAimDirection = AimAssist2D.CorrectAimDirection(_aimDirection, transform.position, aimTargets, m_aimAssistPresset);
+            }
         }
+
         #endregion
 
         #region Movement
 
         //Dash check
-        if (!m_isDashing)
+        if (!_isDashing)
         {
             //Null Input Check
             if (_moveInputValue.magnitude <= 0)
@@ -260,11 +314,11 @@ public class PlayerController : MonoBehaviour
                 //Stop if input is null
                 _rb.velocity = Vector3.zero;
 
-                PlayerAnimStates.animStates = PlayerAnimStates.playerAnimStates.IDLE;
+                playerAnimStatesScript.animStates = PlayerAnimStates.playerAnimStates.IDLE;
 
                 if (_isAiming)
                 {
-                    PlayerAnimStates.animStates = PlayerAnimStates.playerAnimStates.IDLEATTACK;
+                    playerAnimStatesScript.animStates = PlayerAnimStates.playerAnimStates.IDLEATTACK;
                 }
             }
             else
@@ -285,11 +339,11 @@ public class PlayerController : MonoBehaviour
                     //Set Aiming Variables
                     _aimDirection = moveInputDir;
 
-                    PlayerAnimStates.animStates = PlayerAnimStates.playerAnimStates.RUNNING;
+                    playerAnimStatesScript.animStates = PlayerAnimStates.playerAnimStates.RUNNING;
                 }
                 else
                 {
-                    PlayerAnimStates.animStates = PlayerAnimStates.playerAnimStates.RUNNINGATTACK;
+                    playerAnimStatesScript.animStates = PlayerAnimStates.playerAnimStates.RUNNINGATTACK;
                 }
             }
         }
@@ -299,11 +353,24 @@ public class PlayerController : MonoBehaviour
 
             if (m_dashDirection == Vector3.zero)
             {
-                m_dashDirection = m_model.transform.forward;
+                //Null Input Check
+                if (_moveInputValue.magnitude <= 0)
+                {
+                    m_dashDirection = m_model.transform.forward;
+                }
+                else
+                {
+                    Vector3 moveInputDir = relativeForward * _moveInputValue.y + relativeRight * _moveInputValue.x;
+                    moveInputDir = moveInputDir.normalized;
+
+                    m_dashDirection = moveInputDir;
+                }
+
                 StartCoroutine(ICasting());
             }
             else
             {
+                Rotate(m_dashDirection);
                 Move(m_dashDirection, m_moveSpeed * m_dashForce);
             }
         }
@@ -342,7 +409,7 @@ public class PlayerController : MonoBehaviour
             }
 
             //Set new current interactable object
-            _curInteractCollider = interactableColliders[shortestIndex];        
+            _curInteractCollider = interactableColliders[shortestIndex];
             if (interactableColliders[shortestIndex].TryGetComponent<IInteractable>(out var interactable))
             {
                 interactable.Interactable(true);
@@ -367,6 +434,11 @@ public class PlayerController : MonoBehaviour
         #endregion
     }
 
+    public bool GetIsOnTutorial()
+    {
+        return _isOnTutorial;
+    }
+
     #region Movement
     void Move_Performed(InputAction.CallbackContext context)
     {
@@ -383,26 +455,73 @@ public class PlayerController : MonoBehaviour
         _rb.AddForce(100f * speed * Time.deltaTime * direction, ForceMode.Force);
         _rb.drag = m_moveDrag;
 
-        if (!m_isDashing && _rb.velocity.magnitude > m_maxMoveSpeed)
+        if (!_isDashing && _rb.velocity.magnitude > m_maxMoveSpeed)
         {
             _rb.velocity = new Vector3(direction.x, 0, direction.z) * m_maxMoveSpeed;
         }
+
+        CheckingIfPlayerIsMovingForTutorial();
+    }
+
+    private void CheckingIfPlayerIsMovingForTutorial()
+    {
+        if (!_tutorialManager)
+            return;
+
+        if (_isOnTutorial)
+            _tutorialManager.SetIsMoving(true);
+    }
+
+    public void CheckingIfCookingIsDone()
+    {
+        if (!_tutorialManager)
+            return;
+
+        if (_isOnTutorial)
+            _tutorialManager.SetIsCookingDone(true);
     }
 
     //Dash
     private void Dash(InputAction.CallbackContext context)
     {
-        m_isDashing = true;
+        if (_dashOnCooldown)
+        {
+            return;
+        }
+
+        _isDashing = true;
+        _Play_MC_Dash.Post(gameObject);
+
+        StartCoroutine(IDashCooldown());
     }
 
     //Dash Casting
     private IEnumerator ICasting()
     {
+        //Aim Check;
+        if (_isAiming)
+        {
+            m_aimArrow.SetActive(false);
+        }
+
         DashingParticles.Play();
         yield return new WaitForSeconds(m_dashDuration);
-        m_isDashing = false;
+        _isDashing = false;
         m_dashDirection = Vector2.zero;
         DashingParticles.Stop();
+
+        //Aim Check;
+        if (_isAiming)
+        {
+            m_aimArrow.SetActive(true);
+        }
+    }
+
+    private IEnumerator IDashCooldown()
+    {
+        _dashOnCooldown = true;
+        yield return new WaitForSeconds(m_dashCooldown);
+        _dashOnCooldown = false;
     }
 
     #endregion
@@ -410,6 +529,11 @@ public class PlayerController : MonoBehaviour
     #region Aim
     void Aim_Performed(InputAction.CallbackContext context)
     {
+        if (_isDashing)
+        {
+            return;
+        }
+
         _isAiming = true;
 
         m_aimArrow.SetActive(true);
@@ -417,7 +541,7 @@ public class PlayerController : MonoBehaviour
         var inputType = context.control.layout;
 
         //Check Input Device
-        switch(inputType)
+        switch (inputType)
         {
             //M&K
             case ("Button"):
@@ -467,10 +591,11 @@ public class PlayerController : MonoBehaviour
 
     void StartCookingState()
     {
-        Debug.Log("cook");
+        playerAnimStatesScript._animator.SetBool("cooking", true);
+        playerAnimStatesScript.Marmite(false, true);
 
         //Input state check
-        if(_curState != playerStates.Default)
+        if (_curState != playerStates.Default)
             return;
 
         //Set input state
@@ -482,6 +607,9 @@ public class PlayerController : MonoBehaviour
 
     public void StopCookingState()
     {
+        playerAnimStatesScript._animator.SetBool("cooking", false);
+        playerAnimStatesScript.Marmite(false, false);
+        _Stop_SFX_Cook.Post(gameObject);
         Debug.Log("stop cook");
 
         //Input state check
@@ -543,6 +671,19 @@ public class PlayerController : MonoBehaviour
             _cookingScript.CheckQTE();
         }
     }
+
+    public void QTEAppear()
+    {
+        if (_isOnTutorial)
+            _tutorialManager.SetIsQTE(true);
+    }
+
+    public void QTEFailed()
+    {
+        if (_isOnTutorial)
+            _tutorialManager.SetIsQTEFailed(true);
+    }
+
     #endregion
 
     #region Other Actions
@@ -550,7 +691,7 @@ public class PlayerController : MonoBehaviour
     void Shoot_Performed(InputAction.CallbackContext context)
     {
         //Block player actions
-        if (_isLocked)
+        if (_isLocked || IsDashing)
         {
             return;
         }
@@ -570,8 +711,8 @@ public class PlayerController : MonoBehaviour
     }
         #endregion
 
-        #region Utilities
-        public void Lock(bool isLocked)
+    #region Utilities
+    public void Lock(bool isLocked)
     {
         _isLocked = isLocked;
     }
@@ -591,18 +732,98 @@ public class PlayerController : MonoBehaviour
 
         //Cooking cancel
         StopCookingState();
+        
+        if (_tutorialManager)
+            return;
+            
+        if (!_playerHealth.TakeDamage(1))
+        {
+            PauseGame();
+            _playerActions.UI.Enable();
+            _playerActions.Default.Disable();
+            _playerActions.Cooking.Disable();
+            pauseMenu.SetActive(false);
+            victoryMenu.SetActive(false);
+            deathMenu.SetActive(true);
+        }
 
-        _playerHealth.TakeDamage(1);
     }
-
+    
     void Spawn()
     {
         //transform.position = _roomManager.SpawnPoint.position;
     }
 
-    void Quit(InputAction.CallbackContext context)
+    #endregion
+
+    #region Debug
+
+    void EnterDebug(InputAction.CallbackContext context)
     {
-        Application.Quit();
+        _playerActions.Default.Disable();
+        _playerActions.Debug.Enable();
+
+        Time.timeScale = 0;
+
+        m_debugModeUI.SetActive(true);
+    }
+
+    void QuitDebug(InputAction.CallbackContext context)
+    {
+        _playerActions.Debug.Disable();
+        _playerActions.Default.Enable();
+
+        Time.timeScale = 1;
+
+        m_debugModeUI.SetActive(false);
+    }
+
+    void QuitDebug()
+    {
+        _playerActions.Debug.Disable();
+        _playerActions.Default.Enable();
+
+        Time.timeScale = 1;
+
+        m_debugModeUI.SetActive(false);
+    }
+
+    void KillAllEnemies(InputAction.CallbackContext context)
+    {
+        _enemyManager.DestroyAll();
+        QuitDebug();
+    }
+
+    void GotToNextLevel(InputAction.CallbackContext context)
+    {
+        _roomManager.LoadNextLevel();
+        QuitDebug();
+    }
+
+    void GotToPreviousLevel(InputAction.CallbackContext context)
+    {
+        _roomManager.LoadPreviousLevel();
+        QuitDebug();
+    }
+
+    void ReloadLevel(InputAction.CallbackContext context)
+    {
+        _roomManager.RestartRoom();
+        QuitDebug();
+    }
+
+    void SkipTuto(InputAction.CallbackContext context)
+    {
+        if(_isOnTutorial && SceneManager.sceneCountInBuildSettings > 2)
+        {
+            SceneManager.LoadScene(2);
+        }
+        else
+        {
+            Debug.LogWarning("Not in tutorial !");
+        }
+
+        QuitDebug();
     }
 
     #endregion
@@ -620,11 +841,15 @@ public class PlayerController : MonoBehaviour
         {
             Time.timeScale = 1;
             pauseMenu.SetActive(false);
+            _playerActions.UI.Disable();
+            _playerActions.Default.Enable();
         }
         else
         {
             Time.timeScale = 0;
             pauseMenu.SetActive(true);
+            _playerActions.Default.Disable();
+            _playerActions.UI.Enable();
         }
 
         m_isGamePaused = !m_isGamePaused;
@@ -633,6 +858,35 @@ public class PlayerController : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+    
+    
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(1);
+    }
+
+    public void EndGame()
+    {
+        _playerActions.UI.Enable();
+        _playerActions.Default.Disable();
+        _playerActions.Cooking.Disable();
+        pauseMenu.SetActive(false);
+        deathMenu.SetActive(false);
+        victoryMenu.SetActive(true);
+        PauseGame();
+    }
+
+    public void RestartLevel()
+    {
+        _playerActions.UI.Disable();
+        _playerActions.Default.Enable();
+        _playerActions.Cooking.Disable();
+        pauseMenu.SetActive(false);
+        deathMenu.SetActive(false);
+        victoryMenu.SetActive(false);
+        PauseGame();
+        RoomManager.instance.RestartLevel();
     }
 
     #endregion

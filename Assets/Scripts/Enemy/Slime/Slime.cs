@@ -6,22 +6,42 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
+using System.Collections;
 using Random = UnityEngine.Random;
 
 namespace Enemy.Slime
 {
     public class Slime : EnemyController
-    {
+    {   [Header("Sound")]
+        [SerializeField]
+        private AK.Wwise.Event _Play_SFX_Pea_Pod_Footsteps;
+        [SerializeField]
+        private AK.Wwise.Event _Stop_SFX_Pea_Pod_Footsteps;
+        [SerializeField]
+        private AK.Wwise.Event _Play_SFX_Pea_Pod_Hit;
+        [SerializeField]
+        private AK.Wwise.Event _Play_Weapon_Hit;
+        [SerializeField]
+        private AK.Wwise.Event _Play_SFX_Pea_Pod_Death;
+        [SerializeField]
+        private AK.Wwise.Event _Play_SFX_Pea_Spawn;
+
+        [Space]
+
         [SerializeField] private SlimeData data;
         [SerializeField] private NavMeshAgent agent;
         [SerializeField] private GameObject gun;
         [SerializeField, Required("Prefabs minimoyz")] private GameObject minimoyz;
         [FormerlySerializedAs("_minimoyzSpawnChecker")] [SerializeField, Required("Minimoyz spawn checker")] private CheckingSpawn spawnChecker;
 
+        private Animator animator;
+        private Coroutine stateCoroutine;
+        [SerializeField] private GameObject physics;
+
         public enum State
         {
             Neutral,
-            KeepingDistance,
+            // KeepingDistance,
             Chase,
             Attack,
             Dying,
@@ -53,38 +73,58 @@ namespace Enemy.Slime
         {
             state = data.GetFocusPlayer ? State.Chase : State.Neutral;
             spawnChecker = GetComponentInChildren<CheckingSpawn>();
-
+            animator = GetComponentInChildren<Animator>();
             base.Start();
         }
 
         // Update is called once per frame
         protected override void Update()
         {
-            StateManagement();
-        }
-
-        private void FixedUpdate()
-        {
             if (state == State.Dying)
                 return;
         
             AreaDetection();
         }
+        
+        private void SetState(State value)
+        {
+            if (stateCoroutine != null)
+                stateCoroutine = null;
+         
+            state = value;
+            
+            StateManagement();
+        }
 
         // ReSharper disable Unity.PerformanceAnalysis
         private void StateManagement()
         {
+            animator.SetBool("isAttack", _canAttackAnim);
+           
             switch (state)
             {
                 case State.Neutral:
+                    animator.SetBool("isWalking", false);
+                    animator.SetBool("isAttack", false);
+                    _Stop_SFX_Pea_Pod_Footsteps.Post(gameObject);
                     break;
                 case State.Chase:
                     Chase();
+                    animator.SetBool("isWalking", true);
+                    animator.SetBool("isAttack", false);
+                    _Play_SFX_Pea_Pod_Footsteps.Post(gameObject);
                     break;
-                case State.KeepingDistance:
-                    KeepDistance();
-                    break;
+                // case State.KeepingDistance:
+                //     animator.SetBool("isWalking", false);
+                //     animator.SetBool("isAttack", false);
+                //     _Stop_SFX_Pea_Pod_Footsteps.Post(gameObject);
+                //     // KeepDistance();
+                //     break;
                 case State.Attack:
+                    animator.SetBool("isWalking", false);
+                    _Stop_SFX_Pea_Pod_Footsteps.Post(gameObject);
+                    transform.LookAt(Player.transform.position);
+                    //animator.SetBool("isAttack", true);
                     Attack(ThrowMinimoyz, data.GetAttackSpeed);
                     break;
                 case State.Dying:
@@ -93,6 +133,7 @@ namespace Enemy.Slime
                 default:
                     Dying();
                     break;
+                    //_Stop_SFX_Pea_Pod_Footsteps.IsValid
             }
         }
 
@@ -100,63 +141,73 @@ namespace Enemy.Slime
         {
             if (state == State.Dying)
                 return;
-        
-            if (Vector3.Distance(transform.position, Player.transform.position) <= data.GetFocusRange)
-            {
-                FocusPlayer = true;
-                state = State.Chase;
-            }
-            else
-            {
-                state = State.Neutral;
-            }
 
-            if (Vector3.Distance(transform.position, Player.transform.position) <= data.GetAttackRange)
-            {
-                if (Vector3.Distance(transform.position, Player.transform.position) <= data.GetMinimumDistanceToKeep)
-                    state = State.KeepingDistance;
-                else
-                    state = State.Attack;
-            }
+            if (Vector3.Distance(transform.position, Player.transform.position) > data.GetAttackRange)
+                SetState(State.Chase);
             else
-            {
-                if (FocusPlayer)
-                    state = State.Chase;
-            }
+                SetState(State.Attack);
         }
     
-        private void KeepDistance()
-        {
-            if (Vector3.Distance(transform.position, Player.transform.position) <= data.GetMinimumDistanceToKeep)
-            {
-                Vector3 target = transform.position - (Player.transform.position - transform.position);
-                agent.stoppingDistance = 0;
-                agent.SetDestination(target);
-            }
-        }
+        // private void KeepDistance()
+        // {
+        //     float r = data.GetAttackRange * Mathf.Sqrt(Random.Range(0f, 1f));
+        //     float theta = Random.Range(0f, 1f) * 2 * Mathf.PI;
+        //     Vector3 target = new Vector3(Mathf.Cos(theta), 0, Mathf.Sin(theta));
+        //     
+        //     stateCoroutine = StartCoroutine(IKeepDistance());
+        //
+        //     IEnumerator IKeepDistance()
+        //     {
+        //         while (state == State.KeepingDistance)
+        //         {
+        //             if (Vector3.Distance(transform.position, Player.transform.position) < data.GetMinimumDistanceToKeep)
+        //             {
+        //                 agent.stoppingDistance = 0;
+        //                 agent.SetDestination(target);
+        //             }
+        //             
+        //             yield return null;
+        //         }
+        //     }
+        // }
     
         protected override void Chase()
         {
             agent.stoppingDistance = data.GetAttackRange;
-            agent.SetDestination(Player.transform.position);
+            stateCoroutine = StartCoroutine(IChase());
+
+            IEnumerator IChase()
+            {
+                while (state == State.Chase)
+                {
+                    agent.SetDestination(Player.transform.position);
+                    
+                    yield return null;
+                }
+            }
         }
 
         // ReSharper disable Unity.PerformanceAnalysis
         private void ThrowMinimoyz()
         {
-            Transform point = RandomPoint();
+            Vector3 point = RandomPoint();
             
-            spawnChecker.SetTransformPosition(point.position);
+            spawnChecker.SetTransformPosition(point);
             
-            if (!spawnChecker.IsPathValid(Player.transform.position))
-                ThrowMinimoyz();
-
+            if (!spawnChecker.IsPathValid())
+                return;
+                     
             GameObject minimoyz = Instantiate(this.minimoyz, gun.transform.position, quaternion.identity);
             minimoyz.GetComponent<MinimoyzController>().SetIsThrowing(true);
             minimoyz.GetComponent<ThrowingEffect>().ThrowMinimoyz(point, data.GetThrowingMaxHeight, data.GetThrowingSpeed);
+            
+            if (_canAttackAnim)
+            {
+                _Play_SFX_Pea_Spawn.Post(minimoyz);
+            }
         }
 
-        private Transform RandomPoint()
+        private Vector3 RandomPoint()
         {
             Vector3 center = Player.transform.position;
             float distanceBetweenRadius = data.GetOuterRadius - data.GetInnerRadius;
@@ -169,47 +220,57 @@ namespace Enemy.Slime
             float x = center.x + (distanceFromCenter * Mathf.Cos(angleInRadians));
             float y = center.y;
             float z = center.z + (distanceFromCenter * Mathf.Sin(angleInRadians));
-
+            
             Vector3 position = new Vector3(x, y, z);
-
-            GameObject pointObject = new GameObject("RandomPoint");
-            pointObject.transform.position = position;
-
-            return pointObject.transform;
+            
+            return position;
         }
 
         public override void TakeDamage(float damage = 1, bool isCritical = false)
         {
             base.TakeDamage(damage, isCritical);
-        
+            _Play_SFX_Pea_Pod_Hit.Post(gameObject);
+            _Play_Weapon_Hit.Post(gameObject);
+
             if (Healthpoint <= 0)
             {
                 state = State.Dying;
+                _Play_SFX_Pea_Pod_Death.Post(gameObject);
             }
-        }
-
-        private void SetState(State value)
-        {
-            state = value;
         }
 
         protected override void Dying()
         {
+            physics.SetActive(false);
+            agent.SetDestination(transform.position);
+
+            animator.SetBool("isDead", true);
+
             for (int i = 0; i < data.GetSlimeSpawnWhenDying; i++)
             {
                 Vector2 origin = new Vector2(transform.position.x, transform.position.z);
                 Vector3 point = Random.insideUnitCircle * data.GetRadiusMinimoyzSpawnPoint + origin;
                 point = new Vector3(point.x, 0, point.y);
-            
+
                 Instantiate(minimoyz, point, Quaternion.identity);
             }
-        
+            
             base.Dying();
         }
 
         public override bool IsMoving()
         {
             throw new System.NotImplementedException();
+        }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, 2);
+            Gizmos.color = Color.blue;
+            Gizmos.DrawWireSphere(transform.position, data.GetInnerRadius);
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireSphere(transform.position, data.GetOuterRadius);
         }
     }
 }

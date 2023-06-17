@@ -3,27 +3,38 @@ using System.Collections;
 using Enemy.Data;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Animations;
+using UnityEngine.Serialization;
 
 namespace Enemy.Basic
 {
     public class BasicEnemy : EnemyController
-    {
+    {[Header("Sound")]
         [SerializeField]
-        private EnemyData data;
+        private AK.Wwise.Event _Play_Weapon_Hit;
         [SerializeField]
-        private NavMeshAgent _agent;
+        private AK.Wwise.Event _Play_SFX_Corn_Death;
+        [SerializeField]
+        private AK.Wwise.Event _Play_SFX_Corn_Hit;
+        [SerializeField]
+        private AK.Wwise.Event _Play_SFX_Corn_Footsteps;
+        [SerializeField]
+        private AK.Wwise.Event _Play_SFX_Corn_Attack_Charge;
+        [SerializeField]
+        private AK.Wwise.Event _Play_SFX_Corn_Attack_Shot;
     
-        [SerializeField]
-        private GameObject m_gun;
-        [SerializeField]
-        private GameObject m_bullet;
-        [SerializeField]
-        private ParticleSystem m_stateSystem;
-        [SerializeField]
-        private Renderer stateRenderer;
+        [SerializeField] private EnemyData data;
+        [SerializeField] private NavMeshAgent agent;
 
-        private Coroutine _chaseCoroutine;
-        
+        [SerializeField] private GameObject m_gun;
+        [SerializeField] private GameObject m_bullet;
+        [SerializeField] private ParticleSystem m_stateSystem;
+        [SerializeField] private GameObject physics;
+
+        private Coroutine _stateCoroutine;
+
+        [SerializeField]
+        private Animator animator;
         public enum State
         {
             Neutral,
@@ -32,44 +43,45 @@ namespace Enemy.Basic
             Dying,
         }
 
-        [SerializeField]
-        private State state;
-    
+        [SerializeField] private State state;
+
         protected override void Awake()
         {
             base.Awake();
-        
-            _agent = GetComponent<NavMeshAgent>();
-            _agent.speed = data.GetSpeed;
-            _agent.stoppingDistance = data.GetAttackRange;
+
+            agent = GetComponent<NavMeshAgent>();
+            agent.speed = data.GetSpeed;
+            agent.stoppingDistance = data.GetAttackRange;
             FocusPlayer = data.GetFocusPlayer;
             Healthpoint = data.GetHealth;
-        
-            stateRenderer = m_stateSystem.GetComponent<Renderer>();
+
+            animator = GetComponentInChildren<Animator>();
         }
 
         // Start is called before the first frame update
         protected override void Start()
         {
             SetState(FocusPlayer ? State.Chase : State.Neutral);
-            
+
             base.Start();
         }
 
-        private void FixedUpdate()
+        protected override void Update()
         {
+            base.Update();
+
             if (state == State.Dying)
                 return;
-        
+
             AreaDetection();
         }
-        
+
         private void Reset()
         {
             Healthpoint = data.GetHealth;
-            _agent = GetComponent<NavMeshAgent>();
-            _agent.speed = data.GetSpeed;
-            _agent.stoppingDistance = data.GetAttackRange;
+            agent = GetComponent<NavMeshAgent>();
+            agent.speed = data.GetSpeed;
+            agent.stoppingDistance = data.GetAttackRange;
         }
 
         private State GetState()
@@ -79,22 +91,32 @@ namespace Enemy.Basic
 
         private void SetState(State value)
         {
-            state = value;
+            if (_stateCoroutine != null)
+                StopCoroutine(_stateCoroutine);
             
+            state = value;
+
             StateManagement();
         }
-    
+
         // ReSharper disable Unity.PerformanceAnalysis
         private void StateManagement()
         {
             switch (state)
             {
                 case State.Neutral:
+                    animator.SetBool("isWalking", false);
+                    animator.SetBool("isAttack", false);
                     break;
                 case State.Chase:
+                    animator.SetBool("isWalking", true);
+                    animator.SetBool("isAttack", false);
                     Chase();
                     break;
                 case State.Attack:
+                    animator.SetBool("isWalking", false);
+                    animator.SetBool("isAttack", false);
+                    transform.LookAt(Player.transform.position);
                     Attack(Shot, data.GetAttackSpeed);
                     break;
                 case State.Dying:
@@ -105,39 +127,39 @@ namespace Enemy.Basic
                     break;
             }
         }
-    
+
         private void AreaDetection()
         {
             if (state == State.Dying)
                 return;
 
-            if (Vector3.Distance(transform.position, Player.transform.position) <= data.GetRangeDetection)
-            {
-                FocusPlayer = true;
-            }
-
             if (FocusPlayer)
             {
-                if (Vector3.Distance(transform.position, Player.transform.position) <= data.GetRangeDetection && 
-                    Vector3.Distance(transform.position, Player.transform.position) > data.GetAttackRange)
-                {
-                    SetState(State.Chase);
-                }
-                else
-                {
-                    SetState(State.Attack);
-                }
+                if (Vector3.Distance(transform.position, Player.transform.position) <= data.GetRangeDetection)
+                    if (Vector3.Distance(transform.position, Player.transform.position) > data.GetAttackRange)
+                        SetState(State.Chase);
+                    else
+                        SetState(State.Attack);
+            }
+            else
+            {
+                if (Vector3.Distance(transform.position, Player.transform.position) <= data.GetRangeDetection)
+                    FocusPlayer = true;
+                else 
+                    SetState(State.Neutral);
             }
         }
 
         protected override void Chase()
         {
-            if (state == State.Dying)
+            if (Player.GetComponent<PlayerController>().GetIsOnTutorial())
                 return;
             
-            if (_chaseCoroutine == null)
-                _chaseCoroutine = StartCoroutine(IChase());
-            
+            if (state == State.Dying)
+                return;
+
+            _stateCoroutine = StartCoroutine(IChase());
+
             IEnumerator IChase()
             {
                 while (state == State.Chase)
@@ -145,11 +167,11 @@ namespace Enemy.Basic
                     if (Vector3.Distance(transform.position, Player.transform.position) <= data.GetAttackRange)
                     {
                         SetState(State.Attack);
-                        _chaseCoroutine = null;
+                        _stateCoroutine = null;
                     }
-                
-                    _agent.SetDestination(Player.transform.position);
-                
+
+                    agent.SetDestination(Player.transform.position);
+
                     yield return null;
                 }
             }
@@ -159,12 +181,24 @@ namespace Enemy.Basic
         {
             GameObject shot = Instantiate(m_bullet, m_gun.transform.position, Quaternion.identity);
             shot.GetComponent<EnemyBulletController>().SetDirection(Player.transform);
+            animator.SetBool("isAttack", true);
+            _Play_SFX_Corn_Attack_Shot.Post(gameObject);
         }
-    
-        private new void Dying()
+
+        protected override void Dying()
         {
-            base.Dying();
-            m_stateSystem.gameObject.SetActive(false);
+            physics.SetActive(false);
+
+            animator.SetBool("isDead", true);
+
+            StartCoroutine(IDeathAnim());
+
+            IEnumerator IDeathAnim()
+            {
+                yield return new WaitForSeconds(2f);
+                base.Dying();
+                m_stateSystem.gameObject.SetActive(false);
+            }
         }
 
         public override bool IsMoving()
@@ -175,14 +209,28 @@ namespace Enemy.Basic
         public override void TakeDamage(float damage = 1, bool isCritical = false)
         {
             base.TakeDamage(damage, isCritical);
-        
-            if (state == State.Neutral)
+
+            if (state == State.Neutral) 
+            {
                 SetState(State.Chase);
-        
+                _Play_SFX_Corn_Hit.Post(gameObject);
+                _Play_Weapon_Hit.Post(gameObject);
+            }
+
             if (Healthpoint <= 0)
             {
+
+                _Play_SFX_Corn_Death.Post(gameObject);
                 SetState(State.Dying);
             }
+        }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, data.GetRangeDetection);
+            Gizmos.color = Color.blue;
+            Gizmos.DrawWireSphere(transform.position, data.GetAttackRange);
         }
     }
 }

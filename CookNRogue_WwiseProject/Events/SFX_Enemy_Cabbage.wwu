@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{ABFF2DFC-7AF2-45F5-A49E-711F8D02B4F4}" SchemaVersion="110" RootDocumentID="{899603F8-092E-4FB8-93A5-00C3DC23A21E}" ParentDocumentID="{899603F8-092E-4FB8-93A5-00C3DC23A21E}">
+	<Events>
+		<WorkUnit Name="SFX_Enemy_Cabbage" ID="{ABFF2DFC-7AF2-45F5-A49E-711F8D02B4F4}" OwnerID="{899603F8-092E-4FB8-93A5-00C3DC23A21E}" PersistMode="Nested">
+			<PropertyList>
+				<Property Name="Color" Type="int16" Value="10"/>
+				<Property Name="OverrideColor" Type="bool" Value="True"/>
+			</PropertyList>
+			<ChildrenList>
+				<Event Name="Play_SFX_Cabbage_Footsteps" ID="{AB510070-89D4-4724-AB10-6DB277CAC122}">
+					<ChildrenList>
+						<Action Name="" ID="{B32F671E-5A0E-416D-8D0D-DCF553D252A9}" ShortID="505108288">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="RC_Cabbage_Footsteps" ID="{3DB5CE50-C4F2-453D-A8A4-0E1DC3927B65}" WorkUnitID="{23B15D27-5212-492F-AB18-D64924507D5D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_SFX_Cabbage_Hit" ID="{9753C00E-4EA3-4102-9738-A8883A648880}">
+					<ChildrenList>
+						<Action Name="" ID="{217BCC6C-7EE8-4E89-AA04-DA546557D83B}" ShortID="730406066">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="RC_Cabbage_Hit" ID="{54682A50-50E0-4AD3-BD32-D1858156E266}" WorkUnitID="{23B15D27-5212-492F-AB18-D64924507D5D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_SFX_Cabbage_Charge_Impact" ID="{7ED28F22-7E01-4313-BC38-1D1062B45E50}">
+					<ChildrenList>
+						<Action Name="" ID="{D923F7A2-008F-411B-9567-05579C07E7E9}" ShortID="495483349">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+								<Property Name="Delay" Type="Real64" Value="0.2"/>
+								<Property Name="FadeOutCurve" Type="int16" Value="1"/>
+								<Property Name="FadeTime" Type="Real64" Value="0.1"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="BLD_Cabbage_Charge_LP" ID="{15995089-32D7-4328-BEF2-82464036AF6B}" WorkUnitID="{23B15D27-5212-492F-AB18-D64924507D5D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+						<Action Name="" ID="{BA401C84-55DA-4ABD-9FCC-3EDECBF16277}" ShortID="344083291">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="RC_Cabbage_Charge_Impact" ID="{901EBDE0-D372-4224-A216-07C9118859BE}" WorkUnitID="{23B15D27-5212-492F-AB18-D64924507D5D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_SFX_Cabbage_Charge_LP" ID="{84C41461-CD73-46A1-A694-FF3E59A30932}">
+					<ChildrenList>
+						<Action Name="" ID="{4DE9FC31-4531-4075-989B-D6C1C30EE69E}" ShortID="189615586">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+								<Property Name="FadeOutCurve" Type="int16" Value="1"/>
+								<Property Name="FadeTime" Type="Real64" Value="0.2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="RC_Cabbage_Footsteps" ID="{3DB5CE50-C4F2-453D-A8A4-0E1DC3927B65}" WorkUnitID="{23B15D27-5212-492F-AB18-D64924507D5D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+						<Action Name="" ID="{A0998589-017C-4BAC-A27B-78A152D42141}" ShortID="605944000">
+							<PropertyList>
+								<Property Name="FadeInCurve" Type="int16" Value="7"/>
+								<Property Name="FadeTime" Type="Real64" Value="0.2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="BLD_Cabbage_Charge_LP" ID="{15995089-32D7-4328-BEF2-82464036AF6B}" WorkUnitID="{23B15D27-5212-492F-AB18-D64924507D5D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_SFX_Cabbage_Death" ID="{AD9715DB-F5E9-4633-BF74-3A5379302E06}">
+					<ChildrenList>
+						<Action Name="" ID="{7CBF9700-4D9B-4C77-B42E-519E510E9C02}" ShortID="135442947">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+								<Property Name="Delay" Type="Real64" Value="0.5"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="AM_Cabagge" ID="{2E0EBD3B-4854-4EAE-B096-93C3C436047E}" WorkUnitID="{23B15D27-5212-492F-AB18-D64924507D5D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+						<Action Name="" ID="{87500CED-092F-46A0-BC29-F9EE09A6790F}" ShortID="586306469">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="RC_Cabbage_Death" ID="{B27BFC50-0249-4143-967B-480896D8002D}" WorkUnitID="{23B15D27-5212-492F-AB18-D64924507D5D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Stop_SFX_Cabbage_Charge_LP" ID="{4748C734-023E-4ECC-B5E6-130DAB09D553}">
+					<ChildrenList>
+						<Action Name="" ID="{A66DE4BB-456F-4774-B65B-589F80E03774}" ShortID="498298173">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+								<Property Name="FadeTime" Type="Real64" Value="0.3"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="BLD_Cabbage_Charge_LP" ID="{15995089-32D7-4328-BEF2-82464036AF6B}" WorkUnitID="{23B15D27-5212-492F-AB18-D64924507D5D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+			</ChildrenList>
+		</WorkUnit>
+	</Events>
+</WwiseDocument>

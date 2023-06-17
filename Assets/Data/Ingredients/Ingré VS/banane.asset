@@ -1,0 +1,101 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53abb120a886f884a82d268ea4771c0d, type: 3}
+  m_Name: banane
+  m_EditorClassIdentifier: 
+  _effects:
+  - rid: 7441399568168124419
+  _plat: 0
+  inventorySprite: {fileID: 21300000, guid: 53fe503b3e18cc242b2cc97cecb77b91, type: 3}
+  description: Boomerang bullets
+  _size: 1
+  _speed: 4
+  _drag: 0
+  _ammunition: 10
+  _attackDelay: 0.2
+  _damage: 80
+  audioState:
+    idInternal: 0
+    valueGuidInternal: 
+    groupIdInternal: 0
+    groupGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 98140de8d0446ca46b890dfceb3d9cc6,
+      type: 2}
+  color: {r: 0, g: 1, b: 1, a: 1}
+  references:
+    version: 2
+    RefIds:
+    - rid: 7441399568168124419
+      type: {class: Boomerang, ns: , asm: Assembly-CSharp}
+      data:
+        _forward:
+          serializedVersion: 2
+          m_Curve:
+          - serializedVersion: 3
+            time: 0
+            value: 0
+            inSlope: 2
+            outSlope: 2
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          - serializedVersion: 3
+            time: 0.5082966
+            value: 0.9990841
+            inSlope: -0.011642849
+            outSlope: -0.011642849
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0.33333334
+            outWeight: 0.33333334
+          - serializedVersion: 3
+            time: 0.9958191
+            value: 0.0009422302
+            inSlope: -1.9145235
+            outSlope: -1.9145235
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0.054379787
+            outWeight: 0
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+        _sides:
+          serializedVersion: 2
+          m_Curve:
+          - serializedVersion: 3
+            time: 0.029792666
+            value: 0.0005277232
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 34
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0.33333334
+          - serializedVersion: 3
+            time: 1.0297927
+            value: 0.0005277232
+            inSlope: -0.0012467549
+            outSlope: -0.0012467549
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0.93751156
+            outWeight: 0
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+        _Speed: 3
+        _MaxForwardDistance: 20
+        _MaxSideDistance: 7
+        WindEffect: {fileID: 7795035279837964594, guid: cd42bae5a4ea2c2468a0e8803e050695,
+          type: 3}

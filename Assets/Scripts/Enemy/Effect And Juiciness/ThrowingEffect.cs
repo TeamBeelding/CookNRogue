@@ -9,14 +9,14 @@ namespace Enemy.Effect_And_Juiciness
         [SerializeField] private AnimationCurve xCurve;
         [SerializeField] private AnimationCurve yCurve;
 
-        private Transform _target;
+        private Vector3 _target;
         private float _maxHeight = 4;
         private float _maxLength = 10;
         private float _speed = 2;
 
         private void Start()
         {
-            _target = GameObject.FindWithTag("Player").transform;
+            _target = GameObject.FindWithTag("Player").transform.position;
         }
 
         private void Update()
@@ -25,7 +25,7 @@ namespace Enemy.Effect_And_Juiciness
                 ThrowMinimoyz(_target, _maxHeight, _speed);
         }
 
-        public void ThrowMinimoyz(Transform target, float maxHeight, float speed)
+        public void ThrowMinimoyz(Vector3 target, float maxHeight, float speed)
         {
             
             _target = target;
@@ -39,8 +39,8 @@ namespace Enemy.Effect_And_Juiciness
         {
             float timer = 0;
             Vector3 initPos = transform.position;
-            Vector3 direction = (_target.position - transform.position).normalized;
-            _maxLength = Vector3.Distance(transform.position, _target.position);
+            Vector3 direction = (_target - transform.position).normalized;
+            _maxLength = Vector3.Distance(transform.position, _target);
 
             while (timer < 1)
             {

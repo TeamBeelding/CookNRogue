@@ -60,9 +60,18 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Quit",
+                    "name": "Pause",
                     "type": "Button",
-                    "id": "e81f954d-c622-4de1-94d2-70d625d37ce3",
+                    "id": "a12c7b46-b438-496d-a6ea-cc0fc8f0eab4",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "EnterDebug",
+                    "type": "Button",
+                    "id": "4adb3a5d-ca14-4a19-8342-45d1457b5257",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -226,28 +235,6 @@
                 },
                 {
                     "name": "",
-                    "id": "440facc4-16b7-42ea-9908-03e8aa57f182",
-                    "path": "<Keyboard>/escape",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "Quit",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "c266a7ab-47fe-47e9-ae99-d83ed5fceeab",
-                    "path": "<Gamepad>/start",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "GamePad",
-                    "action": "Quit",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "715b5077-20f8-4990-ae12-e62cdf900623",
                     "path": "<Keyboard>/space",
                     "interactions": "",
@@ -265,6 +252,61 @@
                     "processors": "",
                     "groups": "GamePad",
                     "action": "Dash",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d1fc183c-c076-44ab-a199-6925d6e088a7",
+                    "path": "<Keyboard>/p",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c1268843-b016-409d-8fc0-9fc84f3d26ba",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7d735e76-7d6a-4aa3-b4c2-d770ce795908",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "GamePad",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5d51f65a-fb01-4928-a453-c5ae0a392708",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "GamePad",
+                    "action": "Dash",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "92323129-6e4d-4d3c-a92d-9a0cdca0a0d6",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "GamePad",
+                    "action": "EnterDebug",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -445,6 +487,145 @@
                     "processors": "",
                     "groups": "Keyboard",
                     "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8646a162-c74f-401b-97ba-80b5540535bb",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Debug",
+            "id": "483bae16-c1e2-4a10-ac49-19a9050c9a9e",
+            "actions": [
+                {
+                    "name": "EnterDebug",
+                    "type": "Button",
+                    "id": "da525827-64c4-4f3b-8f83-3a6c20e742cb",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "KillAllEnemies",
+                    "type": "Button",
+                    "id": "1765443e-ec90-439d-be29-13910dceb756",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ReloadLevel",
+                    "type": "Button",
+                    "id": "25739d98-662d-479a-a24e-699520ac22b5",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "GoToNextLevel",
+                    "type": "Button",
+                    "id": "7b3cbdd1-4088-4899-b6ba-424593aed7a1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "GoToPreviousLevel",
+                    "type": "Button",
+                    "id": "7cd4477a-f228-4660-8fad-d189f5b3a015",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SkipTuto",
+                    "type": "Button",
+                    "id": "a5fb2b67-89d3-4cec-a96a-684e4430cc35",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "9d5445d9-9492-46ba-9e42-09527da19a6c",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "GamePad",
+                    "action": "EnterDebug",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "be9dd907-e03f-46d9-9423-0b3e8957064f",
+                    "path": "<Gamepad>/dpad/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "GamePad",
+                    "action": "KillAllEnemies",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1349a239-4bf9-4da3-aa59-dc8be77fca7e",
+                    "path": "<Gamepad>/dpad/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "GamePad",
+                    "action": "GoToNextLevel",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7d27d9af-43b9-4763-bac6-48faf7c775bd",
+                    "path": "<Gamepad>/dpad/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "GamePad",
+                    "action": "GoToPreviousLevel",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "84020daa-31ba-4386-b361-88acf0b62f60",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "GamePad",
+                    "action": "SkipTuto",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "aed4e5b5-4cf2-4e6c-8d14-286d29c06c7f",
+                    "path": "<Gamepad>/dpad/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "GamePad",
+                    "action": "ReloadLevel",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
