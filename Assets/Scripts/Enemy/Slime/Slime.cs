@@ -194,7 +194,7 @@ namespace Enemy.Slime
             
             spawnChecker.SetTransformPosition(point);
             
-            if (!spawnChecker.IsPathValid())
+            if (!spawnChecker.CanThrowHere())
                 return;
                      
             GameObject minimoyz = Instantiate(this.minimoyz, gun.transform.position, quaternion.identity);

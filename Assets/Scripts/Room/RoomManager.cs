@@ -3,6 +3,7 @@ using Enemy;
 using UnityEngine;
 using Unity.AI.Navigation;
 using UnityEditor;
+using System.Collections.Generic;
 
 public class RoomManager : MonoBehaviour
 {
@@ -45,6 +46,9 @@ public class RoomManager : MonoBehaviour
     private TransitionController m_transition;
 
     public event Action OnRoomStart;
+
+    [SerializeField]
+    private List<GameObject> IngredientsInRoom;
 
     void Awake()
     {
@@ -129,14 +133,21 @@ public class RoomManager : MonoBehaviour
         }
 
         TransitionToLevel();
-
         m_currentLevelIndex = 0;
+        m_currentLevelType = m_Levels.OrderList[m_currentLevelIndex];
+        PickFromType(m_currentLevelType);
+    }
+
+    public void RestartRoom()
+    {
+        TransitionToLevel();
         m_currentLevelType = m_Levels.OrderList[m_currentLevelIndex];
         PickFromType(m_currentLevelType);
     }
 
     private void PickFromType(string currentLevelType)
     {
+        RemoveIngredientsFromRoom();
         switch (currentLevelType)
         {
             case "Hub":
@@ -180,6 +191,7 @@ public class RoomManager : MonoBehaviour
     }
     public void PickFromTypeAndIndex(string currentLevelType, int index)
     {
+        RemoveIngredientsFromRoom();
         TransitionToLevel();
         m_currentLevelType = currentLevelType;
 
@@ -262,6 +274,28 @@ public class RoomManager : MonoBehaviour
     {
         m_spawnPoint = levels.GetComponent<RoomInfo>().SpawnPoint.transform;
         PlayerController.Instance.transform.position = m_spawnPoint.position;
+    }
+
+    public void AddIngredient(GameObject Ingredtient) 
+    {
+        IngredientsInRoom.Add(Ingredtient);
+    }
+
+    public void RemoveIngredient(GameObject Ingredtient)
+    {
+        IngredientsInRoom.Remove(Ingredtient);
+    }
+
+    private void RemoveIngredientsFromRoom()
+    {
+        if (IngredientsInRoom != null)
+        {
+            for (int i = IngredientsInRoom.Count - 1; i >= 0; i--)
+            {
+                Destroy(IngredientsInRoom[i]);
+                IngredientsInRoom.Remove(IngredientsInRoom[i]);
+            }
+        }
     }
 
     //private void SpawnPlayer() 

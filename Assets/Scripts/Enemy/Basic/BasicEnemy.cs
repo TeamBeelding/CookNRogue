@@ -116,7 +116,7 @@ namespace Enemy.Basic
                 case State.Attack:
                     animator.SetBool("isWalking", false);
                     animator.SetBool("isAttack", false);
-                    transform.LookAt(Player.transform.position);
+                    transform.LookAt(new Vector3(Player.transform.position.x, transform.position.y, Player.transform.position.z));
                     Attack(Shot, data.GetAttackSpeed);
                     break;
                 case State.Dying:
