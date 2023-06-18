@@ -257,6 +257,15 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
+        if (_curState == playerStates.Cooking)
+        {
+            playerAnimStatesScript.Marmite(false, true);
+        }
+        else
+        {
+            playerAnimStatesScript.Marmite(false, false);
+        }
+
         //Inputs relative to camera
         Vector3 relativeForward = _relativeTransform.forward + _relativeTransform.up;
         Vector3 relativeRight = _relativeTransform.right;
@@ -592,7 +601,7 @@ public class PlayerController : MonoBehaviour
     void StartCookingState()
     {
         playerAnimStatesScript._animator.SetBool("cooking", true);
-        playerAnimStatesScript.Marmite(false, true);
+        // playerAnimStatesScript.Marmite(false, true);
 
         //Input state check
         if (_curState != playerStates.Default)
@@ -608,7 +617,8 @@ public class PlayerController : MonoBehaviour
     public void StopCookingState()
     {
         playerAnimStatesScript._animator.SetBool("cooking", false);
-        playerAnimStatesScript.Marmite(false, false);
+        // playerAnimStatesScript.Marmite(false, false);
+        
         _Stop_SFX_Cook.Post(gameObject);
         Debug.Log("stop cook");
 
