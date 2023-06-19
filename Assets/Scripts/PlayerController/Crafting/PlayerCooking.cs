@@ -38,7 +38,6 @@ public class PlayerCooking : MonoBehaviour
 
     bool _craftingInProgress;
     float _curProgressTime;
-    bool _spawnedQTE;
 
     float _totalCookTime;
     float _randQTEDelay;
@@ -207,7 +206,6 @@ public class PlayerCooking : MonoBehaviour
         //reset
         _craftingRoutine = null;
         _craftingInProgress = false;
-        _spawnedQTE = false;
 
         //Hide UI
         m_cookingProgressVisuals.SetActive(false);
@@ -217,15 +215,11 @@ public class PlayerCooking : MonoBehaviour
 
     IEnumerator ICraftingLoop(float delay)
     {
+        m_QTEScript.StartQTE(delay);
+
         //Check crafting time
         while (_curProgressTime < _totalCookTime)
         {
-            //Check QTE spawn time
-            if (!_spawnedQTE && _curProgressTime >= delay)
-            {
-                
-                SpawnQTE();
-            }
             //UI
             _fillMaterial.SetFloat("_FillAmount", _curProgressTime / _totalCookTime);
 
@@ -239,14 +233,6 @@ public class PlayerCooking : MonoBehaviour
     #endregion
 
     #region QTE
-    void SpawnQTE()
-    {
-        _playerController.QTEAppear();
-        
-        m_QTEScript.StartQTE();
-        _spawnedQTE = true;
-    }
-
     public void CheckQTE()
     {
         m_QTEScript.CheckQTE();
