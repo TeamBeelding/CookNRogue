@@ -16,6 +16,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     internal float m_maxHealthValue = 10f;
     [SerializeField]
+    internal float m_invicibilityDuration = 1f;
+    [SerializeField]
     internal float m_rotationSpeed = 3f;
     [SerializeField]
     internal float m_moveSpeed = 5f;
@@ -26,7 +28,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] internal float m_dashDuration = .2f;
     [SerializeField] internal float m_dashForce = 2f;
-    [SerializeField] float m_dashCooldown = 1f;
+    [SerializeField] internal float m_dashCooldown = 1f;
 
     [SerializeField]
     internal float m_interactionRange = 0.5f;
@@ -73,6 +75,8 @@ public class PlayerController : MonoBehaviour
     Rigidbody _rb;
     Transform _relativeTransform;
 
+    InputsManager _inputsManager;
+
     Vector2 _moveInputValue;
     public Vector2 MoveInputValue
     {
@@ -112,6 +116,8 @@ public class PlayerController : MonoBehaviour
 
     bool _isLocked = false;
     private bool m_isGamePaused = false;
+
+    bool _isInvicible = false;
 
     Collider _curInteractCollider = null;
 
@@ -186,6 +192,7 @@ public class PlayerController : MonoBehaviour
         _inventoryScript = PlayerCookingInventory.Instance;
         _enemyManager = EnemyManager.Instance;
         _roomManager = RoomManager.instance;
+        _inputsManager = InputsManager.Instance;
         _cookingScript = GetComponent<PlayerCooking>();
         _playerHealth = GetComponent<PlayerHealth>();
         _rb = _rb != null ? _rb : GetComponent<Rigidbody>();
@@ -513,11 +520,13 @@ public class PlayerController : MonoBehaviour
             m_aimArrow.SetActive(false);
         }
 
+        _isInvicible = true;
         DashingParticles.Play();
         yield return new WaitForSeconds(m_dashDuration);
         _isDashing = false;
         m_dashDirection = Vector2.zero;
         DashingParticles.Stop();
+        _isInvicible = false;
 
         //Aim Check;
         if (_isAiming)
@@ -736,6 +745,9 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(float damage) 
     {
+        if (_isInvicible)
+            return;
+
         //Feedbacks
         CameraController.instance.ScreenShake();
         takeDamageTransition.LoadTransition();
@@ -756,7 +768,17 @@ public class PlayerController : MonoBehaviour
             victoryMenu.SetActive(false);
             deathMenu.SetActive(true);
         }
+        else
+        {
+            StartCoroutine(InvicibleTimer());
+        }
+    }
 
+    private IEnumerator InvicibleTimer()
+    {
+        _isInvicible = true;
+        yield return new WaitForSeconds(m_invicibilityDuration);
+        _isInvicible = false;
     }
     
     void Spawn()
