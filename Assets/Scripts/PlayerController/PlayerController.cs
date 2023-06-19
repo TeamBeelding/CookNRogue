@@ -75,8 +75,6 @@ public class PlayerController : MonoBehaviour
     Rigidbody _rb;
     Transform _relativeTransform;
 
-    InputsManager _inputsManager;
-
     Vector2 _moveInputValue;
     public Vector2 MoveInputValue
     {
@@ -192,7 +190,6 @@ public class PlayerController : MonoBehaviour
         _inventoryScript = PlayerCookingInventory.Instance;
         _enemyManager = EnemyManager.Instance;
         _roomManager = RoomManager.instance;
-        _inputsManager = InputsManager.Instance;
         _cookingScript = GetComponent<PlayerCooking>();
         _playerHealth = GetComponent<PlayerHealth>();
         _rb = _rb != null ? _rb : GetComponent<Rigidbody>();
