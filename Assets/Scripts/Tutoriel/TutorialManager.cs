@@ -287,7 +287,7 @@ namespace Tutoriel
 
                 yield return new WaitForSeconds(timeBeforeLoadingScene);
 
-                SceneManager.LoadScene(sceneToLoad);
+                SceneManager.LoadScene(2);
             }
         }
 

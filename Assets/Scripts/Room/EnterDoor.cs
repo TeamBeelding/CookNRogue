@@ -97,7 +97,6 @@ public class EnterDoor : MonoBehaviour
         if (SkinnedMaterials.Length > 0)
         {
             float duration = m_portalAnimDuration + m_portalAnimOffset < m_doorOpeningDuration ? m_doorOpeningDuration : m_portalAnimDuration + m_portalAnimOffset;
-            Debug.Log(duration);
 
             for (float f = 0f; f < duration; f += m_refreshRate)
             {
