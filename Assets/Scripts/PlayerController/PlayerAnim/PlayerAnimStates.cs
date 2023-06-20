@@ -90,6 +90,7 @@ public class PlayerAnimStates : MonoBehaviour
                     _animator.SetBool("idleAttackBool", false);
                     _animator.SetBool("runningBool", false);
                     _animator.SetBool("runningAttackBool", false);
+                    Marmite(false, false);
                     break;
                 }
         }
