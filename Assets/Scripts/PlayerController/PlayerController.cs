@@ -246,9 +246,6 @@ public class PlayerController : MonoBehaviour
         _playerActions.Debug.Disable();
         #endregion
 
-        if (_roomManager)
-            _roomManager.OnRoomStart += Spawn;
-
         m_currentHealthValue = m_maxHealthValue;
 
         m_aimArrow.SetActive(false);
@@ -775,9 +772,9 @@ public class PlayerController : MonoBehaviour
         _isInvicible = false;
     }
     
-    void Spawn()
+    public void Spawn(Transform spawnPoint)
     {
-        //transform.position = _roomManager.SpawnPoint.position;
+        transform.position = spawnPoint.position;
     }
 
     #endregion

@@ -236,11 +236,13 @@ public class RoomManager : MonoBehaviour
                 break;
         }
 
+        /*
         ExcractSpawnPoint(_currentLevel);
 
         OnRoomStart?.Invoke();
 
         m_loadSurface = true;
+        */
     }
 
     private void TransitionToLevel()
@@ -263,11 +265,19 @@ public class RoomManager : MonoBehaviour
         int rand = UnityEngine.Random.Range(0, levels.Length);
         _currentLevel = Instantiate(levels[rand], Vector3.zero, Quaternion.identity);
 
+        /*
         ExcractSpawnPoint(_currentLevel);
 
         OnRoomStart?.Invoke();
 
         m_loadSurface = true;
+        */
+    }
+
+    public void BuildNavMesh()
+    {
+        m_navMeshSurface.UpdateNavMesh(m_navMeshSurface.navMeshData);
+        m_navMeshSurface.BuildNavMesh();
     }
 
     private void ExcractSpawnPoint(GameObject levels) 
