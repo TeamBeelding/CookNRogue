@@ -64,7 +64,9 @@ public class PlayerCookingQTE : MonoBehaviour
         _isActive = false;
         m_QTEVisuals.SetActive(false);
 
-        StopCoroutine(_curLoop);
+        if (_curLoop != null)
+            StopCoroutine(_curLoop);
+        
         _curLoop = null;
     }
 

@@ -526,6 +526,12 @@ PrefabInstance:
       objectReference: {fileID: 2101895989}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d18ed1799f774094098f1329861ffcfe, type: 3}
+--- !u!1 &346311303 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8435914716660352095, guid: 4f1d931103cb2404580d27bd24717df0,
+    type: 3}
+  m_PrefabInstance: {fileID: 1980849254}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &388421185
 GameObject:
   m_ObjectHideFlags: 0
@@ -2744,10 +2750,34 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 1980849254}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 346311303}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 50bae93c6790f4d4f8b8fac67c309301, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1980849264 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8435914716660352041, guid: 4f1d931103cb2404580d27bd24717df0,
+    type: 3}
+  m_PrefabInstance: {fileID: 1980849254}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 346311303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 984b7b65a3eb9a2459383cfe9814f4d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1980849265 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8435914716660352085, guid: 4f1d931103cb2404580d27bd24717df0,
+    type: 3}
+  m_PrefabInstance: {fileID: 1980849254}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 346311303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a34558ecc9aa7f34e83646aee1d9a244, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &2042373623
@@ -3281,6 +3311,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7830899782318110669, guid: 1b02798667e6634408b21385ca40d55c,
         type: 3}
+      propertyPath: _player
+      value: 
+      objectReference: {fileID: 346311303}
+    - target: {fileID: 7830899782318110669, guid: 1b02798667e6634408b21385ca40d55c,
+        type: 3}
       propertyPath: cauldron
       value: 
       objectReference: {fileID: 57168939}
@@ -3295,6 +3330,21 @@ PrefabInstance:
       value: STOOOOOOP ! Did you know that by being quick enough, you could end the
         cooking in a flash ? Try pushing the X button.
       objectReference: {fileID: 0}
+    - target: {fileID: 7830899782318110669, guid: 1b02798667e6634408b21385ca40d55c,
+        type: 3}
+      propertyPath: _dialogueBox
+      value: 
+      objectReference: {fileID: 388421187}
+    - target: {fileID: 7830899782318110669, guid: 1b02798667e6634408b21385ca40d55c,
+        type: 3}
+      propertyPath: _playerAttack
+      value: 
+      objectReference: {fileID: 1980849265}
+    - target: {fileID: 7830899782318110669, guid: 1b02798667e6634408b21385ca40d55c,
+        type: 3}
+      propertyPath: _playerCooking
+      value: 
+      objectReference: {fileID: 1980849264}
     - target: {fileID: 7830899782318110669, guid: 1b02798667e6634408b21385ca40d55c,
         type: 3}
       propertyPath: slowMotionFactor
