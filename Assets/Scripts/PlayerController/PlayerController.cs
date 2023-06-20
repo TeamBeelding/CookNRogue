@@ -839,6 +839,7 @@ public class PlayerController : MonoBehaviour
     {
         if(_isOnTutorial && SceneManager.sceneCountInBuildSettings > 2)
         {
+            AkSoundEngine.StopAll();
             SceneManager.LoadScene(2);
         }
         else
@@ -910,6 +911,20 @@ public class PlayerController : MonoBehaviour
         victoryMenu.SetActive(false);
         PauseGame();
         RoomManager.instance.RestartLevel();
+    }
+
+    public void SkipTuto()
+    {
+        if (_isOnTutorial && SceneManager.sceneCountInBuildSettings > 2)
+        {
+            AkSoundEngine.StopAll();
+            SceneManager.LoadScene(2);
+            Time.timeScale = 1f;
+        }
+        else
+        {
+            Debug.LogWarning("Not in tutorial !");
+        }
     }
 
     #endregion

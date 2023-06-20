@@ -52,7 +52,6 @@ namespace Tutoriel
         private GameObject _player;
 
         [SerializeField] private float timeBeforeLoadingScene = 1f;
-        [SerializeField] private string sceneToLoad = "Run";
         [Header("Text to display")]
         [SerializeField]
         private string textWhenPlayerApproachCauldron = "Approach the cauldron";
@@ -287,6 +286,7 @@ namespace Tutoriel
 
                 yield return new WaitForSeconds(timeBeforeLoadingScene);
 
+                AkSoundEngine.StopAll();
                 SceneManager.LoadScene(2);
             }
         }
