@@ -231,6 +231,7 @@ public class PlayerController : MonoBehaviour
 
         //Set UI Events
         _playerActions.UI.Pause.performed += OnPauseGame;
+        _playerActions.UI.Return.performed += OnPauseGame;
 
         //Set Debug Events
         _playerActions.Debug.EnterDebug.started += QuitDebug;
