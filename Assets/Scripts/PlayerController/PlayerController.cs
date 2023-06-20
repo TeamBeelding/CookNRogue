@@ -265,10 +265,6 @@ public class PlayerController : MonoBehaviour
         {
             playerAnimStatesScript.Marmite(false, true);
         }
-        else
-        {
-            playerAnimStatesScript.Marmite(false, false);
-        }
 
         //Inputs relative to camera
         Vector3 relativeForward = _relativeTransform.forward + _relativeTransform.up;
