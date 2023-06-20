@@ -286,7 +286,7 @@ namespace Tutoriel
 
                 yield return new WaitForSeconds(timeBeforeLoadingScene);
 
-                AkSoundEngine.StopAll();
+                //AkSoundEngine.StopAll();
                 SceneManager.LoadScene(2);
             }
         }

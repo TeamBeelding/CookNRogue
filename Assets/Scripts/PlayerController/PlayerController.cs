@@ -839,7 +839,7 @@ public class PlayerController : MonoBehaviour
     {
         if(_isOnTutorial && SceneManager.sceneCountInBuildSettings > 2)
         {
-            AkSoundEngine.StopAll();
+            //AkSoundEngine.StopAll();
             SceneManager.LoadScene(2);
         }
         else
@@ -917,7 +917,7 @@ public class PlayerController : MonoBehaviour
     {
         if (_isOnTutorial && SceneManager.sceneCountInBuildSettings > 2)
         {
-            AkSoundEngine.StopAll();
+            //AkSoundEngine.StopAll();
             SceneManager.LoadScene(2);
             Time.timeScale = 1f;
         }
