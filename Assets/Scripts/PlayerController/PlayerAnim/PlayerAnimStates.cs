@@ -118,7 +118,6 @@ public class PlayerAnimStates : MonoBehaviour
     {
         if (isAimed)
         {
-            Debug.Log("isAimed was called");
             m_marmite.gameObject.SetActive(false);
             m_aimedMarmite.gameObject.SetActive(true);
             m_cookingMarmite.gameObject.SetActive(false);
@@ -128,7 +127,6 @@ public class PlayerAnimStates : MonoBehaviour
         }
         else if (isCooking) 
         {
-            Debug.Log("isCooking was called");
             m_marmite.gameObject.SetActive(false);
             m_aimedMarmite.gameObject.SetActive(false);
             m_cookingMarmite.gameObject.SetActive(true);

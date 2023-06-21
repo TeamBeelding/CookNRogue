@@ -81,7 +81,6 @@ public class PlayerCooking : MonoBehaviour
         if (!_craftingInProgress)
         {
             _inventoryScript.Show(true);
-            Debug.Log("true");
         }
         else
         {
@@ -101,7 +100,6 @@ public class PlayerCooking : MonoBehaviour
             if (_inventoryScript.IsDisplayed())
             {
                 _inventoryScript.Show(false);
-                Debug.Log("false");
                 _inventoryScript.CancelCraft();
             }
         }
@@ -200,7 +198,6 @@ public class PlayerCooking : MonoBehaviour
     void CompleteCrafting()
     {
         _inventoryScript.CraftBullet();
-        _playerController.StopCookingState();
         m_attackScript.OnAmmunitionChange();
 
         //reset
@@ -211,6 +208,8 @@ public class PlayerCooking : MonoBehaviour
         m_cookingProgressVisuals.SetActive(false);
         
         _playerController.CheckingIfCookingIsDone();
+        _playerController.StopCookingState();
+        _playerController._ignoreCook = true;
     }
 
     IEnumerator ICraftingLoop(float delay)
@@ -227,7 +226,8 @@ public class PlayerCooking : MonoBehaviour
             _curProgressTime += Time.deltaTime;
             yield return new WaitForSeconds(Time.deltaTime);
         }
-        
+
+        _fillMaterial.SetFloat("_FillAmount", 0f);
         CompleteCrafting();
     }
     #endregion
