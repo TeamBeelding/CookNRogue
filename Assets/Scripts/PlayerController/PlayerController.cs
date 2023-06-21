@@ -67,6 +67,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private PlayerAnimStates playerAnimStatesScript;
 
+    [SerializeField]
+    PlayerAttack m_playerAttackScript;
+
     static PlayerController _instance;
 
     PlayerActions _playerActions;
@@ -755,6 +758,8 @@ public class PlayerController : MonoBehaviour
             _playerActions.UI.Enable();
             _playerActions.Default.Disable();
             _playerActions.Cooking.Disable();
+            m_playerAttackScript.OnDeathReset();
+            _cookingScript.Clear();
             pauseMenu.SetActive(false);
             victoryMenu.SetActive(false);
             deathMenu.SetActive(true);

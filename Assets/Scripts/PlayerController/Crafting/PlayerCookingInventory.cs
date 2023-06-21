@@ -242,6 +242,18 @@ public class PlayerCookingInventory : MonoBehaviour
             }
         }
     }
+
+    public void Clear()
+    {
+        foreach (PlayerCookingInventoryWheel wheel in m_inventoryWheels)
+        {
+            for (int i = 0; i < 8; i++)
+            {
+                PlayerCookingInventorySlot slot = wheel.GetSlot(i);
+                slot.ResetCount();
+            }
+        }
+    }
     #endregion
 
     #region Bullet Crafting

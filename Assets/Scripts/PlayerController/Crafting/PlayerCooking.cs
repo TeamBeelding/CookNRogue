@@ -250,4 +250,13 @@ public class PlayerCooking : MonoBehaviour
         }
     }
     #endregion
+
+    #region Utilities
+
+    public void Clear()
+    {
+        _inventoryScript.Clear();
+    }
+
+    #endregion
 }

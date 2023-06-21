@@ -133,6 +133,28 @@ public class PlayerAttack : MonoBehaviour
         _ammunitionBar.UpdateAmmoBar();
         _Play_Weapon_Empty.Post(gameObject);
     }
+
+    public void OnDeathReset()
+    {
+        if (!_asEmptiedAmmo)
+        {
+            _asEmptiedAmmo = true;
+
+            //Reset Audio
+            foreach (ProjectileData data in _inventory.EquippedRecipe)
+            {
+                data.audioState.SetValue();
+            }
+
+            _inventory.EquippedRecipe.Clear();
+            _inventory.UpdateEquipedRecipeUI();
+
+            ResetParameters();
+
+            if (_ammunitionBar)
+                _ammunitionBar.UpdateAmmoBar();
+        }
+    }
            
 
     #region OnHitEffects

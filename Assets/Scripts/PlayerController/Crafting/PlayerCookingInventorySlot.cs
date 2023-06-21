@@ -69,5 +69,11 @@ public class PlayerCookingInventorySlot : MonoBehaviour
         _ingredientCount += -1;
         m_ingredientCounter.text = _ingredientCount.ToString();
     }
+
+    public void ResetCount()
+    {
+        _ingredientCount = 0;
+        m_ingredientCounter.text = "0";
+    }
     #endregion
 }
