@@ -67,6 +67,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private PlayerAnimStates playerAnimStatesScript;
 
+    [SerializeField]
+    PlayerAttack m_playerAttackScript;
+
     static PlayerController _instance;
 
     PlayerActions _playerActions;
@@ -114,6 +117,7 @@ public class PlayerController : MonoBehaviour
 
     bool _isLocked = false;
     private bool m_isGamePaused = false;
+    public bool _ignoreCook = false;
 
     bool _isInvicible = false;
 
@@ -217,6 +221,7 @@ public class PlayerController : MonoBehaviour
         _playerActions.Default.Aim.canceled += Aim_Canceled;
         _playerActions.Default.Dash.performed += Dash;
         _playerActions.Default.Cook.started += Cook_Performed;
+        _playerActions.Default.Cook.canceled += RemoveCookSafety;
         _playerActions.Default.Pause.performed += OnPauseGame;
         _playerActions.Default.EnterDebug.started += EnterDebug;
 
@@ -584,10 +589,23 @@ public class PlayerController : MonoBehaviour
     #region Cooking
     void Cook_Performed(InputAction.CallbackContext context)
     {
+        if (_ignoreCook)
+        {
+            return;
+        }
+
         StartCookingState();
 
         //Start cooking
         _cookingScript.StartCooking();
+    }
+
+    void RemoveCookSafety(InputAction.CallbackContext context)
+    {
+        if (_ignoreCook)
+        {
+            _ignoreCook = false;
+        }
     }
 
     void Cook_Canceled(InputAction.CallbackContext context)
@@ -620,7 +638,6 @@ public class PlayerController : MonoBehaviour
         // playerAnimStatesScript.Marmite(false, false);
         
         _Stop_SFX_Cook.Post(gameObject);
-        Debug.Log("stop cook");
 
         //Input state check
         if (_curState != playerStates.Cooking)
@@ -755,6 +772,8 @@ public class PlayerController : MonoBehaviour
             _playerActions.UI.Enable();
             _playerActions.Default.Disable();
             _playerActions.Cooking.Disable();
+            m_playerAttackScript.OnDeathReset();
+            _cookingScript.Clear();
             pauseMenu.SetActive(false);
             victoryMenu.SetActive(false);
             deathMenu.SetActive(true);
