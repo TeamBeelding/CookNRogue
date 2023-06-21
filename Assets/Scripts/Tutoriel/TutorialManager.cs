@@ -249,7 +249,9 @@ namespace Tutoriel
                 while (tutorialStep == TutorialStep.FightingPhase)
                 {
                     if (GameObject.FindGameObjectsWithTag("Enemy").IsNullOrEmpty())
+                    { 
                         SetTutorialState(TutorialStep.End);
+                    }
                     
                     yield return null;
                 }
@@ -258,8 +260,10 @@ namespace Tutoriel
         
         private void EndTutorial()
         {
+            //SceneManager.LoadScene(2);
             StartCoroutine(IEndTutorial());
             
+
             IEnumerator IEndTutorial()
             {
                 _playerAttack.ResetAmunition();

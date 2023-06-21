@@ -901,6 +901,7 @@ public class PlayerController : MonoBehaviour
     public void QuitGame()
     {
         Time.timeScale = 1;
+        AkSoundEngine.StopAll();
         SceneManager.LoadScene(0);
     }
     
@@ -938,7 +939,6 @@ public class PlayerController : MonoBehaviour
     {
         if (_isOnTutorial && SceneManager.sceneCountInBuildSettings > 2)
         {
-            //AkSoundEngine.StopAll();
             SceneManager.LoadScene(2);
             Time.timeScale = 1f;
         }
