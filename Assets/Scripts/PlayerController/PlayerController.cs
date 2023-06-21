@@ -117,6 +117,7 @@ public class PlayerController : MonoBehaviour
 
     bool _isLocked = false;
     private bool m_isGamePaused = false;
+    public bool _ignoreCook = false;
 
     bool _isInvicible = false;
 
@@ -220,6 +221,7 @@ public class PlayerController : MonoBehaviour
         _playerActions.Default.Aim.canceled += Aim_Canceled;
         _playerActions.Default.Dash.performed += Dash;
         _playerActions.Default.Cook.started += Cook_Performed;
+        _playerActions.Default.Cook.canceled += RemoveCookSafety;
         _playerActions.Default.Pause.performed += OnPauseGame;
         _playerActions.Default.EnterDebug.started += EnterDebug;
 
@@ -587,10 +589,23 @@ public class PlayerController : MonoBehaviour
     #region Cooking
     void Cook_Performed(InputAction.CallbackContext context)
     {
+        if (_ignoreCook)
+        {
+            return;
+        }
+
         StartCookingState();
 
         //Start cooking
         _cookingScript.StartCooking();
+    }
+
+    void RemoveCookSafety(InputAction.CallbackContext context)
+    {
+        if (_ignoreCook)
+        {
+            _ignoreCook = false;
+        }
     }
 
     void Cook_Canceled(InputAction.CallbackContext context)
@@ -623,7 +638,6 @@ public class PlayerController : MonoBehaviour
         // playerAnimStatesScript.Marmite(false, false);
         
         _Stop_SFX_Cook.Post(gameObject);
-        Debug.Log("stop cook");
 
         //Input state check
         if (_curState != playerStates.Cooking)
@@ -754,10 +768,10 @@ public class PlayerController : MonoBehaviour
             
         if (!_playerHealth.TakeDamage(1))
         {
-            PauseGame();
-            _playerActions.UI.Enable();
+            Time.timeScale = 0f;
             _playerActions.Default.Disable();
             _playerActions.Cooking.Disable();
+            _playerActions.UI.Enable();
             m_playerAttackScript.OnDeathReset();
             _cookingScript.Clear();
             pauseMenu.SetActive(false);
@@ -887,6 +901,7 @@ public class PlayerController : MonoBehaviour
     public void QuitGame()
     {
         Time.timeScale = 1;
+        AkSoundEngine.StopAll();
         SceneManager.LoadScene(0);
     }
     
@@ -899,24 +914,25 @@ public class PlayerController : MonoBehaviour
 
     public void EndGame()
     {
+        Time.timeScale = 0;
         _playerActions.UI.Enable();
         _playerActions.Default.Disable();
         _playerActions.Cooking.Disable();
         pauseMenu.SetActive(false);
         deathMenu.SetActive(false);
         victoryMenu.SetActive(true);
-        PauseGame();
+        AkSoundEngine.StopAll();
     }
 
     public void RestartLevel()
     {
+        Time.timeScale = 1f;
         _playerActions.UI.Disable();
-        _playerActions.Default.Enable();
         _playerActions.Cooking.Disable();
+        _playerActions.Default.Enable();
         pauseMenu.SetActive(false);
         deathMenu.SetActive(false);
         victoryMenu.SetActive(false);
-        PauseGame();
         RoomManager.instance.RestartLevel();
     }
 
@@ -924,7 +940,6 @@ public class PlayerController : MonoBehaviour
     {
         if (_isOnTutorial && SceneManager.sceneCountInBuildSettings > 2)
         {
-            //AkSoundEngine.StopAll();
             SceneManager.LoadScene(2);
             Time.timeScale = 1f;
         }

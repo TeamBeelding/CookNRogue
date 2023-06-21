@@ -56,9 +56,9 @@ public class EnemyBulletController : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
-        {
             other.GetComponent<PlayerController>().TakeDamage(_damage);
+
+        if (!other.transform.parent.CompareTag("Enemy"))
             Destroy(gameObject);
-        }
     }
 }
