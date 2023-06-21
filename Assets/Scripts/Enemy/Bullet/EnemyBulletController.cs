@@ -58,7 +58,7 @@ public class EnemyBulletController : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
             other.GetComponent<PlayerController>().TakeDamage(_damage);
 
-        Debug.Log("Bullet hit " + other.gameObject.name);
-        Destroy(gameObject);
+        if (!other.transform.parent.CompareTag("Enemy"))
+            Destroy(gameObject);
     }
 }
