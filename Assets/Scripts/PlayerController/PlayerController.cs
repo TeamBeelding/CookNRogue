@@ -920,7 +920,8 @@ public class PlayerController : MonoBehaviour
         pauseMenu.SetActive(false);
         deathMenu.SetActive(false);
         victoryMenu.SetActive(true);
-        PauseGame();
+        AkSoundEngine.StopAll();
+        Time.timeScale = 0;
     }
 
     public void RestartLevel()
