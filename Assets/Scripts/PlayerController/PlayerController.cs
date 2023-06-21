@@ -768,10 +768,10 @@ public class PlayerController : MonoBehaviour
             
         if (!_playerHealth.TakeDamage(1))
         {
-            PauseGame();
-            _playerActions.UI.Enable();
+            Time.timeScale = 0f;
             _playerActions.Default.Disable();
             _playerActions.Cooking.Disable();
+            _playerActions.UI.Enable();
             m_playerAttackScript.OnDeathReset();
             _cookingScript.Clear();
             pauseMenu.SetActive(false);
@@ -914,6 +914,7 @@ public class PlayerController : MonoBehaviour
 
     public void EndGame()
     {
+        Time.timeScale = 0;
         _playerActions.UI.Enable();
         _playerActions.Default.Disable();
         _playerActions.Cooking.Disable();
@@ -921,18 +922,17 @@ public class PlayerController : MonoBehaviour
         deathMenu.SetActive(false);
         victoryMenu.SetActive(true);
         AkSoundEngine.StopAll();
-        Time.timeScale = 0;
     }
 
     public void RestartLevel()
     {
+        Time.timeScale = 1f;
         _playerActions.UI.Disable();
-        _playerActions.Default.Enable();
         _playerActions.Cooking.Disable();
+        _playerActions.Default.Enable();
         pauseMenu.SetActive(false);
         deathMenu.SetActive(false);
         victoryMenu.SetActive(false);
-        PauseGame();
         RoomManager.instance.RestartLevel();
     }
 
