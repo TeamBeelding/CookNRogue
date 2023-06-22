@@ -909,7 +909,9 @@ public class PlayerController : MonoBehaviour
     public void RestartGame()
     {
         Time.timeScale = 1;
-        SceneManager.LoadScene(2);
+        AkSoundEngine.StopAll();
+        RestartLevelFix.Instance.RestartLevel();
+        SceneManager.LoadScene(0);
     }
 
     public void EndGame()
