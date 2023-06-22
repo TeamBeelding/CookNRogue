@@ -880,6 +880,11 @@ public class PlayerController : MonoBehaviour
 
     public void PauseGame()
     {
+        if (deathMenu.activeSelf || victoryMenu.activeSelf)
+        {
+            return;
+        }
+
         if (m_isGamePaused)
         {
             Time.timeScale = 1;
@@ -917,24 +922,24 @@ public class PlayerController : MonoBehaviour
     public void EndGame()
     {
         Time.timeScale = 0;
-        _playerActions.UI.Enable();
-        _playerActions.Default.Disable();
-        _playerActions.Cooking.Disable();
         pauseMenu.SetActive(false);
         deathMenu.SetActive(false);
         victoryMenu.SetActive(true);
+        _playerActions.UI.Enable();
+        _playerActions.Default.Disable();
+        _playerActions.Cooking.Disable();
         AkSoundEngine.StopAll();
     }
 
     public void RestartLevel()
     {
         Time.timeScale = 1f;
-        _playerActions.UI.Disable();
-        _playerActions.Cooking.Disable();
-        _playerActions.Default.Enable();
         pauseMenu.SetActive(false);
         deathMenu.SetActive(false);
         victoryMenu.SetActive(false);
+        _playerActions.UI.Disable();
+        _playerActions.Cooking.Disable();
+        _playerActions.Default.Enable();
         RoomManager.instance.RestartLevel();
     }
 
