@@ -70,6 +70,17 @@ public class PlayerCookingQTE : MonoBehaviour
         _curLoop = null;
     }
 
+    public void ResetQTE()
+    {
+        _isActive = false;
+        m_QTEVisuals.SetActive(false);
+
+        if (_curLoop != null)
+            StopCoroutine(_curLoop);
+
+        _curLoop = null;
+    }
+
     //Called by input manager
     public void CheckQTE()
     {

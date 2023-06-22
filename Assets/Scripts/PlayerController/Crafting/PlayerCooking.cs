@@ -227,6 +227,8 @@ public class PlayerCooking : MonoBehaviour
             yield return new WaitForSeconds(Time.deltaTime);
         }
 
+        m_QTEScript.ResetQTE();
+
         _fillMaterial.SetFloat("_FillAmount", 0f);
         CompleteCrafting();
     }
