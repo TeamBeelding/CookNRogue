@@ -502,9 +502,19 @@ public class PlayerCookingInventory : MonoBehaviour
             return;
         }
 
+        ProjectileData data = selectedSlot.GetData();
+
+        foreach (ProjectileData curData in _recipe)
+        {
+            if (curData == data)
+            {
+                Debug.Log("Can't select item");
+                return;
+            }
+        }
+
         selectedSlot.DecreaseCount();
 
-        ProjectileData data = selectedSlot.GetData();
         _recipe.Add(data);
         m_recipeSlots[_recipe.Count - 1].Sprite = data.inventorySprite;
         m_recipeSlots[_recipe.Count - 1].Description = data.description;
