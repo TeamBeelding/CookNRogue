@@ -33,6 +33,8 @@ public class SceneLoader : MonoBehaviour
 
     private void Start()
     {
+        Cursor.visible = false;
+
         _actions = new();
         _actions.UI.Enable();
 
