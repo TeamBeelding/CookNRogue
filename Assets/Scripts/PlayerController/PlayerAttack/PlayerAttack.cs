@@ -20,7 +20,7 @@ public class PlayerAttack : MonoBehaviour
     //[SerializeField]
     //PlayerKnockback m_knockbackScript;
 
-    
+
     [Header("Physic and Movements")]
     [HideInInspector] public float _size;
     [HideInInspector] public float _speed;
@@ -30,7 +30,7 @@ public class PlayerAttack : MonoBehaviour
     private float _defaultShootCooldown;
     public float _shootCooldown;
     public float _damage;
-    [SerializeField]private bool _isShooting = false;
+    [SerializeField] private bool _isShooting = false;
     [SerializeReference]
     public List<IIngredientEffects> _effects = new List<IIngredientEffects>();
 
@@ -46,7 +46,7 @@ public class PlayerAttack : MonoBehaviour
     {
         get => _shootOnCooldown;
     }
-        
+
     Coroutine _curShootDelay;
 
     PlayerController _playerController;
@@ -83,31 +83,35 @@ public class PlayerAttack : MonoBehaviour
     }
     public void Shoot()
     {
+        //SI LE JOUEUR N'EST PAS EN TRAIN DE VISER
         if (!_playerController._isAiming)
             return;
 
+        //SI LE COOLDOWN DE TIR EST TOUJOURS ACTIF
         if (_shootOnCooldown)
             return;
 
-        if(_shootingParticles)
+        if (_shootingParticles)
             _shootingParticles.Play();
 
         _shootOnCooldown = true;
-        //BulletInstantiate
+
+        //ON FAIS DEBUTER LA FONCTION DE SHOOT
         StartCoroutine(Shootbullets(_TimeBtwShotsRafale));
-        
-        //Shoot Bullet
+
+        //ON FAIT DEBUTER LE COOLDOWN DE TIR
         _curShootDelay = StartCoroutine(ShootDelay(_shootCooldown));
 
-
+        //SI AMMO INFINIE
         if (_asEmptiedAmmo)
             return;
-       
+
         _ammunition--;
 
         if (_ammunitionBar)
-                _ammunitionBar.UpdateAmmoBar();
+            _ammunitionBar.UpdateAmmoBar();
 
+        //SI AMMO TOUJOURS SUPERIEURE A 0
         if (_ammunition > 0)
             return;
 
@@ -130,7 +134,6 @@ public class PlayerAttack : MonoBehaviour
 
     public void ResetAmunition()
     {
-        Debug.Log("ResetAmunition ?");
         _ammunition = 0;
         ResetParameters();
         _asEmptiedAmmo = true;
@@ -159,17 +162,17 @@ public class PlayerAttack : MonoBehaviour
                 _ammunitionBar.UpdateAmmoBar();
         }
     }
-           
+
 
     #region OnHitEffects
     public void ApplyOnHitEffects(Vector3 Position)
     {
         foreach (IIngredientEffects effect in _effects)
         {
-            effect.EffectOnHit(Position, null,Vector3.zero);
+            effect.EffectOnHit(Position, null, Vector3.zero);
         }
     }
-    public void ApplyOnHitEffects(Vector3 Position,GameObject HitObject, Vector3 direction)
+    public void ApplyOnHitEffects(Vector3 Position, GameObject HitObject, Vector3 direction)
     {
         foreach (IIngredientEffects effect in _effects)
         {
@@ -195,10 +198,12 @@ public class PlayerAttack : MonoBehaviour
 
     IEnumerator Shootbullets(float time)
     {
-        for(int i = 0; i< _ProjectileNbr; i++)
+        //NOMBRE DE PROJECTILE A TIER A LA SUITE
+        for (int i = 0; i < _ProjectileNbr; i++)
         {
             float totalAngle = 0;
             float incrementAngle = 0;
+
 
             foreach (IIngredientEffects effect in _effects)
             {
@@ -215,21 +220,19 @@ public class PlayerAttack : MonoBehaviour
             {
                 j = 0;
             }
-            
 
 
-            for (int k = j;k < 3; k++)
+            for (int k = j; k < 3; k++)
             {
-
+                #region PlayerBulletBehaviour Init
                 GameObject Bullet = Instantiate(_Projectile, _muzzle.position, Quaternion.identity);
-
-
                 _projectileBehaviour = Bullet.GetComponent<PlayerBulletBehaviour>();
                 _projectileBehaviour.ResetStats();
                 _projectileBehaviour._playerAttack = this;
                 _projectileBehaviour._speed += _speed;
                 _projectileBehaviour._drag -= _drag;
                 _Play_Weapon_Shot.Post(Bullet);
+                #endregion
 
                 if (_effects.Count > 0)
                 {
@@ -239,7 +242,7 @@ public class PlayerAttack : MonoBehaviour
                 _projectileBehaviour._damage += _damage;
                 Vector3 direction = Quaternion.Euler(0, totalAngle, 0) * _playerController.PlayerAimDirection;
 
-                if(_color != null)
+                if (_color != null)
                     SetGradientInParticle(Bullet, _color);
 
                 if (direction == Vector3.zero)
@@ -247,44 +250,50 @@ public class PlayerAttack : MonoBehaviour
 
                 _projectileBehaviour._direction = direction;
 
-                
-
-                foreach (IIngredientEffects effect in _effects)
-                {
-                    if (effect != null)
-                    {
-                        effect.EffectOnShoot(transform.position, Bullet);
-                    }
-
-
-                    if (effect is Boomerang boomerang)
-                    {
-                        BoomerangBehaviour boomerangBehaviour = GetComponent<BoomerangBehaviour>();
-                        if (boomerangBehaviour == null)
-                        {
-                            boomerangBehaviour = Bullet.AddComponent<BoomerangBehaviour>();
-                        }
-
-                        Boomerang TempEffect = boomerang;
-                        boomerangBehaviour.ResetStats();
-                        boomerangBehaviour._forward = TempEffect._forward;
-                        boomerangBehaviour._MaxForwardDistance = TempEffect._MaxForwardDistance;
-                        boomerangBehaviour._sides = TempEffect._sides;
-                        boomerangBehaviour._MaxSideDistance = TempEffect._MaxSideDistance;
-                        boomerangBehaviour._playerAttack = this;
-                        boomerangBehaviour._boomerangSpeed = TempEffect._Speed;
-                        boomerangBehaviour._damage += _damage;
-                        boomerangBehaviour._direction = Quaternion.Euler(0, totalAngle, 0) * _playerController.PlayerAimDirection;
-                    }
-                }
+                ApplyEffectOnShoot(Bullet, ref totalAngle);
 
                 totalAngle -= incrementAngle;
             }
-            
+
 
             yield return new WaitForSeconds(time);
         }
 
+    }
+
+    public void ApplyEffectOnShoot(GameObject Bullet, ref float Angle)
+    {
+        if (_effects.Count == 0)
+            return;
+
+        foreach (IIngredientEffects effect in _effects)
+        {
+            effect.EffectOnShoot(transform.position, Bullet);
+
+            //SI L'EFFET BOOMERANG EST PRESENT
+            if (!(effect is Boomerang boomerang))
+                continue;
+
+            #region BoomerangBehaviour Init
+
+            BoomerangBehaviour boomerangBehaviour = Bullet.GetComponent<BoomerangBehaviour>();
+
+            if (boomerangBehaviour == null)
+                boomerangBehaviour = Bullet.AddComponent<BoomerangBehaviour>();
+
+            Boomerang TempEffect = boomerang as Boomerang;
+            boomerangBehaviour.ResetStats();
+            boomerangBehaviour._forward = TempEffect._forward;
+            boomerangBehaviour._MaxForwardDistance = TempEffect._MaxForwardDistance;
+            boomerangBehaviour._sides = TempEffect._sides;
+            boomerangBehaviour._MaxSideDistance = TempEffect._MaxSideDistance;
+            boomerangBehaviour._playerAttack = this;
+            boomerangBehaviour._boomerangSpeed = TempEffect._Speed;
+            boomerangBehaviour._damage += _damage;
+            boomerangBehaviour._direction = Quaternion.Euler(0, Angle, 0) * _playerController.PlayerAimDirection;
+            #endregion
+
+        }
     }
 
     void SetGradientInParticle(GameObject bullet, Color color)
@@ -292,7 +301,7 @@ public class PlayerAttack : MonoBehaviour
 
         var RenderModule = bullet.transform.GetChild(1).GetChild(1).GetComponent<ParticleSystemRenderer>();
         Material splashmat = Instantiate(RenderModule.sharedMaterials[0]);
-        splashmat.SetColor("_Color",color);
+        splashmat.SetColor("_Color", color);
         RenderModule.material = splashmat;
         /*
         var ps = bullet.transform.GetChild(1).GetChild(0).GetComponent<ParticleSystem>();
@@ -310,7 +319,7 @@ public class PlayerAttack : MonoBehaviour
         Bubblemat.SetColor("_EmissionColor", color);
         BubbleRenderModule.material = Bubblemat;
 
-        bullet.transform.GetChild(0).GetComponent<MeshRenderer>().material.SetColor("_BaseColor",color);
+        bullet.transform.GetChild(0).GetComponent<MeshRenderer>().material.SetColor("_BaseColor", color);
     }
 
     public void OnAmmunitionChange()
@@ -320,7 +329,6 @@ public class PlayerAttack : MonoBehaviour
 
     public void ResetParameters()
     {
-        Debug.Log("ResetParameters ?");
         _color = defaultcolor;
         _effects.Clear();
         _size = 0;
@@ -343,7 +351,7 @@ public class PlayerAttack : MonoBehaviour
     }
     public void Reset()
     {
-        _ProjectileNbr= 1;
+        _ProjectileNbr = 1;
         _size = 1;
         _speed = 1;
         _drag = 0;
