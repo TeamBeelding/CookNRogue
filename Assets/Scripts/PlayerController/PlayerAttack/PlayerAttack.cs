@@ -34,13 +34,14 @@ public class PlayerAttack : MonoBehaviour
     [SerializeReference]
     public List<IIngredientEffects> _effects = new List<IIngredientEffects>();
 
-    bool _asEmptiedAmmo;
+    [SerializeReference] bool _asEmptiedAmmo = true;
 
     [Header("Sound")]
     [SerializeField] private AK.Wwise.Event _Play_Weapon_Shot;
     [SerializeField] private AK.Wwise.Event _Play_Weapon_Empty;
 
     bool _shootOnCooldown = false;
+
     public bool ShootOnCooldown
     {
         get => _shootOnCooldown;
@@ -97,30 +98,31 @@ public class PlayerAttack : MonoBehaviour
         
         //Shoot Bullet
         _curShootDelay = StartCoroutine(ShootDelay(_shootCooldown));
-        
-        if(!_asEmptiedAmmo)
+
+
+        if (_asEmptiedAmmo)
+            return;
+       
+        _ammunition--;
+
+        if (_ammunitionBar)
+                _ammunitionBar.UpdateAmmoBar();
+
+        if (_ammunition > 0)
+            return;
+
+        ResetParameters();
+
+        _inventory.EquippedRecipe.Clear();
+        _inventory.UpdateEquipedRecipeUI();
+
+
+        //Reset Audio
+        foreach (ProjectileData data in _inventory.EquippedRecipe)
         {
-            _ammunition--;
-
-            if (_ammunition <= 0)
-            {
-                _asEmptiedAmmo = true;
-
-                //Reset Audio
-                foreach (ProjectileData data in _inventory.EquippedRecipe)
-                {
-                    data.audioState.SetValue();
-                }
-
-                _inventory.EquippedRecipe.Clear();
-                _inventory.UpdateEquipedRecipeUI();
-
-                ResetParameters();
-            }
+            data.audioState.SetValue();
         }
 
-        if(_ammunitionBar)
-            _ammunitionBar.UpdateAmmoBar();
         //Animation
         //m_knockbackScript.StartKnockback();
 
@@ -128,8 +130,10 @@ public class PlayerAttack : MonoBehaviour
 
     public void ResetAmunition()
     {
+        Debug.Log("ResetAmunition ?");
         _ammunition = 0;
         ResetParameters();
+        _asEmptiedAmmo = true;
         _ammunitionBar.UpdateAmmoBar();
         _Play_Weapon_Empty.Post(gameObject);
     }
@@ -316,6 +320,7 @@ public class PlayerAttack : MonoBehaviour
 
     public void ResetParameters()
     {
+        Debug.Log("ResetParameters ?");
         _color = defaultcolor;
         _effects.Clear();
         _size = 0;
@@ -326,6 +331,7 @@ public class PlayerAttack : MonoBehaviour
         _damage = 0;
         _ammunition = 0;
         _shootCooldown = _defaultShootCooldown;
+        _asEmptiedAmmo = true;
     }
 
     public void FixedUpdate()
