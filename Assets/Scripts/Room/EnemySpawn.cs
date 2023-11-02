@@ -16,7 +16,7 @@ public class EnemySpawn : MonoBehaviour
     
     void Start()
     {
-        Invoke("EnemyDifficulty", enemySpawnerDelay);
+        RoomInfo.Instance.OnRoomStart += EnemyDifficulty;
     }
 
     private void EnemyDifficulty()

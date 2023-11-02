@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -5,49 +6,63 @@ namespace Enemy.Slime
 {
     public class CheckingSpawn : MonoBehaviour
     {
-        private NavMeshAgent agent;
-        private NavMeshPath navMeshPath;
+        // private NavMeshAgent agent;
+        // private NavMeshPath navMeshPath;
         private Transform player;
         
         // Start is called before the first frame update
         private void Start()
         {
-            agent = GetComponent<NavMeshAgent>();
-            navMeshPath = new NavMeshPath();
+            // agent = GetComponent<NavMeshAgent>();
+            // navMeshPath = new NavMeshPath();
             player = GameObject.FindGameObjectWithTag("Player").transform;
         }
 
         public void SetTransformPosition(Vector3 position)
         {
-            agent.ResetPath();
+            // agent.ResetPath();
+            //
+            // agent.enabled = false;
+            // agent.transform.position = position;
+            // agent.enabled = true;
             
-            agent.enabled = false;
-            agent.transform.position = position;
-            agent.enabled = true;
+            transform.position = position;
         }
 
         public bool IsPathValid()
         {
-            agent.SetDestination(player.position);
+            // agent.SetDestination(player.position);
 
-            NavMeshPath path = new NavMeshPath();
-            
-            agent.CalculatePath(player.position, path);
-            
-            if (!agent.CalculatePath(player.transform.position, navMeshPath))
-            {
-                return false;
-            }
+            // agent.CalculatePath(player.position, navMeshPath);
+            //
+            // if (navMeshPath.status == NavMeshPathStatus.PathComplete)
+            //     return true;
 
-            switch (navMeshPath.status)
-            {
-                case NavMeshPathStatus.PathPartial:
-                case NavMeshPathStatus.PathInvalid:
-                    return false;
-                    break;
-            }
-
-            return true;
+            return false;
         }
+        
+        public bool CanThrowHere()
+        {
+            RaycastHit hit;
+            
+            if (Physics.Raycast(transform.position, player.position - transform.position, out hit, Vector3.Distance(transform.position, player.position)))
+            {
+                if (hit.collider.CompareTag("Player"))
+                    return true;
+            }
+
+            return false;
+        }
+
+        #if UNITY_EDITOR
+        private void OnDrawGizmos()
+        {
+            if (player == null)
+                return;
+            
+            Gizmos.color = Color.red;
+            Gizmos.DrawRay(transform.position, player.position - transform.position);
+        }
+        #endif
     }
 }

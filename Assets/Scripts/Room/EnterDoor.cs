@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Enemy;
 using UnityEngine;
 
 public class EnterDoor : MonoBehaviour
@@ -46,6 +47,8 @@ public class EnterDoor : MonoBehaviour
     bool _doorIsOpened = false;
     bool _raysAreActive = false;
 
+    [SerializeField] private AK.Wwise.Event _Play_SFX_Door_Open;
+
     private void Start()
     {
         if (m_door != null)
@@ -84,6 +87,7 @@ public class EnterDoor : MonoBehaviour
     {
         if (m_door != null)
         {
+            _Play_SFX_Door_Open.Post(gameObject);
             StartCoroutine(IOpenDoor());
         }
     }
@@ -93,7 +97,6 @@ public class EnterDoor : MonoBehaviour
         if (SkinnedMaterials.Length > 0)
         {
             float duration = m_portalAnimDuration + m_portalAnimOffset < m_doorOpeningDuration ? m_doorOpeningDuration : m_portalAnimDuration + m_portalAnimOffset;
-            Debug.Log(duration);
 
             for (float f = 0f; f < duration; f += m_refreshRate)
             {
@@ -141,7 +144,6 @@ public class EnterDoor : MonoBehaviour
         //Open Door
         if(value >= m_doorOpeningDuration)
         {
-            Debug.Log("?");
             m_door.SetActive(false);
             _doorIsOpened = true;
         }

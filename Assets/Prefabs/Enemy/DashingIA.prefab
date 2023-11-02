@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8021884753707496196}
   m_Layer: 0
   m_Name: DashingIA
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -66,8 +66,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _effectHandlers: []
-  explosion: {fileID: 466446929295881914, guid: 3fb8a478fb9325d40bc6d96484133a99,
+  explosion: {fileID: 466446929295881914, guid: 1768f1adcc585bb42ac938af9d0b00e8,
     type: 3}
+  tutorial: {fileID: 0}
   _Play_SFX_Cabbage_Footsteps:
     idInternal: 0
     valueGuidInternal: 
@@ -93,9 +94,15 @@ MonoBehaviour:
     valueGuidInternal: 
     WwiseObjectReference: {fileID: 11400000, guid: fd03862a77398f3488d84f7115f084b9,
       type: 2}
+  _Play_Weapon_Hit:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: a15d4b8ee5a9a404cbbbedb89ceaa826,
+      type: 2}
   _redLine: {fileID: 6108361974556150891}
   _data: {fileID: 11400000, guid: 26487e152450d55438d24d6cd1e63093, type: 2}
   visual: {fileID: 3747529388696228734}
+  physics: {fileID: 3650257289919461018}
   state: 0
 --- !u!114 &8115613155748835701
 MonoBehaviour:
@@ -109,6 +116,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b28b50808076adf48b35bd4e48771628, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _Play_SFX_Cabbage_Charge_Impact:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
 --- !u!114 &8021884753707496196
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -218,7 +229,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3747529388696228734}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.95, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

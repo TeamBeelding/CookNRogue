@@ -22,6 +22,20 @@ public class LevelOrderData : ScriptableObject
         get => m_orderList;
     }
 
+    [SerializeField]
+    private LevelOrderData m_PrevLevelOrder;
+    public LevelOrderData PrevLevelOrder
+    {
+        get => m_PrevLevelOrder;
+    }
+
+    [SerializeField]
+    private LevelOrderData m_NextLevelOrder;
+    public LevelOrderData NextLevelOrder
+    {
+        get => m_NextLevelOrder;
+    }
+
     // Name
     private string[] _hubNames;
 

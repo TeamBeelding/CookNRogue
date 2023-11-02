@@ -3,14 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-
 public class AmmunitionBar : MonoBehaviour
 {
     private Slider _ammoBar;
-    public PlayerAttack _playerAttack;
     public TextMeshProUGUI _ammoText;
     public static AmmunitionBar instance;
-
     public void Awake()
     {
         if (instance != null && instance != this)
@@ -18,7 +15,6 @@ public class AmmunitionBar : MonoBehaviour
             Destroy(this.gameObject);
             return;
         }
-
         instance = this;
     }
     private void Start()
@@ -27,19 +23,17 @@ public class AmmunitionBar : MonoBehaviour
     }
     public void InitAmmoBar(int ammoNbr)
     {
-        _ammoBar.maxValue= _playerAttack._ammunition;
-        _ammoBar.value= _playerAttack._ammunition;
+        _ammoBar.maxValue = PlayerRuntimeData.GetInstance().data.AttackData.Ammunition;
+        _ammoBar.value = PlayerRuntimeData.GetInstance().data.AttackData.Ammunition;
     }
-
     public void ResetAmmoBar()
     {
         _ammoBar.maxValue = 0;
         _ammoBar.value = 0;
     }
-
     public void UpdateAmmoBar()
     {
-        _ammoBar.value = _playerAttack._ammunition;
+        _ammoBar.value = PlayerRuntimeData.GetInstance().data.AttackData.Ammunition;
         UpdateAmmoText();
     }
     public void AddIngredientAmmo(int nbr)
@@ -48,7 +42,6 @@ public class AmmunitionBar : MonoBehaviour
         _ammoBar.value += nbr;
         UpdateAmmoText();
     }
-
     public void UpdateAmmoText()
     {
         if (_ammoText)

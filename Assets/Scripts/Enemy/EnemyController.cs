@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Enemy;
 using Tutoriel;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -135,7 +136,7 @@ public abstract class EnemyController : MonoBehaviour
 
     protected virtual void Dying()
     {
-        // DestroyEffect();
+        DestroyEffect();
         Destroy(gameObject);
     }
 
@@ -182,7 +183,9 @@ public abstract class EnemyController : MonoBehaviour
             return;
         
         Instantiate(explosion, transform.position, Quaternion.identity);
-        _collider.enabled = false;
+        
+        if (_collider)
+            _collider.enabled = false;
     }
 
     // Lerp color of the enemy

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Dialogues;
 using Sirenix.Utilities;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 
 namespace Tutoriel
@@ -26,11 +26,16 @@ namespace Tutoriel
         [SerializeField] private float distanceCloseEnough = 1f;
         [SerializeField] private float slowMotionFactor = 0.25f;
         private bool _isCloseEnough = false;
+        
+        [SerializeField] private PlayerCooking _playerCooking;
+        [SerializeField] private PlayerAttack _playerAttack;
 
         [SerializeField]
         private bool isMoving = false;
         [SerializeField]
         private bool isQte = false;
+        [SerializeField]
+        private bool isQteFailed = false;
         [SerializeField]
         private bool isCookingDone = false;
         [SerializeField]
@@ -44,12 +49,13 @@ namespace Tutoriel
         private Coroutine _coroutineState;
 
         [SerializeField] private GameObject cauldron;
-        [SerializeField] private string[] dialogue;
-        private DialogueBox _dialogueBox;
-        private string _textToDisplay = "";
-        private GameObject _player;
+        [SerializeField] private DialogueBox _dialogueBox;
+        [SerializeField] private GameObject _player;
+
+        [SerializeField] private float timeBeforeLoadingScene = 1f;
         
         [Header("Text to display")]
+        private string _textToDisplay = "";
         [SerializeField]
         private string textWhenPlayerApproachCauldron = "Approach the cauldron";
         [SerializeField]
@@ -66,15 +72,14 @@ namespace Tutoriel
         private string textWhenFighting = "Press E to fight";
         [SerializeField]
         private string textWhenPlayerHasntAmmo = "You need ammo to fight";
-        [SerializeField]
-        private string textWhenEnd = "Tutorial is over";
 
         private void Start()
         {
-            _dialogueBox = GameObject.FindObjectOfType<DialogueBox>();
             _player = GameObject.FindGameObjectWithTag("Player");
-
+            
             SetTutorialState(TutorialStep.Move);
+            
+            ActiveEnemies(false);
         }
         
         public TutorialStep GetTutorialState() => tutorialStep;
@@ -115,17 +120,6 @@ namespace Tutoriel
             }
         }
 
-        public void DisplayText()
-        {
-            if (string.IsNullOrEmpty(_textToDisplay))
-                return;
-            
-            // string[] dialogueToDisplay = { _textToDisplay };
-            // _dialogueBox.DisplayDialogueText(dialogueToDisplay, cauldron.transform);
-            
-            // _dialogueBox.DisplayText(_textToDisplay, cauldron.transform);
-        }
-
         private void Move()
         {
             StartCoroutine(IChekingMovement());
@@ -144,9 +138,8 @@ namespace Tutoriel
         
         public void SetIsMoving(bool value) => isMoving = value;
         public void SetIsQTE(bool value) => isQte = value;
-        
+        public void SetIsQTEFailed(bool value) => isQteFailed = value;
         public void SetIsCookingDone(bool value) => isCookingDone = value;
-        
         public void SetPlayerHasIngredients(bool value) => playerHasIngredients = value;
 
         private void ApproachCauldron()
@@ -183,8 +176,6 @@ namespace Tutoriel
                 {
                     if (playerHasIngredients)
                     {
-                        OutlineCauldron(true);
-                        
                         _textToDisplay = textWhenPlayerHasIngredients;
                         _dialogueBox.DisplayText(_textToDisplay, cauldron.transform);
                         
@@ -192,8 +183,6 @@ namespace Tutoriel
                     }
                     else
                     {
-                        OutlineIngredient(true);
-                        
                         _textToDisplay = textWhenPlayerHasntIngredients;
                         _dialogueBox.DisplayText(_textToDisplay, cauldron.transform);
                     }
@@ -212,21 +201,27 @@ namespace Tutoriel
 
             IEnumerator ICooking()
             {
-                yield return new WaitForSeconds(1);
-                
-                _textToDisplay = textWhenPlayerCooking;
-                _dialogueBox.DisplayText(_textToDisplay, cauldron.transform);
-
                 while (tutorialStep == TutorialStep.CookMenuOpen)
                 {
                     if (!isCookingDone)
                     {
+                        if (_playerCooking.GetCraftingInProgress() && !isQte)
+                        {
+                            _textToDisplay = textWhenPlayerCooking;
+                            _dialogueBox.DisplayText(_textToDisplay, cauldron.transform);
+                        }
+
                         if (isQte)
                         {
                             _textToDisplay = textWhenQTE;
                             _dialogueBox.DisplayText(_textToDisplay, cauldron.transform);
 
                             Time.timeScale = slowMotionFactor;
+                        }
+
+                        if (isQteFailed)
+                        {
+                            Time.timeScale = 1f;
                         }
                     }
                     else
@@ -242,7 +237,7 @@ namespace Tutoriel
         
         private void Fighting()
         {
-            SpawnEnemy();
+            ActiveEnemies(true);
 
             StartCoroutine(IFighting());
             
@@ -254,7 +249,9 @@ namespace Tutoriel
                 while (tutorialStep == TutorialStep.FightingPhase)
                 {
                     if (GameObject.FindGameObjectsWithTag("Enemy").IsNullOrEmpty())
+                    { 
                         SetTutorialState(TutorialStep.End);
+                    }
                     
                     yield return null;
                 }
@@ -263,80 +260,35 @@ namespace Tutoriel
         
         private void EndTutorial()
         {
+            //SceneManager.LoadScene(2);
             StartCoroutine(IEndTutorial());
             
+
             IEnumerator IEndTutorial()
             {
-                _player.GetComponent<PlayerAttack>().ResetAmunation();
+                _playerAttack.ResetAmunition();
                 
                 _textToDisplay = textWhenPlayerHasntAmmo;
                 _dialogueBox.DisplayText(_textToDisplay, cauldron.transform);
-                
-                yield return new WaitForSeconds(2);
-                
-                _textToDisplay = textWhenEnd;
-                _dialogueBox.DisplayText(_textToDisplay, cauldron.transform);
-            }
-        }
 
-        public void FoodSpawn()
-        {
-            foreach (GameObject food in ingredients)
-            {
-                if (food == null)
-                    continue;
-            
-                food.SetActive(true);
+                yield return new WaitForSeconds(timeBeforeLoadingScene);
+
+                //AkSoundEngine.StopAll();
+                SceneManager.LoadScene(2);
             }
         }
         
-        private void OutlineCauldron(bool value)
-        {
-            if (cauldron == null)
-                return;
-            
-            if (value)
-            {
-                OutlineIngredient(false);
-                cauldron.GetComponent<Outline>().enabled = true;
-            }
-        }
-
-        private void OutlineIngredient(bool value)
-        {
-            if (ingredients == null || ingredients.Count <= 0)
-                return;
-
-            if (value)
-            {
-                OutlineCauldron(false);
-                
-                foreach (GameObject ingredient in GameObject.FindGameObjectsWithTag("IngredientTutorial"))
-                {
-                    ingredient.GetComponent<Outline>().enabled = true;
-                }
-            }
-        }
-        
-        private void SpawnEnemy()
+        private void ActiveEnemies(bool value)
         {
             if (enemies == null || enemies.Count == 0)
                 return;
 
             foreach (GameObject enemy in enemies)
             {
-                enemy.SetActive(true);
+                enemy.SetActive(value);
             }
         }
         
-        private void ShowingUI()
-        {
-            // if (ui == null)
-            //     return;
-            //
-            // ui.SetActive(true);
-        }
-
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.red;

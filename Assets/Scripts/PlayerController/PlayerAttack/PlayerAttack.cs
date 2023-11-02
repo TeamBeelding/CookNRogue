@@ -10,36 +10,23 @@ using UnityEngine.InputSystem;
 public class PlayerAttack : MonoBehaviour
 {
     public GameObject _Projectile;
-    public int _ProjectileNbr;
-    public int _ammunition;
+
     private AmmunitionBar _ammunitionBar;
-    [HideInInspector]
-    public float _TimeBtwShotsRafale;
     PlayerBulletBehaviour _projectileBehaviour;
     public Transform _muzzle;
     //[SerializeField]
     //PlayerKnockback m_knockbackScript;
 
-    
-    [Header("Physic and Movements")]
-    [HideInInspector] public float _size;
-    [HideInInspector] public float _speed;
-    [HideInInspector] public float _drag;
+    [SerializeField] private bool _isShooting = false;
 
-    [Header("Attack")]
-    private float _defaultShootCooldown;
-    public float _shootCooldown;
-    public float _damage;
-    [SerializeField]private bool _isShooting = false;
-    [SerializeReference]
-    public List<IIngredientEffects> _effects = new List<IIngredientEffects>();
-
-    bool _asEmptiedAmmo;
+    [SerializeReference] bool _asEmptiedAmmo = true;
 
     [Header("Sound")]
     [SerializeField] private AK.Wwise.Event _Play_Weapon_Shot;
+    [SerializeField] private AK.Wwise.Event _Play_Weapon_Empty;
 
     bool _shootOnCooldown = false;
+
     public bool ShootOnCooldown
     {
         get => _shootOnCooldown;
@@ -50,15 +37,10 @@ public class PlayerAttack : MonoBehaviour
     PlayerController _playerController;
     PlayerCookingInventory _inventory;
     [SerializeField] ParticleSystem _shootingParticles;
-    [ColorUsage(true, true)]
-    public Color _color;
-
-    [ColorUsage(true, true)]
-    [SerializeField] Color defaultcolor;
 
     private void Start()
     {
-        _defaultShootCooldown = _shootCooldown;
+        PlayerRuntimeData.GetInstance().data.AttackData.AttackDefaultCooldown = PlayerRuntimeData.GetInstance().data.AttackData.AttackCooldown;
 
         _playerController = GetComponent<PlayerController>();
         _inventory = PlayerCookingInventory.Instance;
@@ -81,65 +63,98 @@ public class PlayerAttack : MonoBehaviour
     }
     public void Shoot()
     {
+        //SI LE JOUEUR N'EST PAS EN TRAIN DE VISER
         if (!_playerController._isAiming)
             return;
 
+        //SI LE COOLDOWN DE TIR EST TOUJOURS ACTIF
         if (_shootOnCooldown)
             return;
 
-        if(_shootingParticles)
+        if (_shootingParticles)
             _shootingParticles.Play();
 
         _shootOnCooldown = true;
-        //BulletInstantiate
-        StartCoroutine(Shootbullets(_TimeBtwShotsRafale));
-        
-        //Shoot Bullet
-        _curShootDelay = StartCoroutine(ShootDelay(_shootCooldown));
-        
-        if(!_asEmptiedAmmo)
+
+        //ON FAIS DEBUTER LA FONCTION DE SHOOT
+        StartCoroutine(Shootbullets(PlayerRuntimeData.GetInstance().data.AttackData.TimeBtwShotRafale));
+
+        //ON FAIT DEBUTER LE COOLDOWN DE TIR
+        _curShootDelay = StartCoroutine(ShootDelay(PlayerRuntimeData.GetInstance().data.AttackData.AttackCooldown));
+
+        //SI AMMO INFINIE
+        if (_asEmptiedAmmo)
+            return;
+
+        PlayerRuntimeData.GetInstance().data.AttackData.Ammunition--;
+
+        if (_ammunitionBar)
+            _ammunitionBar.UpdateAmmoBar();
+
+        //SI AMMO TOUJOURS SUPERIEURE A 0
+        if (PlayerRuntimeData.GetInstance().data.AttackData.Ammunition > 0)
+            return;
+
+        ResetParameters();
+
+        _inventory.EquippedRecipe.Clear();
+        _inventory.UpdateEquipedRecipeUI();
+
+
+        //Reset Audio
+        foreach (ProjectileData data in _inventory.EquippedRecipe)
         {
-            _ammunition--;
-
-            if (_ammunition <= 0)
-            {
-                _asEmptiedAmmo = true;
-
-                //Reset Audio
-                foreach (ProjectileData data in _inventory.EquippedRecipe)
-                {
-                    data.audioState.SetValue();
-                }
-
-                ResetParameters();
-            }
+            data.audioState.SetValue();
         }
 
-        if(_ammunitionBar)
-            _ammunitionBar.UpdateAmmoBar();
         //Animation
         //m_knockbackScript.StartKnockback();
 
     }
 
-    public void ResetAmunation()
+    public void ResetAmunition()
     {
-        _ammunition = 0;
+        PlayerRuntimeData.GetInstance().data.AttackData.Ammunition = 0;
         ResetParameters();
+        _asEmptiedAmmo = true;
         _ammunitionBar.UpdateAmmoBar();
+        _Play_Weapon_Empty.Post(gameObject);
     }
+
+    public void OnDeathReset()
+    {
+        if (!_asEmptiedAmmo)
+        {
+            _asEmptiedAmmo = true;
+
+            //Reset Audio
+            foreach (ProjectileData data in _inventory.EquippedRecipe)
+            {
+                data.audioState.SetValue();
+            }
+
+            _inventory.EquippedRecipe.Clear();
+            _inventory.UpdateEquipedRecipeUI();
+
+            ResetParameters();
+
+            if (_ammunitionBar)
+                _ammunitionBar.UpdateAmmoBar();
+        }
+    }
+
 
     #region OnHitEffects
     public void ApplyOnHitEffects(Vector3 Position)
     {
-        foreach (IIngredientEffects effect in _effects)
+        foreach (IIngredientEffects effect in PlayerRuntimeData.GetInstance().data.AttackData.AttackEffects)
         {
-            effect.EffectOnHit(Position, null,Vector3.zero);
+            effect.EffectOnHit(Position, null, Vector3.zero);
         }
     }
-    public void ApplyOnHitEffects(Vector3 Position,GameObject HitObject, Vector3 direction)
+    public void ApplyOnHitEffects(Vector3 Position, GameObject HitObject, Vector3 direction)
     {
-        foreach (IIngredientEffects effect in _effects)
+        foreach (IIngredientEffects effect in PlayerRuntimeData.GetInstance().data.AttackData.AttackEffects)
         {
             if (effect != null)
             {
@@ -163,12 +178,14 @@ public class PlayerAttack : MonoBehaviour
 
     IEnumerator Shootbullets(float time)
     {
-        for(int i = 0; i< _ProjectileNbr; i++)
+        //NOMBRE DE PROJECTILE A TIER A LA SUITE
+        for (int i = 0; i < PlayerRuntimeData.GetInstance().data.AttackData.ProjectileNumber; i++)
         {
             float totalAngle = 0;
             float incrementAngle = 0;
 
-            foreach (IIngredientEffects effect in _effects)
+
+            foreach (IIngredientEffects effect in PlayerRuntimeData.GetInstance().data.AttackData.AttackEffects)
             {
                 if (effect is ConeShots shots)
                 {
@@ -183,76 +200,81 @@ public class PlayerAttack : MonoBehaviour
             {
                 j = 0;
             }
-            
 
 
-            for (int k = j;k < 3; k++)
+            for (int k = j; k < 3; k++)
             {
-
+                #region PlayerBulletBehaviour Init
                 GameObject Bullet = Instantiate(_Projectile, _muzzle.position, Quaternion.identity);
-
-
                 _projectileBehaviour = Bullet.GetComponent<PlayerBulletBehaviour>();
                 _projectileBehaviour.ResetStats();
                 _projectileBehaviour._playerAttack = this;
-                _projectileBehaviour._speed += _speed;
-                _projectileBehaviour._drag -= _drag;
+                _projectileBehaviour._speed += PlayerRuntimeData.GetInstance().data.AttackData.AttackSpeed;
+                _projectileBehaviour._drag -= PlayerRuntimeData.GetInstance().data.AttackData.AttackDrag;
                 _Play_Weapon_Shot.Post(Bullet);
+                #endregion
 
-                if (_effects.Count > 0)
+                if (PlayerRuntimeData.GetInstance().data.AttackData.AttackEffects.Count > 0)
                 {
                     _projectileBehaviour._damage = 0;
                 }
 
-                _projectileBehaviour._damage += _damage;
+                _projectileBehaviour._damage += PlayerRuntimeData.GetInstance().data.AttackData.AttackDamage;
                 Vector3 direction = Quaternion.Euler(0, totalAngle, 0) * _playerController.PlayerAimDirection;
 
-                if(_color != null)
-                    SetGradientInParticle(Bullet, _color);
+                var color = PlayerRuntimeData.GetInstance().data.AttackData.AttackColor;
+                if(color != null)
+                    SetGradientInParticle(Bullet, color.Value);
 
                 if (direction == Vector3.zero)
                     direction = transform.forward;
 
                 _projectileBehaviour._direction = direction;
 
-                
-
-                foreach (IIngredientEffects effect in _effects)
-                {
-                    if (effect != null)
-                    {
-                        effect.EffectOnShoot(transform.position, Bullet);
-                    }
-
-
-                    if (effect is Boomerang boomerang)
-                    {
-                        BoomerangBehaviour boomerangBehaviour = GetComponent<BoomerangBehaviour>();
-                        if (boomerangBehaviour == null)
-                        {
-                            boomerangBehaviour = Bullet.AddComponent<BoomerangBehaviour>();
-                        }
-
-                        Boomerang TempEffect = boomerang;
-                        boomerangBehaviour.ResetStats();
-                        boomerangBehaviour._forward = TempEffect._forward;
-                        boomerangBehaviour._MaxForwardDistance = TempEffect._MaxForwardDistance;
-                        boomerangBehaviour._sides = TempEffect._sides;
-                        boomerangBehaviour._MaxSideDistance = TempEffect._MaxSideDistance;
-                        boomerangBehaviour._playerAttack = this;
-                        boomerangBehaviour._boomerangSpeed = TempEffect._Speed;
-                        boomerangBehaviour._damage += _damage;
-                        boomerangBehaviour._direction = Quaternion.Euler(0, totalAngle, 0) * _playerController.PlayerAimDirection;
-                    }
-                }
+                ApplyEffectOnShoot(Bullet, ref totalAngle);
 
                 totalAngle -= incrementAngle;
             }
-            
+
 
             yield return new WaitForSeconds(time);
         }
 
+    }
+
+    public void ApplyEffectOnShoot(GameObject Bullet, ref float Angle)
+    {
+        if (PlayerRuntimeData.GetInstance().data.AttackData.AttackEffects.Count == 0)
+            return;
+
+        foreach (IIngredientEffects effect in PlayerRuntimeData.GetInstance().data.AttackData.AttackEffects)
+        {
+            effect.EffectOnShoot(transform.position, Bullet);
+
+            //SI L'EFFET BOOMERANG EST PRESENT
+            if (!(effect is Boomerang boomerang))
+                continue;
+
+            #region BoomerangBehaviour Init
+
+            BoomerangBehaviour boomerangBehaviour = Bullet.GetComponent<BoomerangBehaviour>();
+
+            if (boomerangBehaviour == null)
+                boomerangBehaviour = Bullet.AddComponent<BoomerangBehaviour>();
+
+            Boomerang TempEffect = boomerang as Boomerang;
+            boomerangBehaviour.ResetStats();
+            boomerangBehaviour._forward = TempEffect._forward;
+            boomerangBehaviour._MaxForwardDistance = TempEffect._MaxForwardDistance;
+            boomerangBehaviour._sides = TempEffect._sides;
+            boomerangBehaviour._MaxSideDistance = TempEffect._MaxSideDistance;
+            boomerangBehaviour._playerAttack = this;
+            boomerangBehaviour._boomerangSpeed = TempEffect._Speed;
+            boomerangBehaviour._damage += PlayerRuntimeData.GetInstance().data.AttackData.AttackDamage;
+            boomerangBehaviour._direction = Quaternion.Euler(0, Angle, 0) * _playerController.PlayerAimDirection;
+            #endregion
+
+        }
     }
 
     void SetGradientInParticle(GameObject bullet, Color color)
@@ -260,7 +282,7 @@ public class PlayerAttack : MonoBehaviour
 
         var RenderModule = bullet.transform.GetChild(1).GetChild(1).GetComponent<ParticleSystemRenderer>();
         Material splashmat = Instantiate(RenderModule.sharedMaterials[0]);
-        splashmat.SetColor("_Color",color);
+        splashmat.SetColor("_Color", color);
         RenderModule.material = splashmat;
         /*
         var ps = bullet.transform.GetChild(1).GetChild(0).GetComponent<ParticleSystem>();
@@ -278,7 +300,7 @@ public class PlayerAttack : MonoBehaviour
         Bubblemat.SetColor("_EmissionColor", color);
         BubbleRenderModule.material = Bubblemat;
 
-        bullet.transform.GetChild(0).GetComponent<MeshRenderer>().material.SetColor("_BaseColor",color);
+        bullet.transform.GetChild(0).GetComponent<MeshRenderer>().material.SetColor("_BaseColor", color);
     }
 
     public void OnAmmunitionChange()
@@ -288,16 +310,17 @@ public class PlayerAttack : MonoBehaviour
 
     public void ResetParameters()
     {
-        _color = defaultcolor;
-        _effects.Clear();
-        _size = 0;
-        _speed = 0;
-        _drag = 0;
-        _ProjectileNbr = 1;
-        _TimeBtwShotsRafale = 0;
-        _damage = 0;
-        _ammunition = 0;
-        _shootCooldown = _defaultShootCooldown;
+        PlayerRuntimeData.GetInstance().data.AttackData.AttackColor = PlayerRuntimeData.GetInstance().data.AttackData.DefaultColor;
+        PlayerRuntimeData.GetInstance().data.AttackData.AttackEffects.Clear();
+        PlayerRuntimeData.GetInstance().data.AttackData.AttackSize = 0;
+        PlayerRuntimeData.GetInstance().data.AttackData.AttackSpeed = 0;
+        PlayerRuntimeData.GetInstance().data.AttackData.AttackDrag = 0;
+        PlayerRuntimeData.GetInstance().data.AttackData.ProjectileNumber = 1;
+        PlayerRuntimeData.GetInstance().data.AttackData.TimeBtwShotRafale = 0;
+        PlayerRuntimeData.GetInstance().data.AttackData.AttackDamage = 0;
+        PlayerRuntimeData.GetInstance().data.AttackData.Ammunition = 0;
+        PlayerRuntimeData.GetInstance().data.AttackData.AttackCooldown = PlayerRuntimeData.GetInstance().data.AttackData.AttackDefaultCooldown;
+        _asEmptiedAmmo = true;
     }
 
     public void FixedUpdate()
@@ -309,12 +332,12 @@ public class PlayerAttack : MonoBehaviour
     }
     public void Reset()
     {
-        _ProjectileNbr= 1;
-        _size = 1;
-        _speed = 1;
-        _drag = 0;
-        _shootCooldown = 0.1f;
-        _damage = 1;
+        PlayerRuntimeData.GetInstance().data.AttackData.ProjectileNumber = 1;
+        PlayerRuntimeData.GetInstance().data.AttackData.AttackSize = 1;
+        PlayerRuntimeData.GetInstance().data.AttackData.AttackSpeed = 1;
+        PlayerRuntimeData.GetInstance().data.AttackData.AttackDrag = 0;
+        PlayerRuntimeData.GetInstance().data.AttackData.AttackCooldown = 0.1f;
+        PlayerRuntimeData.GetInstance().data.AttackData.AttackDamage = 1;
         //m_knockbackScript = GameObject.Find("CharacterModel").GetComponent<PlayerKnockback>();
     }
 

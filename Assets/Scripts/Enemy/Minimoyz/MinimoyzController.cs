@@ -21,6 +21,9 @@ namespace Enemy.Minimoyz
         [SerializeField]
         private AK.Wwise.Event _Stop_SFX_Pea_Movement;
 
+        //public int LimitOfSound;
+        //public static int AmountOfSound;
+
         [SerializeField] private MinimoyzData data;
         [SerializeField] private SlimeData slimeData;
         [SerializeField] private NavMeshAgent agent;
@@ -49,7 +52,8 @@ namespace Enemy.Minimoyz
         protected override void Awake()
         {
             base.Awake();
-        
+
+            //AmountOfSound++;
             agent = GetComponent<NavMeshAgent>();
             agent.speed = data.GetSpeed();
             agent.stoppingDistance = data.GetAttackRange();
@@ -113,8 +117,8 @@ namespace Enemy.Minimoyz
                     _Stop_SFX_Pea_Movement.Post(gameObject);
                     break;
                 case State.Dying:
-                    Dying();
                     _Stop_SFX_Pea_Movement.Post(gameObject);
+                    Dying();
                     break;
                 default:
                     Dying();
@@ -273,6 +277,13 @@ namespace Enemy.Minimoyz
                 _Play_SFX_Pea_Death.Post(gameObject);
                 _Play_Weapon_Hit.Post(gameObject);
             }
+        }
+
+        protected override void Dying()
+        {
+            Destroy(gameObject);
+            
+            base.Dying();
         }
     }
 }

@@ -105,12 +105,10 @@ namespace Enemy.Basic
             switch (state)
             {
                 case State.Neutral:
-
                     animator.SetBool("isWalking", false);
                     animator.SetBool("isAttack", false);
                     break;
                 case State.Chase:
-
                     animator.SetBool("isWalking", true);
                     animator.SetBool("isAttack", false);
                     Chase();
@@ -118,7 +116,7 @@ namespace Enemy.Basic
                 case State.Attack:
                     animator.SetBool("isWalking", false);
                     animator.SetBool("isAttack", false);
-                    transform.LookAt(Player.transform.position);
+                    transform.LookAt(new Vector3(Player.transform.position.x, transform.position.y, Player.transform.position.z));
                     Attack(Shot, data.GetAttackSpeed);
                     break;
                 case State.Dying:
@@ -135,15 +133,21 @@ namespace Enemy.Basic
             if (state == State.Dying)
                 return;
 
-            if (!FocusPlayer)
+            if (FocusPlayer)
+            {
+                if (Vector3.Distance(transform.position, Player.transform.position) <= data.GetRangeDetection)
+                    if (Vector3.Distance(transform.position, Player.transform.position) > data.GetAttackRange)
+                        SetState(State.Chase);
+                    else
+                        SetState(State.Attack);
+            }
+            else
+            {
                 if (Vector3.Distance(transform.position, Player.transform.position) <= data.GetRangeDetection)
                     FocusPlayer = true;
-
-            if (Vector3.Distance(transform.position, Player.transform.position) <= data.GetRangeDetection &&
-                Vector3.Distance(transform.position, Player.transform.position) > data.GetAttackRange)
-                SetState(State.Chase);
-            else
-                SetState(State.Attack);
+                else 
+                    SetState(State.Neutral);
+            }
         }
 
         protected override void Chase()
@@ -184,9 +188,9 @@ namespace Enemy.Basic
         protected override void Dying()
         {
             physics.SetActive(false);
-            
+
             animator.SetBool("isDead", true);
-            
+
             StartCoroutine(IDeathAnim());
 
             IEnumerator IDeathAnim()
@@ -219,6 +223,14 @@ namespace Enemy.Basic
                 _Play_SFX_Corn_Death.Post(gameObject);
                 SetState(State.Dying);
             }
+        }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, data.GetRangeDetection);
+            Gizmos.color = Color.blue;
+            Gizmos.DrawWireSphere(transform.position, data.GetAttackRange);
         }
     }
 }

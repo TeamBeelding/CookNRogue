@@ -1,9 +1,7 @@
-using System;
 using Enemy.Data;
 using Enemy.Effect_And_Juiciness;
 using Enemy.Minimoyz;
 using NaughtyAttributes;
-using Newtonsoft.Json.Linq;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.AI;
@@ -38,6 +36,7 @@ namespace Enemy.Slime
 
         private Animator animator;
         private Coroutine stateCoroutine;
+        [SerializeField] private GameObject physics;
 
         public enum State
         {
@@ -195,7 +194,7 @@ namespace Enemy.Slime
             
             spawnChecker.SetTransformPosition(point);
             
-            if (!spawnChecker.IsPathValid())
+            if (!spawnChecker.CanThrowHere())
                 return;
                      
             GameObject minimoyz = Instantiate(this.minimoyz, gun.transform.position, quaternion.identity);
@@ -242,27 +241,21 @@ namespace Enemy.Slime
 
         protected override void Dying()
         {
+            physics.SetActive(false);
             agent.SetDestination(transform.position);
 
             animator.SetBool("isDead", true);
 
-            stateCoroutine = StartCoroutine(IDeathAnim());
-
-            IEnumerator IDeathAnim()
+            for (int i = 0; i < data.GetSlimeSpawnWhenDying; i++)
             {
-                yield return new WaitForSeconds(2f);
+                Vector2 origin = new Vector2(transform.position.x, transform.position.z);
+                Vector3 point = Random.insideUnitCircle * data.GetRadiusMinimoyzSpawnPoint + origin;
+                point = new Vector3(point.x, 0, point.y);
 
-                for (int i = 0; i < data.GetSlimeSpawnWhenDying; i++)
-                {
-                    Vector2 origin = new Vector2(transform.position.x, transform.position.z);
-                    Vector3 point = Random.insideUnitCircle * data.GetRadiusMinimoyzSpawnPoint + origin;
-                    point = new Vector3(point.x, 0, point.y);
-
-                    Instantiate(minimoyz, point, Quaternion.identity);
-                }
-
-                base.Dying();
+                Instantiate(minimoyz, point, Quaternion.identity);
             }
+            
+            base.Dying();
         }
 
         public override bool IsMoving()
