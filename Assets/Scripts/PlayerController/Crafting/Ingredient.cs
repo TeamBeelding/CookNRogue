@@ -6,6 +6,12 @@ public class Ingredient : MonoBehaviour, IInteractable
     ProjectileData _projectileData;
     [SerializeField]
     ParticleSystem _particles;
+
+    [Header("Particle behaviour")]
+    [SerializeField] float _simulationSpeed = 4;
+    [SerializeField] float _yVelocity = 1.5f;
+    [SerializeField] float _noiseValue = 4;
+
     public ProjectileData GetData
     {
         get => _projectileData;
@@ -40,21 +46,22 @@ public class Ingredient : MonoBehaviour, IInteractable
     private void OnPickUpIngredientParticles()
     {
         ParticleSystem.MainModule main = _particles.main;
-        main.simulationSpeed = 4;
+        main.simulationSpeed = _simulationSpeed;
 
         var emission = _particles.emission;
         emission.enabled = false;
 
         var vol = _particles.velocityOverLifetime; ;
-        vol.y = 1.5f;
+        vol.y = _yVelocity;
 
         var noise = _particles.noise;
-        noise.strengthX = 2;
-        noise.strengthY = 2;
-        noise.strengthZ = 2;
+        noise.strengthX = _noiseValue;
+        noise.strengthY = _noiseValue;
+        noise.strengthZ = _noiseValue;
 
         Destroy(transform.parent,1);
     }
 
+    
     
 }
