@@ -1,11 +1,8 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using Newtonsoft.Json;
-using UnityEditor.ShaderGraph.Serialization;
 using UnityEngine;
 
-public class PlayerRuntimeData: ScriptableObject
+public class PlayerRuntimeData
 {
     private static PlayerRuntimeData _instance;
 
@@ -13,10 +10,15 @@ public class PlayerRuntimeData: ScriptableObject
     {
         if (_instance == null)
         {
-            _instance = CreateInstance<PlayerRuntimeData>();
+            _instance = new PlayerRuntimeData();
         }
 
         return _instance;
+    }
+
+    private PlayerRuntimeData()
+    {
+        LoadData();
     }
 
     [Serializable]
@@ -111,25 +113,16 @@ public class PlayerRuntimeData: ScriptableObject
     public Data data = new ();
 
 
-    private string _dataFilePath;
-
-    private void OnEnable()
-    {
-        _dataFilePath = Application.dataPath + "/Resources/PlayerData.json";
-        LoadData();
-    }
+    private string _dataFilePath = Application.dataPath + "/Resources/PlayerData.json";
 
     public void SaveData()
     {
-        if(_dataFilePath == null) return;
         var json = JsonUtility.ToJson(data, true);
         System.IO.File.WriteAllText(_dataFilePath, json);
     }
 
     private void LoadData()
     {
-        if(_dataFilePath == null) return;
-
         data = JsonUtility.FromJson<Data>(System.IO.File.ReadAllText(_dataFilePath));
     }
 }
