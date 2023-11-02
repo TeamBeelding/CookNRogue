@@ -80,6 +80,7 @@ public class MarmitePlayerSettings
     [BoxGroup("PlayerCooking")]
     [Tooltip("random ammount of time in seconds available to validate the QTE," +
              " where x is the lowest possible value and y is the highest")]
+    [CustomValueDrawer("SetQteDuration")]
     public Vector2 QteDuration;
 
     #endregion
@@ -109,6 +110,7 @@ public class MarmitePlayerSettings
         TwoIngredientCookTime = PlayerRuntimeData.GetInstance().data.CookData.TwoIngredientCookTime;
         ThreeIngredientCookTime = PlayerRuntimeData.GetInstance().data.CookData.ThreeIngredientCookTime;
         QteSpawnDelay = PlayerRuntimeData.GetInstance().data.CookData.QteSpawnDelay;
+        QteDuration = PlayerRuntimeData.GetInstance().data.CookData.QteDuration;
     }
 
     #region PlayerController
@@ -201,6 +203,10 @@ public class MarmitePlayerSettings
     private Vector2 SetQteSpawnDelay(Vector2 value, GUIContent label)
     {
         return EditorGUILayout.Vector2Field(label, PlayerRuntimeData.GetInstance().data.CookData.DefaultQteSpawnDelay = value);
+    }
+    private Vector2 SetQteDuration(Vector2 value, GUIContent label)
+    {
+        return EditorGUILayout.Vector2Field(label, PlayerRuntimeData.GetInstance().data.CookData.DefaultQteDuration = value);
     }
 
     #endregion
