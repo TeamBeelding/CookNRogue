@@ -28,7 +28,7 @@ namespace Enemy.Minimoyz
         [SerializeField] private SlimeData slimeData;
         [SerializeField] private NavMeshAgent agent;
 
-        private bool _shouldChaseAndAttack;
+        //private bool _shouldChaseAndAttack;
         private bool _isThrowing = true;
         private Coroutine coroutineState;
         
@@ -255,7 +255,7 @@ namespace Enemy.Minimoyz
                     
                     if (Vector3.Distance(transform.position, Player.transform.position) <= data.GetAttackRange())
                     {
-                        _shouldChaseAndAttack = false;
+                        //_shouldChaseAndAttack = false;
                         HitPlayer();
                     }
                     

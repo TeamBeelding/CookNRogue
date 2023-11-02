@@ -25,7 +25,7 @@ namespace Tutoriel
         [SerializeField] private float distanceToCauldron = 2f;
         [SerializeField] private float distanceCloseEnough = 1f;
         [SerializeField] private float slowMotionFactor = 0.25f;
-        private bool _isCloseEnough = false;
+        //private bool _isCloseEnough = false;
         
         [SerializeField] private PlayerCooking _playerCooking;
         [SerializeField] private PlayerAttack _playerAttack;

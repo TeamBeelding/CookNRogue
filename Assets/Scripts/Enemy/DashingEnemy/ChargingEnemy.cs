@@ -26,7 +26,7 @@ namespace Enemy.DashingEnemy
 
         private bool _isCharging = false;
         private bool _canShowingRedLine = false;
-        private bool _changeStateToWaiting = false;
+        //private bool _changeStateToWaiting = false;
     
         private Vector3 _direction;
 
@@ -34,7 +34,7 @@ namespace Enemy.DashingEnemy
         [SerializeField] private EnemyDashingData _data;
     
         private Material _redLineMaterial;
-        private bool _isRedLineFullVisible = false;
+        //private bool _isRedLineFullVisible = false;
 
         [SerializeField]
         private GameObject visual;
@@ -176,7 +176,7 @@ namespace Enemy.DashingEnemy
         {
             HideRedLine();
             
-            _changeStateToWaiting = false;
+            //_changeStateToWaiting = false;
             _isCharging = false;
             
             _coroutineState = StartCoroutine(ICasting());
@@ -216,7 +216,7 @@ namespace Enemy.DashingEnemy
         private void WaitingAnotherDash()
         {
             _isCharging = false;
-            _isRedLineFullVisible = false;
+            //_isRedLineFullVisible = false;
             _canShowingRedLine = false;
 
             _coroutineState = StartCoroutine(IWaiting());

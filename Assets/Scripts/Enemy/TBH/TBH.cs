@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using Enemy.Data;
 using Enemy.Slime;
@@ -129,10 +128,10 @@ public class TBH : EnemyController
 
     private void Teleport()
     {
-        Vector3 randomPosition = UnityEngine.Random.insideUnitSphere.normalized * _data.AttackRange + Player.transform.position;
+        Vector3 randomPosition = Random.insideUnitSphere.normalized * _data.AttackRange + Player.transform.position;
         
         if (Vector3.Distance(transform.position, randomPosition) <= _data.MinimumRadius)
-            randomPosition = UnityEngine.Random.insideUnitSphere * _data.AttackRange + Player.transform.position;
+            randomPosition = Random.insideUnitSphere * _data.AttackRange + Player.transform.position;
 
         Vector3 position = new Vector3(randomPosition.x, transform.position.y, randomPosition.z);
         

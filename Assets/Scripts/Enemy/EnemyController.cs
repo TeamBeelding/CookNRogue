@@ -89,12 +89,6 @@ public abstract class EnemyController : MonoBehaviour
             yield return new WaitForSeconds(delay * 0.05f);
             _canAttack = true;
         }
-
-        //IEnumerator IAttackAnimTimer(float delay = 0.5f)
-        //{
-        //    yield return new WaitForSeconds(delay * 1.5f);
-        //    _canAttackAnim = true;
-        //}
     }
     
     #endregion
@@ -117,16 +111,16 @@ public abstract class EnemyController : MonoBehaviour
         }
 
         // Color the enemy red for a short time to indicate that he has been hit
-        IEnumerator IColorationFeedback()
-        {
-            for (int i = 0; i < 5; i++)
-            {
-                _meshRenderer.enabled = false;
-                yield return new WaitForSeconds(0.2f);
-                _meshRenderer.enabled = true;
-                yield return new WaitForSeconds(0.2f);
-            }
-        }
+        //IEnumerator IColorationFeedback()
+        //{
+        //    for (int i = 0; i < 5; i++)
+        //    {
+        //        _meshRenderer.enabled = false;
+        //        yield return new WaitForSeconds(0.2f);
+        //        _meshRenderer.enabled = true;
+        //        yield return new WaitForSeconds(0.2f);
+        //    }
+        //}
     }
     
     protected virtual void TakeDamageEffect()

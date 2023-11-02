@@ -29,17 +29,17 @@ namespace Enemy.Slime
             transform.position = position;
         }
 
-        public bool IsPathValid()
-        {
-            // agent.SetDestination(player.position);
+        //public bool IsPathValid()
+        //{
+        //    // agent.SetDestination(player.position);
 
-            // agent.CalculatePath(player.position, navMeshPath);
-            //
-            // if (navMeshPath.status == NavMeshPathStatus.PathComplete)
-            //     return true;
+        //    // agent.CalculatePath(player.position, navMeshPath);
+        //    //
+        //    // if (navMeshPath.status == NavMeshPathStatus.PathComplete)
+        //    //     return true;
 
-            return false;
-        }
+        //    return false;
+        //}
         
         public bool CanThrowHere()
         {
