@@ -1,196 +1,209 @@
 #if UNITY_EDITOR
 
 using Sirenix.OdinInspector;
-using Sirenix.OdinInspector.Editor.Drawers;
 using UnityEditor;
 using UnityEngine;
-using Object = System.Object;
 
 public class MarmitePlayerSettings
 {
-    private PlayerController m_playerController;
-    private PlayerAttack m_playerAttack;
-    
-    
     #region PlayerController
     [BoxGroup("PlayerController", true, true)]
-    [InfoBox("No PlayerController script found in scene.", InfoMessageType.Error, "IsPlayerControllerNull")]
-    [EnableIf("m_playerController")]
     [CustomValueDrawer("SetMaxHealth")]
-    public float maxHealth;
+    public float MaxHealth;
     [BoxGroup("PlayerController")]
-    [EnableIf("m_playerController")]
     [CustomValueDrawer("SetRotationSpeed")]
-    public float rotationSpeed;
+    public float RotationSpeed;
     [BoxGroup("PlayerController")]
-    [EnableIf("m_playerController")]
     [CustomValueDrawer("SetMoveSpeed")]
-    public float moveSpeed;
+    public float MoveSpeed;
     [BoxGroup("PlayerController")]
-    [EnableIf("m_playerController")]
     [CustomValueDrawer("SetMaxMoveSpeed")]
-    public float maxMoveSpeed;
+    public float MaxMoveSpeed;
     [BoxGroup("PlayerController")]
-    [EnableIf("m_playerController")]
     [CustomValueDrawer("SetMoveDrag")]
-    public float moveDrag;
+    public float MoveDrag;
     [BoxGroup("PlayerController")]
-    [EnableIf("m_playerController")]
     [CustomValueDrawer("SetDashDuration")]
-    public float dashDuration;
+    public float DashDuration;
     [BoxGroup("PlayerController")]
-    [EnableIf("m_playerController")]
     [CustomValueDrawer("SetDashForce")]
-    public float dashForce;
+    public float DashForce;
     [BoxGroup("PlayerController")]
-    [EnableIf("m_playerController")]
     [CustomValueDrawer("SetInteractionRange")]
-    public float interactionRange;
-    
+    public float InteractionRange;
+
     #endregion
 
     #region PlayerAttack
-    
-    [BoxGroup("PlayerAttack", true, true)]
-    [InfoBox("No PlayerAttack script found in scene.", InfoMessageType.Error, "IsPlayerAttackNull")]
 
-    [EnableIf("m_playerController")]
+    [BoxGroup("PlayerAttack", true, true)]
     [CustomValueDrawer("SetSize")]
-    public float size;
+    public float Size;
     [BoxGroup("PlayerAttack")]
-    [EnableIf("m_playerController")]
     [CustomValueDrawer("SetSpeed")]
-    public float speed;
+    public float Speed;
     [BoxGroup("PlayerAttack")]
-    [EnableIf("m_playerController")]
     [CustomValueDrawer("SetDrag")]
-    public float drag;
+    public float Drag;
     [BoxGroup("PlayerAttack")]
-    [EnableIf("m_playerController")]
     [CustomValueDrawer("SetHeavyDamage")]
-    public float damage;
+    public float Damage;
     [BoxGroup("PlayerAttack")]
-    [EnableIf("m_playerController")]
     [CustomValueDrawer("SetShootCooldown")]
-    public float shootCooldown;
-    
+    public float ShootCooldown;
+    [BoxGroup("PlayerAttack")]
+    [CustomValueDrawer("SetShootColor")]
+    public Color DefaultColor;
+
     #endregion
-    
+
+    #region PlayerCooking
+
+    [BoxGroup("PlayerCooking", true, true)]
+    [CustomValueDrawer("SetShowAnimDuration")]
+    public float ShowAnimDuration;
+    [BoxGroup("PlayerCooking")]
+    [CustomValueDrawer("SetOneIngredientCookTime")]
+    public float OneIngredientCookTime;
+    [BoxGroup("PlayerCooking")]
+    [CustomValueDrawer("SetTwoIngredientCookTime")]
+    public float TwoIngredientCookTime;
+    [BoxGroup("PlayerCooking")]
+    [CustomValueDrawer("SetThreeIngredientCookTime")]
+    public float ThreeIngredientCookTime;
+    [BoxGroup("PlayerCooking")]
+    [Tooltip("Random delay to spawn the QTE based on the total cook time,\r\n" +
+             "Where 0 is the start of cooking and 1 is the end,\r\n" +
+             "And X is the lowest possible generated value and Y the highest.")]
+    [CustomValueDrawer("SetQteSpawnDelay")]
+    public Vector2 QteSpawnDelay;
+    [BoxGroup("PlayerCooking")]
+    [Tooltip("random ammount of time in seconds available to validate the QTE," +
+             " where x is the lowest possible value and y is the highest")]
+    public Vector2 QteDuration;
+
+    #endregion
+
     public MarmitePlayerSettings()
     {
-        m_playerController = GameObject.FindObjectOfType<PlayerController>();
-        if (m_playerController == null)
-        {
-            Debug.LogAssertion("No PlayerController script Found in scene");
-            return;
-        }
+        MaxHealth = PlayerRuntimeData.GetInstance().data.BaseData.MaxHealth;
+        RotationSpeed = PlayerRuntimeData.GetInstance().data.BaseData.RotationSpeed;
+        MoveSpeed = PlayerRuntimeData.GetInstance().data.BaseData.MoveSpeed;
+        MaxMoveSpeed = PlayerRuntimeData.GetInstance().data.BaseData.MaxMoveSpeed;
+        MoveDrag = PlayerRuntimeData.GetInstance().data.BaseData.MoveDrag;
+        DashDuration = PlayerRuntimeData.GetInstance().data.BaseData.DashDuration;
+        DashForce = PlayerRuntimeData.GetInstance().data.BaseData.DashForce;
+        InteractionRange = PlayerRuntimeData.GetInstance().data.BaseData.InteractionRange;
 
-        maxHealth = m_playerController.m_maxHealthValue;
-        rotationSpeed = m_playerController.m_rotationSpeed;
-        moveSpeed = m_playerController.m_moveSpeed;
-        maxMoveSpeed = m_playerController.m_maxMoveSpeed;
-        moveDrag = m_playerController.m_moveDrag;
-        dashDuration = m_playerController.m_dashDuration;
-        dashForce = m_playerController.m_dashForce;
-        interactionRange = m_playerController.m_interactionRange;
-        
-        m_playerAttack = GameObject.FindObjectOfType<PlayerAttack>();
-        if (m_playerAttack == null)
-        {
-            Debug.LogAssertion("No PlayerAttack script Found in scene");
-            return;
-        }
-        
-        size = m_playerAttack._size;
-        speed = m_playerAttack._speed;
-        drag = m_playerAttack._drag;
-        damage = m_playerAttack._damage;
-        shootCooldown = m_playerAttack._shootCooldown;
+
+        Size = PlayerRuntimeData.GetInstance().data.AttackData.AttackSize;
+        Speed = PlayerRuntimeData.GetInstance().data.AttackData.AttackSpeed;
+        Drag = PlayerRuntimeData.GetInstance().data.AttackData.AttackDrag;
+        Damage = PlayerRuntimeData.GetInstance().data.AttackData.AttackDamage;
+        ShootCooldown = PlayerRuntimeData.GetInstance().data.AttackData.AttackCooldown;
+        DefaultColor = PlayerRuntimeData.GetInstance().data.AttackData.DefaultColor;
+
+
+        ShowAnimDuration = PlayerRuntimeData.GetInstance().data.CookData.ShowAnimDuration;
+        OneIngredientCookTime = PlayerRuntimeData.GetInstance().data.CookData.OneIngredientCookTime;
+        TwoIngredientCookTime = PlayerRuntimeData.GetInstance().data.CookData.TwoIngredientCookTime;
+        ThreeIngredientCookTime = PlayerRuntimeData.GetInstance().data.CookData.ThreeIngredientCookTime;
+        QteSpawnDelay = PlayerRuntimeData.GetInstance().data.CookData.QteSpawnDelay;
     }
 
     #region PlayerController
-    
-    private float SetMaxHealth(float value, GUIContent label)
+
+    private int SetMaxHealth(int value, GUIContent label)
     {
-        if (m_playerController == null) return EditorGUILayout.FloatField(label, 0);
-        return EditorGUILayout.FloatField(label, m_playerController.m_maxHealthValue = value);
+        PlayerRuntimeData.GetInstance().SaveData();
+
+        return EditorGUILayout.IntField(label, PlayerRuntimeData.GetInstance().data.BaseData.DefaultMaxHealth = value);
     }
     private float SetRotationSpeed(float value, GUIContent label)
     {
-        if (m_playerController == null) return EditorGUILayout.FloatField(label, 0);;
-        return EditorGUILayout.FloatField(label, m_playerController.m_rotationSpeed = value);
+        return EditorGUILayout.FloatField(label, PlayerRuntimeData.GetInstance().data.BaseData.RotationSpeed = value);
     }
     private float SetMoveSpeed(float value, GUIContent label)
     {
-        if (m_playerController == null) return EditorGUILayout.FloatField(label, 0);;
-        return EditorGUILayout.FloatField(label, m_playerController.m_moveSpeed = value);
+        return EditorGUILayout.FloatField(label, PlayerRuntimeData.GetInstance().data.BaseData.MoveSpeed = value);
     }
     private float SetMaxMoveSpeed(float value, GUIContent label)
     {
-        if (m_playerController == null) return EditorGUILayout.FloatField(label, 0);;
-        return EditorGUILayout.FloatField(label, m_playerController.m_maxMoveSpeed = value);
+        return EditorGUILayout.FloatField(label, PlayerRuntimeData.GetInstance().data.BaseData.MaxMoveSpeed = value);
     }
     private float SetMoveDrag(float value, GUIContent label)
     {
-        if (m_playerController == null) return EditorGUILayout.FloatField(label, 0);;
-        return EditorGUILayout.FloatField(label, m_playerController.m_moveDrag = value);
+        return EditorGUILayout.FloatField(label, PlayerRuntimeData.GetInstance().data.BaseData.MoveDrag = value);
     }
     private float SetDashDuration(float value, GUIContent label)
     {
-        if (m_playerController == null) return EditorGUILayout.FloatField(label, 0);;
-        return EditorGUILayout.FloatField(label, m_playerController.m_dashDuration = value);
+        return EditorGUILayout.FloatField(label, PlayerRuntimeData.GetInstance().data.BaseData.DashDuration = value);
     }
     private float SetDashForce(float value, GUIContent label)
     {
-        if (m_playerController == null) return EditorGUILayout.FloatField(label, 0);;
-        return EditorGUILayout.FloatField(label, m_playerController.m_dashForce = value);
+        return EditorGUILayout.FloatField(label, PlayerRuntimeData.GetInstance().data.BaseData.DashForce = value);
     }
     private float SetInteractionRange(float value, GUIContent label)
     {
-        if (m_playerController == null) return EditorGUILayout.FloatField(label, 0);;
-        return EditorGUILayout.FloatField(label, m_playerController.m_interactionRange = value);
+        return EditorGUILayout.FloatField(label, PlayerRuntimeData.GetInstance().data.BaseData.InteractionRange = value);
     }
     #endregion
 
     #region PlayerAttack
-    
+
     private float SetSize(float value, GUIContent label)
     {
-        if (m_playerAttack == null) return EditorGUILayout.FloatField(label, 0);;
-        return EditorGUILayout.FloatField(label, m_playerAttack._size = value);
+        return EditorGUILayout.FloatField(label, PlayerRuntimeData.GetInstance().data.AttackData.AttackSize = value);
     }
     private float SetSpeed(float value, GUIContent label)
     {
-        if (m_playerAttack == null) return EditorGUILayout.FloatField(label, 0);;
-        return EditorGUILayout.FloatField(label, m_playerAttack._speed = value);
+        return EditorGUILayout.FloatField(label, PlayerRuntimeData.GetInstance().data.AttackData.AttackSpeed = value);
     }
     private float SetDrag(float value, GUIContent label)
     {
-        if (m_playerAttack == null) return EditorGUILayout.FloatField(label, 0);;
-        return EditorGUILayout.FloatField(label, m_playerAttack._drag = value);
+        return EditorGUILayout.FloatField(label, PlayerRuntimeData.GetInstance().data.AttackData.AttackDrag = value);
     }
     private float SetHeavyDamage(float value, GUIContent label)
     {
-        if (m_playerAttack == null) return EditorGUILayout.FloatField(label, 0);;
-        return EditorGUILayout.FloatField(label, m_playerAttack._damage = value);
+        return EditorGUILayout.FloatField(label, PlayerRuntimeData.GetInstance().data.AttackData.AttackDamage = value);
     }
 
     private float SetShootCooldown(float value, GUIContent label)
     {
-        if (m_playerAttack == null) return EditorGUILayout.FloatField(label, 0);;
-        return EditorGUILayout.FloatField(label, m_playerAttack._shootCooldown = value);
+        return EditorGUILayout.FloatField(label, PlayerRuntimeData.GetInstance().data.AttackData.AttackCooldown = value);
+    }
+
+    private Color SetShootColor(Color value, GUIContent label)
+    {
+        return EditorGUILayout.ColorField(label, PlayerRuntimeData.GetInstance().data.AttackData.DefaultColor = value, false, true, true);
     }
 
     #endregion
 
-    private bool IsPlayerControllerNull()
+    #region PlayerCooking
+
+    private float SetShowAnimDuration(float value, GUIContent label)
     {
-        return m_playerController == null;
+        return EditorGUILayout.FloatField(label, PlayerRuntimeData.GetInstance().data.CookData.ShowAnimDuration = value);
     }
-    private bool IsPlayerAttackNull()
+    private float SetOneIngredientCookTime(float value, GUIContent label)
     {
-        return m_playerAttack == null;
+        return EditorGUILayout.FloatField(label, PlayerRuntimeData.GetInstance().data.CookData.DefaultOneIngredientCookTime = value);
     }
-    
+    private float SetTwoIngredientCookTime(float value, GUIContent label)
+    {
+        return EditorGUILayout.FloatField(label, PlayerRuntimeData.GetInstance().data.CookData.DefaultTwoIngredientCookTime = value);
+    }
+    private float SetThreeIngredientCookTime(float value, GUIContent label)
+    {
+        return EditorGUILayout.FloatField(label, PlayerRuntimeData.GetInstance().data.CookData.DefaultThreeIngredientCookTime = value);
+    }
+    private Vector2 SetQteSpawnDelay(Vector2 value, GUIContent label)
+    {
+        return EditorGUILayout.Vector2Field(label, PlayerRuntimeData.GetInstance().data.CookData.DefaultQteSpawnDelay = value);
+    }
+
+    #endregion
+
 }
 #endif

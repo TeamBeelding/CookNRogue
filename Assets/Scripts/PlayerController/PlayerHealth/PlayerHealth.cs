@@ -5,8 +5,6 @@ using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
-    [SerializeField] int _health;
-    [SerializeField] int _maxHealth;
     [SerializeField] private AK.Wwise.Event _Play_SFX_Health_Collect;
     [SerializeField] private AK.Wwise.Event _Play_MC_Hit;
     [SerializeField] private AK.Wwise.Event _Play_MC_Death;
@@ -19,18 +17,19 @@ public class PlayerHealth : MonoBehaviour
     public void HealthInit()
     {
         //GUARDS
-        _maxHealth = Mathf.Abs(_maxHealth);
-        if (_maxHealth == 0)
-            _maxHealth = 6;
+        PlayerRuntimeData.GetInstance().data.BaseData.DefaultMaxHealth = Mathf.Abs(PlayerRuntimeData.GetInstance().data.BaseData.DefaultMaxHealth);
 
-        if(_maxHealth%2 !=0)
-            _maxHealth++;
+        if (PlayerRuntimeData.GetInstance().data.BaseData.DefaultMaxHealth == 0)
+            PlayerRuntimeData.GetInstance().data.BaseData.DefaultMaxHealth = 6;
+
+        if(PlayerRuntimeData.GetInstance().data.BaseData.DefaultMaxHealth%2 !=0)
+            PlayerRuntimeData.GetInstance().data.BaseData.DefaultMaxHealth++;
         
         
 
-        _health = _maxHealth;
-        _heartBar.InitBar(_health);
-
+        PlayerRuntimeData.GetInstance().data.BaseData.MaxHealth = PlayerRuntimeData.GetInstance().data.BaseData.DefaultMaxHealth;
+        PlayerRuntimeData.GetInstance().data.BaseData.CurrentHealth = PlayerRuntimeData.GetInstance().data.BaseData.DefaultMaxHealth;
+        _heartBar.InitBar(PlayerRuntimeData.GetInstance().data.BaseData.CurrentHealth);
     }
 
     /*
@@ -40,15 +39,15 @@ public class PlayerHealth : MonoBehaviour
     {
         if (damage <= 0) return true;
 
-        _health -= damage;
-        _heartBar.UpdateHealthVisual(_health);
+        PlayerRuntimeData.GetInstance().data.BaseData.CurrentHealth -= damage;
+        _heartBar.UpdateHealthVisual(PlayerRuntimeData.GetInstance().data.BaseData.CurrentHealth);
         _Play_MC_Hit.Post(gameObject);
         _Play_SFX_Health_Collect.Post(gameObject);
 
-        if (_health <= 0)
+        if (PlayerRuntimeData.GetInstance().data.BaseData.CurrentHealth <= 0)
         {
-            _health = _maxHealth;
-            _heartBar.UpdateHealthVisual(_health);
+            PlayerRuntimeData.GetInstance().data.BaseData.CurrentHealth = PlayerRuntimeData.GetInstance().data.BaseData.MaxHealth;
+            _heartBar.UpdateHealthVisual(PlayerRuntimeData.GetInstance().data.BaseData.CurrentHealth);
             _Play_MC_Death.Post(gameObject);
 
             // RoomManager.instance.RestartLevel();
@@ -63,14 +62,14 @@ public class PlayerHealth : MonoBehaviour
         if (heal <= 0)
             return;
 
-        _health += heal;
+        PlayerRuntimeData.GetInstance().data.BaseData.CurrentHealth += heal;
 
-        _heartBar.UpdateHealthVisual(_health);
+        _heartBar.UpdateHealthVisual(PlayerRuntimeData.GetInstance().data.BaseData.CurrentHealth);
     }
 
     private void Reset()
     {
-        _maxHealth = 6;
+        PlayerRuntimeData.GetInstance().data.BaseData.MaxHealth = PlayerRuntimeData.GetInstance().data.BaseData.DefaultMaxHealth;
     }
 
 }

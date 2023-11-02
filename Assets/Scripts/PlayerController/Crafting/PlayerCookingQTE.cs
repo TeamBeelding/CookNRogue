@@ -4,10 +4,6 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerCooking))]
 public class PlayerCookingQTE : MonoBehaviour
 {
-    [SerializeField, Tooltip("random ammount of time in seconds available to validate the QTE," +
-        " where x is the lowest possible value and y is the highest")]
-    Vector2 m_QTEDuration;
-
     [SerializeField]
     PlayerCooking m_playerCookingScript;
 
@@ -24,7 +20,7 @@ public class PlayerCookingQTE : MonoBehaviour
     {
         m_playerCookingScript = m_playerCookingScript != null ? m_playerCookingScript : GetComponent<PlayerCooking>();
 
-        m_QTEDuration = new Vector2(1f, 2f);
+        PlayerRuntimeData.GetInstance().data.CookData.QteDuration = PlayerRuntimeData.GetInstance().data.CookData.DefaultQteDuration;
     }
 
     private void Start()
@@ -32,11 +28,12 @@ public class PlayerCookingQTE : MonoBehaviour
         _playerController = GetComponent<PlayerController>();
         m_playerCookingScript = m_playerCookingScript != null ? m_playerCookingScript : GetComponent<PlayerCooking>();
         m_QTEVisuals.SetActive(false);
+        PlayerRuntimeData.GetInstance().data.CookData.QteDuration = PlayerRuntimeData.GetInstance().data.CookData.DefaultQteDuration;
     }
 
     public void StartQTE(float delay)
     {
-        float randDuration = Random.Range(m_QTEDuration.x, m_QTEDuration.y);
+        float randDuration = Random.Range(PlayerRuntimeData.GetInstance().data.CookData.QteDuration.x, PlayerRuntimeData.GetInstance().data.CookData.QteDuration.y);
         _curLoop = StartCoroutine(QTELoop(delay, randDuration));
     }
 

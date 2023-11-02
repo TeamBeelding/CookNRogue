@@ -10,29 +10,6 @@ using static UnityEngine.ParticleSystem;
 public class PlayerController : MonoBehaviour
 {
     #region Variables
-    [Header("Character Properties")]
-    [SerializeField]
-    float m_currentHealthValue = 10f;
-    [SerializeField]
-    internal float m_maxHealthValue = 10f;
-    [SerializeField]
-    internal float m_invicibilityDuration = 1f;
-    [SerializeField]
-    internal float m_rotationSpeed = 3f;
-    [SerializeField]
-    internal float m_moveSpeed = 5f;
-    [SerializeField]
-    internal float m_maxMoveSpeed = 5f;
-    [SerializeField]
-    internal float m_moveDrag = 1f;
-
-    [SerializeField] internal float m_dashDuration = .2f;
-    [SerializeField] internal float m_dashForce = 2f;
-    [SerializeField] internal float m_dashCooldown = 1f;
-
-    [SerializeField]
-    internal float m_interactionRange = 0.5f;
-
     [Header("Init")]
     [SerializeField]
     Camera m_mainCamera;
@@ -251,8 +228,6 @@ public class PlayerController : MonoBehaviour
         _playerActions.Debug.Disable();
         #endregion
 
-        m_currentHealthValue = m_maxHealthValue;
-
         m_aimArrow.SetActive(false);
     }
 
@@ -339,7 +314,7 @@ public class PlayerController : MonoBehaviour
                 Vector3 moveInputDir = relativeForward * _moveInputValue.y + relativeRight * _moveInputValue.x;
                 moveInputDir = moveInputDir.normalized;
 
-                float speed = m_moveSpeed * _moveInputValue.sqrMagnitude;
+                float speed = PlayerRuntimeData.GetInstance().data.BaseData.MoveSpeed * _moveInputValue.sqrMagnitude;
 
                 Move(moveInputDir, speed);
 
@@ -383,7 +358,7 @@ public class PlayerController : MonoBehaviour
             else
             {
                 Rotate(m_dashDirection);
-                Move(m_dashDirection, m_moveSpeed * m_dashForce);
+                Move(m_dashDirection, PlayerRuntimeData.GetInstance().data.BaseData.MoveSpeed * PlayerRuntimeData.GetInstance().data.BaseData.DashForce);
             }
         }
         #endregion
@@ -392,7 +367,7 @@ public class PlayerController : MonoBehaviour
         Collider[] interactableColliders = new Collider[3];
 
         //Get interactable objects in range
-        int foundObjects = Physics.OverlapSphereNonAlloc(transform.position + m_model.transform.forward * 0.5f, m_interactionRange, interactableColliders, m_interactionMask);
+        int foundObjects = Physics.OverlapSphereNonAlloc(transform.position + m_model.transform.forward * 0.5f, PlayerRuntimeData.GetInstance().data.BaseData.InteractionRange, interactableColliders, m_interactionMask);
         if (foundObjects > 0)
         {
             //Get closest object
@@ -465,11 +440,11 @@ public class PlayerController : MonoBehaviour
     void Move(Vector3 direction, float speed)
     {
         _rb.AddForce(100f * speed * Time.deltaTime * direction, ForceMode.Force);
-        _rb.drag = m_moveDrag;
+        _rb.drag = PlayerRuntimeData.GetInstance().data.BaseData.MoveDrag;
 
-        if (!_isDashing && _rb.velocity.magnitude > m_maxMoveSpeed)
+        if (!_isDashing && _rb.velocity.magnitude > PlayerRuntimeData.GetInstance().data.BaseData.MaxMoveSpeed)
         {
-            _rb.velocity = new Vector3(direction.x, 0, direction.z) * m_maxMoveSpeed;
+            _rb.velocity = new Vector3(direction.x, 0, direction.z) * PlayerRuntimeData.GetInstance().data.BaseData.MaxMoveSpeed;
         }
 
         CheckingIfPlayerIsMovingForTutorial();
@@ -518,7 +493,7 @@ public class PlayerController : MonoBehaviour
 
         _isInvicible = true;
         DashingParticles.Play();
-        yield return new WaitForSeconds(m_dashDuration);
+        yield return new WaitForSeconds(PlayerRuntimeData.GetInstance().data.BaseData.DashDuration);
         _isDashing = false;
         m_dashDirection = Vector2.zero;
         DashingParticles.Stop();
@@ -534,7 +509,7 @@ public class PlayerController : MonoBehaviour
     private IEnumerator IDashCooldown()
     {
         _dashOnCooldown = true;
-        yield return new WaitForSeconds(m_dashCooldown);
+        yield return new WaitForSeconds(PlayerRuntimeData.GetInstance().data.BaseData.DashCooldown);
         _dashOnCooldown = false;
     }
 
@@ -746,8 +721,8 @@ public class PlayerController : MonoBehaviour
 
     void Rotate(Vector3 direction)
     {
-        float newX = Mathf.Lerp(m_model.transform.forward.x, direction.x, Time.deltaTime * m_rotationSpeed);
-        float newZ = Mathf.Lerp(m_model.transform.forward.z, direction.z, Time.deltaTime * m_rotationSpeed);
+        float newX = Mathf.Lerp(m_model.transform.forward.x, direction.x, Time.deltaTime * PlayerRuntimeData.GetInstance().data.BaseData.RotationSpeed);
+        float newZ = Mathf.Lerp(m_model.transform.forward.z, direction.z, Time.deltaTime * PlayerRuntimeData.GetInstance().data.BaseData.RotationSpeed);
         m_model.transform.forward = new Vector3(newX, 0, newZ);
     }
 
@@ -787,7 +762,7 @@ public class PlayerController : MonoBehaviour
     private IEnumerator InvicibleTimer()
     {
         _isInvicible = true;
-        yield return new WaitForSeconds(m_invicibilityDuration);
+        yield return new WaitForSeconds(PlayerRuntimeData.GetInstance().data.BaseData.InvicibilityDuration);
         _isInvicible = false;
     }
     

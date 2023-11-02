@@ -10,29 +10,14 @@ using UnityEngine.InputSystem;
 public class PlayerAttack : MonoBehaviour
 {
     public GameObject _Projectile;
-    public int _ProjectileNbr;
-    public int _ammunition;
+
     private AmmunitionBar _ammunitionBar;
-    [HideInInspector]
-    public float _TimeBtwShotsRafale;
     PlayerBulletBehaviour _projectileBehaviour;
     public Transform _muzzle;
     //[SerializeField]
     //PlayerKnockback m_knockbackScript;
 
-
-    [Header("Physic and Movements")]
-    [HideInInspector] public float _size;
-    [HideInInspector] public float _speed;
-    [HideInInspector] public float _drag;
-
-    [Header("Attack")]
-    private float _defaultShootCooldown;
-    public float _shootCooldown;
-    public float _damage;
     [SerializeField] private bool _isShooting = false;
-    [SerializeReference]
-    public List<IIngredientEffects> _effects = new List<IIngredientEffects>();
 
     [SerializeReference] bool _asEmptiedAmmo = true;
 
@@ -52,15 +37,10 @@ public class PlayerAttack : MonoBehaviour
     PlayerController _playerController;
     PlayerCookingInventory _inventory;
     [SerializeField] ParticleSystem _shootingParticles;
-    [ColorUsage(true, true)]
-    public Color _color;
-
-    [ColorUsage(true, true)]
-    [SerializeField] Color defaultcolor;
 
     private void Start()
     {
-        _defaultShootCooldown = _shootCooldown;
+        PlayerRuntimeData.GetInstance().data.AttackData.AttackDefaultCooldown = PlayerRuntimeData.GetInstance().data.AttackData.AttackCooldown;
 
         _playerController = GetComponent<PlayerController>();
         _inventory = PlayerCookingInventory.Instance;
@@ -97,22 +77,22 @@ public class PlayerAttack : MonoBehaviour
         _shootOnCooldown = true;
 
         //ON FAIS DEBUTER LA FONCTION DE SHOOT
-        StartCoroutine(Shootbullets(_TimeBtwShotsRafale));
+        StartCoroutine(Shootbullets(PlayerRuntimeData.GetInstance().data.AttackData.TimeBtwShotRafale));
 
         //ON FAIT DEBUTER LE COOLDOWN DE TIR
-        _curShootDelay = StartCoroutine(ShootDelay(_shootCooldown));
+        _curShootDelay = StartCoroutine(ShootDelay(PlayerRuntimeData.GetInstance().data.AttackData.AttackCooldown));
 
         //SI AMMO INFINIE
         if (_asEmptiedAmmo)
             return;
 
-        _ammunition--;
+        PlayerRuntimeData.GetInstance().data.AttackData.Ammunition--;
 
         if (_ammunitionBar)
             _ammunitionBar.UpdateAmmoBar();
 
         //SI AMMO TOUJOURS SUPERIEURE A 0
-        if (_ammunition > 0)
+        if (PlayerRuntimeData.GetInstance().data.AttackData.Ammunition > 0)
             return;
 
         ResetParameters();
@@ -134,7 +114,7 @@ public class PlayerAttack : MonoBehaviour
 
     public void ResetAmunition()
     {
-        _ammunition = 0;
+        PlayerRuntimeData.GetInstance().data.AttackData.Ammunition = 0;
         ResetParameters();
         _asEmptiedAmmo = true;
         _ammunitionBar.UpdateAmmoBar();
@@ -167,14 +147,14 @@ public class PlayerAttack : MonoBehaviour
     #region OnHitEffects
     public void ApplyOnHitEffects(Vector3 Position)
     {
-        foreach (IIngredientEffects effect in _effects)
+        foreach (IIngredientEffects effect in PlayerRuntimeData.GetInstance().data.AttackData.AttackEffects)
         {
             effect.EffectOnHit(Position, null, Vector3.zero);
         }
     }
     public void ApplyOnHitEffects(Vector3 Position, GameObject HitObject, Vector3 direction)
     {
-        foreach (IIngredientEffects effect in _effects)
+        foreach (IIngredientEffects effect in PlayerRuntimeData.GetInstance().data.AttackData.AttackEffects)
         {
             if (effect != null)
             {
@@ -199,13 +179,13 @@ public class PlayerAttack : MonoBehaviour
     IEnumerator Shootbullets(float time)
     {
         //NOMBRE DE PROJECTILE A TIER A LA SUITE
-        for (int i = 0; i < _ProjectileNbr; i++)
+        for (int i = 0; i < PlayerRuntimeData.GetInstance().data.AttackData.ProjectileNumber; i++)
         {
             float totalAngle = 0;
             float incrementAngle = 0;
 
 
-            foreach (IIngredientEffects effect in _effects)
+            foreach (IIngredientEffects effect in PlayerRuntimeData.GetInstance().data.AttackData.AttackEffects)
             {
                 if (effect is ConeShots shots)
                 {
@@ -229,21 +209,22 @@ public class PlayerAttack : MonoBehaviour
                 _projectileBehaviour = Bullet.GetComponent<PlayerBulletBehaviour>();
                 _projectileBehaviour.ResetStats();
                 _projectileBehaviour._playerAttack = this;
-                _projectileBehaviour._speed += _speed;
-                _projectileBehaviour._drag -= _drag;
+                _projectileBehaviour._speed += PlayerRuntimeData.GetInstance().data.AttackData.AttackSpeed;
+                _projectileBehaviour._drag -= PlayerRuntimeData.GetInstance().data.AttackData.AttackDrag;
                 _Play_Weapon_Shot.Post(Bullet);
                 #endregion
 
-                if (_effects.Count > 0)
+                if (PlayerRuntimeData.GetInstance().data.AttackData.AttackEffects.Count > 0)
                 {
                     _projectileBehaviour._damage = 0;
                 }
 
-                _projectileBehaviour._damage += _damage;
+                _projectileBehaviour._damage += PlayerRuntimeData.GetInstance().data.AttackData.AttackDamage;
                 Vector3 direction = Quaternion.Euler(0, totalAngle, 0) * _playerController.PlayerAimDirection;
 
-                if (_color != null)
-                    SetGradientInParticle(Bullet, _color);
+                var color = PlayerRuntimeData.GetInstance().data.AttackData.AttackColor;
+                if(color != null)
+                    SetGradientInParticle(Bullet, color.Value);
 
                 if (direction == Vector3.zero)
                     direction = transform.forward;
@@ -263,10 +244,10 @@ public class PlayerAttack : MonoBehaviour
 
     public void ApplyEffectOnShoot(GameObject Bullet, ref float Angle)
     {
-        if (_effects.Count == 0)
+        if (PlayerRuntimeData.GetInstance().data.AttackData.AttackEffects.Count == 0)
             return;
 
-        foreach (IIngredientEffects effect in _effects)
+        foreach (IIngredientEffects effect in PlayerRuntimeData.GetInstance().data.AttackData.AttackEffects)
         {
             effect.EffectOnShoot(transform.position, Bullet);
 
@@ -289,7 +270,7 @@ public class PlayerAttack : MonoBehaviour
             boomerangBehaviour._MaxSideDistance = TempEffect._MaxSideDistance;
             boomerangBehaviour._playerAttack = this;
             boomerangBehaviour._boomerangSpeed = TempEffect._Speed;
-            boomerangBehaviour._damage += _damage;
+            boomerangBehaviour._damage += PlayerRuntimeData.GetInstance().data.AttackData.AttackDamage;
             boomerangBehaviour._direction = Quaternion.Euler(0, Angle, 0) * _playerController.PlayerAimDirection;
             #endregion
 
@@ -329,16 +310,16 @@ public class PlayerAttack : MonoBehaviour
 
     public void ResetParameters()
     {
-        _color = defaultcolor;
-        _effects.Clear();
-        _size = 0;
-        _speed = 0;
-        _drag = 0;
-        _ProjectileNbr = 1;
-        _TimeBtwShotsRafale = 0;
-        _damage = 0;
-        _ammunition = 0;
-        _shootCooldown = _defaultShootCooldown;
+        PlayerRuntimeData.GetInstance().data.AttackData.AttackColor = PlayerRuntimeData.GetInstance().data.AttackData.DefaultColor;
+        PlayerRuntimeData.GetInstance().data.AttackData.AttackEffects.Clear();
+        PlayerRuntimeData.GetInstance().data.AttackData.AttackSize = 0;
+        PlayerRuntimeData.GetInstance().data.AttackData.AttackSpeed = 0;
+        PlayerRuntimeData.GetInstance().data.AttackData.AttackDrag = 0;
+        PlayerRuntimeData.GetInstance().data.AttackData.ProjectileNumber = 1;
+        PlayerRuntimeData.GetInstance().data.AttackData.TimeBtwShotRafale = 0;
+        PlayerRuntimeData.GetInstance().data.AttackData.AttackDamage = 0;
+        PlayerRuntimeData.GetInstance().data.AttackData.Ammunition = 0;
+        PlayerRuntimeData.GetInstance().data.AttackData.AttackCooldown = PlayerRuntimeData.GetInstance().data.AttackData.AttackDefaultCooldown;
         _asEmptiedAmmo = true;
     }
 
@@ -351,12 +332,12 @@ public class PlayerAttack : MonoBehaviour
     }
     public void Reset()
     {
-        _ProjectileNbr = 1;
-        _size = 1;
-        _speed = 1;
-        _drag = 0;
-        _shootCooldown = 0.1f;
-        _damage = 1;
+        PlayerRuntimeData.GetInstance().data.AttackData.ProjectileNumber = 1;
+        PlayerRuntimeData.GetInstance().data.AttackData.AttackSize = 1;
+        PlayerRuntimeData.GetInstance().data.AttackData.AttackSpeed = 1;
+        PlayerRuntimeData.GetInstance().data.AttackData.AttackDrag = 0;
+        PlayerRuntimeData.GetInstance().data.AttackData.AttackCooldown = 0.1f;
+        PlayerRuntimeData.GetInstance().data.AttackData.AttackDamage = 1;
         //m_knockbackScript = GameObject.Find("CharacterModel").GetComponent<PlayerKnockback>();
     }
 

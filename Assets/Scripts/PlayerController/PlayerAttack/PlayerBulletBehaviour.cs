@@ -177,12 +177,12 @@ public class PlayerBulletBehaviour : MonoBehaviour
             destroyOnHit = true;
 
             //VFX
-            foreach (IIngredientEffects effect in _playerAttack._effects)
+            foreach (IIngredientEffects effect in PlayerRuntimeData.GetInstance().data.AttackData.AttackEffects)
             {
                 if (effect is Ricochet ricochet)
                 {
-                    GameObject RicochetPart = GameObject.Instantiate(ricochet.RicochetParticles, Position, Quaternion.identity);
-                    GameObject.Destroy(RicochetPart, 0.5f);
+                    GameObject RicochetPart = Instantiate(ricochet.RicochetParticles, Position, Quaternion.identity);
+                    Destroy(RicochetPart, 0.5f);
                     Debug.Log("ricochet");
                 }
             }
