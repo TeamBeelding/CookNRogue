@@ -80,6 +80,8 @@ public class PlayerBulletBehaviour : MonoBehaviour
             _hitObject = other.gameObject;
             ApplyCorrectOnHitEffects();
 
+            SetUpDecal(other.transform.position);
+
             _damage = (int)_damage;
              other.GetComponentInParent<EnemyController>().TakeDamage(_damage, _isCritical);
 
@@ -108,6 +110,7 @@ public class PlayerBulletBehaviour : MonoBehaviour
         {
             _HasHit = false;
             ApplyCorrectOnHitEffects();
+
             if (bouncingNbr > 0)
             {
                 bouncingNbr--;
@@ -121,7 +124,6 @@ public class PlayerBulletBehaviour : MonoBehaviour
             }
             else
             {
-                
                 Destroy(gameObject);
             }
         }
@@ -181,8 +183,9 @@ public class PlayerBulletBehaviour : MonoBehaviour
             {
                 if (effect is Ricochet ricochet)
                 {
-                    GameObject RicochetPart = Instantiate(ricochet.RicochetParticles, Position, Quaternion.identity);
-                    Destroy(RicochetPart, 0.5f);
+                    GameObject ricochetPart = Instantiate(ricochet.RicochetParticles, Position, Quaternion.identity);
+
+                    Destroy(ricochetPart, 0.5f);
                     Debug.Log("ricochet");
                 }
             }
@@ -198,6 +201,8 @@ public class PlayerBulletBehaviour : MonoBehaviour
 
     void ApplyCorrectOnHitEffects()
     {
+        SetUpDecal(transform.position);
+
         if (_HasHit)
         {
             _playerAttack.ApplyOnHitEffects(transform.position, _hitObject, _direction);
@@ -206,6 +211,18 @@ public class PlayerBulletBehaviour : MonoBehaviour
         {
             _playerAttack.ApplyOnHitEffects(transform.position);
         }
+    }
+
+    private void SetUpDecal(Vector3 pos)
+    {
+        if (!DecalManager.instance)
+            return;
+
+        Debug.Log("splash");
+        BulletDecal decal = DecalManager.instance.GetAvailableDecal();
+        decal.Init(Color.red);
+        decal.transform.position = pos;
+        decal.transform.rotation = Quaternion.Euler(90, 0, 0);
     }
 
     private void Reset()
