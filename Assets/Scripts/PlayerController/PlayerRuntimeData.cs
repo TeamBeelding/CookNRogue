@@ -76,6 +76,7 @@ public class PlayerRuntimeData
         public float TimeBtwShotRafale = 0;
     }
 
+    [Serializable]
     public class PlayerCookData
     {
         public float ShowAnimDuration = .5f;
