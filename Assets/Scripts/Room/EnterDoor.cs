@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Eflatun.SceneReference;
 using Enemy;
 using Sirenix.OdinInspector.Editor.Validation;
 using UnityEngine;
@@ -60,9 +61,9 @@ public class EnterDoor : MonoBehaviour
 
     private void Start()
     {
-        if (_sceneToLoad == null)
+        if (_sceneToLoad.State == SceneReferenceState.Unsafe)
         {
-            Debug.LogError("Door has no level linked");
+            Debug.LogError("Door has no valid level linked");
         }
 
         if (m_door != null)
@@ -94,9 +95,9 @@ public class EnterDoor : MonoBehaviour
     {
         if (other.CompareTag("Player") && !m_door.GetComponent<Collider>().enabled)
         {
-            if (_sceneToLoad == null)
+            if (_sceneToLoad.State == SceneReferenceState.Unsafe)
             {
-                Debug.LogError("Door has no level linked");
+                Debug.LogError("Door has no valid level linked");
                 return;
             }
             SceneManager.LoadScene(_sceneToLoad.BuildIndex);
