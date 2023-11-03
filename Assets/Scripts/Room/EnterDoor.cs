@@ -1,10 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using Enemy;
+using Sirenix.OdinInspector.Editor.Validation;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using SceneReference = Eflatun.SceneReference.SceneReference;
 
 public class EnterDoor : MonoBehaviour
 {
+
+    [SerializeField]
+    private SceneReference _sceneToLoad;
+
+    [Space]
+
     [SerializeField]
     private GameObject m_door;
     [SerializeField]
@@ -51,6 +60,11 @@ public class EnterDoor : MonoBehaviour
 
     private void Start()
     {
+        if (_sceneToLoad == null)
+        {
+            Debug.LogError("Door has no level linked");
+        }
+
         if (m_door != null)
         {
             _godRays.SetActive(false);
@@ -80,7 +94,12 @@ public class EnterDoor : MonoBehaviour
     {
         if (other.CompareTag("Player") && !m_door.GetComponent<Collider>().enabled)
         {
-            RoomManager.instance.LoadNextLevel();
+            if (_sceneToLoad == null)
+            {
+                Debug.LogError("Door has no level linked");
+                return;
+            }
+            SceneManager.LoadScene(_sceneToLoad.BuildIndex);
         }
     }
     private void StartOpenDoor()
