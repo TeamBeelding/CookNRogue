@@ -532,6 +532,10 @@ public class PlayerController : MonoBehaviour
 
         var inputType = context.control.layout;
 
+        Debug.Log("a");
+        //test
+        GetComponent<PlayerAttack>().SetIsShooting(true);
+
         //Check Input Device
         switch (inputType)
         {
@@ -560,6 +564,9 @@ public class PlayerController : MonoBehaviour
         _aimMagnitude = 0f;
 
         m_aimArrow.SetActive(false);
+
+        //test
+        GetComponent<PlayerAttack>().SetIsShooting(false);
     }
 
     #endregion
@@ -726,6 +733,7 @@ public class PlayerController : MonoBehaviour
 
     void Shoot_Performed(InputAction.CallbackContext context)
     {
+        return;
         //Block player actions
         if (_isLocked || IsDashing)
         {
@@ -740,6 +748,7 @@ public class PlayerController : MonoBehaviour
 
     void Shoot_Canceled(InputAction.CallbackContext context)
     {
+        return;
         if (context.canceled)
         {
             GetComponent<PlayerAttack>().SetIsShooting(false);
