@@ -564,7 +564,7 @@ public class PlayerController : MonoBehaviour
     #region Cooking
     void Cook_Performed(InputAction.CallbackContext context)
     {
-        if (_ignoreCook)
+        if (_ignoreCook || _isLocked)
         {
             return;
         }
