@@ -16,13 +16,20 @@ MonoBehaviour:
   - rid: 4485747390005641222
   _plat: 0
   inventorySprite: {fileID: 21300000, guid: be311f505104cf646a04c5efafff1c57, type: 3}
+  description: 
   _size: 1.5
   _speed: 2
   _drag: 0
   _ammunition: 25
   _attackDelay: 0.2
   _damage: 80
-  color: {r: 0, g: 0, b: 0, a: 0}
+  audioState:
+    idInternal: 0
+    valueGuidInternal: 
+    groupIdInternal: 0
+    groupGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
+  color: {r: 2, g: 0.40784314, b: 0.08627451, a: 1}
   references:
     version: 2
     RefIds:
@@ -32,27 +39,17 @@ MonoBehaviour:
         _speed: 0
         _minSize: 0.5
         _maxSize: 4
-        _size:
+        _sizeOtherDistance:
           serializedVersion: 2
-          m_Curve:
-          - serializedVersion: 3
-            time: 0
-            value: 0.5
-            inSlope: 2
-            outSlope: 2
-            tangentMode: 0
-            weightedMode: 0
-            inWeight: 0
-            outWeight: 0
-          - serializedVersion: 3
-            time: 1
-            value: 4
-            inSlope: 0
-            outSlope: 0
-            tangentMode: 0
-            weightedMode: 0
-            inWeight: 0
-            outWeight: 0
+          m_Curve: []
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+        _minDamageFactor: 0
+        _maxDamageFactor: 0
+        _damageOtherDistance:
+          serializedVersion: 2
+          m_Curve: []
           m_PreInfinity: 2
           m_PostInfinity: 2
           m_RotationOrder: 4
