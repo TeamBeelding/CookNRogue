@@ -5,8 +5,6 @@ using static UnityEngine.UI.Image;
 
 public class Cauldron_Explosion : MonoBehaviour
 {
-    [SerializeField] [Range(0.1f,4f)] float _triggerRadius;
-    [SerializeField] SphereCollider _sphereCollider;
     [SerializeField] float _explosionTimer;
     [SerializeField] float _explosionRadius;
 
@@ -14,37 +12,53 @@ public class Cauldron_Explosion : MonoBehaviour
     [Header("DAMAGE")]
     [SerializeField] int _maxDamage;
     [SerializeField] AnimationCurve _damageCurve;
-
     float _damage_radius_increment;
+
+    [Space(20)]
+    [Header("VFX")]
+    [SerializeField] Transform _vfxContainer;
+    [SerializeField] ParticleSystem[] _particles;
+
+    bool _canExplode = true;
 
     private void Start()
     {
-        _sphereCollider.radius = _triggerRadius;
-        _damage_radius_increment = _triggerRadius / 3;
+        _damage_radius_increment = _explosionRadius / 3;
+        _particles = _vfxContainer.GetComponentsInChildren<ParticleSystem>();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter(Collider collision)
     {
-        if (collision.GetComponent<PlayerBulletBehaviour>())
+        if (collision.transform.parent.GetComponent<PlayerBulletBehaviour>())
         {
-            StartCoroutine(Eplosion(_explosionTimer));
+            if (!_canExplode)
+                return;
+
+            StartCoroutine(Explosion(_explosionTimer));
         }
     }
 
-    IEnumerator Eplosion(float timer)
+    IEnumerator Explosion(float timer)
     {
+        _canExplode = false;
         yield return new WaitForSecondsRealtime(timer);
+
+        TriggerParticles();
+
         RaycastHit[] hits = Physics.SphereCastAll(transform.position, _explosionRadius, Vector3.up);
 
         foreach (RaycastHit hit in hits)
         {
-            if (hit.transform.GetComponent<EnemyController>())
+            if (hit.transform.parent.GetComponent<EnemyController>())
             {
                 int damage = (int)CalculateDamage(hit.transform.position);
                 hit.transform.GetComponent<EnemyController>().TakeDamage(damage);
             }
         }
         Debug.Log("kaboom");
+
+        yield return new WaitForSecondsRealtime(0.5f);
+        Destroy(gameObject);
     }
 
     public float CalculateDamage(Vector3 position)
@@ -54,6 +68,14 @@ public class Cauldron_Explosion : MonoBehaviour
         float damage = _damageCurve.Evaluate(distance / _explosionRadius) * _maxDamage;
 
         return damage;
+    }
+
+    void TriggerParticles()
+    {
+        foreach (var particle in _particles)
+        {
+            particle.Play();
+        }
     }
     
 }
