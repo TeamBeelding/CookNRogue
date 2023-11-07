@@ -25,7 +25,6 @@ public class PlayerBulletBehaviour : MonoBehaviour
     public LayerMask _sphereMask;
     public LayerMask _rayMask;
     public GameObject Explosion;
-    public GameObject DamageUI;
 
     protected virtual void Start()
     {
@@ -85,12 +84,6 @@ public class PlayerBulletBehaviour : MonoBehaviour
             _damage = (int)_damage;
              other.GetComponentInParent<EnemyController>().TakeDamage(_damage, _isCritical);
 
-            GameObject UIDAMAGE = Instantiate(DamageUI, other.transform.position + (Vector3.up * 3) + GetCameraDirection() * 0.5f, Quaternion.identity);
-            UIDAMAGE.GetComponentInChildren<TextMeshProUGUI>().text = _damage.ToString();
-            //UIDAMAGE.GetComponentInChildren<TextMeshProUGUI>().text = "RATIO";
-
-            Destroy(UIDAMAGE, 1);
-
             if (_ricochetNbr > 0)
             {
                 _ricochetNbr--;
@@ -127,11 +120,6 @@ public class PlayerBulletBehaviour : MonoBehaviour
                 Destroy(gameObject);
             }
         }
-    }
-    Vector3 GetCameraDirection()
-    {
-        Vector3 dir = Camera.main.transform.position - transform.position;
-        return dir;
     }
 
     void BulletRicochet(Vector3 Position, GameObject HitObject, Vector3 direction)
