@@ -12,8 +12,8 @@ public class BulletDecal : MonoBehaviour
 
     public void Init(Color color)
     {
-        //var mat = _decalProjector.material;
-        //mat.SetColor("_Color", color);
+        var mat = _decalProjector.material;
+        mat.SetColor("_Color", color);
 
         //_decalProjector.material = mat;
 

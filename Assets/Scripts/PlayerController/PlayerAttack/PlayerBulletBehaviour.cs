@@ -208,7 +208,7 @@ public class PlayerBulletBehaviour : MonoBehaviour
 
         Debug.Log("splash");
         BulletDecal decal = DecalManager.instance.GetAvailableDecal();
-        decal.Init(Color.red);
+        decal.Init((Color)PlayerRuntimeData.GetInstance().data.AttackData.AttackColor);
         decal.transform.position = pos;
         decal.transform.rotation = Quaternion.Euler(90, 0, 0);
     }
