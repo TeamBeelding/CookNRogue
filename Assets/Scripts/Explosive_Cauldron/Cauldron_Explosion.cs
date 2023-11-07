@@ -47,16 +47,17 @@ public class Cauldron_Explosion : MonoBehaviour
 
         RaycastHit[] hits = Physics.SphereCastAll(transform.position, _explosionRadius, Vector3.up);
 
-        foreach (RaycastHit hit in hits)
+        foreach(RaycastHit hit in hits)
         {
+            if (!hit.transform.parent)
+                continue;
+
             if (hit.transform.parent.GetComponent<EnemyController>())
             {
                 int damage = (int)CalculateDamage(hit.transform.position);
                 hit.transform.GetComponent<EnemyController>().TakeDamage(damage);
             }
         }
-        Debug.Log("kaboom");
-
         yield return new WaitForSecondsRealtime(0.5f);
         Destroy(gameObject);
     }
