@@ -1,3 +1,4 @@
+using Sirenix.Utilities;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -108,9 +109,9 @@ public class PlayerBulletBehaviour : MonoBehaviour
             {
                 bouncingNbr--;
                 RaycastHit hit;
-                if (Physics.Raycast(transform.position, _direction, out hit))
+                if (Physics.Raycast(transform.position - _direction, _direction, out hit,3))
                 {
-                    _direction = Vector3.Reflect(_direction.normalized, hit.normal);
+                    _direction = Vector3.Reflect(_direction, hit.normal);
                 }
                 
                 bouncingNbr--;
