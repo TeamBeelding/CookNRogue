@@ -15,12 +15,7 @@ namespace Enemy.LongDistanceEnemy
         
         private int _numberShootBeforeMoving;
         
-        private Coroutine _chaseCoroutine;
-        private Coroutine _attackCoroutine;
-        private Coroutine _movingAnotherPositionCoroutine;
-        private Coroutine _takingDistanceCoroutine;
-
-        //private bool _needTakeDistance = false;
+        private Coroutine _stateCoroutine;
 
         public enum State
         {
@@ -52,30 +47,13 @@ namespace Enemy.LongDistanceEnemy
             _agent.stoppingDistance = _data.AttackRange;
         }
 
-        // protected override void Update()
-        // {
-        //     base.Update();
-        //
-        //     if (Input.GetKeyDown(KeyCode.A))
-        //         TakingDistance();
-        // }
-
-        private void FixedUpdate()
-        {
-            // AreaDetection();
-        }
-
-        private State GetState()
-        {
-            return _state;
-        }
+        private State GetState() => _state;
     
         private void SetState(State value)
         {
+            _stateCoroutine = null;
             _state = value;
 
-            Debug.Log("State: " + _state);
-        
             StateManagement();
         }
 
@@ -107,26 +85,19 @@ namespace Enemy.LongDistanceEnemy
         private void AreaDetection()
         {
             if (Vector3.Distance(transform.position, Player.transform.position) > _data.AttackRange)
-            {
                 SetState(State.Chasing);
-            }
             else
             {
                 if (Vector3.Distance(transform.position, Player.transform.position) < _data.MinimumDistanceToKeep)
-                {
                     SetState(State.TakingDistance);
-                }
                 else if (Vector3.Distance(transform.position, Player.transform.position) <= _data.AttackRange)
-                {
                     SetState(State.Attacking);
-                }
             }
         }
 
         private void Chasing()
         {
-            _chaseCoroutine = StartCoroutine(IChasing());
-            _movingAnotherPositionCoroutine = null;
+            _stateCoroutine = StartCoroutine(IChasing());
             
             IEnumerator IChasing()
             {
@@ -135,8 +106,6 @@ namespace Enemy.LongDistanceEnemy
                     _agent.SetDestination(Player.transform.position);
                     yield return null;
                 }
-                
-                _chaseCoroutine = null;
             }
         }
         
@@ -163,13 +132,9 @@ namespace Enemy.LongDistanceEnemy
             Vector3 newPosition = GetRandomPoint();
             
             if (CanMoveThere(newPosition))
-            {
-                _movingAnotherPositionCoroutine = StartCoroutine(IMovingAnotherPosition());
-            }
+                _stateCoroutine = StartCoroutine(IMovingAnotherPosition());
             else
-            {
                 MovingAnotherPosition();
-            }
 
             IEnumerator IMovingAnotherPosition()
             {
@@ -178,8 +143,6 @@ namespace Enemy.LongDistanceEnemy
                     _agent.SetDestination(newPosition);
                     yield return null;
                 }
-                
-                _movingAnotherPositionCoroutine = null;
             }
             
             Vector3 GetRandomPoint()
@@ -210,7 +173,7 @@ namespace Enemy.LongDistanceEnemy
             Vector3 randomPoint = Player.transform.position + Random.insideUnitSphere;
             Vector3 position = randomPoint * _data.AttackRange;
 
-            _takingDistanceCoroutine = StartCoroutine(ITakeDistance());
+            _stateCoroutine = StartCoroutine(ITakeDistance());
             
             IEnumerator ITakeDistance()
             {
@@ -220,15 +183,10 @@ namespace Enemy.LongDistanceEnemy
                     _agent.SetDestination(position);
                     yield return null;
                 }
-
-                _takingDistanceCoroutine = null;
             }
         }
 
-        public override bool IsMoving()
-        {
-            return false;
-        }
+        public override bool IsMoving() => false;
         
         public override void TakeDamage(float damage = 1, bool isCritical = false)
         {

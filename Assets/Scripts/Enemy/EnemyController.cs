@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using Enemy;
 using Tutoriel;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -17,7 +16,6 @@ public abstract class EnemyController : MonoBehaviour
     private CapsuleCollider _collider;
     
     private IEnumerator _colorCoroutine;
-    private IEnumerator _attackCoroutine;
     
     protected bool FocusPlayer = false;
     private bool _canAttack = true;
@@ -109,18 +107,6 @@ public abstract class EnemyController : MonoBehaviour
             isDead = true;
             Dying();
         }
-
-        // Color the enemy red for a short time to indicate that he has been hit
-        //IEnumerator IColorationFeedback()
-        //{
-        //    for (int i = 0; i < 5; i++)
-        //    {
-        //        _meshRenderer.enabled = false;
-        //        yield return new WaitForSeconds(0.2f);
-        //        _meshRenderer.enabled = true;
-        //        yield return new WaitForSeconds(0.2f);
-        //    }
-        //}
     }
     
     protected virtual void TakeDamageEffect()

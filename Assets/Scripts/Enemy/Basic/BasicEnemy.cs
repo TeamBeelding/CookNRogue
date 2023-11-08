@@ -1,10 +1,7 @@
-using System;
 using System.Collections;
 using Enemy.Data;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Animations;
-using UnityEngine.Serialization;
 
 namespace Enemy.Basic
 {
@@ -66,10 +63,8 @@ namespace Enemy.Basic
             base.Start();
         }
 
-        protected override void Update()
+        private void FixedUpdate()
         {
-            base.Update();
-
             if (state == State.Dying)
                 return;
 
@@ -84,10 +79,7 @@ namespace Enemy.Basic
             agent.stoppingDistance = data.GetAttackRange;
         }
 
-        private State GetState()
-        {
-            return state;
-        }
+        private State GetState() => state;
 
         private void SetState(State value)
         {
@@ -219,12 +211,12 @@ namespace Enemy.Basic
 
             if (Healthpoint <= 0)
             {
-
                 _Play_SFX_Corn_Death.Post(gameObject);
                 SetState(State.Dying);
             }
         }
 
+#if UNITY_EDITOR
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.red;
@@ -232,5 +224,6 @@ namespace Enemy.Basic
             Gizmos.color = Color.blue;
             Gizmos.DrawWireSphere(transform.position, data.GetAttackRange);
         }
+#endif
     }
 }

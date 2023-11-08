@@ -43,9 +43,7 @@ public class TBH : EnemyController
     private void FixedUpdate()
     {
         if (_state != State.Dying) 
-        {
             AreaDetection();
-        }
     }
 
     private void AreaDetection()
@@ -54,9 +52,7 @@ public class TBH : EnemyController
             return;
         
         if (Vector3.Distance(transform.position, Player.transform.position) <= _data.AttackRange)
-        {
             SetState(State.Attacking);
-        }
     }
 
     private void StateManagement()
@@ -104,17 +100,17 @@ public class TBH : EnemyController
 
         for (int i = 0; i < _data.NumberOfBullet; i++)
         {
-            StartCoroutine(IShotRandomly(i));
+            StartCoroutine(IShotRandomly(/*i*/));
         }
 
         SetState(State.Casting);
 
-        IEnumerator IShotRandomly(int i)
+        IEnumerator IShotRandomly(/*int i*/)
         {
             var spread = Random.Range(-2f, 2f);
             
-            Quaternion rotation = quaternion.Euler(angleStep * i, 0, angleStep * i);
-            Vector3 direction = rotation * transform.forward;
+            //Quaternion rotation = quaternion.Euler(angleStep * i, 0, angleStep * i);
+            //Vector3 direction = rotation * transform.forward;
             
             float randomDelay = Random.Range(0.1f, 0.5f);
             yield return new WaitForSeconds(randomDelay);
@@ -176,10 +172,7 @@ public class TBH : EnemyController
         StateManagement();
     }
 
-    public State GetState()
-    {
-        return _state;
-    }
+    public State GetState() => _state;
 
     public override bool IsMoving()
     {
