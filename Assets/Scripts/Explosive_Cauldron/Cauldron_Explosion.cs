@@ -100,5 +100,11 @@ public class Cauldron_Explosion : MonoBehaviour
             particle.Play();
         }
     }
-    
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, _explosionRadius);
+    }
+
 }
