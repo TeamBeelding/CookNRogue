@@ -10,9 +10,9 @@ public class Cauldron_Explosion : MonoBehaviour
 
     [Space(20)]
     [Header("DAMAGE")]
-    [SerializeField] int _maxDamage;
-    [SerializeField] AnimationCurve _damageCurve;
-    float _damage_radius_increment;
+    [SerializeField] int _maxEnnemyDamage;
+    [SerializeField] int _maxPlayerDamage;
+    [SerializeField] AnimationCurve _damageByDistanceCurve;
 
     [Space(20)]
     [Header("VFX")]
@@ -32,7 +32,6 @@ public class Cauldron_Explosion : MonoBehaviour
 
     private void Start()
     {
-        _damage_radius_increment = _explosionRadius / 3;
         _particles = _vfxContainer.GetComponentsInChildren<ParticleSystem>();
     }
 
@@ -71,24 +70,40 @@ public class Cauldron_Explosion : MonoBehaviour
 
         foreach(RaycastHit hit in hits)
         {
+            if (hit.transform.GetComponent<PlayerHealth>())
+            {
+                int damage = (int)CalculatePlayerDamage(hit.transform.position);
+                hit.transform.GetComponent<PlayerHealth>().TakeDamage(damage);
+                continue;
+            }
+
             if (!hit.transform.parent)
                 continue;
 
             if (hit.transform.parent.GetComponent<EnemyController>())
             {
-                int damage = (int)CalculateDamage(hit.transform.position);
+                int damage = (int)CalculateEnemyDamage(hit.transform.position);
                 hit.transform.GetComponent<EnemyController>().TakeDamage(damage);
+                continue;
             }
         }
         yield return new WaitForSecondsRealtime(0.5f);
         Destroy(gameObject);
     }
 
-    public float CalculateDamage(Vector3 position)
+    public float CalculateEnemyDamage(Vector3 position)
     {
         float distance = Vector3.Distance(transform.position, position);
 
-        float damage = _damageCurve.Evaluate(distance / _explosionRadius) * _maxDamage;
+        float damage = _damageByDistanceCurve.Evaluate(distance / _explosionRadius) * _maxPlayerDamage;
+
+        return damage;
+    }
+    public float CalculatePlayerDamage(Vector3 position)
+    {
+        float distance = Vector3.Distance(transform.position, position);
+
+        float damage = _damageByDistanceCurve.Evaluate(distance / _explosionRadius) * _maxPlayerDamage;
 
         return damage;
     }
