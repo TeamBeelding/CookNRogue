@@ -58,4 +58,32 @@ sysinfo.txt
 *.unitypackage
 
 # Crashlytics generated file
+<<<<<<< Updated upstream
 crashlytics-build.properties
+=======
+crashlytics-build.properties
+
+# Odin
+# Ignore the auto-generated AOT compatibility dll.
+/Assets/Plugins/Sirenix/Assemblies/AOT/*
+
+# Ignore all unpacked demos.
+/Assets/Plugins/Sirenix/Demos/*
+
+# But keep the demo packages themselves.
+!/Assets/Plugins/Sirenix/Demos/*.unitypackage 
+
+
+
+# Wwise
+.cache/
+.validationcache
+.wsettings
+IncrementalSoundBankData.xml
+
+Assets/PluginMaster/DesignTools/Editor/PrefabWorldBuilder/Resources/PWBData.*
+Assets/Wwise/Editor/ProjectData/AkWwiseProjectData.*
+
+**/[Aa]ssets/Resources/Eflatun/SceneReference/*.generated.json
+**/[Aa]ssets/Resources/Eflatun/SceneReference/*.generated.json.meta
+>>>>>>> Stashed changes
