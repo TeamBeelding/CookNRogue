@@ -95,6 +95,7 @@ public class PlayerController : MonoBehaviour
     bool _isLocked = false;
     private bool m_isGamePaused = false;
     public bool _ignoreCook = false;
+    float _selectIngredientHoldTimer = 0f;
 
     bool _isInvicible = false;
 
@@ -203,13 +204,15 @@ public class PlayerController : MonoBehaviour
         _playerActions.Default.EnterDebug.started += EnterDebug;
 
         //Set Cooking Events
-        _playerActions.Cooking.Cook.canceled += Cook_Canceled;
-        _playerActions.Cooking.SelectIngredient.performed += SelectIngredient;
-        _playerActions.Cooking.StartCrafting.performed += StartCraftingBullet;
+        _playerActions.Cooking.Cook.started += Cook_Canceled;
+        _playerActions.Cooking.SelectIngredient.performed += SelectIngredient_Performed;
+        _playerActions.Cooking.SelectIngredient.canceled += SelectIngredient_Canceled;
+        //_playerActions.Cooking.StartCrafting.performed += StartCraftingBullet;
         _playerActions.Cooking.IngredientSelector.performed += OnIngredientSelectorInput;
         _playerActions.Cooking.IngredientSelector.canceled += OnIngredientSelectorInputStop;
         _playerActions.Cooking.ChangeWheel.performed += OnChangeUIWheel;
-
+        _playerActions.Cooking.Move.performed += Move_Performed;
+        _playerActions.Cooking.Move.canceled += Move_Canceled;
 
         //Set UI Events
         _playerActions.UI.Pause.performed += OnPauseGame;
@@ -625,13 +628,44 @@ public class PlayerController : MonoBehaviour
         _curState = playerStates.Default;
     }
 
-    void SelectIngredient(InputAction.CallbackContext context)
+    void SelectIngredient_Performed(InputAction.CallbackContext context)
     {
         //Active Inventory Check
         if (!_inventoryScript.IsDisplayed())
             return;
 
-        _inventoryScript.SelectIngredient();
+        _selectIngredientHoldTimer += Time.deltaTime;
+    }
+
+    void SelectIngredient_Canceled(InputAction.CallbackContext context)
+    {
+        //Active Inventory Check
+        if (!_inventoryScript.IsDisplayed())
+        {
+            _selectIngredientHoldTimer = 0f;
+            return;
+        }
+
+
+        if (_selectIngredientHoldTimer <= 0.2f)
+        {
+            //Active Inventory Check
+            if (_inventoryScript.IsDisplayed())
+            {
+                _inventoryScript.SelectIngredient();
+            }
+            else
+            {
+                //QTE
+                _cookingScript.CheckQTE();
+            }
+        }
+        else
+        {
+            _cookingScript.StartCrafting();
+        }
+
+        _selectIngredientHoldTimer = 0f;
     }
 
     void OnIngredientSelectorInput(InputAction.CallbackContext context)

@@ -159,7 +159,7 @@ public class PlayerCooking : MonoBehaviour
             m_cookingProgressVisuals.SetActive(true);
 
             //Stop Slow Motion
-            Time.timeScale = 1f;
+            //Time.timeScale = 1f;
         }
     }
 
