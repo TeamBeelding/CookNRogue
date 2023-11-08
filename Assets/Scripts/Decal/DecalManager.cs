@@ -6,7 +6,7 @@ public class DecalManager : MonoBehaviour
 {
 
     public static DecalManager instance;
-    [SerializeField] List<BulletDecal> DecalList;
+    List<BulletDecal> DecalList = new List<BulletDecal>();
     [SerializeField] GameObject DecalPrefab;
 
     [SerializeField] int _initialListSize;
@@ -49,6 +49,7 @@ public class DecalManager : MonoBehaviour
 
         GameObject temp = Instantiate(DecalPrefab, transform.position, Quaternion.identity,transform);
         BulletDecal bulletDecal = temp.GetComponent<BulletDecal>();
+
         DecalList.Add(bulletDecal);
         return bulletDecal;
     }

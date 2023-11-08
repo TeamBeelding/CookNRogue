@@ -17,9 +17,18 @@ public class Cauldron_Explosion : MonoBehaviour
     [Space(20)]
     [Header("VFX")]
     [SerializeField] Transform _vfxContainer;
-    [SerializeField] ParticleSystem[] _particles;
+    ParticleSystem[] _particles;
+    [SerializeField] ParticleSystem _fireParticles;
 
     bool _canExplode = true;
+
+    [ColorUsage(true,true)]
+    Color _explosionColor;
+
+    [SerializeField, ColorUsage(true, true)]
+    Color _cauldronDefaultColor;
+
+    [SerializeField] bool _useCauldronColor;
 
     private void Start()
     {
@@ -34,8 +43,21 @@ public class Cauldron_Explosion : MonoBehaviour
             if (!_canExplode)
                 return;
 
+            _explosionColor = GetDesiredColor();
+            _explosionColor.a = 1;
+
+            var renderer = _fireParticles.GetComponent<ParticleSystemRenderer>();
+            renderer.material.color = _explosionColor;
+
             StartCoroutine(Explosion(_explosionTimer));
         }
+    }
+
+    Color GetDesiredColor()
+    {
+        if(_useCauldronColor)
+            return _cauldronDefaultColor;
+        else return (Color)PlayerRuntimeData.GetInstance().data.AttackData.AttackColor;
     }
 
     IEnumerator Explosion(float timer)
