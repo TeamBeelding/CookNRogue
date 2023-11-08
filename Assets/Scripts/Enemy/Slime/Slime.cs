@@ -166,7 +166,6 @@ namespace Enemy.Slime
             }
         }
 
-        // Todo : Throw a sprite instead a prefabs and instantiate prefabs on position
         // Todo : Pooling Sprite and AI
         private void ThrowMinimoyz()
         {
@@ -178,7 +177,6 @@ namespace Enemy.Slime
                 return;
                      
             GameObject minimoyz = Instantiate(this.minimoyz, gun.transform.position, quaternion.identity);
-            //minimoyz.GetComponent<MinimoyzController>().SetIsThrowing(true);
             minimoyz.GetComponent<ThrowingEffect>().ThrowMinimoyz(point, data.GetThrowingMaxHeight, data.GetThrowingSpeed);
             
             if (_canAttackAnim)
