@@ -8,7 +8,6 @@ public class DecalManager : MonoBehaviour
     public static DecalManager instance;
     List<BulletDecal> DecalList = new List<BulletDecal>();
     [SerializeField] GameObject DecalPrefab;
-
     [SerializeField] int _initialListSize;
     private void Awake()
     {
@@ -16,7 +15,7 @@ public class DecalManager : MonoBehaviour
             Destroy(gameObject);
 
         instance = this;
-        
+        DontDestroyOnLoad(gameObject);
     }
 
     private void Start()

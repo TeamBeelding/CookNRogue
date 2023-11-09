@@ -104,11 +104,25 @@ public class PlayerRuntimeData
         public List<ProjectileData> Recipe = new();
     }
 
+    [Serializable]
+    public class InventoryData
+    {
+        public int Currency = 0;
+        public bool MidasCauldron = false;
+        public bool ButteredShoes = false;
+        public bool MealOfTheDay = false;
+        public bool LargeCauldron = false;
+        public bool BigSpatule = false;
+        public bool WoodenSpoon = false;
+        public bool Caramel = false;
+    }
+
     public class Data
     {
         public PlayerBaseData BaseData = new();
         public PlayerAttackData AttackData = new();
         public PlayerCookData CookData = new();
+        public InventoryData InventoryData = new();
     }
 
     public Data data = new ();
