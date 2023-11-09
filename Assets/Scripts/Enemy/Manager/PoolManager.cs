@@ -1,8 +1,20 @@
 using UnityEngine;
 
+public enum PoolType
+{
+    MinimoyzVisual,
+    Minimoyz,
+    Slime,
+    TBH,
+    LDS,
+    CE,
+    Bullet
+}
+
 public class PoolManager : MonoBehaviour
 {
     [SerializeField] private static PoolManager instance;
+    [SerializeField] private GameObject minimoyzVisualPool;
     [SerializeField] private GameObject minimoyzPool;
     [SerializeField] private GameObject slimePool;
     [SerializeField] private GameObject TBHPool;
@@ -10,8 +22,7 @@ public class PoolManager : MonoBehaviour
     [SerializeField] private GameObject CEPool;
     [SerializeField] private GameObject bulletPool;
 
-    // reference to all queue
-    // fonction to pull some obj
+    // Todo ask : reference avec le pool
 
     private void Awake()
     {
@@ -19,12 +30,13 @@ public class PoolManager : MonoBehaviour
             instance = this;
         else
             Destroy(instance);
+
+        DontDestroyOnLoad(gameObject);
     }
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        
+        InstantiateFromPool(PoolType.Slime, new Vector3(-183f, 0, 1.92f), Quaternion.identity);
     }
 
     public static PoolManager Instance
@@ -32,49 +44,33 @@ public class PoolManager : MonoBehaviour
         get => instance;
     }
 
-    #region Pooler object
-
-    public GameObject InstantiateMinimoyz(Vector3 position, Quaternion quaternion)
+    public GameObject InstantiateFromPool(PoolType pool, Vector3 position, Quaternion quaternion)
     {
-        GameObject obj = null;
-
-        return obj;
+        switch (pool)
+        {
+            case PoolType.MinimoyzVisual:
+                return minimoyzVisualPool.GetComponent<IPooling>().Instantiating(position, quaternion);
+            case PoolType.Minimoyz:
+                return minimoyzPool.GetComponent<IPooling>().Instantiating(position, quaternion);
+            case PoolType.Slime:
+                return slimePool.GetComponent<IPooling>().Instantiating(position, quaternion);
+            case PoolType.TBH:
+                return TBHPool.GetComponent<IPooling>().Instantiating(position, quaternion);
+            case PoolType.LDS:
+                return LDSPool.GetComponent<IPooling>().Instantiating(position, quaternion);
+            case PoolType.CE:
+                return CEPool.GetComponent<IPooling>().Instantiating(position, quaternion);
+            case PoolType.Bullet:
+                return bulletPool.GetComponent<IPooling>().Instantiating(position, quaternion);
+            default:
+                Debug.LogWarning("Pool object not exist");
+                return null;
+        }
     }
 
-    public GameObject InstantiateSlime(Vector3 position, Quaternion quaternion)
+    public void DesinstantiateFromPool(GameObject obj)
     {
-        GameObject obj = null;
-
-        return obj;
+        GameObject parent = obj.transform.parent.gameObject;
+        parent.GetComponent<IPooling>().Desinstantiating(obj);
     }
-
-    public GameObject InstantiateTBH(Vector3 position, Quaternion quaternion)
-    {
-        GameObject obj = null;
-
-        return obj;
-    }
-
-    public GameObject InstantiateLDS(Vector3 position, Quaternion quaternion)
-    {
-        GameObject obj = null;
-
-        return obj;
-    }
-
-    public GameObject InstantiateCE(Vector3 position, Quaternion quaternion)
-    {
-        GameObject obj = null;
-
-        return obj;
-    }
-
-    public GameObject InstantiateBullet(Vector3 position, Quaternion quaternion)
-    {
-        GameObject gameObject = null;
-
-        return gameObject;
-    }
-
-    #endregion
 }

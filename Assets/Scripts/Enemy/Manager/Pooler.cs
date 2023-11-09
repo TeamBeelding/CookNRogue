@@ -3,31 +3,23 @@ using UnityEngine;
 
 public class Pooler : MonoBehaviour, IPooling
 {
-    [SerializeField] private Queue<GameObject> queue;
+    [SerializeField] private int remainingElement;
+    [SerializeField] private GameObject objectToPool;
 
-    private int remainingElement;
+    private Queue<GameObject> queue;
 
     private void Awake()
     {
         queue = new Queue<GameObject>();
 
-        foreach (GameObject obj in transform.GetComponentsInChildren<GameObject>())
+        for (int i = 0; i < 5; i++)
         {
+            GameObject obj = Instantiate(objectToPool);
+            obj.transform.transform.SetParent(transform, false);
             queue.Enqueue(obj);
             obj.SetActive(false);
+            remainingElement++;
         }
-
-        remainingElement = queue.Count;
-    }
-
-    public void DequeueObject()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public void QueueObject()
-    {
-        throw new System.NotImplementedException();
     }
 
     public GameObject Instantiating(Vector3 position, Quaternion quaternion)
@@ -36,10 +28,17 @@ public class Pooler : MonoBehaviour, IPooling
 
         if (remainingElement == 0)
         {
-            // Queue new element
-            obj = Instantiate(obj, position, quaternion);
+            obj = Instantiate(objectToPool, position, quaternion);
             obj.transform.parent = gameObject.transform;
+
+            return obj;
         }
+
+        obj = queue.Dequeue();
+        obj.SetActive(true);
+
+        obj.transform.localPosition = position;
+        obj.transform.localRotation = quaternion;
 
         remainingElement--;
 
@@ -48,6 +47,7 @@ public class Pooler : MonoBehaviour, IPooling
 
     public void Desinstantiating(GameObject obj)
     {
+        queue.Enqueue(obj);
         obj.SetActive(false);
 
         remainingElement++;

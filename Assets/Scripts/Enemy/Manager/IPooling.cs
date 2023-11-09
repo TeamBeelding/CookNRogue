@@ -1,9 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public interface IPooling
 {
-    public void QueueObject();
-    public void DequeueObject();
+    public GameObject Instantiating(Vector3 position, Quaternion quaternion);
+    public void Desinstantiating(GameObject obj);
 }
