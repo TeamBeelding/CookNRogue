@@ -31,8 +31,8 @@ namespace Enemy.Slime
         [SerializeField] private SlimeData data;
         [SerializeField] private NavMeshAgent agent;
         [SerializeField] private GameObject gun;
-        [SerializeField, Required("Prefabs minimoyz")] private GameObject minimoyz;
-        [FormerlySerializedAs("_minimoyzSpawnChecker")] [SerializeField, Required("Minimoyz spawn checker")] private CheckingSpawn spawnChecker;
+        [SerializeField, Required("Prefabs minimoyz visual only")] private GameObject minimoyzVisualOnly;
+        [SerializeField, Required("Minimoyz spawn checker")] private CheckingSpawn spawnChecker;
 
         private Animator animator;
         private Coroutine stateCoroutine;
@@ -138,12 +138,6 @@ namespace Enemy.Slime
             if (state == State.Dying)
                 return;
 
-            if (!Player)
-            {
-                Debug.Log("no player");
-                return;
-            }
-
             if (Vector3.Distance(transform.position, Player.transform.position) > data.GetAttackRange)
                 SetState(State.Chase);
             else
@@ -176,7 +170,7 @@ namespace Enemy.Slime
             if (!spawnChecker.CanThrowHere())
                 return;
                      
-            GameObject minimoyz = Instantiate(this.minimoyz, gun.transform.position, quaternion.identity);
+            GameObject minimoyz = Instantiate(this.minimoyzVisualOnly, gun.transform.position, quaternion.identity);
             minimoyz.GetComponent<ThrowingEffect>().ThrowMinimoyz(point, data.GetThrowingMaxHeight, data.GetThrowingSpeed);
             
             if (_canAttackAnim)
@@ -230,7 +224,8 @@ namespace Enemy.Slime
                 Vector3 point = Random.insideUnitCircle * data.GetRadiusMinimoyzSpawnPoint + origin;
                 point = new Vector3(point.x, 0, point.y);
 
-                Instantiate(minimoyz, point, Quaternion.identity);
+                GameObject obj = Instantiate(minimoyzVisualOnly, point, Quaternion.identity);
+                obj.GetComponent<ThrowingEffect>().ReplaceWithPhysicalAI();
             }
             
             base.Dying();

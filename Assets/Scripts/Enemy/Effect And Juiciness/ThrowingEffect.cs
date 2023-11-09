@@ -21,6 +21,12 @@ namespace Enemy.Effect_And_Juiciness
             _target = GameObject.FindWithTag("Player").transform.position;
         }
 
+        public void ReplaceWithPhysicalAI()
+        {
+            Instantiate(minimoyz, transform.position, Quaternion.identity);
+            Destroy(gameObject);
+        }
+
         public void ThrowMinimoyz(Vector3 target, float maxHeight, float speed)
         {
             _target = target;
@@ -47,8 +53,7 @@ namespace Enemy.Effect_And_Juiciness
                     yield return new WaitForSeconds(Time.deltaTime * _speed);
                 }
 
-                Instantiate(minimoyz, transform.position, Quaternion.identity);
-                Destroy(gameObject);
+                ReplaceWithPhysicalAI();
             }
         }
     }
