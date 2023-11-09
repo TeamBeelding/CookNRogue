@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MealOfTheDay : Item
+public class Tea : Item
 {
-    [SerializeReference] MealOfTheDayData _MOTDdata;
+    [SerializeReference] TeaData _Tdata;
     public override void Interact(string tag)
     {
         base.Interact(tag);
@@ -13,6 +13,6 @@ public class MealOfTheDay : Item
 
     public override void ApplyItem()
     {
-        PlayerHealth.instance.UpgradeMaxHealth(_MOTDdata.playerUpgradeHealth);
+        PlayerHealth.instance.Heal(_Tdata.regen);
     }
 }

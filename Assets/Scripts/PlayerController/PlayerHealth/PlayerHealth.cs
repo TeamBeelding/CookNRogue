@@ -5,10 +5,21 @@ using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
+    public static PlayerHealth instance;
+
     [SerializeField] private AK.Wwise.Event _Play_SFX_Health_Collect;
     [SerializeField] private AK.Wwise.Event _Play_MC_Hit;
     [SerializeField] private AK.Wwise.Event _Play_MC_Death;
+
     HeartBar _heartBar;
+
+    private void Awake()
+    {
+        if(instance != null && instance != this)
+            Destroy(this);
+
+        instance = this;
+    }
     private void Start()
     {
         _heartBar = HeartBar.instance;
@@ -57,12 +68,21 @@ public class PlayerHealth : MonoBehaviour
         return true;
     }
 
+    public void UpgradeMaxHealth(int additionalHealth)
+    {
+        PlayerRuntimeData.GetInstance().data.BaseData.MaxHealth += additionalHealth;
+        Heal(additionalHealth);
+    }
+
     public void Heal(int heal)
     {
         if (heal <= 0)
             return;
-
+        
         PlayerRuntimeData.GetInstance().data.BaseData.CurrentHealth += heal;
+
+        if (PlayerRuntimeData.GetInstance().data.BaseData.CurrentHealth > PlayerRuntimeData.GetInstance().data.BaseData.MaxHealth)
+            PlayerRuntimeData.GetInstance().data.BaseData.CurrentHealth = PlayerRuntimeData.GetInstance().data.BaseData.MaxHealth;
 
         _heartBar.UpdateHealthVisual(PlayerRuntimeData.GetInstance().data.BaseData.CurrentHealth);
     }
