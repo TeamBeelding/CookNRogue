@@ -230,7 +230,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 342ebfe61ec09b94e8b014a405d261ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerAttack: {fileID: 8435914716660352085}
   _ammoText: {fileID: 0}
 --- !u!1 &442074662
 GameObject:
@@ -18622,17 +18621,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50bae93c6790f4d4f8b8fac67c309301, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_currentHealthValue: 10
-  m_maxHealthValue: 10
-  m_invicibilityDuration: 0.4
-  m_rotationSpeed: 40
-  m_moveSpeed: 70
-  m_maxMoveSpeed: 7
-  m_moveDrag: 5
-  m_dashDuration: 0.35
-  m_dashForce: 1.5
-  m_dashCooldown: 1
-  m_interactionRange: 0.5
   m_mainCamera: {fileID: 1177456190}
   m_model: {fileID: 8435914715738197458}
   m_aimArrow: {fileID: 3415898256133404371}
@@ -18678,17 +18666,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _Projectile: {fileID: 1666282856065623693, guid: 4f0c527b1de4f1b408606041297daaf0,
     type: 3}
-  _ProjectileNbr: 1
-  _ammunition: 0
-  _TimeBtwShotsRafale: 0
   _muzzle: {fileID: 8435914715651120542}
-  _size: 0
-  _speed: 0
-  _drag: 0
-  _shootCooldown: 0.2
-  _damage: 0
   _isShooting: 0
-  _effects: []
+  _asEmptiedAmmo: 1
   _Play_Weapon_Shot:
     idInternal: 0
     valueGuidInternal: 
@@ -18700,11 +18680,6 @@ MonoBehaviour:
     WwiseObjectReference: {fileID: 11400000, guid: 6460952090bbe8a4f8b66e4f37966580,
       type: 2}
   _shootingParticles: {fileID: 1025718787}
-  _color: {r: 0, g: 0.41039923, b: 1.4142135, a: 1}
-  defaultcolor: {r: 0, g: 0.41039923, b: 1.0592737, a: 1}
-  references:
-    version: 2
-    RefIds: []
 --- !u!114 &8435914716660352041
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18717,10 +18692,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 984b7b65a3eb9a2459383cfe9814f4d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_1IngredientCookTime: 1
-  m_2IngredientCookTime: 1.5
-  m_3IngredientCookTime: 2
-  m_QTESpawnDelay: {x: 0.4, y: 0.7}
   m_attackScript: {fileID: 8435914716660352085}
   m_QTEScript: {fileID: 8435914716660352040}
   m_cookingProgressVisuals: {fileID: 5548440836250469752}
@@ -18742,7 +18713,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7de7845903942047936d24566386740, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_QTEDuration: {x: 0.3, y: 0.5}
   m_playerCookingScript: {fileID: 8435914716660352041}
   m_QTEVisuals: {fileID: 311240113172565327}
 --- !u!136 &8435914716660352081
@@ -18787,8 +18757,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28bd06e595155b44c8b9346ca673da6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: 0
-  _maxHealth: 12
   _Play_SFX_Health_Collect:
     idInternal: 0
     valueGuidInternal: 
@@ -20994,14 +20962,24 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6278162432355493037}
     m_Modifications:
+    - target: {fileID: 126346150044892365, guid: 21c6504aa05bbae47b8c7e27a587ea54,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1148976801156847414, guid: 21c6504aa05bbae47b8c7e27a587ea54,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -373
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1148976801156847414, guid: 21c6504aa05bbae47b8c7e27a587ea54,
         type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2152456593740174534, guid: 21c6504aa05bbae47b8c7e27a587ea54,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3452839196401527285, guid: 21c6504aa05bbae47b8c7e27a587ea54,
@@ -21141,6 +21119,16 @@ PrefabInstance:
       objectReference: {fileID: 1929120686985583587}
     - target: {fileID: 3452839196401527289, guid: 21c6504aa05bbae47b8c7e27a587ea54,
         type: 3}
+      propertyPath: m_cameraOffset.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3452839196401527289, guid: 21c6504aa05bbae47b8c7e27a587ea54,
+        type: 3}
+      propertyPath: m_cameraOffset.z
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3452839196401527289, guid: 21c6504aa05bbae47b8c7e27a587ea54,
+        type: 3}
       propertyPath: Cooking_Particles
       value: 
       objectReference: {fileID: 1058958483018749866}
@@ -21263,12 +21251,12 @@ PrefabInstance:
     - target: {fileID: 3452839197810871519, guid: 21c6504aa05bbae47b8c7e27a587ea54,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 600
+      value: 373
       objectReference: {fileID: 0}
     - target: {fileID: 3452839197810871519, guid: 21c6504aa05bbae47b8c7e27a587ea54,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: 436
       objectReference: {fileID: 0}
     - target: {fileID: 3452839197889945392, guid: 21c6504aa05bbae47b8c7e27a587ea54,
         type: 3}
@@ -21354,6 +21342,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: -332
       objectReference: {fileID: 0}
+    - target: {fileID: 4258745342607492291, guid: 21c6504aa05bbae47b8c7e27a587ea54,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5943931337619307751, guid: 21c6504aa05bbae47b8c7e27a587ea54,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -21368,6 +21361,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5943931337619307751, guid: 21c6504aa05bbae47b8c7e27a587ea54,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 373
       objectReference: {fileID: 0}
     - target: {fileID: 6410744418359535538, guid: 21c6504aa05bbae47b8c7e27a587ea54,
         type: 3}
@@ -21409,7 +21407,7 @@ PrefabInstance:
     - target: {fileID: 7782951395153182232, guid: 21c6504aa05bbae47b8c7e27a587ea54,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -373
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7782951395153182232, guid: 21c6504aa05bbae47b8c7e27a587ea54,
         type: 3}
@@ -21419,17 +21417,22 @@ PrefabInstance:
     - target: {fileID: 8215355746796952109, guid: 21c6504aa05bbae47b8c7e27a587ea54,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 600
+      value: 434
       objectReference: {fileID: 0}
     - target: {fileID: 8215355746796952109, guid: 21c6504aa05bbae47b8c7e27a587ea54,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -386
+      value: 443
       objectReference: {fileID: 0}
     - target: {fileID: 8556621198095502945, guid: 21c6504aa05bbae47b8c7e27a587ea54,
         type: 3}
       propertyPath: m_Name
       value: Transition
+      objectReference: {fileID: 0}
+    - target: {fileID: 8556621198095502945, guid: 21c6504aa05bbae47b8c7e27a587ea54,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8959086237312290727, guid: 21c6504aa05bbae47b8c7e27a587ea54,
         type: 3}

@@ -95,7 +95,6 @@ public class PlayerController : MonoBehaviour
     bool _isLocked = false;
     private bool m_isGamePaused = false;
     public bool _ignoreCook = false;
-    float _selectIngredientHoldTimer = 0f;
 
     bool _isInvicible = false;
 
@@ -206,8 +205,7 @@ public class PlayerController : MonoBehaviour
         //Set Cooking Events
         _playerActions.Cooking.Cook.started += Cook_Canceled;
         _playerActions.Cooking.SelectIngredient.performed += SelectIngredient_Performed;
-        _playerActions.Cooking.SelectIngredient.canceled += SelectIngredient_Canceled;
-        //_playerActions.Cooking.StartCrafting.performed += StartCraftingBullet;
+        _playerActions.Cooking.StartCrafting.performed += StartCraftingBullet;
         _playerActions.Cooking.IngredientSelector.performed += OnIngredientSelectorInput;
         _playerActions.Cooking.IngredientSelector.canceled += OnIngredientSelectorInputStop;
         _playerActions.Cooking.ChangeWheel.performed += OnChangeUIWheel;
@@ -638,41 +636,15 @@ public class PlayerController : MonoBehaviour
     void SelectIngredient_Performed(InputAction.CallbackContext context)
     {
         //Active Inventory Check
-        if (!_inventoryScript.IsDisplayed())
-            return;
-
-        _selectIngredientHoldTimer += Time.deltaTime;
-    }
-
-    void SelectIngredient_Canceled(InputAction.CallbackContext context)
-    {
-        //Active Inventory Check
-        if (!_inventoryScript.IsDisplayed())
+        if (_inventoryScript.IsDisplayed())
         {
-            _selectIngredientHoldTimer = 0f;
-            return;
-        }
-
-
-        if (_selectIngredientHoldTimer <= 0.2f)
-        {
-            //Active Inventory Check
-            if (_inventoryScript.IsDisplayed())
-            {
-                _inventoryScript.SelectIngredient();
-            }
-            else
-            {
-                //QTE
-                _cookingScript.CheckQTE();
-            }
+            _inventoryScript.SelectIngredient();
         }
         else
         {
-            _cookingScript.StartCrafting();
+            //QTE
+            _cookingScript.CheckQTE();
         }
-
-        _selectIngredientHoldTimer = 0f;
     }
 
     void OnIngredientSelectorInput(InputAction.CallbackContext context)
@@ -708,10 +680,6 @@ public class PlayerController : MonoBehaviour
         if (_inventoryScript.IsDisplayed())
         {
             _cookingScript.StartCrafting();
-        }
-        else
-        {
-            _cookingScript.CheckQTE();
         }
     }
 
@@ -775,7 +743,7 @@ public class PlayerController : MonoBehaviour
             return;
 
         //Feedbacks
-        CameraController.instance.ScreenShake();
+        CameraController.Instance.ScreenShake();
         takeDamageTransition.LoadTransition();
 
         //Cooking cancel

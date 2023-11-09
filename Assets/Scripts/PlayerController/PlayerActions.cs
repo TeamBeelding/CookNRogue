@@ -397,7 +397,7 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""6900fb1a-5b03-409f-9dcf-8f328845652b"",
-                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
                     ""interactions"": """",
                     ""processors"": ""AxisDeadzone"",
                     ""groups"": ""GamePad"",
@@ -419,7 +419,7 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""723b5e95-a559-404b-a382-cac422db7b04"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""GamePad"",
@@ -441,8 +441,8 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""a800c54f-9926-4929-92bd-a02f7ddabb66"",
-                    ""path"": ""<Gamepad>/buttonWest"",
-                    ""interactions"": """",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": ""Hold(duration=0.2)"",
                     ""processors"": """",
                     ""groups"": ""GamePad"",
                     ""action"": ""StartCrafting"",
@@ -474,7 +474,7 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""dfd3be85-538d-4026-b51d-fc014dcc3879"",
-                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""GamePad"",
