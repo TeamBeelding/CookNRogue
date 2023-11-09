@@ -16,6 +16,11 @@ public class PlayerRuntimeData
         return _instance;
     }
 
+    public static Data GetData()
+    {
+        return GetInstance().data;
+    }
+
     private PlayerRuntimeData()
     {
         LoadData();
@@ -104,11 +109,18 @@ public class PlayerRuntimeData
         public List<ProjectileData> Recipe = new();
     }
 
+    public class PlayerRoomData
+    {
+        [NonSerialized]
+        public int NextDoorIndex = 0;
+    }
+
     public class Data
     {
         public PlayerBaseData BaseData = new();
         public PlayerAttackData AttackData = new();
         public PlayerCookData CookData = new();
+        public PlayerRoomData RoomData = new();
     }
 
     public Data data = new ();
