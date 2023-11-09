@@ -432,6 +432,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 389268223}
+  - component: {fileID: 389268224}
   m_Layer: 0
   m_Name: LDSPool
   m_TagString: Untagged
@@ -454,6 +455,18 @@ Transform:
   m_Father: {fileID: 1986533325}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &389268224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 389268222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f88f1f68557dfa74197c3327fdb6b8aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &734561929
 GameObject:
   m_ObjectHideFlags: 0
@@ -509,6 +522,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 778966383}
+  - component: {fileID: 778966384}
   m_Layer: 0
   m_Name: SlimePool
   m_TagString: Untagged
@@ -531,6 +545,18 @@ Transform:
   m_Father: {fileID: 1986533325}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &778966384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 778966382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f88f1f68557dfa74197c3327fdb6b8aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1037132502
 GameObject:
   m_ObjectHideFlags: 0
@@ -721,6 +747,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1115900116}
+  - component: {fileID: 1115900117}
   m_Layer: 0
   m_Name: TBHPool
   m_TagString: Untagged
@@ -743,6 +770,18 @@ Transform:
   m_Father: {fileID: 1986533325}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1115900117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1115900115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f88f1f68557dfa74197c3327fdb6b8aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1331439438 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8435914716660352086, guid: 4f1d931103cb2404580d27bd24717df0,
@@ -764,8 +803,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1365816567}
+  - component: {fileID: 1365816568}
   m_Layer: 0
-  m_Name: Bullet
+  m_Name: BulletPool
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -786,6 +826,18 @@ Transform:
   m_Father: {fileID: 1986533325}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1365816568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1365816566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f88f1f68557dfa74197c3327fdb6b8aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1389649740
 GameObject:
   m_ObjectHideFlags: 0
@@ -871,6 +923,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1457031675}
+  - component: {fileID: 1457031676}
+  - component: {fileID: 1457031677}
   m_Layer: 0
   m_Name: MinimoyzPool
   m_TagString: Untagged
@@ -893,6 +947,30 @@ Transform:
   m_Father: {fileID: 1986533325}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1457031676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1457031674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f88f1f68557dfa74197c3327fdb6b8aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1457031677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1457031674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f88f1f68557dfa74197c3327fdb6b8aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1728509654
 GameObject:
   m_ObjectHideFlags: 0
@@ -1038,6 +1116,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1830388778}
+  - component: {fileID: 1830388779}
   m_Layer: 0
   m_Name: CEPool
   m_TagString: Untagged
@@ -1060,6 +1139,18 @@ Transform:
   m_Father: {fileID: 1986533325}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1830388779
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1830388777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f88f1f68557dfa74197c3327fdb6b8aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1986533324
 GameObject:
   m_ObjectHideFlags: 0
@@ -1110,6 +1201,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e2146765e9249a4e9b3557976af4aff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minimoyzPool: {fileID: 1457031674}
+  slimePool: {fileID: 778966382}
+  TBHPool: {fileID: 1115900115}
+  LDSPool: {fileID: 389268222}
+  CEPool: {fileID: 1830388777}
+  bulletPool: {fileID: 1365816566}
 --- !u!1 &2103703127
 GameObject:
   m_ObjectHideFlags: 0
