@@ -4,19 +4,26 @@ using UnityEngine;
 
 public class Tea : Item,ISubItem
 {
-    [SerializeReference] TeaData _Tdata;
+
     public override void Interact(string tag)
     {
         base.Interact(tag);
-        ApplyItem();
+        TriggerItem();
     }
 
-    public void ApplyItem()
+    public void TriggerItem()
     {
         if (!CanTrigger())
             return;
 
+        _triggerEffect.AddListener(ApplyItem);
         ApplyItemRoutine();
-        PlayerHealth.instance.Heal(_Tdata.regen);
+        
+    }
+
+    public void ApplyItem()
+    {
+        TeaData data = (TeaData)_data;
+        PlayerHealth.instance.Heal(data.regen);
     }
 }

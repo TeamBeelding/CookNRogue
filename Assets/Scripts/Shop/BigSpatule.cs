@@ -7,15 +7,20 @@ public class BigSpatule : Item, ISubItem
     public override void Interact(string tag)
     {
         base.Interact(tag);
-        ApplyItem();
+        TriggerItem();
     }
 
-    public void ApplyItem()
+    public void TriggerItem()
     {
         if (!CanTrigger())
             return;
 
+        _triggerEffect.AddListener(ApplyItem);
         ApplyItemRoutine();
     }
 
+    public void ApplyItem()
+    {
+
+    }
 }

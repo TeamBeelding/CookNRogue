@@ -13,7 +13,7 @@ public class PlayerInteract : MonoBehaviour
         if (Item == null)
             return;
 
-        Item.ApplyItem();
+        Item.TriggerItem();
 
         /*
         if (Item == null || Item == _interactable)

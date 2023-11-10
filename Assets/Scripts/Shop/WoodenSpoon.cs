@@ -7,10 +7,10 @@ public class WoodenSpoon : Item,ISubItem
     public override void Interact(string tag)
     {
         base.Interact(tag);
-        ApplyItem();
+        TriggerItem();
     }
 
-    public void ApplyItem()
+    public void TriggerItem()
     {
         if (!CanTrigger())
             return;
@@ -18,5 +18,10 @@ public class WoodenSpoon : Item,ISubItem
         ApplyItemRoutine();
     }
 
-    
+    public void ApplyItem()
+    {
+
+    }
+
+
 }

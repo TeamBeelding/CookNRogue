@@ -4,6 +4,8 @@ using UnityEngine;
 
 public interface ISubItem
 {
+    public void TriggerItem();
+
     public void ApplyItem();
 
 }

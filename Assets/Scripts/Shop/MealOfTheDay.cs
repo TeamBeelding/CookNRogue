@@ -5,9 +5,8 @@ using UnityEngine;
 
 public class MealOfTheDay : Item, ISubItem
 {
-    [SerializeField] MealOfTheDayData _MOTDdata;
     bool hasTriggered = false;
-    
+
     protected override void Update()
     {
         base.Update();
@@ -15,21 +14,27 @@ public class MealOfTheDay : Item, ISubItem
     public override void Interact(string tag)
     {
         base.Interact(tag);
-        ApplyItem();
+        TriggerItem();
     }
 
-    public void ApplyItem()
+    public void TriggerItem()
     {
         if (!CanTrigger())
             return;
 
+        _triggerEffect.AddListener(ApplyItem);
         ApplyItemRoutine();
-
-        for(int i = 0; i < _MOTDdata.playerUpgradeHealth; i++)
-        {
-            PlayerHealth.instance.UpgradeMaxHealth(_MOTDdata.playerUpgradeHealth);
-        }
         
+    }
+
+    public void ApplyItem()
+    {
+        MealOfTheDayData data = (MealOfTheDayData)_data;
+
+        for (int i = 0; i < data.playerUpgradeHealth; i++)
+        {
+            PlayerHealth.instance.UpgradeMaxHealth(data.playerUpgradeHealth);
+        }
     }
 
 }

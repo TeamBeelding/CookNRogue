@@ -4,18 +4,23 @@ using UnityEngine;
 
 public class ButteredShoes : Item,ISubItem
 {
-    [SerializeReference] ButteredShoesData _BSdata;
     public override void Interact(string tag)
     {
         base.Interact(tag);
-        ApplyItem();
+        TriggerItem();
     }
 
-    public void ApplyItem()
+    public void TriggerItem()
     {
         if (!CanTrigger())
             return;
 
+        _triggerEffect.AddListener(ApplyItem);
         ApplyItemRoutine();
+    }
+
+    public void ApplyItem()
+    {
+        ButteredShoesData data = (ButteredShoesData)_data;
     }
 }

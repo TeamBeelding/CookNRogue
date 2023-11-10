@@ -4,18 +4,23 @@ using UnityEngine;
 
 public class MidasCauldron : Item, ISubItem
 {
-    [SerializeReference] MidasCauldronData _MCdata;
     public override void Interact(string tag)
     {
         base.Interact(tag);
-        ApplyItem();
+        TriggerItem();
+    }
+
+    public void TriggerItem()
+    {
+        if (!CanTrigger())
+            return;
+        
+        _triggerEffect.AddListener(ApplyItem);
+        ApplyItemRoutine();
     }
 
     public void ApplyItem()
     {
-        if (!CanTrigger())
-            return;
-
-        ApplyItemRoutine();
+        MidasCauldronData data = (MidasCauldronData)_data;
     }
 }

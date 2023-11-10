@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Item : MonoBehaviour
 {
-    [SerializeReference] ItemData _data;
+    [SerializeReference] protected ItemData _data;
     private int _cost;
     private string _name;
     private string _description;
@@ -12,7 +13,9 @@ public class Item : MonoBehaviour
     protected bool _hasTriggered = false;
     [SerializeField] private ParticleSystem _highlightPS;
     [SerializeField] private ParticleSystem _obtainPS;
-    void Awake()
+    protected UnityEvent _triggerEffect = new UnityEvent();
+
+    protected void Awake()
     {
         _cost = _data.cost;
         _name = _data.name;
@@ -58,7 +61,7 @@ public class Item : MonoBehaviour
 
     protected void ApplyItemRoutine(){ StartCoroutine(ToPlayer()); }
 
-    public IEnumerator ToPlayer()
+    protected IEnumerator ToPlayer()
     {
         Debug.Log("ToPlayer");
         Transform playerTransform = PlayerHealth.instance.transform;
@@ -76,5 +79,7 @@ public class Item : MonoBehaviour
 
         if (_obtainPS)
             _obtainPS.Play();
+
+        _triggerEffect.Invoke();
     }
 }
