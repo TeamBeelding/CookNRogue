@@ -80,7 +80,11 @@ public class PlayerAttack : MonoBehaviour
         StartCoroutine(Shootbullets(PlayerRuntimeData.GetInstance().data.AttackData.TimeBtwShotRafale));
 
         //ON FAIT DEBUTER LE COOLDOWN DE TIR
-        _curShootDelay = StartCoroutine(ShootDelay(PlayerRuntimeData.GetInstance().data.AttackData.AttackCooldown));
+        float cooldown = PlayerRuntimeData.GetInstance().data.AttackData.AttackCooldown;
+        if (PlayerRuntimeData.GetInstance().data.InventoryData.ErgonomicHandle)
+            cooldown /= PlayerRuntimeData.GetInstance().data.InventoryData.ErgonomicHandleValue;
+
+        _curShootDelay = StartCoroutine(ShootDelay(cooldown));
 
         //SI AMMO INFINIE
         if (_asEmptiedAmmo)

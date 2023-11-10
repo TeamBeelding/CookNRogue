@@ -113,6 +113,7 @@ public class PlayerRuntimeData
         public float ButteredShoesValue = 0;
         public bool LargeCauldron = false;
         public bool ErgonomicHandle = false;
+        public float ErgonomicHandleValue = 0;
         public bool BigSpatule = false;
         public bool WoodenSpoon = false;
         public bool Caramel = false;

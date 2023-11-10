@@ -23,6 +23,7 @@ public class ErgonomicHandle : Item, ISubItem
     {
         ErgonomicHandleData data = (ErgonomicHandleData)_data;
         PlayerRuntimeData.GetInstance().data.InventoryData.ErgonomicHandle = true;
+        PlayerRuntimeData.GetInstance().data.InventoryData.ErgonomicHandleValue = data.fireRateBuff;
     }
 
 }
