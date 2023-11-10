@@ -5,4 +5,5 @@ using UnityEngine;
 public interface ISubItem
 {
     public void ApplyItem();
+
 }

@@ -30,6 +30,7 @@ public class HeartBar : MonoBehaviour
         {
             AddHeart();
         }
+
         UpdateHealthVisual(initialHealth);
     }
 
