@@ -22,6 +22,7 @@ public class ErgonomicHandle : Item, ISubItem
     public void ApplyItem()
     {
         ErgonomicHandleData data = (ErgonomicHandleData)_data;
+        PlayerRuntimeData.GetInstance().data.InventoryData.ErgonomicHandle = true;
     }
 
 }

@@ -110,11 +110,13 @@ public class PlayerRuntimeData
         public int Currency = 0;
         public bool MidasCauldron = false;
         public bool ButteredShoes = false;
-        public int MealOfTheDay = 0;
+        public float ButteredShoesValue = 0;
         public bool LargeCauldron = false;
+        public bool ErgonomicHandle = false;
         public bool BigSpatule = false;
         public bool WoodenSpoon = false;
         public bool Caramel = false;
+        public int CaramelDamage = 0;
     }
 
     public class Data

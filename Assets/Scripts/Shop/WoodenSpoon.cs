@@ -20,7 +20,7 @@ public class WoodenSpoon : Item,ISubItem
 
     public void ApplyItem()
     {
-
+        PlayerRuntimeData.GetInstance().data.InventoryData.WoodenSpoon = true;
     }
 
 

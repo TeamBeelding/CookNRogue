@@ -22,5 +22,6 @@ public class MidasCauldron : Item, ISubItem
     public void ApplyItem()
     {
         MidasCauldronData data = (MidasCauldronData)_data;
+        PlayerRuntimeData.GetInstance().data.InventoryData.MidasCauldron = true;
     }
 }

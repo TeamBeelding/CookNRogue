@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class LargeCauldron : Item,ISubItem
 {
-    [SerializeReference] LargeCauldronData _LCdata;
     public override void Interact(string tag)
     {
         base.Interact(tag);
@@ -23,5 +22,6 @@ public class LargeCauldron : Item,ISubItem
     public void ApplyItem()
     {
         LargeCauldronData data = (LargeCauldronData)_data;
+        PlayerRuntimeData.GetInstance().data.InventoryData.LargeCauldron = true;
     }
 }
