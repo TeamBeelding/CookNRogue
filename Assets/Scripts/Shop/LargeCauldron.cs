@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LargeCauldron : Item
+public class LargeCauldron : Item,ISubItem
 {
     [SerializeReference] LargeCauldronData _LCdata;
     public override void Interact(string tag)
@@ -11,8 +11,11 @@ public class LargeCauldron : Item
         ApplyItem();
     }
 
-    public override void ApplyItem()
+    public void ApplyItem()
     {
+        if (!CanTrigger())
+            return;
 
+        ApplyItemRoutine();
     }
 }

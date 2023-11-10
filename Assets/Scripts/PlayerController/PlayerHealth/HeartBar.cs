@@ -28,10 +28,15 @@ public class HeartBar : MonoBehaviour
     {
         for (int i = 0; i < (initialHealth / 2); i++)
         {
-            RectTransform newHeart = Instantiate(_heart, transform); 
-            _heartsRenderer.Add(newHeart.GetComponent<Image>());
+            AddHeart();
         }
         UpdateHealthVisual(initialHealth);
+    }
+
+    public void AddHeart()
+    {
+        RectTransform newHeart = Instantiate(_heart, transform);
+        _heartsRenderer.Add(newHeart.GetComponent<Image>());
     }
 
     public void UpdateHealthVisual(int health)

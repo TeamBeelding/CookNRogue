@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MidasCauldron : Item
+public class MidasCauldron : Item, ISubItem
 {
     [SerializeReference] MidasCauldronData _MCdata;
     public override void Interact(string tag)
@@ -11,8 +11,11 @@ public class MidasCauldron : Item
         ApplyItem();
     }
 
-    public override void ApplyItem()
+    public void ApplyItem()
     {
+        if (!CanTrigger())
+            return;
 
+        ApplyItemRoutine();
     }
 }

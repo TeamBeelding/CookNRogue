@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Coffee : Item
+public class Coffee : Item,ISubItem
 {
     [SerializeReference] CoffeeData _Cdata;
     public override void Interact(string tag)
@@ -11,8 +11,13 @@ public class Coffee : Item
         ApplyItem();
     }
 
-    public override void ApplyItem()
+    public void ApplyItem()
     {
+        if (!CanTrigger())
+            return;
+
+        ApplyItemRoutine();
         PlayerHealth.instance.Heal(_Cdata.regen);
     }
+
 }

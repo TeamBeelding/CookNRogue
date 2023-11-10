@@ -70,6 +70,7 @@ public class PlayerHealth : MonoBehaviour
 
     public void UpgradeMaxHealth(int additionalHealth)
     {
+        _heartBar.AddHeart();
         PlayerRuntimeData.GetInstance().data.BaseData.MaxHealth += additionalHealth;
         Heal(additionalHealth);
     }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Caramel : Item
+public class Caramel : Item,ISubItem
 {
     [SerializeReference] CaramelData _Cdata;
     public override void Interact(string tag)
@@ -11,8 +11,12 @@ public class Caramel : Item
         ApplyItem();
     }
 
-    public override void ApplyItem()
+    public void ApplyItem()
     {
+        if (!CanTrigger())
+            return;
 
+        ApplyItemRoutine();
     }
+
 }
