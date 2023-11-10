@@ -36,7 +36,7 @@ public class PoolManager : MonoBehaviour
 
     private void Start()
     {
-        InstantiateFromPool(PoolType.Slime, new Vector3(-183f, 0, 1.92f), Quaternion.identity);
+        InstantiateFromPool(PoolType.Slime, new Vector3(-183f, 1, 1.92f), Quaternion.identity);
     }
 
     public static PoolManager Instance

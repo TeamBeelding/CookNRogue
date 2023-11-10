@@ -24,13 +24,10 @@ namespace Enemy.Minimoyz
         [SerializeField] private MinimoyzData data;
         [SerializeField] private SlimeData slimeData;
         [SerializeField] private NavMeshAgent agent;
-
-        private bool _isThrowing = true;
-        private Coroutine coroutineState;
-        
-        private NavMeshPath navMeshPath;
-        
         [SerializeField] private GameObject physicsMinimoyz;
+
+        private Coroutine coroutineState;
+        private NavMeshPath navMeshPath;
     
         public enum State
         {
@@ -47,27 +44,36 @@ namespace Enemy.Minimoyz
         protected override void Awake()
         {
             base.Awake();
-
-            agent = GetComponent<NavMeshAgent>();
-            agent.speed = data.GetSpeed();
-            agent.stoppingDistance = data.GetAttackRange();
-            FocusPlayer = data.GetFocusPlayer();
-            Healthpoint = data.GetHealth();
         }
 
         // Start is called before the first frame update
         protected override void Start()
         {
+            base.Start();
+        }
+
+        protected override void OnEnable()
+        {
+            agent = GetComponent<NavMeshAgent>();
+
+            agent.speed = data.GetSpeed();
+            agent.stoppingDistance = data.GetAttackRange();
+            FocusPlayer = data.GetFocusPlayer();
+            Healthpoint = data.GetHealth();
+
             navMeshPath = new NavMeshPath();
 
             SetState(State.Chase);
 
-            base.Start();
+            base.OnEnable();
         }
 
         // Update is called once per frame
         protected override void Update()
         {
+            if (!gameObject.activeInHierarchy)
+                return;
+
             if (state == State.Dying)
                 return;
         
@@ -111,7 +117,7 @@ namespace Enemy.Minimoyz
     
         private void AreaDetection()
         {
-            if (state == State.Dying || _isThrowing)
+            if (state == State.Dying)
                 return;
 
             if (Vector3.Distance(transform.position, Player.transform.position) > data.GetAttackRange())
@@ -166,9 +172,6 @@ namespace Enemy.Minimoyz
         {
             if (!physicsMinimoyz.activeSelf)
                 physicsMinimoyz.SetActive(true);
-            
-            if (_isThrowing)
-                _isThrowing = false;
             
             if (agent.enabled == false)
                 agent.enabled = true;
@@ -236,8 +239,6 @@ namespace Enemy.Minimoyz
 
         protected override void Dying()
         {
-            //Destroy(gameObject);
-            
             base.Dying();
         }
     }

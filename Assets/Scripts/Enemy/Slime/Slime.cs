@@ -1,11 +1,9 @@
 using Enemy.Data;
 using Enemy.Effect_And_Juiciness;
-using Enemy.Minimoyz;
 using NaughtyAttributes;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Serialization;
 using System.Collections;
 using Random = UnityEngine.Random;
 
@@ -70,14 +68,26 @@ namespace Enemy.Slime
                 animator = GetComponent<Animator>();
         }
 
-        // Start is called before the first frame update
-        protected override void Start()
+        protected override void OnEnable()
         {
-            base.Start();
+            base.OnEnable();
 
             SetState(data.GetFocusPlayer ? State.Chase : State.Neutral);
             spawnChecker = GetComponentInChildren<CheckingSpawn>();
             animator = GetComponentInChildren<Animator>();
+        }
+
+        protected override void OnDisable()
+        {
+            SetState(State.Neutral);
+
+            base.OnDisable();
+        }
+
+        // Start is called before the first frame update
+        protected override void Start()
+        {
+            base.Start();
         }
 
         private void FixedUpdate()
@@ -101,26 +111,26 @@ namespace Enemy.Slime
         // ReSharper disable Unity.PerformanceAnalysis
         private void StateManagement()
         {
-            animator.SetBool("isAttack", _canAttackAnim);
+            //animator.SetBool("isAttack", _canAttackAnim);
            
             switch (state)
             {
                 case State.Neutral:
-                    animator.SetBool("isWalking", false);
-                    animator.SetBool("isAttack", false);
+                    //animator.SetBool("isWalking", false);
+                    //animator.SetBool("isAttack", false);
                     _Stop_SFX_Pea_Pod_Footsteps.Post(gameObject);
                     break;
                 case State.Chase:
                     Chase();
-                    animator.SetBool("isWalking", true);
-                    animator.SetBool("isAttack", false);
+                    //animator.SetBool("isWalking", true);
+                    //animator.SetBool("isAttack", false);
                     _Play_SFX_Pea_Pod_Footsteps.Post(gameObject);
                     break;
                 case State.Attack:
-                    animator.SetBool("isWalking", false);
+                    //animator.SetBool("isWalking", false);
                     _Stop_SFX_Pea_Pod_Footsteps.Post(gameObject);
                     transform.LookAt(Player.transform.position);
-                    animator.SetBool("isAttack", true);
+                    //animator.SetBool("isAttack", true);
                     Attack(ThrowMinimoyz, data.GetAttackSpeed);
                     break;
                 case State.Dying:
@@ -160,7 +170,6 @@ namespace Enemy.Slime
             }
         }
 
-        // Todo : Pooling Sprite and AI
         private void ThrowMinimoyz()
         {
             Vector3 point = RandomPoint();
@@ -170,7 +179,7 @@ namespace Enemy.Slime
             if (!spawnChecker.CanThrowHere())
                 return;
                      
-            GameObject minimoyz = Instantiate(this.minimoyzVisualOnly, gun.transform.position, quaternion.identity);
+            GameObject minimoyz = PoolManager.Instance.InstantiateFromPool(PoolType.MinimoyzVisual, gun.transform.position, quaternion.identity);
             minimoyz.GetComponent<ThrowingEffect>().ThrowMinimoyz(point, data.GetThrowingMaxHeight, data.GetThrowingSpeed);
             
             if (_canAttackAnim)
@@ -209,8 +218,6 @@ namespace Enemy.Slime
             }
         }
 
-        // Todo : Add fix for spawning minimoyz inside circle with some distance between them
-        // Maybe Activate physics
         protected override void Dying()
         {
             physics.SetActive(false);
@@ -224,7 +231,7 @@ namespace Enemy.Slime
                 Vector3 point = Random.insideUnitCircle * data.GetRadiusMinimoyzSpawnPoint + origin;
                 point = new Vector3(point.x, 0, point.y);
 
-                GameObject obj = Instantiate(minimoyzVisualOnly, point, Quaternion.identity);
+                GameObject obj = PoolManager.Instance.InstantiateFromPool(PoolType.MinimoyzVisual, point, Quaternion.identity);
                 obj.GetComponent<ThrowingEffect>().ReplaceWithPhysicalAI();
             }
             

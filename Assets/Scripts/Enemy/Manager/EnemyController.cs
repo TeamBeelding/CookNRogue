@@ -44,10 +44,13 @@ public abstract class EnemyController : MonoBehaviour
     // Start is called before the first frame update
     protected virtual void Start()
     {
+        _rend.material.color = Color.white;
+    }
+
+    protected virtual void OnEnable()
+    {
         Player = PlayerController.Instance.gameObject;
         AddToEnemyManager();
-        
-        _rend.material.color = Color.white;
     }
 
     // Update is called once per frame
@@ -117,18 +120,17 @@ public abstract class EnemyController : MonoBehaviour
     protected virtual void Dying()
     {
         DestroyEffect();
-        Destroy(gameObject);
+        PoolManager.Instance.DesinstantiateFromPool(gameObject);
     }
 
     #endregion
 
-    //Add to enemy manager
     private void AddToEnemyManager()
     {
         EnemyManager.Instance.AddEnemyToLevel(this);
     }
     
-    private void OnDestroy()
+    protected virtual void OnDisable()
     {
         StopAllCoroutines();
         EnemyManager.Instance.RemoveEnemyFromLevel(this);

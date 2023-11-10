@@ -16,15 +16,15 @@ namespace Enemy.Effect_And_Juiciness
         private float _maxLength = 10;
         private float _speed = 2;
 
-        private void Start()
+        private void OnEnable()
         {
             _target = GameObject.FindWithTag("Player").transform.position;
         }
 
         public void ReplaceWithPhysicalAI()
         {
-            Instantiate(minimoyz, transform.position, Quaternion.identity);
-            Destroy(gameObject);
+            PoolManager.Instance.InstantiateFromPool(PoolType.Minimoyz, transform.position, Quaternion.identity);
+            PoolManager.Instance.DesinstantiateFromPool(gameObject);
         }
 
         public void ThrowMinimoyz(Vector3 target, float maxHeight, float speed)

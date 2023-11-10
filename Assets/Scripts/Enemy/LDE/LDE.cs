@@ -172,8 +172,9 @@ namespace Enemy.LDE
 
         private void Shot()
         {
-            GameObject shot = Instantiate(m_bullet, m_gun.transform.position, Quaternion.identity);
+            GameObject shot = PoolManager.Instance.InstantiateFromPool(PoolType.Bullet, m_gun.transform.position, Quaternion.identity);
             shot.GetComponent<EnemyBulletController>().SetDirection(Player.transform);
+
             animator.SetBool("isAttack", true);
             _Play_SFX_Corn_Attack_Shot.Post(gameObject);
         }
