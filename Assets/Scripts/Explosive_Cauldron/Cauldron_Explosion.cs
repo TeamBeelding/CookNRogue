@@ -101,7 +101,10 @@ public class Cauldron_Explosion : MonoBehaviour
                 continue;
             }
         }
-        yield return new WaitForSeconds(5f);
+
+        float time = _markParticles.main.startLifetimeMultiplier;
+        yield return new WaitForSeconds(time);
+
         Destroy(gameObject);
     }
 
