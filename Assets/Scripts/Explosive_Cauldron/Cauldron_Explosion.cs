@@ -112,7 +112,7 @@ public class Cauldron_Explosion : MonoBehaviour
     {
         float distance = Vector3.Distance(transform.position, position);
 
-        float damage = _damageByDistanceCurve.Evaluate(distance / _explosionRadius) * _maxPlayerDamage;
+        float damage = _damageByDistanceCurve.Evaluate(distance / _explosionRadius) * _maxEnnemyDamage;
 
         return damage;
     }
