@@ -21,7 +21,7 @@ public class Cauldron_Explosion : MonoBehaviour
     ParticleSystem[] _particles;
     [SerializeField] ParticleSystem _fireParticles1;
     [SerializeField] ParticleSystem _fireParticles2;
-    [SerializeField] DecalProjector _explosionDecal;
+    [SerializeField] ParticleSystem _markParticles;
     
 
     bool _canExplode = true;
@@ -33,7 +33,7 @@ public class Cauldron_Explosion : MonoBehaviour
     Color _cauldronDefaultColor;
     [SerializeField] bool _useCauldronColor;
 
-    [SerializeField, ColorUsage(true, true)] Color _explosionDecalColor;
+    [SerializeField, ColorUsage(true, true)] Color _explosionMarkColor;
 
     
 
@@ -56,19 +56,15 @@ public class Cauldron_Explosion : MonoBehaviour
             renderer.material.SetColor("_ExplosionColor",_explosionColor);
             renderer = _fireParticles2.GetComponent<ParticleSystemRenderer>();
             renderer.material.SetColor("_ExplosionColor", _explosionColor);
+            renderer = _markParticles.GetComponent<ParticleSystemRenderer>();
+            renderer.material.SetColor("_Color", _explosionMarkColor);
 
-          
+
             StartCoroutine(Explosion(_explosionTimer));
         }
     }
 
-    void InitDecal()
-    {
-        _explosionDecal.gameObject.SetActive(true);
-        _explosionDecal.material = new Material(_explosionDecal.material);
-        var mat = _explosionDecal.material;
-        mat.SetColor("_Color", _explosionDecalColor);
-    }
+   
 
     Color GetDesiredColor()
     {
@@ -105,9 +101,7 @@ public class Cauldron_Explosion : MonoBehaviour
                 continue;
             }
         }
-        yield return new WaitForSeconds(0.5f);
-        InitDecal();
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(5f);
         Destroy(gameObject);
     }
 
