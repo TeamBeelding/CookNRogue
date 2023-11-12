@@ -22,8 +22,6 @@ public class PoolManager : MonoBehaviour
     [SerializeField] private GameObject CEPool;
     [SerializeField] private GameObject bulletPool;
 
-    // Todo ask : reference avec le pool
-
     private void Awake()
     {
         if (instance == null)

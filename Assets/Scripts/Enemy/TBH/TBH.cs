@@ -10,7 +10,6 @@ public class TBH : EnemyController
     [SerializeField] private GameObject _gun;
     [SerializeField] private GameObject _bullet;
     [SerializeField] private ParticleSystem m_stateSystem;
-    [SerializeField] private CheckingSpawn _checkingSpawn;
 
     [SerializeField] private Animator _animator;
     [SerializeField] private GameObject physics;
@@ -29,11 +28,16 @@ public class TBH : EnemyController
     protected override void Awake()
     {
         base.Awake();
+    }
+
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+
         _animator = GetComponentInChildren<Animator>();
         Healthpoint = _data.Health;
-        _checkingSpawn = GetComponentInChildren<CheckingSpawn>();
     }
-    
+
     private void Reset()
     {
         Healthpoint = _data.Health;
@@ -93,7 +97,7 @@ public class TBH : EnemyController
     // ReSharper disable Unity.PerformanceAnalysis
     private void Shot()
     {
-        float angleStep = _data.AngleShot / _data.NumberOfBullet;
+        //float angleStep = _data.AngleShot / _data.NumberOfBullet;
         
         transform.LookAt(new Vector3(Player.transform.position.x, transform.position.y, Player.transform.position.z));
 

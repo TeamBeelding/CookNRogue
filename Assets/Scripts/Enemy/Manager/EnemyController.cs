@@ -41,10 +41,9 @@ public abstract class EnemyController : MonoBehaviour
             _collider = GetComponentInChildren<CapsuleCollider>();
     }
 
-    // Start is called before the first frame update
     protected virtual void Start()
     {
-        _rend.material.color = Color.white;
+        //_rend.material.color = Color.white;
     }
 
     protected virtual void OnEnable()

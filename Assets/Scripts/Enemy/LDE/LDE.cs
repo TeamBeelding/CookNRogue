@@ -46,8 +46,12 @@ namespace Enemy.LDE
         protected override void Awake()
         {
             base.Awake();
+        }
 
+        protected override void OnEnable()
+        {
             agent = GetComponent<NavMeshAgent>();
+
             agent.speed = data.GetSpeed;
             agent.stoppingDistance = data.GetAttackRange;
             FocusPlayer = data.GetFocusPlayer;

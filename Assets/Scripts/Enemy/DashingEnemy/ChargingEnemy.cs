@@ -54,9 +54,15 @@ namespace Enemy.DashingEnemy
         protected override void Awake()
         {
             base.Awake();
+        }
+
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+
             Healthpoint = _data.GetHealth();
         }
-    
+
         // Start is called before the first frame update
         protected override void Start()
         {
@@ -130,9 +136,6 @@ namespace Enemy.DashingEnemy
             {
                 if (!hit.collider.CompareTag("Player"))
                 {
-                    Debug.DrawRay(transform.position, direction * hit.distance, Color.red);
-                    Debug.Log($"<color=red>{hit.collider.name}</color>");
-                    
                     SetState(State.Casting);
                     
                     return;
@@ -244,15 +247,11 @@ namespace Enemy.DashingEnemy
 
             animator.SetBool("isDead", true);
 
-            Debug.Log("Dead Anim");
-
             StartCoroutine(IDeathAnim());
 
             IEnumerator IDeathAnim()
             {
-                Debug.Log("Wait");
                 yield return new WaitForSeconds(2f);
-                Debug.Log("Destroyed");
                 base.Dying();
             }
         }

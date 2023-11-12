@@ -74,7 +74,14 @@ namespace Enemy.Slime
 
             SetState(data.GetFocusPlayer ? State.Chase : State.Neutral);
             spawnChecker = GetComponentInChildren<CheckingSpawn>();
-            animator = GetComponentInChildren<Animator>();
+
+            Healthpoint = data.GetHealth;
+            agent = GetComponent<NavMeshAgent>();
+            agent.speed = data.GetSpeed;
+            agent.stoppingDistance = data.GetAttackRange;
+
+            if (!animator)
+                animator = GetComponent<Animator>();
         }
 
         protected override void OnDisable()
@@ -111,26 +118,26 @@ namespace Enemy.Slime
         // ReSharper disable Unity.PerformanceAnalysis
         private void StateManagement()
         {
-            //animator.SetBool("isAttack", _canAttackAnim);
-           
+            animator.SetBool("isAttack", _canAttackAnim);
+
             switch (state)
             {
                 case State.Neutral:
-                    //animator.SetBool("isWalking", false);
-                    //animator.SetBool("isAttack", false);
+                    animator.SetBool("isWalking", false);
+                    animator.SetBool("isAttack", false);
                     _Stop_SFX_Pea_Pod_Footsteps.Post(gameObject);
                     break;
                 case State.Chase:
                     Chase();
-                    //animator.SetBool("isWalking", true);
-                    //animator.SetBool("isAttack", false);
+                    animator.SetBool("isWalking", true);
+                    animator.SetBool("isAttack", false);
                     _Play_SFX_Pea_Pod_Footsteps.Post(gameObject);
                     break;
                 case State.Attack:
-                    //animator.SetBool("isWalking", false);
+                    animator.SetBool("isWalking", false);
                     _Stop_SFX_Pea_Pod_Footsteps.Post(gameObject);
                     transform.LookAt(Player.transform.position);
-                    //animator.SetBool("isAttack", true);
+                    animator.SetBool("isAttack", true);
                     Attack(ThrowMinimoyz, data.GetAttackSpeed);
                     break;
                 case State.Dying:
