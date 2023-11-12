@@ -8,6 +8,7 @@ public enum PoolType
     TBH,
     LDS,
     CE,
+    Kamilkaze,
     Bullet
 }
 
@@ -20,6 +21,7 @@ public class PoolManager : MonoBehaviour
     [SerializeField] private GameObject TBHPool;
     [SerializeField] private GameObject LDSPool;
     [SerializeField] private GameObject CEPool;
+    [SerializeField] private GameObject KamilkazePool;
     [SerializeField] private GameObject bulletPool;
 
     private void Awake()
@@ -58,6 +60,8 @@ public class PoolManager : MonoBehaviour
                 return LDSPool.GetComponent<IPooling>().Instantiating(position, quaternion);
             case PoolType.CE:
                 return CEPool.GetComponent<IPooling>().Instantiating(position, quaternion);
+            case PoolType.Kamilkaze:
+                return KamilkazePool.GetComponent<IPooling>().Instantiating(position, quaternion);
             case PoolType.Bullet:
                 return bulletPool.GetComponent<IPooling>().Instantiating(position, quaternion);
             default:
