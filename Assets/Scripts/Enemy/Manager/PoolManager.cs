@@ -42,7 +42,7 @@ public class PoolManager : MonoBehaviour
     {
         if (Input.GetKeyUp(KeyCode.A))
         {
-            GameObject obj = InstantiateFromPool(PoolType.Slime, new Vector3(-183f, 0, 1.92f), Quaternion.identity);
+            GameObject obj = InstantiateFromPool(PoolType.LDS, new Vector3(-183f, 0, 1.92f), Quaternion.identity);
         }
     }
 

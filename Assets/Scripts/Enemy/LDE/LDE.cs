@@ -50,6 +50,8 @@ namespace Enemy.LDE
 
         protected override void OnEnable()
         {
+            base.OnEnable();
+
             agent = GetComponent<NavMeshAgent>();
 
             agent.speed = data.GetSpeed;
