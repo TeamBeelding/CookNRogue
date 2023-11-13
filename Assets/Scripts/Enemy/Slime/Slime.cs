@@ -1,7 +1,6 @@
 using Enemy.Data;
 using Enemy.Effect_And_Juiciness;
 using NaughtyAttributes;
-using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
@@ -57,12 +56,9 @@ namespace Enemy.Slime
 
         protected override void Awake()
         {
-            base.Awake();
-        
-            Healthpoint = data.GetHealth;
             agent = GetComponent<NavMeshAgent>();
-            agent.speed = data.GetSpeed;
-            agent.stoppingDistance = data.GetAttackRange;
+
+            base.Awake();
 
             if (!animator)
                 animator = GetComponent<Animator>();
@@ -76,7 +72,6 @@ namespace Enemy.Slime
             spawnChecker = GetComponentInChildren<CheckingSpawn>();
 
             Healthpoint = data.GetHealth;
-            agent = GetComponent<NavMeshAgent>();
             agent.speed = data.GetSpeed;
             agent.stoppingDistance = data.GetAttackRange;
 
@@ -163,6 +158,9 @@ namespace Enemy.Slime
     
         protected override void Chase()
         {
+            if (!gameObject.activeSelf)
+                return;
+
             agent.stoppingDistance = data.GetAttackRange;
             stateCoroutine = StartCoroutine(IChase());
 
@@ -185,10 +183,10 @@ namespace Enemy.Slime
             
             if (!spawnChecker.CanThrowHere())
                 return;
-                     
-            GameObject minimoyz = PoolManager.Instance.InstantiateFromPool(PoolType.MinimoyzVisual, gun.transform.position, quaternion.identity);
+
+            GameObject minimoyz = PoolManager.Instance.InstantiateFromPool(PoolType.MinimoyzVisual, gun.transform.position, Quaternion.identity);
             minimoyz.GetComponent<ThrowingEffect>().ThrowMinimoyz(point, data.GetThrowingMaxHeight, data.GetThrowingSpeed);
-            
+
             if (_canAttackAnim)
                 _Play_SFX_Pea_Spawn.Post(minimoyz);
         }

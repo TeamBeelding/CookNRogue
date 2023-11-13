@@ -44,15 +44,13 @@ namespace Enemy.Minimoyz
         protected override void Awake()
         {
             base.Awake();
-        }
-
-        protected override void Start()
-        {
-            base.Start();
+            navMeshPath = new NavMeshPath();
         }
 
         protected override void OnEnable()
         {
+            base.OnEnable();
+
             agent = GetComponent<NavMeshAgent>();
 
             agent.speed = data.GetSpeed();
@@ -60,11 +58,8 @@ namespace Enemy.Minimoyz
             FocusPlayer = data.GetFocusPlayer();
             Healthpoint = data.GetHealth();
 
-            navMeshPath = new NavMeshPath();
 
             SetState(State.Chase);
-
-            base.OnEnable();
         }
 
         // Update is called once per frame
@@ -169,12 +164,12 @@ namespace Enemy.Minimoyz
 
         protected override void Chase()
         {
+            if (!gameObject.activeSelf)
+                return;
+
             if (!physicsMinimoyz.activeSelf)
                 physicsMinimoyz.SetActive(true);
-            
-            if (agent.enabled == false)
-                agent.enabled = true;
-
+ 
             coroutineState = StartCoroutine(IChase());
 
             IEnumerator IChase()
@@ -238,6 +233,7 @@ namespace Enemy.Minimoyz
 
         protected override void Dying()
         {
+            Debug.Log("<color=red>Die</color>");
             base.Dying();
         }
     }

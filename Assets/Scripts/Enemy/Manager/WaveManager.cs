@@ -32,7 +32,7 @@ public class WaveManager : MonoBehaviour
 
     private void Awake()
     {
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
      
         VerifyWaveManager();
     }

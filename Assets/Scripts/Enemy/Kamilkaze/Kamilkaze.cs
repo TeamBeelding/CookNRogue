@@ -23,9 +23,10 @@ public class Kamilkaze : EnemyController
 
     private Coroutine stateCoroutine;
 
-    protected override void Awake()
+    protected override void OnEnable()
     {
-        base.Awake();
+        base.OnEnable();
+
         Healthpoint = _data.Health;
         //_animator = GetComponentInChildren<Animator>();
 
