@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using static UnityEngine.UI.Image;
 
 public class Cauldron_Explosion : MonoBehaviour
@@ -13,12 +14,16 @@ public class Cauldron_Explosion : MonoBehaviour
     [SerializeField] int _maxEnnemyDamage;
     [SerializeField] int _maxPlayerDamage;
     [SerializeField] AnimationCurve _damageByDistanceCurve;
+    [SerializeField] bool _canTriggerOtherCauldrons = true;
 
     [Space(20)]
     [Header("VFX")]
     [SerializeField] Transform _vfxContainer;
     ParticleSystem[] _particles;
-    [SerializeField] ParticleSystem _fireParticles;
+    [SerializeField] ParticleSystem _fireParticles1;
+    [SerializeField] ParticleSystem _fireParticles2;
+    [SerializeField] ParticleSystem _markParticles;
+    
 
     bool _canExplode = true;
 
@@ -27,8 +32,11 @@ public class Cauldron_Explosion : MonoBehaviour
 
     [SerializeField, ColorUsage(true, true)]
     Color _cauldronDefaultColor;
-
     [SerializeField] bool _useCauldronColor;
+
+    [SerializeField, ColorUsage(true, true)] Color _explosionMarkColor;
+
+    
 
     private void Start()
     {
@@ -39,18 +47,30 @@ public class Cauldron_Explosion : MonoBehaviour
     {
         if (collision.transform.parent.GetComponent<PlayerBulletBehaviour>())
         {
-            if (!_canExplode)
-                return;
-
-            _explosionColor = GetDesiredColor();
-            _explosionColor.a = 1;
-
-            var renderer = _fireParticles.GetComponent<ParticleSystemRenderer>();
-            renderer.material.color = _explosionColor;
-
-            StartCoroutine(Explosion(_explosionTimer));
+            TriggerExplosion();
         }
     }
+
+
+    public void TriggerExplosion()
+    {
+        if (!_canExplode)
+            return;
+
+        _explosionColor = GetDesiredColor();
+        _explosionColor.a = 1;
+
+        var renderer = _fireParticles1.GetComponent<ParticleSystemRenderer>();
+        renderer.material.SetColor("_ExplosionColor", _explosionColor);
+        renderer = _fireParticles2.GetComponent<ParticleSystemRenderer>();
+        renderer.material.SetColor("_ExplosionColor", _explosionColor);
+        renderer = _markParticles.GetComponent<ParticleSystemRenderer>();
+        renderer.material.SetColor("_Color", _explosionMarkColor);
+
+
+        StartCoroutine(Explosion(_explosionTimer));
+    }
+   
 
     Color GetDesiredColor()
     {
@@ -77,6 +97,11 @@ public class Cauldron_Explosion : MonoBehaviour
                 continue;
             }
 
+            if (hit.transform.GetComponent<Cauldron_Explosion>() && _canTriggerOtherCauldrons)
+            {
+                hit.transform.GetComponent<Cauldron_Explosion>().TriggerExplosion();
+            }
+
             if (!hit.transform.parent)
                 continue;
 
@@ -87,7 +112,10 @@ public class Cauldron_Explosion : MonoBehaviour
                 continue;
             }
         }
-        yield return new WaitForSecondsRealtime(0.5f);
+
+        float time = _markParticles.main.startLifetimeMultiplier;
+        yield return new WaitForSeconds(time);
+
         Destroy(gameObject);
     }
 
@@ -95,7 +123,7 @@ public class Cauldron_Explosion : MonoBehaviour
     {
         float distance = Vector3.Distance(transform.position, position);
 
-        float damage = _damageByDistanceCurve.Evaluate(distance / _explosionRadius) * _maxPlayerDamage;
+        float damage = _damageByDistanceCurve.Evaluate(distance / _explosionRadius) * _maxEnnemyDamage;
 
         return damage;
     }
