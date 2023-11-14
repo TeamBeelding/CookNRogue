@@ -1,3 +1,4 @@
+using Enemy;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,38 +11,55 @@ public class WaveManager : MonoBehaviour
     public struct WaveStruct
     {
         public PoolType type;
-        public int currency;
+        public int rating;
     }
 
     [SerializeField] private List<WaveStruct> wavesContainers;
 
     [SerializeField] private int waveNumber = 1;
-    [SerializeField] private int minEnemiesInWave = 1;
-    [SerializeField] private int maxEnemiesInWave = 1;
+    [SerializeField] private int enemiesInWave = 1;
+    //[SerializeField] private int maxEnemiesInWave = 1;
     [SerializeField] private float delayBetweenWave = 1f;
     [SerializeField] private float delayBetweenSpawn = 1f;
 
     [SerializeField] private bool needAllEnemiesDiesBeforeNextWave = false;
 
+    private bool allWaveEnd = false;
     private bool isWaveIsEnd = false;
 
     private Coroutine waveCoroutine;
     private Coroutine enemyCoroutine;
 
-    private List<PoolType> allType;
+    private List<PoolType> allType = new List<PoolType>();
 
-    private void Awake()
+    private void Update()
     {
-        //DontDestroyOnLoad(gameObject);
-     
-        VerifyWaveManager();
+        if (Input.GetKeyUp(KeyCode.W))
+        {
+            StartingWave();
+        }
     }
 
-    private void Start()
+    private void FixedUpdate()
     {
+        if (allWaveEnd)
+        {
+            if (EnemyManager.Instance.EnemiesInLevel.Length == 0)
+            {
+                isWaveIsEnd = true;
+            }
+        }
+    }
+
+    private void StartingWave()
+    {
+        VerifyWaveManager();
+
+        allWaveEnd = false;
+
         for (int i = 0; i < waveNumber; i++)
         {
-            for(int j = 0; j < minEnemiesInWave; j++)
+            for (int j = 0; j < enemiesInWave; j++)
             {
                 enemyCoroutine = StartCoroutine(IWaitForNextEnemieSpawn());
             }
@@ -49,10 +67,12 @@ public class WaveManager : MonoBehaviour
             waveCoroutine = StartCoroutine(IWaitNextWave());
         }
 
-        isWaveIsEnd = true;
+        allWaveEnd = true;
 
         StopCoroutine(waveCoroutine);
         StopCoroutine(enemyCoroutine);
+
+        Debug.Log("End of wave");
     }
 
     private void VerifyWaveManager()
@@ -62,14 +82,13 @@ public class WaveManager : MonoBehaviour
 
         foreach (WaveStruct wave in wavesContainers)
         {
-            for (int i = 0; i < wave.currency; i++)
-                allType.Add(wave.type);
-        }        
-        
-        foreach (WaveStruct wave in wavesContainers)
-        {
-            if (wave.currency == 0)
-                wavesContainers.Remove(wave);
+            for (int i = 0; i < wave.rating; i++)
+            {
+                var waveType = wave.type;
+
+                Debug.Log(waveType);
+                allType.Add(waveType);
+            }
         }
     }
 
@@ -89,7 +108,19 @@ public class WaveManager : MonoBehaviour
 
     private IEnumerator IWaitNextWave()
     {
-        yield return new WaitForSeconds(delayBetweenWave);
+        if (needAllEnemiesDiesBeforeNextWave)
+        {
+            while (!isWaveIsEnd)
+            {
+                yield return new WaitForSeconds(1);
+            }
+
+            yield return null;
+        }   
+        else
+        {
+            yield return new WaitForSeconds(delayBetweenWave);
+        }
     }
 
     private IEnumerator IWaitForNextEnemieSpawn()
