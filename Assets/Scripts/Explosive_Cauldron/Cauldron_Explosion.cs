@@ -25,7 +25,7 @@ public class Cauldron_Explosion : MonoBehaviour
     [SerializeField] ParticleSystem _markParticles;
     [SerializeField] ParticleSystem _smallSmokeParticles;
     [SerializeField] ParticleSystem _smallBubblesParticles;
-
+    [SerializeField] Animator _explosiveCauldronAnimator;
     bool _canExplode = true;
 
     [ColorUsage(true,true)]
@@ -86,12 +86,20 @@ public class Cauldron_Explosion : MonoBehaviour
         else return (Color)PlayerRuntimeData.GetInstance().data.AttackData.AttackColor;
     }
 
+    public void MeshOff()
+    {
+        transform.GetChild(0).gameObject.SetActive(false);
+    }
     IEnumerator Explosion(float timer)
     {
         _canExplode = false;
         yield return new WaitForSecondsRealtime(timer);
 
         TriggerParticles();
+
+        if (_explosiveCauldronAnimator)
+            _explosiveCauldronAnimator.Play("Explosive_Cauldron_Explosion");
+
 
         RaycastHit[] hits = Physics.SphereCastAll(transform.position, _explosionRadius, Vector3.up);
 
