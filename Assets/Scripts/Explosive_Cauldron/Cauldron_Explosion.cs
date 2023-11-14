@@ -98,7 +98,12 @@ public class Cauldron_Explosion : MonoBehaviour
         TriggerParticles();
 
         if (_explosiveCauldronAnimator)
+        {
             _explosiveCauldronAnimator.Play("Explosive_Cauldron_Explosion");
+            var emission = _smallSmokeParticles.emission;
+            emission.rateOverDistance = 5;
+        }
+            
 
 
         RaycastHit[] hits = Physics.SphereCastAll(transform.position, _explosionRadius, Vector3.up);
