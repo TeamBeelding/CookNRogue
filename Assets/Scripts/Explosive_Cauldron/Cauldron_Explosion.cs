@@ -23,7 +23,8 @@ public class Cauldron_Explosion : MonoBehaviour
     [SerializeField] ParticleSystem _fireParticles1;
     [SerializeField] ParticleSystem _fireParticles2;
     [SerializeField] ParticleSystem _markParticles;
-    
+    [SerializeField] ParticleSystem _smallSmokeParticles;
+    [SerializeField] ParticleSystem _smallBubblesParticles;
 
     bool _canExplode = true;
 
@@ -41,6 +42,12 @@ public class Cauldron_Explosion : MonoBehaviour
     private void Start()
     {
         _particles = _vfxContainer.GetComponentsInChildren<ParticleSystem>();
+
+        _explosionColor = GetDesiredColor();
+        _explosionColor.a = 1;
+
+        var renderer = _smallBubblesParticles.GetComponent<ParticleSystemRenderer>();
+        renderer.material.SetColor("_BubbleColor", _explosionColor / 4);
     }
 
     private void OnTriggerEnter(Collider collision)
