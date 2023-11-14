@@ -14,6 +14,7 @@ public class Cauldron_Explosion : MonoBehaviour
     [SerializeField] int _maxEnnemyDamage;
     [SerializeField] int _maxPlayerDamage;
     [SerializeField] AnimationCurve _damageByDistanceCurve;
+    [SerializeField] bool _canTriggerOtherCauldrons = true;
 
     [Space(20)]
     [Header("VFX")]
@@ -46,24 +47,29 @@ public class Cauldron_Explosion : MonoBehaviour
     {
         if (collision.transform.parent.GetComponent<PlayerBulletBehaviour>())
         {
-            if (!_canExplode)
-                return;
-
-            _explosionColor = GetDesiredColor();
-            _explosionColor.a = 1;
-
-            var renderer = _fireParticles1.GetComponent<ParticleSystemRenderer>();
-            renderer.material.SetColor("_ExplosionColor",_explosionColor);
-            renderer = _fireParticles2.GetComponent<ParticleSystemRenderer>();
-            renderer.material.SetColor("_ExplosionColor", _explosionColor);
-            renderer = _markParticles.GetComponent<ParticleSystemRenderer>();
-            renderer.material.SetColor("_Color", _explosionMarkColor);
-
-
-            StartCoroutine(Explosion(_explosionTimer));
+            TriggerExplosion();
         }
     }
 
+
+    public void TriggerExplosion()
+    {
+        if (!_canExplode)
+            return;
+
+        _explosionColor = GetDesiredColor();
+        _explosionColor.a = 1;
+
+        var renderer = _fireParticles1.GetComponent<ParticleSystemRenderer>();
+        renderer.material.SetColor("_ExplosionColor", _explosionColor);
+        renderer = _fireParticles2.GetComponent<ParticleSystemRenderer>();
+        renderer.material.SetColor("_ExplosionColor", _explosionColor);
+        renderer = _markParticles.GetComponent<ParticleSystemRenderer>();
+        renderer.material.SetColor("_Color", _explosionMarkColor);
+
+
+        StartCoroutine(Explosion(_explosionTimer));
+    }
    
 
     Color GetDesiredColor()
@@ -89,6 +95,11 @@ public class Cauldron_Explosion : MonoBehaviour
                 int damage = (int)CalculatePlayerDamage(hit.transform.position);
                 hit.transform.GetComponent<PlayerHealth>().TakeDamage(damage);
                 continue;
+            }
+
+            if (hit.transform.GetComponent<Cauldron_Explosion>() && _canTriggerOtherCauldrons)
+            {
+                hit.transform.GetComponent<Cauldron_Explosion>().TriggerExplosion();
             }
 
             if (!hit.transform.parent)
