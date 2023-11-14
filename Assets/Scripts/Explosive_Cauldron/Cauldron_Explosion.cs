@@ -47,7 +47,7 @@ public class Cauldron_Explosion : MonoBehaviour
         _explosionColor.a = 1;
 
         var renderer = _smallBubblesParticles.GetComponent<ParticleSystemRenderer>();
-        renderer.material.SetColor("_BubbleColor", _explosionColor / 4);
+        renderer.material.SetColor("_BubbleColor", _explosionColor);
     }
 
     private void OnTriggerEnter(Collider collision)
