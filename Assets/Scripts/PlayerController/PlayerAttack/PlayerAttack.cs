@@ -14,18 +14,29 @@ public class PlayerAttack : MonoBehaviour
     private AmmunitionBar _ammunitionBar;
     PlayerBulletBehaviour _projectileBehaviour;
     public Transform _muzzle;
+
+    public bool PauseAmmoTimer
+    {
+        get => _pauseAmmoTimer;
+        set
+        {
+            _pauseAmmoTimer = value;
+        }
+    }
     //[SerializeField]
     //PlayerKnockback m_knockbackScript;
 
     [SerializeField] private bool _isShooting = false;
 
-    [SerializeReference] bool _asEmptiedAmmo = true;
+    [SerializeReference] bool _hasEmptiedAmmo = true;
 
     [Header("Sound")]
     [SerializeField] private AK.Wwise.Event _Play_Weapon_Shot;
     [SerializeField] private AK.Wwise.Event _Play_Weapon_Empty;
 
     bool _shootOnCooldown = false;
+    Coroutine _ammoTimer;
+    bool _pauseAmmoTimer;
 
     public bool ShootOnCooldown
     {
@@ -49,7 +60,7 @@ public class PlayerAttack : MonoBehaviour
 
         if (_ammunitionBar)
         {
-            _ammunitionBar.InitAmmoBar(0);
+            _ammunitionBar.InitAmmoBar();
         }
 
         ResetParameters();
@@ -81,19 +92,33 @@ public class PlayerAttack : MonoBehaviour
 
         //ON FAIT DEBUTER LE COOLDOWN DE TIR
         _curShootDelay = StartCoroutine(ShootDelay(PlayerRuntimeData.GetInstance().data.AttackData.AttackCooldown));
+    }
 
-        //SI AMMO INFINIE
-        if (_asEmptiedAmmo)
-            return;
-
-        PlayerRuntimeData.GetInstance().data.AttackData.Ammunition--;
-
+    IEnumerator IRecipeAmmoTimer()
+    {
+        _hasEmptiedAmmo = false;
         if (_ammunitionBar)
-            _ammunitionBar.UpdateAmmoBar();
+        {
+            _ammunitionBar.InitAmmoBar();
+        }
 
-        //SI AMMO TOUJOURS SUPERIEURE A 0
-        if (PlayerRuntimeData.GetInstance().data.AttackData.Ammunition > 0)
-            return;
+        while (PlayerRuntimeData.GetInstance().data.AttackData.Ammunition > 0)
+        {
+            if (_pauseAmmoTimer)
+                yield return new WaitForSeconds(Time.deltaTime);
+
+            float ammo = PlayerRuntimeData.GetInstance().data.AttackData.Ammunition;
+            ammo -= Time.deltaTime;
+            ammo = ammo < 0 ? 0 : ammo;
+            PlayerRuntimeData.GetInstance().data.AttackData.Ammunition = ammo;
+
+            if (_ammunitionBar)
+                _ammunitionBar.UpdateAmmoBar();
+
+            yield return new WaitForSeconds(Time.deltaTime);
+        }
+
+        _hasEmptiedAmmo = true;
 
         ResetParameters();
 
@@ -106,26 +131,28 @@ public class PlayerAttack : MonoBehaviour
         {
             data.audioState.SetValue();
         }
-
-        //Animation
-        //m_knockbackScript.StartKnockback();
-
     }
 
     public void ResetAmunition()
     {
+        if (_ammoTimer != null)
+        {
+            StopCoroutine(_ammoTimer);
+        }
         PlayerRuntimeData.GetInstance().data.AttackData.Ammunition = 0;
         ResetParameters();
-        _asEmptiedAmmo = true;
+        _hasEmptiedAmmo = true;
         _ammunitionBar.UpdateAmmoBar();
         _Play_Weapon_Empty.Post(gameObject);
     }
 
     public void OnDeathReset()
     {
-        if (!_asEmptiedAmmo)
+        if (!_hasEmptiedAmmo)
         {
-            _asEmptiedAmmo = true;
+            _hasEmptiedAmmo = true;
+
+            StopCoroutine(_ammoTimer);
 
             //Reset Audio
             foreach (ProjectileData data in _inventory.EquippedRecipe)
@@ -305,7 +332,7 @@ public class PlayerAttack : MonoBehaviour
 
     public void OnAmmunitionChange()
     {
-        _asEmptiedAmmo = false;
+        _ammoTimer = StartCoroutine(IRecipeAmmoTimer());
     }
 
     public void ResetParameters()
@@ -320,7 +347,7 @@ public class PlayerAttack : MonoBehaviour
         PlayerRuntimeData.GetInstance().data.AttackData.AttackDamage = 0;
         PlayerRuntimeData.GetInstance().data.AttackData.Ammunition = 0;
         PlayerRuntimeData.GetInstance().data.AttackData.AttackCooldown = PlayerRuntimeData.GetInstance().data.AttackData.AttackDefaultCooldown;
-        _asEmptiedAmmo = true;
+        _hasEmptiedAmmo = true;
     }
 
     public void FixedUpdate()

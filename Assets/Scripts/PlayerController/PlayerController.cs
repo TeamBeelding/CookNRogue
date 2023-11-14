@@ -265,8 +265,8 @@ public class PlayerController : MonoBehaviour
                 _aimMagnitude = 1f;
             }
 
-            //Null Input Check
-            if (_aimMagnitude > 0)
+            //Deadzone
+            if (_aimMagnitude > 0.2f)
             {
                 //Rotate Player Model
                 Vector3 aimInputDir = relativeForward * _aimInputValue.y + relativeRight * _aimInputValue.x;
@@ -309,7 +309,8 @@ public class PlayerController : MonoBehaviour
                     playerAnimStatesScript.animStates = PlayerAnimStates.playerAnimStates.IDLEATTACK;
                 }
             }
-            else
+            //Deadzone
+            else if(_moveInputValue.magnitude > 0.2f)
             {
                 //Move Player
                 Vector3 moveInputDir = relativeForward * _moveInputValue.y + relativeRight * _moveInputValue.x;
@@ -338,7 +339,6 @@ public class PlayerController : MonoBehaviour
         else
         {
             //Dash
-
             if (m_dashDirection == Vector3.zero)
             {
                 //Null Input Check
@@ -346,7 +346,8 @@ public class PlayerController : MonoBehaviour
                 {
                     m_dashDirection = m_model.transform.forward;
                 }
-                else
+                //Deadzone
+                else if(_moveInputValue.magnitude > 0.2f)
                 {
                     Vector3 moveInputDir = relativeForward * _moveInputValue.y + relativeRight * _moveInputValue.x;
                     moveInputDir = moveInputDir.normalized;
@@ -524,15 +525,7 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        _isAiming = true;
-
-        m_aimArrow.SetActive(true);
-
         var inputType = context.control.layout;
-
-        Debug.Log("a");
-        //test
-        GetComponent<PlayerAttack>().SetIsShooting(true);
 
         //Check Input Device
         switch (inputType)
@@ -541,6 +534,10 @@ public class PlayerController : MonoBehaviour
             case ("Button"):
                 {
                     _isAimingOnMouse = true;
+                    _isAiming = true;
+
+                    m_aimArrow.SetActive(true);
+                    GetComponent<PlayerAttack>().SetIsShooting(true);
                     return;
                 }
             //Gamepad
@@ -548,6 +545,21 @@ public class PlayerController : MonoBehaviour
                 {
                     _aimInputValue = context.ReadValue<Vector2>();
                     _aimMagnitude = _aimInputValue.magnitude;
+                    //Deadzone
+                    if (_aimMagnitude > 0.2f)
+                    {
+                        _isAiming = true;
+
+                        m_aimArrow.SetActive(true);
+                        GetComponent<PlayerAttack>().SetIsShooting(true);
+                    }
+                    else
+                    {
+                        _isAiming = false;
+
+                        m_aimArrow.SetActive(false);
+                        GetComponent<PlayerAttack>().SetIsShooting(false);
+                    }
                     return;
                 }
         }
@@ -563,7 +575,6 @@ public class PlayerController : MonoBehaviour
 
         m_aimArrow.SetActive(false);
 
-        //test
         GetComponent<PlayerAttack>().SetIsShooting(false);
     }
 
@@ -575,6 +586,16 @@ public class PlayerController : MonoBehaviour
         if (_ignoreCook)
         {
             return;
+        }
+
+        if (_isAiming)
+        {
+            _aimInputValue = Vector2.zero;
+            _aimMagnitude = 0f;
+
+            m_aimArrow.SetActive(false);
+
+            GetComponent<PlayerAttack>().SetIsShooting(false);
         }
 
         StartCookingState();
@@ -601,12 +622,12 @@ public class PlayerController : MonoBehaviour
 
     void StartCookingState()
     {
-        playerAnimStatesScript._animator.SetBool("cooking", true);
-        // playerAnimStatesScript.Marmite(false, true);
-
         //Input state check
         if (_curState != playerStates.Default)
             return;
+
+        playerAnimStatesScript._animator.SetBool("cooking", true);
+        // playerAnimStatesScript.Marmite(false, true);
 
         //Set input state
         _playerActions.Default.Disable();
@@ -617,14 +638,14 @@ public class PlayerController : MonoBehaviour
 
     public void StopCookingState()
     {
+        //Input state check
+        if (_curState != playerStates.Cooking)
+            return;
+
         playerAnimStatesScript._animator.SetBool("cooking", false);
         // playerAnimStatesScript.Marmite(false, false);
         
         _Stop_SFX_Cook.Post(gameObject);
-
-        //Input state check
-        if (_curState != playerStates.Cooking)
-            return;
 
         //Set input state
         _playerActions.Cooking.Disable();
@@ -745,15 +766,15 @@ public class PlayerController : MonoBehaviour
         //Feedbacks
         CameraController.Instance.ScreenShake();
         takeDamageTransition.LoadTransition();
-
-        //Cooking cancel
-        StopCookingState();
         
         if (_tutorialManager)
             return;
             
         if (!_playerHealth.TakeDamage(1))
         {
+            //Cooking cancel
+            StopCookingState();
+
             Time.timeScale = 0f;
             _playerActions.Default.Disable();
             _playerActions.Cooking.Disable();

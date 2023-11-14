@@ -316,7 +316,6 @@ public class PlayerCookingInventory : MonoBehaviour
             PlayerRuntimeData.GetInstance().data.AttackData.AttackDrag += ingredient._drag;
             PlayerRuntimeData.GetInstance().data.AttackData.AttackCooldown += ingredient._attackDelay;
             averageDmg += ingredient._damage;
-            PlayerRuntimeData.GetInstance().data.AttackData.Ammunition += ingredient._ammunition;
             AmmunitionBar.instance.AddIngredientAmmo(ingredient._ammunition);
 
             //Audio
@@ -338,12 +337,15 @@ public class PlayerCookingInventory : MonoBehaviour
         {
             case 1:
                 averageDmg *= _damageFactor[0];
+                PlayerRuntimeData.GetInstance().data.AttackData.Ammunition = 15f;
                 break;
             case 2:
                 averageDmg *= _damageFactor[1];
+                PlayerRuntimeData.GetInstance().data.AttackData.Ammunition = 20f;
                 break;
             case 3:
                 averageDmg *= _damageFactor[2];
+                PlayerRuntimeData.GetInstance().data.AttackData.Ammunition = 30f;
                 break;
 
         }
