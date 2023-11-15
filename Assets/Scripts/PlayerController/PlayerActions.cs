@@ -236,7 +236,7 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""b2f4dd92-9071-4509-a70e-5499c599b803"",
-                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
                     ""interactions"": """",
                     ""processors"": ""AxisDeadzone"",
                     ""groups"": ""GamePad"",
@@ -313,7 +313,7 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""5d51f65a-fb01-4928-a453-c5ae0a392708"",
-                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""GamePad"",
@@ -324,7 +324,7 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""92323129-6e4d-4d3c-a92d-9a0cdca0a0d6"",
-                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""path"": ""<Gamepad>/dpad/up"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""GamePad"",
@@ -375,6 +375,15 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
+                    ""name"": ""Move"",
+                    ""type"": ""Value"",
+                    ""id"": ""b30e00b9-6da9-4c2f-a20d-2419e0b9f6a0"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
                     ""name"": ""ChangeWheel"",
                     ""type"": ""Button"",
                     ""id"": ""ac3372bb-e759-48db-9061-f0953e7c50ed"",
@@ -388,7 +397,7 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""6900fb1a-5b03-409f-9dcf-8f328845652b"",
-                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
                     ""interactions"": """",
                     ""processors"": ""AxisDeadzone"",
                     ""groups"": ""GamePad"",
@@ -410,7 +419,7 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""723b5e95-a559-404b-a382-cac422db7b04"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""GamePad"",
@@ -432,8 +441,8 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""a800c54f-9926-4929-92bd-a02f7ddabb66"",
-                    ""path"": ""<Gamepad>/buttonWest"",
-                    ""interactions"": """",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": ""Hold(duration=0.2)"",
                     ""processors"": """",
                     ""groups"": ""GamePad"",
                     ""action"": ""StartCrafting"",
@@ -454,7 +463,7 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""4c025de8-9dea-4412-b06f-86d77e52514a"",
-                    ""path"": ""<Gamepad>/leftStick"",
+                    ""path"": ""<Gamepad>/rightStick"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""GamePad"",
@@ -465,13 +474,79 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""dfd3be85-538d-4026-b51d-fc014dcc3879"",
-                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""GamePad"",
                     ""action"": ""ChangeWheel"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""637827fa-2552-4d25-b408-a2ee6694d4c4"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""GamePad"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""WASD"",
+                    ""id"": ""27bb771a-b716-4dcb-a5e8-2d8152e7662a"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""2ac9a522-b5ad-43f4-bfc2-616fa46c2195"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""b846922a-0cbf-4d5e-b7ad-d5c474c8041d"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""c02c2f57-24ae-4660-bea3-7d8ea85091c4"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""d1707306-b985-4d9a-973d-511fc4aaf85e"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         },
@@ -863,6 +938,7 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
         m_Cooking_SelectIngredient = m_Cooking.FindAction("SelectIngredient", throwIfNotFound: true);
         m_Cooking_StartCrafting = m_Cooking.FindAction("StartCrafting", throwIfNotFound: true);
         m_Cooking_IngredientSelector = m_Cooking.FindAction("IngredientSelector", throwIfNotFound: true);
+        m_Cooking_Move = m_Cooking.FindAction("Move", throwIfNotFound: true);
         m_Cooking_ChangeWheel = m_Cooking.FindAction("ChangeWheel", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
@@ -1034,6 +1110,7 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Cooking_SelectIngredient;
     private readonly InputAction m_Cooking_StartCrafting;
     private readonly InputAction m_Cooking_IngredientSelector;
+    private readonly InputAction m_Cooking_Move;
     private readonly InputAction m_Cooking_ChangeWheel;
     public struct CookingActions
     {
@@ -1043,6 +1120,7 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
         public InputAction @SelectIngredient => m_Wrapper.m_Cooking_SelectIngredient;
         public InputAction @StartCrafting => m_Wrapper.m_Cooking_StartCrafting;
         public InputAction @IngredientSelector => m_Wrapper.m_Cooking_IngredientSelector;
+        public InputAction @Move => m_Wrapper.m_Cooking_Move;
         public InputAction @ChangeWheel => m_Wrapper.m_Cooking_ChangeWheel;
         public InputActionMap Get() { return m_Wrapper.m_Cooking; }
         public void Enable() { Get().Enable(); }
@@ -1065,6 +1143,9 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                 @IngredientSelector.started -= m_Wrapper.m_CookingActionsCallbackInterface.OnIngredientSelector;
                 @IngredientSelector.performed -= m_Wrapper.m_CookingActionsCallbackInterface.OnIngredientSelector;
                 @IngredientSelector.canceled -= m_Wrapper.m_CookingActionsCallbackInterface.OnIngredientSelector;
+                @Move.started -= m_Wrapper.m_CookingActionsCallbackInterface.OnMove;
+                @Move.performed -= m_Wrapper.m_CookingActionsCallbackInterface.OnMove;
+                @Move.canceled -= m_Wrapper.m_CookingActionsCallbackInterface.OnMove;
                 @ChangeWheel.started -= m_Wrapper.m_CookingActionsCallbackInterface.OnChangeWheel;
                 @ChangeWheel.performed -= m_Wrapper.m_CookingActionsCallbackInterface.OnChangeWheel;
                 @ChangeWheel.canceled -= m_Wrapper.m_CookingActionsCallbackInterface.OnChangeWheel;
@@ -1084,6 +1165,9 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                 @IngredientSelector.started += instance.OnIngredientSelector;
                 @IngredientSelector.performed += instance.OnIngredientSelector;
                 @IngredientSelector.canceled += instance.OnIngredientSelector;
+                @Move.started += instance.OnMove;
+                @Move.performed += instance.OnMove;
+                @Move.canceled += instance.OnMove;
                 @ChangeWheel.started += instance.OnChangeWheel;
                 @ChangeWheel.performed += instance.OnChangeWheel;
                 @ChangeWheel.canceled += instance.OnChangeWheel;
@@ -1297,6 +1381,7 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
         void OnSelectIngredient(InputAction.CallbackContext context);
         void OnStartCrafting(InputAction.CallbackContext context);
         void OnIngredientSelector(InputAction.CallbackContext context);
+        void OnMove(InputAction.CallbackContext context);
         void OnChangeWheel(InputAction.CallbackContext context);
     }
     public interface IUIActions

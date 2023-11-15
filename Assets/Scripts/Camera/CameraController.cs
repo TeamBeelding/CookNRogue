@@ -3,7 +3,11 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    public static CameraController instance;
+    static CameraController _instance;
+    public static CameraController Instance
+    {
+        get => _instance;
+    }
 
     //Controler
     [Header("Camera Controller")]
@@ -19,6 +23,15 @@ public class CameraController : MonoBehaviour
 
     [SerializeField]
     private Vector3 m_offsetCoord;
+    public Vector3 OffsetCoord
+    {
+        get => m_offsetCoord;
+        set
+        {
+            m_offsetCoord = value;
+        }
+    }
+
     [SerializeField]
     private Quaternion m_offsetRotation;
 
@@ -78,6 +91,13 @@ public class CameraController : MonoBehaviour
     // This can be usfull for bosses, special items in the room ect..
     [SerializeField]
     private Transform m_target;
+    public Transform Target
+    {
+        set
+        {
+            m_target = value;
+        }
+    }
 
     [Header("Aim Smoothing")]
     [Header("==========================================================================================================================================================================================================================")]
@@ -85,10 +105,18 @@ public class CameraController : MonoBehaviour
     private float m_cameraAimDistance;
     private float _currentMagnitude = 0;
 
+    private void Awake()
+    {
+        if (_instance != null)
+        {
+            Destroy(gameObject);
+        }
+
+        _instance = this;
+    }
+
     void Start()
     {
-        instance = this;
-
         //m_mainCamera.position += m_offsetCoord;
         m_mainCamera.rotation *= m_offsetRotation;
         m_mainCamera.position += m_offsetCoord;
