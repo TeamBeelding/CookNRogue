@@ -50,7 +50,7 @@ public class PlayerRuntimeData
     public class PlayerAttackData
     {
         [NonSerialized]
-        public int Ammunition = 0;
+        public float Ammunition = 0;
         [NonSerialized]
         public int ProjectileNumber = 0;
 
