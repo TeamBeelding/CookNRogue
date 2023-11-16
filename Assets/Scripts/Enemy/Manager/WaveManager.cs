@@ -1,10 +1,22 @@
 using Enemy;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class WaveManager : MonoBehaviour
 {
+    private enum State
+    {
+        VerifyContent,
+        SpawnEnemie,
+        NextWave,
+        WaitAllEnemiesDie,
+        EndWave
+    }
+
+    private State state;
+
     [SerializeField] private List<Transform> waveSpawner;
 
     [System.Serializable]
@@ -18,76 +30,133 @@ public class WaveManager : MonoBehaviour
 
     [SerializeField] private int waveNumber = 1;
     [SerializeField] private int enemiesInWave = 1;
-    //[SerializeField] private int maxEnemiesInWave = 1;
+    [SerializeField] private float delayBeforeWave = 1f;
     [SerializeField] private float delayBetweenWave = 1f;
     [SerializeField] private float delayBetweenSpawn = 1f;
 
     [SerializeField] private bool needAllEnemiesDiesBeforeNextWave = false;
 
-    private bool allWaveEnd = false;
-    private bool isWaveIsEnd = false;
-
-    private Coroutine waveCoroutine;
-    private Coroutine enemyCoroutine;
+    private Coroutine stateCoroutine;
 
     private List<PoolType> allType = new List<PoolType>();
 
-    private void Update()
+    private int indexOfEnemie;
+    private int indexOfWave;
+
+    private void Start()
     {
-        if (Input.GetKeyUp(KeyCode.W))
-        {
-            StartingWave();
-        }
+        SetState(State.VerifyContent);
     }
 
-    private void FixedUpdate()
+    private void SetState(State newValue)
     {
-        if (allWaveEnd)
-        {
-            if (EnemyManager.Instance.EnemiesInLevel.Length == 0)
-            {
-                isWaveIsEnd = true;
-            }
-        }
+        if (stateCoroutine != null)
+            stateCoroutine = null;
+
+        state = newValue;
+
+        StateManagement();
     }
 
-    private void StartingWave()
+    private void StateManagement()
     {
-        VerifyWaveManager();
-
-        allWaveEnd = false;
-
-        for (int i = 0; i < waveNumber; i++)
+        switch (state)
         {
-            for (int j = 0; j < enemiesInWave; j++)
-            {
-                enemyCoroutine = StartCoroutine(IWaitForNextEnemieSpawn());
-            }
-
-            waveCoroutine = StartCoroutine(IWaitNextWave());
+            case State.VerifyContent:
+                VerifyWaveManager();
+                break;
+            case State.SpawnEnemie:
+                SpawnEnemies();
+                break;
+            case State.NextWave:
+                NextWave();
+                break;
+            case State.WaitAllEnemiesDie:
+                WaitingAllEnemieDie();
+                break;
+            case State.EndWave:
+                EnemyManager.Instance.EndWave();
+                break;
         }
-
-        allWaveEnd = true;
-
-        StopCoroutine(waveCoroutine);
-        StopCoroutine(enemyCoroutine);
-
-        Debug.Log("End of wave");
     }
 
     private void VerifyWaveManager()
     {
-        if (waveSpawner != null || wavesContainers.Count == 0)
-            Debug.LogWarning("Wave spawner ou wave container doesn't exist");
-
-        foreach (WaveStruct wave in wavesContainers)
+        if (waveSpawner == null || wavesContainers.Count == 0)
         {
-            for (int i = 0; i < wave.rating; i++)
+            Debug.LogWarning("Wave spawner or wave container doesn't exist");
+            SetState(State.EndWave);
+        }
+        else
+        {
+            foreach (WaveStruct wave in wavesContainers)
             {
-                var waveType = wave.type;
+                for (int i = 1; i <= wave.rating; i++)
+                    allType.Add(wave.type);
+            }
 
-                Debug.Log(waveType);
-                allType.Add(waveType);
+            SetState(State.NextWave);
+        }
+    }
+
+    private void SpawnEnemies()
+    {
+        stateCoroutine = StartCoroutine(ISpawnEnemies());
+
+        IEnumerator ISpawnEnemies()
+        {
+            while (state == State.SpawnEnemie)
+            {
+                indexOfEnemie++;
+
+                if (indexOfEnemie > enemiesInWave)
+                {
+                    if (needAllEnemiesDiesBeforeNextWave)
+                        SetState(State.WaitAllEnemiesDie);
+                    else
+                        SetState(State.NextWave);
+                }
+                else
+                {
+                    PoolManager.Instance.InstantiateFromPool(GetRandomEnemy(), GetRandomSpawner(), Quaternion.identity);
+                    yield return new WaitForSeconds(delayBetweenSpawn);
+                }
+            }
+        }
+    }
+
+    private void NextWave()
+    {
+        indexOfWave++;
+        indexOfEnemie = 0;
+
+        if (indexOfWave > waveNumber)
+            SetState(State.EndWave);
+        else
+            stateCoroutine = StartCoroutine(IWaitingWaveDelay());
+
+        IEnumerator IWaitingWaveDelay()
+        {
+            while (state == State.NextWave)
+            {
+                yield return new WaitForSeconds(delayBetweenWave);
+                SetState(State.SpawnEnemie);
+            }
+        }
+    }
+
+    private void WaitingAllEnemieDie()
+    {
+        stateCoroutine = StartCoroutine(IWaitingAllAIDie());
+
+        IEnumerator IWaitingAllAIDie()
+        {
+            while (state == State.WaitAllEnemiesDie)
+            {
+                if (GameObject.FindGameObjectsWithTag("Enemy").Length > 0)
+                    yield return new WaitForSeconds(1);
+                else
+                    SetState(State.NextWave);
             }
         }
     }
@@ -101,31 +170,8 @@ public class WaveManager : MonoBehaviour
 
     private PoolType GetRandomEnemy()
     {
-        var rand = Random.Range(0, allType.Count);
+        var rand = Random.Range(0, allType.Count - 1);
 
         return wavesContainers[rand].type;
-    }
-
-    private IEnumerator IWaitNextWave()
-    {
-        if (needAllEnemiesDiesBeforeNextWave)
-        {
-            while (!isWaveIsEnd)
-            {
-                yield return new WaitForSeconds(1);
-            }
-
-            yield return null;
-        }   
-        else
-        {
-            yield return new WaitForSeconds(delayBetweenWave);
-        }
-    }
-
-    private IEnumerator IWaitForNextEnemieSpawn()
-    {
-        PoolManager.Instance.InstantiateFromPool(GetRandomEnemy(), GetRandomSpawner(), Quaternion.identity);
-        yield return new WaitForSeconds(delayBetweenSpawn);
     }
 }

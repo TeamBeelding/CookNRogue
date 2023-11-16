@@ -56,10 +56,15 @@ namespace Enemy
                 }
             }
 
-            if (numOfEnemies <= 0 && OnAllEnnemiesKilled != null)
-            {
-                OnAllEnnemiesKilled?.Invoke();
-            }
+            //if (numOfEnemies <= 0 && OnAllEnnemiesKilled != null)
+            //{
+            //    OnAllEnnemiesKilled?.Invoke();
+            //}
+        }
+
+        public void EndWave()
+        {
+            OnAllEnnemiesKilled?.Invoke();
         }
 
         public void DestroyAll()
