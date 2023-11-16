@@ -75,6 +75,12 @@ public class PlayerController : MonoBehaviour
     }
     bool _dashOnCooldown = false;
 
+    private bool _canMove = true;
+    public bool CanMove
+    {
+        get => _canMove;
+    }
+
     [SerializeField] ParticleSystem DashingParticles;
 
     private Vector3 m_dashDirection = Vector2.zero;
@@ -214,6 +220,10 @@ public class PlayerController : MonoBehaviour
         //Set UI Events
         _playerActions.UI.Pause.performed += OnPauseGame;
         _playerActions.UI.Return.performed += OnPauseGame;
+        _playerActions.UI.SelectIngredient.performed += SelectTotemIngredient;
+        _playerActions.UI.IngredientSelector.performed += OnTotemIngredientSelectorInput;
+        _playerActions.UI.IngredientSelector.canceled += OnTotemIngredientSelectorInputStop;
+        _playerActions.UI.ValidateIngredients.performed += OnValidateIngredients;
 
         //Set Debug Events
         _playerActions.Debug.EnterDebug.started += QuitDebug;
@@ -430,6 +440,9 @@ public class PlayerController : MonoBehaviour
     #region Movement
     void Move_Performed(InputAction.CallbackContext context)
     {
+        if (!_canMove)
+            return;
+
         _moveInputValue = context.ReadValue<Vector2>();
     }
 
@@ -472,6 +485,9 @@ public class PlayerController : MonoBehaviour
     //Dash
     private void Dash(InputAction.CallbackContext context)
     {
+        if (!_canMove)
+            return;
+
         if (_dashOnCooldown)
         {
             return;
@@ -742,6 +758,11 @@ public class PlayerController : MonoBehaviour
         _isLocked = isLocked;
     }
 
+    public void AbleToMove(bool ableToMove)
+    {
+        _canMove = ableToMove;
+    }
+
     void Rotate(Vector3 direction)
     {
         float newX = Mathf.Lerp(m_model.transform.forward.x, direction.x, Time.deltaTime * PlayerRuntimeData.GetInstance().data.BaseData.RotationSpeed);
@@ -870,6 +891,34 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region UI
+
+    void OnTotemIngredientSelectorInput(InputAction.CallbackContext context)
+    {
+
+        if (!TotemSelectorScript.instance)
+            return;
+
+        TotemSelectorScript.instance.OnSelectorInput(context.ReadValue<Vector2>().normalized);
+    }
+
+    void OnTotemIngredientSelectorInputStop(InputAction.CallbackContext context)
+    {
+        if (!TotemSelectorScript.instance)
+            return;
+
+        TotemSelectorScript.instance.OnSelectorInputStop();
+    }
+
+    void SelectTotemIngredient(InputAction.CallbackContext context)
+    {
+        TotemSelectorScript.instance.SelectIngredient();
+    }
+
+    void OnValidateIngredients(InputAction.CallbackContext context)
+    {
+        TotemSelectorScript.instance.ApplyTotemHeal();
+        TotemMenuManager._instance.SwitchUI();
+    }
 
     private void OnPauseGame(InputAction.CallbackContext callbackContext)
     {

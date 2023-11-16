@@ -18,6 +18,11 @@ public class PlayerCookingInventory : MonoBehaviour
     [SerializeField] 
     List<PlayerCookingInventoryWheel> m_inventoryWheels;
 
+    public PlayerCookingInventoryWheel GetWheel()
+    {
+        return m_inventoryWheels[0];
+    }
+
     [SerializeField]
     List<PlayerCookingRecipeSlot> m_recipeSlots;
 
@@ -614,7 +619,7 @@ public class PlayerCookingInventory : MonoBehaviour
     #endregion
 
     [System.Serializable]
-    private class PlayerCookingInventoryWheel
+    public class PlayerCookingInventoryWheel
     {
         [SerializeField]
         GameObject m_wheelObject;
