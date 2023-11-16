@@ -222,7 +222,6 @@ public sealed class TotemSelectorScript : MonoBehaviour
         {
             if(PlayerCookingInventory.Instance.GetWheel().GetSlot(i).GetData() == data)
             {
-                Debug.Log("DECREASE INVENTORY");
                 PlayerCookingInventory.Instance.GetWheel().GetSlot(i).DecreaseCount();
             }
         }

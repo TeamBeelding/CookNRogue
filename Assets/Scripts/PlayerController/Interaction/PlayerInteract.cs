@@ -19,6 +19,9 @@ public class PlayerInteract : MonoBehaviour
 
     private void OnTriggerExit(Collider collision)
     {
+        if (_interactable == null)
+            return;
+
         _interactable.HideItemGFX();
         _interactable = null;
     }
