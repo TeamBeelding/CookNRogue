@@ -95,7 +95,6 @@ public class PlayerController : MonoBehaviour
 
     PlayerCookingInventory _inventoryScript;
     EnemyManager _enemyManager;
-    RoomManager _roomManager;
     PlayerCooking _cookingScript;
 
     bool _isLocked = false;
@@ -176,7 +175,6 @@ public class PlayerController : MonoBehaviour
         _relativeTransform = m_mainCamera.transform;
         _inventoryScript = PlayerCookingInventory.Instance;
         _enemyManager = EnemyManager.Instance;
-        _roomManager = RoomManager.instance;
         _cookingScript = GetComponent<PlayerCooking>();
         _playerHealth = GetComponent<PlayerHealth>();
         _rb = _rb != null ? _rb : GetComponent<Rigidbody>();
@@ -857,19 +855,17 @@ public class PlayerController : MonoBehaviour
 
     void GotToNextLevel(InputAction.CallbackContext context)
     {
-        _roomManager.LoadNextLevel();
         QuitDebug();
     }
 
     void GotToPreviousLevel(InputAction.CallbackContext context)
     {
-        _roomManager.LoadPreviousLevel();
         QuitDebug();
     }
 
     void ReloadLevel(InputAction.CallbackContext context)
     {
-        _roomManager.RestartRoom();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         QuitDebug();
     }
 
@@ -987,7 +983,7 @@ public class PlayerController : MonoBehaviour
         _playerActions.UI.Disable();
         _playerActions.Cooking.Disable();
         _playerActions.Default.Enable();
-        RoomManager.instance.RestartLevel();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void SkipTuto()
