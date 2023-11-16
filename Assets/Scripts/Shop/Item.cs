@@ -63,11 +63,10 @@ public class Item : MonoBehaviour
 
     protected IEnumerator ToPlayer()
     {
-        Debug.Log("ToPlayer");
         Transform playerTransform = PlayerHealth.instance.transform;
         float distanceToPlayer = Vector3.Distance(playerTransform.position, transform.position);
 
-        while (distanceToPlayer > 0.1f)
+        while (distanceToPlayer > 0.2f)
         {
             transform.position = Vector3.Lerp(transform.position, playerTransform.position, 0.05f);
             distanceToPlayer = Vector3.Distance(playerTransform.position, transform.position);
@@ -81,5 +80,8 @@ public class Item : MonoBehaviour
             _obtainPS.Play();
 
         _triggerEffect.Invoke();
+
+        //TEMPORARY
+        Destroy(gameObject);
     }
 }
