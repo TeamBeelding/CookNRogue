@@ -155,6 +155,6 @@ public class PlayerRuntimeData
 
     private void LoadData()
     {
-        data = JsonUtility.FromJson<Data>(System.IO.File.ReadAllText(_dataFilePath));
+        data = JsonUtility.FromJson<Data>(Resources.Load("PlayerData").ToString());
     }
 }
