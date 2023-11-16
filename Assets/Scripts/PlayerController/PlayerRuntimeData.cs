@@ -102,6 +102,8 @@ public class PlayerRuntimeData
 
         [NonSerialized]
         public List<ProjectileData> Recipe = new();
+        [NonSerialized]
+        public int RecipeMaxIngredientNb = 1;
     }
 
     [Serializable]
