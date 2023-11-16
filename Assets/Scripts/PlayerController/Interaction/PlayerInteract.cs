@@ -8,22 +8,28 @@ public class PlayerInteract : MonoBehaviour
     Item _interactable;
     private void OnTriggerEnter(Collider collision)
     {
-        Item Item = collision.GetComponent<Item>();
+        ISubItem Item = collision.GetComponent<ISubItem>();
 
+        if (Item == null)
+            return;
+
+        Item.TriggerItem();
+
+        /*
         if (Item == null || Item == _interactable)
             return;
 
         _interactable = collision.GetComponent<Item>();
         _interactable.ShowItemGFX();
+        */
     }
 
     private void OnTriggerExit(Collider collision)
     {
-        if (_interactable == null)
-            return;
-
+        /*
         _interactable.HideItemGFX();
         _interactable = null;
+        */
     }
 
     public void TryInteract(InputAction.CallbackContext context)

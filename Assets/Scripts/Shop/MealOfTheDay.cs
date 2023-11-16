@@ -1,18 +1,40 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class MealOfTheDay : Item
+public class MealOfTheDay : Item, ISubItem
 {
-    [SerializeReference] MealOfTheDayData _MOTDdata;
+    bool hasTriggered = false;
+
+    protected override void Update()
+    {
+        base.Update();
+    }
     public override void Interact(string tag)
     {
         base.Interact(tag);
-        ApplyItem();
+        TriggerItem();
     }
 
-    public override void ApplyItem()
+    public void TriggerItem()
     {
+        if (!CanTrigger())
+            return;
+
+        _triggerEffect.AddListener(ApplyItem);
+        ApplyItemRoutine();
         
     }
+
+    public void ApplyItem()
+    {
+        MealOfTheDayData data = (MealOfTheDayData)_data;
+
+        for (int i = 0; i < data.playerUpgradeHealth; i++)
+        {
+            PlayerHealth.instance.UpgradeMaxHealth(data.playerUpgradeHealth);
+        }
+    }
+
 }

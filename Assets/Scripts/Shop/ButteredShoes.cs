@@ -2,17 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ButteredShoes : Item
+public class ButteredShoes : Item,ISubItem
 {
-    [SerializeReference] ButteredShoesData _BSdata;
     public override void Interact(string tag)
     {
         base.Interact(tag);
-        ApplyItem();
+        TriggerItem();
     }
 
-    public override void ApplyItem()
+    public void TriggerItem()
     {
+        if (!CanTrigger())
+            return;
 
+        _triggerEffect.AddListener(ApplyItem);
+        ApplyItemRoutine();
+    }
+
+    public void ApplyItem()
+    {
+        ButteredShoesData data = (ButteredShoesData)_data;
+        PlayerRuntimeData.GetInstance().data.InventoryData.ButteredShoes = true;
+        PlayerRuntimeData.GetInstance().data.InventoryData.ButteredShoesValue += data.playerSpeedBuff;
     }
 }
