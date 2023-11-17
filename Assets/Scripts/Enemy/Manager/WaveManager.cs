@@ -1,7 +1,6 @@
 using Enemy;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class WaveManager : MonoBehaviour
@@ -95,7 +94,10 @@ public class WaveManager : MonoBehaviour
                     allType.Add(wave.type);
             }
 
-            SetState(State.NextWave);
+            if (allType.Count > 0)
+                SetState(State.NextWave);
+            else
+                SetState(State.EndWave);
         }
     }
 
@@ -170,7 +172,7 @@ public class WaveManager : MonoBehaviour
 
     private PoolType GetRandomEnemy()
     {
-        var rand = Random.Range(0, allType.Count - 1);
+        int rand = Random.Range(0, allType.Count - 1);
 
         return wavesContainers[rand].type;
     }

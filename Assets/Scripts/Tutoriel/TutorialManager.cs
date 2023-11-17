@@ -5,7 +5,6 @@ using Dialogues;
 using Sirenix.Utilities;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 
 namespace Tutoriel
 {

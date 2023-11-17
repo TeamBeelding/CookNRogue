@@ -15,7 +15,7 @@ public class KamilkazeData : ScriptableObject
 
     private void Reset()
     {
-        focusPlayerOnCD = false;
+        focusPlayerOnCD = true;
         health = 100;
         focusRange = 0;
         speed = 0;

@@ -18,8 +18,10 @@ public class Kamilkaze : EnemyController
 
     public State state;
 
-    [SerializeField] private Animator _animator;
+    //[SerializeField] private Animator _animator;
     [SerializeField] private GameObject physics;
+    [SerializeField] private GameObject visual;
+    [SerializeField] private GameObject effect;
 
     private Coroutine stateCoroutine;
 
@@ -29,13 +31,20 @@ public class Kamilkaze : EnemyController
 
         Healthpoint = _data.Health;
         //_animator = GetComponentInChildren<Animator>();
+        _agent.stoppingDistance = _data.DistanceToPlayerForExplosion;
+
+        visual?.SetActive(true);
+        physics?.SetActive(true);
+        effect?.SetActive(false);
 
         SetState(_data.FocusPlayerOnCD ? State.Chase : State.Neutral);
     }
 
     private void SetState(State newState)
     {
-        stateCoroutine = null;
+        if (stateCoroutine != null)
+            stateCoroutine = null;
+        
         state = newState;
 
         StateManagement();
@@ -46,6 +55,7 @@ public class Kamilkaze : EnemyController
         switch (state)
         {
             case State.Neutral:
+                Neutral();
                 break;
             case State.Chase:
                 Chase();
@@ -60,7 +70,7 @@ public class Kamilkaze : EnemyController
                 Dying();
                 break;
             default:
-                SetState(State.Dying); 
+                Dying();
                 break;
         }
     }
@@ -68,6 +78,22 @@ public class Kamilkaze : EnemyController
     public override bool IsMoving()
     {
         throw new System.NotImplementedException();
+    }
+
+    private void Neutral()
+    {
+        stateCoroutine = StartCoroutine(ICheckingPlayerPos());
+
+        IEnumerator ICheckingPlayerPos()
+        {
+            while (state == State.Neutral)
+            {
+                if (Vector3.Distance(transform.position, Player.transform.position) < _data.FocusRange)
+                    SetState(State.Chase);
+
+                yield return new WaitForSeconds(0.5f);
+            }
+        }
     }
 
     protected override void Chase()
@@ -79,7 +105,7 @@ public class Kamilkaze : EnemyController
         {
             while (state == State.Chase)
             {
-                if (Vector3.Distance(transform.position, Player.transform.position) < _agent.stoppingDistance)
+                if (Vector3.Distance(transform.position, Player.transform.position) > _agent.stoppingDistance)
                     _agent.SetDestination(Player.transform.position);
                 else
                     SetState(State.Casting);
@@ -96,12 +122,18 @@ public class Kamilkaze : EnemyController
         IEnumerator ICasting()
         {
             yield return new WaitForSeconds(_data.DelaiForExplose);
+            Debug.Log("explode");
+
             SetState(State.Explose);
         }
     }
 
     private void Explode()
     {
+        visual?.SetActive(false);
+        physics?.SetActive(false);
+        effect?.SetActive(true);
+
         if (Vector3.Distance(transform.position, Player.transform.position) <= _data.ExplosionRange)
             Player.GetComponent<PlayerController>().TakeDamage(_data.Damage);
 
@@ -118,12 +150,9 @@ public class Kamilkaze : EnemyController
 
     protected override void Dying()
     {
-        physics?.SetActive(false);
-        StopAllCoroutines();
+        //_animator?.SetBool("isDead", true);
 
-        _animator?.SetBool("isDead", true);
-
-        StartCoroutine(IDeathAnim());
+        stateCoroutine = StartCoroutine(IDeathAnim());
 
         IEnumerator IDeathAnim()
         {
@@ -131,4 +160,14 @@ public class Kamilkaze : EnemyController
             base.Dying();
         }
     }
+
+#if UNITY_EDITOR
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, _data.FocusRange);
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, _data.ExplosionRange);
+    }
+#endif
 }

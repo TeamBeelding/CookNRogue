@@ -67,6 +67,8 @@ namespace Enemy
             OnAllEnnemiesKilled?.Invoke();
         }
 
+        public int GetNumOfEnemies() => numOfEnemies;
+
         public void DestroyAll()
         {
             if (_enemiesInLevel != null)
