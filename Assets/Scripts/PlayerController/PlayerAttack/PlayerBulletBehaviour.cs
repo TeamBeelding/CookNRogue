@@ -34,8 +34,6 @@ public class PlayerBulletBehaviour : MonoBehaviour
 
         rb.drag = drag;
         rb.velocity = direction * speed;*/
-
-        Invoke("DestroyBullet", 1);
         _initialSpeed = _speed;
     }
    
@@ -63,10 +61,21 @@ public class PlayerBulletBehaviour : MonoBehaviour
             ApplyCorrectOnHitEffects();
         }
     }
-    public void DestroyBullet()
+    public virtual void ExplosionEffect()
+    {
+        GameObject explosion = Instantiate(Explosion, transform.position, Quaternion.identity);
+        Destroy(explosion, 1);
+        if (!_HasHit)
+        {
+            ApplyCorrectOnHitEffects();
+        }
+    }
+    public void DisableBullet()
     {
         //Debug.Log("Destroy");
-        Destroy(gameObject);
+        //Destroy(gameObject);
+        ExplosionEffect();
+        gameObject.SetActive(false);
     }
     public void ResetSpeed()
     {
@@ -95,7 +104,8 @@ public class PlayerBulletBehaviour : MonoBehaviour
 
             if (destroyOnHit)
             {
-                Destroy(gameObject);
+                //Destroy(gameObject);
+                DisableBullet();
             }
 
 
@@ -119,7 +129,8 @@ public class PlayerBulletBehaviour : MonoBehaviour
             }
             else
             {
-                Destroy(gameObject);
+                //Destroy(gameObject);
+                DisableBullet();
             }
         }
     }
@@ -182,7 +193,7 @@ public class PlayerBulletBehaviour : MonoBehaviour
         }
         else
         {
-            DestroyBullet();
+            DisableBullet();
         }
         
         

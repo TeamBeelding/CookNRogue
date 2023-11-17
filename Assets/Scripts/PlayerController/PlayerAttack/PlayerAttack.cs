@@ -235,8 +235,21 @@ public class PlayerAttack : MonoBehaviour
             for (int k = j; k < 3; k++)
             {
                 #region PlayerBulletBehaviour Init
-                GameObject Bullet = Instantiate(_Projectile, _muzzle.position, Quaternion.identity);
+
+                GameObject Bullet;
+
+                if (PlayerBulletManager.instance != null)
+                    Bullet = PlayerBulletManager.instance.GetAvailableBullet().gameObject;
+                else
+                    Bullet = Instantiate(_Projectile, _muzzle.position, Quaternion.identity);
+
+                Bullet.transform.position = _muzzle.position;
+
                 _projectileBehaviour = Bullet.GetComponent<PlayerBulletBehaviour>();
+
+                _projectileBehaviour.CancelInvoke("DisableBullet");
+                _projectileBehaviour.Invoke("DisableBullet", 1);
+
                 _projectileBehaviour.ResetStats();
                 _projectileBehaviour._playerAttack = this;
                 _projectileBehaviour._speed += PlayerRuntimeData.GetInstance().data.AttackData.AttackSpeed;

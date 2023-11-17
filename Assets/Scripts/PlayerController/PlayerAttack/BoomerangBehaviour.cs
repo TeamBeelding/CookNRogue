@@ -30,8 +30,7 @@ public class BoomerangBehaviour : PlayerBulletBehaviour
         transform.position = _StartPosition + (_direction * _forward.Evaluate(_increment * _boomerangSpeed) * _MaxForwardDistance) + (_Xaxis * _sides.Evaluate(_increment * _boomerangSpeed) * _MaxSideDistance);
         if(_increment * _boomerangSpeed > 1)
         {
-            Debug.Log("destroy");
-            Destroy(gameObject);
+            DisableBullet();
         }
         _increment++;
         

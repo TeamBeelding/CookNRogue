@@ -5,6 +5,7 @@ using UnityEngine;
 public sealed class MissileDecalManager : MonoBehaviour
 {
     public static MissileDecalManager instance;
+    [SerializeField] Transform BossDecalContainer;
     List<MissileDecal> DecalList = new List<MissileDecal>();
     [SerializeField] GameObject MissileDecalPrefab;
     [SerializeField] int _initialListSize;
@@ -27,7 +28,7 @@ public sealed class MissileDecalManager : MonoBehaviour
     {
         for (int i = 0; i < _initialListSize; i++)
         {
-            GameObject temp = Instantiate(MissileDecalPrefab, transform.position, Quaternion.identity, transform);
+            GameObject temp = Instantiate(MissileDecalPrefab, transform.position, Quaternion.identity, BossDecalContainer);
             MissileDecal missileDecal = temp.GetComponent<MissileDecal>();
             DecalList.Add(missileDecal);
             temp.SetActive(false);
@@ -45,7 +46,7 @@ public sealed class MissileDecalManager : MonoBehaviour
             }
         }
 
-        GameObject temp = Instantiate(MissileDecalPrefab, transform.position, Quaternion.identity, transform);
+        GameObject temp = Instantiate(MissileDecalPrefab, transform.position, Quaternion.identity, BossDecalContainer);
         MissileDecal missileDecal = temp.GetComponent<MissileDecal>();
 
         DecalList.Add(missileDecal);
