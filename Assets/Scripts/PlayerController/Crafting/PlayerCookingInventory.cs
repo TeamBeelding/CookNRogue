@@ -96,7 +96,7 @@ public class PlayerCookingInventory : MonoBehaviour
         _hiddenPosition.y -= gameObject.GetComponent<RectTransform>().rect.height;*/
         //m_UIHolder.localPosition = _hiddenPosition;
 
-        _cameraController = CameraController.Instance;
+        _cameraController = CameraController.instance;
         _shownCamOffset = _cameraController.OffsetCoord + m_cameraOffset;
         _hiddenCamOffset = _cameraController.OffsetCoord;
 
@@ -365,7 +365,20 @@ public class PlayerCookingInventory : MonoBehaviour
                 break;
 
         }
+
+        //LARGE CAULDRON CHECK
+        if (PlayerRuntimeData.GetInstance().data.InventoryData.LargeCauldron)
+            PlayerRuntimeData.GetInstance().data.AttackData.Ammunition += PlayerRuntimeData.GetInstance().data.InventoryData.LargeCauldronValue;
+
+        //BIG SPATULE CHECK
+        if (PlayerRuntimeData.GetInstance().data.InventoryData.BigSpatule && PlayerRuntimeData.GetInstance().data.CookData.QTESuccess)
+            PlayerRuntimeData.GetInstance().data.AttackData.Ammunition += PlayerRuntimeData.GetInstance().data.InventoryData.BigSpatuleValue;
+        
         PlayerRuntimeData.GetInstance().data.AttackData.AttackDamage = averageDmg;
+
+        //WODDEN SPOON CHECK
+        if (PlayerRuntimeData.GetInstance().data.InventoryData.WoodenSpoon)
+            PlayerRuntimeData.GetInstance().data.AttackData.AttackDamage += PlayerRuntimeData.GetInstance().data.InventoryData.WoodenSpoonValue;
 
         //Average rate of fire
         PlayerRuntimeData.GetInstance().data.AttackData.AttackCooldown /= PlayerRuntimeData.GetInstance().data.CookData.Recipe.Count;

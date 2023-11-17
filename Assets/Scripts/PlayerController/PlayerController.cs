@@ -451,6 +451,10 @@ public class PlayerController : MonoBehaviour
 
     void Move(Vector3 direction, float speed)
     {
+        //CHECK FOR BUTTERED SHOES BUFF
+        if (PlayerRuntimeData.GetInstance().data.InventoryData.ButteredShoes)
+            speed *= PlayerRuntimeData.GetInstance().data.InventoryData.ButteredShoesValue;
+
         _rb.AddForce(100f * speed * Time.deltaTime * direction, ForceMode.Force);
         _rb.drag = PlayerRuntimeData.GetInstance().data.BaseData.MoveDrag;
 
@@ -774,7 +778,7 @@ public class PlayerController : MonoBehaviour
             return;
 
         //Feedbacks
-        CameraController.Instance.ScreenShake();
+        CameraController.instance.ScreenShake();
         takeDamageTransition.LoadTransition();
         
         if (_tutorialManager)

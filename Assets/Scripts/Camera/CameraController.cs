@@ -4,7 +4,6 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     public static CameraController instance;
-
     //Controler
     [Header("Camera Controller")]
     [Header("==========================================================================================================================================================================================================================")]
@@ -19,6 +18,8 @@ public class CameraController : MonoBehaviour
 
     [SerializeField]
     private Vector3 m_offsetCoord;
+    public Vector3 OffsetCoord { get { return m_offsetCoord; } set { m_offsetCoord = value; } }
+
     [SerializeField]
     private Quaternion m_offsetRotation;
 
