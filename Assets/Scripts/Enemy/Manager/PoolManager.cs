@@ -34,19 +34,6 @@ public class PoolManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    private void Start()
-    {
-
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyUp(KeyCode.A))
-        {
-            GameObject obj = InstantiateFromPool(PoolType.Kamilkaze, new Vector3(-184.521f, 0.5f, 22f), Quaternion.identity);
-        }
-    }
-
     public static PoolManager Instance
     {
         get => instance;
