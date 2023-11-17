@@ -23,5 +23,6 @@ public class LargeCauldron : Item,ISubItem
     {
         LargeCauldronData data = (LargeCauldronData)_data;
         PlayerRuntimeData.GetInstance().data.InventoryData.LargeCauldron = true;
+        PlayerRuntimeData.GetInstance().data.InventoryData.LargeCauldronValue = data.SecondBuff;
     }
 }

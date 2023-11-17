@@ -13,6 +13,13 @@ public class PlayerHealth : MonoBehaviour
 
     HeartBar _heartBar;
 
+    [Header("Time Scale")]
+    [SerializeField] float _targetTimeScale;
+    [SerializeField] float _scalingDuration;
+    [SerializeField] float _ScalingSpeed;
+    [SerializeField] AnimationCurve _scaleCurve;
+
+
     private void Awake()
     {
         if(instance != null && instance != this)
@@ -65,6 +72,7 @@ public class PlayerHealth : MonoBehaviour
             return false;
         }
 
+        StartCoroutine(DamageSlowTime(_scalingDuration));
         return true;
     }
 
@@ -91,6 +99,32 @@ public class PlayerHealth : MonoBehaviour
     private void Reset()
     {
         PlayerRuntimeData.GetInstance().data.BaseData.MaxHealth = PlayerRuntimeData.GetInstance().data.BaseData.DefaultMaxHealth;
+    }
+
+    IEnumerator DamageSlowTime(float duration)
+    {
+        //SCALE
+        float scaleProgress = 0;
+        while (scaleProgress < 1)
+        {
+            float newScale = (1 - _targetTimeScale) * _scaleCurve.Evaluate(scaleProgress);
+            scaleProgress += Time.fixedDeltaTime * _ScalingSpeed;
+            Time.timeScale = 1 - newScale;
+            yield return new WaitForFixedUpdate();
+        }
+        Time.timeScale = _targetTimeScale;
+
+        yield return new WaitForSecondsRealtime(duration);
+
+        scaleProgress = 1;
+        while (scaleProgress > 0)
+        {
+            float newScale = (1 - _targetTimeScale) * _scaleCurve.Evaluate(scaleProgress);
+            scaleProgress -= Time.fixedDeltaTime * _ScalingSpeed;
+            Time.timeScale = 1 - newScale;
+            yield return new WaitForFixedUpdate();
+        }
+        Time.timeScale = 1;
     }
 
 }
