@@ -88,6 +88,7 @@ public class PlayerCooking : MonoBehaviour
     {
         if (!_craftingInProgress)
         {
+            PlayerRuntimeData.GetInstance().data.CookData.QTESuccess = false;
             _inventoryScript.Show(true);
         }
         else

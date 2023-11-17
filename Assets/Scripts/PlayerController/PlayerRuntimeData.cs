@@ -115,6 +115,8 @@ public class PlayerRuntimeData
         public List<ProjectileData> Recipe = new();
         [NonSerialized]
         public int RecipeMaxIngredientNb = 1;
+
+        public bool QTESuccess = false;
     }
 
     [Serializable]
@@ -129,7 +131,9 @@ public class PlayerRuntimeData
         public bool ErgonomicHandle = false;
         public float ErgonomicHandleValue = 0;
         public bool BigSpatule = false;
+        public float BigSpatuleValue = 0;
         public bool WoodenSpoon = false;
+        public float WoodenSpoonValue = 0;
         public bool Caramel = false;
         public int CaramelDamage = 0;
     }

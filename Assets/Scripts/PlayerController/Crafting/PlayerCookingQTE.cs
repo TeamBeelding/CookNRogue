@@ -56,6 +56,8 @@ public class PlayerCookingQTE : MonoBehaviour
         if (_curLoop == null)
             return;
 
+        PlayerRuntimeData.GetInstance().data.CookData.QTESuccess = true;
+
         m_playerCookingScript.CompletedQTE();
 
         _isActive = false;
