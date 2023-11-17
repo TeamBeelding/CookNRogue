@@ -1,3 +1,4 @@
+using Sirenix.Utilities;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -25,7 +26,6 @@ public class PlayerBulletBehaviour : MonoBehaviour
     public LayerMask _sphereMask;
     public LayerMask _rayMask;
     public GameObject Explosion;
-    public GameObject DamageUI;
 
     protected virtual void Start()
     {
@@ -80,14 +80,10 @@ public class PlayerBulletBehaviour : MonoBehaviour
             _hitObject = other.gameObject;
             ApplyCorrectOnHitEffects();
 
+            SetUpDecal(other.transform.position);
+
             _damage = (int)_damage;
              other.GetComponentInParent<EnemyController>().TakeDamage(_damage, _isCritical);
-
-            GameObject UIDAMAGE = Instantiate(DamageUI, other.transform.position + (Vector3.up * 3) + GetCameraDirection() * 0.5f, Quaternion.identity);
-            UIDAMAGE.GetComponentInChildren<TextMeshProUGUI>().text = _damage.ToString();
-            //UIDAMAGE.GetComponentInChildren<TextMeshProUGUI>().text = "RATIO";
-
-            Destroy(UIDAMAGE, 1);
 
             if (_ricochetNbr > 0)
             {
@@ -108,28 +104,24 @@ public class PlayerBulletBehaviour : MonoBehaviour
         {
             _HasHit = false;
             ApplyCorrectOnHitEffects();
+
             if (bouncingNbr > 0)
             {
                 bouncingNbr--;
                 RaycastHit hit;
-                if (Physics.Raycast(transform.position, _direction, out hit))
+                if (Physics.Raycast(transform.position - _direction, _direction, out hit,3,9))
                 {
-                    _direction = Vector3.Reflect(_direction.normalized, hit.normal);
+                    Debug.Log(hit.transform.name);
+                    _direction = Vector3.Reflect(_direction, hit.normal);
                 }
                 
                 bouncingNbr--;
             }
             else
             {
-                
                 Destroy(gameObject);
             }
         }
-    }
-    Vector3 GetCameraDirection()
-    {
-        Vector3 dir = Camera.main.transform.position - transform.position;
-        return dir;
     }
 
     void BulletRicochet(Vector3 Position, GameObject HitObject, Vector3 direction)
@@ -181,8 +173,9 @@ public class PlayerBulletBehaviour : MonoBehaviour
             {
                 if (effect is Ricochet ricochet)
                 {
-                    GameObject RicochetPart = Instantiate(ricochet.RicochetParticles, Position, Quaternion.identity);
-                    Destroy(RicochetPart, 0.5f);
+                    GameObject ricochetPart = Instantiate(ricochet.RicochetParticles, Position, Quaternion.identity);
+
+                    Destroy(ricochetPart, 0.5f);
                     Debug.Log("ricochet");
                 }
             }
@@ -198,6 +191,8 @@ public class PlayerBulletBehaviour : MonoBehaviour
 
     void ApplyCorrectOnHitEffects()
     {
+        SetUpDecal(transform.position);
+
         if (_HasHit)
         {
             _playerAttack.ApplyOnHitEffects(transform.position, _hitObject, _direction);
@@ -206,6 +201,17 @@ public class PlayerBulletBehaviour : MonoBehaviour
         {
             _playerAttack.ApplyOnHitEffects(transform.position);
         }
+    }
+
+    private void SetUpDecal(Vector3 pos)
+    {
+        if (!DecalManager.instance)
+            return;
+
+        BulletDecal decal = DecalManager.instance.GetAvailableDecal();
+        decal.Init((Color)PlayerRuntimeData.GetInstance().data.AttackData.AttackColor);
+        decal.transform.position = pos;
+        decal.transform.rotation = Quaternion.Euler(90, 0, 0);
     }
 
     private void Reset()

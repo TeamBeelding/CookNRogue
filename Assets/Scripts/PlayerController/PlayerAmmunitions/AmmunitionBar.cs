@@ -21,7 +21,7 @@ public class AmmunitionBar : MonoBehaviour
     {
         _ammoBar = GetComponentInChildren<Slider>();
     }
-    public void InitAmmoBar(int ammoNbr)
+    public void InitAmmoBar()
     {
         _ammoBar.maxValue = PlayerRuntimeData.GetInstance().data.AttackData.Ammunition;
         _ammoBar.value = PlayerRuntimeData.GetInstance().data.AttackData.Ammunition;

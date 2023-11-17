@@ -6,7 +6,6 @@ using TMPro;
 public class CurrencyManager : MonoBehaviour
 {
     public static CurrencyManager instance;
-    [SerializeField] int _currency;
     [SerializeField] TextMeshProUGUI _currencyText;
     private void Awake()
     {
@@ -22,16 +21,16 @@ public class CurrencyManager : MonoBehaviour
     }
     public void AddCurrency(int amount)
     {
-        _currency += amount;
+        PlayerRuntimeData.GetInstance().data.InventoryData.Currency += amount;
         UpdateCurrencyText();
     }
     public bool CheckCurrency(int amount)
     {
-        return (amount <= _currency);
+        return (amount <= PlayerRuntimeData.GetInstance().data.InventoryData.Currency);
     }
     public void RemoveCurrency(int amount)
     {
-        _currency -= amount;
+        PlayerRuntimeData.GetInstance().data.InventoryData.Currency -= amount;
         UpdateCurrencyText();
     }
     private void UpdateCurrencyText()
@@ -39,6 +38,6 @@ public class CurrencyManager : MonoBehaviour
         if (_currencyText == null)
             return;
 
-        _currencyText.text = _currency.ToString();
+        _currencyText.text = PlayerRuntimeData.GetInstance().data.InventoryData.Currency.ToString();
     }
 }
