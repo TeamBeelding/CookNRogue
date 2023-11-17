@@ -365,6 +365,11 @@ public class PlayerCookingInventory : MonoBehaviour
                 break;
 
         }
+
+        //LARGE CAULDRON CHECK
+        if (PlayerRuntimeData.GetInstance().data.InventoryData.LargeCauldron)
+            PlayerRuntimeData.GetInstance().data.AttackData.Ammunition += PlayerRuntimeData.GetInstance().data.InventoryData.LargeCauldronValue;
+
         PlayerRuntimeData.GetInstance().data.AttackData.AttackDamage = averageDmg;
 
         //Average rate of fire
