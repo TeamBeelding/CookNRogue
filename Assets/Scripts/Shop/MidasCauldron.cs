@@ -2,17 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MidasCauldron : Item
+public class MidasCauldron : Item, ISubItem
 {
-    [SerializeReference] MidasCauldronData _MCdata;
     public override void Interact(string tag)
     {
         base.Interact(tag);
-        ApplyItem();
+        TriggerItem();
     }
 
-    public override void ApplyItem()
+    public void TriggerItem()
     {
+        if (!CanTrigger())
+            return;
+        
+        _triggerEffect.AddListener(ApplyItem);
+        ApplyItemRoutine();
+    }
 
+    public void ApplyItem()
+    {
+        MidasCauldronData data = (MidasCauldronData)_data;
+        PlayerRuntimeData.GetInstance().data.InventoryData.MidasCauldron = true;
     }
 }

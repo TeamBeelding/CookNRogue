@@ -208,7 +208,6 @@ public class PlayerBulletBehaviour : MonoBehaviour
         if (!DecalManager.instance)
             return;
 
-        Debug.Log("splash");
         BulletDecal decal = DecalManager.instance.GetAvailableDecal();
         decal.Init((Color)PlayerRuntimeData.GetInstance().data.AttackData.AttackColor);
         decal.transform.position = pos;

@@ -16,9 +16,20 @@ public class PlayerRuntimeData
         return _instance;
     }
 
+    public static Data GetData()
+    {
+        return GetInstance().data;
+    }
+
     private PlayerRuntimeData()
     {
         LoadData();
+    }
+
+    public class PlayerRoomData
+    {
+        [NonSerialized]
+        public int NextDoorIndex = 0;
     }
 
     [Serializable]
@@ -50,7 +61,7 @@ public class PlayerRuntimeData
     public class PlayerAttackData
     {
         [NonSerialized]
-        public int Ammunition = 0;
+        public float Ammunition = 0;
         [NonSerialized]
         public int ProjectileNumber = 0;
 
@@ -102,6 +113,8 @@ public class PlayerRuntimeData
 
         [NonSerialized]
         public List<ProjectileData> Recipe = new();
+        [NonSerialized]
+        public int RecipeMaxIngredientNb = 1;
     }
 
     [Serializable]
@@ -110,11 +123,14 @@ public class PlayerRuntimeData
         public int Currency = 0;
         public bool MidasCauldron = false;
         public bool ButteredShoes = false;
-        public bool MealOfTheDay = false;
+        public float ButteredShoesValue = 0;
         public bool LargeCauldron = false;
+        public bool ErgonomicHandle = false;
+        public float ErgonomicHandleValue = 0;
         public bool BigSpatule = false;
         public bool WoodenSpoon = false;
         public bool Caramel = false;
+        public int CaramelDamage = 0;
     }
 
     public class Data
@@ -122,6 +138,7 @@ public class PlayerRuntimeData
         public PlayerBaseData BaseData = new();
         public PlayerAttackData AttackData = new();
         public PlayerCookData CookData = new();
+        public PlayerRoomData RoomData = new();
         public InventoryData InventoryData = new();
     }
 
@@ -138,6 +155,6 @@ public class PlayerRuntimeData
 
     private void LoadData()
     {
-        data = JsonUtility.FromJson<Data>(System.IO.File.ReadAllText(_dataFilePath));
+        data = JsonUtility.FromJson<Data>(Resources.Load("PlayerData").ToString());
     }
 }

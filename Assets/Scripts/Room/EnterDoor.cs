@@ -1,20 +1,31 @@
+using System;
 using System.Collections;
-using System.Collections.Generic;
 using Eflatun.SceneReference;
 using Enemy;
-using Sirenix.OdinInspector.Editor.Validation;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using SceneReference = Eflatun.SceneReference.SceneReference;
 
 public class EnterDoor : MonoBehaviour
 {
+    /* Instancié au chargement d'une nouvelle scène */
+    private static DoorManager _doorManager;
+
+    [Header("Room linker")]
+    [Range(0,5)]
+    public int doorIndex = 0;
 
     [SerializeField]
     private SceneReference _sceneToLoad;
 
-    [Space]
+    public Transform spawnPoint;
 
+    [Range(0,5)]
+    [SerializeField]
+    private int _doorIndexToLink;
+
+    [Space]
+    [Header("Door settings")]
     [SerializeField]
     private GameObject m_door;
     [SerializeField]
@@ -59,11 +70,17 @@ public class EnterDoor : MonoBehaviour
 
     [SerializeField] private AK.Wwise.Event _Play_SFX_Door_Open;
 
-    private void Start()
+
+    private void Awake()
     {
+        if (_doorManager == null)
+        {
+            _doorManager = new GameObject("DoorManager").AddComponent<DoorManager>();
+        }
+
         if (_sceneToLoad.State == SceneReferenceState.Unsafe)
         {
-            Debug.LogError("Door has no valid level linked");
+            Debug.LogError("Door has no valid level linked " + gameObject.name);
         }
 
         if (m_door != null)
@@ -100,6 +117,8 @@ public class EnterDoor : MonoBehaviour
                 Debug.LogError("Door has no valid level linked");
                 return;
             }
+
+            PlayerRuntimeData.GetData().RoomData.NextDoorIndex = _doorIndexToLink;
             SceneManager.LoadScene(_sceneToLoad.BuildIndex);
         }
     }

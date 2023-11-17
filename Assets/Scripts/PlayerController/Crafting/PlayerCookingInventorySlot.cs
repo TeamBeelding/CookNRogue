@@ -17,7 +17,7 @@ public class PlayerCookingInventorySlot : MonoBehaviour
     [SerializeField, Required]
     TextMeshProUGUI m_ingredientCounter;
 
-    int _ingredientCount;
+    public int _ingredientCount;
     RectTransform _transform;
 
     private void Awake()

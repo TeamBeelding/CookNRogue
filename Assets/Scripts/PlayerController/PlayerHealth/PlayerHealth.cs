@@ -2,20 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.UIElements;
 
 public class PlayerHealth : MonoBehaviour
 {
+    public static PlayerHealth instance;
+
     [SerializeField] private AK.Wwise.Event _Play_SFX_Health_Collect;
     [SerializeField] private AK.Wwise.Event _Play_MC_Hit;
     [SerializeField] private AK.Wwise.Event _Play_MC_Death;
+
     HeartBar _heartBar;
 
-    [Header("Time Scale")]
-    [SerializeField] float _ScalingDuration;
-    [SerializeField] float _TargetTimeScale;
-    [SerializeField] AnimationCurve _scaleCurve;
-    [SerializeField] float _ScalingSpeed;
+    private void Awake()
+    {
+        if(instance != null && instance != this)
+            Destroy(this);
+
+        instance = this;
+    }
     private void Start()
     {
         _heartBar = HeartBar.instance;
@@ -61,17 +65,25 @@ public class PlayerHealth : MonoBehaviour
             return false;
         }
 
-        StartCoroutine(DamageSlowTime(_ScalingDuration));
-
         return true;
+    }
+
+    public void UpgradeMaxHealth(int additionalHealth)
+    {
+        _heartBar.AddHeart();
+        PlayerRuntimeData.GetInstance().data.BaseData.MaxHealth += additionalHealth;
+        Heal(additionalHealth);
     }
 
     public void Heal(int heal)
     {
         if (heal <= 0)
             return;
-
+        
         PlayerRuntimeData.GetInstance().data.BaseData.CurrentHealth += heal;
+
+        if (PlayerRuntimeData.GetInstance().data.BaseData.CurrentHealth > PlayerRuntimeData.GetInstance().data.BaseData.MaxHealth)
+            PlayerRuntimeData.GetInstance().data.BaseData.CurrentHealth = PlayerRuntimeData.GetInstance().data.BaseData.MaxHealth;
 
         _heartBar.UpdateHealthVisual(PlayerRuntimeData.GetInstance().data.BaseData.CurrentHealth);
     }
@@ -79,32 +91,6 @@ public class PlayerHealth : MonoBehaviour
     private void Reset()
     {
         PlayerRuntimeData.GetInstance().data.BaseData.MaxHealth = PlayerRuntimeData.GetInstance().data.BaseData.DefaultMaxHealth;
-    }
-
-    IEnumerator DamageSlowTime(float duration)
-    {
-        //SCALE
-        float scaleProgress = 0;
-        while (scaleProgress < 1)
-        {
-            float newScale = (1 - _TargetTimeScale) * _scaleCurve.Evaluate(scaleProgress);
-            scaleProgress += Time.fixedDeltaTime * _ScalingSpeed;
-            Time.timeScale = 1 - newScale;
-            yield return new WaitForFixedUpdate();
-        }
-        Time.timeScale = _TargetTimeScale;
-
-        yield return new WaitForSecondsRealtime(duration);
-
-        scaleProgress = 1;
-        while (scaleProgress > 0)
-        {
-            float newScale = (1 - _TargetTimeScale) * _scaleCurve.Evaluate(scaleProgress);
-            scaleProgress -= Time.fixedDeltaTime * _ScalingSpeed;
-            Time.timeScale = 1 - newScale;
-            yield return new WaitForFixedUpdate();
-        }
-        Time.timeScale = 1;
     }
 
 }
