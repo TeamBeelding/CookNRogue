@@ -1,24 +1,30 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyBulletController : MonoBehaviour
 {
-    [SerializeField]
-    private EnemyBulletData _data;
+    [SerializeField] private EnemyBulletData _data;
+
     private bool isDirectionSet = false;
-    private float _speed;
     private Vector3 _direction;
     private float _damage;
-    
-    private void Start()
+
+    private void Awake()
     {
-        _speed = _data.GetSpeed();
         _damage = _data.GetDamage();
-        Destroy(gameObject, _data.GetLifeTime());
     }
-    
+
+    private void OnEnable()
+    {
+        //_damage = _data.GetDamage();
+        StartCoroutine(IDesinstantiate());
+    }
+
+    private void OnDisable()
+    {
+        //StopCoroutine(IDesinstantiate());
+    }
+
     // Update is called once per frame
     private void Update()
     {
@@ -26,7 +32,6 @@ public class EnemyBulletController : MonoBehaviour
             Move();
     }
 
-    // Set direction of bullet
     public void SetDirection(Transform dir)
     {
         _direction = new Vector3(dir.position.x - transform.position.x, 0, dir.position.z - transform.position.z);
@@ -46,22 +51,25 @@ public class EnemyBulletController : MonoBehaviour
         _damage = damage;
     }
 
-    // Move bullet
     private void Move()
     {
         transform.position += _direction * (_data.GetSpeed() * Time.deltaTime);
     }
 
-    // Destroy bullet when it hits player
+    private IEnumerator IDesinstantiate()
+    {
+        yield return new WaitForSeconds(_data.GetLifeTime());
+        PoolManager.Instance.DesinstantiateFromPool(gameObject);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            other.GetComponent<PlayerController>().TakeDamage(_damage); 
-            Destroy(gameObject);
+            other.GetComponent<PlayerController>()?.TakeDamage(_damage);
+            PoolManager.Instance.DesinstantiateFromPool(gameObject);
         }
-
-        if (!other.transform.parent.CompareTag("Enemy"))
-            Destroy(gameObject);
+        else if (!other.transform.parent.CompareTag("Enemy"))
+            PoolManager.Instance.DesinstantiateFromPool(gameObject);
     }
 }

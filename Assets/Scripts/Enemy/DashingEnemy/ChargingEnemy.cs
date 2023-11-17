@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
@@ -26,7 +25,7 @@ namespace Enemy.DashingEnemy
 
         private bool _isCharging = false;
         private bool _canShowingRedLine = false;
-        private bool _changeStateToWaiting = false;
+        //private bool _changeStateToWaiting = false;
     
         private Vector3 _direction;
 
@@ -34,7 +33,7 @@ namespace Enemy.DashingEnemy
         [SerializeField] private EnemyDashingData _data;
     
         private Material _redLineMaterial;
-        private bool _isRedLineFullVisible = false;
+        //private bool _isRedLineFullVisible = false;
 
         [SerializeField]
         private GameObject visual;
@@ -55,9 +54,15 @@ namespace Enemy.DashingEnemy
         protected override void Awake()
         {
             base.Awake();
+        }
+
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+
             Healthpoint = _data.GetHealth();
         }
-    
+
         // Start is called before the first frame update
         protected override void Start()
         {
@@ -131,9 +136,6 @@ namespace Enemy.DashingEnemy
             {
                 if (!hit.collider.CompareTag("Player"))
                 {
-                    Debug.DrawRay(transform.position, direction * hit.distance, Color.red);
-                    Debug.Log($"<color=red>{hit.collider.name}</color>");
-                    
                     SetState(State.Casting);
                     
                     return;
@@ -176,7 +178,7 @@ namespace Enemy.DashingEnemy
         {
             HideRedLine();
             
-            _changeStateToWaiting = false;
+            //_changeStateToWaiting = false;
             _isCharging = false;
             
             _coroutineState = StartCoroutine(ICasting());
@@ -216,7 +218,7 @@ namespace Enemy.DashingEnemy
         private void WaitingAnotherDash()
         {
             _isCharging = false;
-            _isRedLineFullVisible = false;
+            //_isRedLineFullVisible = false;
             _canShowingRedLine = false;
 
             _coroutineState = StartCoroutine(IWaiting());
@@ -245,15 +247,11 @@ namespace Enemy.DashingEnemy
 
             animator.SetBool("isDead", true);
 
-            Debug.Log("Dead Anim");
-
             StartCoroutine(IDeathAnim());
 
             IEnumerator IDeathAnim()
             {
-                Debug.Log("Wait");
                 yield return new WaitForSeconds(2f);
-                Debug.Log("Destroyed");
                 base.Dying();
             }
         }

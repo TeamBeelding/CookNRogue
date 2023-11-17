@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Enemy;
 using TMPro;
 using Tutoriel;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -18,7 +17,6 @@ public abstract class EnemyController : MonoBehaviour
     private CapsuleCollider _collider;
     
     private IEnumerator _colorCoroutine;
-    private IEnumerator _attackCoroutine;
     
     protected bool FocusPlayer = false;
     private bool _canAttack = true;
@@ -47,13 +45,15 @@ public abstract class EnemyController : MonoBehaviour
             _collider = GetComponentInChildren<CapsuleCollider>();
     }
 
-    // Start is called before the first frame update
     protected virtual void Start()
+    {
+        //_rend.material.color = Color.white;
+    }
+
+    protected virtual void OnEnable()
     {
         Player = PlayerController.Instance.gameObject;
         AddToEnemyManager();
-        
-        _rend.material.color = Color.white;
     }
 
     // Update is called once per frame
@@ -93,12 +93,6 @@ public abstract class EnemyController : MonoBehaviour
             yield return new WaitForSeconds(delay * 0.05f);
             _canAttack = true;
         }
-
-        //IEnumerator IAttackAnimTimer(float delay = 0.5f)
-        //{
-        //    yield return new WaitForSeconds(delay * 1.5f);
-        //    _canAttackAnim = true;
-        //}
     }
     
     #endregion
@@ -128,18 +122,6 @@ public abstract class EnemyController : MonoBehaviour
             isDead = true;
             Dying();
         }
-
-        // Color the enemy red for a short time to indicate that he has been hit
-        IEnumerator IColorationFeedback()
-        {
-            for (int i = 0; i < 5; i++)
-            {
-                _meshRenderer.enabled = false;
-                yield return new WaitForSeconds(0.2f);
-                _meshRenderer.enabled = true;
-                yield return new WaitForSeconds(0.2f);
-            }
-        }
     }
     
     protected virtual void TakeDamageEffect()
@@ -150,18 +132,17 @@ public abstract class EnemyController : MonoBehaviour
     protected virtual void Dying()
     {
         DestroyEffect();
-        Destroy(gameObject);
+        PoolManager.Instance.DesinstantiateFromPool(gameObject);
     }
 
     #endregion
 
-    //Add to enemy manager
     private void AddToEnemyManager()
     {
         EnemyManager.Instance.AddEnemyToLevel(this);
     }
     
-    private void OnDestroy()
+    protected virtual void OnDisable()
     {
         StopAllCoroutines();
         EnemyManager.Instance.RemoveEnemyFromLevel(this);
