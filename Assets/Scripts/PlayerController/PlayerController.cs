@@ -778,7 +778,7 @@ public class PlayerController : MonoBehaviour
             return;
 
         //Feedbacks
-        CameraController.Instance.ScreenShake();
+        CameraController.instance.ScreenShake();
         takeDamageTransition.LoadTransition();
         
         if (_tutorialManager)

@@ -96,7 +96,7 @@ public class PlayerCookingInventory : MonoBehaviour
         _hiddenPosition.y -= gameObject.GetComponent<RectTransform>().rect.height;*/
         //m_UIHolder.localPosition = _hiddenPosition;
 
-        _cameraController = CameraController.Instance;
+        _cameraController = CameraController.instance;
         _shownCamOffset = _cameraController.OffsetCoord + m_cameraOffset;
         _hiddenCamOffset = _cameraController.OffsetCoord;
 
