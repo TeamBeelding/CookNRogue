@@ -6,4 +6,9 @@ public class MissilesController : MonoBehaviour
 
     private int numberOfMissiles;
     private float delaiBetweenEachMissile;
+
+    public void LaunchMissiles()
+    {
+
+    }
 }

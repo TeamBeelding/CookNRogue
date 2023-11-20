@@ -1,3 +1,4 @@
+using Enemy.DashingEnemy;
 using System.Collections;
 using UnityEngine;
 
@@ -26,7 +27,6 @@ public class BossController : EnemyController
     private ShockwaveController shockwaveController;
 
     private Coroutine stateCoroutine;
-    private bool hitPlayerDuringDash = false;
 
     protected override void OnEnable()
     {
@@ -35,6 +35,9 @@ public class BossController : EnemyController
 
     private void Reset()
     {
+        visual?.SetActive(true);
+        physics?.SetActive(true);
+
         missilesController = GetComponent<MissilesController>();
         shockwaveController = GetComponent<ShockwaveController>();
     }
@@ -88,7 +91,7 @@ public class BossController : EnemyController
         {
             while (state == State.EnterRoom)
             {
-                yield return new WaitForSeconds(2);
+                yield return new WaitForSeconds(data.GetStart);
                 SetState(State.Teleport);
             }
         }
@@ -102,7 +105,9 @@ public class BossController : EnemyController
         {
             while (state == State.Teleport)
             {
-                yield return null;
+                yield return new WaitForSeconds(data.GetDelayBeforeTeleport);
+                transform.position = Player.transform.position;
+
                 SetState(State.CastMissiles);
             }
         }
@@ -128,6 +133,8 @@ public class BossController : EnemyController
         // Todo : 
         // Start throwing missiles
 
+        missilesController?.LaunchMissiles();
+
         SetState(State.Dash);
     }
 
@@ -139,7 +146,7 @@ public class BossController : EnemyController
         {
             while (state == State.Dash)
             {
-                yield return new WaitForSeconds(2);
+                yield return new WaitForSeconds(data.GetCastDashDelay);
                 SetState(State.Dash);
             }
         }
@@ -147,20 +154,17 @@ public class BossController : EnemyController
 
     private void Dashing()
     {
+        Vector3 lastPlayerPosition = Player.transform.position;
+        Vector3 direction = (transform.position - lastPlayerPosition).normalized;
+
         stateCoroutine = StartCoroutine(IDashing());
 
         IEnumerator IDashing()
         {
             while (state == State.Dash)
             {
+                transform.position += direction * (data.GetDashSpeed * Time.deltaTime);
                 yield return null;
-
-                if (hitPlayerDuringDash)
-                {
-
-                }
-                else
-                    SetState(State.Shockwave);
             }
         }
     }
@@ -181,12 +185,26 @@ public class BossController : EnemyController
 
     protected override void Dying()
     {
-        
+        visual?.SetActive(false);
+        physics?.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        
+        if (state == State.Dash)
+        {
+            if (other.gameObject.CompareTag("Player"))
+            {
+                Player.GetComponent<PlayerController>().TakeDamage(data.GetDamageOnHitDash);
+
+                SetState(State.Teleport);
+            }
+
+            if (other.gameObject.CompareTag("Obstruction"))
+                SetState(State.Shockwave);
+        }
+        else
+            Player.GetComponent<PlayerController>().TakeDamage(data.GetDamageOnHitPlayer);
     }
 
     public override bool IsMoving()
