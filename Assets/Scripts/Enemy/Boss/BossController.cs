@@ -1,7 +1,7 @@
-using Enemy.DashingEnemy;
 using System.Collections;
 using UnityEngine;
 
+[RequireComponent (typeof(MissilesController), typeof(MissilesController), typeof(ShockwaveController))]
 public class BossController : EnemyController
 {
     private enum State
@@ -41,6 +41,8 @@ public class BossController : EnemyController
         missilesController = GetComponent<MissilesController>();
         shockwaveController = GetComponent<ShockwaveController>();
     }
+
+    public BossData GetBossDataRef() => data;
 
     private void SetState(State newValue)
     {
@@ -121,7 +123,7 @@ public class BossController : EnemyController
         {
             while (state == State.CastMissiles)
             {
-                yield return new WaitForSeconds(2f);
+                yield return new WaitForSeconds(data.GetCastMissilesDelay);
 
                 SetState(State.ThrowMissiles);
             }
@@ -130,9 +132,6 @@ public class BossController : EnemyController
 
     private void ThrowMissiles()
     {
-        // Todo : 
-        // Start throwing missiles
-
         missilesController?.LaunchMissiles();
 
         SetState(State.Dash);
