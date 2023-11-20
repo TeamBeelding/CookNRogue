@@ -4,7 +4,6 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     public static CameraController instance;
-
     //Controler
     [Header("Camera Controller")]
     [Header("==========================================================================================================================================================================================================================")]
@@ -19,6 +18,8 @@ public class CameraController : MonoBehaviour
 
     [SerializeField]
     private Vector3 m_offsetCoord;
+    public Vector3 OffsetCoord { get { return m_offsetCoord; } set { m_offsetCoord = value; } }
+
     [SerializeField]
     private Quaternion m_offsetRotation;
 
@@ -85,6 +86,12 @@ public class CameraController : MonoBehaviour
     private float m_cameraAimDistance;
     private float _currentMagnitude = 0;
 
+    //Freeze
+    private bool _mooveIsUnscaled;
+    private bool _shakeIsUnscaled;
+    private bool _zoomIsUnscaled;
+    PlayerController _playerController;
+
     void Start()
     {
         instance = this;
@@ -100,22 +107,42 @@ public class CameraController : MonoBehaviour
 
         _initialZoom = _shakeGimble.GetChild(0).GetComponent<Camera>().orthographicSize;
         _obstructionMesh = _placeHolderMesh;
+
+        _playerController = PlayerController.Instance;
+
+        //Set events
+        Enemy.EnemyManager.Instance.OnAllEnnemiesKilled += FreezeOnRoomClear;
     }
 
     private void LateUpdate()
     {
-        // In the update the camera will follow the player, unless the the target object has been added.
-        // When target is removed (=null) Camera will start following the player again
-        if (m_target == null)
+        if (!_mooveIsUnscaled)
         {
-            _currentMagnitude = m_cameraPlayerTarget.gameObject.GetComponent<PlayerController>().PlayerAimMagnitude;
-            m_mainCamera.position = Vector3.Lerp(m_mainCamera.position, m_cameraPlayerTarget.position + (m_cameraAimDistance * m_cameraPlayerTarget.gameObject.GetComponent<PlayerController>().PlayerAimDirection) * _currentMagnitude + m_offsetCoord, m_smoothSpeed * Time.deltaTime);
+            // In the update the camera will follow the player, unless the the target object has been added.
+            // When target is removed (=null) Camera will start following the player again
+            if (m_target == null)
+            {
+                _currentMagnitude = m_cameraPlayerTarget.gameObject.GetComponent<PlayerController>().PlayerAimMagnitude;
+                m_mainCamera.position = Vector3.Lerp(m_mainCamera.position, m_cameraPlayerTarget.position + (m_cameraAimDistance * m_cameraPlayerTarget.gameObject.GetComponent<PlayerController>().PlayerAimDirection) * _currentMagnitude + m_offsetCoord, m_smoothSpeed * Time.deltaTime);
+            }
+            else
+            {
+                m_mainCamera.position = Vector3.Lerp(m_mainCamera.position, m_target.position + m_offsetCoord, m_smoothSpeed * Time.deltaTime);
+            }
         }
-        else 
+        else
         {
-            m_mainCamera.position = Vector3.Lerp(m_mainCamera.position, m_target.position + m_offsetCoord, m_smoothSpeed * Time.deltaTime);
-        }
-        
+            //Unscaled time
+            if (m_target == null)
+            {
+                _currentMagnitude = m_cameraPlayerTarget.gameObject.GetComponent<PlayerController>().PlayerAimMagnitude;
+                m_mainCamera.position = Vector3.Lerp(m_mainCamera.position, m_cameraPlayerTarget.position + (m_cameraAimDistance * m_cameraPlayerTarget.gameObject.GetComponent<PlayerController>().PlayerAimDirection) * _currentMagnitude + m_offsetCoord, m_smoothSpeed * Time.unscaledDeltaTime);
+            }
+            else
+            {
+                m_mainCamera.position = Vector3.Lerp(m_mainCamera.position, m_target.position + m_offsetCoord, m_smoothSpeed * Time.unscaledDeltaTime);
+            }
+        }    
     }
 
 
@@ -188,8 +215,16 @@ public class CameraController : MonoBehaviour
         Vector3 startPosition = _shakeGimble.localPosition;
         while (elapsedTime < m_shakeDuration)
         {
-            // adding time to counter
-            elapsedTime += Time.deltaTime;
+            if (_shakeIsUnscaled)
+            {
+                // adding time to counter
+                elapsedTime += Time.unscaledDeltaTime;
+            }
+            else
+            {
+                // adding time to counter
+                elapsedTime += Time.deltaTime;
+            }
             // strength of the curve at specific time. So strength over time (The y axis being strength, and x being time)
             float strength = m_shakeCurve.Evaluate(elapsedTime / m_shakeDuration);
             // changing the local postion of _shake gimble inside the unit circle, so random position in a circle and adding the start position.
@@ -213,8 +248,17 @@ public class CameraController : MonoBehaviour
         // Getting start position of _shake gimble in local space
         while (elapsedTime < m_zoomDuration)
         {
-            // adding time to counter
-            elapsedTime += Time.deltaTime;
+            if (_zoomIsUnscaled)
+            {
+                // adding time to counter
+                elapsedTime += Time.unscaledDeltaTime;
+            }
+            else
+            {
+                // adding time to counter
+                elapsedTime += Time.deltaTime;
+            }
+
             // strength of the curve at specific time. So strength over time (The y axis being strength, and x being time)
             float zoomspeed = m_zoomCurve.Evaluate(elapsedTime / m_zoomDuration);
             Debug.Log(zoomspeed);
@@ -222,5 +266,60 @@ public class CameraController : MonoBehaviour
             _shakeGimble.GetChild(0).GetComponent<Camera>().orthographicSize = _initialZoom * zoomspeed;
             yield return null;
         }
+    }
+
+    private void FreezeOnRoomClear()
+    {
+        StartCoroutine(IFreezeOnRoomClear());
+    }
+
+    IEnumerator IFreezeOnRoomClear()
+    {
+        _playerController.Lock(true);
+
+        float elapsedTime = 0f;
+        float progress = 0f;
+        while(progress < 1)
+        {
+            Time.timeScale = Mathf.Lerp(1f, 0.25f, progress);
+            elapsedTime += Time.unscaledDeltaTime;
+            progress = elapsedTime / 0.25f;
+            yield return new WaitForSecondsRealtime(Time.unscaledDeltaTime);
+        }
+        Time.timeScale = 0.25f;
+
+        yield return new WaitForSecondsRealtime(0.5f);
+
+        elapsedTime = 0f;
+        progress = 0f;
+        while (progress < 1)
+        {
+            Time.timeScale = Mathf.Lerp(0.25f, 1f, progress);
+            elapsedTime += Time.unscaledDeltaTime;
+            progress = elapsedTime / 0.25f;
+            yield return new WaitForSecondsRealtime(Time.unscaledDeltaTime);
+        }
+        Time.timeScale = 1f;
+
+        _playerController.Lock(false);
+    }
+
+    private void ShowLevelDoor()
+    {
+        StartCoroutine(IShowLevelDoor());
+    }
+
+    IEnumerator IShowLevelDoor()
+    {
+        _mooveIsUnscaled = true;
+        _shakeIsUnscaled = true;
+        _zoomIsUnscaled = true;
+
+        //Do stuff
+        yield return new WaitForEndOfFrame();
+
+        _mooveIsUnscaled = false;
+        _shakeIsUnscaled = false;
+        _zoomIsUnscaled = false;
     }
 }

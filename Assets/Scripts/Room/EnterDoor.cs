@@ -71,7 +71,7 @@ public class EnterDoor : MonoBehaviour
     [SerializeField] private AK.Wwise.Event _Play_SFX_Door_Open;
 
 
-    private void Start()
+    private void Awake()
     {
         if (_doorManager == null)
         {
