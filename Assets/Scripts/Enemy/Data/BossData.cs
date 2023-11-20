@@ -22,13 +22,14 @@ public class BossData : ScriptableObject
     [Header("Missiles")]
     
     [SerializeField] private int missilesCount;
-    [SerializeField] private float delaiBetweenMissiles;
+    [SerializeField] private float delayBetweenMissiles;
     [SerializeField] private float damagePerMissiles;
 
     [Space(1f)]
     [Header("Shockwave")]
 
     [SerializeField] private int shockwaveCount;
+    [SerializeField] private float delayBetweenShockwave;
     [SerializeField] private float innerRadius;
     [SerializeField] private float outerRadius;
     [SerializeField] private float shockwaveSpeed;
@@ -49,7 +50,6 @@ public class BossData : ScriptableObject
 
     public float GetStart => start;
     public float GetDelayBeforeTeleport => delaiBeforeteleport;
-    public float GetCastMissilesDelay => castMissiles;
     public float GetCastDashDelay => castDash;
 
     #endregion
@@ -59,7 +59,8 @@ public class BossData : ScriptableObject
     #region Missiles
 
     public int GetMissilesCount => missilesCount;
-    public float GetDelayForEachMissiles => delaiBetweenMissiles;
+    public float GetDelayForEachMissiles => delayBetweenMissiles;
+    public float GetCastMissilesDelay => castMissiles;
 
     #endregion
 
@@ -68,6 +69,7 @@ public class BossData : ScriptableObject
     #region Shockwave
 
     public int GetShockwaveCount => shockwaveCount;
+    public float GetDelayForEachShockWave => delayBetweenShockwave;
     public float GetInnerRadius => innerRadius;
     public float GetOuterRadius => outerRadius;
     public float GetShockwaveSpeed => shockwaveSpeed;

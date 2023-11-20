@@ -6,8 +6,6 @@ public class MissilesController : MonoBehaviour
 {
     private BossData data;
 
-
-
     private void OnEnable()
     {
         Reset();
