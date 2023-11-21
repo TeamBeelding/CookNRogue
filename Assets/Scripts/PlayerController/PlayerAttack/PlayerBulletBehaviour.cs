@@ -27,15 +27,7 @@ public class PlayerBulletBehaviour : MonoBehaviour
     public LayerMask _sphereMask;
     public LayerMask _rayMask;
     public GameObject Explosion;
-
-    protected virtual void Start()
-    {
-        /*ParticleSystem.MainModule part = GetComponentInChildren<ParticleSystem>().main;
-        part.startColor = color;
-
-        rb.drag = drag;
-        rb.velocity = direction * speed;*/
-    }
+    public List<GameObject> VFX = new List<GameObject>();
 
     public virtual void Init()
     {
@@ -51,7 +43,7 @@ public class PlayerBulletBehaviour : MonoBehaviour
         _speed *= _drag;
     }
 
-    public void ResetStats()
+    public virtual void ResetStats()
     {
         //rb.drag = 0;
         //HeavyDamage = 1;
@@ -63,18 +55,11 @@ public class PlayerBulletBehaviour : MonoBehaviour
         bouncingNbr = 0;
         _ricochetNbr = 0;
     }
-
-    protected virtual void OnDestroy()
-    {
-        GameObject explosion = Instantiate(Explosion, transform.position,Quaternion.identity);
-        Destroy(explosion,1);
-        if (!_HasHit)
-        {
-            ApplyCorrectOnHitEffects();
-        }
-    }
     public virtual void ExplosionEffect()
     {
+        if (!Explosion)
+            return;
+
         GameObject explosion = Instantiate(Explosion, transform.position, Quaternion.identity);
         Destroy(explosion, 1);
         if (!_HasHit)
@@ -82,11 +67,20 @@ public class PlayerBulletBehaviour : MonoBehaviour
             ApplyCorrectOnHitEffects();
         }
     }
-    public void DisableBullet()
+    protected void DisableBullet()
     {
-        //Debug.Log("Destroy");
-        //Destroy(gameObject);
         ExplosionEffect();
+
+        BoomerangBehaviour boomerang = null;
+        TryGetComponent(out boomerang);
+        if(boomerang != null)
+            Destroy(boomerang);
+
+        foreach(GameObject vfx in VFX)
+        {
+            Destroy(vfx);
+        }
+
         gameObject.SetActive(false);
     }
     public void ResetSpeed()
@@ -186,8 +180,8 @@ public class PlayerBulletBehaviour : MonoBehaviour
         HitObject.layer = 0;
         if (closestEnemy != HitObject)
         {
-            CancelInvoke("DestroyBullet");
-            Invoke("DestroyBullet", 1);
+            CancelInvoke("DisableBullet");
+            Invoke("DisableBullet", 1);
             _direction = (closestEnemy.gameObject.transform.position - HitObject.transform.position).normalized;
             destroyOnHit = true;
 

@@ -17,8 +17,8 @@ public class Boomerang : IIngredientEffects
     //EFFET LORS DU SHOOT
     public void EffectOnShoot(Vector3 Position, GameObject bullet)
     {
-        if(WindEffect)
-            GameObject.Instantiate(WindEffect, bullet.transform.position, Quaternion.identity, bullet.transform);
+        if (WindEffect)
+            bullet.GetComponent<PlayerBulletBehaviour>().VFX.Add(GameObject.Instantiate(WindEffect, bullet.transform.position, Quaternion.identity, bullet.transform));
     }
 
 
