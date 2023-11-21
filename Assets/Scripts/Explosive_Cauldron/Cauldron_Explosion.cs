@@ -52,6 +52,9 @@ public class Cauldron_Explosion : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
+        if (!collision.transform.parent)
+            return;
+
         if (collision.transform.parent.GetComponent<PlayerBulletBehaviour>())
         {
             TriggerExplosion();

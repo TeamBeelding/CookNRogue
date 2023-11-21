@@ -8,7 +8,7 @@ public class PlayerBulletBehaviour : MonoBehaviour
 {
     public float _damage;
     public bool _isCritical;
-    public float _speed;
+    public float _speed = 4;
     public float _drag = 1;
     protected bool _HasHit = false;
     protected GameObject _hitObject;
@@ -34,9 +34,13 @@ public class PlayerBulletBehaviour : MonoBehaviour
 
         rb.drag = drag;
         rb.velocity = direction * speed;*/
+    }
+
+    public void Init()
+    {
         _initialSpeed = _speed;
     }
-   
+
     protected virtual void FixedUpdate()
     {
         //rb.AddForce(gravity * rb.mass);
@@ -50,6 +54,7 @@ public class PlayerBulletBehaviour : MonoBehaviour
         //rb.drag = 0;
         //HeavyDamage = 1;
         gameObject.transform.localScale = new Vector3(1,1,1);
+        _speed = _initialSpeed;
     }
 
     protected virtual void OnDestroy()
