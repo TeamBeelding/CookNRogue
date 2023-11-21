@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-[RequireComponent (typeof(MissilesController), typeof(MissilesController), typeof(ShockwaveController))]
+[RequireComponent (typeof(MissilesController), typeof(ShockwaveController))]
 public class BossController : EnemyController
 {
     private enum State
@@ -35,6 +35,8 @@ public class BossController : EnemyController
 
     private void Reset()
     {
+        SetState(State.EnterRoom);
+
         visual?.SetActive(true);
         physics?.SetActive(true);
 

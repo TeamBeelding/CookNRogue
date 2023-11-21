@@ -7,7 +7,12 @@ public class MissileBoss : MonoBehaviour
 	[SerializeField] private float explosionSpeed;
 	[SerializeField] private float damage;
 
-	private void Explode()
+    private void OnEnable()
+    {
+		Explode();
+    }
+
+    private void Explode()
 	{
 		StartCoroutine(IWaitForExplode());
 		
@@ -18,13 +23,8 @@ public class MissileBoss : MonoBehaviour
 			if (Vector3.Distance(transform.position, PlayerController.Instance.transform.position) <= radiusExplosion)
 			{
 				PlayerController.Instance.TakeDamage(damage);
-				Destroy(gameObject);
+				gameObject.SetActive(false);
 			}
 		}
 	}
-
-    private void OnTriggerEnter(Collider other)
-    {
-        Explode();
-    }
 }

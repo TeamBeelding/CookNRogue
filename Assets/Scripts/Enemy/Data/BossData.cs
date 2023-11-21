@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Boss", menuName = "AI")]
+[CreateAssetMenu(fileName = "Boss", menuName = "Enemy/Boss")]
 public class BossData : ScriptableObject
 {
     [Header("Basic")]
@@ -14,7 +14,7 @@ public class BossData : ScriptableObject
     [Header("Timing")]
 
     [SerializeField] private float start;
-    [SerializeField] private float delaiBeforeteleport;
+    [SerializeField] private float delayBeforeTeleport;
     [SerializeField] private float castMissiles;
     [SerializeField] private float castDash;
 
@@ -35,6 +35,30 @@ public class BossData : ScriptableObject
     [SerializeField] private float shockwaveSpeed;
     [SerializeField] private float damageForShockwave;
 
+    private void Reset()
+    {
+        bossHealth = 15000;
+        bossDashSpeed = 4f;
+        damageOnHitPlayer = 1f;
+        damageOnHitDash = 1.5f;
+
+        start = 2f;
+        delayBeforeTeleport = 2f;
+        castMissiles = 2f;
+        castDash = 2f;
+
+        missilesCount = 8;
+        delayBetweenMissiles = 0.2f;
+        damagePerMissiles = 1f;
+
+        shockwaveCount = 1;
+        delayBetweenShockwave = 0;
+        innerRadius = 0;
+        outerRadius = 1;
+        shockwaveSpeed = 4;
+        damageForShockwave = 0.5f;
+    }
+
     #region Basic
 
     public int GetHealth => bossHealth;
@@ -49,7 +73,7 @@ public class BossData : ScriptableObject
     #region Timing
 
     public float GetStart => start;
-    public float GetDelayBeforeTeleport => delaiBeforeteleport;
+    public float GetDelayBeforeTeleport => delayBeforeTeleport;
     public float GetCastDashDelay => castDash;
 
     #endregion
