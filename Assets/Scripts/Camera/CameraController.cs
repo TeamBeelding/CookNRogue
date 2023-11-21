@@ -92,9 +92,20 @@ public class CameraController : MonoBehaviour
     private bool _zoomIsUnscaled;
     PlayerController _playerController;
 
+    private void Awake()
+    {
+        //Set instance
+        if (instance != null)
+        {
+            Destroy(gameObject);
+        }
+
+        instance = this;
+    }
+
     void Start()
     {
-        instance = this;
+        
 
         //m_mainCamera.position += m_offsetCoord;
         m_mainCamera.rotation *= m_offsetRotation;

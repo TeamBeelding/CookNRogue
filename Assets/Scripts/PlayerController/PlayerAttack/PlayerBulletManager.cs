@@ -32,6 +32,7 @@ public sealed class PlayerBulletManager : MonoBehaviour
             GameObject temp = Instantiate(_playerBulletPrefab, transform.position, Quaternion.identity, _bulletContainer);
             PlayerBulletBehaviour playerBullet = temp.GetComponent<PlayerBulletBehaviour>();
             _bulletList.Add(playerBullet);
+            playerBullet.Init();
             temp.SetActive(false);
         }
     }
@@ -49,6 +50,7 @@ public sealed class PlayerBulletManager : MonoBehaviour
 
         GameObject temp = Instantiate(_playerBulletPrefab, transform.position, Quaternion.identity, _bulletContainer);
         PlayerBulletBehaviour playerBullet = temp.GetComponent<PlayerBulletBehaviour>();
+        playerBullet.Init();
 
         _bulletList.Add(playerBullet);
         return playerBullet;

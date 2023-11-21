@@ -17,7 +17,7 @@ public class Item : MonoBehaviour
 
     protected void Awake()
     {
-        _cost = _data.cost;
+        //_cost = _data.cost;
         _name = _data.name;
         _description = _data.description;
     }
