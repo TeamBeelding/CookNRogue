@@ -55,6 +55,7 @@ public class PlayerBulletBehaviour : MonoBehaviour
         destroyOnHit = true;
         bouncingNbr = 0;
         _ricochetNbr = 0;
+        HasExploded = false;
     }
     public virtual void ExplosionEffect()
     {

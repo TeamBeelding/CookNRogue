@@ -16,6 +16,6 @@ public class Splash : MonoBehaviour
 
     void DisableSplash()
     {
-        enabled = false;
+        gameObject.SetActive(false);
     }
 }
