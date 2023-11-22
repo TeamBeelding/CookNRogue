@@ -28,11 +28,12 @@ public class PlayerBulletBehaviour : MonoBehaviour
     public LayerMask _rayMask;
     public GameObject Explosion;
     public List<GameObject> VFX = new List<GameObject>();
-
+    public bool HasExploded = false;
     public virtual void Init()
     {
         _initialSpeed = _speed;
         _initialDamage = _damage;
+        HasExploded = false;
     }
 
     protected virtual void FixedUpdate()
@@ -57,11 +58,14 @@ public class PlayerBulletBehaviour : MonoBehaviour
     }
     public virtual void ExplosionEffect()
     {
-        if (!Explosion)
+        if (HasExploded)
             return;
 
-        GameObject explosion = Instantiate(Explosion, transform.position, Quaternion.identity);
-        Destroy(explosion, 1);
+        Splash explosion = SplashManager.instance.GetAvailableSplash();
+        explosion.transform.position = transform.position;
+        explosion.TriggerSplash();
+
+        HasExploded = true;
         if (!_HasHit)
         {
             ApplyCorrectOnHitEffects();
@@ -69,7 +73,8 @@ public class PlayerBulletBehaviour : MonoBehaviour
     }
     protected void DisableBullet()
     {
-        ExplosionEffect();
+        if(!HasExploded)
+            ExplosionEffect();
 
         BoomerangBehaviour boomerang = null;
         TryGetComponent(out boomerang);

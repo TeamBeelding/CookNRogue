@@ -20,6 +20,14 @@ public class BoomerangBehaviour : PlayerBulletBehaviour
         _StartPosition = transform.position;
         _increment = _boomerangSpeed/30;
         _Xaxis = Quaternion.Euler(new Vector3(0, 90, 0)) * _direction;
+        HasExploded = false;
+
+        PlayerBulletBehaviour[] playerBulletBehaviours = GetComponents<PlayerBulletBehaviour>();
+        foreach(PlayerBulletBehaviour playerBulletBehaviour in playerBulletBehaviours)
+        {
+            if (playerBulletBehaviour != this)
+                playerBulletBehaviour.HasExploded = true;
+        }
     }
 
     // Update is called once per frame
