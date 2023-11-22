@@ -15,6 +15,7 @@ public class PlayerCookingQTE : MonoBehaviour
     bool _isActive;
 
     Coroutine _curLoop;
+    bool _hasSpawned;
 
     private void Reset()
     {
@@ -33,6 +34,9 @@ public class PlayerCookingQTE : MonoBehaviour
 
     public void StartQTE(float delay)
     {
+        if (_hasSpawned)
+            return;
+
         float randDuration = Random.Range(PlayerRuntimeData.GetInstance().data.CookData.QteDuration.x, PlayerRuntimeData.GetInstance().data.CookData.QteDuration.y);
         _curLoop = StartCoroutine(QTELoop(delay, randDuration));
     }
@@ -56,20 +60,17 @@ public class PlayerCookingQTE : MonoBehaviour
         if (_curLoop == null)
             return;
 
+        PlayerRuntimeData.GetInstance().data.CookData.QTESuccess = true;
+
         m_playerCookingScript.CompletedQTE();
 
-        _isActive = false;
-        m_QTEVisuals.SetActive(false);
-
-        if (_curLoop != null)
-            StopCoroutine(_curLoop);
-        
-        _curLoop = null;
+        ResetQTE();
     }
 
     public void ResetQTE()
     {
         _isActive = false;
+        _hasSpawned = false;
         m_QTEVisuals.SetActive(false);
 
         if (_curLoop != null)
@@ -98,6 +99,7 @@ public class PlayerCookingQTE : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         _isActive = true;
+        _hasSpawned = true;
         m_QTEVisuals.SetActive(true);
         _playerController.QTEAppear();
 

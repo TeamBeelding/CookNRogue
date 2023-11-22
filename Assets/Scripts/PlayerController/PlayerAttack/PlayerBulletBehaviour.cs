@@ -1,3 +1,4 @@
+using Sirenix.Utilities;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -6,8 +7,9 @@ using UnityEngine.Rendering.VirtualTexturing;
 public class PlayerBulletBehaviour : MonoBehaviour
 {
     public float _damage;
+    private float _initialDamage;
     public bool _isCritical;
-    public float _speed;
+    public float _speed = 4;
     public float _drag = 1;
     protected bool _HasHit = false;
     protected GameObject _hitObject;
@@ -25,19 +27,15 @@ public class PlayerBulletBehaviour : MonoBehaviour
     public LayerMask _sphereMask;
     public LayerMask _rayMask;
     public GameObject Explosion;
-
-    protected virtual void Start()
+    public List<GameObject> VFX = new List<GameObject>();
+    public bool HasExploded = false;
+    public virtual void Init()
     {
-        /*ParticleSystem.MainModule part = GetComponentInChildren<ParticleSystem>().main;
-        part.startColor = color;
-
-        rb.drag = drag;
-        rb.velocity = direction * speed;*/
-
-        Invoke("DestroyBullet", 1);
         _initialSpeed = _speed;
+        _initialDamage = _damage;
+        HasExploded = false;
     }
-   
+
     protected virtual void FixedUpdate()
     {
         //rb.AddForce(gravity * rb.mass);
@@ -46,26 +44,50 @@ public class PlayerBulletBehaviour : MonoBehaviour
         _speed *= _drag;
     }
 
-    public void ResetStats()
+    public virtual void ResetStats()
     {
         //rb.drag = 0;
         //HeavyDamage = 1;
         gameObject.transform.localScale = new Vector3(1,1,1);
+        _speed = _initialSpeed;
+        _damage = _initialDamage;
+        _HasHit = false;
+        destroyOnHit = true;
+        bouncingNbr = 0;
+        _ricochetNbr = 0;
+        HasExploded = false;
     }
-
-    protected virtual void OnDestroy()
+    public virtual void ExplosionEffect()
     {
-        GameObject explosion = Instantiate(Explosion, transform.position,Quaternion.identity);
-        Destroy(explosion,1);
+        if (HasExploded)
+            return;
+
+        Splash explosion = SplashManager.instance.GetAvailableSplash();
+        explosion.transform.position = transform.position;
+        explosion.TriggerSplash();
+
+        HasExploded = true;
         if (!_HasHit)
         {
             ApplyCorrectOnHitEffects();
         }
     }
-    public void DestroyBullet()
+    protected void DisableBullet()
     {
-        //Debug.Log("Destroy");
-        Destroy(gameObject);
+        if(!HasExploded)
+            ExplosionEffect();
+
+        BoomerangBehaviour boomerang = null;
+        TryGetComponent(out boomerang);
+        if(boomerang != null)
+            Destroy(boomerang);
+
+        foreach(GameObject vfx in VFX)
+        {
+            Destroy(vfx);
+        }
+
+        gameObject.SetActive(false);
     }
     public void ResetSpeed()
     {
@@ -94,7 +116,8 @@ public class PlayerBulletBehaviour : MonoBehaviour
 
             if (destroyOnHit)
             {
-                Destroy(gameObject);
+                //Destroy(gameObject);
+                DisableBullet();
             }
 
 
@@ -108,16 +131,18 @@ public class PlayerBulletBehaviour : MonoBehaviour
             {
                 bouncingNbr--;
                 RaycastHit hit;
-                if (Physics.Raycast(transform.position, _direction, out hit))
+                if (Physics.Raycast(transform.position - _direction, _direction, out hit,3,9))
                 {
-                    _direction = Vector3.Reflect(_direction.normalized, hit.normal);
+                    Debug.Log(hit.transform.name);
+                    _direction = Vector3.Reflect(_direction, hit.normal);
                 }
                 
                 bouncingNbr--;
             }
             else
             {
-                Destroy(gameObject);
+                //Destroy(gameObject);
+                DisableBullet();
             }
         }
     }
@@ -161,8 +186,8 @@ public class PlayerBulletBehaviour : MonoBehaviour
         HitObject.layer = 0;
         if (closestEnemy != HitObject)
         {
-            CancelInvoke("DestroyBullet");
-            Invoke("DestroyBullet", 1);
+            CancelInvoke("DisableBullet");
+            Invoke("DisableBullet", 1);
             _direction = (closestEnemy.gameObject.transform.position - HitObject.transform.position).normalized;
             destroyOnHit = true;
 
@@ -180,7 +205,7 @@ public class PlayerBulletBehaviour : MonoBehaviour
         }
         else
         {
-            DestroyBullet();
+            DisableBullet();
         }
         
         
@@ -206,7 +231,6 @@ public class PlayerBulletBehaviour : MonoBehaviour
         if (!DecalManager.instance)
             return;
 
-        Debug.Log("splash");
         BulletDecal decal = DecalManager.instance.GetAvailableDecal();
         decal.Init((Color)PlayerRuntimeData.GetInstance().data.AttackData.AttackColor);
         decal.transform.position = pos;

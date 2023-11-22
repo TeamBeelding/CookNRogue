@@ -35,6 +35,12 @@ public class PlayerCooking : MonoBehaviour
     [SerializeField]
     private AK.Wwise.Event _Play_SFX_Cook;
 
+    static PlayerCooking _instance;
+    public static PlayerCooking Instance
+    {
+        get => _instance;
+    }
+
     #endregion
 
     private void Reset()
@@ -47,6 +53,17 @@ public class PlayerCooking : MonoBehaviour
         PlayerRuntimeData.GetInstance().data.CookData.ThreeIngredientCookTime = PlayerRuntimeData.GetInstance().data.CookData.DefaultThreeIngredientCookTime;
         PlayerRuntimeData.GetInstance().data.CookData.ThreeIngredientCookTime = PlayerRuntimeData.GetInstance().data.CookData.DefaultThreeIngredientCookTime;
         PlayerRuntimeData.GetInstance().data.CookData.QteSpawnDelay = PlayerRuntimeData.GetInstance().data.CookData.DefaultQteSpawnDelay;
+    }
+
+    private void Awake()
+    {
+        //Set instance
+        if (_instance != null)
+        {
+            Destroy(gameObject);
+        }
+
+        _instance = this;
     }
 
     void Start()
@@ -71,6 +88,7 @@ public class PlayerCooking : MonoBehaviour
     {
         if (!_craftingInProgress)
         {
+            PlayerRuntimeData.GetInstance().data.CookData.QTESuccess = false;
             _inventoryScript.Show(true);
         }
         else
@@ -159,7 +177,7 @@ public class PlayerCooking : MonoBehaviour
             m_cookingProgressVisuals.SetActive(true);
 
             //Stop Slow Motion
-            Time.timeScale = 1f;
+            //Time.timeScale = 1f;
         }
     }
 
@@ -200,7 +218,7 @@ public class PlayerCooking : MonoBehaviour
         
         _playerController.CheckingIfCookingIsDone();
         _playerController.StopCookingState();
-        _playerController._ignoreCook = true;
+        //_playerController._ignoreCook = true;
     }
 
     IEnumerator ICraftingLoop(float delay)
@@ -238,6 +256,7 @@ public class PlayerCooking : MonoBehaviour
         {
             StopCoroutine(_craftingRoutine);
             CompleteCrafting();
+            _inventoryScript.IncreaseMaxRecipeSlots();
             
             _playerController.CheckingIfCookingIsDone();
         }
