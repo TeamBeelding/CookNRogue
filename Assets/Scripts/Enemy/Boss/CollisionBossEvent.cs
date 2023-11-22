@@ -1,0 +1,33 @@
+using UnityEngine;
+
+public class CollisionBossEvent : MonoBehaviour
+{
+    private BossData data;
+    private BossController bossController;
+
+    private void OnEnable()
+    {
+        Reset();
+
+        bossController = GetComponent<BossController>();
+    }
+
+    private void Reset()
+    {
+        data = GetComponent<BossController>().GetBossDataRef();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (bossController.IsDashing())
+        {
+            if (other.gameObject.CompareTag("Player"))
+                bossController.CollideWithPlayer();
+
+            else if (other.gameObject.CompareTag("Obstruction"))
+                bossController.CollideWithObstruction();
+        }
+        else
+            PlayerController.Instance.TakeDamage(data.GetDamageOnHitPlayer);
+    }
+}

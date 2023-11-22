@@ -28,4 +28,19 @@ public class ShockwaveController : MonoBehaviour
             }
         }
     }
+
+#if UNITY_EDITOR
+
+    private void OnDrawGizmos()
+    {
+        if (data)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, data.GetMaxRadius);
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(transform.position, data.GetRadius);
+        }
+    }
+
+#endif
 }

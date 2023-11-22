@@ -30,13 +30,15 @@ public class BossController : EnemyController
 
     protected override void OnEnable()
     {
+        Player = PlayerController.Instance.gameObject;
+
+        SetState(State.EnterRoom);
+
         Reset();
     }
 
     private void Reset()
     {
-        SetState(State.EnterRoom);
-
         visual?.SetActive(true);
         physics?.SetActive(true);
 
@@ -55,6 +57,8 @@ public class BossController : EnemyController
 
         StateManagement();
     }
+
+    public bool IsDashing() => state == State.Dash;
 
     private void StateManagement()
     {
@@ -184,28 +188,22 @@ public class BossController : EnemyController
         }
     }
 
+    public void CollideWithPlayer()
+    {
+        PlayerController.Instance.TakeDamage(data.GetDamageOnHitDash);
+
+        SetState(State.Teleport);
+    }
+
+    public void CollideWithObstruction()
+    {
+        SetState(State.Shockwave);
+    }
+
     protected override void Dying()
     {
         visual?.SetActive(false);
         physics?.SetActive(false);
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (state == State.Dash)
-        {
-            if (other.gameObject.CompareTag("Player"))
-            {
-                Player.GetComponent<PlayerController>().TakeDamage(data.GetDamageOnHitDash);
-
-                SetState(State.Teleport);
-            }
-
-            if (other.gameObject.CompareTag("Obstruction"))
-                SetState(State.Shockwave);
-        }
-        else
-            Player.GetComponent<PlayerController>().TakeDamage(data.GetDamageOnHitPlayer);
     }
 
     public override bool IsMoving()
