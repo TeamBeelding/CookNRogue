@@ -28,7 +28,7 @@ public class Item : MonoBehaviour
 
     protected virtual void Update()
     {
-        transform.LookAt(Camera.main.transform.position);
+        //transform.LookAt(Camera.main.transform.position);
     }
 
     public void HideItemGFX()
@@ -66,7 +66,7 @@ public class Item : MonoBehaviour
         Transform playerTransform = PlayerHealth.instance.transform;
         float distanceToPlayer = Vector3.Distance(playerTransform.position, transform.position);
 
-        while (distanceToPlayer > 0.2f)
+        while (distanceToPlayer > 0.3f)
         {
             transform.position = Vector3.Lerp(transform.position, playerTransform.position, 0.05f);
             distanceToPlayer = Vector3.Distance(playerTransform.position, transform.position);
