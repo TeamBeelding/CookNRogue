@@ -13,6 +13,7 @@ public class Item : MonoBehaviour
     protected bool _hasTriggered = false;
     [SerializeField] private ParticleSystem _highlightPS;
     [SerializeField] private ParticleSystem _obtainPS;
+    [SerializeField] AnimationCurve _scaleCurve;
     protected UnityEvent _triggerEffect = new UnityEvent();
 
     protected void Awake()
@@ -66,10 +67,17 @@ public class Item : MonoBehaviour
         Transform playerTransform = PlayerHealth.instance.transform;
         float distanceToPlayer = Vector3.Distance(playerTransform.position, transform.position);
 
+        float progress = 0;
+        float scale = transform.localScale.x;
         while (distanceToPlayer > 0.3f)
         {
             transform.position = Vector3.Lerp(transform.position, playerTransform.position, 0.05f);
+
             distanceToPlayer = Vector3.Distance(playerTransform.position, transform.position);
+            transform.localScale = Vector3.one * (scale - _scaleCurve.Evaluate(progress));
+            progress += Time.deltaTime;
+            Mathf.Clamp01(progress);
+
             yield return new WaitForEndOfFrame();
         }
 
