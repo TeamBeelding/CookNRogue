@@ -6,7 +6,6 @@ public class BossController : EnemyController
 {
     private enum State
     {
-        Neutre,
         EnterRoom,
         Teleport,
         CastMissiles,
@@ -32,12 +31,20 @@ public class BossController : EnemyController
 
     protected override void OnEnable()
     {
-        Player = PlayerController.Instance.gameObject;
-
-        SetState(State.Neutre);
-
+        base.OnEnable();
         Reset();
     }
+
+    protected override void Start()
+    {
+        base.Start();
+
+        missilesController = GetComponentInChildren<MissilesController>();
+        shockwaveController = GetComponentInChildren<ShockwaveController>();
+
+        SetState(State.EnterRoom);
+    }
+
 
     private void Reset()
     {
@@ -66,8 +73,6 @@ public class BossController : EnemyController
     {
         switch (state)
         {
-            case State.Neutre:
-                break;
             case State.EnterRoom:
                 EnterRoom();
                 break;
@@ -97,6 +102,9 @@ public class BossController : EnemyController
 
     private void EnterRoom()
     {
+        if (!Player)
+            Player = PlayerController.Instance.gameObject;
+
         stateCoroutine = StartCoroutine(IEnterRoom());
 
         IEnumerator IEnterRoom()
@@ -198,6 +206,8 @@ public class BossController : EnemyController
         {
             while (state == State.Shockwave)
             {
+                shockwaveController.StartShockwave();
+
                 yield return null;
                 SetState(State.Teleport);
             }

@@ -33,24 +33,22 @@ public class ShockwaveController : MonoBehaviour
 
             while (elapsedTime < duration)
             {
-                if (hasHittingPlayer )
-                {
-                    StopCoroutine(shockwaveCoroutine);
-                }
-
                 float curveValue = animationCurve.Evaluate(elapsedTime / duration);
 
                 radius = Mathf.Lerp(0, data.GetMaxRadius, curveValue);
 
-                Collider[] hits = Physics.OverlapSphere(transform.position, radius);
-
-                foreach (Collider c in hits)
+                if (!hasHittingPlayer)
                 {
-                    if (c.gameObject.layer == LayerMask.NameToLayer("Player"))
-                    {
-                        PlayerController.Instance.TakeDamage(data.GetShockwaveDamage);
+                    Collider[] hits = Physics.OverlapSphere(transform.position, radius);
 
-                        hasHittingPlayer = true;
+                    foreach (Collider c in hits)
+                    {
+                        if (c.gameObject.layer == LayerMask.NameToLayer("Player"))
+                        {
+                            PlayerController.Instance.TakeDamage(data.GetShockwaveDamage);
+
+                            hasHittingPlayer = true;
+                        }
                     }
                 }
 
