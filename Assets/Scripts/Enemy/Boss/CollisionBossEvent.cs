@@ -1,3 +1,4 @@
+using Enemy.DashingEnemy;
 using UnityEngine;
 
 public class CollisionBossEvent : MonoBehaviour
@@ -5,16 +6,21 @@ public class CollisionBossEvent : MonoBehaviour
     private BossData data;
     private BossController bossController;
 
+    private void Awake()
+    {
+        bossController = GetComponentInParent<BossController>();
+    }
+
     private void OnEnable()
     {
         Reset();
 
-        bossController = GetComponent<BossController>();
+        bossController = GetComponentInParent<BossController>();
     }
 
     private void Reset()
     {
-        data = GetComponent<BossController>().GetBossDataRef();
+        data = GetComponentInParent<BossController>().GetBossDataRef();
     }
 
     private void OnTriggerEnter(Collider other)

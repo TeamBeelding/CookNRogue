@@ -27,6 +27,7 @@ public class BossController : EnemyController
     private ShockwaveController shockwaveController;
 
     private Coroutine stateCoroutine;
+    private Vector3 targetPosition;
 
     protected override void OnEnable()
     {
@@ -159,18 +160,30 @@ public class BossController : EnemyController
 
     private void Dashing()
     {
-        Vector3 lastPlayerPosition = Player.transform.position;
-        Vector3 direction = (transform.position - lastPlayerPosition).normalized;
-
         stateCoroutine = StartCoroutine(IDashing());
 
         IEnumerator IDashing()
         {
+            Vector3 direction = (GetTargetPosition() - transform.position).normalized;
+
             while (state == State.Dash)
             {
                 transform.position += direction * (data.GetDashSpeed * Time.deltaTime);
                 yield return null;
             }
+        }
+    }
+
+    public Vector3 GetTargetPosition()
+    {
+        targetPosition = GetLastPlayerPosition();
+        targetPosition.y = 0;
+
+        return targetPosition;
+
+        Vector3 GetLastPlayerPosition()
+        {
+            return Player.gameObject.transform.position;
         }
     }
 
