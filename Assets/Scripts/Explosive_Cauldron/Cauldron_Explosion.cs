@@ -26,6 +26,7 @@ public class Cauldron_Explosion : MonoBehaviour
     [SerializeField] ParticleSystem _smallSmokeParticles;
     [SerializeField] ParticleSystem _smallBubblesParticles;
     [SerializeField] Animator _explosiveCauldronAnimator;
+    private CapsuleCollider _capsuleCollider;
     bool _canExplode = true;
 
     [ColorUsage(true,true)]
@@ -41,6 +42,8 @@ public class Cauldron_Explosion : MonoBehaviour
 
     private void Start()
     {
+        _capsuleCollider = GetComponent<CapsuleCollider>();
+
         _particles = _vfxContainer.GetComponentsInChildren<ParticleSystem>();
 
         _explosionColor = GetDesiredColor();
@@ -77,6 +80,7 @@ public class Cauldron_Explosion : MonoBehaviour
         renderer = _markParticles.GetComponent<ParticleSystemRenderer>();
         renderer.material.SetColor("_Color", _explosionMarkColor);
 
+        _capsuleCollider.enabled = false;
 
         StartCoroutine(Explosion(_explosionTimer));
     }
