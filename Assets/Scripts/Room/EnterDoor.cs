@@ -1,7 +1,10 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using Eflatun.SceneReference;
 using Enemy;
+using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
@@ -13,17 +16,15 @@ public class EnterDoor : MonoBehaviour
     private static DoorManager _doorManager;
 
     [Header("Room linker")]
-    [Range(0,5)]
-    public int doorIndex = 0;
+
+    [SerializeField]
+    [Probability("_scenesToLoad")]
+    private float[] _sceneProbas;
 
     [SerializeField]
     private SceneReference[] _scenesToLoad;
 
     public Transform spawnPoint;
-
-    [Range(0,5)]
-    [SerializeField]
-    private int _doorIndexToLink;
 
     [Space]
     [Header("Door settings")]
@@ -121,8 +122,20 @@ public class EnterDoor : MonoBehaviour
                 Debug.LogError("No scene linked to this door");
                 return;
             }
-            int randomSceneIndex = Random.Range(0, _scenesToLoad.Length);
-            var sceneToLoad = _scenesToLoad[randomSceneIndex];
+
+            float proba = Random.Range(0.0f, 1.0f);
+            int chosenIndex = _scenesToLoad.Length - 1;
+            for (int i = 0; i < _sceneProbas.Length; i++)
+            {
+                if (proba < _sceneProbas[i])
+                {
+                    chosenIndex = i;
+                    break;
+                }
+            }
+
+
+            var sceneToLoad = _scenesToLoad[chosenIndex];
 
             if (sceneToLoad.State == SceneReferenceState.Unsafe)
             {
@@ -130,7 +143,6 @@ public class EnterDoor : MonoBehaviour
                 return;
             }
 
-            PlayerRuntimeData.GetData().RoomData.NextDoorIndex = _doorIndexToLink;
             SceneManager.LoadScene(sceneToLoad.BuildIndex);
         }
     }
