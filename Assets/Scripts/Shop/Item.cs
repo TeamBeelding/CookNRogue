@@ -65,6 +65,7 @@ public class Item : MonoBehaviour
     protected IEnumerator ToPlayer()
     {
         Transform playerTransform = PlayerHealth.instance.transform;
+        transform.parent = playerTransform;
         float distanceToPlayer = Vector3.Distance(playerTransform.position, transform.position);
 
         float progress = 0;
