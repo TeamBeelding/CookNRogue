@@ -2,13 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using AK.Wwise;
 
 public class PlayerCookingInventory : MonoBehaviour
 {
     #region Variables
     [SerializeField]
-    float m_showAnimDuration = 1f;
+    Vector3 m_cameraOffset;
 
     [SerializeField]
     AnimationCurve m_showAnimPosCurve;
@@ -18,6 +17,11 @@ public class PlayerCookingInventory : MonoBehaviour
 
     [SerializeField] 
     List<PlayerCookingInventoryWheel> m_inventoryWheels;
+
+    public PlayerCookingInventoryWheel GetWheel()
+    {
+        return m_inventoryWheels[0];
+    }
 
     [SerializeField]
     List<PlayerCookingRecipeSlot> m_recipeSlots;
@@ -38,22 +42,22 @@ public class PlayerCookingInventory : MonoBehaviour
     [SerializeField]
     List<PlayerCookingRecipeSlot> m_defaultRecipeSlots;
 
-    [SerializeField]
-    PlayerAttack m_playerAttackScript;
-
     [SerializeField] 
     float[] _damageFactor;
-
-    List<ProjectileData> _recipe;
 
     int _currentWheelIndex = 0;
     PlayerCookingInventorySlot _currentSlot;
 
     static PlayerCookingInventory _instance;
+    CameraController _cameraController;
+    PlayerCooking _cookingScript;
 
     bool _areControlsLocked;
     Vector3 _shownPosition;
     Vector3 _hiddenPosition;
+    Vector3 _initScale;
+    Vector3 _shownCamOffset;
+    Vector3 _hiddenCamOffset;
     float _curAnimProgress;
     Coroutine _curShowRoutine;
 
@@ -75,25 +79,38 @@ public class PlayerCookingInventory : MonoBehaviour
     private void Awake()
     {
         //Set instance
-        if(_instance == null)
+        if (_instance != null)
         {
-            _instance = this;
+            Destroy(gameObject);
         }
-        else if(_instance != this)
-        {
-            Destroy(this);
-        }
+
+        _instance = this;
     }
 
     private void Start()
     {
         gameObject.SetActive(false);
-        _recipe = new List<ProjectileData>();
 
-        _shownPosition = m_UIHolder.localPosition;
+        /*_shownPosition = m_UIHolder.localPosition;
         _hiddenPosition = _shownPosition;
-        _hiddenPosition.y -= gameObject.GetComponent<RectTransform>().rect.height;
-        m_UIHolder.localPosition = _hiddenPosition;
+        _hiddenPosition.y -= gameObject.GetComponent<RectTransform>().rect.height;*/
+        //m_UIHolder.localPosition = _hiddenPosition;
+
+        _cameraController = CameraController.instance;
+        _shownCamOffset = _cameraController.OffsetCoord + m_cameraOffset;
+        _hiddenCamOffset = _cameraController.OffsetCoord;
+
+        _initScale = m_UIHolder.localScale;
+        m_UIHolder.localScale = Vector3.zero;
+
+        //Set Recipe Slots
+        PlayerRuntimeData.GetInstance().data.CookData.RecipeMaxIngredientNb = 1;
+        m_recipeSlots[1].gameObject.SetActive(false);
+        m_recipeSlots[2].gameObject.SetActive(false);
+        m_defaultRecipeSlots[1].gameObject.SetActive(false);
+        m_defaultRecipeSlots[2].gameObject.SetActive(false);
+
+        _cookingScript = PlayerCooking.Instance;
 
         ResetRecipeUI();
     }
@@ -126,24 +143,30 @@ public class PlayerCookingInventory : MonoBehaviour
     {
         _areControlsLocked = true;
 
-        float time = m_showAnimDuration;
-        Vector3 targetPos = _shownPosition;
-        Vector3 initPos = m_UIHolder.localPosition;
+        float time = PlayerRuntimeData.GetInstance().data.CookData.ShowAnimDuration;
+        //Vector3 targetPos = _shownPosition;
+        //Vector3 initPos = m_UIHolder.localPosition;
+
+        Vector3 initCameraOffset = _cameraController.OffsetCoord;
+        Vector3 targetCameraOffset = _shownCamOffset;
 
 
         for (float f = _curAnimProgress > 0 ? (1 - _curAnimProgress) * time : 0; f < time; f += Time.unscaledDeltaTime)
         {
             _curAnimProgress = f / time;
-            m_UIHolder.localPosition = Vector3.Lerp(initPos, targetPos, m_showAnimPosCurve.Evaluate(_curAnimProgress));
-            m_UIHolder.localScale = Vector3.Lerp(Vector3.one * 0.5f, Vector3.one, m_showAnimPosCurve.Evaluate(_curAnimProgress));
-            Time.timeScale = Mathf.Lerp(1, 0, m_showAnimPosCurve.Evaluate(_curAnimProgress));
+            //m_UIHolder.localPosition = Vector3.Lerp(initPos, targetPos, m_showAnimPosCurve.Evaluate(_curAnimProgress));
+            m_UIHolder.localScale = Vector3.Lerp(Vector3.zero, _initScale, m_showAnimPosCurve.Evaluate(_curAnimProgress));
+            _cameraController.OffsetCoord = Vector3.Lerp(initCameraOffset, targetCameraOffset, m_showAnimPosCurve.Evaluate(_curAnimProgress));
+            //Time.timeScale = Mathf.Lerp(1, 0, m_showAnimPosCurve.Evaluate(_curAnimProgress));
             Color tempc = m_transition.color;
             tempc.a = Mathf.Lerp(0, 0.9f, m_showAnimPosCurve.Evaluate(_curAnimProgress));
             m_transition.color = tempc;
             yield return null;
         }
 
-        m_UIHolder.localPosition = targetPos;
+        //m_UIHolder.localPosition = targetPos;
+        m_UIHolder.localScale = _initScale;
+        _cameraController.OffsetCoord = targetCameraOffset;
         _areControlsLocked = false;
         _curAnimProgress = 0;
         _curShowRoutine = null;
@@ -153,23 +176,29 @@ public class PlayerCookingInventory : MonoBehaviour
     {
         _areControlsLocked = true;
 
-        float time = m_showAnimDuration;
-        Vector3 initPos = m_UIHolder.localPosition;
-        Vector3 targetPos = _hiddenPosition;
+        float time = PlayerRuntimeData.GetInstance().data.CookData.ShowAnimDuration;
+        //Vector3 initPos = m_UIHolder.localPosition;
+        //Vector3 targetPos = _hiddenPosition;
+
+        Vector3 initCameraOffset = _cameraController.OffsetCoord;
+        Vector3 targetCameraOffset = _hiddenCamOffset;
 
         for (float f = _curAnimProgress > 0 ? (1 - _curAnimProgress) * time : 0; f < time; f += Time.unscaledDeltaTime)
         {
             _curAnimProgress = f / time;
-            m_UIHolder.localPosition = Vector3.Lerp(targetPos, initPos, 1 - m_showAnimPosCurve.Evaluate(_curAnimProgress));
-            m_UIHolder.localScale = Vector3.Lerp(Vector3.one * 0.5f, Vector3.one, 1 - m_showAnimPosCurve.Evaluate(_curAnimProgress));
-            Time.timeScale = Mathf.Lerp(1, 0, 1 - m_showAnimPosCurve.Evaluate(_curAnimProgress));
+            //m_UIHolder.localPosition = Vector3.Lerp(targetPos, initPos, 1 - m_showAnimPosCurve.Evaluate(_curAnimProgress));
+            m_UIHolder.localScale = Vector3.Lerp(Vector3.zero, _initScale, 1 - m_showAnimPosCurve.Evaluate(_curAnimProgress));
+            _cameraController.OffsetCoord = Vector3.Lerp(targetCameraOffset, initCameraOffset, 1 - m_showAnimPosCurve.Evaluate(_curAnimProgress));
+            //Time.timeScale = Mathf.Lerp(1, 0, 1 - m_showAnimPosCurve.Evaluate(_curAnimProgress));
             Color tempc = m_transition.color;
             tempc.a = Mathf.Lerp(0, 0.9f, 1 - m_showAnimPosCurve.Evaluate(_curAnimProgress));
             m_transition.color = tempc;
             yield return null;
         }
 
-        m_UIHolder.localPosition = targetPos;
+        //m_UIHolder.localPosition = targetPos;
+        m_UIHolder.localScale = Vector3.zero;
+        _cameraController.OffsetCoord = targetCameraOffset;
         _areControlsLocked = false;
         _curAnimProgress = 0;
         _curShowRoutine = null;
@@ -259,18 +288,18 @@ public class PlayerCookingInventory : MonoBehaviour
     #region Bullet Crafting
     public void CancelCraft()
     {
-        if(_recipe == null)
+        if(PlayerRuntimeData.GetInstance().data.CookData.Recipe.Count == 0)
         {
             return;
         }
 
         //Reset recipe
-        foreach (ProjectileData ingredient in _recipe)
+        foreach (ProjectileData ingredient in PlayerRuntimeData.GetInstance().data.CookData.Recipe)
         {
             AddIngredientToInventory(ingredient);
         }
 
-        _recipe.Clear();
+        PlayerRuntimeData.GetInstance().data.CookData.Recipe.Clear();
 
         ResetRecipeUI();
     }
@@ -284,26 +313,25 @@ public class PlayerCookingInventory : MonoBehaviour
 
         PlayParticlesCooking();
 
-        if (_recipe.Count <= 0)
+        if (PlayerRuntimeData.GetInstance().data.CookData.Recipe.Count <= 0)
         {
             Debug.Log("Recipe is empty");
             return;
         }
 
 
-        m_playerAttackScript._color = _recipe[0].color;
+        PlayerRuntimeData.GetInstance().data.AttackData.AttackColor = PlayerRuntimeData.GetInstance().data.CookData.Recipe[0].color;
         AmmunitionBar.instance.ResetAmmoBar();
         _equippedRecipe.Clear();
         //Fuse ingredients's effects and stats
         float averageDmg = 0;
-        foreach (ProjectileData ingredient in _recipe)
+        foreach (ProjectileData ingredient in PlayerRuntimeData.GetInstance().data.CookData.Recipe)
         {
-            m_playerAttackScript._size += ingredient._size;
-            m_playerAttackScript._speed += ingredient._speed;
-            m_playerAttackScript._drag += ingredient._drag;
-            m_playerAttackScript._shootCooldown += ingredient._attackDelay;
+            PlayerRuntimeData.GetInstance().data.AttackData.AttackSize += ingredient._size;
+            PlayerRuntimeData.GetInstance().data.AttackData.AttackSpeed += ingredient._speed;
+            PlayerRuntimeData.GetInstance().data.AttackData.AttackDrag += ingredient._drag;
+            PlayerRuntimeData.GetInstance().data.AttackData.AttackCooldown += ingredient._attackDelay;
             averageDmg += ingredient._damage;
-            m_playerAttackScript._ammunition += ingredient._ammunition;
             AmmunitionBar.instance.AddIngredientAmmo(ingredient._ammunition);
 
             //Audio
@@ -315,36 +343,52 @@ public class PlayerCookingInventory : MonoBehaviour
             {
                 if(effect != null)
                 {                   
-                    m_playerAttackScript._effects.Add(effect);
+                    PlayerRuntimeData.GetInstance().data.AttackData.AttackEffects.Add(effect);
                 }
             }
         }
-        averageDmg /= _recipe.Count;
+        averageDmg /= PlayerRuntimeData.GetInstance().data.CookData.Recipe.Count;
 
-        switch (_recipe.Count)
+        switch (PlayerRuntimeData.GetInstance().data.CookData.Recipe.Count)
         {
             case 1:
                 averageDmg *= _damageFactor[0];
+                PlayerRuntimeData.GetInstance().data.AttackData.Ammunition = 15f;
                 break;
             case 2:
                 averageDmg *= _damageFactor[1];
+                PlayerRuntimeData.GetInstance().data.AttackData.Ammunition = 20f;
                 break;
             case 3:
                 averageDmg *= _damageFactor[2];
+                PlayerRuntimeData.GetInstance().data.AttackData.Ammunition = 30f;
                 break;
 
         }
-        m_playerAttackScript._damage = averageDmg;
+
+        //LARGE CAULDRON CHECK
+        if (PlayerRuntimeData.GetInstance().data.InventoryData.LargeCauldron)
+            PlayerRuntimeData.GetInstance().data.AttackData.Ammunition += PlayerRuntimeData.GetInstance().data.InventoryData.LargeCauldronValue;
+
+        //BIG SPATULE CHECK
+        if (PlayerRuntimeData.GetInstance().data.InventoryData.BigSpatule && PlayerRuntimeData.GetInstance().data.CookData.QTESuccess)
+            PlayerRuntimeData.GetInstance().data.AttackData.Ammunition += PlayerRuntimeData.GetInstance().data.InventoryData.BigSpatuleValue;
+        
+        PlayerRuntimeData.GetInstance().data.AttackData.AttackDamage = averageDmg;
+
+        //WODDEN SPOON CHECK
+        if (PlayerRuntimeData.GetInstance().data.InventoryData.WoodenSpoon)
+            PlayerRuntimeData.GetInstance().data.AttackData.AttackDamage += PlayerRuntimeData.GetInstance().data.InventoryData.WoodenSpoonValue;
 
         //Average rate of fire
-        m_playerAttackScript._shootCooldown /= _recipe.Count;
+        PlayerRuntimeData.GetInstance().data.AttackData.AttackCooldown /= PlayerRuntimeData.GetInstance().data.CookData.Recipe.Count;
 
-        foreach (IIngredientEffects effect in m_playerAttackScript._effects)
+        foreach (IIngredientEffects effect in PlayerRuntimeData.GetInstance().data.AttackData.AttackEffects)
         {
             if (effect is MultipleShots TempEffect)
             {
-                m_playerAttackScript._ProjectileNbr = TempEffect._shotNbr;
-                m_playerAttackScript._TimeBtwShotsRafale = TempEffect._TimebtwShots;
+                PlayerRuntimeData.GetInstance().data.AttackData.ProjectileNumber = TempEffect._shotNbr;
+                PlayerRuntimeData.GetInstance().data.AttackData.TimeBtwShotRafale = TempEffect._TimebtwShots;
             }
         }
 
@@ -352,7 +396,7 @@ public class PlayerCookingInventory : MonoBehaviour
         UpdateEquipedRecipeUI();
 
         //Clear recipe
-        _recipe.Clear();
+        PlayerRuntimeData.GetInstance().data.CookData.Recipe.Clear();
 
         ResetRecipeUI();
     }
@@ -386,12 +430,12 @@ public class PlayerCookingInventory : MonoBehaviour
             }
             
             //Item Description
-            if (_recipe.Count < m_recipeSlots.Count)
+            if (PlayerRuntimeData.GetInstance().data.CookData.Recipe.Count < PlayerRuntimeData.GetInstance().data.CookData.RecipeMaxIngredientNb)
             {
                 ProjectileData slotData = slot.GetData();
-                m_recipeSlots[_recipe.Count].Sprite = slotData.inventorySprite;
-                m_recipeSlots[_recipe.Count].Color = Color.white;
-                m_recipeSlots[_recipe.Count].Description = slotData.description;
+                m_recipeSlots[PlayerRuntimeData.GetInstance().data.CookData.Recipe.Count].Sprite = slotData.inventorySprite;
+                m_recipeSlots[PlayerRuntimeData.GetInstance().data.CookData.Recipe.Count].Color = Color.white;
+                m_recipeSlots[PlayerRuntimeData.GetInstance().data.CookData.Recipe.Count].Description = slotData.description;
             }
 
             slot.Highlight(true);
@@ -407,15 +451,18 @@ public class PlayerCookingInventory : MonoBehaviour
         }
 
         //Item Description
-        if (_recipe.Count < m_recipeSlots.Count)
+        if (PlayerRuntimeData.GetInstance().data.CookData.Recipe.Count < PlayerRuntimeData.GetInstance().data.CookData.RecipeMaxIngredientNb)
         {
-            m_recipeSlots[_recipe.Count].Sprite = null;
-            m_recipeSlots[_recipe.Count].Color = Color.clear;
-            m_recipeSlots[_recipe.Count].Description = null;
+            m_recipeSlots[PlayerRuntimeData.GetInstance().data.CookData.Recipe.Count].Sprite = null;
+            m_recipeSlots[PlayerRuntimeData.GetInstance().data.CookData.Recipe.Count].Color = Color.clear;
+            m_recipeSlots[PlayerRuntimeData.GetInstance().data.CookData.Recipe.Count].Description = null;
         }
 
-        _currentSlot.Highlight(false);
-        _currentSlot = null;
+        if(_currentSlot != null)
+        {
+            _currentSlot.Highlight(false);
+            _currentSlot = null;
+        }
 
         m_navigateKey.SetActive(true);
         m_selectKey.SetActive(false);
@@ -496,7 +543,7 @@ public class PlayerCookingInventory : MonoBehaviour
 
     private void AddToRecipe(PlayerCookingInventorySlot selectedSlot)
     {
-        if (_recipe !=null && _recipe.Count >= m_recipeSlots.Count || !selectedSlot.CanSelect())
+        if (PlayerRuntimeData.GetInstance().data.CookData.Recipe.Count >= PlayerRuntimeData.GetInstance().data.CookData.RecipeMaxIngredientNb || !selectedSlot.CanSelect())
         {
             Debug.Log("Can't select item");
             return;
@@ -504,7 +551,7 @@ public class PlayerCookingInventory : MonoBehaviour
 
         ProjectileData data = selectedSlot.GetData();
 
-        foreach (ProjectileData curData in _recipe)
+        foreach (ProjectileData curData in PlayerRuntimeData.GetInstance().data.CookData.Recipe)
         {
             if (curData == data)
             {
@@ -515,17 +562,37 @@ public class PlayerCookingInventory : MonoBehaviour
 
         selectedSlot.DecreaseCount();
 
-        _recipe.Add(data);
-        m_recipeSlots[_recipe.Count - 1].Sprite = data.inventorySprite;
-        m_recipeSlots[_recipe.Count - 1].Description = data.description;
+        PlayerRuntimeData.GetInstance().data.CookData.Recipe.Add(data);
+        m_recipeSlots[PlayerRuntimeData.GetInstance().data.CookData.Recipe.Count - 1].Sprite = data.inventorySprite;
+        m_recipeSlots[PlayerRuntimeData.GetInstance().data.CookData.Recipe.Count - 1].Description = data.description;
+
+        if(PlayerRuntimeData.GetInstance().data.CookData.Recipe.Count == PlayerRuntimeData.GetInstance().data.CookData.RecipeMaxIngredientNb)
+        {
+            _cookingScript.StartCrafting();
+        }
     }
     #endregion
 
     #region Utility
     public int RecipeSize()
     {
-        return _recipe.Count;
+        return PlayerRuntimeData.GetInstance().data.CookData.Recipe.Count;
     }
+
+    public void IncreaseMaxRecipeSlots()
+    {
+        if(PlayerRuntimeData.GetInstance().data.CookData.RecipeMaxIngredientNb >= 3)
+        {
+            return;
+        }
+
+        int index = PlayerRuntimeData.GetInstance().data.CookData.RecipeMaxIngredientNb;
+
+        m_recipeSlots[index].gameObject.SetActive(true);
+        m_defaultRecipeSlots[index].gameObject.SetActive(true);
+
+        PlayerRuntimeData.GetInstance().data.CookData.RecipeMaxIngredientNb += 1;
+    } 
 
     public void UpdateEquipedRecipeUI()
     {
@@ -565,7 +632,7 @@ public class PlayerCookingInventory : MonoBehaviour
     #endregion
 
     [System.Serializable]
-    private class PlayerCookingInventoryWheel
+    public class PlayerCookingInventoryWheel
     {
         [SerializeField]
         GameObject m_wheelObject;

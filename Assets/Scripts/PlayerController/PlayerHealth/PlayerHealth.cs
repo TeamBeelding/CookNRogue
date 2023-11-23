@@ -5,12 +5,28 @@ using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
-    [SerializeField] int _health;
-    [SerializeField] int _maxHealth;
+    public static PlayerHealth instance;
+
     [SerializeField] private AK.Wwise.Event _Play_SFX_Health_Collect;
     [SerializeField] private AK.Wwise.Event _Play_MC_Hit;
     [SerializeField] private AK.Wwise.Event _Play_MC_Death;
+
     HeartBar _heartBar;
+
+    [Header("Time Scale")]
+    [SerializeField] float _targetTimeScale;
+    [SerializeField] float _scalingDuration;
+    [SerializeField] float _ScalingSpeed;
+    [SerializeField] AnimationCurve _scaleCurve;
+
+
+    private void Awake()
+    {
+        if(instance != null && instance != this)
+            Destroy(this);
+
+        instance = this;
+    }
     private void Start()
     {
         _heartBar = HeartBar.instance;
@@ -19,18 +35,19 @@ public class PlayerHealth : MonoBehaviour
     public void HealthInit()
     {
         //GUARDS
-        _maxHealth = Mathf.Abs(_maxHealth);
-        if (_maxHealth == 0)
-            _maxHealth = 6;
+        PlayerRuntimeData.GetInstance().data.BaseData.DefaultMaxHealth = Mathf.Abs(PlayerRuntimeData.GetInstance().data.BaseData.DefaultMaxHealth);
 
-        if(_maxHealth%2 !=0)
-            _maxHealth++;
+        if (PlayerRuntimeData.GetInstance().data.BaseData.DefaultMaxHealth == 0)
+            PlayerRuntimeData.GetInstance().data.BaseData.DefaultMaxHealth = 6;
+
+        if(PlayerRuntimeData.GetInstance().data.BaseData.DefaultMaxHealth%2 !=0)
+            PlayerRuntimeData.GetInstance().data.BaseData.DefaultMaxHealth++;
         
         
 
-        _health = _maxHealth;
-        _heartBar.InitBar(_health);
-
+        PlayerRuntimeData.GetInstance().data.BaseData.MaxHealth = PlayerRuntimeData.GetInstance().data.BaseData.DefaultMaxHealth;
+        PlayerRuntimeData.GetInstance().data.BaseData.CurrentHealth = PlayerRuntimeData.GetInstance().data.BaseData.DefaultMaxHealth;
+        _heartBar.InitBar(PlayerRuntimeData.GetInstance().data.BaseData.CurrentHealth);
     }
 
     /*
@@ -40,37 +57,74 @@ public class PlayerHealth : MonoBehaviour
     {
         if (damage <= 0) return true;
 
-        _health -= damage;
-        _heartBar.UpdateHealthVisual(_health);
+        PlayerRuntimeData.GetInstance().data.BaseData.CurrentHealth -= damage;
+        _heartBar.UpdateHealthVisual(PlayerRuntimeData.GetInstance().data.BaseData.CurrentHealth);
         _Play_MC_Hit.Post(gameObject);
         _Play_SFX_Health_Collect.Post(gameObject);
 
-        if (_health <= 0)
+        if (PlayerRuntimeData.GetInstance().data.BaseData.CurrentHealth <= 0)
         {
-            _health = _maxHealth;
-            _heartBar.UpdateHealthVisual(_health);
+            PlayerRuntimeData.GetInstance().data.BaseData.CurrentHealth = PlayerRuntimeData.GetInstance().data.BaseData.MaxHealth;
+            _heartBar.UpdateHealthVisual(PlayerRuntimeData.GetInstance().data.BaseData.CurrentHealth);
             _Play_MC_Death.Post(gameObject);
 
             // RoomManager.instance.RestartLevel();
             return false;
         }
 
+        StartCoroutine(DamageSlowTime(_scalingDuration));
         return true;
+    }
+
+    public void UpgradeMaxHealth(int additionalHealth)
+    {
+        _heartBar.AddHeart();
+        PlayerRuntimeData.GetInstance().data.BaseData.MaxHealth += additionalHealth;
+        Heal(additionalHealth);
     }
 
     public void Heal(int heal)
     {
         if (heal <= 0)
             return;
+        
+        PlayerRuntimeData.GetInstance().data.BaseData.CurrentHealth += heal;
 
-        _health += heal;
+        if (PlayerRuntimeData.GetInstance().data.BaseData.CurrentHealth > PlayerRuntimeData.GetInstance().data.BaseData.MaxHealth)
+            PlayerRuntimeData.GetInstance().data.BaseData.CurrentHealth = PlayerRuntimeData.GetInstance().data.BaseData.MaxHealth;
 
-        _heartBar.UpdateHealthVisual(_health);
+        _heartBar.UpdateHealthVisual(PlayerRuntimeData.GetInstance().data.BaseData.CurrentHealth);
     }
 
     private void Reset()
     {
-        _maxHealth = 6;
+        PlayerRuntimeData.GetInstance().data.BaseData.MaxHealth = PlayerRuntimeData.GetInstance().data.BaseData.DefaultMaxHealth;
+    }
+
+    IEnumerator DamageSlowTime(float duration)
+    {
+        //SCALE
+        float scaleProgress = 0;
+        while (scaleProgress < 1)
+        {
+            float newScale = (1 - _targetTimeScale) * _scaleCurve.Evaluate(scaleProgress);
+            scaleProgress += Time.fixedDeltaTime * _ScalingSpeed;
+            Time.timeScale = 1 - newScale;
+            yield return new WaitForFixedUpdate();
+        }
+        Time.timeScale = _targetTimeScale;
+
+        yield return new WaitForSecondsRealtime(duration);
+
+        scaleProgress = 1;
+        while (scaleProgress > 0)
+        {
+            float newScale = (1 - _targetTimeScale) * _scaleCurve.Evaluate(scaleProgress);
+            scaleProgress -= Time.fixedDeltaTime * _ScalingSpeed;
+            Time.timeScale = 1 - newScale;
+            yield return new WaitForFixedUpdate();
+        }
+        Time.timeScale = 1;
     }
 
 }

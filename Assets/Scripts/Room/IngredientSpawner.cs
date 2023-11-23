@@ -24,7 +24,6 @@ public class IngredientSpawner : MonoBehaviour
             int rand = Random.Range(0, _pool.Count);
             GameObject ingredient = Instantiate(_pool[rand], m_spawnPoints[i].position, Quaternion.identity);
             ingredient.transform.localScale = Vector3.one * _ingredientScale;
-            RoomManager.instance.AddIngredient(ingredient);
 
             _pool.RemoveAt(rand);
         }
