@@ -6,6 +6,7 @@ public class BossController : EnemyController
 {
     private enum State
     {
+        Neutre,
         EnterRoom,
         Teleport,
         CastMissiles,
@@ -33,7 +34,7 @@ public class BossController : EnemyController
     {
         Player = PlayerController.Instance.gameObject;
 
-        SetState(State.EnterRoom);
+        SetState(State.Neutre);
 
         Reset();
     }
@@ -65,6 +66,8 @@ public class BossController : EnemyController
     {
         switch (state)
         {
+            case State.Neutre:
+                break;
             case State.EnterRoom:
                 EnterRoom();
                 break;

@@ -30,9 +30,8 @@ public class BossData : ScriptableObject
 
     [SerializeField] private int shockwaveCount;
     [SerializeField] private float delayBetweenShockwave;
-    [SerializeField] private float radius;
     [SerializeField] private float maxRadius;
-    [SerializeField] private float shockwaveSpeed;
+    [SerializeField] private float shockwaveDuration;
     [SerializeField] private float damageForShockwave;
 
     private void Reset()
@@ -53,9 +52,8 @@ public class BossData : ScriptableObject
 
         shockwaveCount = 1;
         delayBetweenShockwave = 0;
-        radius = 0;
         maxRadius = 10;
-        shockwaveSpeed = 4;
+        shockwaveDuration = 3;
         damageForShockwave = 0.5f;
     }
 
@@ -94,9 +92,9 @@ public class BossData : ScriptableObject
 
     public int GetShockwaveCount => shockwaveCount;
     public float GetDelayForEachShockWave => delayBetweenShockwave;
-    public float GetRadius => radius;
     public float GetMaxRadius => maxRadius;
-    public float GetShockwaveSpeed => shockwaveSpeed;
+    public float GetShockwaveDuration => shockwaveDuration;
+    public float GetShockwaveDamage => damageForShockwave;
 
     #endregion
 }
