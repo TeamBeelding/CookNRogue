@@ -27,15 +27,14 @@ public class DoorManager : MonoBehaviour
         _doorsInScene = FindObjectsOfType<EnterDoor>();
         _player = GameObject.FindGameObjectWithTag("Player");
 
-        foreach (var enterDoor in _doorsInScene)
+        var spawnPoint = GameObject.FindGameObjectWithTag("PlayerSpawn");
+        if (spawnPoint == null)
         {
-            if (enterDoor.doorIndex == PlayerRuntimeData.GetData().RoomData.NextDoorIndex)
-            {
-                var position = enterDoor.spawnPoint.position;
-                _player.transform.position = new Vector3(position.x, _player.transform.position.y, position.z);
-                return;
-            }
+            Debug.LogError("No spawnpoint found in scene");
+            return;
         }
-        Debug.Log("No door found");
+
+        var position = spawnPoint.transform.position;
+        _player.transform.position = new Vector3(position.x, _player.transform.position.y, position.z);
     }
 }

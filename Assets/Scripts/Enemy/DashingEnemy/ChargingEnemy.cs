@@ -41,6 +41,9 @@ namespace Enemy.DashingEnemy
         private Animator animator;
         [SerializeField] private GameObject physics;
 
+        [SerializeField] ParticleSystem _collisionParticles;
+        [SerializeField] ParticleSystem _dashParticles;
+
         public enum State
         {
             Casting,
@@ -152,9 +155,15 @@ namespace Enemy.DashingEnemy
                     if (_direction != Vector3.zero)
                     {
                         transform.position += _direction * (_data.GetSpeed() * Time.deltaTime);
+
+                        if (_dashParticles)
+                            _dashParticles.Play();
                     }
                     else
                     {
+                        if (_dashParticles)
+                            _dashParticles.Stop();
+
                         _isCharging = false;
                     }
                 
@@ -310,6 +319,10 @@ namespace Enemy.DashingEnemy
         public void CollideWithObstruction()
         {
             _Play_SFX_Cabbage_Charge_Impact.Post(gameObject);
+
+            if(_collisionParticles)
+                _collisionParticles.Play();
+
             StopMoving();
             SetState(State.Waiting);
         }

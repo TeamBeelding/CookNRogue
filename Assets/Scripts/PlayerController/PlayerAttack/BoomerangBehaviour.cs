@@ -9,40 +9,55 @@ public class BoomerangBehaviour : PlayerBulletBehaviour
     public AnimationCurve _sides;
     public float _boomerangSpeed;
     private Vector3 _StartPosition;
+    private float _progress = 0;
     private float _increment = 0;
     public float _MaxForwardDistance = 10;
     public float _MaxSideDistance = 5;
     Vector3 _Xaxis;
-    
-    protected override void Start()
+    bool done = false;
+    public override void Init()
     {
         _StartPosition = transform.position;
-        _boomerangSpeed /= 100;
-        _Xaxis = Quaternion.Euler(new Vector3(0,90,0)) * _direction;
+        _increment = _boomerangSpeed/30;
+        _Xaxis = Quaternion.Euler(new Vector3(0, 90, 0)) * _direction;
+        HasExploded = false;
+
+        PlayerBulletBehaviour[] playerBulletBehaviours = GetComponents<PlayerBulletBehaviour>();
+        foreach(PlayerBulletBehaviour playerBulletBehaviour in playerBulletBehaviours)
+        {
+            if (playerBulletBehaviour != this)
+                playerBulletBehaviour.HasExploded = true;
+        }
     }
 
     // Update is called once per frame
     protected override void FixedUpdate()
     {
-        Debug.DrawLine(transform.position, transform.position + (_Xaxis * _MaxSideDistance), Color.red) ;
-        float posX = _direction.x * _sides.Evaluate(_increment *_boomerangSpeed);
+        if(done) return;
 
-        transform.position = _StartPosition + (_direction * _forward.Evaluate(_increment * _boomerangSpeed) * _MaxForwardDistance) + (_Xaxis * _sides.Evaluate(_increment * _boomerangSpeed) * _MaxSideDistance);
-        if(_increment * _boomerangSpeed > 1)
+        transform.position = _StartPosition + (_direction * _forward.Evaluate(_progress) * _MaxForwardDistance) + (_Xaxis * _sides.Evaluate(_progress) * _MaxSideDistance);
+        _progress += _increment;
+
+        if (_progress / _boomerangSpeed >= 1)
         {
+            done = true;
             DisableBullet();
+
         }
-        _increment++;
-        
     }
 
-    protected override void OnDestroy()
-    {
-        //NE PAS ENLEVER
-    }
     protected override void OnTriggerEnter(Collider other)
     {
         //NE PAS ENLEVER
+    }
+
+
+    public override void ResetStats()
+    {
+        base.ResetStats();
+        _progress = 0;
+        _increment = 0;
+        done = false;
     }
 
 

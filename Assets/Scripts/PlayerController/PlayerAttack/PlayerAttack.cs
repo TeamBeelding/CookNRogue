@@ -246,7 +246,7 @@ public class PlayerAttack : MonoBehaviour
                 Bullet.transform.position = _muzzle.position;
 
                 _projectileBehaviour = Bullet.GetComponent<PlayerBulletBehaviour>();
-
+                _projectileBehaviour.enabled = true;
                 _projectileBehaviour.CancelInvoke("DisableBullet");
                 _projectileBehaviour.Invoke("DisableBullet", 1);
 
@@ -298,12 +298,16 @@ public class PlayerAttack : MonoBehaviour
             if (!(effect is Boomerang boomerang))
                 continue;
 
-            #region BoomerangBehaviour Init
 
+            #region BoomerangBehaviour Init
+            _projectileBehaviour = Bullet.GetComponent<PlayerBulletBehaviour>();
+            _projectileBehaviour.enabled = false;
             BoomerangBehaviour boomerangBehaviour = Bullet.GetComponent<BoomerangBehaviour>();
 
             if (boomerangBehaviour == null)
                 boomerangBehaviour = Bullet.AddComponent<BoomerangBehaviour>();
+            
+                
 
             Boomerang TempEffect = boomerang as Boomerang;
             boomerangBehaviour.ResetStats();
@@ -315,6 +319,7 @@ public class PlayerAttack : MonoBehaviour
             boomerangBehaviour._boomerangSpeed = TempEffect._Speed;
             boomerangBehaviour._damage += PlayerRuntimeData.GetInstance().data.AttackData.AttackDamage;
             boomerangBehaviour._direction = Quaternion.Euler(0, Angle, 0) * _playerController.PlayerAimDirection;
+            boomerangBehaviour.Init();
             #endregion
 
         }
@@ -383,5 +388,7 @@ public class PlayerAttack : MonoBehaviour
         PlayerRuntimeData.GetInstance().data.AttackData.AttackDamage = 1;
         //m_knockbackScript = GameObject.Find("CharacterModel").GetComponent<PlayerKnockback>();
     }
+
+
 
 }
