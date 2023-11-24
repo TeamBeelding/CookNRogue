@@ -60,14 +60,8 @@ namespace Enemy.LDE
             Healthpoint = data.GetHealth;
 
             animator = GetComponentInChildren<Animator>();
-        }
 
-        // Start is called before the first frame update
-        protected override void Start()
-        {
             SetState(FocusPlayer ? State.Chase : State.Neutral);
-
-            base.Start();
         }
 
         private void FixedUpdate()
