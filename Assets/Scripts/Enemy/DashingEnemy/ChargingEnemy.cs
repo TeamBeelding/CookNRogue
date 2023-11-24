@@ -57,6 +57,8 @@ namespace Enemy.DashingEnemy
         protected override void Awake()
         {
             base.Awake();
+
+            Player = PlayerController.Instance.gameObject;
         }
 
         protected override void OnEnable()
@@ -64,6 +66,8 @@ namespace Enemy.DashingEnemy
             base.OnEnable();
 
             Healthpoint = _data.GetHealth();
+
+            Player = PlayerController.Instance.gameObject;
         }
 
         // Start is called before the first frame update
@@ -311,7 +315,7 @@ namespace Enemy.DashingEnemy
         {
             _Play_SFX_Cabbage_Charge_Impact.Post(gameObject);
             StopMoving();
-            Player.GetComponent<PlayerController>().TakeDamage(_data.GetDamage());
+            PlayerController.Instance.TakeDamage(_data.GetDamage());
 
             SetState(State.Waiting);
         }
