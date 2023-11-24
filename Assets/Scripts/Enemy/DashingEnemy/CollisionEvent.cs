@@ -21,17 +21,11 @@ namespace Enemy.DashingEnemy
 
         private void OnTriggerEnter(Collider other)
         {
-           
-
             if (other.gameObject.CompareTag("Player"))
-            {
                 _chargingEnemy.CollideWithPlayer();
-            }
         
             if (other.gameObject.CompareTag("Obstruction"))
-            {
                 _chargingEnemy.CollideWithObstruction();
-            }
         }
     }
 }

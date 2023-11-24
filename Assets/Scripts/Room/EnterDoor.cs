@@ -1,9 +1,13 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using Eflatun.SceneReference;
 using Enemy;
+using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Random = UnityEngine.Random;
 using SceneReference = Eflatun.SceneReference.SceneReference;
 
 public class EnterDoor : MonoBehaviour
@@ -12,17 +16,15 @@ public class EnterDoor : MonoBehaviour
     private static DoorManager _doorManager;
 
     [Header("Room linker")]
-    [Range(0,5)]
-    public int doorIndex = 0;
 
     [SerializeField]
-    private SceneReference _sceneToLoad;
+    [Probability("_scenesToLoad")]
+    private float[] _sceneProbas;
+
+    [SerializeField]
+    private SceneReference[] _scenesToLoad;
 
     public Transform spawnPoint;
-
-    [Range(0,5)]
-    [SerializeField]
-    private int _doorIndexToLink;
 
     [Space]
     [Header("Door settings")]
@@ -78,9 +80,12 @@ public class EnterDoor : MonoBehaviour
             _doorManager = new GameObject("DoorManager").AddComponent<DoorManager>();
         }
 
-        if (_sceneToLoad.State == SceneReferenceState.Unsafe)
+        foreach (SceneReference sceneReference in _scenesToLoad)
         {
-            Debug.LogError("Door has no valid level linked " + gameObject.name);
+            if (sceneReference.State == SceneReferenceState.Unsafe)
+            {
+                Debug.LogError("Door has no valid level linked " + gameObject.name);
+            }
         }
 
         if (m_door != null)
@@ -112,14 +117,33 @@ public class EnterDoor : MonoBehaviour
     {
         if (other.CompareTag("Player") && !m_door.GetComponent<Collider>().enabled)
         {
-            if (_sceneToLoad.State == SceneReferenceState.Unsafe)
+            if (_scenesToLoad.Length == 0)
             {
-                Debug.LogError("Door has no valid level linked");
+                Debug.LogError("No scene linked to this door");
                 return;
             }
 
-            PlayerRuntimeData.GetData().RoomData.NextDoorIndex = _doorIndexToLink;
-            SceneManager.LoadScene(_sceneToLoad.BuildIndex);
+            float proba = Random.Range(0.0f, 1.0f);
+            int chosenIndex = _scenesToLoad.Length - 1;
+            for (int i = 0; i < _sceneProbas.Length; i++)
+            {
+                if (proba < _sceneProbas[i])
+                {
+                    chosenIndex = i;
+                    break;
+                }
+            }
+
+
+            var sceneToLoad = _scenesToLoad[chosenIndex];
+
+            if (sceneToLoad.State == SceneReferenceState.Unsafe)
+            {
+                Debug.LogError("Scene reference is invalid");
+                return;
+            }
+
+            SceneManager.LoadScene(sceneToLoad.BuildIndex);
         }
     }
     private void StartOpenDoor()
