@@ -6,7 +6,6 @@ using TMPro;
 public class AmmunitionBar : MonoBehaviour
 {
     private Slider _ammoBar;
-    public PlayerAttack _playerAttack;
     public TextMeshProUGUI _ammoText;
     public static AmmunitionBar instance;
     public void Awake()
@@ -22,10 +21,10 @@ public class AmmunitionBar : MonoBehaviour
     {
         _ammoBar = GetComponentInChildren<Slider>();
     }
-    public void InitAmmoBar(int ammoNbr)
+    public void InitAmmoBar()
     {
-        _ammoBar.maxValue = _playerAttack._ammunition;
-        _ammoBar.value = _playerAttack._ammunition;
+        _ammoBar.maxValue = PlayerRuntimeData.GetInstance().data.AttackData.Ammunition;
+        _ammoBar.value = PlayerRuntimeData.GetInstance().data.AttackData.Ammunition;
     }
     public void ResetAmmoBar()
     {
@@ -34,7 +33,7 @@ public class AmmunitionBar : MonoBehaviour
     }
     public void UpdateAmmoBar()
     {
-        _ammoBar.value = _playerAttack._ammunition;
+        _ammoBar.value = PlayerRuntimeData.GetInstance().data.AttackData.Ammunition;
         UpdateAmmoText();
     }
     public void AddIngredientAmmo(int nbr)

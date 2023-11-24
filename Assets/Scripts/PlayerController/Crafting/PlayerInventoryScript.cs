@@ -6,8 +6,6 @@ public class PlayerInventoryScript : MonoBehaviour
 {
     private static PlayerInventoryScript _instance;
     public PlayerInventoryScrolling _scroll;
-    [SerializeField]
-    PlayerAttack m_attack;
     public List<ProjectileData> projectilesData;
     public GameObject UI_Inventory;
     public List<ProjectileData> recipe;
@@ -74,16 +72,16 @@ public class PlayerInventoryScript : MonoBehaviour
         }
 
         //PREPARE LE DELAI DE TIR EN LE METTANT A ZERO POUR IGNORER LA VALEUR DE BASE
-        m_attack._shootCooldown = 0;
+        PlayerRuntimeData.GetInstance().data.AttackData.AttackCooldown = 0;
         //Fusionne les effets et stats des differents ingredients
         foreach (ProjectileData ingredient in recipe)
         {
 
-            m_attack._size += ingredient._size;
-            m_attack._speed += ingredient._speed;
-            m_attack._drag += ingredient._drag;
-            m_attack._damage += ingredient._damage;
-            m_attack._ammunition += ingredient._ammunition;
+            PlayerRuntimeData.GetInstance().data.AttackData.AttackSize += ingredient._size;
+            PlayerRuntimeData.GetInstance().data.AttackData.AttackSpeed += ingredient._speed;
+            PlayerRuntimeData.GetInstance().data.AttackData.AttackDrag += ingredient._drag;
+            PlayerRuntimeData.GetInstance().data.AttackData.AttackDamage += ingredient._damage;
+            PlayerRuntimeData.GetInstance().data.AttackData.Ammunition += ingredient._ammunition;
             //m_attack._shootCooldown += ingredient._attackDelay;
 
             if (AmmunitionBar.instance!= null)
@@ -92,19 +90,19 @@ public class PlayerInventoryScript : MonoBehaviour
             //AJOUT DES EFFETS DANS LE SCRIPT D'ATTAQUE
             foreach (IIngredientEffects effect in ingredient.Effects)
             {
-                m_attack._effects.Add(effect);
+                PlayerRuntimeData.GetInstance().data.AttackData.AttackEffects.Add(effect);
             }
         }
         //CALCULE LE DELAIS DE TIR ENTRE CHAQUE BALLE EN FAISANT LA MOYENNE
         //m_attack.CalculateShootDelay();
 
-        foreach (IIngredientEffects effect in m_attack._effects)
+        foreach (IIngredientEffects effect in PlayerRuntimeData.GetInstance().data.AttackData.AttackEffects)
         {
             if (effect is MultipleShots)
             {
                 MultipleShots TempEffect = (MultipleShots)effect;
-                m_attack._ProjectileNbr = TempEffect._shotNbr;
-                m_attack._TimeBtwShotsRafale = TempEffect._TimebtwShots;
+                PlayerRuntimeData.GetInstance().data.AttackData.ProjectileNumber = TempEffect._shotNbr;
+                PlayerRuntimeData.GetInstance().data.AttackData.TimeBtwShotRafale = TempEffect._TimebtwShots;
             }
         }
         //Clear la Liste d'ingredients

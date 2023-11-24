@@ -10,18 +10,12 @@ public class FragmentationParticlesCollisions : MonoBehaviour
     List<ParticleCollisionEvent> _collisionEvents;
     [SerializeField] private float m_ExplosionForce;
     [SerializeField] private float m_ExplosionRadius;
-    private float _damage = 0f;
     [Range(0f, 100f)]
     [SerializeField] private float _damage_percentage;
     [SerializeField] private LayerMask _mask;
-    PlayerAttack _playerAttack;
     public GameObject DamageUI;
     void Start()
     {
-        _playerAttack = FindObjectOfType<PlayerAttack>();
-        float damage = _playerAttack._damage;
-        SetDamage(damage);
-
         _part = GetComponent<ParticleSystem>();
         _collisionEvents = new List<ParticleCollisionEvent>();
         Destroy(gameObject,_part.main.duration);
@@ -40,7 +34,7 @@ public class FragmentationParticlesCollisions : MonoBehaviour
             if (enemyController != null)
             {
                 Debug.Log((_damage_percentage / 100));
-                float totalDamage = _damage * (_damage_percentage / 100);
+                float totalDamage = PlayerRuntimeData.GetInstance().data.AttackData.AttackDamage * (_damage_percentage / 100);
                 totalDamage = (int)totalDamage;
                 enemyController.TakeDamage(totalDamage);
                 GameObject UIDAMAGE = Instantiate(DamageUI, other.transform.position + (Vector3.up * 3) + GetCameraDirection() * 0.5f, Quaternion.identity);
@@ -58,15 +52,8 @@ public class FragmentationParticlesCollisions : MonoBehaviour
         return dir;
     }
 
-    public void SetDamage(float damage)
-    {
-        _damage = damage;
-    }
-
     void kaboom(Vector3 Position)
     {
-
-        
         Collider[] hitColliders = Physics.OverlapSphere(Position, m_ExplosionRadius,_mask);
 
         foreach (Collider hitCollider in hitColliders)
@@ -79,14 +66,7 @@ public class FragmentationParticlesCollisions : MonoBehaviour
             if (rb != null)
             {
                 rb.AddExplosionForce(m_ExplosionForce, Position, m_ExplosionRadius);
-                
             }
-
-
-
         }
-
-
     }
-
 }

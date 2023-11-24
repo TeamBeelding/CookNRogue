@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Enemy;
+using TMPro;
 using Tutoriel;
 using UnityEngine;
 using UnityEngine.Events;
@@ -22,7 +23,10 @@ public abstract class EnemyController : MonoBehaviour
     protected bool _canAttackAnim = true;
     
     protected float Healthpoint;
-    
+
+    [SerializeField]
+    protected GameObject _damageUI;
+
     [SerializeField]
     protected GameObject explosion;
 
@@ -99,6 +103,15 @@ public abstract class EnemyController : MonoBehaviour
     {
         damage = Mathf.Abs(damage);
         Healthpoint -= damage;
+
+        //DAMAGE UI
+        if (_damageUI)
+        {
+            GameObject UIDAMAGE = Instantiate(_damageUI, transform.position + (Vector3.up * 3) + GetCameraDirection() * 0.5f, Quaternion.identity);
+            UIDAMAGE.GetComponentInChildren<TextMeshProUGUI>().text = damage.ToString();
+            Destroy(UIDAMAGE, 1);
+        }
+
 
         if (Healthpoint > 0)
         {
@@ -200,5 +213,11 @@ public abstract class EnemyController : MonoBehaviour
     ~EnemyController()
     {
         StopAllCoroutines();
+    }
+
+    Vector3 GetCameraDirection()
+    {
+        Vector3 dir = Camera.main.transform.position - transform.position;
+        return dir;
     }
 }
