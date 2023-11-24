@@ -120,8 +120,12 @@ public class RewardsManager : MonoBehaviour
 
         _pickedItems.Add(randomItem.itemPrefab.name);
 
-        var inst = Instantiate(randomItem.itemPrefab, _dropPosition);
-        // inst.transform.SetParent(null);
+        var amountToSpawn = Random.Range(randomItem.minAmount, randomItem.maxAmount + 1);
+        for (int i = 0; i < amountToSpawn; i++)
+        {
+            var inst = Instantiate(randomItem.itemPrefab, _dropPosition);
+            inst.transform.SetParent(null);
+        }
 
         Debug.Log("Spawned reward item " + randomItem.itemPrefab.name);
 
