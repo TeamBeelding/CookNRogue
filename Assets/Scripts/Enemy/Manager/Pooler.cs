@@ -48,14 +48,13 @@ public class Pooler : MonoBehaviour, IPooling
 
             return obj;
         }
-
-        obj = queue.Dequeue();
-        obj.SetActive(true);
-
         //PlaceItCorrectly(obj);
 
         obj.transform.localPosition = position;
         obj.transform.localRotation = quaternion;
+
+        obj = queue.Dequeue();
+        obj.SetActive(true);
 
         remainingElement--;
 
