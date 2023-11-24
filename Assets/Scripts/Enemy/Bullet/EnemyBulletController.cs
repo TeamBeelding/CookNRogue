@@ -69,7 +69,7 @@ public class EnemyBulletController : MonoBehaviour
             other.GetComponent<PlayerController>()?.TakeDamage(_damage);
             PoolManager.Instance.DesinstantiateFromPool(gameObject);
         }
-        else if (!other.transform.parent.CompareTag("Enemy"))
-            PoolManager.Instance.DesinstantiateFromPool(gameObject);
+        //else if (!other.transform.parent.CompareTag("Enemy"))
+        //    PoolManager.Instance.DesinstantiateFromPool(gameObject);
     }
 }
