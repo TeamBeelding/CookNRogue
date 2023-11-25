@@ -9,6 +9,7 @@ public class ShockwaveController : MonoBehaviour
     private BossData data;
     private Coroutine shockwaveCoroutine;
     private float radius;
+    [SerializeField] ParticleSystem _shockwavePart;
 
     private void OnEnable()
     {
@@ -22,6 +23,11 @@ public class ShockwaveController : MonoBehaviour
 
     public void StartShockwave()
     {
+        if (_shockwavePart != null)
+            _shockwavePart.Play();
+
+        var shape = _shockwavePart.shape;
+
         bool hasHittingPlayer = false;
         float duration = data.GetShockwaveDuration;
 
@@ -36,6 +42,9 @@ public class ShockwaveController : MonoBehaviour
                 float curveValue = animationCurve.Evaluate(elapsedTime / duration);
 
                 radius = Mathf.Lerp(0, data.GetMaxRadius, curveValue);
+
+                if(_shockwavePart != null) 
+                    shape.radius = radius;
 
                 if (!hasHittingPlayer)
                 {
@@ -56,6 +65,9 @@ public class ShockwaveController : MonoBehaviour
 
                 yield return null;
             }
+
+            if (_shockwavePart != null)
+                _shockwavePart.Stop();
         }
     }
 
