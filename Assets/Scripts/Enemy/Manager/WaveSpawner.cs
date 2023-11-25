@@ -10,14 +10,14 @@ public class WaveSpawner : MonoBehaviour
         public PoolType IAType;
     }
 
-    [SerializeField] private List<WaveContainer> list;
+    [SerializeField] private List<WaveContainer> waveContainer;
 
     private int waveCount = 1;
     private int currentWaveIndex = 0;
 
     private void Awake()
     {
-        waveCount = list.Count;
+        waveCount = waveContainer.Count;
     }
 
     public void SpawnAIFromWave()
@@ -27,7 +27,7 @@ public class WaveSpawner : MonoBehaviour
 
         currentWaveIndex++;
 
-        PoolManager.Instance.InstantiateFromPool(list[currentWaveIndex - 1].IAType, transform.position, Quaternion.identity);
+        PoolManager.Instance.InstantiateFromPool(waveContainer[currentWaveIndex - 1].IAType, transform.position, Quaternion.identity);
     }
 
     public bool IsWaveIsEnd() => currentWaveIndex > waveCount;

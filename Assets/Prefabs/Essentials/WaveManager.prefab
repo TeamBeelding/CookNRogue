@@ -46,17 +46,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f2457fdf42f6b846bc1198399c71107, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waveSpawner:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  waveNumber: 2
-  enemiesInWave: 1
-  delayBeforeWave: 1
-  delayBetweenWave: 2
-  delayBetweenSpawn: 1
-  needAllEnemiesDiesBeforeNextWave: 0
+  waveSpawner: []
+  delayBeforeStartingWave: 1
+  allAIDieBeforeNextWave: 1
 --- !u!1001 &2712791807528013645
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -64,6 +56,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4313082895853559647}
     m_Modifications:
+    - target: {fileID: 1586584862540676249, guid: d4bf3d4cbaa02b54a9eb817f2ee079e3,
+        type: 3}
+      propertyPath: list.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1586584862540676249, guid: d4bf3d4cbaa02b54a9eb817f2ee079e3,
+        type: 3}
+      propertyPath: list.Array.data[0].IAType
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1586584862540676249, guid: d4bf3d4cbaa02b54a9eb817f2ee079e3,
+        type: 3}
+      propertyPath: list.Array.data[0].waveIndex
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1586584862540676254, guid: d4bf3d4cbaa02b54a9eb817f2ee079e3,
         type: 3}
       propertyPath: m_RootOrder
@@ -139,6 +146,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4313082895853559647}
     m_Modifications:
+    - target: {fileID: 1586584862540676249, guid: d4bf3d4cbaa02b54a9eb817f2ee079e3,
+        type: 3}
+      propertyPath: list.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1586584862540676249, guid: d4bf3d4cbaa02b54a9eb817f2ee079e3,
+        type: 3}
+      propertyPath: list.Array.data[0].IAType
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1586584862540676249, guid: d4bf3d4cbaa02b54a9eb817f2ee079e3,
+        type: 3}
+      propertyPath: list.Array.data[0].waveIndex
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1586584862540676254, guid: d4bf3d4cbaa02b54a9eb817f2ee079e3,
         type: 3}
       propertyPath: m_RootOrder
