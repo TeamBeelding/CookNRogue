@@ -4,14 +4,16 @@ using UnityEngine;
 public class MissileBoss : MonoBehaviour
 {
 
-	[SerializeField] private float _damage;
+	private float _damage;
 	public float damage { get { return _damage; } }
 
 	[SerializeField] Color _missileColor;
 	[SerializeField] MissileDecal _decal;
 	[SerializeField] MissileBehaviour _missileBehaviour;
-    public void Init()
+    public void Init(int damage)
     {
+		_damage = damage;
+
         _missileBehaviour.gameObject.SetActive(true);
         _decal.gameObject.SetActive(true);
 

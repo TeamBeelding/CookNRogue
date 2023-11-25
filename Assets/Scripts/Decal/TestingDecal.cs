@@ -11,7 +11,7 @@ public class TestingDecal : MonoBehaviour
     public virtual void TestMissileDecal()
     {
         MissileBoss MISSILE = MissileManager.instance.GetAvailableMissile();
-        MISSILE.Init();
+        MISSILE.Init(1);
         MISSILE.transform.position = getPosition() + new Vector3(Random.Range(-2f, 2f), 0, Random.Range(-2f, 2f));
         MISSILE.transform.rotation = Quaternion.Euler(0, 0, 0);
     }

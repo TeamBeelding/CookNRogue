@@ -34,7 +34,7 @@ public class MissilesController : MonoBehaviour
                 //Debug.Log($"Launch at {boss.GetTargetPosition()}");
                 MissileBoss missile = MissileManager.instance.GetAvailableMissile();
                 missile.transform.position = boss.GetTargetPosition();
-                missile.Init();
+                missile.Init(data.damage);
 
                 yield return new WaitForSeconds(data.GetDelayForEachMissiles);
             }
