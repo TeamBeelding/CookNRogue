@@ -3,15 +3,25 @@ using UnityEngine;
 
 public class MissileBoss : MonoBehaviour
 {
-	[SerializeField] private float radiusExplosion;
-	[SerializeField] private float explosionSpeed;
-	[SerializeField] private float damage;
 
-    private void OnEnable()
+	[SerializeField] private float _damage;
+	public float damage { get { return _damage; } }
+
+	[SerializeField] Color _missileColor;
+	[SerializeField] MissileDecal _decal;
+	[SerializeField] MissileBehaviour _missileBehaviour;
+    public void Init()
     {
-		Explode();
+        _missileBehaviour.gameObject.SetActive(true);
+        _decal.gameObject.SetActive(true);
+
+        _decal.Init(_missileColor);
+		_missileBehaviour.Init(_decal.gameObject,this);
     }
 
+
+
+	/*
     private void Explode()
 	{
 		StartCoroutine(IWaitForExplode());
@@ -27,4 +37,5 @@ public class MissileBoss : MonoBehaviour
 			}
 		}
 	}
+	*/
 }
