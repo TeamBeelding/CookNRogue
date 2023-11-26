@@ -403,14 +403,50 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3720372691500512210, guid: 8d21681d92645b34ba96da09a7d6f089,
+        type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: -1412012063857583412, guid: 0000000000000000d000000000000000,
+        type: 0}
     - target: {fileID: 3720372691500512211, guid: 8d21681d92645b34ba96da09a7d6f089,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 9
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 3720372691500512211, guid: 8d21681d92645b34ba96da09a7d6f089,
         type: 3}
       propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3720372691500512212, guid: 8d21681d92645b34ba96da09a7d6f089,
+        type: 3}
+      propertyPath: waveContainer.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3720372691500512212, guid: 8d21681d92645b34ba96da09a7d6f089,
+        type: 3}
+      propertyPath: waveContainer.Array.data[0].IAType
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3720372691500512212, guid: 8d21681d92645b34ba96da09a7d6f089,
+        type: 3}
+      propertyPath: waveContainer.Array.data[1].IAType
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3720372691500512212, guid: 8d21681d92645b34ba96da09a7d6f089,
+        type: 3}
+      propertyPath: waveContainer.Array.data[0].waveIndex
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3720372691500512212, guid: 8d21681d92645b34ba96da09a7d6f089,
+        type: 3}
+      propertyPath: waveContainer.Array.data[1].waveIndex
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3720372691500512212, guid: 8d21681d92645b34ba96da09a7d6f089,
+        type: 3}
+      propertyPath: waveContainer.Array.data[2].waveIndex
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4313082895853559616, guid: 8d21681d92645b34ba96da09a7d6f089,
@@ -488,6 +524,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9117118691432850474, guid: 8d21681d92645b34ba96da09a7d6f089,
+        type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: -1412012063857583412, guid: 0000000000000000d000000000000000,
+        type: 0}
     - target: {fileID: 9117118691432850475, guid: 8d21681d92645b34ba96da09a7d6f089,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -498,6 +540,16 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9117118691432850475, guid: 8d21681d92645b34ba96da09a7d6f089,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 9117118691432850476, guid: 8d21681d92645b34ba96da09a7d6f089,
+        type: 3}
+      propertyPath: waveContainer.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9117118691432850476, guid: 8d21681d92645b34ba96da09a7d6f089,
         type: 3}
       propertyPath: list.Array.data[0].IAType
@@ -507,6 +559,21 @@ PrefabInstance:
         type: 3}
       propertyPath: list.Array.data[1].IAType
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9117118691432850476, guid: 8d21681d92645b34ba96da09a7d6f089,
+        type: 3}
+      propertyPath: waveContainer.Array.data[0].IAType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9117118691432850476, guid: 8d21681d92645b34ba96da09a7d6f089,
+        type: 3}
+      propertyPath: waveContainer.Array.data[0].waveIndex
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9117118691432850476, guid: 8d21681d92645b34ba96da09a7d6f089,
+        type: 3}
+      propertyPath: waveContainer.Array.data[1].waveIndex
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8d21681d92645b34ba96da09a7d6f089, type: 3}
@@ -831,8 +898,19 @@ PrefabInstance:
       propertyPath: m_Name
       value: PoolingAIManager
       objectReference: {fileID: 0}
+    - target: {fileID: 7647779013300878607, guid: 37354c4fe993d854788a963b6cc2af97,
+        type: 3}
+      propertyPath: KamilkazePool
+      value: 
+      objectReference: {fileID: 396284241}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 37354c4fe993d854788a963b6cc2af97, type: 3}
+--- !u!1 &396284241 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7647779013396572681, guid: 37354c4fe993d854788a963b6cc2af97,
+    type: 3}
+  m_PrefabInstance: {fileID: 396284240}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &669407273
 PrefabInstance:
   m_ObjectHideFlags: 0
