@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,9 +11,16 @@ public class CBIngredientSlot : MonoBehaviour
     private Image m_ingredientImage;
 
     [SerializeField]
+    private TextMeshProUGUI m_ingredientName;
+
+    [SerializeField]
     private TextMeshProUGUI m_ingredientDescription;
 
-    public Sprite Sprite
+    [SerializeField]
+    private ProjectileData m_ingredientData;
+
+    private ProjectileData _curData;
+    Sprite Sprite
     {
         set
         {
@@ -20,19 +28,36 @@ public class CBIngredientSlot : MonoBehaviour
         }
     }
 
-    public Color Color
+    string Name
     {
         set
         {
-            m_ingredientImage.color = value;
+            m_ingredientName.text = value;
         }
     }
 
-    public string Description
+    string Description
     {
         set
         {
             m_ingredientDescription.text = value;
         }
     }
+
+    private void OnValidate()
+    {
+        if(m_ingredientData != null)
+        {
+            if(_curData != null && _curData == m_ingredientData)
+            {
+                return;
+            }
+
+            _curData = m_ingredientData;
+            Sprite = m_ingredientData.inventorySprite;
+            Name = m_ingredientData.ingredientName;
+            Description = m_ingredientData.description;
+        }
+    }
 }
+#endif
