@@ -91,6 +91,15 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""OpenCB"",
+                    ""type"": ""Button"",
+                    ""id"": ""91e85025-2322-405e-bd5f-2bd9dbbc6c81"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""EnterDebug"",
                     ""type"": ""Button"",
                     ""id"": ""4adb3a5d-ca14-4a19-8342-45d1457b5257"",
@@ -329,6 +338,17 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""GamePad"",
                     ""action"": ""EnterDebug"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f838bb04-d939-42b5-b024-64126d80606a"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""GamePad"",
+                    ""action"": ""OpenCB"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -798,6 +818,74 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
             ]
         },
         {
+            ""name"": ""CookBook"",
+            ""id"": ""e22c203a-8a0b-45e6-bcc5-75f8945f6ab5"",
+            ""actions"": [
+                {
+                    ""name"": ""Close"",
+                    ""type"": ""Button"",
+                    ""id"": ""66ed9328-e908-4177-8baa-00ea088ae815"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""NextPage"",
+                    ""type"": ""Button"",
+                    ""id"": ""cfe2a924-0937-428e-9f36-605ea073d9f1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PrevPage"",
+                    ""type"": ""Button"",
+                    ""id"": ""c7a66d65-1781-47e5-97cc-8983f5f0080d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""b1812a89-4c81-47ab-afcd-39613df77bcc"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""GamePad"",
+                    ""action"": ""Close"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""73246954-ba9d-45ac-b277-6cb6b228424a"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""GamePad"",
+                    ""action"": ""NextPage"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f726daa0-8a99-411f-8c47-878a2fe170cd"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""GamePad"",
+                    ""action"": ""PrevPage"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
             ""name"": ""Debug"",
             ""id"": ""483bae16-c1e2-4a10-ac49-19a9050c9a9e"",
             ""actions"": [
@@ -1013,6 +1101,7 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
         m_Default_Interact = m_Default.FindAction("Interact", throwIfNotFound: true);
         m_Default_Cook = m_Default.FindAction("Cook", throwIfNotFound: true);
         m_Default_Pause = m_Default.FindAction("Pause", throwIfNotFound: true);
+        m_Default_OpenCB = m_Default.FindAction("OpenCB", throwIfNotFound: true);
         m_Default_EnterDebug = m_Default.FindAction("EnterDebug", throwIfNotFound: true);
         // Cooking
         m_Cooking = asset.FindActionMap("Cooking", throwIfNotFound: true);
@@ -1031,6 +1120,11 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
         m_UI_IngredientSelector = m_UI.FindAction("IngredientSelector", throwIfNotFound: true);
         m_UI_SelectIngredient = m_UI.FindAction("SelectIngredient", throwIfNotFound: true);
         m_UI_ValidateIngredients = m_UI.FindAction("ValidateIngredients", throwIfNotFound: true);
+        // CookBook
+        m_CookBook = asset.FindActionMap("CookBook", throwIfNotFound: true);
+        m_CookBook_Close = m_CookBook.FindAction("Close", throwIfNotFound: true);
+        m_CookBook_NextPage = m_CookBook.FindAction("NextPage", throwIfNotFound: true);
+        m_CookBook_PrevPage = m_CookBook.FindAction("PrevPage", throwIfNotFound: true);
         // Debug
         m_Debug = asset.FindActionMap("Debug", throwIfNotFound: true);
         m_Debug_EnterDebug = m_Debug.FindAction("EnterDebug", throwIfNotFound: true);
@@ -1109,6 +1203,7 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Default_Interact;
     private readonly InputAction m_Default_Cook;
     private readonly InputAction m_Default_Pause;
+    private readonly InputAction m_Default_OpenCB;
     private readonly InputAction m_Default_EnterDebug;
     public struct DefaultActions
     {
@@ -1121,6 +1216,7 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
         public InputAction @Interact => m_Wrapper.m_Default_Interact;
         public InputAction @Cook => m_Wrapper.m_Default_Cook;
         public InputAction @Pause => m_Wrapper.m_Default_Pause;
+        public InputAction @OpenCB => m_Wrapper.m_Default_OpenCB;
         public InputAction @EnterDebug => m_Wrapper.m_Default_EnterDebug;
         public InputActionMap Get() { return m_Wrapper.m_Default; }
         public void Enable() { Get().Enable(); }
@@ -1152,6 +1248,9 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                 @Pause.started -= m_Wrapper.m_DefaultActionsCallbackInterface.OnPause;
                 @Pause.performed -= m_Wrapper.m_DefaultActionsCallbackInterface.OnPause;
                 @Pause.canceled -= m_Wrapper.m_DefaultActionsCallbackInterface.OnPause;
+                @OpenCB.started -= m_Wrapper.m_DefaultActionsCallbackInterface.OnOpenCB;
+                @OpenCB.performed -= m_Wrapper.m_DefaultActionsCallbackInterface.OnOpenCB;
+                @OpenCB.canceled -= m_Wrapper.m_DefaultActionsCallbackInterface.OnOpenCB;
                 @EnterDebug.started -= m_Wrapper.m_DefaultActionsCallbackInterface.OnEnterDebug;
                 @EnterDebug.performed -= m_Wrapper.m_DefaultActionsCallbackInterface.OnEnterDebug;
                 @EnterDebug.canceled -= m_Wrapper.m_DefaultActionsCallbackInterface.OnEnterDebug;
@@ -1180,6 +1279,9 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                 @Pause.started += instance.OnPause;
                 @Pause.performed += instance.OnPause;
                 @Pause.canceled += instance.OnPause;
+                @OpenCB.started += instance.OnOpenCB;
+                @OpenCB.performed += instance.OnOpenCB;
+                @OpenCB.canceled += instance.OnOpenCB;
                 @EnterDebug.started += instance.OnEnterDebug;
                 @EnterDebug.performed += instance.OnEnterDebug;
                 @EnterDebug.canceled += instance.OnEnterDebug;
@@ -1342,6 +1444,55 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
     }
     public UIActions @UI => new UIActions(this);
 
+    // CookBook
+    private readonly InputActionMap m_CookBook;
+    private ICookBookActions m_CookBookActionsCallbackInterface;
+    private readonly InputAction m_CookBook_Close;
+    private readonly InputAction m_CookBook_NextPage;
+    private readonly InputAction m_CookBook_PrevPage;
+    public struct CookBookActions
+    {
+        private @PlayerActions m_Wrapper;
+        public CookBookActions(@PlayerActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Close => m_Wrapper.m_CookBook_Close;
+        public InputAction @NextPage => m_Wrapper.m_CookBook_NextPage;
+        public InputAction @PrevPage => m_Wrapper.m_CookBook_PrevPage;
+        public InputActionMap Get() { return m_Wrapper.m_CookBook; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(CookBookActions set) { return set.Get(); }
+        public void SetCallbacks(ICookBookActions instance)
+        {
+            if (m_Wrapper.m_CookBookActionsCallbackInterface != null)
+            {
+                @Close.started -= m_Wrapper.m_CookBookActionsCallbackInterface.OnClose;
+                @Close.performed -= m_Wrapper.m_CookBookActionsCallbackInterface.OnClose;
+                @Close.canceled -= m_Wrapper.m_CookBookActionsCallbackInterface.OnClose;
+                @NextPage.started -= m_Wrapper.m_CookBookActionsCallbackInterface.OnNextPage;
+                @NextPage.performed -= m_Wrapper.m_CookBookActionsCallbackInterface.OnNextPage;
+                @NextPage.canceled -= m_Wrapper.m_CookBookActionsCallbackInterface.OnNextPage;
+                @PrevPage.started -= m_Wrapper.m_CookBookActionsCallbackInterface.OnPrevPage;
+                @PrevPage.performed -= m_Wrapper.m_CookBookActionsCallbackInterface.OnPrevPage;
+                @PrevPage.canceled -= m_Wrapper.m_CookBookActionsCallbackInterface.OnPrevPage;
+            }
+            m_Wrapper.m_CookBookActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Close.started += instance.OnClose;
+                @Close.performed += instance.OnClose;
+                @Close.canceled += instance.OnClose;
+                @NextPage.started += instance.OnNextPage;
+                @NextPage.performed += instance.OnNextPage;
+                @NextPage.canceled += instance.OnNextPage;
+                @PrevPage.started += instance.OnPrevPage;
+                @PrevPage.performed += instance.OnPrevPage;
+                @PrevPage.canceled += instance.OnPrevPage;
+            }
+        }
+    }
+    public CookBookActions @CookBook => new CookBookActions(this);
+
     // Debug
     private readonly InputActionMap m_Debug;
     private IDebugActions m_DebugActionsCallbackInterface;
@@ -1482,6 +1633,7 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
         void OnInteract(InputAction.CallbackContext context);
         void OnCook(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
+        void OnOpenCB(InputAction.CallbackContext context);
         void OnEnterDebug(InputAction.CallbackContext context);
     }
     public interface ICookingActions
@@ -1502,6 +1654,12 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
         void OnIngredientSelector(InputAction.CallbackContext context);
         void OnSelectIngredient(InputAction.CallbackContext context);
         void OnValidateIngredients(InputAction.CallbackContext context);
+    }
+    public interface ICookBookActions
+    {
+        void OnClose(InputAction.CallbackContext context);
+        void OnNextPage(InputAction.CallbackContext context);
+        void OnPrevPage(InputAction.CallbackContext context);
     }
     public interface IDebugActions
     {

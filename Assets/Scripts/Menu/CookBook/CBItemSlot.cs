@@ -8,23 +8,23 @@ using TMPro;
 public class CBItemSlot : MonoBehaviour
 {
     [SerializeField]
-    private Image m_ingredientImage;
+    private Image m_itemImage;
 
     [SerializeField]
-    private TextMeshProUGUI m_ingredientName;
+    private TextMeshProUGUI m_itemName;
 
     [SerializeField]
-    private TextMeshProUGUI m_ingredientDescription;
+    private TextMeshProUGUI m_itemDescription;
 
     [SerializeField]
-    private ProjectileData m_ingredientData;
+    private ItemData m_itemData;
 
-    private ProjectileData _curData;
+    private ItemData _curData;
     Sprite Sprite
     {
         set
         {
-            m_ingredientImage.sprite = value;
+            m_itemImage.sprite = value;
         }
     }
 
@@ -32,7 +32,7 @@ public class CBItemSlot : MonoBehaviour
     {
         set
         {
-            m_ingredientName.text = value;
+            m_itemName.text = value;
         }
     }
 
@@ -40,23 +40,23 @@ public class CBItemSlot : MonoBehaviour
     {
         set
         {
-            m_ingredientDescription.text = value;
+            m_itemDescription.text = value;
         }
     }
 
     private void OnValidate()
     {
-        if (m_ingredientData != null)
+        if (m_itemData != null)
         {
-            if (_curData != null && _curData == m_ingredientData)
+            if (_curData != null && _curData == m_itemData)
             {
                 return;
             }
 
-            _curData = m_ingredientData;
-            Sprite = m_ingredientData.inventorySprite;
-            Name = m_ingredientData.ingredientName;
-            Description = m_ingredientData.description;
+            _curData = m_itemData;
+            Sprite = m_itemData.inventorySprite;
+            Name = m_itemData.name;
+            Description = m_itemData.description;
         }
     }
 }

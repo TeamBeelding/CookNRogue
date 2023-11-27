@@ -69,6 +69,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "OpenCB",
+                    "type": "Button",
+                    "id": "91e85025-2322-405e-bd5f-2bd9dbbc6c81",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "EnterDebug",
                     "type": "Button",
                     "id": "4adb3a5d-ca14-4a19-8342-45d1457b5257",
@@ -307,6 +316,17 @@
                     "processors": "",
                     "groups": "GamePad",
                     "action": "EnterDebug",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f838bb04-d939-42b5-b024-64126d80606a",
+                    "path": "<Gamepad>/dpad/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "GamePad",
+                    "action": "OpenCB",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -770,6 +790,74 @@
                     "processors": "",
                     "groups": "GamePad",
                     "action": "IngredientSelector",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "CookBook",
+            "id": "e22c203a-8a0b-45e6-bcc5-75f8945f6ab5",
+            "actions": [
+                {
+                    "name": "Close",
+                    "type": "Button",
+                    "id": "66ed9328-e908-4177-8baa-00ea088ae815",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "NextPage",
+                    "type": "Button",
+                    "id": "cfe2a924-0937-428e-9f36-605ea073d9f1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "PrevPage",
+                    "type": "Button",
+                    "id": "c7a66d65-1781-47e5-97cc-8983f5f0080d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "b1812a89-4c81-47ab-afcd-39613df77bcc",
+                    "path": "<Gamepad>/dpad/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "GamePad",
+                    "action": "Close",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "73246954-ba9d-45ac-b277-6cb6b228424a",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "GamePad",
+                    "action": "NextPage",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f726daa0-8a99-411f-8c47-878a2fe170cd",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "GamePad",
+                    "action": "PrevPage",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

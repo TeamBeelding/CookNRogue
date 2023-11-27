@@ -84,6 +84,7 @@ public class CookBook : MonoBehaviour
     IEnumerator ShowAnimation()
     {
         _areControlsLocked = true;
+        Time.timeScale = 0f;
 
         float time = PlayerRuntimeData.GetInstance().data.CookData.ShowAnimDuration;
         Vector3 targetPos = _shownPosition;
@@ -111,6 +112,7 @@ public class CookBook : MonoBehaviour
     IEnumerator HideAnimation()
     {
         _areControlsLocked = true;
+        Time.timeScale = 1f;
 
         float time = PlayerRuntimeData.GetInstance().data.CookData.ShowAnimDuration;
         Vector3 initPos = m_UIHolder.localPosition;
@@ -135,7 +137,7 @@ public class CookBook : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public void NextWheel()
+    public void NextPage()
     {
         if (_areControlsLocked)
         {
@@ -165,7 +167,7 @@ public class CookBook : MonoBehaviour
         m_inventoryPages[_currentPageIndex].SetActive(true);
     }
 
-    public void PrevWheel()
+    public void PrevPage()
     {
         if (_areControlsLocked)
         {
