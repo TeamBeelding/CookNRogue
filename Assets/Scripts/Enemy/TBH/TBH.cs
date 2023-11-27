@@ -1,8 +1,6 @@
-using System;
 using System.Collections;
 using Enemy.Data;
 using Enemy.Slime;
-using Unity.Mathematics;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -12,7 +10,6 @@ public class TBH : EnemyController
     [SerializeField] private GameObject _gun;
     [SerializeField] private GameObject _bullet;
     [SerializeField] private ParticleSystem m_stateSystem;
-    [SerializeField] private CheckingSpawn _checkingSpawn;
 
     [SerializeField] private Animator _animator;
     [SerializeField] private GameObject physics;
@@ -31,11 +28,16 @@ public class TBH : EnemyController
     protected override void Awake()
     {
         base.Awake();
+    }
+
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+
         _animator = GetComponentInChildren<Animator>();
         Healthpoint = _data.Health;
-        _checkingSpawn = GetComponentInChildren<CheckingSpawn>();
     }
-    
+
     private void Reset()
     {
         Healthpoint = _data.Health;
@@ -44,9 +46,7 @@ public class TBH : EnemyController
     private void FixedUpdate()
     {
         if (_state != State.Dying) 
-        {
             AreaDetection();
-        }
     }
 
     private void AreaDetection()
@@ -55,9 +55,7 @@ public class TBH : EnemyController
             return;
         
         if (Vector3.Distance(transform.position, Player.transform.position) <= _data.AttackRange)
-        {
             SetState(State.Attacking);
-        }
     }
 
     private void StateManagement()
@@ -99,28 +97,25 @@ public class TBH : EnemyController
     // ReSharper disable Unity.PerformanceAnalysis
     private void Shot()
     {
-        float angleStep = _data.AngleShot / _data.NumberOfBullet;
+        //float angleStep = _data.AngleShot / _data.NumberOfBullet;
         
         transform.LookAt(new Vector3(Player.transform.position.x, transform.position.y, Player.transform.position.z));
 
         for (int i = 0; i < _data.NumberOfBullet; i++)
         {
-            StartCoroutine(IShotRandomly(i));
+            StartCoroutine(IShotRandomly());
         }
 
         SetState(State.Casting);
 
-        IEnumerator IShotRandomly(int i)
+        IEnumerator IShotRandomly()
         {
-            var spread = Random.Range(-2f, 2f);
-            
-            Quaternion rotation = quaternion.Euler(angleStep * i, 0, angleStep * i);
-            Vector3 direction = rotation * transform.forward;
-            
+            float spread = Random.Range(-2f, 2f);
             float randomDelay = Random.Range(0.1f, 0.5f);
+
             yield return new WaitForSeconds(randomDelay);
             
-            GameObject bullet = Instantiate(_bullet, _gun.transform.position, Quaternion.identity);
+            GameObject bullet = PoolManager.Instance.InstantiateFromPool(PoolType.Bullet, _gun.transform.position, Quaternion.identity);
 
             bullet.GetComponent<EnemyBulletController>().SetDirection(new Vector3(Player.transform.position.x + spread, Player.transform.position.y, Player.transform.position.z + spread));
             bullet.GetComponent<EnemyBulletController>().SetDamage(_data.DamagePerBullet);
@@ -129,10 +124,10 @@ public class TBH : EnemyController
 
     private void Teleport()
     {
-        Vector3 randomPosition = UnityEngine.Random.insideUnitSphere.normalized * _data.AttackRange + Player.transform.position;
+        Vector3 randomPosition = Random.insideUnitSphere.normalized * _data.AttackRange + Player.transform.position;
         
         if (Vector3.Distance(transform.position, randomPosition) <= _data.MinimumRadius)
-            randomPosition = UnityEngine.Random.insideUnitSphere * _data.AttackRange + Player.transform.position;
+            randomPosition = Random.insideUnitSphere * _data.AttackRange + Player.transform.position;
 
         Vector3 position = new Vector3(randomPosition.x, transform.position.y, randomPosition.z);
         
@@ -177,10 +172,7 @@ public class TBH : EnemyController
         StateManagement();
     }
 
-    public State GetState()
-    {
-        return _state;
-    }
+    public State GetState() => _state;
 
     public override bool IsMoving()
     {

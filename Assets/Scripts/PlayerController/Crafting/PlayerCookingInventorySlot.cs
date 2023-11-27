@@ -17,8 +17,10 @@ public class PlayerCookingInventorySlot : MonoBehaviour
     [SerializeField, Required]
     TextMeshProUGUI m_ingredientCounter;
 
-    int _ingredientCount;
+    public int _ingredientCount;
     RectTransform _transform;
+
+    Color _greyedColor;
 
     private void Awake()
     {
@@ -28,6 +30,9 @@ public class PlayerCookingInventorySlot : MonoBehaviour
     private void Start()
     {
         m_ingredientImage.sprite = m_data.inventorySprite;
+        _greyedColor = Color.gray;
+        _greyedColor.a = 0.5f;
+        m_ingredientImage.color = _greyedColor;
     }
 
     public ProjectileData GetData()
@@ -55,6 +60,11 @@ public class PlayerCookingInventorySlot : MonoBehaviour
     #region Count management
     public void IncreaseCount()
     {
+        if (_ingredientCount <= 0)
+        {
+            m_ingredientImage.color = Color.white;
+        }
+
         _ingredientCount += 1;
         m_ingredientCounter.text = _ingredientCount.ToString();
     }
@@ -68,10 +78,19 @@ public class PlayerCookingInventorySlot : MonoBehaviour
 
         _ingredientCount += -1;
         m_ingredientCounter.text = _ingredientCount.ToString();
+
+
+        if (_ingredientCount <= 0)
+        {
+            m_ingredientImage.color = _greyedColor;
+        }
+
     }
 
     public void ResetCount()
     {
+        m_ingredientImage.color = _greyedColor;
+
         _ingredientCount = 0;
         m_ingredientCounter.text = "0";
     }

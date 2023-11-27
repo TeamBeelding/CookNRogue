@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
@@ -26,7 +25,7 @@ namespace Enemy.DashingEnemy
 
         private bool _isCharging = false;
         private bool _canShowingRedLine = false;
-        private bool _changeStateToWaiting = false;
+        //private bool _changeStateToWaiting = false;
     
         private Vector3 _direction;
 
@@ -34,13 +33,17 @@ namespace Enemy.DashingEnemy
         [SerializeField] private EnemyDashingData _data;
     
         private Material _redLineMaterial;
-        private bool _isRedLineFullVisible = false;
+        //private bool _isRedLineFullVisible = false;
 
         [SerializeField]
         private GameObject visual;
 
         private Animator animator;
         [SerializeField] private GameObject physics;
+
+        [SerializeField] ParticleSystem _collisionParticles;
+        [SerializeField] ParticleSystem _dashParticles;
+        [SerializeField] ParticleSystem _dirtParticles;
 
         public enum State
         {
@@ -55,9 +58,19 @@ namespace Enemy.DashingEnemy
         protected override void Awake()
         {
             base.Awake();
-            Healthpoint = _data.GetHealth();
+
+            Player = PlayerController.Instance.gameObject;
         }
-    
+
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+
+            Healthpoint = _data.GetHealth();
+
+            Player = PlayerController.Instance.gameObject;
+        }
+
         // Start is called before the first frame update
         protected override void Start()
         {
@@ -131,15 +144,19 @@ namespace Enemy.DashingEnemy
             {
                 if (!hit.collider.CompareTag("Player"))
                 {
-                    Debug.DrawRay(transform.position, direction * hit.distance, Color.red);
-                    Debug.Log($"<color=red>{hit.collider.name}</color>");
-                    
                     SetState(State.Casting);
                     
                     return;
                 }
-                
+
                 _isCharging = true;
+
+                if (_dashParticles)
+                    _dashParticles.Play();
+
+                if (_dirtParticles)
+                    _dirtParticles.Play();
+
                 _coroutineState = StartCoroutine(ChargingToPlayer());
             }
 
@@ -155,9 +172,11 @@ namespace Enemy.DashingEnemy
                     {
                         _isCharging = false;
                     }
-                
+
                     yield return null;
                 }
+
+                
             }
         }
     
@@ -175,8 +194,9 @@ namespace Enemy.DashingEnemy
         private void Casting()
         {
             HideRedLine();
-            
-            _changeStateToWaiting = false;
+
+
+            //_changeStateToWaiting = false;
             _isCharging = false;
             
             _coroutineState = StartCoroutine(ICasting());
@@ -216,8 +236,14 @@ namespace Enemy.DashingEnemy
         private void WaitingAnotherDash()
         {
             _isCharging = false;
-            _isRedLineFullVisible = false;
+            //_isRedLineFullVisible = false;
             _canShowingRedLine = false;
+
+            if (_dashParticles)
+                _dashParticles.Stop();
+
+            if(_dirtParticles)
+                _dirtParticles.Stop();
 
             _coroutineState = StartCoroutine(IWaiting());
             StopCoroutine(ICanShowingRedLine());
@@ -245,15 +271,11 @@ namespace Enemy.DashingEnemy
 
             animator.SetBool("isDead", true);
 
-            Debug.Log("Dead Anim");
-
             StartCoroutine(IDeathAnim());
 
             IEnumerator IDeathAnim()
             {
-                Debug.Log("Wait");
                 yield return new WaitForSeconds(2f);
-                Debug.Log("Destroyed");
                 base.Dying();
             }
         }
@@ -304,7 +326,7 @@ namespace Enemy.DashingEnemy
         {
             _Play_SFX_Cabbage_Charge_Impact.Post(gameObject);
             StopMoving();
-            Player.GetComponent<PlayerController>().TakeDamage(_data.GetDamage());
+            PlayerController.Instance.TakeDamage(_data.GetDamage());
 
             SetState(State.Waiting);
         }
@@ -312,6 +334,10 @@ namespace Enemy.DashingEnemy
         public void CollideWithObstruction()
         {
             _Play_SFX_Cabbage_Charge_Impact.Post(gameObject);
+
+            if(_collisionParticles)
+                _collisionParticles.Play();
+
             StopMoving();
             SetState(State.Waiting);
         }

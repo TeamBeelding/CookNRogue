@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 8374838445234050372}
   - component: {fileID: 8374838445234050374}
   - component: {fileID: 4727922601000954265}
+  - component: {fileID: 9127651168109318411}
   m_Layer: 12
   m_Name: Slime
   m_TagString: Enemy
@@ -105,6 +106,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _effectHandlers: []
+  _damageUI: {fileID: 4752919081619040609, guid: 5abc18997e19393429b154f8231589f9,
+    type: 3}
   explosion: {fileID: 466446929295881914, guid: 1768f1adcc585bb42ac938af9d0b00e8,
     type: 3}
   tutorial: {fileID: 0}
@@ -141,7 +144,7 @@ MonoBehaviour:
   data: {fileID: 11400000, guid: c347bd2a1957383469ec63fdaaa779da, type: 2}
   agent: {fileID: 8374838445234050372}
   gun: {fileID: 1526352955}
-  minimoyz: {fileID: 3843937293996089466, guid: 1ca9a5944e58f734e8e435ac5cd845a0,
+  minimoyzVisualOnly: {fileID: 3843937293996089466, guid: 0b532d59457ea50448f1141f1ab1c9e4,
     type: 3}
   spawnChecker: {fileID: 5900735735034971508}
   physics: {fileID: 9170120249770325098}
@@ -171,6 +174,26 @@ MonoBehaviour:
   unloadTriggerList: 
   bankNameInternal: 
   valueGuidInternal: 
+--- !u!95 &9127651168109318411
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8374838445234050371}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!1 &9170120249770325098
 GameObject:
   m_ObjectHideFlags: 0
@@ -238,16 +261,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 8510893909803564707, guid: 1a2a811deb0eb4646b47db971ef136bb,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8510893909803564707, guid: 1a2a811deb0eb4646b47db971ef136bb,
-        type: 3}
-      propertyPath: avoidancePriority
-      value: 99
       objectReference: {fileID: 0}
     - target: {fileID: 8510893909803564764, guid: 1a2a811deb0eb4646b47db971ef136bb,
         type: 3}

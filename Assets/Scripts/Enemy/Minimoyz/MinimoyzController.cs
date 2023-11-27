@@ -21,25 +21,17 @@ namespace Enemy.Minimoyz
         [SerializeField]
         private AK.Wwise.Event _Stop_SFX_Pea_Movement;
 
-        //public int LimitOfSound;
-        //public static int AmountOfSound;
-
         [SerializeField] private MinimoyzData data;
         [SerializeField] private SlimeData slimeData;
         [SerializeField] private NavMeshAgent agent;
-
-        private bool _shouldChaseAndAttack;
-        private bool _isThrowing = true;
-        private Coroutine coroutineState;
-        
-        private NavMeshPath navMeshPath;
-        
         [SerializeField] private GameObject physicsMinimoyz;
+
+        private Coroutine coroutineState;
+        private NavMeshPath navMeshPath;
     
         public enum State
         {
             Neutral,
-            Throw,
             Chase,
             Cast,
             Attack,
@@ -52,33 +44,30 @@ namespace Enemy.Minimoyz
         protected override void Awake()
         {
             base.Awake();
+            navMeshPath = new NavMeshPath();
+        }
 
-            //AmountOfSound++;
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+
             agent = GetComponent<NavMeshAgent>();
+
             agent.speed = data.GetSpeed();
             agent.stoppingDistance = data.GetAttackRange();
             FocusPlayer = data.GetFocusPlayer();
             Healthpoint = data.GetHealth();
-        }
 
-        // Start is called before the first frame update
-        protected override void Start()
-        {
-            navMeshPath = new NavMeshPath();
-            
-            if (_isThrowing)
-                SetState(State.Throw);
-            else if (FocusPlayer)
-                state = State.Chase;
 
-            base.Start();
-            
-            physicsMinimoyz.SetActive(false);
+            SetState(State.Chase);
         }
 
         // Update is called once per frame
         protected override void Update()
         {
+            if (!gameObject.activeInHierarchy)
+                return;
+
             if (state == State.Dying)
                 return;
         
@@ -87,19 +76,13 @@ namespace Enemy.Minimoyz
             base.Update();
         }
 
-        public void SetFocus(bool value = true)
-        {
-            FocusPlayer = value;
-        }
+        public void SetFocus(bool value = true) => FocusPlayer = value;
 
         private void StateManagement()
         {
             switch (state)
             {
                 case State.Neutral:
-                    break;
-                case State.Throw:
-                    Throw();
                     break;
                 case State.Chase:
                     Chase();
@@ -128,7 +111,7 @@ namespace Enemy.Minimoyz
     
         private void AreaDetection()
         {
-            if (state == State.Dying || _isThrowing)
+            if (state == State.Dying)
                 return;
 
             if (Vector3.Distance(transform.position, Player.transform.position) > data.GetAttackRange())
@@ -136,12 +119,9 @@ namespace Enemy.Minimoyz
             else
                 SetState(State.Attack);
         }
-    
-        public State GetState()
-        {
-            return state;
-        }
-    
+
+        public State GetState() => state;
+
         public void SetState(State value)
         {
             if (coroutineState != null)
@@ -152,29 +132,7 @@ namespace Enemy.Minimoyz
             StateManagement();
         }
 
-        public void SetIsThrowing(bool value)
-        {
-            _isThrowing = value;
-        }
-
-        public override bool IsMoving()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void Throw()
-        {
-            if (agent.enabled)
-                agent.enabled = false;
-            
-            coroutineState = StartCoroutine(IThrow());
-            
-            IEnumerator IThrow()
-            {
-                yield return new WaitForSeconds(slimeData.GetThrowingSpeed);
-                SetState(State.Chase);
-            }
-        }
+        public override bool IsMoving() => throw new System.NotImplementedException();
 
         private void Cast()
         {
@@ -206,15 +164,12 @@ namespace Enemy.Minimoyz
 
         protected override void Chase()
         {
+            if (!gameObject.activeSelf)
+                return;
+
             if (!physicsMinimoyz.activeSelf)
                 physicsMinimoyz.SetActive(true);
-            
-            if (_isThrowing)
-                _isThrowing = false;
-            
-            if (agent.enabled == false)
-                agent.enabled = true;
-
+ 
             coroutineState = StartCoroutine(IChase());
 
             IEnumerator IChase()
@@ -254,10 +209,7 @@ namespace Enemy.Minimoyz
                     agent.SetDestination(Player.transform.position);
                     
                     if (Vector3.Distance(transform.position, Player.transform.position) <= data.GetAttackRange())
-                    {
-                        _shouldChaseAndAttack = false;
                         HitPlayer();
-                    }
                     
                     yield return null;
                 }
@@ -281,8 +233,7 @@ namespace Enemy.Minimoyz
 
         protected override void Dying()
         {
-            Destroy(gameObject);
-            
+            Debug.Log("<color=red>Die</color>");
             base.Dying();
         }
     }
