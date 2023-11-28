@@ -258,7 +258,6 @@ namespace Enemy.Slime
             Gizmos.color = Color.green;
             Gizmos.DrawWireSphere(transform.position, data.GetOuterRadius);
         }
+#endif
     }
-# endif
-
 }
