@@ -224,9 +224,9 @@ namespace Enemy.Minimoyz
 
             if (Healthpoint <= 0)
             {
-                state = State.Dying;
                 _Play_SFX_Pea_Death.Post(gameObject);
                 _Play_Weapon_Hit.Post(gameObject);
+                SetState(State.Dying);
             }
         }
 
