@@ -65,6 +65,14 @@ public class PoolManager : MonoBehaviour
         }
     }
 
+    public void DestroyAI()
+    {
+        WaveManager wm = GameObject.FindObjectOfType<WaveManager>();
+
+        if (wm != null)
+            wm.DestroyAllAI();
+    }
+
     public void DesinstantiateFromPool(GameObject obj)
     {
         GameObject parent = obj.transform.parent.gameObject;
