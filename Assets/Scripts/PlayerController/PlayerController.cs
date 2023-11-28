@@ -96,6 +96,7 @@ public class PlayerController : MonoBehaviour
     PlayerCookingInventory _inventoryScript;
     EnemyManager _enemyManager;
     PlayerCooking _cookingScript;
+    CookBook _cookBookScript;
 
     bool _isLocked = false;
     private bool m_isGamePaused = false;
@@ -109,7 +110,8 @@ public class PlayerController : MonoBehaviour
     {
         Default,
         Cooking,
-        UI
+        UI,
+        CB
     }
 
     private playerStates _curState = playerStates.Default;
@@ -175,6 +177,7 @@ public class PlayerController : MonoBehaviour
         _relativeTransform = m_mainCamera.transform;
         _inventoryScript = PlayerCookingInventory.Instance;
         _enemyManager = EnemyManager.Instance;
+        _cookBookScript = CookBook.Instance;
         _cookingScript = GetComponent<PlayerCooking>();
         _playerHealth = GetComponent<PlayerHealth>();
         _rb = _rb != null ? _rb : GetComponent<Rigidbody>();
@@ -191,6 +194,7 @@ public class PlayerController : MonoBehaviour
         _playerActions.Default.Enable();
         _playerActions.Cooking.Enable();
         _playerActions.UI.Enable();
+        _playerActions.CookBook.Enable();
         _playerActions.Debug.Enable();
 
         //Set Default Events
@@ -204,6 +208,7 @@ public class PlayerController : MonoBehaviour
         _playerActions.Default.Cook.started += Cook_Performed;
         _playerActions.Default.Pause.performed += OnPauseGame;
         _playerActions.Default.EnterDebug.started += EnterDebug;
+        _playerActions.Default.OpenCB.started += OpenCB;
 
         //Set Cooking Events
         _playerActions.Cooking.Cook.started += Cook_Canceled;
@@ -223,6 +228,11 @@ public class PlayerController : MonoBehaviour
         _playerActions.UI.IngredientSelector.canceled += OnTotemIngredientSelectorInputStop;
         _playerActions.UI.ValidateIngredients.performed += OnValidateIngredients;
 
+        //Set CB Events
+        _playerActions.CookBook.Close.performed += CloseCB;
+        _playerActions.CookBook.PrevPage.performed += CBPrevPage;
+        _playerActions.CookBook.NextPage.performed += CBNextPage;
+
         //Set Debug Events
         _playerActions.Debug.EnterDebug.started += QuitDebug;
         _playerActions.Debug.KillAllEnemies.started += KillAllEnemies;
@@ -233,6 +243,7 @@ public class PlayerController : MonoBehaviour
 
         _playerActions.Cooking.Disable();
         _playerActions.UI.Disable();
+        _playerActions.CookBook.Disable();
         _playerActions.Debug.Disable();
         #endregion
 
@@ -1001,6 +1012,60 @@ public class PlayerController : MonoBehaviour
         {
             Debug.LogWarning("Not in tutorial !");
         }
+    }
+
+    #endregion
+
+    #region CB
+
+    void OpenCB(InputAction.CallbackContext context)
+    {
+        //Input state check
+        if (_curState != playerStates.Default)
+            return;
+
+        if (_isAiming)
+        {
+            _aimInputValue = Vector2.zero;
+            _aimMagnitude = 0f;
+
+            m_aimArrow.SetActive(false);
+
+            GetComponent<PlayerAttack>().SetIsShooting(false);
+        }
+
+        //Set input state
+        _playerActions.Default.Disable();
+        _playerActions.CookBook.Enable();
+
+        _curState = playerStates.CB;
+
+        _cookBookScript.Show(true);
+    }
+
+    void CloseCB(InputAction.CallbackContext context)
+    {
+        //Input state check
+        if (_curState != playerStates.CB)
+            return;
+
+        //Set input state
+        _playerActions.CookBook.Disable();
+        _playerActions.Default.Enable();
+
+        _curState = playerStates.Default;
+
+        _cookBookScript.Show(false);
+    }
+
+    void CBPrevPage(InputAction.CallbackContext context)
+    {
+        _cookBookScript.PrevPage();
+    }
+
+    void CBNextPage(InputAction.CallbackContext context)
+    {
+        _cookBookScript.NextPage();
     }
 
     #endregion
