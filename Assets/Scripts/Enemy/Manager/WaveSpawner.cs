@@ -12,6 +12,8 @@ public class WaveSpawner : MonoBehaviour
 
     [SerializeField] private List<WaveContainer> waveContainer;
 
+    private GameObject ai;
+
     private int waveCount = 1;
     private int currentWaveIndex = 0;
 
@@ -27,7 +29,15 @@ public class WaveSpawner : MonoBehaviour
 
         currentWaveIndex++;
 
-        PoolManager.Instance.InstantiateFromPool(waveContainer[currentWaveIndex - 1].IAType, transform.position, Quaternion.identity);
+        ai = PoolManager.Instance.InstantiateFromPool(waveContainer[currentWaveIndex - 1].IAType, transform.position, Quaternion.identity);
+    }
+
+    public void DespawnAI()
+    {
+        if (ai != null)
+        {
+            PoolManager.Instance.DesinstantiateFromPool(ai);
+        }
     }
 
     public bool IsWaveIsEnd() => currentWaveIndex > waveCount;

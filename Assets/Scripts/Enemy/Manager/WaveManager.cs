@@ -116,4 +116,10 @@ public class WaveManager : MonoBehaviour
             }
         }
     }
+
+    public void DestroyAllAI()
+    {
+        foreach (WaveSpawner ws in GetComponentsInChildren<WaveSpawner>())
+            ws.DespawnAI();
+    }
 }

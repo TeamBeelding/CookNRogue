@@ -58,7 +58,6 @@ namespace Enemy.Minimoyz
             FocusPlayer = data.GetFocusPlayer();
             Healthpoint = data.GetHealth();
 
-
             SetState(State.Chase);
         }
 
