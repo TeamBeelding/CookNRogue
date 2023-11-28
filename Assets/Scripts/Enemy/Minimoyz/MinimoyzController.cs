@@ -233,7 +233,6 @@ namespace Enemy.Minimoyz
 
         protected override void Dying()
         {
-            Debug.Log("<color=red>Die</color>");
             base.Dying();
         }
     }

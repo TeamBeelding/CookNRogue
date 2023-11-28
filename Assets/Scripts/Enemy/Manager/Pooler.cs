@@ -53,8 +53,8 @@ public class Pooler : MonoBehaviour, IPooling
 
         //PlaceItCorrectly(obj);
 
-        obj.transform.localPosition = position;
-        obj.transform.localRotation = quaternion;
+        obj.transform.position = position;
+        obj.transform.rotation = quaternion;
 
         obj.SetActive(true);
 

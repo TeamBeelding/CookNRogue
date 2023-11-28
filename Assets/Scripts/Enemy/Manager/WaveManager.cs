@@ -51,6 +51,7 @@ public class WaveManager : MonoBehaviour
                 WaitingAllEnemieDie();
                 break;
             case State.EndWave:
+                StopAllCoroutines();
                 EnemyManager.Instance.EndWave();
                 gameObject.SetActive(false);
                 break;
@@ -103,7 +104,7 @@ public class WaveManager : MonoBehaviour
                 {
                     foreach (WaveSpawner ws in waveSpawner)
                     {
-                        if (ws.IsWaveIsEnd())
+                        if (!ws.IsWaveIsEnd())
                             continue;
 
                         else
