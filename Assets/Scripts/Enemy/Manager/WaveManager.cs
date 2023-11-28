@@ -52,6 +52,7 @@ public class WaveManager : MonoBehaviour
                 break;
             case State.EndWave:
                 EnemyManager.Instance.EndWave();
+                gameObject.SetActive(false);
                 break;
         }
     }
