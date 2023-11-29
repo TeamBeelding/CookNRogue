@@ -6,12 +6,15 @@ public class ShockwaveController : MonoBehaviour
 {
     [SerializeField] private AnimationCurve animationCurve;
 
+    private BossController bossController;
     private BossData data;
     private Coroutine shockwaveCoroutine;
     private float radius;
 
-    private void OnEnable()
+    private void Start()
     {
+        bossController = GetComponent<BossController>();
+
         Reset();
     }
 
@@ -56,6 +59,8 @@ public class ShockwaveController : MonoBehaviour
 
                 yield return null;
             }
+            
+            radius = 0;
         }
     }
 
@@ -73,7 +78,7 @@ public class ShockwaveController : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.black;
-        Gizmos.DrawWireSphere(transform.position, radius);
+        Gizmos.DrawSphere(transform.position, radius);
 
         if (data)
         {
