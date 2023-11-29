@@ -16,14 +16,20 @@ public class TestingDecal : MonoBehaviour
         //MISSILE.transform.position = getPosition() + new Vector3(Random.Range(-2f, 2f), 0, Random.Range(-2f, 2f));
         MISSILE.transform.rotation = Quaternion.Euler(0, 0, 0);
     }
-    private float timer = 3f;
+    private float timer = 0f;
+    [SerializeField] private float _timerBtwMissiles;
+    
+    private void Start()
+    {
+        timer = _timerBtwMissiles;
+    }
     private void Update()
     {
         if(timer > 0)
             timer-= Time.deltaTime;
         else
         {
-            timer += 3f;
+            timer += _timerBtwMissiles;
             TestMissileDecal();
         }
     }

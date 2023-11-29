@@ -11,7 +11,7 @@ public sealed class MissileBehaviour : MonoBehaviour
 
     [SerializeField] AnimationCurve _heightCurve;
     [SerializeField] AnimationCurve _forwardCurve;
-    [SerializeField] float _forwardSpeed;
+    [SerializeField,Range(0.5f,3f)] float _missileSpeed;
 
     [SerializeField] private float _radiusExplosion;
     Collider _collider;
@@ -29,6 +29,7 @@ public sealed class MissileBehaviour : MonoBehaviour
     [SerializeField] ParticleSystem _fireParticles2;
     [SerializeField] ParticleSystem _markParticles;
 
+    [SerializeField] ParticleSystem _smokeParticles;
     GameObject _decal;
     MissileBoss _missileBoss;
     Vector3 _target = Vector3.zero;
@@ -59,6 +60,7 @@ public sealed class MissileBehaviour : MonoBehaviour
         _hasExploded = false;
         GFX.SetActive(true);
         _collider.enabled = false;
+        _smokeParticles.Play();
         StartCoroutine(MissileFall());
     }
 
@@ -79,7 +81,7 @@ public sealed class MissileBehaviour : MonoBehaviour
 
             transform.LookAt(oldPosition);
             
-            progress += Time.fixedDeltaTime;
+            progress += Time.fixedDeltaTime * _missileSpeed;
 
             if(progress > 0.8f)
                 _collider.enabled = true;
@@ -89,7 +91,7 @@ public sealed class MissileBehaviour : MonoBehaviour
 
             yield return new WaitForFixedUpdate();
         }
-
+        _smokeParticles.Stop();
         TriggerParticles();
         yield return new WaitForSeconds(0.5f);
         GFX.SetActive(false);
