@@ -51,7 +51,6 @@ public class WaveManager : MonoBehaviour
                 WaitingAllEnemieDie();
                 break;
             case State.EndWave:
-                StopAllCoroutines();
                 DestroyAllAI();
                 EnemyManager.Instance.EndWave();
                 gameObject.SetActive(false);
@@ -65,17 +64,15 @@ public class WaveManager : MonoBehaviour
             waveSpawner.Add(ws);
 
         if (waveSpawner.Count == 0)
-        {
-            Debug.LogWarning("Wave spawner doesn't exist");
             SetState(State.EndWave);
-        }
 
         SetState(State.NextWave);
     }
 
     private void NextWave()
     {
-        stateCoroutine = StartCoroutine(IDelayBeforeStartingWave());
+        if (gameObject.activeInHierarchy)
+            stateCoroutine = StartCoroutine(IDelayBeforeStartingWave());
 
         IEnumerator IDelayBeforeStartingWave()
         {
