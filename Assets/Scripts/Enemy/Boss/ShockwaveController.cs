@@ -12,7 +12,7 @@ public class ShockwaveController : MonoBehaviour
     private float radius;
     [SerializeField] Transform VFXContainer;
     ParticleSystem[] _shockwaveParts;
-
+    [SerializeField] LayerMask _shockwaveLayerMask;
     private void Start()
     {
         _shockwaveParts = VFXContainer.GetComponentsInChildren<ParticleSystem>();
@@ -55,15 +55,16 @@ public class ShockwaveController : MonoBehaviour
 
                 if (!hasHittingPlayer)
                 {
-                    Collider[] hits = Physics.OverlapSphere(transform.position, radius);
+                    Collider[] hits = Physics.OverlapSphere(transform.position, radius, _shockwaveLayerMask);
 
                     foreach (Collider c in hits)
                     {
-                        if (c.gameObject.layer == LayerMask.NameToLayer("Player"))
+                        if (c.GetComponent<PlayerController>())
                         {
                             PlayerController.Instance.TakeDamage(data.GetShockwaveDamage);
 
                             hasHittingPlayer = true;
+                            break;
                         }
                     }
                 }
