@@ -109,6 +109,7 @@ public sealed class MissileBehaviour : MonoBehaviour
             PlayerController.Instance.TakeDamage(_missileBoss.damage);
         }
 
+        _collider.enabled = false;
         _decal.SetActive(false);
     }
 
