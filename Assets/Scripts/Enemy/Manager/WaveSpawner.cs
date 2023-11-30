@@ -36,10 +36,8 @@ public class WaveSpawner : MonoBehaviour
     public void DespawnAI()
     {
         if (ai != null)
-        {
             PoolManager.Instance.DesinstantiateFromPool(ai);
-        }
     }
 
-    public bool IsWaveIsEnd() => currentWaveIndex > waveCount;
+    public bool IsWaveIsEnd() => currentWaveIndex >= waveCount;
 }
