@@ -93,7 +93,7 @@ public class ShockwaveController : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.black;
-        Gizmos.DrawWireSphere(transform.position, radius);
+        Gizmos.DrawSphere(transform.position, radius);
 
         if (data)
         {
