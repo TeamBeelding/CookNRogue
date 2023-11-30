@@ -55,7 +55,7 @@ public class PoolManager : MonoBehaviour
             case PoolType.LDS:
                 return LDSPool.GetComponent<IPooling>().Instantiating(position, quaternion);
             case PoolType.CE:
-                return CEPool.GetComponent<IPooling>().Instantiating(position, quaternion);
+                return CEPool.GetComponent<IPooling>().Instantiating(new Vector3(position.x, position.y + 0.5f, position.y), quaternion);
             case PoolType.Kamilkaze:
                 return KamilkazePool.GetComponent<IPooling>().Instantiating(position, quaternion);
             case PoolType.Bullet:

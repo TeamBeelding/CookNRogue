@@ -29,6 +29,8 @@ public class Kamilkaze : EnemyController
     {
         base.OnEnable();
 
+        _agent = GetComponent<NavMeshAgent>();
+
         _agent.speed = _data.Speed;
         Healthpoint = _data.Health;
 

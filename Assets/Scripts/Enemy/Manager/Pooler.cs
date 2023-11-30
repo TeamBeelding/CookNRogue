@@ -30,7 +30,7 @@ public class Pooler : MonoBehaviour, IPooling
             {
                 GameObject obj = Instantiate(objectToPool);
                 obj.SetActive(false);
-                obj.transform.transform.SetParent(transform, false);
+                obj.transform.SetParent(transform, false);
                 queue.Enqueue(obj);
                 remainingElement++;
             }
