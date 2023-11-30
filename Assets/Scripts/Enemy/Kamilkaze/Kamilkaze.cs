@@ -159,17 +159,14 @@ public class Kamilkaze : EnemyController
 
         effect?.SetActive(true);
 
-        base.Dying();
+        stateCoroutine = StartCoroutine(IDeathAnim());
 
-        //stateCoroutine = StartCoroutine(IDeathAnim());
+        IEnumerator IDeathAnim()
+        {
+            yield return new WaitForSeconds(1f);
 
-        //IEnumerator IDeathAnim()
-        //{
-
-        //    yield return new WaitForSeconds(0.5f);
-
-        //    base.Dying();
-        //}
+            base.Dying();
+        }
     }
 
 #if UNITY_EDITOR
