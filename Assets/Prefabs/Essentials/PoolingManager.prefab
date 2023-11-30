@@ -41,7 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2372792029034617971}
   m_Layer: 0
-  m_Name: ---Boss Decal Container---
+  m_Name: ---Boss Missile Container---
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -134,9 +134,9 @@ GameObject:
   m_Component:
   - component: {fileID: 6486714673642413930}
   - component: {fileID: 6486714673642413931}
-  - component: {fileID: 3982978691112725375}
   - component: {fileID: -5856418778272679037}
   - component: {fileID: 3793979752148230496}
+  - component: {fileID: 3426534742618123633}
   m_Layer: 0
   m_Name: PoolingManager
   m_TagString: Untagged
@@ -179,22 +179,6 @@ MonoBehaviour:
   DecalPrefab: {fileID: 4598742525228532041, guid: 6bade9f01c5c2bf48b07da4a5f650581,
     type: 3}
   _initialListSize: 5
---- !u!114 &3982978691112725375
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6486714673642413940}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: def7be757a391ef468cb4425718391dc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  BossDecalContainer: {fileID: 2372792029034617971}
-  MissileDecalPrefab: {fileID: 4183403099036417897, guid: 64f97057709bf85438d20e1c5c25d7c5,
-    type: 3}
-  _initialListSize: 5
 --- !u!114 &-5856418778272679037
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -225,5 +209,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _splashContainer: {fileID: 6862572276663189573}
   _splashPrefab: {fileID: 4451083612553706139, guid: a407143afbb95fc48bd76858bd9979f3,
+    type: 3}
+  _initialListSize: 5
+--- !u!114 &3426534742618123633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6486714673642413940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: def7be757a391ef468cb4425718391dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BossMissileContainer: {fileID: 2372792029034617971}
+  MissileDecalPrefab: {fileID: 3262285425793568489, guid: dc9fcc2a33253fa4ba924f107c05d20b,
     type: 3}
   _initialListSize: 5

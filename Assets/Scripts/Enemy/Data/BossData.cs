@@ -24,7 +24,8 @@ public class BossData : ScriptableObject
     
     [SerializeField] private int missilesCount;
     [SerializeField] private float delayBetweenMissiles;
-    [SerializeField] private float damagePerMissiles;
+    [SerializeField] private int damagePerMissiles;
+    public int damage { get { return damagePerMissiles; } }
 
     [Space(1f)]
     [Header("Shockwave")]
@@ -50,7 +51,7 @@ public class BossData : ScriptableObject
 
         missilesCount = 8;
         delayBetweenMissiles = 0.2f;
-        damagePerMissiles = 1f;
+        damagePerMissiles = 1;
 
         shockwaveCount = 1;
         delayBetweenShockwave = 0;

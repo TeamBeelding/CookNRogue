@@ -25,8 +25,6 @@ public sealed class MissileDecal : MonoBehaviour
     public void Init(Color color)
     {
         StopAllCoroutines();
-        float randomRot = Random.Range(-360.0f, 360.0f);
-        transform.rotation = Quaternion.Euler(0, randomRot, 0);
 
         transform.localScale = new Vector3(_Scale, _Scale, 1);
         StartDecalScaleFade(color);
@@ -35,7 +33,7 @@ public sealed class MissileDecal : MonoBehaviour
     public void StartDecalScaleFade(Color color)
     {
         StartCoroutine(Scale());
-        StartCoroutine(Fade(color));
+        //StartCoroutine(Fade(color));
     }
 
     IEnumerator Scale()
@@ -47,7 +45,7 @@ public sealed class MissileDecal : MonoBehaviour
             float newScale = _Scale * _scaleCurve.Evaluate(scaleProgress);
             transform.localScale = new Vector3(newScale, newScale, 1);
             scaleProgress += Time.deltaTime * _ScalingSpeed;
-            yield return new WaitForEndOfFrame();
+            yield return new WaitForFixedUpdate();
         }
     }
 
@@ -68,9 +66,7 @@ public sealed class MissileDecal : MonoBehaviour
             _decalColor.a = newAlpha;
             mat.SetColor("_Color", _decalColor);
             alphaProgress += Time.deltaTime * _alphaFadeSpeed;
-            yield return new WaitForEndOfFrame();
+            yield return new WaitForFixedUpdate();
         }
-
-        gameObject.SetActive(false);
     }
 }

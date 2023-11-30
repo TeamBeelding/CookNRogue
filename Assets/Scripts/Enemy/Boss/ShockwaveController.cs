@@ -1,20 +1,24 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.VFX;
 
 [RequireComponent(typeof(BossController))]
 public class ShockwaveController : MonoBehaviour
 {
     [SerializeField] private AnimationCurve animationCurve;
 
-    private BossController bossController;
     private BossData data;
     private Coroutine shockwaveCoroutine;
     private float radius;
-
+    [SerializeField] Transform VFXContainer;
+    ParticleSystem[] _shockwaveParts;
+    [SerializeField] LayerMask _shockwaveLayerMask;
     private void Start()
     {
-        bossController = GetComponent<BossController>();
-
+        _shockwaveParts = VFXContainer.GetComponentsInChildren<ParticleSystem>();
+    }
+    private void OnEnable()
+    {
         Reset();
     }
 
@@ -25,6 +29,9 @@ public class ShockwaveController : MonoBehaviour
 
     public void StartShockwave()
     {
+        foreach (ParticleSystem particle in _shockwaveParts)
+            particle.Play();
+
         bool hasHittingPlayer = false;
         float duration = data.GetShockwaveDuration;
 
@@ -40,17 +47,24 @@ public class ShockwaveController : MonoBehaviour
 
                 radius = Mathf.Lerp(0, data.GetMaxRadius, curveValue);
 
+                foreach(ParticleSystem particle in _shockwaveParts)
+                {
+                    var shape = particle.shape;
+                    shape.radius = radius;
+                } 
+
                 if (!hasHittingPlayer)
                 {
-                    Collider[] hits = Physics.OverlapSphere(transform.position, radius);
+                    Collider[] hits = Physics.OverlapSphere(transform.position, radius, _shockwaveLayerMask);
 
                     foreach (Collider c in hits)
                     {
-                        if (c.gameObject.layer == LayerMask.NameToLayer("Player"))
+                        if (c.GetComponent<PlayerController>())
                         {
                             PlayerController.Instance.TakeDamage(data.GetShockwaveDamage);
 
                             hasHittingPlayer = true;
+                            break;
                         }
                     }
                 }
@@ -59,8 +73,9 @@ public class ShockwaveController : MonoBehaviour
 
                 yield return null;
             }
-            
-            radius = 0;
+
+            foreach (ParticleSystem particle in _shockwaveParts)
+                particle.Stop();
         }
     }
 
@@ -78,7 +93,7 @@ public class ShockwaveController : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.black;
-        Gizmos.DrawSphere(transform.position, radius);
+        Gizmos.DrawWireSphere(transform.position, radius);
 
         if (data)
         {
