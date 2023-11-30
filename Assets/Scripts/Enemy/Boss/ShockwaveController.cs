@@ -60,11 +60,20 @@ public class ShockwaveController : MonoBehaviour
                 yield return null;
             }
 
-            radius = 0;
+            ResetRadiusPos();
+            bossController.EndShockwave();
         }
     }
 
 #if UNITY_EDITOR
+
+    public void ResetRadiusPos()
+    {
+        if (shockwaveCoroutine != null)
+            StopCoroutine(shockwaveCoroutine);
+        
+        radius = 0;
+    }
 
     private void OnGUI()
     {

@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(MissilesController), typeof(ShockwaveController))]
 public class BossController : EnemyController
@@ -19,6 +20,7 @@ public class BossController : EnemyController
     [SerializeField] private State state;
 
     [SerializeField] private BossData data;
+    [SerializeField] private Image bossHealthBar;
 
     [SerializeField] private GameObject visual;
     [SerializeField] private GameObject physics;
@@ -29,7 +31,6 @@ public class BossController : EnemyController
     private Coroutine stateCoroutine;
     private Coroutine rotationCoroutine;
     private Vector3 targetPosition;
-
 
     #region Debug
 
@@ -141,6 +142,8 @@ public class BossController : EnemyController
 
                 yield return new WaitForSeconds(data.GetDelayBeforeTeleport);
 
+                shockwaveController.ResetRadiusPos();
+
                 teleportTarget = GetTargetPosition();
                 targetTeleportDebug = teleportTarget;
 
@@ -242,16 +245,24 @@ public class BossController : EnemyController
             {
                 shockwaveController.StartShockwave();
 
-                SetState(State.Teleport);
+                yield return new WaitForSeconds(2);
+                EndShockwave();
 
                 yield return null;
             }
         }
     }
 
+    public void EndShockwave()
+    {
+        SetState(State.Teleport);
+    }
+
     public override void TakeDamage(float damage = 1, bool isCritical = false)
     {
         base.TakeDamage(damage, isCritical);
+
+        UpdateBossHealthBar();
 
         if (Healthpoint <= 0)
             SetState(State.Dying);
@@ -280,6 +291,14 @@ public class BossController : EnemyController
     public override bool IsMoving()
     {
         throw new System.NotImplementedException();
+    }
+
+    private void UpdateBossHealthBar()
+    {
+        if (!bossHealthBar)
+            return;
+
+        bossHealthBar.fillAmount = Mathf.Clamp(Healthpoint, 0, data.GetHealth) / data.GetHealth;
     }
 
 #if UNITY_EDITOR
