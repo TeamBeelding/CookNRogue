@@ -25,4 +25,9 @@ public class BigSpatule : Item, ISubItem
         PlayerRuntimeData.GetInstance().data.InventoryData.BigSpatule = true;
         PlayerRuntimeData.GetInstance().data.InventoryData.BigSpatuleValue += data.bonusSecond;
     }
+
+    public override bool AlreadyHasUpgrade()
+    {
+        return PlayerRuntimeData.GetInstance().data.InventoryData.BigSpatule;
+    }
 }
