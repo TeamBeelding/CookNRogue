@@ -155,9 +155,9 @@ public class BossController : EnemyController
                 {
                     
                     var VOLT = particle.velocityOverLifetime;
-                    VOLT.x = new ParticleSystem.MinMaxCurve(1, 5);
-                    VOLT.y = new ParticleSystem.MinMaxCurve(1, 5);
-                    VOLT.z = new ParticleSystem.MinMaxCurve(1, 5);
+                    VOLT.x = new ParticleSystem.MinMaxCurve(-10, 10);
+                    VOLT.y = new ParticleSystem.MinMaxCurve(1, 10);
+                    VOLT.z = new ParticleSystem.MinMaxCurve(-10, 10);
                     particle.Stop();
                 }
 
