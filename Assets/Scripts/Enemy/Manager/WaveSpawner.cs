@@ -29,7 +29,8 @@ public class WaveSpawner : MonoBehaviour
 
         currentWaveIndex++;
 
-        ai = PoolManager.Instance.InstantiateFromPool(waveContainer[currentWaveIndex - 1].IAType, transform.position, Quaternion.identity);
+        if (waveContainer[currentWaveIndex - 1].IAType != PoolType.None)
+            ai = PoolManager.Instance.InstantiateFromPool(waveContainer[currentWaveIndex - 1].IAType, transform.position, Quaternion.identity);
     }
 
     public void DespawnAI()
