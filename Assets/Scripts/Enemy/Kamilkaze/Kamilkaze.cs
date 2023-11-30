@@ -29,7 +29,9 @@ public class Kamilkaze : EnemyController
     {
         base.OnEnable();
 
+        _agent.speed = _data.Speed;
         Healthpoint = _data.Health;
+
         //_animator = GetComponentInChildren<Animator>();
         _agent.stoppingDistance = _data.DistanceToPlayerForExplosion;
 
@@ -155,11 +157,13 @@ public class Kamilkaze : EnemyController
         visual?.SetActive(false);
         physics?.SetActive(false);
 
+        effect?.SetActive(true);
+
         stateCoroutine = StartCoroutine(IDeathAnim());
 
         IEnumerator IDeathAnim()
         {
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(1f);
 
             base.Dying();
         }

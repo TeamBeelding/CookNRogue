@@ -2,6 +2,7 @@ using UnityEngine;
 
 public enum PoolType
 {
+    None,
     MinimoyzVisual,
     Minimoyz,
     Slime,
