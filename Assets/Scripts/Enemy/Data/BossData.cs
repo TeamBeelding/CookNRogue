@@ -15,6 +15,7 @@ public class BossData : ScriptableObject
 
     [SerializeField] private float start;
     [SerializeField] private float delayBeforeTeleport;
+    [SerializeField] private float delayBeforeTakingLastPlayerPosition;
     [SerializeField] private float castMissiles;
     [SerializeField] private float castDash;
 
@@ -43,6 +44,7 @@ public class BossData : ScriptableObject
 
         start = 2f;
         delayBeforeTeleport = 2f;
+        delayBeforeTakingLastPlayerPosition = 1f;
         castMissiles = 2f;
         castDash = 2f;
 
@@ -72,6 +74,7 @@ public class BossData : ScriptableObject
 
     public float GetStart => start;
     public float GetDelayBeforeTeleport => delayBeforeTeleport;
+    public float DelayBeforeTakingLastPlayerPosition => delayBeforeTakingLastPlayerPosition;
     public float GetCastDashDelay => castDash;
 
     #endregion

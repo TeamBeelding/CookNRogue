@@ -34,6 +34,9 @@ public class CollisionBossEvent : MonoBehaviour
                 bossController.CollideWithObstruction();
         }
         else
-            PlayerController.Instance.TakeDamage(data.GetDamageOnHitPlayer);
+        {
+            if (other.gameObject.CompareTag("Player"))
+                PlayerController.Instance.TakeDamage(data.GetDamageOnHitPlayer);
+        }
     }
 }
