@@ -29,6 +29,7 @@ public class BossController : EnemyController
     private Coroutine stateCoroutine;
     private Vector3 targetPosition;
 
+    [SerializeField] ParticleSystem _teleportParticles;
     protected override void OnEnable()
     {
         base.OnEnable();
@@ -123,10 +124,29 @@ public class BossController : EnemyController
 
         IEnumerator ITeleport()
         {
+            if (_teleportParticles)
+                _teleportParticles.transform.parent = null;
+
             while (state == State.Teleport)
             {
+                if (_teleportParticles)
+                    _teleportParticles.Play();
+
+                var VOLT = _teleportParticles.velocityOverLifetime;
+                VOLT.y = new ParticleSystem.MinMaxCurve(1, 0);
+
+                _teleportParticles.transform.position = Player.transform.position;
+                Vector3 tpPos = Player.transform.position;
+
                 yield return new WaitForSeconds(data.GetDelayBeforeTeleport);
-                transform.position = Player.transform.position;
+                transform.position = tpPos;
+
+                if (_teleportParticles)
+                {
+                    VOLT.y = new ParticleSystem.MinMaxCurve(1, 20);
+                    _teleportParticles.Stop();
+                }
+                    
 
                 SetState(State.CastMissiles);
             }
