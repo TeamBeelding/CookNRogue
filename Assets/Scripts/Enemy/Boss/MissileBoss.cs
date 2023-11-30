@@ -10,15 +10,15 @@ public class MissileBoss : MonoBehaviour
 	[SerializeField] Color _missileColor;
 	[SerializeField] MissileDecal _decal;
 	[SerializeField] MissileBehaviour _missileBehaviour;
-    public void Init(int damage)
+    public void Init(int damage, Vector3 target, Vector3 BossPosition)
     {
 		_damage = damage;
-
+		transform.position = target;
         _missileBehaviour.gameObject.SetActive(true);
         _decal.gameObject.SetActive(true);
 
         _decal.Init(_missileColor);
-		_missileBehaviour.Init(_decal.gameObject,this);
+		_missileBehaviour.Init(_decal.gameObject,this, target, BossPosition);
     }
 
 

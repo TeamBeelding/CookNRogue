@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.VFX;
 
 [RequireComponent(typeof(BossController))]
 public class ShockwaveController : MonoBehaviour
@@ -9,8 +10,13 @@ public class ShockwaveController : MonoBehaviour
     private BossData data;
     private Coroutine shockwaveCoroutine;
     private float radius;
-    [SerializeField] ParticleSystem _shockwavePart;
-
+    [SerializeField] Transform VFXContainer;
+    ParticleSystem[] _shockwaveParts;
+    [SerializeField] LayerMask _shockwaveLayerMask;
+    private void Start()
+    {
+        _shockwaveParts = VFXContainer.GetComponentsInChildren<ParticleSystem>();
+    }
     private void OnEnable()
     {
         Reset();
@@ -23,10 +29,8 @@ public class ShockwaveController : MonoBehaviour
 
     public void StartShockwave()
     {
-        if (_shockwavePart != null)
-            _shockwavePart.Play();
-
-        var shape = _shockwavePart.shape;
+        foreach (ParticleSystem particle in _shockwaveParts)
+            particle.Play();
 
         bool hasHittingPlayer = false;
         float duration = data.GetShockwaveDuration;
@@ -43,20 +47,24 @@ public class ShockwaveController : MonoBehaviour
 
                 radius = Mathf.Lerp(0, data.GetMaxRadius, curveValue);
 
-                if(_shockwavePart != null) 
+                foreach(ParticleSystem particle in _shockwaveParts)
+                {
+                    var shape = particle.shape;
                     shape.radius = radius;
+                } 
 
                 if (!hasHittingPlayer)
                 {
-                    Collider[] hits = Physics.OverlapSphere(transform.position, radius);
+                    Collider[] hits = Physics.OverlapSphere(transform.position, radius, _shockwaveLayerMask);
 
                     foreach (Collider c in hits)
                     {
-                        if (c.gameObject.layer == LayerMask.NameToLayer("Player"))
+                        if (c.GetComponent<PlayerController>())
                         {
                             PlayerController.Instance.TakeDamage(data.GetShockwaveDamage);
 
                             hasHittingPlayer = true;
+                            break;
                         }
                     }
                 }
@@ -66,8 +74,8 @@ public class ShockwaveController : MonoBehaviour
                 yield return null;
             }
 
-            if (_shockwavePart != null)
-                _shockwavePart.Stop();
+            foreach (ParticleSystem particle in _shockwaveParts)
+                particle.Stop();
         }
     }
 
