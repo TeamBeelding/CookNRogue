@@ -30,6 +30,7 @@ public class MealOfTheDay : Item, ISubItem
     public void ApplyItem()
     {
         MealOfTheDayData data = (MealOfTheDayData)_data;
+        ItemsBar.Instance.AddItem(data);
 
         for (int i = 0; i < data.playerUpgradeHealth; i++)
         {
