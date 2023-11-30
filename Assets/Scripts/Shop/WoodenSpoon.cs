@@ -25,5 +25,8 @@ public class WoodenSpoon : Item,ISubItem
         PlayerRuntimeData.GetInstance().data.InventoryData.ButteredShoesValue += data.damageBonus;
     }
 
-
+    public override bool AlreadyHasUpgrade()
+    {
+        return PlayerRuntimeData.GetInstance().data.InventoryData.ButteredShoes;
+    }
 }

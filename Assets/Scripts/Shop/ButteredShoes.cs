@@ -25,4 +25,9 @@ public class ButteredShoes : Item,ISubItem
         PlayerRuntimeData.GetInstance().data.InventoryData.ButteredShoes = true;
         PlayerRuntimeData.GetInstance().data.InventoryData.ButteredShoesValue += data.playerSpeedBuff;
     }
+
+    public override bool AlreadyHasUpgrade()
+    {
+        return PlayerRuntimeData.GetInstance().data.InventoryData.ButteredShoes;
+    }
 }
