@@ -25,4 +25,9 @@ public class LargeCauldron : Item,ISubItem
         PlayerRuntimeData.GetInstance().data.InventoryData.LargeCauldron = true;
         PlayerRuntimeData.GetInstance().data.InventoryData.LargeCauldronValue = data.SecondBuff;
     }
+
+    public override bool AlreadyHasUpgrade()
+    {
+        return PlayerRuntimeData.GetInstance().data.InventoryData.LargeCauldron;
+    }
 }

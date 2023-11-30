@@ -3,9 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Enemy;
-using Sirenix.OdinInspector;
 using Sirenix.Utilities;
-using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -24,8 +22,10 @@ public class RewardsManager : MonoBehaviour
         public int amount = 1;
     }
 
+
+
     [SerializeField]
-    private Transform _dropPosition;
+    private Transform[] _dropPositions;
 
     [Space]
 
@@ -47,10 +47,34 @@ public class RewardsManager : MonoBehaviour
 
     private List<string> _pickedItems = new();
 
+
+    [Space]
+
+
+    [SerializeField]
+    [Probability("_upgradesToDrop", "Beach")]
+    private float[] _upgradesProbas;
+
+    [SerializeField]
+    private Item[] _upgradesToDrop;
+
     private void Awake()
     {
-        EnemyManager.Instance.OnAllEnnemiesKilled += DropItems;
+        if (_itemsToDrop.Length > 0)
+        {
+            EnemyManager.Instance.OnAllEnnemiesKilled += DropItems;
+        }
+        if (_upgradesToDrop.Length > 0)
+        {
+            EnemyManager.Instance.OnAllEnnemiesKilled += DropUpgrade;
+        }
     }
+
+    private void DropUpgrade()
+    {
+        SpawnRandomUpgrade();
+    }
+
 
     private void DropItems()
     {
@@ -123,12 +147,65 @@ public class RewardsManager : MonoBehaviour
         var amountToSpawn = Random.Range(randomItem.minAmount, randomItem.maxAmount + 1);
         for (int i = 0; i < amountToSpawn; i++)
         {
-            var inst = Instantiate(randomItem.itemPrefab, _dropPosition);
+            var inst = Instantiate(randomItem.itemPrefab, GetRandomSpawnPoint());
             inst.transform.SetParent(null);
         }
 
         Debug.Log("Spawned reward item " + randomItem.itemPrefab.name);
 
         return true;
+    }
+
+    private bool SpawnRandomUpgrade()
+    {
+        Debug.Log("Spawning a reward upgrade");
+
+        float random = Random.Range(0f, 1f);
+        Item randomUpgrade = _upgradesToDrop.Last();
+
+        for (int i = 0; i < _upgradesProbas.Length; i++)
+        {
+            if (random >= _upgradesProbas[i])
+                continue;
+
+            var upgrade = _upgradesToDrop[i];
+            
+            if(upgrade.AlreadyHasUpgrade())
+                continue;
+
+            randomUpgrade = upgrade;
+            break;
+        }
+
+        if (randomUpgrade == null)
+        {
+            Debug.LogError("Couldn't pick any reward to spawn");
+            return false;
+        }
+
+        if(randomUpgrade.AlreadyHasUpgrade())
+            return false;
+
+
+        var inst = Instantiate(randomUpgrade.gameObject, GetRandomSpawnPoint());
+        inst.transform.localPosition = Vector3.zero;
+        inst.transform.SetParent(null);
+        inst.transform.localRotation = Quaternion.identity;
+        inst.transform.localScale = Vector3.one;
+
+        Debug.Log("Spawned upgrade item " + randomUpgrade.gameObject.name);
+
+        return true;
+    }
+
+    private Transform GetRandomSpawnPoint()
+    {
+        if (_dropPositions.Length == 0)
+        {
+            Debug.LogError("No reward drop position set");
+            return null;
+        }
+        int random = Random.Range(0, _dropPositions.Length);
+        return _dropPositions[random];
     }
 }
