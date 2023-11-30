@@ -25,4 +25,9 @@ public class MidasCauldron : Item, ISubItem
         ItemsBar.Instance.AddItem(data);
         PlayerRuntimeData.GetInstance().data.InventoryData.MidasCauldron = true;
     }
+
+    public bool AlreadyHasUpgrade()
+    {
+        return PlayerRuntimeData.GetInstance().data.InventoryData.MidasCauldron;
+    }
 }

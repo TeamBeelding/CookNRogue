@@ -135,6 +135,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Explosive_Cauldron (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 4646817272898527614, guid: c8bb1b56a6685984ca3562c20a671c88,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4646817272898527615, guid: c8bb1b56a6685984ca3562c20a671c88,
         type: 3}
       propertyPath: m_RootOrder
@@ -336,11 +341,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 8944650555969867854, guid: 4f1d931103cb2404580d27bd24717df0,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8999576046859560440, guid: 4f1d931103cb2404580d27bd24717df0,
         type: 3}
       propertyPath: m_BlockingMask.m_Bits
@@ -525,6 +525,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Explosive_Cauldron
       objectReference: {fileID: 0}
+    - target: {fileID: 4646817272898527614, guid: c8bb1b56a6685984ca3562c20a671c88,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4646817272898527615, guid: c8bb1b56a6685984ca3562c20a671c88,
         type: 3}
       propertyPath: m_RootOrder
@@ -660,7 +665,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _randomDisplacement: 1
   _displacementAmount: 1.5
-  _timerBtwMissiles: 0.75
+  _timerBtwMissiles: 0.3
 --- !u!1 &734561929
 GameObject:
   m_ObjectHideFlags: 0
@@ -769,6 +774,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 226126117295486597, guid: 9ed083dc4f0ed9f4cae6456f83e9d3ba,
+        type: 3}
+      propertyPath: _teleportParticles
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 226126117295486597, guid: 9ed083dc4f0ed9f4cae6456f83e9d3ba,
+        type: 3}
+      propertyPath: _teleportParticlesContainer
+      value: 
+      objectReference: {fileID: 1432366483}
     - target: {fileID: 226126117295486622, guid: 9ed083dc4f0ed9f4cae6456f83e9d3ba,
         type: 3}
       propertyPath: m_Name
@@ -777,7 +792,7 @@ PrefabInstance:
     - target: {fileID: 226126117295486622, guid: 9ed083dc4f0ed9f4cae6456f83e9d3ba,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9ed083dc4f0ed9f4cae6456f83e9d3ba, type: 3}
@@ -850,6 +865,105 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 97707bd660d65ce4ba3b555a920df6cd, type: 3}
+--- !u!1001 &1002718268
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1664692823}
+    m_Modifications:
+    - target: {fileID: 2953571280602008321, guid: b82c71e315506854f882072788c1db8f,
+        type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2953571280602008335, guid: b82c71e315506854f882072788c1db8f,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2953571280602008335, guid: b82c71e315506854f882072788c1db8f,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6902331061785037832, guid: b82c71e315506854f882072788c1db8f,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6902331061785037832, guid: b82c71e315506854f882072788c1db8f,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6902331061785037838, guid: b82c71e315506854f882072788c1db8f,
+        type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6902331062497683776, guid: b82c71e315506854f882072788c1db8f,
+        type: 3}
+      propertyPath: m_Name
+      value: FolliageDome
+      objectReference: {fileID: 0}
+    - target: {fileID: 6902331062497683777, guid: b82c71e315506854f882072788c1db8f,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6902331062497683777, guid: b82c71e315506854f882072788c1db8f,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6902331062497683777, guid: b82c71e315506854f882072788c1db8f,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6902331062497683777, guid: b82c71e315506854f882072788c1db8f,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6902331062497683777, guid: b82c71e315506854f882072788c1db8f,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6902331062497683777, guid: b82c71e315506854f882072788c1db8f,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6902331062497683777, guid: b82c71e315506854f882072788c1db8f,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6902331062497683777, guid: b82c71e315506854f882072788c1db8f,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6902331062497683777, guid: b82c71e315506854f882072788c1db8f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6902331062497683777, guid: b82c71e315506854f882072788c1db8f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6902331062497683777, guid: b82c71e315506854f882072788c1db8f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b82c71e315506854f882072788c1db8f, type: 3}
 --- !u!1 &1037132502
 GameObject:
   m_ObjectHideFlags: 0
@@ -1017,6 +1131,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1389649740}
   m_CullTransparentMesh: 1
+--- !u!4 &1432366483 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6902331062497683777, guid: b82c71e315506854f882072788c1db8f,
+    type: 3}
+  m_PrefabInstance: {fileID: 1002718268}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1544577300
 GameObject:
   m_ObjectHideFlags: 0
@@ -1102,6 +1222,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5cf8d8fb6a8ca4b43a8f3293dc1a74d1, type: 3}
+--- !u!4 &1664692823 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 226126117295486594, guid: 9ed083dc4f0ed9f4cae6456f83e9d3ba,
+    type: 3}
+  m_PrefabInstance: {fileID: 840417261}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1665753312
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1113,6 +1239,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Explosive_Cauldron (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4646817272898527614, guid: c8bb1b56a6685984ca3562c20a671c88,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4646817272898527615, guid: c8bb1b56a6685984ca3562c20a671c88,
         type: 3}
@@ -1318,6 +1449,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Explosive_Cauldron (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4646817272898527614, guid: c8bb1b56a6685984ca3562c20a671c88,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4646817272898527615, guid: c8bb1b56a6685984ca3562c20a671c88,
         type: 3}
@@ -1944,11 +2080,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: MCauldron_Item
-      objectReference: {fileID: 0}
-    - target: {fileID: 3698641679562299479, guid: 536617a34137e3d418ffda6c312838d5,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3698641679562299499, guid: 536617a34137e3d418ffda6c312838d5,
         type: 3}

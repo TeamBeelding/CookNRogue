@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 [RequireComponent (typeof(MissilesController), typeof(ShockwaveController))]
@@ -29,6 +30,8 @@ public class BossController : EnemyController
     private Coroutine stateCoroutine;
     private Vector3 targetPosition;
 
+    [SerializeField] Transform _teleportParticlesContainer;
+    ParticleSystem[] _teleportParticles;
     protected override void OnEnable()
     {
         base.OnEnable();
@@ -41,6 +44,7 @@ public class BossController : EnemyController
 
         missilesController = GetComponentInChildren<MissilesController>();
         shockwaveController = GetComponentInChildren<ShockwaveController>();
+        _teleportParticles = _teleportParticlesContainer.GetComponentsInChildren<ParticleSystem>();
 
         SetState(State.EnterRoom);
     }
@@ -123,10 +127,40 @@ public class BossController : EnemyController
 
         IEnumerator ITeleport()
         {
+            if (_teleportParticlesContainer)
+                _teleportParticlesContainer.transform.parent = null;
+
             while (state == State.Teleport)
             {
+                foreach (var particle in _teleportParticles)
+                {
+                    particle.Play();
+                    var VOLT = particle.velocityOverLifetime;
+                    VOLT.x = new ParticleSystem.MinMaxCurve(0, 0);
+                    VOLT.y = new ParticleSystem.MinMaxCurve(0, 0);
+                    VOLT.z = new ParticleSystem.MinMaxCurve(0, 0);
+                }
+                    
+
+                
+
+                _teleportParticlesContainer.transform.position = Player.transform.position;
+                Vector3 tpPos = Player.transform.position;
+
                 yield return new WaitForSeconds(data.GetDelayBeforeTeleport);
-                transform.position = Player.transform.position;
+                transform.position = tpPos;
+
+
+                foreach (var particle in _teleportParticles)
+                {
+                    
+                    var VOLT = particle.velocityOverLifetime;
+                    VOLT.x = new ParticleSystem.MinMaxCurve(-10, 10);
+                    VOLT.y = new ParticleSystem.MinMaxCurve(1, 10);
+                    VOLT.z = new ParticleSystem.MinMaxCurve(-10, 10);
+                    particle.Stop();
+                }
+
 
                 SetState(State.CastMissiles);
             }

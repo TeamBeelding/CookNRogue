@@ -27,4 +27,8 @@ public class Caramel : Item,ISubItem
         PlayerRuntimeData.GetInstance().data.InventoryData.CaramelDamage = data.Damage;
     }
 
+    public override bool AlreadyHasUpgrade()
+    {
+        return PlayerRuntimeData.GetInstance().data.InventoryData.Caramel;
+    }
 }
