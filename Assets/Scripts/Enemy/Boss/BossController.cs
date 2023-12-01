@@ -140,40 +140,41 @@ public class BossController : EnemyController
             if (_teleportParticlesContainer)
                 _teleportParticlesContainer.transform.parent = null;
 
+            teleportTarget = GetTargetPosition();
+
+            foreach (var particle in _teleportParticles)
+            {
+                particle.Play();
+                var VOLT = particle.velocityOverLifetime;
+                VOLT.x = new ParticleSystem.MinMaxCurve(0, 0);
+                VOLT.y = new ParticleSystem.MinMaxCurve(0, 0);
+                VOLT.z = new ParticleSystem.MinMaxCurve(0, 0);
+            }
+
+            _teleportParticlesContainer.transform.position = teleportTarget;
+
             while (state == State.Teleport)
             {
-                foreach (var particle in _teleportParticles)
-                {
-                    particle.Play();
-                    var VOLT = particle.velocityOverLifetime;
-                    VOLT.x = new ParticleSystem.MinMaxCurve(0, 0);
-                    VOLT.y = new ParticleSystem.MinMaxCurve(0, 0);
-                    VOLT.z = new ParticleSystem.MinMaxCurve(0, 0);
-                }
-                    
-                _teleportParticlesContainer.transform.position = Player.transform.position;
-
+              
                 yield return new WaitForSeconds(data.GetDelayBeforeTeleport);
 
                 shockwaveController.ResetRadiusPos();
-
-                teleportTarget = GetTargetPosition();
-
-                foreach (var particle in _teleportParticles)
-                {
-                    
-                    var VOLT = particle.velocityOverLifetime;
-                    VOLT.x = new ParticleSystem.MinMaxCurve(-10, 10);
-                    VOLT.y = new ParticleSystem.MinMaxCurve(1, 10);
-                    VOLT.z = new ParticleSystem.MinMaxCurve(-10, 10);
-                    particle.Stop();
-                }
 
                 yield return new WaitForSeconds(data.DelayBeforeTakingLastPlayerPosition);
 
                 transform.position = teleportTarget;
 
                 SetState(State.CastMissiles);
+            }
+
+            foreach (var particle in _teleportParticles)
+            {
+
+                var VOLT = particle.velocityOverLifetime;
+                VOLT.x = new ParticleSystem.MinMaxCurve(-10, 10);
+                VOLT.y = new ParticleSystem.MinMaxCurve(1, 10);
+                VOLT.z = new ParticleSystem.MinMaxCurve(-10, 10);
+                particle.Stop();
             }
         }
     }
