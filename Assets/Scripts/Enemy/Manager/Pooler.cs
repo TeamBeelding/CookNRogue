@@ -30,7 +30,7 @@ public class Pooler : MonoBehaviour, IPooling
             {
                 GameObject obj = Instantiate(objectToPool);
                 obj.SetActive(false);
-                obj.transform.transform.SetParent(transform, false);
+                obj.transform.SetParent(transform, false);
                 queue.Enqueue(obj);
                 remainingElement++;
             }
@@ -50,12 +50,13 @@ public class Pooler : MonoBehaviour, IPooling
         }
 
         obj = queue.Dequeue();
-        obj.SetActive(true);
 
         //PlaceItCorrectly(obj);
 
-        obj.transform.localPosition = position;
-        obj.transform.localRotation = quaternion;
+        obj.transform.position = position;
+        obj.transform.rotation = quaternion;
+
+        obj.SetActive(true);
 
         remainingElement--;
 

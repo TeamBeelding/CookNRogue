@@ -22,8 +22,13 @@ public class ErgonomicHandle : Item, ISubItem
     public void ApplyItem()
     {
         ErgonomicHandleData data = (ErgonomicHandleData)_data;
+        ItemsBar.Instance.AddItem(data);
         PlayerRuntimeData.GetInstance().data.InventoryData.ErgonomicHandle = true;
         PlayerRuntimeData.GetInstance().data.InventoryData.ErgonomicHandleValue = data.fireRateBuff;
     }
 
+    public override bool AlreadyHasUpgrade()
+    {
+        return PlayerRuntimeData.GetInstance().data.InventoryData.ErgonomicHandle;
+    }
 }

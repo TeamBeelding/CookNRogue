@@ -35,6 +35,7 @@ public class DoorManager : MonoBehaviour
         }
 
         var position = spawnPoint.transform.position;
-        _player.transform.position = new Vector3(position.x, _player.transform.position.y, position.z);
+        var root = _player.transform.root;
+        root.position = new Vector3(position.x, root.position.y, position.z);
     }
 }

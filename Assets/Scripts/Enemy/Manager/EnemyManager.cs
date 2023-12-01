@@ -33,6 +33,7 @@ namespace Enemy
             }
 
             _instance = this;
+            DontDestroyOnLoad(this);
         }
 
         public void AddEnemyToLevel(EnemyController enemy)

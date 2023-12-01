@@ -2,6 +2,7 @@ using UnityEngine;
 
 public enum PoolType
 {
+    None,
     MinimoyzVisual,
     Minimoyz,
     Slime,
@@ -54,7 +55,8 @@ public class PoolManager : MonoBehaviour
             case PoolType.LDS:
                 return LDSPool.GetComponent<IPooling>().Instantiating(position, quaternion);
             case PoolType.CE:
-                return CEPool.GetComponent<IPooling>().Instantiating(position, quaternion);
+                return CEPool.GetComponent<IPooling>().Instantiating(new Vector3(position.x, position.y + 0.5f, position.y), quaternion);
+                return CEPool.GetComponent<IPooling>().Instantiating(new Vector3(position.x, position.y + 0.5f, position.z), quaternion);
             case PoolType.Kamilkaze:
                 return KamilkazePool.GetComponent<IPooling>().Instantiating(position, quaternion);
             case PoolType.Bullet:
@@ -63,6 +65,14 @@ public class PoolManager : MonoBehaviour
                 Debug.LogWarning("Pool object not exist");
                 return null;
         }
+    }
+
+    public void DestroyAI()
+    {
+        WaveManager wm = GameObject.FindObjectOfType<WaveManager>();
+
+        if (wm != null)
+            wm.DestroyAllAI();
     }
 
     public void DesinstantiateFromPool(GameObject obj)

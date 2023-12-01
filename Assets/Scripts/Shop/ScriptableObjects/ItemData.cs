@@ -8,4 +8,5 @@ public class ItemData : ScriptableObject
     public string name;
     public string description;
     public int cost;
+    public Sprite inventorySprite;
 }

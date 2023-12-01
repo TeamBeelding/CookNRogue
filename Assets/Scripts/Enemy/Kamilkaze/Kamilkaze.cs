@@ -29,7 +29,11 @@ public class Kamilkaze : EnemyController
     {
         base.OnEnable();
 
+        _agent = GetComponent<NavMeshAgent>();
+
+        _agent.speed = _data.Speed;
         Healthpoint = _data.Health;
+
         //_animator = GetComponentInChildren<Animator>();
         _agent.stoppingDistance = _data.DistanceToPlayerForExplosion;
 
@@ -122,7 +126,6 @@ public class Kamilkaze : EnemyController
         IEnumerator ICasting()
         {
             yield return new WaitForSeconds(_data.DelaiForExplose);
-            Debug.Log("explode");
 
             SetState(State.Explose);
         }
@@ -130,9 +133,10 @@ public class Kamilkaze : EnemyController
 
     private void Explode()
     {
+        effect?.SetActive(true);
+
         visual?.SetActive(false);
         physics?.SetActive(false);
-        effect?.SetActive(true);
 
         if (Vector3.Distance(transform.position, Player.transform.position) <= _data.ExplosionRange)
             Player.GetComponent<PlayerController>().TakeDamage(_data.Damage);
@@ -152,11 +156,17 @@ public class Kamilkaze : EnemyController
     {
         //_animator?.SetBool("isDead", true);
 
+        visual?.SetActive(false);
+        physics?.SetActive(false);
+
+        effect?.SetActive(true);
+
         stateCoroutine = StartCoroutine(IDeathAnim());
 
         IEnumerator IDeathAnim()
         {
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(1f);
+
             base.Dying();
         }
     }

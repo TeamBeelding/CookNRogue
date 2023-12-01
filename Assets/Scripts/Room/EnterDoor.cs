@@ -143,6 +143,8 @@ public class EnterDoor : MonoBehaviour
                 return;
             }
 
+            PoolManager.Instance.DestroyAI();
+
             SceneManager.LoadScene(sceneToLoad.BuildIndex);
         }
     }

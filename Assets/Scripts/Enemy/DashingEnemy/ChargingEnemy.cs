@@ -43,6 +43,7 @@ namespace Enemy.DashingEnemy
 
         [SerializeField] ParticleSystem _collisionParticles;
         [SerializeField] ParticleSystem _dashParticles;
+        [SerializeField] ParticleSystem _dirtParticles;
 
         public enum State
         {
@@ -57,6 +58,8 @@ namespace Enemy.DashingEnemy
         protected override void Awake()
         {
             base.Awake();
+
+            Player = PlayerController.Instance.gameObject;
         }
 
         protected override void OnEnable()
@@ -64,6 +67,8 @@ namespace Enemy.DashingEnemy
             base.OnEnable();
 
             Healthpoint = _data.GetHealth();
+
+            Player = PlayerController.Instance.gameObject;
         }
 
         // Start is called before the first frame update
@@ -143,8 +148,15 @@ namespace Enemy.DashingEnemy
                     
                     return;
                 }
-                
+
                 _isCharging = true;
+
+                if (_dashParticles)
+                    _dashParticles.Play();
+
+                if (_dirtParticles)
+                    _dirtParticles.Play();
+
                 _coroutineState = StartCoroutine(ChargingToPlayer());
             }
 
@@ -155,20 +167,16 @@ namespace Enemy.DashingEnemy
                     if (_direction != Vector3.zero)
                     {
                         transform.position += _direction * (_data.GetSpeed() * Time.deltaTime);
-
-                        if (_dashParticles)
-                            _dashParticles.Play();
                     }
                     else
                     {
-                        if (_dashParticles)
-                            _dashParticles.Stop();
-
                         _isCharging = false;
                     }
-                
+
                     yield return null;
                 }
+
+                
             }
         }
     
@@ -186,7 +194,8 @@ namespace Enemy.DashingEnemy
         private void Casting()
         {
             HideRedLine();
-            
+
+
             //_changeStateToWaiting = false;
             _isCharging = false;
             
@@ -229,6 +238,12 @@ namespace Enemy.DashingEnemy
             _isCharging = false;
             //_isRedLineFullVisible = false;
             _canShowingRedLine = false;
+
+            if (_dashParticles)
+                _dashParticles.Stop();
+
+            if(_dirtParticles)
+                _dirtParticles.Stop();
 
             _coroutineState = StartCoroutine(IWaiting());
             StopCoroutine(ICanShowingRedLine());
@@ -311,7 +326,7 @@ namespace Enemy.DashingEnemy
         {
             _Play_SFX_Cabbage_Charge_Impact.Post(gameObject);
             StopMoving();
-            Player.GetComponent<PlayerController>().TakeDamage(_data.GetDamage());
+            PlayerController.Instance.TakeDamage(_data.GetDamage());
 
             SetState(State.Waiting);
         }

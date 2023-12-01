@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -48,6 +49,12 @@ public class Item : MonoBehaviour
     }
 
     public void Interactable(bool isInteractable) { }
+
+    public virtual bool AlreadyHasUpgrade()
+    {
+        return false;
+    }
+
 
     public virtual void Interact(string tag)
     {
