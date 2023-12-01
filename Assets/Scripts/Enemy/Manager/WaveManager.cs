@@ -20,6 +20,8 @@ public class WaveManager : MonoBehaviour
     [SerializeField] private float delayBeforeStartingWave = 1;
     [SerializeField] private bool allAIDieBeforeNextWave = false;
 
+    private int waveSpawnerCount = 0;
+
     private Coroutine stateCoroutine;
 
     private void Start()
@@ -53,6 +55,7 @@ public class WaveManager : MonoBehaviour
             case State.EndWave:
                 DestroyAllAI();
                 EnemyManager.Instance.EndWave();
+                StopAllCoroutines();
                 gameObject.SetActive(false);
                 break;
         }
@@ -61,7 +64,10 @@ public class WaveManager : MonoBehaviour
     private void VerifyWaveManager()
     {
         foreach (WaveSpawner ws in GetComponentsInChildren<WaveSpawner>())
+        {
             waveSpawner.Add(ws);
+            waveSpawnerCount++;
+        }
 
         if (waveSpawner.Count == 0)
             SetState(State.EndWave);
@@ -106,10 +112,17 @@ public class WaveManager : MonoBehaviour
                             continue;
 
                         else
-                            SetState(State.EndWave);
+                        {
+                            ws.gameObject.SetActive(false);
+                            waveSpawnerCount--;
+                        }
                     }
 
-                    SetState(State.NextWave);
+                    if (waveSpawnerCount > 0)
+                        SetState(State.NextWave);
+                    else
+                        SetState(State.EndWave);
+
                 }
             }
         }
