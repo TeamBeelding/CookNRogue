@@ -5,102 +5,105 @@ using System.Linq;
 using Enemy;
 using Sirenix.Utilities;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class RewardsManager : MonoBehaviour
 {
     [Serializable]
-    public class ItemDrop
+    public class IngredientDrop
     {
-        public GameObject itemPrefab;
+        public GameObject ingredientPrefab;
         public int minAmount = 1;
         public int maxAmount = 1;
     }
     [Serializable]
-    public class ItemDropAmount
+    public class IngredientDropAmount
     {
         public int amount = 1;
     }
 
 
-
     [SerializeField]
     private Transform[] _dropPositions;
 
+    [FormerlySerializedAs("_amountOfIngredientsDropProbas")]
     [Space]
 
     [SerializeField]
-    [Probability("_amountOfItemsDrop", "Beach")]
-    private float[] _amountOfItemsDropProbas;
+    [Probability("_amountOfIngredientsDrop", "Beach")]
+    private float[] _amountOfIngredientsDropProbas;
+
+    [FormerlySerializedAs("_amountOfIngredientsDrop")] [SerializeField]
+    private IngredientDropAmount[] _amountOfIngredientsDrop;
+
+    [FormerlySerializedAs("_ingredientsProbas")]
+    [Space]
 
     [SerializeField]
-    private ItemDropAmount[] _amountOfItemsDrop;
+    [Probability("_ingredientsToDrop", "Beach")]
+    private float[] _ingredientsProbas;
 
+    [FormerlySerializedAs("_ingredientsToDrop")] [SerializeField]
+    private IngredientDrop[] _ingredientsToDrop;
+
+    private List<string> _pickedIngredients = new();
+
+
+    [FormerlySerializedAs("_itemsProbas")]
     [Space]
+
 
     [SerializeField]
     [Probability("_itemsToDrop", "Beach")]
     private float[] _itemsProbas;
 
-    [SerializeField]
-    private ItemDrop[] _itemsToDrop;
-
-    private List<string> _pickedItems = new();
-
-
-    [Space]
-
-
-    [SerializeField]
-    [Probability("_upgradesToDrop", "Beach")]
-    private float[] _upgradesProbas;
-
-    [SerializeField]
-    private Item[] _upgradesToDrop;
+    [FormerlySerializedAs("_itemsToDrop")] [SerializeField]
+    private Item[] _itemsToDrop;
 
     private void Awake()
     {
+        if (_ingredientsToDrop.Length > 0)
+        {
+            EnemyManager.Instance.OnAllEnnemiesKilled += DropIngredients;
+        }
         if (_itemsToDrop.Length > 0)
         {
-            EnemyManager.Instance.OnAllEnnemiesKilled += DropItems;
-        }
-        if (_upgradesToDrop.Length > 0)
-        {
-            EnemyManager.Instance.OnAllEnnemiesKilled += DropUpgrade;
+            EnemyManager.Instance.OnAllEnnemiesKilled += DropItem;
         }
     }
 
-    private void DropUpgrade()
+    private void DropItem()
     {
-        SpawnRandomUpgrade();
+        SpawnRandomItem();
     }
 
 
-    private void DropItems()
+    private void DropIngredients()
     {
-        _pickedItems.Clear();
+        _pickedIngredients.Clear();
 
-        if (_amountOfItemsDrop.IsNullOrEmpty())
+        if (_amountOfIngredientsDrop.IsNullOrEmpty())
         {
-            Debug.LogError("No amount of items to drop is defined in RewardsManager");
+            Debug.LogError("No amount of ingredient to drop is defined in RewardsManager");
             return;
         }
 
         float random = Random.Range(0f, 1f);
-        int amountOfItemsToDrop = _amountOfItemsDrop.Last().amount;
-        for (int i = 0; i < _amountOfItemsDropProbas.Length; i++)
+        int amountOfIngredientsToDrop = _amountOfIngredientsDrop.Last().amount;
+        for (int i = 0; i < _amountOfIngredientsDropProbas.Length; i++)
         {
-            if (random < _amountOfItemsDropProbas[i])
+            if (random < _amountOfIngredientsDropProbas[i])
             {
-                amountOfItemsToDrop = _amountOfItemsDrop[i].amount;
+                amountOfIngredientsToDrop = _amountOfIngredientsDrop[i].amount;
                 break;
             }
         }
 
-        Debug.Log("Spawning " + amountOfItemsToDrop + " reward items");
-        for (int i = 0; i < amountOfItemsToDrop; i++)
+        Debug.Log("Spawning " + amountOfIngredientsToDrop + " reward items");
+        for (int i = 0; i < amountOfIngredientsToDrop; i++)
         {
-            if (!SpawnRandomItem())
+            if (!SpawnRandomIngredient())
                 break;
         }
     }
@@ -108,17 +111,60 @@ public class RewardsManager : MonoBehaviour
     /*
      * @returns Is spawning a success
      */
-    private bool SpawnRandomItem()
+    private bool SpawnRandomIngredient()
     {
         Debug.Log("Spawning a reward item");
-        if (_pickedItems.Count >= _itemsToDrop.Length)
+        if (_pickedIngredients.Count >= _ingredientsToDrop.Length)
         {
             Debug.LogError("No more reward left to pick from");
             return false;
         }
 
         float random = Random.Range(0f, 1f);
-        ItemDrop randomItem = _itemsToDrop.Last();
+        IngredientDrop randomIngredient = _ingredientsToDrop.Last();
+
+        for (int i = 0; i < _ingredientsProbas.Length; i++)
+        {
+            if (random >= _ingredientsProbas[i])
+                continue;
+
+            var item = _ingredientsToDrop[i];
+            if(_pickedIngredients.Contains(item.ingredientPrefab.name))
+                continue;
+
+            randomIngredient = item;
+            break;
+        }
+
+        if (randomIngredient == null)
+        {
+            Debug.LogError("Couldn't pick any reward to spawn");
+            return false;
+        }
+
+        if(_pickedIngredients.Contains(randomIngredient.ingredientPrefab.name))
+            return false;
+
+        _pickedIngredients.Add(randomIngredient.ingredientPrefab.name);
+
+        var amountToSpawn = Random.Range(randomIngredient.minAmount, randomIngredient.maxAmount + 1);
+        for (int i = 0; i < amountToSpawn; i++)
+        {
+            var inst = Instantiate(randomIngredient.ingredientPrefab, GetRandomSpawnPoint());
+            inst.transform.SetParent(null);
+        }
+
+        Debug.Log("Spawned reward item " + randomIngredient.ingredientPrefab.name);
+
+        return true;
+    }
+
+    private bool SpawnRandomItem()
+    {
+        Debug.Log("Spawning a reward item");
+
+        float random = Random.Range(0f, 1f);
+        Item randomItem = _itemsToDrop.Last();
 
         for (int i = 0; i < _itemsProbas.Length; i++)
         {
@@ -126,7 +172,8 @@ public class RewardsManager : MonoBehaviour
                 continue;
 
             var item = _itemsToDrop[i];
-            if(_pickedItems.Contains(item.itemPrefab.name))
+
+            if(item.AlreadyHasUpgrade())
                 continue;
 
             randomItem = item;
@@ -139,61 +186,17 @@ public class RewardsManager : MonoBehaviour
             return false;
         }
 
-        if(_pickedItems.Contains(randomItem.itemPrefab.name))
-            return false;
-
-        _pickedItems.Add(randomItem.itemPrefab.name);
-
-        var amountToSpawn = Random.Range(randomItem.minAmount, randomItem.maxAmount + 1);
-        for (int i = 0; i < amountToSpawn; i++)
-        {
-            var inst = Instantiate(randomItem.itemPrefab, GetRandomSpawnPoint());
-            inst.transform.SetParent(null);
-        }
-
-        Debug.Log("Spawned reward item " + randomItem.itemPrefab.name);
-
-        return true;
-    }
-
-    private bool SpawnRandomUpgrade()
-    {
-        Debug.Log("Spawning a reward upgrade");
-
-        float random = Random.Range(0f, 1f);
-        Item randomUpgrade = _upgradesToDrop.Last();
-
-        for (int i = 0; i < _upgradesProbas.Length; i++)
-        {
-            if (random >= _upgradesProbas[i])
-                continue;
-
-            var upgrade = _upgradesToDrop[i];
-            
-            if(upgrade.AlreadyHasUpgrade())
-                continue;
-
-            randomUpgrade = upgrade;
-            break;
-        }
-
-        if (randomUpgrade == null)
-        {
-            Debug.LogError("Couldn't pick any reward to spawn");
-            return false;
-        }
-
-        if(randomUpgrade.AlreadyHasUpgrade())
+        if(randomItem.AlreadyHasUpgrade())
             return false;
 
 
-        var inst = Instantiate(randomUpgrade.gameObject, GetRandomSpawnPoint());
+        var inst = Instantiate(randomItem.gameObject, GetRandomSpawnPoint());
         inst.transform.localPosition = Vector3.zero;
         inst.transform.SetParent(null);
         inst.transform.localRotation = Quaternion.identity;
         inst.transform.localScale = Vector3.one;
 
-        Debug.Log("Spawned upgrade item " + randomUpgrade.gameObject.name);
+        Debug.Log("Spawned item " + randomItem.gameObject.name);
 
         return true;
     }
