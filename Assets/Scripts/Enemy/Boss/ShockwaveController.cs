@@ -13,6 +13,7 @@ public class ShockwaveController : MonoBehaviour
     [SerializeField] Transform VFXContainer;
     ParticleSystem[] _shockwaveParts;
     [SerializeField] LayerMask _shockwaveLayerMask;
+
     private void Start()
     {
         _shockwaveParts = VFXContainer.GetComponentsInChildren<ParticleSystem>();
