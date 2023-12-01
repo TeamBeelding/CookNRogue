@@ -59,8 +59,9 @@ public class ShockwaveController : MonoBehaviour
 
                 yield return null;
             }
-
+#if UNITY_EDITOR
             ResetRadiusPos();
+#endif
             //bossController.EndShockwave();
         }
     }
