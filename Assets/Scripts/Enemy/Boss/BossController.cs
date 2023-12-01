@@ -2,10 +2,10 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(MissilesController), typeof(ShockwaveController))]
+[RequireComponent (typeof(MissilesController), typeof(ShockwaveController))]
 public class BossController : EnemyController
 {
-    public enum State
+    private enum State
     {
         EnterRoom,
         Teleport,
@@ -20,7 +20,6 @@ public class BossController : EnemyController
     [SerializeField] private State state;
 
     [SerializeField] private BossData data;
-    [SerializeField] private Image bossHealthBar;
 
     [SerializeField] private GameObject visual;
     [SerializeField] private GameObject physics;
@@ -31,13 +30,16 @@ public class BossController : EnemyController
     private Coroutine stateCoroutine;
     private Coroutine rotationCoroutine;
     private Vector3 targetPosition;
+    [SerializeField] private Image bossHealthBar;
 
-    #region Debug
+    [SerializeField] Transform _teleportParticlesContainer;
+    ParticleSystem[] _teleportParticles;
 
-    private float radiusTeleportDebug = 0;
-    private Vector3 targetTeleportDebug;
-
-    #endregion
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        Reset();
+    }
 
     protected override void Start()
     {
@@ -45,6 +47,7 @@ public class BossController : EnemyController
 
         missilesController = GetComponentInChildren<MissilesController>();
         shockwaveController = GetComponentInChildren<ShockwaveController>();
+        _teleportParticles = _teleportParticlesContainer.GetComponentsInChildren<ParticleSystem>();
 
         Healthpoint = data.GetHealth;
         SetState(State.EnterRoom);
@@ -62,10 +65,8 @@ public class BossController : EnemyController
 
     public BossData GetBossDataRef() => data;
 
-    public void SetState(State newValue)
+    private void SetState(State newValue)
     {
-        radiusTeleportDebug = 0;
-
         if (stateCoroutine != null)
             stateCoroutine = null;
 
@@ -136,22 +137,44 @@ public class BossController : EnemyController
 
         IEnumerator ITeleport()
         {
+            if (_teleportParticlesContainer)
+                _teleportParticlesContainer.transform.parent = null;
+
+            teleportTarget = GetTargetPosition();
+
+            foreach (var particle in _teleportParticles)
+            {
+                particle.Play();
+                var VOLT = particle.velocityOverLifetime;
+                VOLT.x = new ParticleSystem.MinMaxCurve(0, 0);
+                VOLT.y = new ParticleSystem.MinMaxCurve(0, 0);
+                VOLT.z = new ParticleSystem.MinMaxCurve(0, 0);
+            }
+
+            _teleportParticlesContainer.transform.position = teleportTarget;
+
             while (state == State.Teleport)
             {
-                radiusTeleportDebug = 2;
-
+              
                 yield return new WaitForSeconds(data.GetDelayBeforeTeleport);
 
                 shockwaveController.ResetRadiusPos();
-
-                teleportTarget = GetTargetPosition();
-                targetTeleportDebug = teleportTarget;
 
                 yield return new WaitForSeconds(data.DelayBeforeTakingLastPlayerPosition);
 
                 transform.position = teleportTarget;
 
                 SetState(State.CastMissiles);
+            }
+
+            foreach (var particle in _teleportParticles)
+            {
+
+                var VOLT = particle.velocityOverLifetime;
+                VOLT.x = new ParticleSystem.MinMaxCurve(-10, 10);
+                VOLT.y = new ParticleSystem.MinMaxCurve(1, 10);
+                VOLT.z = new ParticleSystem.MinMaxCurve(-10, 10);
+                particle.Stop();
             }
         }
     }
@@ -169,15 +192,6 @@ public class BossController : EnemyController
 
                 SetState(State.ThrowMissiles);
             }
-        }
-    }
-
-    private IEnumerator IRotateToPlayer()
-    {
-        while (state == State.CastMissiles)
-        {
-            visual.transform.LookAt(new Vector3(Player.transform.position.x, visual.transform.position.y, Player.transform.position.z));
-            yield return null;
         }
     }
 
@@ -258,6 +272,15 @@ public class BossController : EnemyController
         SetState(State.Teleport);
     }
 
+    private IEnumerator IRotateToPlayer()
+    {
+        while (state == State.CastMissiles)
+        {
+            visual.transform.LookAt(new Vector3(Player.transform.position.x, visual.transform.position.y, Player.transform.position.z));
+            yield return null;
+        }
+    }
+
     public override void TakeDamage(float damage = 1, bool isCritical = false)
     {
         base.TakeDamage(damage, isCritical);
@@ -266,6 +289,14 @@ public class BossController : EnemyController
 
         if (Healthpoint <= 0)
             SetState(State.Dying);
+    }
+
+    private void UpdateBossHealthBar()
+    {
+        if (!bossHealthBar)
+            return;
+
+        bossHealthBar.fillAmount = Mathf.Clamp(Healthpoint, 0, data.GetHealth) / data.GetHealth;
     }
 
     public void CollideWithPlayer()
@@ -284,31 +315,10 @@ public class BossController : EnemyController
     {
         visual?.SetActive(false);
         physics?.SetActive(false);
-
-        base.Dying();
     }
 
     public override bool IsMoving()
     {
         throw new System.NotImplementedException();
     }
-
-    private void UpdateBossHealthBar()
-    {
-        if (!bossHealthBar)
-            return;
-
-        bossHealthBar.fillAmount = Mathf.Clamp(Healthpoint, 0, data.GetHealth) / data.GetHealth;
-    }
-
-#if UNITY_EDITOR
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawSphere(targetTeleportDebug, radiusTeleportDebug);
-    }
-
-#endif
-
 }
