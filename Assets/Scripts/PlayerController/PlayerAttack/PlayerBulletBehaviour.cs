@@ -56,6 +56,7 @@ public class PlayerBulletBehaviour : MonoBehaviour
         bouncingNbr = 0;
         _ricochetNbr = 0;
         HasExploded = false;
+        transform.localScale = new Vector3(1,1,1);
     }
     public virtual void ExplosionEffect()
     {
