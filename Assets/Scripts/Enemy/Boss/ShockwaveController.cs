@@ -61,7 +61,7 @@ public class ShockwaveController : MonoBehaviour
             }
 
             ResetRadiusPos();
-            bossController.EndShockwave();
+            //bossController.EndShockwave();
         }
     }
 
