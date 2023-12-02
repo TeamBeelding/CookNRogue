@@ -34,7 +34,8 @@ public class BossController : EnemyController
 
     [SerializeField] Transform _teleportParticlesContainer;
     ParticleSystem[] _teleportParticles;
-
+    [SerializeField] Transform _dirtParticlesContainer;
+    ParticleSystem[] _dirtParticles;
     protected override void OnEnable()
     {
         base.OnEnable();
@@ -48,6 +49,7 @@ public class BossController : EnemyController
         missilesController = GetComponentInChildren<MissilesController>();
         shockwaveController = GetComponentInChildren<ShockwaveController>();
         _teleportParticles = _teleportParticlesContainer.GetComponentsInChildren<ParticleSystem>();
+        _dirtParticles = _dirtParticlesContainer.GetComponentsInChildren<ParticleSystem>();
 
         Healthpoint = data.GetHealth;
         SetState(State.EnterRoom);
@@ -175,6 +177,11 @@ public class BossController : EnemyController
                 VOLT.y = new ParticleSystem.MinMaxCurve(1, 10);
                 VOLT.z = new ParticleSystem.MinMaxCurve(-10, 10);
                 particle.Stop();
+            }
+
+            foreach (var particle in _dirtParticles)
+            {
+                particle.Play();
             }
         }
     }
