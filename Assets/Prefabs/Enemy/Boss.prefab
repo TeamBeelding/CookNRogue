@@ -168,6 +168,7 @@ MonoBehaviour:
   data: {fileID: 11400000, guid: e508d45b1ccc6bc468168322d74821f8, type: 2}
   visual: {fileID: 226126116324877067}
   physics: {fileID: 226126116367906101}
+  bossHealthBar: {fileID: 2809953802207105036}
   _teleportParticlesContainer: {fileID: 8861672258194289866}
 --- !u!114 &226126117295486599
 MonoBehaviour:
@@ -181,8 +182,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 164d44e945d459d4da35ce56690c2949, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _randomDisplacement: 0
-  _displacementAmount: 0
+  _randomDisplacement: 1
+  _displacementAmount: 1.5
 --- !u!114 &226126117295486596
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -258,7 +259,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.10981251, y: 0.016703704}
   m_AnchorMax: {x: 0.5, y: 0.1084074}
-  m_AnchoredPosition: {x: 374.5, y: -2.651497}
+  m_AnchoredPosition: {x: 374.5, y: -2.6514893}
   m_SizeDelta: {x: 751, y: -0.6969986}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2153583222382331944
@@ -415,7 +416,7 @@ PrefabInstance:
     - target: {fileID: 5750311668600731568, guid: 84cc32c8aa0586047a90ddd73b11b483,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.889163
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5750311668600731568, guid: 84cc32c8aa0586047a90ddd73b11b483,
         type: 3}
@@ -425,7 +426,7 @@ PrefabInstance:
     - target: {fileID: 5750311668600731568, guid: 84cc32c8aa0586047a90ddd73b11b483,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.0626364
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5750311668600731568, guid: 84cc32c8aa0586047a90ddd73b11b483,
         type: 3}

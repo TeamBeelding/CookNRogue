@@ -80,6 +80,14 @@ public class ShockwaveController : MonoBehaviour
         }
     }
 
+    public void ResetRadiusPos()
+    {
+        if (shockwaveCoroutine != null)
+            StopCoroutine(shockwaveCoroutine);
+
+        radius = 0;
+    }
+
 #if UNITY_EDITOR
 
     private void OnGUI()
