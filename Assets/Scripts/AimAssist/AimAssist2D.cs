@@ -26,7 +26,7 @@ public class AimAssist2D
             }
 
             //Check line of sight
-            if (!Physics.Raycast(origin, tempTargetDir, out RaycastHit hit, preset.GetMaxDistance) || hit.collider.gameObject != target)
+            if (!Physics.Raycast(origin, tempTargetDir, out RaycastHit hit, preset.GetMaxDistance) || hit.collider.transform.parent.gameObject != target)
             {
                 continue;
             }

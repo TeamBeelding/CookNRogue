@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerAnimStates : MonoBehaviour
 {
-
+    
     public enum playerAnimStates
     {
         IDLE,
@@ -90,6 +90,7 @@ public class PlayerAnimStates : MonoBehaviour
                     _animator.SetBool("idleAttackBool", false);
                     _animator.SetBool("runningBool", false);
                     _animator.SetBool("runningAttackBool", false);
+                    Marmite(false, false);
                     break;
                 }
         }
@@ -115,20 +116,22 @@ public class PlayerAnimStates : MonoBehaviour
 
     public void Marmite(bool isAimed, bool isCooking) 
     {
-        if (isAimed && !isCooking)
+        if (isAimed)
         {
-            Debug.Log("isAimed was called");
             m_marmite.gameObject.SetActive(false);
             m_aimedMarmite.gameObject.SetActive(true);
+            m_cookingMarmite.gameObject.SetActive(false);
             m_spoon.gameObject.SetActive(false);
             m_aimedSpoon.gameObject.SetActive(true);
+            m_cookingMarmite.gameObject.SetActive(false);
         }
         else if (isCooking) 
         {
-            Debug.Log("isCooking was called");
             m_marmite.gameObject.SetActive(false);
+            m_aimedMarmite.gameObject.SetActive(false);
             m_cookingMarmite.gameObject.SetActive(true);
             m_spoon.gameObject.SetActive(false);
+            m_aimedSpoon.gameObject.SetActive(false);
             m_cookingSpoon.gameObject.SetActive(true);
         }
         else

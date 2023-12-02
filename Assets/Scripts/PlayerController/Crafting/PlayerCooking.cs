@@ -7,20 +7,6 @@ public class PlayerCooking : MonoBehaviour
 {
     #region Variables
 
-    [SerializeField, Tooltip("Cooking time for a 1 ingredient bullet")]
-    float m_1IngredientCookTime;
-
-    [SerializeField, Tooltip("Cooking time for a 2 ingredients bullet")]
-    float m_2IngredientCookTime;
-
-    [SerializeField, Tooltip("Cooking time for a 3 ingredients bullet")]
-    float m_3IngredientCookTime;
-
-    [SerializeField, Tooltip("Random delay to spawn the QTE based on the total cook time,\r\n" +
-        "Where 0 is the start of cooking and 1 is the end,\r\n" +
-        "And X is the lowest possible generated value and Y the highest.")]
-    Vector2 m_QTESpawnDelay;
-
     [SerializeField]
     PlayerAttack m_attackScript;
 
@@ -38,10 +24,11 @@ public class PlayerCooking : MonoBehaviour
 
     bool _craftingInProgress;
     float _curProgressTime;
-    bool _spawnedQTE;
 
     float _totalCookTime;
     float _randQTEDelay;
+
+    Material _fillMaterial;
 
     Coroutine _craftingRoutine;
 
@@ -50,6 +37,12 @@ public class PlayerCooking : MonoBehaviour
     [SerializeField]
     private AK.Wwise.Event _Play_Reset_Ingredient;
 
+    static PlayerCooking _instance;
+    public static PlayerCooking Instance
+    {
+        get => _instance;
+    }
+
     #endregion
 
     private void Reset()
@@ -57,11 +50,22 @@ public class PlayerCooking : MonoBehaviour
         m_attackScript = m_attackScript != null ? m_attackScript : GetComponent<PlayerAttack>();
         m_QTEScript = m_QTEScript != null ? m_QTEScript : GetComponent<PlayerCookingQTE>();
 
-        m_1IngredientCookTime = 4;
-        m_2IngredientCookTime = 6;
-        m_3IngredientCookTime = 8;
+        PlayerRuntimeData.GetInstance().data.CookData.OneIngredientCookTime = PlayerRuntimeData.GetInstance().data.CookData.DefaultOneIngredientCookTime;
+        PlayerRuntimeData.GetInstance().data.CookData.TwoIngredientCookTime = PlayerRuntimeData.GetInstance().data.CookData.DefaultTwoIngredientCookTime;
+        PlayerRuntimeData.GetInstance().data.CookData.ThreeIngredientCookTime = PlayerRuntimeData.GetInstance().data.CookData.DefaultThreeIngredientCookTime;
+        PlayerRuntimeData.GetInstance().data.CookData.ThreeIngredientCookTime = PlayerRuntimeData.GetInstance().data.CookData.DefaultThreeIngredientCookTime;
+        PlayerRuntimeData.GetInstance().data.CookData.QteSpawnDelay = PlayerRuntimeData.GetInstance().data.CookData.DefaultQteSpawnDelay;
+    }
 
-        m_QTESpawnDelay = new Vector2(0.4f, 0.6f);
+    private void Awake()
+    {
+        //Set instance
+        if (_instance != null)
+        {
+            Destroy(gameObject);
+        }
+
+        _instance = this;
     }
 
     void Start()
@@ -72,7 +76,13 @@ public class PlayerCooking : MonoBehaviour
         _inventoryScript = PlayerCookingInventory.Instance;
         _playerController = PlayerController.Instance;
         //animator = GetComponentInChildren<Animator>();
+        _fillMaterial = m_cookingProgressBarFill.material;
         m_cookingProgressVisuals.SetActive(false);
+
+        PlayerRuntimeData.GetInstance().data.CookData.OneIngredientCookTime = PlayerRuntimeData.GetInstance().data.CookData.DefaultOneIngredientCookTime;
+        PlayerRuntimeData.GetInstance().data.CookData.TwoIngredientCookTime = PlayerRuntimeData.GetInstance().data.CookData.DefaultTwoIngredientCookTime;
+        PlayerRuntimeData.GetInstance().data.CookData.ThreeIngredientCookTime = PlayerRuntimeData.GetInstance().data.CookData.DefaultThreeIngredientCookTime;
+        PlayerRuntimeData.GetInstance().data.CookData.QteSpawnDelay = PlayerRuntimeData.GetInstance().data.CookData.DefaultQteSpawnDelay;
     }
 
     #region Cooking
@@ -80,6 +90,7 @@ public class PlayerCooking : MonoBehaviour
     {
         if (!_craftingInProgress)
         {
+            PlayerRuntimeData.GetInstance().data.CookData.QTESuccess = false;
             _inventoryScript.Show(true);
         }
         else
@@ -87,13 +98,21 @@ public class PlayerCooking : MonoBehaviour
             RestartCrafting();
         }
     }
+    
+    public bool GetCraftingInProgress()
+    {
+        return _craftingInProgress;
+    }
 
     public void StopCooking()
     {
         if (!_craftingInProgress)
         {
-            _inventoryScript.Show(false);
-            _inventoryScript.CancelCraft();
+            if (_inventoryScript.IsDisplayed())
+            {
+                _inventoryScript.Show(false);
+                _inventoryScript.CancelCraft();
+            }
         }
         else
         {
@@ -132,25 +151,25 @@ public class PlayerCooking : MonoBehaviour
             {
                 case 1:
                     {
-                        _totalCookTime = m_1IngredientCookTime;
+                        _totalCookTime = PlayerRuntimeData.GetInstance().data.CookData.OneIngredientCookTime;
                         break;
                     }
 
                 case 2:
                     {
-                        _totalCookTime = m_2IngredientCookTime;
+                        _totalCookTime = PlayerRuntimeData.GetInstance().data.CookData.TwoIngredientCookTime;
                         break;
                     }
 
                 case 3:
                     {
-                        _totalCookTime = m_3IngredientCookTime;
+                        _totalCookTime = PlayerRuntimeData.GetInstance().data.CookData.ThreeIngredientCookTime;
                         break;
                     }
             }
 
             //Set QTE delay
-            _randQTEDelay = Random.Range(m_QTESpawnDelay.x, m_QTESpawnDelay.y);
+            _randQTEDelay = Random.Range(PlayerRuntimeData.GetInstance().data.CookData.QteSpawnDelay.x, PlayerRuntimeData.GetInstance().data.CookData.QteSpawnDelay.y);
 
             //Start coroutine
             _curProgressTime = 0f;
@@ -160,7 +179,7 @@ public class PlayerCooking : MonoBehaviour
             m_cookingProgressVisuals.SetActive(true);
 
             //Stop Slow Motion
-            Time.timeScale = 1f;
+            //Time.timeScale = 1f;
         }
     }
 
@@ -190,52 +209,43 @@ public class PlayerCooking : MonoBehaviour
     void CompleteCrafting()
     {
         _inventoryScript.CraftBullet();
-        _playerController.StopCookingState();
         m_attackScript.OnAmmunitionChange();
 
         //reset
         _craftingRoutine = null;
         _craftingInProgress = false;
-        _spawnedQTE = false;
 
         //Hide UI
         m_cookingProgressVisuals.SetActive(false);
         
         _playerController.CheckingIfCookingIsDone();
+        _playerController.StopCookingState();
+        //_playerController._ignoreCook = true;
     }
 
     IEnumerator ICraftingLoop(float delay)
     {
+        m_QTEScript.StartQTE(delay);
+
         //Check crafting time
         while (_curProgressTime < _totalCookTime)
         {
-            //Check QTE spawn time
-            if (!_spawnedQTE && _curProgressTime >= delay)
-            {
-                
-                SpawnQTE();
-            }
             //UI
-            m_cookingProgressBarFill.fillAmount = _curProgressTime / _totalCookTime;
+            _fillMaterial.SetFloat("_FillAmount", _curProgressTime / _totalCookTime);
 
             //Advance Time
             _curProgressTime += Time.deltaTime;
             yield return new WaitForSeconds(Time.deltaTime);
         }
-        
+
+        m_QTEScript.ResetQTE();
+
+        _fillMaterial.SetFloat("_FillAmount", 0f);
         CompleteCrafting();
     }
     #endregion
 
     #region QTE
-    void SpawnQTE()
-    {
-        _playerController.QTEAppear();
-        
-        m_QTEScript.StartQTE();
-        _spawnedQTE = true;
-    }
-
     public void CheckQTE()
     {
         m_QTEScript.CheckQTE();
@@ -248,9 +258,19 @@ public class PlayerCooking : MonoBehaviour
         {
             StopCoroutine(_craftingRoutine);
             CompleteCrafting();
+            _inventoryScript.IncreaseMaxRecipeSlots();
             
             _playerController.CheckingIfCookingIsDone();
         }
     }
+    #endregion
+
+    #region Utilities
+
+    public void Clear()
+    {
+        _inventoryScript.Clear();
+    }
+
     #endregion
 }

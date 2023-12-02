@@ -1,9 +1,33 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Eflatun.SceneReference;
+using Enemy;
+using NaughtyAttributes;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using Random = UnityEngine.Random;
+using SceneReference = Eflatun.SceneReference.SceneReference;
 
 public class EnterDoor : MonoBehaviour
 {
+    /* Instancié au chargement d'une nouvelle scène */
+    private static DoorManager _doorManager;
+
+    [Header("Room linker")]
+
+    [SerializeField]
+    [Probability("_scenesToLoad")]
+    private float[] _sceneProbas;
+
+    [SerializeField]
+    private SceneReference[] _scenesToLoad;
+
+    public Transform spawnPoint;
+
+    [Space]
+    [Header("Door settings")]
     [SerializeField]
     private GameObject m_door;
     [SerializeField]
@@ -48,8 +72,22 @@ public class EnterDoor : MonoBehaviour
 
     [SerializeField] private AK.Wwise.Event _Play_SFX_Door_Open;
 
-    private void Start()
+
+    private void Awake()
     {
+        if (_doorManager == null)
+        {
+            _doorManager = new GameObject("DoorManager").AddComponent<DoorManager>();
+        }
+
+        foreach (SceneReference sceneReference in _scenesToLoad)
+        {
+            if (sceneReference.State == SceneReferenceState.Unsafe)
+            {
+                Debug.LogError("Door has no valid level linked " + gameObject.name);
+            }
+        }
+
         if (m_door != null)
         {
             _godRays.SetActive(false);
@@ -79,7 +117,35 @@ public class EnterDoor : MonoBehaviour
     {
         if (other.CompareTag("Player") && !m_door.GetComponent<Collider>().enabled)
         {
-            RoomManager.instance.LoadNextLevel();
+            if (_scenesToLoad.Length == 0)
+            {
+                Debug.LogError("No scene linked to this door");
+                return;
+            }
+
+            float proba = Random.Range(0.0f, 1.0f);
+            int chosenIndex = _scenesToLoad.Length - 1;
+            for (int i = 0; i < _sceneProbas.Length; i++)
+            {
+                if (proba < _sceneProbas[i])
+                {
+                    chosenIndex = i;
+                    break;
+                }
+            }
+
+
+            var sceneToLoad = _scenesToLoad[chosenIndex];
+
+            if (sceneToLoad.State == SceneReferenceState.Unsafe)
+            {
+                Debug.LogError("Scene reference is invalid");
+                return;
+            }
+
+            PoolManager.Instance.DestroyAI();
+
+            SceneManager.LoadScene(sceneToLoad.BuildIndex);
         }
     }
     private void StartOpenDoor()
@@ -96,7 +162,6 @@ public class EnterDoor : MonoBehaviour
         if (SkinnedMaterials.Length > 0)
         {
             float duration = m_portalAnimDuration + m_portalAnimOffset < m_doorOpeningDuration ? m_doorOpeningDuration : m_portalAnimDuration + m_portalAnimOffset;
-            Debug.Log(duration);
 
             for (float f = 0f; f < duration; f += m_refreshRate)
             {
@@ -144,7 +209,6 @@ public class EnterDoor : MonoBehaviour
         //Open Door
         if(value >= m_doorOpeningDuration)
         {
-            Debug.Log("?");
             m_door.SetActive(false);
             _doorIsOpened = true;
         }
