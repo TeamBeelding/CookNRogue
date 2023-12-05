@@ -48,5 +48,6 @@ public class ProjectileData : ScriptableObject
     [Space(20)]
 
     [Header("Debug")]
+    [ColorUsage(true, true)]
     public Color color;
 }

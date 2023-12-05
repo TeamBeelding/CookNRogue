@@ -95,4 +95,4 @@ public class AkPlatformInitSettings : global::System.IDisposable {
   }
 
 }
-#endif // #if (UNITY_STANDALONE_LINUX && !UNITY_EDITOR) || UNITY_EDITOR_LINUX
+#endif // #if UNITY_STANDALONE_LINUX && ! UNITY_EDITOR

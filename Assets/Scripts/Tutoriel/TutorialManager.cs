@@ -3,17 +3,20 @@ using UnityEngine.InputSystem;
 
 public class TutorialManager : MonoBehaviour
 {
-    public int step = 0;
-    private DialogueBox _dialogueBox;
+    public int step
+    {
+        get => step;
+        private set => step = value;
+    }
+    
     [SerializeField] GameObject Cauldron;
     [SerializeField] private string[] _dialogue;
+    private DialogueBox _dialogueBox;
 
-    void Start()
+    private void Start()
     {
         _dialogueBox = GameObject.FindObjectOfType<DialogueBox>();
     }
-
-
 
     public void ApproachCauldron()
     {
@@ -48,4 +51,30 @@ public class TutorialManager : MonoBehaviour
         _dialogueBox.DisplayDialogueText(dialogueToDisplay, Cauldron.transform);
     }
 
+    public void FoodSpawn()
+    {
+        
+    }
+
+    public void LowTimeSpeed()
+    {
+        Time.timeScale = 0.5f;
+    }
+    
+    public void NormalTimeSpeed()
+    {
+        Time.timeScale = 1f;
+    }
+    
+    public void SpawnEnemy()
+    {
+        
+    }
+    
+    public void ShowInteractButton()
+    {
+        
+    }
+    
+    
 }

@@ -18,19 +18,27 @@ public class PlayerAnimStates : MonoBehaviour
     private Animator _animator;
 
     [SerializeField]
-    private Transform Marmite;
+    private Transform m_marmite;
     [SerializeField]
-    private Transform aimedMarmite;
+    private Transform m_aimedMarmite;
 
-    private PlayerController _player;
+    [SerializeField]
+    private Transform m_spoon;
+    [SerializeField]
+    private Transform m_aimedSpoon;
+
+    private PlayerController _player;    
+    private PlayerAttack _playerAttack;
 
     Vector2 _moveInputValue;
     Vector2 _aimInputValue;
+    float _moveInputMagnitude;
 
     void Start()
     {
         _animator = GetComponent<Animator>();
         _player = GetComponentInParent<PlayerController>();
+        _playerAttack = GetComponentInParent<PlayerAttack>();
     }
 
     private void Update()
@@ -71,30 +79,63 @@ public class PlayerAnimStates : MonoBehaviour
                     break;
                 }
         }
+
+        if (_playerAttack.ShootOnCooldown)
+        {
+            _animator.SetBool("shoot", true);
+        }
+        else
+        {
+            _animator.SetBool("shoot", false);
+        }
+
+        if (_player.IsDashing && !_animator.GetBool("dash"))
+        {
+            _animator.SetBool("dash", true);
+        }
+        else if (!_player.IsDashing)
+        {
+            _animator.SetBool("dash", false);
+        }
     }
 
     private void AimedMarmite(bool isAimed) 
     {
         if (!isAimed)
         {
-            Marmite.gameObject.SetActive(true);
-            aimedMarmite.gameObject.SetActive(false);
+            m_marmite.gameObject.SetActive(true);
+            m_aimedMarmite.gameObject.SetActive(false);
+            m_spoon.gameObject.SetActive(true);
+            m_aimedSpoon.gameObject.SetActive(false);
         }
         else 
         {
-            Marmite.gameObject.SetActive(false);
-            aimedMarmite.gameObject.SetActive(true);
+            m_marmite.gameObject.SetActive(false);
+            m_aimedMarmite.gameObject.SetActive(true);
+            m_spoon.gameObject.SetActive(false);
+            m_aimedSpoon.gameObject.SetActive(true);
         }
     }
 
-
-
     // Update is called once per frame
-    void FixedUpdate()
+    public void FixedUpdate()
     {
-        Vector2 _moveInputValue = _player.MoveInputValue;
-        Vector2 _aimInputValue = _player.AimInputValue;
-        _moveInputValue = _moveInputValue.normalized;
 
+        _moveInputValue = _player.MoveInputValue;
+        _moveInputMagnitude = _player.MoveInputValue.magnitude;
+
+        _aimInputValue = _player.AimInputValue;
+
+        Vector2 _normalizedMoveInputValue = _moveInputValue.normalized;
+        Vector2 _normalizedAimInputValue = _aimInputValue.normalized;
+
+        float _angle = Vector2.SignedAngle(_normalizedAimInputValue, _normalizedMoveInputValue);
+
+        Vector2 dir = Vector2.zero;
+        dir.x = Mathf.Cos(_angle * Mathf.Deg2Rad);
+        dir.y = Mathf.Sin(_angle * Mathf.Deg2Rad);
+
+        _animator.SetFloat("right", _moveInputMagnitude * dir.x);
+        _animator.SetFloat("forward", _moveInputMagnitude * dir.y);
     }
 }
