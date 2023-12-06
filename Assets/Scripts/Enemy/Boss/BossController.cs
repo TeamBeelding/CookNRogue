@@ -34,6 +34,11 @@ public class BossController : EnemyController
 
     [SerializeField] Transform _teleportParticlesContainer;
     ParticleSystem[] _teleportParticles;
+    [SerializeField] Transform _dirtParticlesContainer;
+    ParticleSystem[] _dirtParticles;
+
+    [SerializeField] Transform _dashParticlesContainer;
+    ParticleSystem[] _dashParticles;
 
     protected override void OnEnable()
     {
@@ -48,7 +53,8 @@ public class BossController : EnemyController
         missilesController = GetComponentInChildren<MissilesController>();
         shockwaveController = GetComponentInChildren<ShockwaveController>();
         _teleportParticles = _teleportParticlesContainer.GetComponentsInChildren<ParticleSystem>();
-
+        _dirtParticles = _dirtParticlesContainer.GetComponentsInChildren<ParticleSystem>();
+        _dashParticles = _dashParticlesContainer.GetComponentsInChildren<ParticleSystem>();
         Healthpoint = data.GetHealth;
         SetState(State.EnterRoom);
     }
@@ -176,6 +182,11 @@ public class BossController : EnemyController
                 VOLT.z = new ParticleSystem.MinMaxCurve(-10, 10);
                 particle.Stop();
             }
+
+            foreach (var particle in _dirtParticles)
+            {
+                particle.Play();
+            }
         }
     }
 
@@ -227,10 +238,20 @@ public class BossController : EnemyController
         {
             Vector3 direction = (GetTargetPosition() - transform.position).normalized;
 
+            foreach(var particle in _dashParticles)
+            {
+                particle.Play();
+            }
+
             while (state == State.Dash)
             {
                 transform.position += direction * (data.GetDashSpeed * Time.deltaTime);
                 yield return null;
+            }
+
+            foreach (var particle in _dashParticles)
+            {
+                particle.Stop();
             }
         }
     }
