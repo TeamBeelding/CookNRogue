@@ -276,6 +276,16 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 617176776784796077, guid: 4f1d931103cb2404580d27bd24717df0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4241239851944306433, guid: 4f1d931103cb2404580d27bd24717df0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8435914716660352083, guid: 4f1d931103cb2404580d27bd24717df0,
         type: 3}
       propertyPath: m_RootOrder
@@ -336,6 +346,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 8514202589642275637, guid: 4f1d931103cb2404580d27bd24717df0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8735979666070591228, guid: 4f1d931103cb2404580d27bd24717df0,
         type: 3}
       propertyPath: m_positionOffsetData.positionOffset.x
@@ -350,6 +365,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_BlockingMask.m_Bits
       value: 32759
+      objectReference: {fileID: 0}
+    - target: {fileID: 9184734502866272350, guid: 4f1d931103cb2404580d27bd24717df0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4f1d931103cb2404580d27bd24717df0, type: 3}
@@ -589,11 +609,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 585885595}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 05208fbf27e7dca4aaba140790307e53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _randomDisplacement: 0
+  _displacementAmount: 0
+  _timerBtwMissiles: 0
 --- !u!1 &734561929
 GameObject:
   m_ObjectHideFlags: 0
