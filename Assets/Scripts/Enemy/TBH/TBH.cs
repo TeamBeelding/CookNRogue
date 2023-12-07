@@ -6,6 +6,20 @@ using Random = UnityEngine.Random;
 
 public class TBH : EnemyController
 {
+    [Header("Sound")]
+    [SerializeField]
+    private AK.Wwise.Event _Play_SFX_Carrot_Dive;
+    [SerializeField]
+    private AK.Wwise.Event _Play_SFX_Carrot_Erupt;
+    [SerializeField]
+    private AK.Wwise.Event _Play_SFX_Carrot_Attack;
+    [SerializeField]
+    private AK.Wwise.Event _Play_SFX_Carrot_Hit;
+    [SerializeField]
+    private AK.Wwise.Event _Play_SFX_Carrot_Death;
+    [SerializeField]
+    private AK.Wwise.Event _Play_Weapon_Hit;
+
     [SerializeField] private TBHData _data;
     [SerializeField] private GameObject _gun;
     [SerializeField] private GameObject _bullet;
@@ -79,16 +93,20 @@ public class TBH : EnemyController
                 break;
             case State.Teleporting:
                 //_animator.SetBool("isShoot", false);
+                //_Play_SFX_Carrot_Dive.Post(gameObject);
                 Teleport();
                 break;
             case State.Casting:
                 //_animator.SetBool("isShoot", false);
+                //_Play_SFX_Carrot_Erupt.Post(gameObject);
                 Casting();
                 break;
             case State.Dying:
+                _Play_SFX_Carrot_Death.Post(gameObject);
                 Dying();
                 break;
             default:
+                _Play_SFX_Carrot_Death.Post(gameObject);
                 Dying();
                 break;
         }
@@ -119,6 +137,7 @@ public class TBH : EnemyController
 
             bullet.GetComponent<EnemyBulletController>().SetDirection(new Vector3(Player.transform.position.x + spread, Player.transform.position.y, Player.transform.position.z + spread));
             bullet.GetComponent<EnemyBulletController>().SetDamage(_data.DamagePerBullet);
+            _Play_SFX_Carrot_Attack.Post(bullet);
         }
     }
 
@@ -147,7 +166,7 @@ public class TBH : EnemyController
         if (Physics.Raycast(position, direction, out hit, _data.AttackRange))
         {
             if (hit.collider.CompareTag("Player"))
-                return true;
+            return true;
         }
 
         return false;
@@ -198,6 +217,8 @@ public class TBH : EnemyController
     public override void TakeDamage(float damage = 1, bool isCritical = false)
     {
         base.TakeDamage(damage, isCritical);
+        _Play_SFX_Carrot_Hit.Post(gameObject);
+        _Play_Weapon_Hit.Post(gameObject);
 
         if (Healthpoint <= 0)
             SetState(State.Dying);
