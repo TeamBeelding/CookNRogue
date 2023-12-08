@@ -23,6 +23,7 @@ public class ShockwaveController : MonoBehaviour
         var mat = _decalProjector.material;
         mat.SetFloat("_Alpha", 0);
 
+        _decalProjector.size = new Vector3(data.radius * 2, data.radius * 2,1);
     }
     private void OnEnable()
     {

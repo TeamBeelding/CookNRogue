@@ -33,6 +33,8 @@ public class BossData : ScriptableObject
     [SerializeField] private int shockwaveCount;
     [SerializeField] private float delayBetweenShockwave;
     [SerializeField] private float maxRadius;
+    public float radius { get { return maxRadius; } }
+
     [SerializeField] private float shockwaveDuration;
     [SerializeField] private float damageForShockwave;
 
