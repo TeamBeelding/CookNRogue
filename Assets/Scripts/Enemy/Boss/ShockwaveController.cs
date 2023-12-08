@@ -1,6 +1,6 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.VFX;
+using UnityEngine.Rendering.Universal;
 
 [RequireComponent(typeof(BossController))]
 public class ShockwaveController : MonoBehaviour
@@ -13,10 +13,17 @@ public class ShockwaveController : MonoBehaviour
     [SerializeField] Transform VFXContainer;
     ParticleSystem[] _shockwaveParts;
     [SerializeField] LayerMask _shockwaveLayerMask;
+    [SerializeField] DecalProjector _decalProjector;
+    [SerializeField] float _fadeSpeed = 1;
 
     private void Start()
     {
         _shockwaveParts = VFXContainer.GetComponentsInChildren<ParticleSystem>();
+
+        var mat = _decalProjector.material;
+        mat.SetFloat("_Alpha", 0);
+
+        _decalProjector.size = new Vector3(data.radius * 2, data.radius * 2,1);
     }
     private void OnEnable()
     {
@@ -30,6 +37,8 @@ public class ShockwaveController : MonoBehaviour
 
     public void StartShockwave()
     {
+        StartCoroutine(DecalFadeIn());
+
         foreach (ParticleSystem particle in _shockwaveParts)
             particle.Play();
 
@@ -77,7 +86,50 @@ public class ShockwaveController : MonoBehaviour
 
             foreach (ParticleSystem particle in _shockwaveParts)
                 particle.Stop();
+
+            StartCoroutine(DecalFadeOut());
         }
+       
+    }
+
+    public void ResetRadiusPos()
+    {
+        if (shockwaveCoroutine != null)
+            StopCoroutine(shockwaveCoroutine);
+        radius = 0;
+    }
+
+    public IEnumerator DecalFadeIn()
+    {
+        var mat = _decalProjector.material;
+        
+        mat.SetFloat("_Alpha", 0);
+
+        //FADE
+        float alphaProgress = 0;
+        while (alphaProgress < 1)
+        {
+            alphaProgress += Time.fixedDeltaTime * _fadeSpeed;
+            mat.SetFloat("_Alpha", alphaProgress);
+            yield return new WaitForFixedUpdate();
+        }
+        mat.SetFloat("_Alpha", 1);
+    }
+    public IEnumerator DecalFadeOut()
+    {
+        var mat = _decalProjector.material;
+
+        mat.SetFloat("_Alpha", 0);
+
+        //FADE
+        float alphaProgress = 1;
+        while (alphaProgress > 0)
+        {
+            alphaProgress -= Time.fixedDeltaTime * _fadeSpeed;
+            mat.SetFloat("_Alpha", alphaProgress);
+            yield return new WaitForFixedUpdate();
+        }
+        mat.SetFloat("_Alpha", 0);
     }
 
 #if UNITY_EDITOR
