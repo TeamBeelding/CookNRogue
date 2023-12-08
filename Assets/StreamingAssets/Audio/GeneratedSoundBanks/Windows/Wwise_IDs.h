@@ -14,6 +14,7 @@ namespace AK
     namespace EVENTS
     {
         static const AkUniqueID PLAY_AMB_LEVEL = 1968870321U;
+        static const AkUniqueID PLAY_KAMIKAZE_IDLE = 1454684904U;
         static const AkUniqueID PLAY_MC_CAULDRON_IDLE = 2012076284U;
         static const AkUniqueID PLAY_MC_DASH = 2996328093U;
         static const AkUniqueID PLAY_MC_DEATH = 107675701U;
@@ -73,6 +74,7 @@ namespace AK
         static const AkUniqueID PLAY_WEAPON_HIT = 701036212U;
         static const AkUniqueID PLAY_WEAPON_SHOT = 3889646233U;
         static const AkUniqueID STOP_AMB_LEVEL = 3214656583U;
+        static const AkUniqueID STOP_KAMIKAZE_IDLE = 847261186U;
         static const AkUniqueID STOP_SFX_CABBAGE_CHARGE_LP = 3742019055U;
         static const AkUniqueID STOP_SFX_COOK = 4293892292U;
         static const AkUniqueID STOP_SFX_PEA_MOVEMENT = 2301333962U;
@@ -255,6 +257,7 @@ namespace AK
         static const AkUniqueID SFX_ENEMY_CABBAGE = 2385921979U;
         static const AkUniqueID SFX_ENEMY_CARROT = 1810232503U;
         static const AkUniqueID SFX_ENEMY_CORN = 3871269544U;
+        static const AkUniqueID SFX_ENEMY_KAMIKAZE = 3233071479U;
         static const AkUniqueID SFX_ENEMY_PEA = 1923254948U;
         static const AkUniqueID SFX_ENEMY_PEA_POD = 1563047448U;
         static const AkUniqueID SFX_MC = 3996957973U;
