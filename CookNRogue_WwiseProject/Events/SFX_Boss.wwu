@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{197A5B02-201D-46D0-AFCE-F9924E68DBAE}" SchemaVersion="110" RootDocumentID="{899603F8-092E-4FB8-93A5-00C3DC23A21E}" ParentDocumentID="{899603F8-092E-4FB8-93A5-00C3DC23A21E}">
+	<Events>
+		<WorkUnit Name="SFX_Boss" ID="{197A5B02-201D-46D0-AFCE-F9924E68DBAE}" OwnerID="{899603F8-092E-4FB8-93A5-00C3DC23A21E}" PersistMode="Nested">
+			<PropertyList>
+				<Property Name="Color" Type="int16" Value="23"/>
+				<Property Name="OverrideColor" Type="bool" Value="True"/>
+			</PropertyList>
+			<ChildrenList>
+				<Event Name="Play_SFX_Boss_Dive" ID="{6E1712F1-0301-474C-9543-F0D608F202BF}">
+					<ChildrenList>
+						<Action Name="" ID="{56E8883E-9B71-49AA-B17C-B62B81E71F7A}" ShortID="445964245">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="RC_Boss_Dive" ID="{82161875-F742-49E0-9E3F-137732D5BE7C}" WorkUnitID="{1080E4B2-2AA2-4421-B467-CEF209F946BA}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_SFX_Boss_Erupt" ID="{5D575A90-6890-4304-BA2C-8AAF38FF60B4}">
+					<ChildrenList>
+						<Action Name="" ID="{817F84C3-3FF4-4E98-8375-5D9678E7CD2C}" ShortID="664345007">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+								<Property Name="FadeTime" Type="Real64" Value="0.2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="RC_Boss_Dive" ID="{82161875-F742-49E0-9E3F-137732D5BE7C}" WorkUnitID="{1080E4B2-2AA2-4421-B467-CEF209F946BA}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+						<Action Name="" ID="{54B334B6-47DB-4A6F-8FC0-0695365ECA56}" ShortID="75512842">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="RC_Boss_Erupt" ID="{63B88753-40C1-4007-B784-FF23A6458E65}" WorkUnitID="{1080E4B2-2AA2-4421-B467-CEF209F946BA}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+			</ChildrenList>
+		</WorkUnit>
+	</Events>
+</WwiseDocument>

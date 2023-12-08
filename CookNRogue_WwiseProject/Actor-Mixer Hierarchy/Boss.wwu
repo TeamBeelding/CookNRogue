@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{1080E4B2-2AA2-4421-B467-CEF209F946BA}" SchemaVersion="110" RootDocumentID="{679E07FC-8C90-442A-A138-79B4B3F7C619}" ParentDocumentID="{17155992-32A5-4460-B797-B714CD312E48}">
+	<AudioObjects>
+		<WorkUnit Name="Boss" ID="{1080E4B2-2AA2-4421-B467-CEF209F946BA}" OwnerID="{17155992-32A5-4460-B797-B714CD312E48}" PersistMode="Nested">
+			<PropertyList>
+				<Property Name="Color" Type="int16" Value="23"/>
+				<Property Name="OverrideColor" Type="bool" Value="True"/>
+			</PropertyList>
+			<ChildrenList>
+				<ActorMixer Name="AM_Boss" ID="{B75E7E43-B037-4282-8634-86FA842C26E4}" ShortID="107557978">
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DEC634C6-86E3-4DF9-96EE-F869BA355507}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{85B5C199-8628-4DDB-B756-DA8917395816}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<RandomSequenceContainer Name="RC_Boss_Dive" ID="{82161875-F742-49E0-9E3F-137732D5BE7C}" ShortID="225995779">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DEC634C6-86E3-4DF9-96EE-F869BA355507}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{85B5C199-8628-4DDB-B756-DA8917395816}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<Sound Name="SFX_Boss_Dive_01" ID="{B33E3B74-A7B5-45C5-B2AB-09AA7D92BCFE}" ShortID="318836073">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DEC634C6-86E3-4DF9-96EE-F869BA355507}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{85B5C199-8628-4DDB-B756-DA8917395816}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="SFX_Boss_Dive_01" ID="{7E323F49-1B3D-45BB-8FCD-D6286C324453}">
+											<Language>SFX</Language>
+											<AudioFile>SFX_Boss_Dive_01.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="1035019259"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="SFX_Boss_Dive_01" ID="{7E323F49-1B3D-45BB-8FCD-D6286C324453}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="SFX_Boss_Dive_02" ID="{558EE0BB-7BA1-4EA6-80B5-B307EDDC745D}" ShortID="981170726">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DEC634C6-86E3-4DF9-96EE-F869BA355507}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{85B5C199-8628-4DDB-B756-DA8917395816}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="SFX_Boss_Dive_02" ID="{70068B87-697E-4671-8D63-1C1701683E4E}">
+											<Language>SFX</Language>
+											<AudioFile>SFX_Boss_Dive_02.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="590072342"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="SFX_Boss_Dive_02" ID="{70068B87-697E-4671-8D63-1C1701683E4E}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="SFX_Boss_Dive_03" ID="{F43C8A1C-3E1E-4715-B08D-EE659FB5E087}" ShortID="867592860">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DEC634C6-86E3-4DF9-96EE-F869BA355507}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{85B5C199-8628-4DDB-B756-DA8917395816}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="SFX_Boss_Dive_03" ID="{BDAFC7F9-F617-4044-8D0F-4E37D275C873}">
+											<Language>SFX</Language>
+											<AudioFile>SFX_Boss_Dive_03.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="469492695"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="SFX_Boss_Dive_03" ID="{BDAFC7F9-F617-4044-8D0F-4E37D275C873}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+							</ChildrenList>
+						</RandomSequenceContainer>
+						<RandomSequenceContainer Name="RC_Boss_Erupt" ID="{63B88753-40C1-4007-B784-FF23A6458E65}" ShortID="1048999304">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DEC634C6-86E3-4DF9-96EE-F869BA355507}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{85B5C199-8628-4DDB-B756-DA8917395816}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<Sound Name="SFX_Boss_Erupt_01" ID="{C48E0A95-272F-421E-92FB-BE41670AEA33}" ShortID="835643620">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DEC634C6-86E3-4DF9-96EE-F869BA355507}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{85B5C199-8628-4DDB-B756-DA8917395816}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="SFX_Boss_Erupt_01" ID="{16BFAEC1-8816-4CF2-84F0-6884AA9752CD}">
+											<Language>SFX</Language>
+											<AudioFile>SFX_Boss_Erupt_01.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="381920552"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="SFX_Boss_Erupt_01" ID="{16BFAEC1-8816-4CF2-84F0-6884AA9752CD}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="SFX_Boss_Erupt_02" ID="{BE247C30-FD5A-41FF-87A2-31F4AED12121}" ShortID="208774841">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DEC634C6-86E3-4DF9-96EE-F869BA355507}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{85B5C199-8628-4DDB-B756-DA8917395816}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="SFX_Boss_Erupt_02" ID="{B7C58800-C4FB-4B86-BE86-09CDB15FF2AA}">
+											<Language>SFX</Language>
+											<AudioFile>SFX_Boss_Erupt_02.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="1007512096"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="SFX_Boss_Erupt_02" ID="{B7C58800-C4FB-4B86-BE86-09CDB15FF2AA}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="SFX_Boss_Erupt_03" ID="{F4AB9CD3-3750-40EA-BAFD-5E43F04CBA5F}" ShortID="646279733">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DEC634C6-86E3-4DF9-96EE-F869BA355507}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{85B5C199-8628-4DDB-B756-DA8917395816}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="SFX_Boss_Erupt_03" ID="{CD774450-E1BE-47CD-8E23-C1E7E08CBF3E}">
+											<Language>SFX</Language>
+											<AudioFile>SFX_Boss_Erupt_03.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="226225148"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="SFX_Boss_Erupt_03" ID="{CD774450-E1BE-47CD-8E23-C1E7E08CBF3E}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+							</ChildrenList>
+						</RandomSequenceContainer>
+					</ChildrenList>
+				</ActorMixer>
+			</ChildrenList>
+		</WorkUnit>
+	</AudioObjects>
+</WwiseDocument>

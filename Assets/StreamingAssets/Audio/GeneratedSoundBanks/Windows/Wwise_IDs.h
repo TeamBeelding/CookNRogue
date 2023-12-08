@@ -24,6 +24,8 @@ namespace AK
         static const AkUniqueID PLAY_MC_RUN_FOOTSTEP = 104751245U;
         static const AkUniqueID PLAY_MUSIC = 2932040671U;
         static const AkUniqueID PLAY_RESET_INGREDIENT = 3223052211U;
+        static const AkUniqueID PLAY_SFX_BOSS_DIVE = 1599937242U;
+        static const AkUniqueID PLAY_SFX_BOSS_ERUPT = 4035373962U;
         static const AkUniqueID PLAY_SFX_CABBAGE_CHARGE_IMPACT = 1246023875U;
         static const AkUniqueID PLAY_SFX_CABBAGE_CHARGE_LP = 2535875021U;
         static const AkUniqueID PLAY_SFX_CABBAGE_DEATH = 1817239028U;
@@ -254,6 +256,7 @@ namespace AK
         static const AkUniqueID AMB_MAIN_MENU = 1720558757U;
         static const AkUniqueID AMB_TUTO = 3398709072U;
         static const AkUniqueID MUSIC = 3991942870U;
+        static const AkUniqueID SFX_BOSS = 1421616930U;
         static const AkUniqueID SFX_ENEMY_CABBAGE = 2385921979U;
         static const AkUniqueID SFX_ENEMY_CARROT = 1810232503U;
         static const AkUniqueID SFX_ENEMY_CORN = 3871269544U;
@@ -268,6 +271,7 @@ namespace AK
     namespace BUSSES
     {
         static const AkUniqueID AMB = 1117531639U;
+        static const AkUniqueID BOSS = 1560169506U;
         static const AkUniqueID CABBAGE = 142728178U;
         static const AkUniqueID CABBAGE_CHARGE = 2550010857U;
         static const AkUniqueID ENEMIES = 2242381963U;

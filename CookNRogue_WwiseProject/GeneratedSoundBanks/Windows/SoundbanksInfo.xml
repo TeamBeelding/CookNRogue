@@ -9,7 +9,7 @@
 	</RootPaths>
 	<DialogueEvents/>
 	<SoundBanks>
-		<SoundBank Id="1355168291" Type="User" Language="SFX" Hash="{AC45B8BA-B566-E047-4701-8A93DCD17A8E}">
+		<SoundBank Id="1355168291" Type="User" Language="SFX" Hash="{CE8E1BC0-AEA4-E4BF-D7FC-89F5C98B2198}">
 			<ShortName>Init</ShortName>
 			<Path>Init.bnk</Path>
 			<Plugins>
@@ -25,6 +25,7 @@
 				<Bus Id="142728178" Name="Cabbage"/>
 				<Bus Id="1117531639" Name="AMB"/>
 				<Bus Id="1551306167" Name="UI"/>
+				<Bus Id="1560169506" Name="Boss"/>
 				<Bus Id="1685527061" Name="MC"/>
 				<Bus Id="2242381963" Name="Enemies"/>
 				<Bus Id="2376466361" Name="Other"/>
@@ -147,6 +148,52 @@
 					</States>
 				</StateGroup>
 			</StateGroups>
+		</SoundBank>
+		<SoundBank Id="1421616930" Type="User" Language="SFX" Hash="{42A8BE75-2206-57FB-E35E-B6AA1D135D28}">
+			<ShortName>SFX_Boss</ShortName>
+			<Path>SFX_Boss.bnk</Path>
+			<Media>
+				<File Id="226225148" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Boss_Erupt_03.wav</ShortName>
+					<CachePath>SFX/SFX_Boss_Erupt_03_10C4C929.wem</CachePath>
+				</File>
+				<File Id="381920552" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Boss_Erupt_01.wav</ShortName>
+					<CachePath>SFX/SFX_Boss_Erupt_01_10C4C929.wem</CachePath>
+				</File>
+				<File Id="469492695" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Boss_Dive_03.wav</ShortName>
+					<CachePath>SFX/SFX_Boss_Dive_03_10C4C929.wem</CachePath>
+				</File>
+				<File Id="590072342" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Boss_Dive_02.wav</ShortName>
+					<CachePath>SFX/SFX_Boss_Dive_02_10C4C929.wem</CachePath>
+				</File>
+				<File Id="1007512096" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Boss_Erupt_02.wav</ShortName>
+					<CachePath>SFX/SFX_Boss_Erupt_02_10C4C929.wem</CachePath>
+				</File>
+				<File Id="1035019259" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Boss_Dive_01.wav</ShortName>
+					<CachePath>SFX/SFX_Boss_Dive_01_10C4C929.wem</CachePath>
+				</File>
+			</Media>
+			<Events>
+				<Event Id="1599937242" Name="Play_SFX_Boss_Dive" DurationType="OneShot" DurationMin="1.1261041" DurationMax="1.1261041">
+					<MediaRefs>
+						<MediaRef Id="469492695"/>
+						<MediaRef Id="590072342"/>
+						<MediaRef Id="1035019259"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="4035373962" Name="Play_SFX_Boss_Erupt" DurationType="OneShot" DurationMin="0.8276875" DurationMax="1">
+					<MediaRefs>
+						<MediaRef Id="226225148"/>
+						<MediaRef Id="381920552"/>
+						<MediaRef Id="1007512096"/>
+					</MediaRefs>
+				</Event>
+			</Events>
 		</SoundBank>
 		<SoundBank Id="1563047448" Type="User" Language="SFX" Hash="{FCD27218-D6D4-4C73-66C0-FD7D3996C7BD}">
 			<ShortName>SFX_Enemy_Pea_Pod</ShortName>
@@ -1951,5 +1998,5 @@
 			</StateGroups>
 		</SoundBank>
 	</SoundBanks>
-	<FileHash>{EDF8768D-812A-5E44-7219-C0CC9D8ECEF7}</FileHash>
+	<FileHash>{145C335F-F29C-680D-B29E-BC80F64FA413}</FileHash>
 </SoundBanksInfo>
