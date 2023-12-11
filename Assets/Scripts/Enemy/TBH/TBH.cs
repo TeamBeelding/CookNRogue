@@ -80,6 +80,7 @@ public class TBH : EnemyController
                 break;
             case State.Attacking:
 
+                _Play_SFX_Carrot_Erupt.Post(gameObject);
                 _animator.SetBool("isTeleport", false);
 
                 StartCoroutine(Waiting());
@@ -93,12 +94,10 @@ public class TBH : EnemyController
                 break;
             case State.Teleporting:
                 //_animator.SetBool("isShoot", false);
-                //_Play_SFX_Carrot_Dive.Post(gameObject);
                 Teleport();
                 break;
             case State.Casting:
                 //_animator.SetBool("isShoot", false);
-                //_Play_SFX_Carrot_Erupt.Post(gameObject);
                 Casting();
                 break;
             case State.Dying:
@@ -149,9 +148,12 @@ public class TBH : EnemyController
             randomPosition = Random.insideUnitSphere * _data.AttackRange + Player.transform.position;
 
         Vector3 position = new Vector3(randomPosition.x, transform.position.y, randomPosition.z);
-        
+
         if (CanTeleportHere(position))
+        {
             transform.position = new Vector3(randomPosition.x, transform.position.y, randomPosition.z);
+        }
+
         else
             Teleport();
 
@@ -179,6 +181,7 @@ public class TBH : EnemyController
 
         IEnumerator Waiting()
         {
+            _Play_SFX_Carrot_Dive.Post(gameObject);
             yield return new WaitForSeconds(_data.DelayBetweenTeleport);
             SetState(State.Teleporting);
         }
