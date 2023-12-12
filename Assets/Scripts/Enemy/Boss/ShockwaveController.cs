@@ -15,6 +15,7 @@ public class ShockwaveController : MonoBehaviour
     [SerializeField] LayerMask _shockwaveLayerMask;
     [SerializeField] DecalProjector _decalProjector;
     [SerializeField] float _fadeSpeed = 1;
+    [SerializeField,Range(0,1)] float _targetAlpha = 1;
 
     private void Start()
     {
@@ -107,13 +108,13 @@ public class ShockwaveController : MonoBehaviour
 
         //FADE
         float alphaProgress = 0;
-        while (alphaProgress < 1)
+        while (alphaProgress < _targetAlpha)
         {
-            alphaProgress += Time.fixedDeltaTime * _fadeSpeed;
+            alphaProgress += Time.fixedDeltaTime * _fadeSpeed * _targetAlpha;
             mat.SetFloat("_Alpha", alphaProgress);
             yield return new WaitForFixedUpdate();
         }
-        mat.SetFloat("_Alpha", 1);
+        mat.SetFloat("_Alpha", _targetAlpha);
     }
     public IEnumerator DecalFadeOut()
     {
