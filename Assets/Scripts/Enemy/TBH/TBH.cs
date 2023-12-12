@@ -1,6 +1,5 @@
 using System.Collections;
 using Enemy.Data;
-using Enemy.Slime;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
