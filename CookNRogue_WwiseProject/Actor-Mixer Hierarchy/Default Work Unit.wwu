@@ -6,6 +6,28 @@
 				<WorkUnit Name="AMB" ID="{A6BD6CE3-125F-4BFD-81EA-A7129412700C}" PersistMode="Reference"/>
 				<WorkUnit Name="UI" ID="{981D133A-2352-4D99-99A8-9D2A2C3A44A3}" PersistMode="Reference"/>
 				<WorkUnit Name="SFX" ID="{17155992-32A5-4460-B797-B714CD312E48}" PersistMode="Reference"/>
+				<Sound Name="bip" ID="{0F4E8C30-D8C7-482A-A8CB-472AEDEA9173}" ShortID="793715993">
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DEC634C6-86E3-4DF9-96EE-F869BA355507}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{85B5C199-8628-4DDB-B756-DA8917395816}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="Boats, Submarine, Sonar, Classic, Loop, Reverb, Processed Dirty SND12409 2" ID="{3FA29687-9424-4C0A-803C-954EB1BF30C3}">
+							<Language>SFX</Language>
+							<AudioFile>Boats, Submarine, Sonar, Classic, Loop, Reverb, Processed Dirty SND12409 2.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="592993550"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ActiveSourceList>
+						<ActiveSource Name="Boats, Submarine, Sonar, Classic, Loop, Reverb, Processed Dirty SND12409 2" ID="{3FA29687-9424-4C0A-803C-954EB1BF30C3}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
 			</ChildrenList>
 		</WorkUnit>
 	</AudioObjects>

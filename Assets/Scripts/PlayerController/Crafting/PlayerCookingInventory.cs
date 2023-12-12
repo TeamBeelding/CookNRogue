@@ -5,6 +5,15 @@ using UnityEngine.UI;
 
 public class PlayerCookingInventory : MonoBehaviour
 {
+    [Header("Sound")]
+    [SerializeField]
+    private AK.Wwise.Event _Play_UI_Cook_Hover;
+    [SerializeField]
+    private AK.Wwise.Event _Play_UI_Cook_Select;
+    [SerializeField]
+    private AK.Wwise.Event _Play_UI_Cook_Cancel;
+
+
     #region Variables
     [SerializeField]
     Vector3 m_cameraOffset;
@@ -440,6 +449,7 @@ public class PlayerCookingInventory : MonoBehaviour
 
             slot.Highlight(true);
             _currentSlot = slot;
+            _Play_UI_Cook_Hover.Post(gameObject);
         }
     }
 
@@ -466,6 +476,7 @@ public class PlayerCookingInventory : MonoBehaviour
 
         m_navigateKey.SetActive(true);
         m_selectKey.SetActive(false);
+        _Play_UI_Cook_Hover.Post(gameObject);
     }
 
     public void SelectIngredient()
@@ -486,6 +497,7 @@ public class PlayerCookingInventory : MonoBehaviour
         }
 
         AddToRecipe(_currentSlot);
+        _Play_UI_Cook_Select.Post(gameObject);
     }
 
     private float TranslateInput(Vector2 input)

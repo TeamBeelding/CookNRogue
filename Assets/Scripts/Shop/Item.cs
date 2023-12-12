@@ -6,6 +6,10 @@ using UnityEngine.Events;
 
 public class Item : MonoBehaviour
 {
+    [Header("Sound")]
+    [SerializeField]
+    private AK.Wwise.Event _Play_SFX_Object_Collect;
+
     [SerializeReference] protected ItemData _data;
     private int _cost;
     private string _name;
@@ -96,6 +100,8 @@ public class Item : MonoBehaviour
             _obtainPS.Play();
 
         _triggerEffect.Invoke();
+
+        _Play_SFX_Object_Collect.Post(gameObject);
 
         //TEMPORARY
         Destroy(gameObject);

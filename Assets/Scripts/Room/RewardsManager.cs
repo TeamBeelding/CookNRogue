@@ -10,6 +10,10 @@ using Random = UnityEngine.Random;
 
 public class RewardsManager : MonoBehaviour
 {
+    [Header("Sound")]
+    [SerializeField]
+    private AK.Wwise.Event _Play_SFX_Object_Appear;
+
     [Serializable]
     public class IngredientDrop
     {
@@ -196,6 +200,7 @@ public class RewardsManager : MonoBehaviour
         inst.transform.localRotation = Quaternion.identity;
         inst.transform.localScale = Vector3.one;
 
+        _Play_SFX_Object_Appear.Post(gameObject);
         Debug.Log("Spawned item " + randomItem.gameObject.name);
 
         return true;

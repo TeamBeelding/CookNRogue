@@ -15,6 +15,12 @@ public class EnterDoor : MonoBehaviour
     /* Instancié au chargement d'une nouvelle scène */
     private static DoorManager _doorManager;
 
+    [Header("Sound")]
+    [SerializeField]
+    private AK.Wwise.State _InFightOff;
+    [SerializeField]
+    private AK.Wwise.State _InFightOn;
+
     [Header("Room linker")]
 
     [SerializeField]
@@ -105,10 +111,12 @@ public class EnterDoor : MonoBehaviour
             {
                 SetDoor(m_doorOpeningDuration);
                 SetPortal(m_portalAnimDuration);
+                _InFightOff.SetValue();
             }
             else
             {
                 EnemyManager.Instance.OnAllEnnemiesKilled += StartOpenDoor;
+                _InFightOn.SetValue();
             }
         }
     }
@@ -153,6 +161,7 @@ public class EnterDoor : MonoBehaviour
         if (m_door != null)
         {
             _Play_SFX_Door_Open.Post(gameObject);
+            _InFightOff.SetValue();
             StartCoroutine(IOpenDoor());
         }
     }
