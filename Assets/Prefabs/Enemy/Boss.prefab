@@ -107,6 +107,7 @@ GameObject:
   - component: {fileID: 226126117295486597}
   - component: {fileID: 226126117295486599}
   - component: {fileID: 226126117295486596}
+  - component: {fileID: 3057125687075807775}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Untagged
@@ -176,6 +177,11 @@ MonoBehaviour:
   _teleportParticlesContainer: {fileID: 8861672258194289866}
   _dirtParticlesContainer: {fileID: 2635839345358933584}
   _dashParticlesContainer: {fileID: 3501013884207865384}
+  _Play_SFX_Boss_Leaves:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 5c014add912a60843bd653b1b50a633f,
+      type: 2}
 --- !u!114 &226126117295486599
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -233,6 +239,31 @@ MonoBehaviour:
   _decalProjector: {fileID: 2313598797922782749}
   _fadeSpeed: 5
   _targetAlpha: 0.8
+--- !u!114 &3057125687075807775
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 226126117295486622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2698c394a636bc479a5e90f55e626a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerList: f7e1664c
+  useOtherObject: 0
+  data:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 8009e34ac5961e24f859d0da6ec32cde,
+      type: 2}
+  decodeBank: 0
+  loadAsynchronous: 0
+  saveDecodedBank: 0
+  unloadTriggerList: 958ca0ea
+  bankNameInternal: 
+  valueGuidInternal: 
 --- !u!1 &1181254943218104790
 GameObject:
   m_ObjectHideFlags: 0

@@ -40,6 +40,10 @@ public class BossController : EnemyController
     [SerializeField] Transform _dashParticlesContainer;
     ParticleSystem[] _dashParticles;
 
+    [Header("Sound")]
+    [SerializeField]
+    private AK.Wwise.Event _Play_SFX_Boss_Leaves;
+
     protected override void OnEnable()
     {
         base.OnEnable();
@@ -147,7 +151,7 @@ public class BossController : EnemyController
                 _teleportParticlesContainer.transform.parent = null;
 
             teleportTarget = GetTargetPosition();
-
+            
             foreach (var particle in _teleportParticles)
             {
                 particle.Play();
@@ -158,7 +162,7 @@ public class BossController : EnemyController
             }
 
             _teleportParticlesContainer.transform.position = teleportTarget;
-
+            _Play_SFX_Boss_Leaves.Post(gameObject);
             while (state == State.Teleport)
             {
               
