@@ -150,9 +150,7 @@ public class TBH : EnemyController
         Vector3 position = new Vector3(randomPosition.x, transform.position.y, randomPosition.z);
 
         if (CanTeleportHere(position))
-        {
             transform.position = new Vector3(randomPosition.x, transform.position.y, randomPosition.z);
-        }
 
         else
             Teleport();
@@ -164,11 +162,13 @@ public class TBH : EnemyController
     {
         RaycastHit hit;
         Vector3 direction = Player.transform.position - position;
-        
-        if (Physics.Raycast(position, direction, out hit, _data.AttackRange))
+
+        Vector3 origin = position - (direction.normalized * 10);
+
+        if (Physics.Raycast(origin, direction, out hit, _data.AttackRange))
         {
             if (hit.collider.CompareTag("Player"))
-            return true;
+                return true;
         }
 
         return false;
@@ -227,6 +227,7 @@ public class TBH : EnemyController
             SetState(State.Dying);
     }
 
+#if UNITY_EDITOR
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
@@ -234,4 +235,5 @@ public class TBH : EnemyController
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, _data.TeleportRange);
     }
+#endif
 }
