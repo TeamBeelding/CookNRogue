@@ -26,6 +26,7 @@ namespace AK
         static const AkUniqueID PLAY_RESET_INGREDIENT = 3223052211U;
         static const AkUniqueID PLAY_SFX_BOSS_DIVE = 1599937242U;
         static const AkUniqueID PLAY_SFX_BOSS_ERUPT = 4035373962U;
+        static const AkUniqueID PLAY_SFX_BOSS_LEAVES = 395712816U;
         static const AkUniqueID PLAY_SFX_CABBAGE_CHARGE_IMPACT = 1246023875U;
         static const AkUniqueID PLAY_SFX_CABBAGE_CHARGE_LP = 2535875021U;
         static const AkUniqueID PLAY_SFX_CABBAGE_DEATH = 1817239028U;
@@ -36,6 +37,7 @@ namespace AK
         static const AkUniqueID PLAY_SFX_CARROT_DIVE = 2282737784U;
         static const AkUniqueID PLAY_SFX_CARROT_ERUPT = 1413782892U;
         static const AkUniqueID PLAY_SFX_CARROT_HIT = 1869131017U;
+        static const AkUniqueID PLAY_SFX_CAULDRON_EXPLODE = 4292650966U;
         static const AkUniqueID PLAY_SFX_COOK = 3800044410U;
         static const AkUniqueID PLAY_SFX_COOK_END = 2610641744U;
         static const AkUniqueID PLAY_SFX_CORN_ATTACK_CHARGE = 3879041558U;
