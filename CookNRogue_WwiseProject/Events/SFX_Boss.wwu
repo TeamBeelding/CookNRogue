@@ -105,6 +105,39 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="Play_RC_Missile_Launch" ID="{8AE19E8E-D4E3-4334-A57D-A801A873DA47}">
+					<ChildrenList>
+						<Action Name="" ID="{CF803A27-7073-4430-8215-5C93ADB8502F}" ShortID="317065517">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="RC_Missile_Launch" ID="{6061F0DF-4AFD-4BF5-AAC4-94C562B8D014}" WorkUnitID="{1080E4B2-2AA2-4421-B467-CEF209F946BA}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_RC_Missile_Explode" ID="{3360600B-3EA4-46D9-A236-948B7D6E6A36}">
+					<ChildrenList>
+						<Action Name="" ID="{5D48821F-D111-43B7-BBC7-FB1602B30CBF}" ShortID="562993864">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+								<Property Name="FadeTime" Type="Real64" Value="0.2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="RC_Missile_Launch" ID="{6061F0DF-4AFD-4BF5-AAC4-94C562B8D014}" WorkUnitID="{1080E4B2-2AA2-4421-B467-CEF209F946BA}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+						<Action Name="" ID="{0A3F17AA-D0A6-4AFE-9A80-E5F3AD37AD14}" ShortID="278229872">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="RC_Missile_Explode" ID="{62F8DDC9-757F-49BF-9545-974128495331}" WorkUnitID="{1080E4B2-2AA2-4421-B467-CEF209F946BA}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

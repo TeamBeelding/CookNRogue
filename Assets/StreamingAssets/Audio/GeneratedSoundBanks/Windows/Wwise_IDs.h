@@ -23,6 +23,8 @@ namespace AK
         static const AkUniqueID PLAY_MC_RUN_FOLEY = 3682234456U;
         static const AkUniqueID PLAY_MC_RUN_FOOTSTEP = 104751245U;
         static const AkUniqueID PLAY_MUSIC = 2932040671U;
+        static const AkUniqueID PLAY_RC_MISSILE_EXPLODE = 2808147880U;
+        static const AkUniqueID PLAY_RC_MISSILE_LAUNCH = 3658758792U;
         static const AkUniqueID PLAY_RESET_INGREDIENT = 3223052211U;
         static const AkUniqueID PLAY_SFX_BOSS_CHARGE_IMPACT = 1015345869U;
         static const AkUniqueID PLAY_SFX_BOSS_CHARGE_LP = 1366164187U;

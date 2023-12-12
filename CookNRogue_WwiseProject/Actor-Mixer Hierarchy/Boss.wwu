@@ -623,6 +623,232 @@
 								</BlendContainer>
 							</ChildrenList>
 						</ActorMixer>
+						<RandomSequenceContainer Name="RC_Missile_Launch" ID="{6061F0DF-4AFD-4BF5-AAC4-94C562B8D014}" ShortID="845042537">
+							<PropertyList>
+								<Property Name="OverridePositioning" Type="bool" Value="True"/>
+								<Property Name="Pitch" Type="int32">
+									<ModifierList>
+										<ModifierInfo>
+											<Modifier Name="" ID="{BABAF671-FB1C-4159-8F47-0214990A26F5}">
+												<PropertyList>
+													<Property Name="Enabled" Type="bool" Value="True"/>
+													<Property Name="Max" Type="Real64" Value="100"/>
+													<Property Name="Min" Type="Real64" Value="-100"/>
+												</PropertyList>
+											</Modifier>
+										</ModifierInfo>
+									</ModifierList>
+								</Property>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Attenuation">
+									<ObjectRef Name="ATN_40M" ID="{3ABC1B5A-6934-45A5-9CE0-C7633D3E1A57}" WorkUnitID="{A99C7566-826F-4E9D-A733-5652D69BE57C}"/>
+								</Reference>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DEC634C6-86E3-4DF9-96EE-F869BA355507}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{85B5C199-8628-4DDB-B756-DA8917395816}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<Sound Name="SFX_Missile_Launch_01" ID="{8405D44C-BE22-4F40-A709-9CE00F3444BC}" ShortID="345935558">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DEC634C6-86E3-4DF9-96EE-F869BA355507}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{85B5C199-8628-4DDB-B756-DA8917395816}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="SFX_Missile_Launch_01" ID="{D4DAA3B3-709D-473A-8EBA-BE0C550B59CC}">
+											<Language>SFX</Language>
+											<AudioFile>SFX_Missile_Launch_01.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="15173100"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="SFX_Missile_Launch_01" ID="{D4DAA3B3-709D-473A-8EBA-BE0C550B59CC}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="SFX_Missile_Launch_02" ID="{78EBF6E9-FA21-46F4-BBC5-B2A1D3493C80}" ShortID="772343355">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DEC634C6-86E3-4DF9-96EE-F869BA355507}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{85B5C199-8628-4DDB-B756-DA8917395816}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="SFX_Missile_Launch_02" ID="{AFD09045-CF1C-4A4E-B19C-0DEFDB65F08F}">
+											<Language>SFX</Language>
+											<AudioFile>SFX_Missile_Launch_02.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="792011125"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="SFX_Missile_Launch_02" ID="{AFD09045-CF1C-4A4E-B19C-0DEFDB65F08F}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="SFX_Missile_Launch_03" ID="{8471E4C7-1D99-4138-B07C-DFFA2BA0E9FB}" ShortID="84117078">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DEC634C6-86E3-4DF9-96EE-F869BA355507}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{85B5C199-8628-4DDB-B756-DA8917395816}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="SFX_Missile_Launch_03" ID="{FD6F01F8-556C-4AD8-B848-787E0C497D6F}">
+											<Language>SFX</Language>
+											<AudioFile>SFX_Missile_Launch_03.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="532918406"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="SFX_Missile_Launch_03" ID="{FD6F01F8-556C-4AD8-B848-787E0C497D6F}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="SFX_Missile_Launch_04" ID="{553B2C07-3318-4829-877B-D097AA26F581}" ShortID="296636478">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DEC634C6-86E3-4DF9-96EE-F869BA355507}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{85B5C199-8628-4DDB-B756-DA8917395816}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="SFX_Missile_Launch_04" ID="{C59C14D4-201F-4085-94F7-64D3CB43ED07}">
+											<Language>SFX</Language>
+											<AudioFile>SFX_Missile_Launch_04.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="298997739"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="SFX_Missile_Launch_04" ID="{C59C14D4-201F-4085-94F7-64D3CB43ED07}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+							</ChildrenList>
+						</RandomSequenceContainer>
+						<RandomSequenceContainer Name="RC_Missile_Explode" ID="{62F8DDC9-757F-49BF-9545-974128495331}" ShortID="819531369">
+							<PropertyList>
+								<Property Name="MaxSoundPerInstance" Type="int16">
+									<ValueList>
+										<Value>3</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DEC634C6-86E3-4DF9-96EE-F869BA355507}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{85B5C199-8628-4DDB-B756-DA8917395816}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<Sound Name="SFX_Cauldron_Explode_01" ID="{C36AAABD-6001-4BC2-8250-46A0B03BF6EF}" ShortID="845487594">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Vorbis Quality High" ID="{53A9DE0F-3F4F-4B59-8614-3F9E3C7358FC}" WorkUnitID="{F6B2880C-85E5-47FA-A126-645B5DFD9ACC}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Other" ID="{BC101499-8C91-42B8-BA04-AA71ADF036EF}" WorkUnitID="{85B5C199-8628-4DDB-B756-DA8917395816}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="SFX_Cauldron_Explode_01" ID="{4A7D778C-3D0F-4EBF-AE48-54EF08CED02C}">
+											<Language>SFX</Language>
+											<AudioFile>SFX_Cauldron_Explode_01.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="177371133"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="SFX_Cauldron_Explode_01" ID="{4A7D778C-3D0F-4EBF-AE48-54EF08CED02C}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="SFX_Cauldron_Explode_02" ID="{19564278-E774-4D4E-8F39-A0B86C824A0C}" ShortID="380480658">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Vorbis Quality High" ID="{53A9DE0F-3F4F-4B59-8614-3F9E3C7358FC}" WorkUnitID="{F6B2880C-85E5-47FA-A126-645B5DFD9ACC}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Other" ID="{BC101499-8C91-42B8-BA04-AA71ADF036EF}" WorkUnitID="{85B5C199-8628-4DDB-B756-DA8917395816}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="SFX_Cauldron_Explode_02" ID="{BA9319D4-0DB4-4649-B77D-7B2048ED0B70}">
+											<Language>SFX</Language>
+											<AudioFile>SFX_Cauldron_Explode_02.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="77496107"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="SFX_Cauldron_Explode_02" ID="{BA9319D4-0DB4-4649-B77D-7B2048ED0B70}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="SFX_Cauldron_Explode_03" ID="{28557DD5-37C6-4FD5-91B8-AC25CB1E1414}" ShortID="86997984">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Vorbis Quality High" ID="{53A9DE0F-3F4F-4B59-8614-3F9E3C7358FC}" WorkUnitID="{F6B2880C-85E5-47FA-A126-645B5DFD9ACC}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Other" ID="{BC101499-8C91-42B8-BA04-AA71ADF036EF}" WorkUnitID="{85B5C199-8628-4DDB-B756-DA8917395816}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="SFX_Cauldron_Explode_03" ID="{7EBC0C88-96E3-481E-AD46-CBC2D4754476}">
+											<Language>SFX</Language>
+											<AudioFile>SFX_Cauldron_Explode_03.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="396717345"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="SFX_Cauldron_Explode_03" ID="{7EBC0C88-96E3-481E-AD46-CBC2D4754476}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="SFX_Cauldron_Explode_04" ID="{F094C99F-B33F-49E1-91C3-00CC0BE9D667}" ShortID="960948755">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Vorbis Quality High" ID="{53A9DE0F-3F4F-4B59-8614-3F9E3C7358FC}" WorkUnitID="{F6B2880C-85E5-47FA-A126-645B5DFD9ACC}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Other" ID="{BC101499-8C91-42B8-BA04-AA71ADF036EF}" WorkUnitID="{85B5C199-8628-4DDB-B756-DA8917395816}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="SFX_Cauldron_Explode_04" ID="{010ED9E5-50E2-4459-8777-DC3A9E163749}">
+											<Language>SFX</Language>
+											<AudioFile>SFX_Cauldron_Explode_04.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="229212703"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="SFX_Cauldron_Explode_04" ID="{010ED9E5-50E2-4459-8777-DC3A9E163749}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+							</ChildrenList>
+						</RandomSequenceContainer>
 					</ChildrenList>
 					<PositioningInfo>
 						<Panner Name="" ID="{2C684F79-6C03-4722-A218-860D49D2D36B}"/>
