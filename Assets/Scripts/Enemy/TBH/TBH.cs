@@ -7,11 +7,11 @@ using Random = UnityEngine.Random;
 public class TBH : EnemyController
 {
     [Header("Sound")]
-    [SerializeField]
+    /*[SerializeField]
     private AK.Wwise.Event _Play_SFX_Carrot_Dive;
     [SerializeField]
     private AK.Wwise.Event _Play_SFX_Carrot_Erupt;
-    [SerializeField]
+    [SerializeField]*/
     private AK.Wwise.Event _Play_SFX_Carrot_Attack;
     [SerializeField]
     private AK.Wwise.Event _Play_SFX_Carrot_Hit;
@@ -80,7 +80,7 @@ public class TBH : EnemyController
                 break;
             case State.Attacking:
 
-                _Play_SFX_Carrot_Erupt.Post(gameObject);
+                //_Play_SFX_Carrot_Erupt.Post(gameObject);
                 _animator.SetBool("isTeleport", false);
 
                 StartCoroutine(Waiting());
@@ -181,7 +181,7 @@ public class TBH : EnemyController
 
         IEnumerator Waiting()
         {
-            _Play_SFX_Carrot_Dive.Post(gameObject);
+            //_Play_SFX_Carrot_Dive.Post(gameObject);
             yield return new WaitForSeconds(_data.DelayBetweenTeleport);
             SetState(State.Teleporting);
         }
