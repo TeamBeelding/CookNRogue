@@ -149,10 +149,18 @@
 				</StateGroup>
 			</StateGroups>
 		</SoundBank>
-		<SoundBank Id="1421616930" Type="User" Language="SFX" Hash="{29E1CB6C-277E-4A59-5529-1525806B4224}">
+		<SoundBank Id="1421616930" Type="User" Language="SFX" Hash="{F0990EB9-AB9D-4A49-5F12-8AC09E8A55E1}">
 			<ShortName>SFX_Boss</ShortName>
 			<Path>SFX_Boss.bnk</Path>
 			<Media>
+				<File Id="15173100" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Missile_Launch_01.wav</ShortName>
+					<CachePath>SFX/SFX_Missile_Launch_01_10C4C929.wem</CachePath>
+				</File>
+				<File Id="77496107" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Cauldron_Explode_02.wav</ShortName>
+					<CachePath>SFX/SFX_Cauldron_Explode_02_10C4C929.wem</CachePath>
+				</File>
 				<File Id="135451103" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>SFX_Cabbage_Charge_Impact_01.wav</ShortName>
 					<CachePath>SFX/SFX_Cabbage_Charge_Impact_01_10C4C929.wem</CachePath>
@@ -160,6 +168,10 @@
 				<File Id="148488311" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>SFX_Boss_Leaves_03.wav</ShortName>
 					<CachePath>SFX/SFX_Boss_Leaves_03_10C4C929.wem</CachePath>
+				</File>
+				<File Id="177371133" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Cauldron_Explode_01.wav</ShortName>
+					<CachePath>SFX/SFX_Cauldron_Explode_01_10C4C929.wem</CachePath>
 				</File>
 				<File Id="210312109" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>SFX_Boss_Leaves_01.wav</ShortName>
@@ -169,6 +181,10 @@
 					<ShortName>SFX_Boss_Erupt_03.wav</ShortName>
 					<CachePath>SFX/SFX_Boss_Erupt_03_10C4C929.wem</CachePath>
 				</File>
+				<File Id="229212703" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Cauldron_Explode_04.wav</ShortName>
+					<CachePath>SFX/SFX_Cauldron_Explode_04_10C4C929.wem</CachePath>
+				</File>
 				<File Id="265800130" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>SFX_Cabbage_Charge_Layer_C_LP.wav</ShortName>
 					<CachePath>SFX/SFX_Cabbage_Charge_Layer_C_LP_D79FB2B7.wem</CachePath>
@@ -177,9 +193,17 @@
 					<ShortName>SFX_Boss_Leaves_02.wav</ShortName>
 					<CachePath>SFX/SFX_Boss_Leaves_02_10C4C929.wem</CachePath>
 				</File>
+				<File Id="298997739" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Missile_Launch_04.wav</ShortName>
+					<CachePath>SFX/SFX_Missile_Launch_04_10C4C929.wem</CachePath>
+				</File>
 				<File Id="381920552" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>SFX_Boss_Erupt_01.wav</ShortName>
 					<CachePath>SFX/SFX_Boss_Erupt_01_10C4C929.wem</CachePath>
+				</File>
+				<File Id="396717345" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Cauldron_Explode_03.wav</ShortName>
+					<CachePath>SFX/SFX_Cauldron_Explode_03_10C4C929.wem</CachePath>
 				</File>
 				<File Id="469492695" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>SFX_Boss_Dive_03.wav</ShortName>
@@ -189,9 +213,17 @@
 					<ShortName>SFX_Cabbage_Charge_Layer_D_LP.wav</ShortName>
 					<CachePath>SFX/SFX_Cabbage_Charge_Layer_D_LP_D79FB2B7.wem</CachePath>
 				</File>
+				<File Id="532918406" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Missile_Launch_03.wav</ShortName>
+					<CachePath>SFX/SFX_Missile_Launch_03_10C4C929.wem</CachePath>
+				</File>
 				<File Id="590072342" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>SFX_Boss_Dive_02.wav</ShortName>
 					<CachePath>SFX/SFX_Boss_Dive_02_10C4C929.wem</CachePath>
+				</File>
+				<File Id="792011125" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Missile_Launch_02.wav</ShortName>
+					<CachePath>SFX/SFX_Missile_Launch_02_10C4C929.wem</CachePath>
 				</File>
 				<File Id="807530933" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>SFX_Boss_Leaves_04.wav</ShortName>
@@ -231,6 +263,22 @@
 				</File>
 			</Media>
 			<Events>
+				<Event Id="2808147880" Name="Play_RC_Missile_Explode" MaxAttenuation="100" DurationType="OneShot" DurationMin="1.7666667" DurationMax="1.7691041">
+					<MediaRefs>
+						<MediaRef Id="77496107"/>
+						<MediaRef Id="177371133"/>
+						<MediaRef Id="229212703"/>
+						<MediaRef Id="396717345"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="3658758792" Name="Play_RC_Missile_Launch" MaxAttenuation="40" DurationType="OneShot" DurationMin="1.8877485" DurationMax="2.1189263">
+					<MediaRefs>
+						<MediaRef Id="15173100"/>
+						<MediaRef Id="298997739"/>
+						<MediaRef Id="532918406"/>
+						<MediaRef Id="792011125"/>
+					</MediaRefs>
+				</Event>
 				<Event Id="1015345869" Name="Play_SFX_Boss_Charge_Impact" MaxAttenuation="40" DurationType="OneShot" DurationMin="1.5268935" DurationMax="1.926126">
 					<MediaRefs>
 						<MediaRef Id="135451103"/>
@@ -2100,5 +2148,5 @@
 			</StateGroups>
 		</SoundBank>
 	</SoundBanks>
-	<FileHash>{53816F84-1700-21A9-C5E9-54FC176BA1A5}</FileHash>
+	<FileHash>{C7702ABF-51E7-C701-AB97-902CF4A23865}</FileHash>
 </SoundBanksInfo>
