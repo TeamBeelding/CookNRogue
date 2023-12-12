@@ -24,6 +24,8 @@ namespace AK
         static const AkUniqueID PLAY_MC_RUN_FOOTSTEP = 104751245U;
         static const AkUniqueID PLAY_MUSIC = 2932040671U;
         static const AkUniqueID PLAY_RESET_INGREDIENT = 3223052211U;
+        static const AkUniqueID PLAY_SFX_BOSS_CHARGE_IMPACT = 1015345869U;
+        static const AkUniqueID PLAY_SFX_BOSS_CHARGE_LP = 1366164187U;
         static const AkUniqueID PLAY_SFX_BOSS_DIVE = 1599937242U;
         static const AkUniqueID PLAY_SFX_BOSS_ERUPT = 4035373962U;
         static const AkUniqueID PLAY_SFX_BOSS_LEAVES = 395712816U;
@@ -79,6 +81,7 @@ namespace AK
         static const AkUniqueID PLAY_WEAPON_SHOT = 3889646233U;
         static const AkUniqueID STOP_AMB_LEVEL = 3214656583U;
         static const AkUniqueID STOP_KAMIKAZE_IDLE = 847261186U;
+        static const AkUniqueID STOP_SFX_BOSS_CHARGE_LP = 1829071329U;
         static const AkUniqueID STOP_SFX_CABBAGE_CHARGE_LP = 3742019055U;
         static const AkUniqueID STOP_SFX_COOK = 4293892292U;
         static const AkUniqueID STOP_SFX_PEA_MOVEMENT = 2301333962U;

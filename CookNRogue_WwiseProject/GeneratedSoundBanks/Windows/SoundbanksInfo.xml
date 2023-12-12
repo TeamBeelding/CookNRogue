@@ -149,10 +149,14 @@
 				</StateGroup>
 			</StateGroups>
 		</SoundBank>
-		<SoundBank Id="1421616930" Type="User" Language="SFX" Hash="{97FC6374-3E9B-5386-652B-D0BAD13ECBBD}">
+		<SoundBank Id="1421616930" Type="User" Language="SFX" Hash="{29E1CB6C-277E-4A59-5529-1525806B4224}">
 			<ShortName>SFX_Boss</ShortName>
 			<Path>SFX_Boss.bnk</Path>
 			<Media>
+				<File Id="135451103" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Cabbage_Charge_Impact_01.wav</ShortName>
+					<CachePath>SFX/SFX_Cabbage_Charge_Impact_01_10C4C929.wem</CachePath>
+				</File>
 				<File Id="148488311" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>SFX_Boss_Leaves_03.wav</ShortName>
 					<CachePath>SFX/SFX_Boss_Leaves_03_10C4C929.wem</CachePath>
@@ -164,6 +168,10 @@
 				<File Id="226225148" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>SFX_Boss_Erupt_03.wav</ShortName>
 					<CachePath>SFX/SFX_Boss_Erupt_03_10C4C929.wem</CachePath>
+				</File>
+				<File Id="265800130" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Cabbage_Charge_Layer_C_LP.wav</ShortName>
+					<CachePath>SFX/SFX_Cabbage_Charge_Layer_C_LP_D79FB2B7.wem</CachePath>
 				</File>
 				<File Id="267679322" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>SFX_Boss_Leaves_02.wav</ShortName>
@@ -177,6 +185,10 @@
 					<ShortName>SFX_Boss_Dive_03.wav</ShortName>
 					<CachePath>SFX/SFX_Boss_Dive_03_10C4C929.wem</CachePath>
 				</File>
+				<File Id="509248024" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Cabbage_Charge_Layer_D_LP.wav</ShortName>
+					<CachePath>SFX/SFX_Cabbage_Charge_Layer_D_LP_D79FB2B7.wem</CachePath>
+				</File>
 				<File Id="590072342" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>SFX_Boss_Dive_02.wav</ShortName>
 					<CachePath>SFX/SFX_Boss_Dive_02_10C4C929.wem</CachePath>
@@ -184,6 +196,22 @@
 				<File Id="807530933" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>SFX_Boss_Leaves_04.wav</ShortName>
 					<CachePath>SFX/SFX_Boss_Leaves_04_10C4C929.wem</CachePath>
+				</File>
+				<File Id="832771434" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Cabbage_Charge_Layer_A_LP.wav</ShortName>
+					<CachePath>SFX/SFX_Cabbage_Charge_Layer_A_LP_D79FB2B7.wem</CachePath>
+				</File>
+				<File Id="880184806" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Cabbage_Charge_Layer_B_LP.wav</ShortName>
+					<CachePath>SFX/SFX_Cabbage_Charge_Layer_B_LP_D79FB2B7.wem</CachePath>
+				</File>
+				<File Id="933626843" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Cabbage_Charge_Layer_E_LP.wav</ShortName>
+					<CachePath>SFX/SFX_Cabbage_Charge_Layer_E_LP_D79FB2B7.wem</CachePath>
+				</File>
+				<File Id="949961061" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Cabbage_Charge_Impact_03.wav</ShortName>
+					<CachePath>SFX/SFX_Cabbage_Charge_Impact_03_10C4C929.wem</CachePath>
 				</File>
 				<File Id="1007512096" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>SFX_Boss_Erupt_02.wav</ShortName>
@@ -193,8 +221,33 @@
 					<ShortName>SFX_Boss_Dive_01.wav</ShortName>
 					<CachePath>SFX/SFX_Boss_Dive_01_10C4C929.wem</CachePath>
 				</File>
+				<File Id="1041049691" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Cabbage_Charge_Layer_F_LP.wav</ShortName>
+					<CachePath>SFX/SFX_Cabbage_Charge_Layer_F_LP_D79FB2B7.wem</CachePath>
+				</File>
+				<File Id="1066473168" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Cabbage_Charge_Impact_02.wav</ShortName>
+					<CachePath>SFX/SFX_Cabbage_Charge_Impact_02_10C4C929.wem</CachePath>
+				</File>
 			</Media>
 			<Events>
+				<Event Id="1015345869" Name="Play_SFX_Boss_Charge_Impact" MaxAttenuation="40" DurationType="OneShot" DurationMin="1.5268935" DurationMax="1.926126">
+					<MediaRefs>
+						<MediaRef Id="135451103"/>
+						<MediaRef Id="949961061"/>
+						<MediaRef Id="1066473168"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="1366164187" Name="Play_SFX_Boss_Charge_LP" MaxAttenuation="60" DurationType="Infinite">
+					<MediaRefs>
+						<MediaRef Id="265800130"/>
+						<MediaRef Id="509248024"/>
+						<MediaRef Id="832771434"/>
+						<MediaRef Id="880184806"/>
+						<MediaRef Id="933626843"/>
+						<MediaRef Id="1041049691"/>
+					</MediaRefs>
+				</Event>
 				<Event Id="1599937242" Name="Play_SFX_Boss_Dive" MaxAttenuation="100" DurationType="OneShot" DurationMin="1.1261041" DurationMax="1.1261041">
 					<MediaRefs>
 						<MediaRef Id="469492695"/>
@@ -217,6 +270,7 @@
 						<MediaRef Id="807530933"/>
 					</MediaRefs>
 				</Event>
+				<Event Id="1829071329" Name="Stop_SFX_Boss_Charge_LP" MaxAttenuation="0" DurationType="OneShot" DurationMin="0" DurationMax="0"/>
 			</Events>
 		</SoundBank>
 		<SoundBank Id="1563047448" Type="User" Language="SFX" Hash="{FCD27218-D6D4-4C73-66C0-FD7D3996C7BD}">
@@ -2046,5 +2100,5 @@
 			</StateGroups>
 		</SoundBank>
 	</SoundBanks>
-	<FileHash>{7DC03C02-5BF2-24A2-5D3E-6D34E7C7AB5B}</FileHash>
+	<FileHash>{16FEA4B3-4567-EC58-B067-2A3C9EED8171}</FileHash>
 </SoundBanksInfo>
