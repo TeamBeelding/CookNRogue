@@ -156,6 +156,8 @@ public class Kamilkaze : EnemyController
     {
         //_animator?.SetBool("isDead", true);
 
+        _agent.speed = 0;
+
         visual?.SetActive(false);
         physics?.SetActive(false);
 
@@ -165,8 +167,7 @@ public class Kamilkaze : EnemyController
 
         IEnumerator IDeathAnim()
         {
-            yield return new WaitForSeconds(1f);
-
+            yield return new WaitForSeconds(0.2f);
             base.Dying();
         }
     }

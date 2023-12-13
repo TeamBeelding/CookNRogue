@@ -121,9 +121,11 @@ namespace Enemy.DashingEnemy
                     Dashing();
                     break;
                 case State.Dying:
+                    _Play_SFX_Cabbage_Death.Post(gameObject);
                     Dying();
                     break;
                 default:
+                    _Play_SFX_Cabbage_Death.Post(gameObject);
                     Dying();
                     break;
             }

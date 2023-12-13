@@ -87,6 +87,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1801419215305949974}
   - component: {fileID: 1801419215305949975}
+  - component: {fileID: 4938252654330436676}
   m_Layer: 0
   m_Name: TBH
   m_TagString: Enemy
@@ -130,6 +131,36 @@ MonoBehaviour:
   explosion: {fileID: 466446929295881914, guid: 1768f1adcc585bb42ac938af9d0b00e8,
     type: 3}
   tutorial: {fileID: 0}
+  _Play_SFX_Carrot_Dive:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: ef3a997bbad76fb4f9dd146007c3a1ec,
+      type: 2}
+  _Play_SFX_Carrot_Erupt:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 04cdde1a513758b40a8c86ebc94cfa18,
+      type: 2}
+  _Play_SFX_Carrot_Attack:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 2024ede0e4c321845a5f97236363a200,
+      type: 2}
+  _Play_SFX_Carrot_Hit:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: fc33308eb85dd6f44ae0cd45503c434c,
+      type: 2}
+  _Play_SFX_Carrot_Death:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 08813ffac0028ea4c89dffa72afd2b4b,
+      type: 2}
+  _Play_Weapon_Hit:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: a15d4b8ee5a9a404cbbbedb89ceaa826,
+      type: 2}
   _data: {fileID: 11400000, guid: 2bb4dc28635d1e947b7753bfe3823efb, type: 2}
   _gun: {fileID: 1801419214493071895}
   _bullet: {fileID: 1646218331480662972, guid: c0ed5f524013bca43882139c5df1db26, type: 3}
@@ -137,6 +168,31 @@ MonoBehaviour:
   _animator: {fileID: 3814844365388961351}
   physics: {fileID: 1801419213926679720}
   _state: 0
+--- !u!114 &4938252654330436676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1801419215305949969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2698c394a636bc479a5e90f55e626a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerList: f7e1664c
+  useOtherObject: 0
+  data:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 688c0d7ddbb429444ac4c1fe859d1330,
+      type: 2}
+  decodeBank: 0
+  loadAsynchronous: 0
+  saveDecodedBank: 0
+  unloadTriggerList: 
+  bankNameInternal: 
+  valueGuidInternal: 
 --- !u!1001 &3871141264374730955
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -970,6 +1026,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   physics: {fileID: 1801419213926679720}
+--- !u!114 &8699534158292835643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1140324264276299877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85d440ddc3923b248a37f9aafb256b8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Play_SFX_Carrot_Dive:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: ef3a997bbad76fb4f9dd146007c3a1ec,
+      type: 2}
+  _Play_SFX_Carrot_Erupt:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 04cdde1a513758b40a8c86ebc94cfa18,
+      type: 2}
 --- !u!4 &3617436158831949600 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 544760e53d4392047b20d22ec96d4bf3,

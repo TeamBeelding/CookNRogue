@@ -6,6 +6,20 @@ using Random = UnityEngine.Random;
 
 public class TBH : EnemyController
 {
+    [Header("Sound")]
+    /*[SerializeField]
+    private AK.Wwise.Event _Play_SFX_Carrot_Dive;
+    [SerializeField]
+    private AK.Wwise.Event _Play_SFX_Carrot_Erupt;
+    [SerializeField]*/
+    private AK.Wwise.Event _Play_SFX_Carrot_Attack;
+    [SerializeField]
+    private AK.Wwise.Event _Play_SFX_Carrot_Hit;
+    [SerializeField]
+    private AK.Wwise.Event _Play_SFX_Carrot_Death;
+    [SerializeField]
+    private AK.Wwise.Event _Play_Weapon_Hit;
+
     [SerializeField] private TBHData _data;
     [SerializeField] private GameObject _gun;
     [SerializeField] private GameObject _bullet;
@@ -66,6 +80,7 @@ public class TBH : EnemyController
                 break;
             case State.Attacking:
 
+                //_Play_SFX_Carrot_Erupt.Post(gameObject);
                 _animator.SetBool("isTeleport", false);
 
                 StartCoroutine(Waiting());
@@ -86,9 +101,11 @@ public class TBH : EnemyController
                 Casting();
                 break;
             case State.Dying:
+                _Play_SFX_Carrot_Death.Post(gameObject);
                 Dying();
                 break;
             default:
+                _Play_SFX_Carrot_Death.Post(gameObject);
                 Dying();
                 break;
         }
@@ -119,6 +136,7 @@ public class TBH : EnemyController
 
             bullet.GetComponent<EnemyBulletController>().SetDirection(new Vector3(Player.transform.position.x + spread, Player.transform.position.y, Player.transform.position.z + spread));
             bullet.GetComponent<EnemyBulletController>().SetDamage(_data.DamagePerBullet);
+            _Play_SFX_Carrot_Attack.Post(bullet);
         }
     }
 
@@ -130,9 +148,12 @@ public class TBH : EnemyController
             randomPosition = Random.insideUnitSphere * _data.AttackRange + Player.transform.position;
 
         Vector3 position = new Vector3(randomPosition.x, transform.position.y, randomPosition.z);
-        
+
         if (CanTeleportHere(position))
+        {
             transform.position = new Vector3(randomPosition.x, transform.position.y, randomPosition.z);
+        }
+
         else
             Teleport();
 
@@ -147,7 +168,7 @@ public class TBH : EnemyController
         if (Physics.Raycast(position, direction, out hit, _data.AttackRange))
         {
             if (hit.collider.CompareTag("Player"))
-                return true;
+            return true;
         }
 
         return false;
@@ -160,6 +181,7 @@ public class TBH : EnemyController
 
         IEnumerator Waiting()
         {
+            //_Play_SFX_Carrot_Dive.Post(gameObject);
             yield return new WaitForSeconds(_data.DelayBetweenTeleport);
             SetState(State.Teleporting);
         }
@@ -198,6 +220,8 @@ public class TBH : EnemyController
     public override void TakeDamage(float damage = 1, bool isCritical = false)
     {
         base.TakeDamage(damage, isCritical);
+        _Play_SFX_Carrot_Hit.Post(gameObject);
+        _Play_Weapon_Hit.Post(gameObject);
 
         if (Healthpoint <= 0)
             SetState(State.Dying);
