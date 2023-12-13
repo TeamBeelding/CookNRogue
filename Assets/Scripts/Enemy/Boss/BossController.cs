@@ -59,7 +59,6 @@ public class BossController : EnemyController
         SetState(State.EnterRoom);
     }
 
-
     private void Reset()
     {
         visual?.SetActive(true);
@@ -175,7 +174,6 @@ public class BossController : EnemyController
 
             foreach (var particle in _teleportParticles)
             {
-
                 var VOLT = particle.velocityOverLifetime;
                 VOLT.x = new ParticleSystem.MinMaxCurve(-10, 10);
                 VOLT.y = new ParticleSystem.MinMaxCurve(1, 10);
@@ -336,6 +334,8 @@ public class BossController : EnemyController
     {
         visual?.SetActive(false);
         physics?.SetActive(false);
+
+        Destroy(gameObject);
     }
 
     public override bool IsMoving()

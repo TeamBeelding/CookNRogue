@@ -63,7 +63,7 @@ namespace Enemy
             //}
         }
 
-        public void EndWave()
+        public void LastAIDying()
         {
             OnAllEnnemiesKilled?.Invoke();
         }

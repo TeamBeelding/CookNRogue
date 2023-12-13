@@ -21,7 +21,7 @@ public abstract class EnemyController : MonoBehaviour
     protected bool FocusPlayer = false;
     private bool _canAttack = true;
     protected bool _canAttackAnim = true;
-    
+
     protected float Healthpoint;
 
     [SerializeField]
@@ -122,6 +122,11 @@ public abstract class EnemyController : MonoBehaviour
             isDead = true;
             Dying();
         }
+    }
+
+    protected void KillLastAI()
+    {
+        EnemyManager.Instance.LastAIDying();
     }
     
     protected virtual void TakeDamageEffect()

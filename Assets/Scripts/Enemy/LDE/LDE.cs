@@ -214,7 +214,6 @@ namespace Enemy.LDE
             {
                 SetState(State.Dying);
             }
-
             else
             {
                 _Play_SFX_Corn_Hit.Post(gameObject);
