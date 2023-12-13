@@ -333,4 +333,9 @@ public class CameraController : MonoBehaviour
         _shakeIsUnscaled = false;
         _zoomIsUnscaled = false;
     }
+
+    public void ChangeTarget(Transform target)
+    {
+        m_target = target;
+    }
 }
