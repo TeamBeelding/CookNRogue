@@ -232,6 +232,8 @@ namespace Enemy.Minimoyz
 
         protected override void Dying()
         {
+            waveManager?.SlowMotion();
+
             base.Dying();
         }
     }

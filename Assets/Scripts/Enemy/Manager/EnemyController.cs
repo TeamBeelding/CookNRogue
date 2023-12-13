@@ -33,6 +33,8 @@ public abstract class EnemyController : MonoBehaviour
     [SerializeField] 
     private TutorialManager tutorial;
 
+    protected WaveManager waveManager;
+
     private bool isDead;
 
     protected virtual void Awake()
@@ -53,6 +55,8 @@ public abstract class EnemyController : MonoBehaviour
     protected virtual void OnEnable()
     {
         Player = PlayerController.Instance.gameObject;
+        waveManager = GameObject.FindGameObjectWithTag("WaveManager").GetComponent<WaveManager>();
+
         AddToEnemyManager();
     }
 

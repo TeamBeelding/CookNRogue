@@ -134,17 +134,21 @@ public class WaveManager : MonoBehaviour
 
     public void SlowMotion()
     {
-        int wsCount = 0;
+        List<WaveSpawner> waveList = new List<WaveSpawner>();
 
         foreach (WaveSpawner ws in GetComponentsInChildren<WaveSpawner>())
         {
-            wsCount++;
+            if (ws.gameObject.activeSelf)
+                waveList.Add(ws);
         }
 
-        if (wsCount == 1)
+        if (waveList.Count == 1)
         {
-            if (GameObject.FindGameObjectsWithTag("Enemy").Length == 1)
-                EnemyManager.Instance.LastAIDying();
+            if (waveList[0].IsLastWave())
+            {
+                if (GameObject.FindGameObjectsWithTag("Enemy").Length == 1)
+                    EnemyManager.Instance.LastAIDying();
+            }
         }
     }
 }

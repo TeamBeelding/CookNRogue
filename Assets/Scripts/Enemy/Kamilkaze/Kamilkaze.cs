@@ -163,6 +163,7 @@ public class Kamilkaze : EnemyController
 
         effect?.SetActive(true);
 
+        waveManager?.SlowMotion();
         stateCoroutine = StartCoroutine(IDeathAnim());
 
         IEnumerator IDeathAnim()

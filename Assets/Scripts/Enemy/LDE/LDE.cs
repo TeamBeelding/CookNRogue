@@ -186,6 +186,8 @@ namespace Enemy.LDE
 
             animator.SetBool("isDead", true);
 
+            waveManager?.SlowMotion();
+
             StartCoroutine(IDeathAnim());
 
             IEnumerator IDeathAnim()

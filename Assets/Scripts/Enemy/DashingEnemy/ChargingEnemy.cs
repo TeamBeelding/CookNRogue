@@ -272,6 +272,7 @@ namespace Enemy.DashingEnemy
             _Play_SFX_Cabbage_Death.Post(gameObject);
 
             animator.SetBool("isDead", true);
+            waveManager?.SlowMotion();
 
             StartCoroutine(IDeathAnim());
 

@@ -206,6 +206,7 @@ public class TBH : EnemyController
         StopAllCoroutines();
 
         _animator.SetBool("isDead", true);
+        waveManager?.SlowMotion();
 
         StartCoroutine(IDeathAnim());
 
