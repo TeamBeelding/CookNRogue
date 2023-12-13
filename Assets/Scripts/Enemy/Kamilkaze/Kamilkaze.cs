@@ -167,7 +167,7 @@ public class Kamilkaze : EnemyController
 
         IEnumerator IDeathAnim()
         {
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(_data.DelayAfterExplosion);
             base.Dying();
         }
     }
