@@ -31,6 +31,7 @@ namespace AK
         static const AkUniqueID PLAY_SFX_BOSS_DIVE = 1599937242U;
         static const AkUniqueID PLAY_SFX_BOSS_ERUPT = 4035373962U;
         static const AkUniqueID PLAY_SFX_BOSS_LEAVES = 395712816U;
+        static const AkUniqueID PLAY_SFX_BOSS_SHOCKWAVE = 1854063749U;
         static const AkUniqueID PLAY_SFX_CABBAGE_CHARGE_IMPACT = 1246023875U;
         static const AkUniqueID PLAY_SFX_CABBAGE_CHARGE_LP = 2535875021U;
         static const AkUniqueID PLAY_SFX_CABBAGE_DEATH = 1817239028U;

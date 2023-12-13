@@ -1219,13 +1219,28 @@
 							<ChildrenList>
 								<RandomSequenceContainer Name="RC_Cauldron_Explode" ID="{310357BA-5E3A-4AE8-878E-DE8A16C208E3}" ShortID="73435358">
 									<PropertyList>
+										<Property Name="3DSpatialization" Type="int16" Value="1"/>
+										<Property Name="Lowpass" Type="int16">
+											<ValueList>
+												<Value>20</Value>
+											</ValueList>
+										</Property>
 										<Property Name="MaxSoundPerInstance" Type="int16">
 											<ValueList>
 												<Value>3</Value>
 											</ValueList>
 										</Property>
+										<Property Name="OverridePositioning" Type="bool" Value="True"/>
+										<Property Name="Pitch" Type="int32">
+											<ValueList>
+												<Value>200</Value>
+											</ValueList>
+										</Property>
 									</PropertyList>
 									<ReferenceList>
+										<Reference Name="Attenuation">
+											<ObjectRef Name="ATN_25M" ID="{C1A30AD3-7F4B-4AFC-BBEE-21428EAD722D}" WorkUnitID="{A99C7566-826F-4E9D-A733-5652D69BE57C}"/>
+										</Reference>
 										<Reference Name="Conversion">
 											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DEC634C6-86E3-4DF9-96EE-F869BA355507}"/>
 										</Reference>

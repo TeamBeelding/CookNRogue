@@ -149,7 +149,7 @@
 				</StateGroup>
 			</StateGroups>
 		</SoundBank>
-		<SoundBank Id="1421616930" Type="User" Language="SFX" Hash="{F0990EB9-AB9D-4A49-5F12-8AC09E8A55E1}">
+		<SoundBank Id="1421616930" Type="User" Language="SFX" Hash="{3C645DA6-5774-4F03-784B-7F6CD13B8737}">
 			<ShortName>SFX_Boss</ShortName>
 			<Path>SFX_Boss.bnk</Path>
 			<Media>
@@ -221,9 +221,21 @@
 					<ShortName>SFX_Boss_Dive_02.wav</ShortName>
 					<CachePath>SFX/SFX_Boss_Dive_02_10C4C929.wem</CachePath>
 				</File>
+				<File Id="603199292" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Boss_Shockwave_01.wav</ShortName>
+					<CachePath>SFX/SFX_Boss_Shockwave_01_10C4C929.wem</CachePath>
+				</File>
+				<File Id="775652707" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Boss_Shockwave_02.wav</ShortName>
+					<CachePath>SFX/SFX_Boss_Shockwave_02_10C4C929.wem</CachePath>
+				</File>
 				<File Id="792011125" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>SFX_Missile_Launch_02.wav</ShortName>
 					<CachePath>SFX/SFX_Missile_Launch_02_10C4C929.wem</CachePath>
+				</File>
+				<File Id="792872245" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Boss_Shockwave_03.wav</ShortName>
+					<CachePath>SFX/SFX_Boss_Shockwave_03_10C4C929.wem</CachePath>
 				</File>
 				<File Id="807530933" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>SFX_Boss_Leaves_04.wav</ShortName>
@@ -316,6 +328,13 @@
 						<MediaRef Id="210312109"/>
 						<MediaRef Id="267679322"/>
 						<MediaRef Id="807530933"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="1854063749" Name="Play_SFX_Boss_Shockwave" MaxAttenuation="100" DurationType="OneShot" DurationMin="3.4294097" DurationMax="4.038276">
+					<MediaRefs>
+						<MediaRef Id="603199292"/>
+						<MediaRef Id="775652707"/>
+						<MediaRef Id="792872245"/>
 					</MediaRefs>
 				</Event>
 				<Event Id="1829071329" Name="Stop_SFX_Boss_Charge_LP" MaxAttenuation="0" DurationType="OneShot" DurationMin="0" DurationMax="0"/>
@@ -665,7 +684,7 @@
 				<Event Id="2301333962" Name="Stop_SFX_Pea_Movement" MaxAttenuation="0" DurationType="OneShot" DurationMin="0" DurationMax="0"/>
 			</Events>
 		</SoundBank>
-		<SoundBank Id="2374353081" Type="User" Language="SFX" Hash="{424DF56F-C44A-E0F4-1123-5C9D3D41E4F5}">
+		<SoundBank Id="2374353081" Type="User" Language="SFX" Hash="{E4EC37DC-84EA-F7B3-2F38-9C878E2AC9B4}">
 			<ShortName>SFX_Other</ShortName>
 			<Path>SFX_Other.bnk</Path>
 			<Media>
@@ -827,7 +846,7 @@
 				</File>
 			</Media>
 			<Events>
-				<Event Id="4292650966" Name="Play_SFX_Cauldron_Explode" DurationType="OneShot" DurationMin="1.6675111" DurationMax="1.8743006">
+				<Event Id="4292650966" Name="Play_SFX_Cauldron_Explode" MaxAttenuation="25" DurationType="OneShot" DurationMin="1.4855837" DurationMax="1.6698118">
 					<MediaRefs>
 						<MediaRef Id="186779642"/>
 						<MediaRef Id="291360466"/>
@@ -2148,5 +2167,5 @@
 			</StateGroups>
 		</SoundBank>
 	</SoundBanks>
-	<FileHash>{559160AF-149E-F4F8-A1F4-EEE3BB80CFB6}</FileHash>
+	<FileHash>{AF9F144D-CF43-D88E-2DEA-00344ADD42DA}</FileHash>
 </SoundBanksInfo>

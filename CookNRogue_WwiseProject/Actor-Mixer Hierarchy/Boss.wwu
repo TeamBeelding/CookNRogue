@@ -102,6 +102,19 @@
 							</ChildrenList>
 						</RandomSequenceContainer>
 						<RandomSequenceContainer Name="RC_Boss_Erupt" ID="{63B88753-40C1-4007-B784-FF23A6458E65}" ShortID="1048999304">
+							<PropertyList>
+								<Property Name="IgnoreParentMaxSoundInstance" Type="bool" Value="True"/>
+								<Property Name="MaxSoundPerInstance" Type="int16">
+									<ValueList>
+										<Value>3</Value>
+									</ValueList>
+								</Property>
+								<Property Name="UseMaxSoundPerInstance" Type="bool">
+									<ValueList>
+										<Value>True</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Conversion">
 									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DEC634C6-86E3-4DF9-96EE-F869BA355507}"/>
@@ -192,6 +205,11 @@
 											</Modifier>
 										</ModifierInfo>
 									</ModifierList>
+								</Property>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>-5</Value>
+									</ValueList>
 								</Property>
 							</PropertyList>
 							<ReferenceList>
@@ -298,6 +316,11 @@
 								<Property Name="3DSpatialization" Type="int16" Value="1"/>
 								<Property Name="OverrideEffect" Type="bool" Value="True"/>
 								<Property Name="OverridePositioning" Type="bool" Value="True"/>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>3</Value>
+									</ValueList>
+								</Property>
 							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Attenuation">
@@ -625,6 +648,7 @@
 						</ActorMixer>
 						<RandomSequenceContainer Name="RC_Missile_Launch" ID="{6061F0DF-4AFD-4BF5-AAC4-94C562B8D014}" ShortID="845042537">
 							<PropertyList>
+								<Property Name="3DSpatialization" Type="int16" Value="1"/>
 								<Property Name="OverridePositioning" Type="bool" Value="True"/>
 								<Property Name="Pitch" Type="int32">
 									<ModifierList>
@@ -638,6 +662,11 @@
 											</Modifier>
 										</ModifierInfo>
 									</ModifierList>
+								</Property>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>-11</Value>
+									</ValueList>
 								</Property>
 							</PropertyList>
 							<ReferenceList>
@@ -744,9 +773,20 @@
 						</RandomSequenceContainer>
 						<RandomSequenceContainer Name="RC_Missile_Explode" ID="{62F8DDC9-757F-49BF-9545-974128495331}" ShortID="819531369">
 							<PropertyList>
+								<Property Name="IgnoreParentMaxSoundInstance" Type="bool" Value="True"/>
 								<Property Name="MaxSoundPerInstance" Type="int16">
 									<ValueList>
 										<Value>3</Value>
+									</ValueList>
+								</Property>
+								<Property Name="UseMaxSoundPerInstance" Type="bool">
+									<ValueList>
+										<Value>True</Value>
+									</ValueList>
+								</Property>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>-8</Value>
 									</ValueList>
 								</Property>
 							</PropertyList>
@@ -845,6 +885,104 @@
 									</ChildrenList>
 									<ActiveSourceList>
 										<ActiveSource Name="SFX_Cauldron_Explode_04" ID="{010ED9E5-50E2-4459-8777-DC3A9E163749}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+							</ChildrenList>
+						</RandomSequenceContainer>
+						<RandomSequenceContainer Name="RC_Boss_Shockwave" ID="{EFA6D8AC-9F41-4EBE-B790-3AB317F4C0A6}" ShortID="697281744">
+							<PropertyList>
+								<Property Name="Pitch" Type="int32">
+									<ModifierList>
+										<ModifierInfo>
+											<Modifier Name="" ID="{D0419A9A-F28E-48A7-8C28-93DC169F5753}">
+												<PropertyList>
+													<Property Name="Enabled" Type="bool" Value="True"/>
+													<Property Name="Max" Type="Real64" Value="100"/>
+													<Property Name="Min" Type="Real64" Value="-100"/>
+												</PropertyList>
+											</Modifier>
+										</ModifierInfo>
+									</ModifierList>
+								</Property>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>-8</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DEC634C6-86E3-4DF9-96EE-F869BA355507}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{85B5C199-8628-4DDB-B756-DA8917395816}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<Sound Name="SFX_Boss_Shockwave_01" ID="{83284489-C2C0-42F4-A0E0-B0A9A47C10F0}" ShortID="462995768">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DEC634C6-86E3-4DF9-96EE-F869BA355507}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{85B5C199-8628-4DDB-B756-DA8917395816}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="SFX_Boss_Shockwave_01" ID="{1240D913-02A7-4524-B978-3A5AE067604E}">
+											<Language>SFX</Language>
+											<AudioFile>SFX_Boss_Shockwave_01.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="603199292"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="SFX_Boss_Shockwave_01" ID="{1240D913-02A7-4524-B978-3A5AE067604E}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="SFX_Boss_Shockwave_02" ID="{C72915B2-E6C1-45A8-B2B8-6EB853B29D75}" ShortID="612099385">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DEC634C6-86E3-4DF9-96EE-F869BA355507}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{85B5C199-8628-4DDB-B756-DA8917395816}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="SFX_Boss_Shockwave_02" ID="{5F405951-38CE-4A33-BC4E-22A7C63EFBC6}">
+											<Language>SFX</Language>
+											<AudioFile>SFX_Boss_Shockwave_02.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="775652707"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="SFX_Boss_Shockwave_02" ID="{5F405951-38CE-4A33-BC4E-22A7C63EFBC6}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="SFX_Boss_Shockwave_03" ID="{266AB16E-00BE-43AF-B799-EE8021807E46}" ShortID="906557252">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DEC634C6-86E3-4DF9-96EE-F869BA355507}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{85B5C199-8628-4DDB-B756-DA8917395816}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="SFX_Boss_Shockwave_03" ID="{B8EB32FD-CCC8-491B-ABE2-38C93792FA58}">
+											<Language>SFX</Language>
+											<AudioFile>SFX_Boss_Shockwave_03.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="792872245"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="SFX_Boss_Shockwave_03" ID="{B8EB32FD-CCC8-491B-ABE2-38C93792FA58}" Platform="Linked"/>
 									</ActiveSourceList>
 								</Sound>
 							</ChildrenList>
