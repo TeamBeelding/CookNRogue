@@ -847,6 +847,14 @@ public class PlayerController : MonoBehaviour
         transform.position = spawnPoint.position;
     }
 
+
+    public void ActivateDefaultInputMap(bool activate)
+    {
+        if (activate)
+            _playerActions.Default.Enable();
+        else
+            _playerActions.Default.Disable();
+    }
     #endregion
 
     #region Debug
