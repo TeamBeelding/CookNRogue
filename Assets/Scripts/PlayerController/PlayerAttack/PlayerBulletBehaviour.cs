@@ -48,7 +48,6 @@ public class PlayerBulletBehaviour : MonoBehaviour
     {
         //rb.drag = 0;
         //HeavyDamage = 1;
-        gameObject.transform.localScale = new Vector3(1,1,1);
         _speed = _initialSpeed;
         _damage = _initialDamage;
         _HasHit = false;
@@ -56,6 +55,7 @@ public class PlayerBulletBehaviour : MonoBehaviour
         bouncingNbr = 0;
         _ricochetNbr = 0;
         HasExploded = false;
+        transform.localScale = new Vector3(1,1,1);
     }
     public virtual void ExplosionEffect()
     {
@@ -82,7 +82,12 @@ public class PlayerBulletBehaviour : MonoBehaviour
         if(boomerang != null)
             Destroy(boomerang);
 
-        foreach(GameObject vfx in VFX)
+        ChangeSizeOverDistance SoD = null;
+        TryGetComponent(out SoD);
+        if (SoD != null)
+            Destroy(SoD);
+
+        foreach (GameObject vfx in VFX)
         {
             Destroy(vfx);
         }

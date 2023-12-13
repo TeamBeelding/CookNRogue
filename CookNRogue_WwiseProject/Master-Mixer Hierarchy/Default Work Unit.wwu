@@ -27,6 +27,23 @@
 								<Property Name="Color" Type="int16" Value="26"/>
 								<Property Name="OverrideColor" Type="bool" Value="True"/>
 							</PropertyList>
+							<StateInfo>
+								<StateGroupList>
+									<StateGroupInfo>
+										<StateGroupRef Name="Pause_Menu" ID="{DCC4536A-E318-48C6-AA1F-DF8580335888}"/>
+									</StateGroupInfo>
+								</StateGroupList>
+								<CustomStateList>
+									<CustomState>
+										<StateRef Name="InPauseMenu" ID="{59CFFA60-D92A-4A95-BEC1-15870A188413}"/>
+										<CustomState Name="" ID="{E0121A71-136E-4D33-AA17-6943EF4E94DE}" ShortID="155568600"/>
+									</CustomState>
+									<CustomState>
+										<StateRef Name="OutPauseMenu" ID="{2987396D-222D-4B27-A23D-F2A7ECE32AD1}"/>
+										<CustomState Name="" ID="{A424114C-6D85-486E-B3E9-61501C7DB1E3}" ShortID="229250772"/>
+									</CustomState>
+								</CustomStateList>
+							</StateInfo>
 							<ObjectLists>
 								<ObjectList Name="RTPC">
 									<Reference>
@@ -78,6 +95,42 @@
 								<Property Name="Color" Type="int16" Value="4"/>
 								<Property Name="OverrideColor" Type="bool" Value="True"/>
 							</PropertyList>
+							<StateInfo>
+								<StateGroupList>
+									<StateGroupInfo>
+										<StateGroupRef Name="Cooking_Menu" ID="{480DC1F1-C4C9-4C3D-BC13-612628739BAC}"/>
+									</StateGroupInfo>
+									<StateGroupInfo>
+										<StateGroupRef Name="Pause_Menu" ID="{DCC4536A-E318-48C6-AA1F-DF8580335888}"/>
+									</StateGroupInfo>
+								</StateGroupList>
+								<CustomStateList>
+									<CustomState>
+										<StateRef Name="OutCookingMenu" ID="{F48474B2-E070-43CA-9C12-219BE4A7071C}"/>
+										<CustomState Name="" ID="{BBB722EB-AE1B-41D6-871F-2487F27C3726}" ShortID="489715716"/>
+									</CustomState>
+									<CustomState>
+										<StateRef Name="InCookingMenu" ID="{BD061B15-9DAF-4A28-A041-2AF277545DA4}"/>
+										<CustomState Name="" ID="{0B8B1393-15AF-43AF-896E-23B380920D0D}" ShortID="610996961">
+											<PropertyList>
+												<Property Name="BusVolume" Type="Real64" Value="3"/>
+											</PropertyList>
+										</CustomState>
+									</CustomState>
+									<CustomState>
+										<StateRef Name="InPauseMenu" ID="{59CFFA60-D92A-4A95-BEC1-15870A188413}"/>
+										<CustomState Name="" ID="{0FC1440C-E89B-408F-8E5B-09BD2028E0DF}" ShortID="914431999">
+											<PropertyList>
+												<Property Name="BusVolume" Type="Real64" Value="-100"/>
+											</PropertyList>
+										</CustomState>
+									</CustomState>
+									<CustomState>
+										<StateRef Name="OutPauseMenu" ID="{2987396D-222D-4B27-A23D-F2A7ECE32AD1}"/>
+										<CustomState Name="" ID="{2CB9D5AC-D3E7-467E-B313-BC8234DA7C82}" ShortID="607122253"/>
+									</CustomState>
+								</CustomStateList>
+							</StateInfo>
 							<ObjectLists>
 								<ObjectList Name="RTPC">
 									<Reference>
@@ -127,8 +180,54 @@
 						<Bus Name="Other" ID="{BC101499-8C91-42B8-BA04-AA71ADF036EF}">
 							<PropertyList>
 								<Property Name="Color" Type="int16" Value="8"/>
+								<Property Name="MaxSoundPerInstance" Type="int16">
+									<ValueList>
+										<Value>4</Value>
+									</ValueList>
+								</Property>
 								<Property Name="OverrideColor" Type="bool" Value="True"/>
+								<Property Name="UseMaxSoundPerInstance" Type="bool">
+									<ValueList>
+										<Value>True</Value>
+									</ValueList>
+								</Property>
 							</PropertyList>
+							<StateInfo>
+								<StateGroupList>
+									<StateGroupInfo>
+										<StateGroupRef Name="Cooking_Menu" ID="{480DC1F1-C4C9-4C3D-BC13-612628739BAC}"/>
+									</StateGroupInfo>
+									<StateGroupInfo>
+										<StateGroupRef Name="Pause_Menu" ID="{DCC4536A-E318-48C6-AA1F-DF8580335888}"/>
+									</StateGroupInfo>
+								</StateGroupList>
+								<CustomStateList>
+									<CustomState>
+										<StateRef Name="OutCookingMenu" ID="{F48474B2-E070-43CA-9C12-219BE4A7071C}"/>
+										<CustomState Name="" ID="{D188BF24-EF90-425E-A507-F17B243500B3}" ShortID="246870106"/>
+									</CustomState>
+									<CustomState>
+										<StateRef Name="InCookingMenu" ID="{BD061B15-9DAF-4A28-A041-2AF277545DA4}"/>
+										<CustomState Name="" ID="{5B8561FB-BF2D-488F-875C-CF8E82B31686}" ShortID="821636371">
+											<PropertyList>
+												<Property Name="BusVolume" Type="Real64" Value="-10"/>
+											</PropertyList>
+										</CustomState>
+									</CustomState>
+									<CustomState>
+										<StateRef Name="InPauseMenu" ID="{59CFFA60-D92A-4A95-BEC1-15870A188413}"/>
+										<CustomState Name="" ID="{C98AF79D-CCD5-48BE-8D4E-4368BA79FEBB}" ShortID="790567975">
+											<PropertyList>
+												<Property Name="BusVolume" Type="Real64" Value="-100"/>
+											</PropertyList>
+										</CustomState>
+									</CustomState>
+									<CustomState>
+										<StateRef Name="OutPauseMenu" ID="{2987396D-222D-4B27-A23D-F2A7ECE32AD1}"/>
+										<CustomState Name="" ID="{85AF93A6-7F7F-4EA3-8F6A-EA30E54D824C}" ShortID="372052129"/>
+									</CustomState>
+								</CustomStateList>
+							</StateInfo>
 							<ObjectLists>
 								<ObjectList Name="RTPC">
 									<Reference>
@@ -178,8 +277,54 @@
 						<Bus Name="MC" ID="{A587D2AA-E330-45F3-89D5-D1CD82BE2E54}">
 							<PropertyList>
 								<Property Name="Color" Type="int16" Value="2"/>
+								<Property Name="MaxSoundPerInstance" Type="int16">
+									<ValueList>
+										<Value>10</Value>
+									</ValueList>
+								</Property>
 								<Property Name="OverrideColor" Type="bool" Value="True"/>
+								<Property Name="UseMaxSoundPerInstance" Type="bool">
+									<ValueList>
+										<Value>True</Value>
+									</ValueList>
+								</Property>
 							</PropertyList>
+							<StateInfo>
+								<StateGroupList>
+									<StateGroupInfo>
+										<StateGroupRef Name="Cooking_Menu" ID="{480DC1F1-C4C9-4C3D-BC13-612628739BAC}"/>
+									</StateGroupInfo>
+									<StateGroupInfo>
+										<StateGroupRef Name="Pause_Menu" ID="{DCC4536A-E318-48C6-AA1F-DF8580335888}"/>
+									</StateGroupInfo>
+								</StateGroupList>
+								<CustomStateList>
+									<CustomState>
+										<StateRef Name="OutCookingMenu" ID="{F48474B2-E070-43CA-9C12-219BE4A7071C}"/>
+										<CustomState Name="" ID="{6F58AC81-9298-408E-9979-FD1461E69479}" ShortID="782450683"/>
+									</CustomState>
+									<CustomState>
+										<StateRef Name="InCookingMenu" ID="{BD061B15-9DAF-4A28-A041-2AF277545DA4}"/>
+										<CustomState Name="" ID="{41583792-CBFA-4601-8556-66997F4233C9}" ShortID="830418761">
+											<PropertyList>
+												<Property Name="BusVolume" Type="Real64" Value="-10"/>
+											</PropertyList>
+										</CustomState>
+									</CustomState>
+									<CustomState>
+										<StateRef Name="InPauseMenu" ID="{59CFFA60-D92A-4A95-BEC1-15870A188413}"/>
+										<CustomState Name="" ID="{983B1AC2-8EE6-43CF-8311-C36E438E22E3}" ShortID="412907675">
+											<PropertyList>
+												<Property Name="BusVolume" Type="Real64" Value="-100"/>
+											</PropertyList>
+										</CustomState>
+									</CustomState>
+									<CustomState>
+										<StateRef Name="OutPauseMenu" ID="{2987396D-222D-4B27-A23D-F2A7ECE32AD1}"/>
+										<CustomState Name="" ID="{139EFA65-3663-4BAA-B472-69F00105A83B}" ShortID="187050988"/>
+									</CustomState>
+								</CustomStateList>
+							</StateInfo>
 							<ObjectLists>
 								<ObjectList Name="RTPC">
 									<Reference>
@@ -231,10 +376,9 @@
 								<Property Name="Color" Type="int16" Value="10"/>
 								<Property Name="MaxSoundPerInstance" Type="int16">
 									<ValueList>
-										<Value>20</Value>
+										<Value>15</Value>
 									</ValueList>
 								</Property>
-								<Property Name="OverLimitBehavior" Type="int16" Value="1"/>
 								<Property Name="OverrideColor" Type="bool" Value="True"/>
 								<Property Name="UseMaxSoundPerInstance" Type="bool">
 									<ValueList>
@@ -243,22 +387,115 @@
 								</Property>
 							</PropertyList>
 							<ChildrenList>
-								<Bus Name="Pea_Movements" ID="{6A0D6CD1-C13E-4518-B7BE-677C2C0DA145}">
-									<PropertyList>
-										<Property Name="MaxReachedBehavior" Type="int16" Value="1"/>
-										<Property Name="MaxSoundPerInstance" Type="int16">
-											<ValueList>
-												<Value>7</Value>
-											</ValueList>
-										</Property>
-										<Property Name="UseMaxSoundPerInstance" Type="bool">
-											<ValueList>
-												<Value>True</Value>
-											</ValueList>
-										</Property>
-									</PropertyList>
+								<Bus Name="Cabbage_Charge" ID="{EFD0EC48-C6BC-4982-BAED-4FB6BEF68DA5}">
+									<ReferenceList>
+										<Reference Name="Effect0" PluginName="Wwise Meter" CompanyID="0" PluginID="129" PluginType="3">
+											<ObjectRef Name="Sidechain_Meter" ID="{8CAEDFEA-D478-4794-A098-C6F688A3E7A5}" WorkUnitID="{5063C897-C4E2-4F24-B819-F22106701854}"/>
+										</Reference>
+									</ReferenceList>
 								</Bus>
+								<Bus Name="Other_Enemies" ID="{CD4AC0A5-4F83-4620-B424-FD73509F9D65}">
+									<ChildrenList>
+										<Bus Name="Pea_Movements" ID="{6A0D6CD1-C13E-4518-B7BE-677C2C0DA145}">
+											<PropertyList>
+												<Property Name="MaxReachedBehavior" Type="int16" Value="1"/>
+												<Property Name="MaxSoundPerInstance" Type="int16">
+													<ValueList>
+														<Value>7</Value>
+													</ValueList>
+												</Property>
+												<Property Name="UseMaxSoundPerInstance" Type="bool">
+													<ValueList>
+														<Value>True</Value>
+													</ValueList>
+												</Property>
+											</PropertyList>
+										</Bus>
+									</ChildrenList>
+									<ObjectLists>
+										<ObjectList Name="RTPC">
+											<Reference>
+												<Local>
+													<RTPC Name="" ID="{397636A0-BC48-46E0-BCDF-7488BF4A8108}" ShortID="605917098">
+														<PropertyList>
+															<Property Name="PropertyName" Type="string" Value="Volume"/>
+														</PropertyList>
+														<ReferenceList>
+															<Reference Name="ControlInput">
+																<ObjectRef Name="Cabbage_Charge" ID="{DB65A5A5-7315-48A3-BAEC-C47C55A74051}" WorkUnitID="{045A0393-8F25-4CEC-9CFD-E2BF13F7B399}"/>
+															</Reference>
+															<Reference Name="Curve">
+																<Custom>
+																	<Curve Name="" ID="{21F460A9-A5A9-4A22-89A5-385BD9D89531}">
+																		<PropertyList>
+																			<Property Name="Flags" Type="int32" Value="3"/>
+																		</PropertyList>
+																		<PointList>
+																			<Point>
+																				<XPos>-48</XPos>
+																				<YPos>0</YPos>
+																				<Flags>5</Flags>
+																			</Point>
+																			<Point>
+																				<XPos>-30</XPos>
+																				<YPos>-1</YPos>
+																				<Flags>0</Flags>
+																				<SegmentShape>Log1</SegmentShape>
+																			</Point>
+																			<Point>
+																				<XPos>0</XPos>
+																				<YPos>-8</YPos>
+																				<Flags>37</Flags>
+																			</Point>
+																		</PointList>
+																	</Curve>
+																</Custom>
+															</Reference>
+														</ReferenceList>
+													</RTPC>
+												</Local>
+											</Reference>
+										</ObjectList>
+									</ObjectLists>
+								</Bus>
+								<Bus Name="Cabbage" ID="{A0AE3585-ED19-471E-B138-B27B18066AD1}"/>
 							</ChildrenList>
+							<StateInfo>
+								<StateGroupList>
+									<StateGroupInfo>
+										<StateGroupRef Name="Cooking_Menu" ID="{480DC1F1-C4C9-4C3D-BC13-612628739BAC}"/>
+									</StateGroupInfo>
+									<StateGroupInfo>
+										<StateGroupRef Name="Pause_Menu" ID="{DCC4536A-E318-48C6-AA1F-DF8580335888}"/>
+									</StateGroupInfo>
+								</StateGroupList>
+								<CustomStateList>
+									<CustomState>
+										<StateRef Name="OutCookingMenu" ID="{F48474B2-E070-43CA-9C12-219BE4A7071C}"/>
+										<CustomState Name="" ID="{77608BFE-F860-4AAC-945E-910A30D8867C}" ShortID="535159573"/>
+									</CustomState>
+									<CustomState>
+										<StateRef Name="InCookingMenu" ID="{BD061B15-9DAF-4A28-A041-2AF277545DA4}"/>
+										<CustomState Name="" ID="{32B92D08-DEE9-4178-9A93-ACE4437B058A}" ShortID="734948707">
+											<PropertyList>
+												<Property Name="BusVolume" Type="Real64" Value="-10"/>
+											</PropertyList>
+										</CustomState>
+									</CustomState>
+									<CustomState>
+										<StateRef Name="InPauseMenu" ID="{59CFFA60-D92A-4A95-BEC1-15870A188413}"/>
+										<CustomState Name="" ID="{7ED223F2-87AA-49AE-889D-348287312D82}" ShortID="316598102">
+											<PropertyList>
+												<Property Name="BusVolume" Type="Real64" Value="-100"/>
+											</PropertyList>
+										</CustomState>
+									</CustomState>
+									<CustomState>
+										<StateRef Name="OutPauseMenu" ID="{2987396D-222D-4B27-A23D-F2A7ECE32AD1}"/>
+										<CustomState Name="" ID="{7AE00AEF-EE4C-4039-BD19-9E06E9123E9C}" ShortID="88871410"/>
+									</CustomState>
+								</CustomStateList>
+							</StateInfo>
 							<ObjectLists>
 								<ObjectList Name="RTPC">
 									<Reference>
@@ -316,6 +553,27 @@
 									<ObjectRef Name="Sidechain_Meter" ID="{8CAEDFEA-D478-4794-A098-C6F688A3E7A5}" WorkUnitID="{5063C897-C4E2-4F24-B819-F22106701854}"/>
 								</Reference>
 							</ReferenceList>
+							<StateInfo>
+								<StateGroupList>
+									<StateGroupInfo>
+										<StateGroupRef Name="Pause_Menu" ID="{DCC4536A-E318-48C6-AA1F-DF8580335888}"/>
+									</StateGroupInfo>
+								</StateGroupList>
+								<CustomStateList>
+									<CustomState>
+										<StateRef Name="InPauseMenu" ID="{59CFFA60-D92A-4A95-BEC1-15870A188413}"/>
+										<CustomState Name="" ID="{C60BD434-CF36-4D53-A604-594DB843199E}" ShortID="522441179">
+											<PropertyList>
+												<Property Name="BusVolume" Type="Real64" Value="-100"/>
+											</PropertyList>
+										</CustomState>
+									</CustomState>
+									<CustomState>
+										<StateRef Name="OutPauseMenu" ID="{2987396D-222D-4B27-A23D-F2A7ECE32AD1}"/>
+										<CustomState Name="" ID="{C0219841-E5A2-45F7-8576-6BFC434742DB}" ShortID="281913343"/>
+									</CustomState>
+								</CustomStateList>
+							</StateInfo>
 							<DuckingList>
 								<DuckItem>
 									<BusRef Name="Music" ID="{7BB7EC33-157E-4888-BD94-A74363B1A383}"/>

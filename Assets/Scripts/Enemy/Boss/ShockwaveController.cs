@@ -1,20 +1,33 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 [RequireComponent(typeof(BossController))]
 public class ShockwaveController : MonoBehaviour
 {
     [SerializeField] private AnimationCurve animationCurve;
 
-    private BossController bossController;
     private BossData data;
     private Coroutine shockwaveCoroutine;
     private float radius;
+    [SerializeField] Transform VFXContainer;
+    ParticleSystem[] _shockwaveParts;
+    [SerializeField] LayerMask _shockwaveLayerMask;
+    [SerializeField] DecalProjector _decalProjector;
+    [SerializeField] float _fadeSpeed = 1;
+    [SerializeField,Range(0,1)] float _targetAlpha = 1;
 
     private void Start()
     {
-        bossController = GetComponent<BossController>();
+        _shockwaveParts = VFXContainer.GetComponentsInChildren<ParticleSystem>();
 
+        var mat = _decalProjector.material;
+        mat.SetFloat("_Alpha", 0);
+
+        _decalProjector.size = new Vector3(data.radius * 2, data.radius * 2,1);
+    }
+    private void OnEnable()
+    {
         Reset();
     }
 
@@ -25,6 +38,11 @@ public class ShockwaveController : MonoBehaviour
 
     public void StartShockwave()
     {
+        StartCoroutine(DecalFadeIn());
+
+        foreach (ParticleSystem particle in _shockwaveParts)
+            particle.Play();
+
         bool hasHittingPlayer = false;
         float duration = data.GetShockwaveDuration;
 
@@ -40,17 +58,24 @@ public class ShockwaveController : MonoBehaviour
 
                 radius = Mathf.Lerp(0, data.GetMaxRadius, curveValue);
 
+                foreach(ParticleSystem particle in _shockwaveParts)
+                {
+                    var shape = particle.shape;
+                    shape.radius = radius;
+                } 
+
                 if (!hasHittingPlayer)
                 {
-                    Collider[] hits = Physics.OverlapSphere(transform.position, radius);
+                    Collider[] hits = Physics.OverlapSphere(transform.position, radius, _shockwaveLayerMask);
 
                     foreach (Collider c in hits)
                     {
-                        if (c.gameObject.layer == LayerMask.NameToLayer("Player"))
+                        if (c.GetComponent<PlayerController>())
                         {
                             PlayerController.Instance.TakeDamage(data.GetShockwaveDamage);
 
                             hasHittingPlayer = true;
+                            break;
                         }
                     }
                 }
@@ -59,22 +84,56 @@ public class ShockwaveController : MonoBehaviour
 
                 yield return null;
             }
-#if UNITY_EDITOR
-            ResetRadiusPos();
-#endif
-            //bossController.EndShockwave();
-        }
-    }
 
-#if UNITY_EDITOR
+            foreach (ParticleSystem particle in _shockwaveParts)
+                particle.Stop();
+
+            StartCoroutine(DecalFadeOut());
+        }
+       
+    }
 
     public void ResetRadiusPos()
     {
         if (shockwaveCoroutine != null)
             StopCoroutine(shockwaveCoroutine);
-        
         radius = 0;
     }
+
+    public IEnumerator DecalFadeIn()
+    {
+        var mat = _decalProjector.material;
+        
+        mat.SetFloat("_Alpha", 0);
+
+        //FADE
+        float alphaProgress = 0;
+        while (alphaProgress < _targetAlpha)
+        {
+            alphaProgress += Time.fixedDeltaTime * _fadeSpeed * _targetAlpha;
+            mat.SetFloat("_Alpha", alphaProgress);
+            yield return new WaitForFixedUpdate();
+        }
+        mat.SetFloat("_Alpha", _targetAlpha);
+    }
+    public IEnumerator DecalFadeOut()
+    {
+        var mat = _decalProjector.material;
+
+        mat.SetFloat("_Alpha", 0);
+
+        //FADE
+        float alphaProgress = 1;
+        while (alphaProgress > 0)
+        {
+            alphaProgress -= Time.fixedDeltaTime * _fadeSpeed;
+            mat.SetFloat("_Alpha", alphaProgress);
+            yield return new WaitForFixedUpdate();
+        }
+        mat.SetFloat("_Alpha", 0);
+    }
+
+#if UNITY_EDITOR
 
     private void OnGUI()
     {
@@ -88,7 +147,7 @@ public class ShockwaveController : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.black;
-        Gizmos.DrawSphere(transform.position, radius);
+        Gizmos.DrawWireSphere(transform.position, radius);
 
         if (data)
         {

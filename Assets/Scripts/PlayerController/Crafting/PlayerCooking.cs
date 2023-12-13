@@ -7,6 +7,21 @@ public class PlayerCooking : MonoBehaviour
 {
     #region Variables
 
+    [Header("Sound")]
+    [SerializeField]
+    private AK.Wwise.Event _Play_UI_Cook_Open;
+    [SerializeField]
+    private AK.Wwise.Event _Play_UI_Cook_Close;
+    [SerializeField]
+    private AK.Wwise.Event _Play_SFX_Cook;
+    [SerializeField]
+    private AK.Wwise.Event _Stop_SFX_Cook;
+    [SerializeField]
+    private AK.Wwise.Event _Play_SFX_Cook_End;
+    [SerializeField]
+    private AK.Wwise.Event _Play_Reset_Ingredient;
+
+
     [SerializeField]
     PlayerAttack m_attackScript;
 
@@ -31,9 +46,6 @@ public class PlayerCooking : MonoBehaviour
     Material _fillMaterial;
 
     Coroutine _craftingRoutine;
-
-    [SerializeField]
-    private AK.Wwise.Event _Play_SFX_Cook;
 
     static PlayerCooking _instance;
     public static PlayerCooking Instance
@@ -90,6 +102,7 @@ public class PlayerCooking : MonoBehaviour
         {
             PlayerRuntimeData.GetInstance().data.CookData.QTESuccess = false;
             _inventoryScript.Show(true);
+            _Play_UI_Cook_Open.Post(gameObject);
         }
         else
         {
@@ -110,6 +123,8 @@ public class PlayerCooking : MonoBehaviour
             {
                 _inventoryScript.Show(false);
                 _inventoryScript.CancelCraft();
+                _Play_UI_Cook_Close.Post(gameObject);
+
             }
         }
         else
@@ -137,10 +152,6 @@ public class PlayerCooking : MonoBehaviour
 
             //Reset last bullet parametters
             m_attackScript.ResetParameters();
-            foreach(ProjectileData data in _inventoryScript.EquippedRecipe)
-            {
-                data.audioState.SetValue();
-            }
 
             _inventoryScript.Show(false);
 
@@ -176,8 +187,7 @@ public class PlayerCooking : MonoBehaviour
             //Show UI
             m_cookingProgressVisuals.SetActive(true);
 
-            //Stop Slow Motion
-            //Time.timeScale = 1f;
+            _Play_SFX_Cook.Post(gameObject);
         }
     }
 
@@ -191,6 +201,8 @@ public class PlayerCooking : MonoBehaviour
 
         //Hide UI
         m_cookingProgressVisuals.SetActive(false);
+
+        _Stop_SFX_Cook.Post(gameObject);
     }
 
     public void RestartCrafting()
@@ -206,6 +218,8 @@ public class PlayerCooking : MonoBehaviour
 
     void CompleteCrafting()
     {
+        _Play_Reset_Ingredient.Post(gameObject);
+
         _inventoryScript.CraftBullet();
         m_attackScript.OnAmmunitionChange();
 
@@ -219,6 +233,9 @@ public class PlayerCooking : MonoBehaviour
         _playerController.CheckingIfCookingIsDone();
         _playerController.StopCookingState();
         //_playerController._ignoreCook = true;
+
+        _Stop_SFX_Cook.Post(gameObject);
+        _Play_SFX_Cook_End.Post(gameObject);
     }
 
     IEnumerator ICraftingLoop(float delay)

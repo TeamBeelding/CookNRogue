@@ -4,6 +4,14 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerCooking))]
 public class PlayerCookingQTE : MonoBehaviour
 {
+    [Header("Sound")]
+    [SerializeField]
+    private AK.Wwise.Event _Play_SFX_QTE_Appear;
+    [SerializeField]
+    private AK.Wwise.Event _Play_SFX_QTE_Disappear;
+    [SerializeField]
+    private AK.Wwise.Event _Play_SFX_QTE_Success;
+
     [SerializeField]
     PlayerCooking m_playerCookingScript;
 
@@ -53,6 +61,8 @@ public class PlayerCookingQTE : MonoBehaviour
 
         StopCoroutine(_curLoop);
         _curLoop = null;
+        _Play_SFX_QTE_Disappear.Post(gameObject);
+
     }
 
     private void CompleteQTE()
@@ -65,6 +75,7 @@ public class PlayerCookingQTE : MonoBehaviour
         m_playerCookingScript.CompletedQTE();
 
         ResetQTE();
+        _Play_SFX_QTE_Success.Post(gameObject);
     }
 
     public void ResetQTE()
@@ -102,6 +113,7 @@ public class PlayerCookingQTE : MonoBehaviour
         _hasSpawned = true;
         m_QTEVisuals.SetActive(true);
         _playerController.QTEAppear();
+        _Play_SFX_QTE_Appear.Post(gameObject);
 
         yield return new WaitForSeconds(duration);
         FailQTE();
