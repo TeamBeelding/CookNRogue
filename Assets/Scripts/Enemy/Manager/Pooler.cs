@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Enemy;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -51,8 +52,6 @@ public class Pooler : MonoBehaviour, IPooling
 
         obj = queue.Dequeue();
 
-        //PlaceItCorrectly(obj);
-
         obj.transform.position = position;
         obj.transform.rotation = quaternion;
 
@@ -69,11 +68,5 @@ public class Pooler : MonoBehaviour, IPooling
         obj.SetActive(false);
 
         remainingElement++;
-    }
-
-    private void PlaceItCorrectly(GameObject obj)
-    {
-        obj.SetActive(true);
-        obj.SetActive(false);
     }
 }
