@@ -62,6 +62,7 @@ namespace Enemy
 
         public void LastAIDying()
         {
+            Debug.Log("ça marche sa merde");
             OnAllEnnemiesKilled?.Invoke();
         }
 
