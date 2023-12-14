@@ -3256,6 +3256,22 @@
 							</ReferenceList>
 							<ChildrenList>
 								<BlendContainer Name="Kamikaze_Idle" ID="{423263B6-7532-4EC6-ABAF-20DD072112E6}" ShortID="748274431">
+									<PropertyList>
+										<Property Name="BelowThresholdBehavior" Type="int16" Value="2"/>
+										<Property Name="IgnoreParentMaxSoundInstance" Type="bool" Value="True"/>
+										<Property Name="MaxReachedBehavior" Type="int16" Value="1"/>
+										<Property Name="MaxSoundPerInstance" Type="int16">
+											<ValueList>
+												<Value>1</Value>
+											</ValueList>
+										</Property>
+										<Property Name="OverrideVirtualVoice" Type="bool" Value="True"/>
+										<Property Name="UseMaxSoundPerInstance" Type="bool">
+											<ValueList>
+												<Value>True</Value>
+											</ValueList>
+										</Property>
+									</PropertyList>
 									<ReferenceList>
 										<Reference Name="Conversion">
 											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DEC634C6-86E3-4DF9-96EE-F869BA355507}"/>
@@ -3588,6 +3604,84 @@
 										</Sound>
 									</ChildrenList>
 								</RandomSequenceContainer>
+								<RandomSequenceContainer Name="Kamikaze_Hit" ID="{C5CDF379-F1D0-435E-97F4-5212B885BD0A}" ShortID="595702566">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DEC634C6-86E3-4DF9-96EE-F869BA355507}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{85B5C199-8628-4DDB-B756-DA8917395816}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<Sound Name="SFX_Pea_Pod_Hit_V1-001" ID="{88168ABA-F430-453D-9CBD-396EB18A227B}" ShortID="456524971">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DEC634C6-86E3-4DF9-96EE-F869BA355507}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{85B5C199-8628-4DDB-B756-DA8917395816}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="SFX_Pea_Pod_Hit_V1-001" ID="{DDA9EB9E-8BD6-4D77-9049-A4636AC57A23}">
+													<Language>SFX</Language>
+													<AudioFile>SFX_Pea_Pod_Hit_V1-001.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="1071645651"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="SFX_Pea_Pod_Hit_V1-001" ID="{DDA9EB9E-8BD6-4D77-9049-A4636AC57A23}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="SFX_Pea_Pod_Hit_V1-002" ID="{DE2324CA-A0CB-44EE-B434-13283943B471}" ShortID="465076383">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DEC634C6-86E3-4DF9-96EE-F869BA355507}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{85B5C199-8628-4DDB-B756-DA8917395816}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="SFX_Pea_Pod_Hit_V1-002" ID="{E50A884B-D431-4E9B-A905-3D1493F52368}">
+													<Language>SFX</Language>
+													<AudioFile>SFX_Pea_Pod_Hit_V1-002.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="411336006"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="SFX_Pea_Pod_Hit_V1-002" ID="{E50A884B-D431-4E9B-A905-3D1493F52368}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="SFX_Pea_Pod_Hit_V1-003" ID="{F2DF1123-7295-43AA-B6EB-F41BEA691149}" ShortID="1041315401">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DEC634C6-86E3-4DF9-96EE-F869BA355507}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{85B5C199-8628-4DDB-B756-DA8917395816}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="SFX_Pea_Pod_Hit_V1-003" ID="{6F52577C-DB29-41DB-9B62-E017799D1F59}">
+													<Language>SFX</Language>
+													<AudioFile>SFX_Pea_Pod_Hit_V1-003.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="841777434"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="SFX_Pea_Pod_Hit_V1-003" ID="{6F52577C-DB29-41DB-9B62-E017799D1F59}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+									</ChildrenList>
+								</RandomSequenceContainer>
 							</ChildrenList>
 						</ActorMixer>
 					</ChildrenList>
@@ -3599,12 +3693,20 @@
 						</StateGroupList>
 						<CustomStateList>
 							<CustomState>
-								<StateRef Name="NotInFight" ID="{99F50B97-DF6B-4507-AEA0-78A4EF50F02C}"/>
+								<StateRef Name="Exploration" ID="{99F50B97-DF6B-4507-AEA0-78A4EF50F02C}"/>
 								<CustomState Name="" ID="{A6D07108-A216-4646-8868-7715CA0711DD}" ShortID="178993710"/>
 							</CustomState>
 							<CustomState>
 								<StateRef Name="InFight" ID="{520D31D5-B746-4935-AFA5-95AFFA570329}"/>
 								<CustomState Name="" ID="{7918CA59-1EA6-4D54-A6F2-D6FD8659DA85}" ShortID="177569827"/>
+							</CustomState>
+							<CustomState>
+								<StateRef Name="InBoss" ID="{26685954-25EA-4A92-B70B-481AAF24762A}"/>
+								<CustomState Name="" ID="{19FDB28D-7427-4B69-A9C6-0F061B6DE8A1}" ShortID="442314073"/>
+							</CustomState>
+							<CustomState>
+								<StateRef Name="NoMusic" ID="{E6B63851-F8F6-4E8A-8A12-C6F2B068316D}"/>
+								<CustomState Name="" ID="{6827F182-E56C-446E-8E65-F5C71C39BE46}" ShortID="685911437"/>
 							</CustomState>
 						</CustomStateList>
 					</StateInfo>

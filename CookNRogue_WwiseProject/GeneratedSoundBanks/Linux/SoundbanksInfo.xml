@@ -94,8 +94,10 @@
 				<StateGroup Id="2181612614" Name="InFight">
 					<States>
 						<State Id="748895195" Name="None"/>
+						<State Id="1862135557" Name="NoMusic"/>
 						<State Id="2181612614" Name="InFight"/>
-						<State Id="2218077717" Name="NotInFight"/>
+						<State Id="2387025391" Name="InBoss"/>
+						<State Id="2582085496" Name="Exploration"/>
 					</States>
 				</StateGroup>
 				<StateGroup Id="2682233438" Name="Rice">
@@ -149,7 +151,7 @@
 				</StateGroup>
 			</StateGroups>
 		</SoundBank>
-		<SoundBank Id="1421616930" Type="User" Language="SFX" Hash="{AF655B1E-C91B-6226-A469-7C5136279A76}">
+		<SoundBank Id="1421616930" Type="User" Language="SFX" Hash="{E2165DE7-9A9C-A8A3-6B79-0EDD034FF350}">
 			<ShortName>SFX_Boss</ShortName>
 			<Path>SFX_Boss.bnk</Path>
 			<Media>
@@ -1070,7 +1072,7 @@
 				<Event Id="3742019055" Name="Stop_SFX_Cabbage_Charge_LP" MaxAttenuation="0" DurationType="OneShot" DurationMin="0" DurationMax="0"/>
 			</Events>
 		</SoundBank>
-		<SoundBank Id="3233071479" Type="User" Language="SFX" Hash="{CD4867A8-6D7C-9E1E-FD42-7B7E11319B8F}">
+		<SoundBank Id="3233071479" Type="User" Language="SFX" Hash="{ED3D5EBC-FF98-BF42-B13C-CC581F8C1D60}">
 			<ShortName>SFX_Enemy_Kamikaze</ShortName>
 			<Path>SFX_Enemy_Kamikaze.bnk</Path>
 			<Media>
@@ -1082,6 +1084,10 @@
 					<ShortName>SFX_Kamikaze_Idle_B_03.wav</ShortName>
 					<CachePath>SFX/SFX_Kamikaze_Idle_B_03_9EDFC787.wem</CachePath>
 				</File>
+				<File Id="186779642" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Cauldron_Explode_04.wav</ShortName>
+					<CachePath>SFX/SFX_Cauldron_Explode_04_3F75BDB9.wem</CachePath>
+				</File>
 				<File Id="220333511" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>SFX_Kamikaze_Idle_A_02.wav</ShortName>
 					<CachePath>SFX/SFX_Kamikaze_Idle_A_02_9EDFC787.wem</CachePath>
@@ -1089,6 +1095,14 @@
 				<File Id="255229643" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>SFX_Kamikaze_Idle_A_03.wav</ShortName>
 					<CachePath>SFX/SFX_Kamikaze_Idle_A_03_9EDFC787.wem</CachePath>
+				</File>
+				<File Id="291360466" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Cauldron_Explode_03.wav</ShortName>
+					<CachePath>SFX/SFX_Cauldron_Explode_03_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="411336006" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Pea_Pod_Hit_V1-002.wav</ShortName>
+					<CachePath>SFX/SFX_Pea_Pod_Hit_V1-002_3F75BDB9.wem</CachePath>
 				</File>
 				<File Id="509131991" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>SFX_Kamikaze_Idle_A_01.wav</ShortName>
@@ -1102,8 +1116,39 @@
 					<ShortName>SFX_Kamikaze_Idle_B_02.wav</ShortName>
 					<CachePath>SFX/SFX_Kamikaze_Idle_B_02_9EDFC787.wem</CachePath>
 				</File>
+				<File Id="841777434" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Pea_Pod_Hit_V1-003.wav</ShortName>
+					<CachePath>SFX/SFX_Pea_Pod_Hit_V1-003_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="845554459" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Cauldron_Explode_01.wav</ShortName>
+					<CachePath>SFX/SFX_Cauldron_Explode_01_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="877216723" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Cauldron_Explode_02.wav</ShortName>
+					<CachePath>SFX/SFX_Cauldron_Explode_02_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="1071645651" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Pea_Pod_Hit_V1-001.wav</ShortName>
+					<CachePath>SFX/SFX_Pea_Pod_Hit_V1-001_3F75BDB9.wem</CachePath>
+				</File>
 			</Media>
 			<Events>
+				<Event Id="1362170235" Name="Play_Kamikaze_Explosion" MaxAttenuation="25" DurationType="OneShot" DurationMin="0.9915081" DurationMax="0.9928761">
+					<MediaRefs>
+						<MediaRef Id="186779642"/>
+						<MediaRef Id="291360466"/>
+						<MediaRef Id="845554459"/>
+						<MediaRef Id="877216723"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="2263012213" Name="Play_Kamikaze_Hit" MaxAttenuation="25" DurationType="OneShot" DurationMin="1.4070625" DurationMax="1.4615">
+					<MediaRefs>
+						<MediaRef Id="411336006"/>
+						<MediaRef Id="841777434"/>
+						<MediaRef Id="1071645651"/>
+					</MediaRefs>
+				</Event>
 				<Event Id="1454684904" Name="Play_Kamikaze_Idle" MaxAttenuation="25" DurationType="Infinite">
 					<MediaRefs>
 						<MediaRef Id="4415085"/>
@@ -1407,7 +1452,7 @@
 				</Event>
 			</Events>
 		</SoundBank>
-		<SoundBank Id="3991942870" Type="User" Language="SFX" Hash="{A1D00929-555E-62E4-43F1-9F3A0EA92562}">
+		<SoundBank Id="3991942870" Type="User" Language="SFX" Hash="{71B19B88-6705-17B0-B7FD-84B6310B968E}">
 			<ShortName>MUSIC</ShortName>
 			<Path>MUSIC.bnk</Path>
 			<Media>
@@ -1422,6 +1467,10 @@
 				<File Id="98237533" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>Piano_Bass_02_C.wav</ShortName>
 					<CachePath>SFX/Piano_Bass_02_C_D79FB2B7.wem</CachePath>
+				</File>
+				<File Id="110973873" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Transi_03.wav</ShortName>
+					<CachePath>SFX/Transi_03_D79FB2B7.wem</CachePath>
 				</File>
 				<File Id="204852398" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>Instrumental_Section_01_02.wav</ShortName>
@@ -1455,6 +1504,10 @@
 					<ShortName>Piano_Bass_02_B.wav</ShortName>
 					<CachePath>SFX/Piano_Bass_02_B_D79FB2B7.wem</CachePath>
 				</File>
+				<File Id="295837266" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Transi_02.wav</ShortName>
+					<CachePath>SFX/Transi_02_D79FB2B7.wem</CachePath>
+				</File>
 				<File Id="423374554" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>Piano_Bass_Intro_01.wav</ShortName>
 					<CachePath>SFX/Piano_Bass_Intro_01_D79FB2B7.wem</CachePath>
@@ -1462,6 +1515,14 @@
 				<File Id="436582919" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>Music_Exploration_V2.wav</ShortName>
 					<CachePath>SFX/Music_Exploration_V2_D79FB2B7.wem</CachePath>
+				</File>
+				<File Id="503602989" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Part_02_All_Without_No_Transi.wav</ShortName>
+					<CachePath>SFX/Part_02_All_Without_No_Transi_D79FB2B7.wem</CachePath>
+				</File>
+				<File Id="545518497" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Transi_01.wav</ShortName>
+					<CachePath>SFX/Transi_01_D79FB2B7.wem</CachePath>
 				</File>
 				<File Id="611635544" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>WoodBlock_01_02.wav</ShortName>
@@ -1490,6 +1551,10 @@
 				<File Id="1003454703" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>WoodPerc_Intro_01_02.wav</ShortName>
 					<CachePath>SFX/WoodPerc_Intro_01_02_D79FB2B7.wem</CachePath>
+				</File>
+				<File Id="1025528603" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Part_01_All_Without_No_Transi.wav</ShortName>
+					<CachePath>SFX/Part_01_All_Without_No_Transi_D79FB2B7.wem</CachePath>
 				</File>
 				<File Id="1042873704" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>Castagnette_Intro_01_02.wav</ShortName>
@@ -1530,9 +1595,19 @@
 							</MediaRefs>
 						</SwitchContainer>
 						<SwitchContainer>
-							<SwitchValue GroupType="State" GroupId="2181612614" Id="2218077717"/>
+							<SwitchValue GroupType="State" GroupId="2181612614" Id="2582085496"/>
 							<MediaRefs>
 								<MediaRef Id="436582919"/>
+							</MediaRefs>
+						</SwitchContainer>
+						<SwitchContainer>
+							<SwitchValue GroupType="State" GroupId="2181612614" Id="2387025391"/>
+							<MediaRefs>
+								<MediaRef Id="110973873"/>
+								<MediaRef Id="295837266"/>
+								<MediaRef Id="503602989"/>
+								<MediaRef Id="545518497"/>
+								<MediaRef Id="1025528603"/>
 							</MediaRefs>
 						</SwitchContainer>
 					</SwitchContainers>
@@ -1556,8 +1631,10 @@
 				<StateGroup Id="2181612614" Name="InFight">
 					<States>
 						<State Id="748895195" Name="None"/>
+						<State Id="1862135557" Name="NoMusic"/>
 						<State Id="2181612614" Name="InFight"/>
-						<State Id="2218077717" Name="NotInFight"/>
+						<State Id="2387025391" Name="InBoss"/>
+						<State Id="2582085496" Name="Exploration"/>
 					</States>
 				</StateGroup>
 				<StateGroup Id="2682233438" Name="Rice">
@@ -2167,5 +2244,5 @@
 			</StateGroups>
 		</SoundBank>
 	</SoundBanks>
-	<FileHash>{B60DEF7D-80EA-1B4F-1516-F6D8D6AD280B}</FileHash>
+	<FileHash>{D330A38F-7699-AAD3-431A-F2D9AB592F74}</FileHash>
 </SoundBanksInfo>

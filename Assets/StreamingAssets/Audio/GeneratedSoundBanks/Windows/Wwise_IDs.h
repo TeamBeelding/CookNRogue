@@ -15,6 +15,7 @@ namespace AK
     {
         static const AkUniqueID PLAY_AMB_LEVEL = 1968870321U;
         static const AkUniqueID PLAY_KAMIKAZE_EXPLOSION = 1362170235U;
+        static const AkUniqueID PLAY_KAMIKAZE_HIT = 2263012213U;
         static const AkUniqueID PLAY_KAMIKAZE_IDLE = 1454684904U;
         static const AkUniqueID PLAY_MC_CAULDRON_IDLE = 2012076284U;
         static const AkUniqueID PLAY_MC_DASH = 2996328093U;
@@ -172,9 +173,11 @@ namespace AK
 
             namespace STATE
             {
+                static const AkUniqueID EXPLORATION = 2582085496U;
+                static const AkUniqueID INBOSS = 2387025391U;
                 static const AkUniqueID INFIGHT = 2181612614U;
+                static const AkUniqueID NOMUSIC = 1862135557U;
                 static const AkUniqueID NONE = 748895195U;
-                static const AkUniqueID NOTINFIGHT = 2218077717U;
             } // namespace STATE
         } // namespace INFIGHT
 

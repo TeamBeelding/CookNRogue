@@ -3292,16 +3292,28 @@
 								</StateGroupList>
 								<CustomStateList>
 									<CustomState>
-										<StateRef Name="NotInFight" ID="{99F50B97-DF6B-4507-AEA0-78A4EF50F02C}"/>
+										<StateRef Name="Exploration" ID="{99F50B97-DF6B-4507-AEA0-78A4EF50F02C}"/>
 										<CustomState Name="" ID="{CA9A23ED-45E5-4DBD-84EE-DF381D12CED9}" ShortID="259425380"/>
 									</CustomState>
 									<CustomState>
 										<StateRef Name="InFight" ID="{520D31D5-B746-4935-AFA5-95AFFA570329}"/>
 										<CustomState Name="" ID="{CDFA7803-C36B-440D-B992-F22724181B1A}" ShortID="1068106406">
 											<PropertyList>
-												<Property Name="Volume" Type="Real64" Value="-3"/>
+												<Property Name="Volume" Type="Real64" Value="-5"/>
 											</PropertyList>
 										</CustomState>
+									</CustomState>
+									<CustomState>
+										<StateRef Name="InBoss" ID="{26685954-25EA-4A92-B70B-481AAF24762A}"/>
+										<CustomState Name="" ID="{0A2636EC-AAFF-4798-885A-7C2472B81B21}" ShortID="951004235">
+											<PropertyList>
+												<Property Name="Volume" Type="Real64" Value="-5"/>
+											</PropertyList>
+										</CustomState>
+									</CustomState>
+									<CustomState>
+										<StateRef Name="NoMusic" ID="{E6B63851-F8F6-4E8A-8A12-C6F2B068316D}"/>
+										<CustomState Name="" ID="{CE8B7E36-A6E9-4904-8CB2-3DC2F1BFDBDC}" ShortID="864293178"/>
 									</CustomState>
 								</CustomStateList>
 							</StateInfo>
@@ -3315,12 +3327,20 @@
 						</StateGroupList>
 						<CustomStateList>
 							<CustomState>
-								<StateRef Name="NotInFight" ID="{99F50B97-DF6B-4507-AEA0-78A4EF50F02C}"/>
+								<StateRef Name="Exploration" ID="{99F50B97-DF6B-4507-AEA0-78A4EF50F02C}"/>
 								<CustomState Name="" ID="{CBCAC623-9271-44F3-A832-EBAF04914417}" ShortID="598957829"/>
 							</CustomState>
 							<CustomState>
 								<StateRef Name="InFight" ID="{520D31D5-B746-4935-AFA5-95AFFA570329}"/>
 								<CustomState Name="" ID="{25C4B5B1-68FA-4C22-A482-361277C81B72}" ShortID="1062893416"/>
+							</CustomState>
+							<CustomState>
+								<StateRef Name="InBoss" ID="{26685954-25EA-4A92-B70B-481AAF24762A}"/>
+								<CustomState Name="" ID="{494DA854-BA40-4FA4-8C68-BC63D808028B}" ShortID="1000232154"/>
+							</CustomState>
+							<CustomState>
+								<StateRef Name="NoMusic" ID="{E6B63851-F8F6-4E8A-8A12-C6F2B068316D}"/>
+								<CustomState Name="" ID="{85C120F9-4A84-447D-AD35-7BCF4BE7F04E}" ShortID="571889567"/>
 							</CustomState>
 						</CustomStateList>
 					</StateInfo>

@@ -158,7 +158,7 @@
 						</StateGroupList>
 						<CustomStateList>
 							<CustomState>
-								<StateRef Name="NotInFight" ID="{99F50B97-DF6B-4507-AEA0-78A4EF50F02C}"/>
+								<StateRef Name="Exploration" ID="{99F50B97-DF6B-4507-AEA0-78A4EF50F02C}"/>
 								<CustomState Name="" ID="{1DB914F8-0C74-474F-8442-2ADB05EF9EB3}" ShortID="556153676"/>
 							</CustomState>
 							<CustomState>
@@ -168,6 +168,18 @@
 										<Property Name="Volume" Type="Real64" Value="-10"/>
 									</PropertyList>
 								</CustomState>
+							</CustomState>
+							<CustomState>
+								<StateRef Name="InBoss" ID="{26685954-25EA-4A92-B70B-481AAF24762A}"/>
+								<CustomState Name="" ID="{8F9293F5-AC4D-406D-8727-6A8FD7BAEBD7}" ShortID="435815371">
+									<PropertyList>
+										<Property Name="Volume" Type="Real64" Value="-10"/>
+									</PropertyList>
+								</CustomState>
+							</CustomState>
+							<CustomState>
+								<StateRef Name="NoMusic" ID="{E6B63851-F8F6-4E8A-8A12-C6F2B068316D}"/>
+								<CustomState Name="" ID="{5BB6C191-3EC3-435D-8778-88B080775199}" ShortID="881980991"/>
 							</CustomState>
 						</CustomStateList>
 					</StateInfo>
