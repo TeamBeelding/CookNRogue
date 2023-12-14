@@ -121,16 +121,11 @@ public abstract class EnemyController : MonoBehaviour
         {
             TakeDamageEffect();
         }
-        else if (!isDead) 
-        {
-            isDead = true;
-            Dying();
-        }
-    }
-
-    protected void KillLastAI()
-    {
-        EnemyManager.Instance.LastAIDying();
+        //else if (!isDead) 
+        //{
+        //    isDead = true;
+        //    Dying();
+        //}
     }
     
     protected virtual void TakeDamageEffect()
