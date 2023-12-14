@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -31,6 +32,7 @@ public class BossController : EnemyController
     private Coroutine rotationCoroutine;
     private Vector3 targetPosition;
     [SerializeField] private Image bossHealthBar;
+    [SerializeField] Gradient _healthBarGradient;
 
     [Header("BOSS VFX")]
     [SerializeField] Transform _teleportParticlesContainer;
@@ -336,7 +338,9 @@ public class BossController : EnemyController
         if (!bossHealthBar)
             return;
 
-        bossHealthBar.fillAmount = Mathf.Clamp(Healthpoint, 0, data.GetHealth) / data.GetHealth;
+        float ratio = Mathf.Clamp(Healthpoint, 0, data.GetHealth) / data.GetHealth;
+        bossHealthBar.fillAmount = ratio;
+        bossHealthBar.color = _healthBarGradient.Evaluate(ratio);
     }
 
     public void CollideWithPlayer()
