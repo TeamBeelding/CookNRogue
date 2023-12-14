@@ -11,6 +11,10 @@ public class MissilesController : MonoBehaviour
     [SerializeField] bool _randomDisplacement;
     [SerializeField] float _displacementAmount;
 
+    [Header("Sound")]
+    [SerializeField]
+    private AK.Wwise.Event _Play_SFX_Missile_Launch;
+
     private void Awake()
     {
         boss = GetComponentInParent<BossController>();
@@ -50,6 +54,7 @@ public class MissilesController : MonoBehaviour
                 missile.Init(data.damage, target, transform.position);
 
                 yield return new WaitForSeconds(data.GetDelayForEachMissiles);
+                _Play_SFX_Missile_Launch.Post(gameObject);
             }
         }
     }

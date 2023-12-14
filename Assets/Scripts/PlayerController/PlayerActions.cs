@@ -620,40 +620,13 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""IngredientSelector"",
-                    ""type"": ""Value"",
-                    ""id"": ""04c56406-3e56-4cea-8c3a-0c84c9ab2153"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""SelectIngredient"",
-                    ""type"": ""Button"",
-                    ""id"": ""e63828fa-edab-4620-a8c1-36ea2ff5a8fa"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""ValidateIngredients"",
-                    ""type"": ""Button"",
-                    ""id"": ""cffa512f-b46f-4b3a-aabc-00296ff590c3"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
                 {
                     ""name"": """",
                     ""id"": ""040a629e-6877-4729-84fe-5395e7476b25"",
-                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""GamePad"",
@@ -768,61 +741,6 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Pause"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""74151a63-f679-461e-bf63-64a649b1bdb4"",
-                    ""path"": ""<Gamepad>/buttonWest"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""GamePad"",
-                    ""action"": ""ValidateIngredients"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""05c25b5d-a3ac-4c8a-bd76-e6aedf1a3a5b"",
-                    ""path"": ""<Mouse>/rightButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard"",
-                    ""action"": ""ValidateIngredients"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""4a6c721f-77d5-401f-9c4b-a4c9373757dd"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""GamePad"",
-                    ""action"": ""SelectIngredient"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""d8c7ff7d-0780-4d79-ae7e-fe49cf8acdd2"",
-                    ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard"",
-                    ""action"": ""SelectIngredient"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""decf065e-9f04-4099-93f5-fa8283ce2d46"",
-                    ""path"": ""<Gamepad>/leftStick"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""GamePad"",
-                    ""action"": ""IngredientSelector"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1161,9 +1079,6 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
         m_UI_Interact = m_UI.FindAction("Interact", throwIfNotFound: true);
         m_UI_Return = m_UI.FindAction("Return", throwIfNotFound: true);
         m_UI_Move = m_UI.FindAction("Move", throwIfNotFound: true);
-        m_UI_IngredientSelector = m_UI.FindAction("IngredientSelector", throwIfNotFound: true);
-        m_UI_SelectIngredient = m_UI.FindAction("SelectIngredient", throwIfNotFound: true);
-        m_UI_ValidateIngredients = m_UI.FindAction("ValidateIngredients", throwIfNotFound: true);
         // CookBook
         m_CookBook = asset.FindActionMap("CookBook", throwIfNotFound: true);
         m_CookBook_Close = m_CookBook.FindAction("Close", throwIfNotFound: true);
@@ -1414,9 +1329,6 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_UI_Interact;
     private readonly InputAction m_UI_Return;
     private readonly InputAction m_UI_Move;
-    private readonly InputAction m_UI_IngredientSelector;
-    private readonly InputAction m_UI_SelectIngredient;
-    private readonly InputAction m_UI_ValidateIngredients;
     public struct UIActions
     {
         private @PlayerActions m_Wrapper;
@@ -1425,9 +1337,6 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
         public InputAction @Interact => m_Wrapper.m_UI_Interact;
         public InputAction @Return => m_Wrapper.m_UI_Return;
         public InputAction @Move => m_Wrapper.m_UI_Move;
-        public InputAction @IngredientSelector => m_Wrapper.m_UI_IngredientSelector;
-        public InputAction @SelectIngredient => m_Wrapper.m_UI_SelectIngredient;
-        public InputAction @ValidateIngredients => m_Wrapper.m_UI_ValidateIngredients;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1449,15 +1358,6 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                 @Move.started -= m_Wrapper.m_UIActionsCallbackInterface.OnMove;
                 @Move.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnMove;
                 @Move.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnMove;
-                @IngredientSelector.started -= m_Wrapper.m_UIActionsCallbackInterface.OnIngredientSelector;
-                @IngredientSelector.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnIngredientSelector;
-                @IngredientSelector.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnIngredientSelector;
-                @SelectIngredient.started -= m_Wrapper.m_UIActionsCallbackInterface.OnSelectIngredient;
-                @SelectIngredient.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnSelectIngredient;
-                @SelectIngredient.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnSelectIngredient;
-                @ValidateIngredients.started -= m_Wrapper.m_UIActionsCallbackInterface.OnValidateIngredients;
-                @ValidateIngredients.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnValidateIngredients;
-                @ValidateIngredients.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnValidateIngredients;
             }
             m_Wrapper.m_UIActionsCallbackInterface = instance;
             if (instance != null)
@@ -1474,15 +1374,6 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                 @Move.started += instance.OnMove;
                 @Move.performed += instance.OnMove;
                 @Move.canceled += instance.OnMove;
-                @IngredientSelector.started += instance.OnIngredientSelector;
-                @IngredientSelector.performed += instance.OnIngredientSelector;
-                @IngredientSelector.canceled += instance.OnIngredientSelector;
-                @SelectIngredient.started += instance.OnSelectIngredient;
-                @SelectIngredient.performed += instance.OnSelectIngredient;
-                @SelectIngredient.canceled += instance.OnSelectIngredient;
-                @ValidateIngredients.started += instance.OnValidateIngredients;
-                @ValidateIngredients.performed += instance.OnValidateIngredients;
-                @ValidateIngredients.canceled += instance.OnValidateIngredients;
             }
         }
     }
@@ -1695,9 +1586,6 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
         void OnInteract(InputAction.CallbackContext context);
         void OnReturn(InputAction.CallbackContext context);
         void OnMove(InputAction.CallbackContext context);
-        void OnIngredientSelector(InputAction.CallbackContext context);
-        void OnSelectIngredient(InputAction.CallbackContext context);
-        void OnValidateIngredients(InputAction.CallbackContext context);
     }
     public interface ICookBookActions
     {

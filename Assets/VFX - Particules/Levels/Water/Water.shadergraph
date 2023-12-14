@@ -23,6 +23,9 @@
         },
         {
             "m_Id": "1f5412dfc55646d98d73b5d8697d76c9"
+        },
+        {
+            "m_Id": "0036b30177a34d1ba845c40c20341957"
         }
     ],
     "m_Keywords": [],
@@ -152,6 +155,9 @@
         },
         {
             "m_Id": "ecb7263292384087a102c632cc7580f0"
+        },
+        {
+            "m_Id": "6d1d54835e7546588e9448ce42281c72"
         }
     ],
     "m_GroupDatas": [],
@@ -295,6 +301,20 @@
                     "m_Id": "9f6d1ba9e2f34453b797488279379d5e"
                 },
                 "m_SlotId": 1
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "6d1d54835e7546588e9448ce42281c72"
+                },
+                "m_SlotId": 0
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "265861f88a134b448d2e75c2aba90aa6"
+                },
+                "m_SlotId": 0
             }
         },
         {
@@ -670,6 +690,33 @@
             "m_Id": "e4134df62f044d13b1ae7cff908523da"
         }
     ]
+}
+
+{
+    "m_SGVersion": 1,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.Vector1ShaderProperty",
+    "m_ObjectId": "0036b30177a34d1ba845c40c20341957",
+    "m_Guid": {
+        "m_GuidSerialized": "36fd060c-5e44-47cc-9a94-c6dc063426a3"
+    },
+    "m_Name": "WaterAlpha",
+    "m_DefaultRefNameVersion": 1,
+    "m_RefNameGeneratedByDisplayName": "WaterAlpha",
+    "m_DefaultReferenceName": "_WaterAlpha",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": true,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_Value": 1.0,
+    "m_FloatType": 1,
+    "m_RangeValues": {
+        "x": 0.0,
+        "y": 1.0
+    }
 }
 
 {
@@ -2188,6 +2235,41 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
+    "m_ObjectId": "6d1d54835e7546588e9448ce42281c72",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Property",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": 954.0,
+            "y": 233.0,
+            "width": 136.0,
+            "height": 34.0
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "95e896565ad942c99ad4aac1f07d6dec"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_Property": {
+        "m_Id": "0036b30177a34d1ba845c40c20341957"
+    }
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.DynamicVectorMaterialSlot",
     "m_ObjectId": "6fa9602ad1834dcb9c008c53d9143aeb",
     "m_Id": 1,
@@ -2830,6 +2912,21 @@
     "m_CustomColors": {
         "m_SerializableColors": []
     }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "95e896565ad942c99ad4aac1f07d6dec",
+    "m_Id": 0,
+    "m_DisplayName": "WaterAlpha",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Out",
+    "m_StageCapability": 3,
+    "m_Value": 0.0,
+    "m_DefaultValue": 0.0,
+    "m_Labels": []
 }
 
 {
@@ -4026,6 +4123,9 @@
         },
         {
             "m_Id": "1f5412dfc55646d98d73b5d8697d76c9"
+        },
+        {
+            "m_Id": "0036b30177a34d1ba845c40c20341957"
         }
     ]
 }
@@ -4483,7 +4583,7 @@
         "m_Id": "ca347e8e31bc49f598baed379df9f606"
     },
     "m_AllowMaterialOverride": false,
-    "m_SurfaceType": 0,
+    "m_SurfaceType": 1,
     "m_ZTestMode": 4,
     "m_ZWriteControl": 0,
     "m_AlphaMode": 0,

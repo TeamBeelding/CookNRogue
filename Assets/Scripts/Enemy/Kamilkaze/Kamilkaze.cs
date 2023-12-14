@@ -163,11 +163,12 @@ public class Kamilkaze : EnemyController
 
         effect?.SetActive(true);
 
+        waveManager?.SlowMotion();
         stateCoroutine = StartCoroutine(IDeathAnim());
 
         IEnumerator IDeathAnim()
         {
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(_data.DelayAfterExplosion);
             base.Dying();
         }
     }
