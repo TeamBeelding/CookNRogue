@@ -320,7 +320,7 @@ RectTransform:
   - {fileID: 242267420}
   - {fileID: 1325692280}
   m_Father: {fileID: 8417764788771567537}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -455,6 +455,7 @@ GameObject:
   - component: {fileID: 226126117295486599}
   - component: {fileID: 226126117295486596}
   - component: {fileID: 1549057056}
+  - component: {fileID: 876912438628131275}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Untagged
@@ -553,6 +554,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _randomDisplacement: 1
   _displacementAmount: 1.5
+  _Play_SFX_Missile_Launch:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 06ca7d2c9fb11af478a3871a0e53dc1a,
+      type: 2}
 --- !u!114 &226126117295486596
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -596,6 +602,11 @@ MonoBehaviour:
   _decalProjector: {fileID: 2313598797922782749}
   _fadeSpeed: 5
   _targetAlpha: 0.8
+  _Play_SFX_Boss_Erupt:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: a80bf94ca2e334f4789736b98b1c8d1f,
+      type: 2}
 --- !u!114 &1549057056
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -611,6 +622,31 @@ MonoBehaviour:
   _barAnimator: {fileID: 1331367731}
   _introDelay: 2
   _introDuration: 2.5
+--- !u!114 &876912438628131275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 226126117295486622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2698c394a636bc479a5e90f55e626a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerList: f7e1664c
+  useOtherObject: 0
+  data:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 8009e34ac5961e24f859d0da6ec32cde,
+      type: 2}
+  decodeBank: 0
+  loadAsynchronous: 0
+  saveDecodedBank: 0
+  unloadTriggerList: 958ca0ea
+  bankNameInternal: 
+  valueGuidInternal: 
 --- !u!1 &1181254943218104790
 GameObject:
   m_ObjectHideFlags: 0

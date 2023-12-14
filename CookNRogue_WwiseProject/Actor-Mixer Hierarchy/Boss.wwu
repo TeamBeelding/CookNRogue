@@ -10,6 +10,12 @@
 				<ActorMixer Name="AM_Boss" ID="{B75E7E43-B037-4282-8634-86FA842C26E4}" ShortID="107557978">
 					<PropertyList>
 						<Property Name="3DSpatialization" Type="int16" Value="1"/>
+						<Property Name="SpeakerPanning3DSpatializationMix" Type="int32" Value="70"/>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>5</Value>
+							</ValueList>
+						</Property>
 					</PropertyList>
 					<ReferenceList>
 						<Reference Name="Attenuation">
@@ -318,13 +324,13 @@
 								<Property Name="OverridePositioning" Type="bool" Value="True"/>
 								<Property Name="Volume" Type="Real64">
 									<ValueList>
-										<Value>3</Value>
+										<Value>7</Value>
 									</ValueList>
 								</Property>
 							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Attenuation">
-									<ObjectRef Name="ATN_40M" ID="{3ABC1B5A-6934-45A5-9CE0-C7633D3E1A57}" WorkUnitID="{A99C7566-826F-4E9D-A733-5652D69BE57C}"/>
+									<ObjectRef Name="ATN_BIG" ID="{507BC3F7-2385-4340-B9DC-489D7DD0595B}" WorkUnitID="{A99C7566-826F-4E9D-A733-5652D69BE57C}"/>
 								</Reference>
 								<Reference Name="Conversion">
 									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DEC634C6-86E3-4DF9-96EE-F869BA355507}"/>
@@ -451,13 +457,13 @@
 										<Property Name="OverridePositioning" Type="bool" Value="True"/>
 										<Property Name="Volume" Type="Real64">
 											<ValueList>
-												<Value>-1</Value>
+												<Value>2</Value>
 											</ValueList>
 										</Property>
 									</PropertyList>
 									<ReferenceList>
 										<Reference Name="Attenuation">
-											<ObjectRef Name="ATN_Cabbage_Charge" ID="{C75935A0-E725-4DC8-A32F-32889EF32662}" WorkUnitID="{A99C7566-826F-4E9D-A733-5652D69BE57C}"/>
+											<ObjectRef Name="ATN_Boss_Charge" ID="{08216B2F-CCA9-4AA8-AF7C-CBFBC1FEFDE1}" WorkUnitID="{A99C7566-826F-4E9D-A733-5652D69BE57C}"/>
 										</Reference>
 										<Reference Name="Conversion">
 											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DEC634C6-86E3-4DF9-96EE-F869BA355507}"/>

@@ -9,8 +9,8 @@ public class TBH : EnemyController
     /*[SerializeField]
     private AK.Wwise.Event _Play_SFX_Carrot_Dive;
     [SerializeField]
-    private AK.Wwise.Event _Play_SFX_Carrot_Erupt;
-    [SerializeField]*/
+    private AK.Wwise.Event _Play_SFX_Carrot_Erupt;*/
+    [SerializeField]
     private AK.Wwise.Event _Play_SFX_Carrot_Attack;
     [SerializeField]
     private AK.Wwise.Event _Play_SFX_Carrot_Hit;

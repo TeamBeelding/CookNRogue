@@ -21,10 +21,11 @@
 							<PropertyList>
 								<Property Name="3DSpatialization" Type="int16" Value="1"/>
 								<Property Name="OverridePositioning" Type="bool" Value="True"/>
+								<Property Name="SpeakerPanning3DSpatializationMix" Type="int32" Value="70"/>
 							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Attenuation">
-									<ObjectRef Name="ATN_25M" ID="{C1A30AD3-7F4B-4AFC-BBEE-21428EAD722D}" WorkUnitID="{A99C7566-826F-4E9D-A733-5652D69BE57C}"/>
+									<ObjectRef Name="ATN_40M" ID="{3ABC1B5A-6934-45A5-9CE0-C7633D3E1A57}" WorkUnitID="{A99C7566-826F-4E9D-A733-5652D69BE57C}"/>
 								</Reference>
 								<Reference Name="Conversion">
 									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DEC634C6-86E3-4DF9-96EE-F869BA355507}"/>
@@ -296,7 +297,7 @@
 										</Property>
 										<Property Name="Volume" Type="Real64">
 											<ValueList>
-												<Value>-5</Value>
+												<Value>-7</Value>
 											</ValueList>
 											<ModifierList>
 												<ModifierInfo>
@@ -454,6 +455,9 @@
 											</ModifierList>
 										</Property>
 										<Property Name="Volume" Type="Real64">
+											<ValueList>
+												<Value>5</Value>
+											</ValueList>
 											<ModifierList>
 												<ModifierInfo>
 													<Modifier Name="" ID="{840E3CC2-B839-48A1-8220-32AE8EF51DBE}">
@@ -657,6 +661,7 @@
 							<PropertyList>
 								<Property Name="3DSpatialization" Type="int16" Value="1"/>
 								<Property Name="OverridePositioning" Type="bool" Value="True"/>
+								<Property Name="SpeakerPanning3DSpatializationMix" Type="int32" Value="70"/>
 							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Attenuation">
@@ -985,7 +990,7 @@
 										<Property Name="RandomAvoidRepeatingCount" Type="int32" Value="3"/>
 										<Property Name="Volume" Type="Real64">
 											<ValueList>
-												<Value>-10</Value>
+												<Value>-7</Value>
 											</ValueList>
 											<ModifierList>
 												<ModifierInfo>
@@ -1386,6 +1391,7 @@
 							<PropertyList>
 								<Property Name="3DSpatialization" Type="int16" Value="1"/>
 								<Property Name="OverridePositioning" Type="bool" Value="True"/>
+								<Property Name="SpeakerPanning3DSpatializationMix" Type="int32" Value="70"/>
 							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Attenuation">
@@ -1417,7 +1423,7 @@
 										</Property>
 										<Property Name="Volume" Type="Real64">
 											<ValueList>
-												<Value>-3</Value>
+												<Value>3</Value>
 											</ValueList>
 											<ModifierList>
 												<ModifierInfo>
@@ -1815,7 +1821,7 @@
 										<Property Name="VirtualVoiceQueueBehavior" Type="int16" Value="0"/>
 										<Property Name="Volume" Type="Real64">
 											<ValueList>
-												<Value>-8</Value>
+												<Value>-4</Value>
 											</ValueList>
 											<ModifierList>
 												<ModifierInfo>
@@ -1916,6 +1922,7 @@
 							<PropertyList>
 								<Property Name="3DSpatialization" Type="int16" Value="1"/>
 								<Property Name="OverridePositioning" Type="bool" Value="True"/>
+								<Property Name="SpeakerPanning3DSpatializationMix" Type="int32" Value="70"/>
 							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Attenuation">
@@ -2193,7 +2200,9 @@
 								</RandomSequenceContainer>
 								<RandomSequenceContainer Name="RC_Pea_Death" ID="{DD7CDA29-F0E2-4E7A-9095-0FFB6D554E55}" ShortID="205211318">
 									<PropertyList>
+										<Property Name="3DSpatialization" Type="int16" Value="1"/>
 										<Property Name="NormalOrShuffle" Type="int16" Value="0"/>
+										<Property Name="OverridePositioning" Type="bool" Value="True"/>
 										<Property Name="Pitch" Type="int32">
 											<ModifierList>
 												<ModifierInfo>
@@ -2207,10 +2216,8 @@
 												</ModifierInfo>
 											</ModifierList>
 										</Property>
+										<Property Name="SpeakerPanning3DSpatializationMix" Type="int32" Value="70"/>
 										<Property Name="Volume" Type="Real64">
-											<ValueList>
-												<Value>-2</Value>
-											</ValueList>
 											<ModifierList>
 												<ModifierInfo>
 													<Modifier Name="" ID="{3C1297FE-7A9E-4D75-9B0A-B4DFBA493D1E}">
@@ -2225,6 +2232,9 @@
 										</Property>
 									</PropertyList>
 									<ReferenceList>
+										<Reference Name="Attenuation">
+											<ObjectRef Name="ATN_25M" ID="{C1A30AD3-7F4B-4AFC-BBEE-21428EAD722D}" WorkUnitID="{A99C7566-826F-4E9D-A733-5652D69BE57C}"/>
+										</Reference>
 										<Reference Name="Conversion">
 											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DEC634C6-86E3-4DF9-96EE-F869BA355507}"/>
 										</Reference>
@@ -2349,9 +2359,6 @@
 											</ValueList>
 										</Property>
 										<Property Name="Volume" Type="Real64">
-											<ValueList>
-												<Value>-5</Value>
-											</ValueList>
 											<ModifierList>
 												<ModifierInfo>
 													<Modifier Name="" ID="{080DE68D-5486-42AC-AF7E-ADAC082A2C2D}">
@@ -2506,6 +2513,7 @@
 								<Property Name="3DSpatialization" Type="int16" Value="1"/>
 								<Property Name="OverrideOutput" Type="bool" Value="True"/>
 								<Property Name="OverridePositioning" Type="bool" Value="True"/>
+								<Property Name="SpeakerPanning3DSpatializationMix" Type="int32" Value="70"/>
 							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Attenuation">
@@ -2521,6 +2529,11 @@
 							<ChildrenList>
 								<RandomSequenceContainer Name="RC_Cabbage_Footsteps" ID="{3DB5CE50-C4F2-453D-A8A4-0E1DC3927B65}" ShortID="642952458">
 									<PropertyList>
+										<Property Name="Lowpass" Type="int16">
+											<ValueList>
+												<Value>15</Value>
+											</ValueList>
+										</Property>
 										<Property Name="NormalOrShuffle" Type="int16" Value="0"/>
 										<Property Name="Pitch" Type="int32">
 											<ModifierList>
@@ -2537,6 +2550,9 @@
 										</Property>
 										<Property Name="RandomAvoidRepeatingCount" Type="int32" Value="2"/>
 										<Property Name="Volume" Type="Real64">
+											<ValueList>
+												<Value>-18</Value>
+											</ValueList>
 											<ModifierList>
 												<ModifierInfo>
 													<Modifier Name="" ID="{2C755F4F-88CC-4864-AC8D-C755767624A8}">
@@ -2654,6 +2670,7 @@
 										<Property Name="3DSpatialization" Type="int16" Value="1"/>
 										<Property Name="OverrideEffect" Type="bool" Value="True"/>
 										<Property Name="OverridePositioning" Type="bool" Value="True"/>
+										<Property Name="SpeakerPanning3DSpatializationMix" Type="int32" Value="70"/>
 									</PropertyList>
 									<ReferenceList>
 										<Reference Name="Attenuation">
@@ -2685,7 +2702,7 @@
 												</Property>
 												<Property Name="Volume" Type="Real64">
 													<ValueList>
-														<Value>-3</Value>
+														<Value>3</Value>
 													</ValueList>
 													<ModifierList>
 														<ModifierInfo>
@@ -2782,9 +2799,10 @@
 												<Property Name="3DSpatialization" Type="int16" Value="1"/>
 												<Property Name="OverrideOutput" Type="bool" Value="True"/>
 												<Property Name="OverridePositioning" Type="bool" Value="True"/>
+												<Property Name="SpeakerPanning3DSpatializationMix" Type="int32" Value="85"/>
 												<Property Name="Volume" Type="Real64">
 													<ValueList>
-														<Value>-1</Value>
+														<Value>5</Value>
 													</ValueList>
 												</Property>
 											</PropertyList>
@@ -3037,6 +3055,9 @@
 											</ModifierList>
 										</Property>
 										<Property Name="Volume" Type="Real64">
+											<ValueList>
+												<Value>2</Value>
+											</ValueList>
 											<ModifierList>
 												<ModifierInfo>
 													<Modifier Name="" ID="{587F52DD-3608-4994-8D03-6D207008DDCA}">
@@ -3145,7 +3166,7 @@
 										</Property>
 										<Property Name="Volume" Type="Real64">
 											<ValueList>
-												<Value>2</Value>
+												<Value>5</Value>
 											</ValueList>
 											<ModifierList>
 												<ModifierInfo>
@@ -3241,7 +3262,9 @@
 						</ActorMixer>
 						<ActorMixer Name="AM_Kamikaze" ID="{DE4BA67E-2661-44BB-B8A5-EB31577EF012}" ShortID="742562629">
 							<PropertyList>
+								<Property Name="3DSpatialization" Type="int16" Value="1"/>
 								<Property Name="OverridePositioning" Type="bool" Value="True"/>
+								<Property Name="SpeakerPanning3DSpatializationMix" Type="int32" Value="70"/>
 							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Attenuation">
@@ -3259,6 +3282,11 @@
 									<PropertyList>
 										<Property Name="BelowThresholdBehavior" Type="int16" Value="2"/>
 										<Property Name="IgnoreParentMaxSoundInstance" Type="bool" Value="True"/>
+										<Property Name="Lowpass" Type="int16">
+											<ValueList>
+												<Value>20</Value>
+											</ValueList>
+										</Property>
 										<Property Name="MaxReachedBehavior" Type="int16" Value="1"/>
 										<Property Name="MaxSoundPerInstance" Type="int16">
 											<ValueList>
@@ -3269,6 +3297,11 @@
 										<Property Name="UseMaxSoundPerInstance" Type="bool">
 											<ValueList>
 												<Value>True</Value>
+											</ValueList>
+										</Property>
+										<Property Name="Volume" Type="Real64">
+											<ValueList>
+												<Value>5</Value>
 											</ValueList>
 										</Property>
 									</PropertyList>
@@ -3605,7 +3638,20 @@
 									</ChildrenList>
 								</RandomSequenceContainer>
 								<RandomSequenceContainer Name="Kamikaze_Hit" ID="{C5CDF379-F1D0-435E-97F4-5212B885BD0A}" ShortID="595702566">
+									<PropertyList>
+										<Property Name="3DSpatialization" Type="int16" Value="1"/>
+										<Property Name="OverridePositioning" Type="bool" Value="True"/>
+										<Property Name="SpeakerPanning3DSpatializationMix" Type="int32" Value="70"/>
+										<Property Name="Volume" Type="Real64">
+											<ValueList>
+												<Value>-5</Value>
+											</ValueList>
+										</Property>
+									</PropertyList>
 									<ReferenceList>
+										<Reference Name="Attenuation">
+											<ObjectRef Name="ATN_40M" ID="{3ABC1B5A-6934-45A5-9CE0-C7633D3E1A57}" WorkUnitID="{A99C7566-826F-4E9D-A733-5652D69BE57C}"/>
+										</Reference>
 										<Reference Name="Conversion">
 											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DEC634C6-86E3-4DF9-96EE-F869BA355507}"/>
 										</Reference>
@@ -3685,31 +3731,6 @@
 							</ChildrenList>
 						</ActorMixer>
 					</ChildrenList>
-					<StateInfo>
-						<StateGroupList>
-							<StateGroupInfo>
-								<StateGroupRef Name="InFight" ID="{FE1DCA5E-8784-48FF-8945-E0036FCA005B}"/>
-							</StateGroupInfo>
-						</StateGroupList>
-						<CustomStateList>
-							<CustomState>
-								<StateRef Name="Exploration" ID="{99F50B97-DF6B-4507-AEA0-78A4EF50F02C}"/>
-								<CustomState Name="" ID="{A6D07108-A216-4646-8868-7715CA0711DD}" ShortID="178993710"/>
-							</CustomState>
-							<CustomState>
-								<StateRef Name="InFight" ID="{520D31D5-B746-4935-AFA5-95AFFA570329}"/>
-								<CustomState Name="" ID="{7918CA59-1EA6-4D54-A6F2-D6FD8659DA85}" ShortID="177569827"/>
-							</CustomState>
-							<CustomState>
-								<StateRef Name="InBoss" ID="{26685954-25EA-4A92-B70B-481AAF24762A}"/>
-								<CustomState Name="" ID="{19FDB28D-7427-4B69-A9C6-0F061B6DE8A1}" ShortID="442314073"/>
-							</CustomState>
-							<CustomState>
-								<StateRef Name="NoMusic" ID="{E6B63851-F8F6-4E8A-8A12-C6F2B068316D}"/>
-								<CustomState Name="" ID="{6827F182-E56C-446E-8E65-F5C71C39BE46}" ShortID="685911437"/>
-							</CustomState>
-						</CustomStateList>
-					</StateInfo>
 				</ActorMixer>
 			</ChildrenList>
 		</WorkUnit>

@@ -9,7 +9,7 @@
 	</RootPaths>
 	<DialogueEvents/>
 	<SoundBanks>
-		<SoundBank Id="1355168291" Type="User" Language="SFX" Hash="{9F63A951-FADE-7923-D24F-BFC2F9AD4199}">
+		<SoundBank Id="1355168291" Type="User" Language="SFX" Hash="{261D735F-D717-DACA-92A4-1F19A2E26375}">
 			<ShortName>Init</ShortName>
 			<Path>Init.bnk</Path>
 			<Plugins>
@@ -342,7 +342,7 @@
 				<Event Id="1829071329" Name="Stop_SFX_Boss_Charge_LP" MaxAttenuation="0" DurationType="OneShot" DurationMin="0" DurationMax="0"/>
 			</Events>
 		</SoundBank>
-		<SoundBank Id="1563047448" Type="User" Language="SFX" Hash="{FCD27218-D6D4-4C73-66C0-FD7D3996C7BD}">
+		<SoundBank Id="1563047448" Type="User" Language="SFX" Hash="{6D58FF0F-BC53-0836-D85E-611CEA2A75AC}">
 			<ShortName>SFX_Enemy_Pea_Pod</ShortName>
 			<Path>SFX_Enemy_Pea_Pod.bnk</Path>
 			<Media>
@@ -436,7 +436,7 @@
 			<ShortName>AMB_Main_Menu</ShortName>
 			<Path>AMB_Main_Menu.bnk</Path>
 		</SoundBank>
-		<SoundBank Id="1806359924" Type="User" Language="SFX" Hash="{B60F40A9-B566-47FC-B6B1-EBB77613A50B}">
+		<SoundBank Id="1806359924" Type="User" Language="SFX" Hash="{4DAF32FD-92A8-424C-9C58-E7520F0071B8}">
 			<ShortName>AMB_Level</ShortName>
 			<Path>AMB_Level.bnk</Path>
 			<Media>
@@ -467,7 +467,7 @@
 				<Event Id="3214656583" Name="Stop_AMB_Level" MaxAttenuation="0" DurationType="OneShot" DurationMin="0" DurationMax="0"/>
 			</Events>
 		</SoundBank>
-		<SoundBank Id="1810232503" Type="User" Language="SFX" Hash="{019173CB-3E9E-8EA6-F80C-DE1B5A24A2DF}">
+		<SoundBank Id="1810232503" Type="User" Language="SFX" Hash="{955F9D68-AA64-75EA-E971-A14BB6CB65B1}">
 			<ShortName>SFX_Enemy_Carrot</ShortName>
 			<Path>SFX_Enemy_Carrot.bnk</Path>
 			<Media>
@@ -580,7 +580,7 @@
 				</Event>
 			</Events>
 		</SoundBank>
-		<SoundBank Id="1923254948" Type="User" Language="SFX" Hash="{888E5412-23DF-93B4-04EC-ED1D14E429CE}">
+		<SoundBank Id="1923254948" Type="User" Language="SFX" Hash="{F3E00F71-C6E2-6FB3-4108-7686275F96C8}">
 			<ShortName>SFX_Enemy_Pea</ShortName>
 			<Path>SFX_Enemy_Pea.bnk</Path>
 			<Media>
@@ -686,7 +686,7 @@
 				<Event Id="2301333962" Name="Stop_SFX_Pea_Movement" MaxAttenuation="0" DurationType="OneShot" DurationMin="0" DurationMax="0"/>
 			</Events>
 		</SoundBank>
-		<SoundBank Id="2374353081" Type="User" Language="SFX" Hash="{E4EC37DC-84EA-F7B3-2F38-9C878E2AC9B4}">
+		<SoundBank Id="2374353081" Type="User" Language="SFX" Hash="{79A0F4D4-3E1B-5082-F231-723529374CCE}">
 			<ShortName>SFX_Other</ShortName>
 			<Path>SFX_Other.bnk</Path>
 			<Media>
@@ -757,10 +757,6 @@
 				<File Id="291360466" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>SFX_Cauldron_Explode_03.wav</ShortName>
 					<CachePath>SFX/SFX_Cauldron_Explode_03_3F75BDB9.wem</CachePath>
-				</File>
-				<File Id="311784795" Language="SFX" Streaming="false" Location="Memory">
-					<ShortName>SFX_Object_Collect.wav</ShortName>
-					<CachePath>SFX/SFX_Object_Collect_3F75BDB9.wem</CachePath>
 				</File>
 				<File Id="391898874" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>SFX_Ingredient_Collect_06.wav</ShortName>
@@ -893,7 +889,7 @@
 						<MediaRef Id="832782286"/>
 					</MediaRefs>
 				</Event>
-				<Event Id="3954090412" Name="Play_SFX_Ingredient_Collect" DurationType="OneShot" DurationMin="0.3860561" DurationMax="0.48640022">
+				<Event Id="3954090412" Name="Play_SFX_Ingredient_Collect" DurationType="OneShot" DurationMin="0.4975594" DurationMax="0.77613103">
 					<MediaRefs>
 						<MediaRef Id="805171404"/>
 						<MediaRef Id="939273688"/>
@@ -906,8 +902,6 @@
 						<MediaRef Id="228480264"/>
 						<MediaRef Id="252528078"/>
 						<MediaRef Id="391898874"/>
-						<MediaRef Id="805171404"/>
-						<MediaRef Id="939273688"/>
 					</MediaRefs>
 				</Event>
 				<Event Id="1605788677" Name="Play_SFX_Object_Appear" MaxAttenuation="40" DurationType="OneShot" DurationMin="1.6875" DurationMax="1.6875">
@@ -916,9 +910,10 @@
 						<MediaRef Id="172022968"/>
 					</MediaRefs>
 				</Event>
-				<Event Id="3679460012" Name="Play_SFX_Object_Collect" DurationType="OneShot" DurationMin="0.46666667" DurationMax="0.46666667">
+				<Event Id="3679460012" Name="Play_SFX_Object_Collect" DurationType="OneShot" DurationMin="0.4975594" DurationMax="0.77613103">
 					<MediaRefs>
-						<MediaRef Id="311784795"/>
+						<MediaRef Id="805171404"/>
+						<MediaRef Id="939273688"/>
 					</MediaRefs>
 				</Event>
 				<Event Id="1043523938" Name="Play_SFX_QTE_Appear" DurationType="OneShot" DurationMin="0.3" DurationMax="0.3">
@@ -948,7 +943,7 @@
 				<Event Id="4293892292" Name="Stop_SFX_Cook" MaxAttenuation="0" DurationType="OneShot" DurationMin="0" DurationMax="0"/>
 			</Events>
 		</SoundBank>
-		<SoundBank Id="2385921979" Type="User" Language="SFX" Hash="{69FC4C12-E300-82B3-F391-F3634005F678}">
+		<SoundBank Id="2385921979" Type="User" Language="SFX" Hash="{9BB259D1-E5A9-FFB0-BAE2-F116C90A968C}">
 			<ShortName>SFX_Enemy_Cabbage</ShortName>
 			<Path>SFX_Enemy_Cabbage.bnk</Path>
 			<Media>
@@ -1072,7 +1067,7 @@
 				<Event Id="3742019055" Name="Stop_SFX_Cabbage_Charge_LP" MaxAttenuation="0" DurationType="OneShot" DurationMin="0" DurationMax="0"/>
 			</Events>
 		</SoundBank>
-		<SoundBank Id="3233071479" Type="User" Language="SFX" Hash="{ED3D5EBC-FF98-BF42-B13C-CC581F8C1D60}">
+		<SoundBank Id="3233071479" Type="User" Language="SFX" Hash="{11ED94EE-812D-EDEE-F432-84A3C8A8C834}">
 			<ShortName>SFX_Enemy_Kamikaze</ShortName>
 			<Path>SFX_Enemy_Kamikaze.bnk</Path>
 			<Media>
@@ -1167,7 +1162,7 @@
 			<ShortName>AMB_Tuto</ShortName>
 			<Path>AMB_Tuto.bnk</Path>
 		</SoundBank>
-		<SoundBank Id="3862737079" Type="User" Language="SFX" Hash="{F6F2846F-B646-2D31-9FE6-CB87DE8FAF9B}">
+		<SoundBank Id="3862737079" Type="User" Language="SFX" Hash="{90D00B32-0C65-8CCC-C7F0-0217EE8EF32C}">
 			<ShortName>SFX_UI</ShortName>
 			<Path>SFX_UI.bnk</Path>
 			<Media>
@@ -1314,7 +1309,7 @@
 				</Event>
 			</Events>
 		</SoundBank>
-		<SoundBank Id="3871269544" Type="User" Language="SFX" Hash="{E053AD06-E9F5-86B6-4400-9965BA8A437F}">
+		<SoundBank Id="3871269544" Type="User" Language="SFX" Hash="{CBF239BE-421A-2AE3-C2D5-DF65224C2050}">
 			<ShortName>SFX_Enemy_Corn</ShortName>
 			<Path>SFX_Enemy_Corn.bnk</Path>
 			<Media>
@@ -1452,7 +1447,7 @@
 				</Event>
 			</Events>
 		</SoundBank>
-		<SoundBank Id="3991942870" Type="User" Language="SFX" Hash="{71B19B88-6705-17B0-B7FD-84B6310B968E}">
+		<SoundBank Id="3991942870" Type="User" Language="SFX" Hash="{1C0B11AD-C9CF-59CD-E712-9B9FB57144F0}">
 			<ShortName>MUSIC</ShortName>
 			<Path>MUSIC.bnk</Path>
 			<Media>
@@ -1681,7 +1676,7 @@
 				</StateGroup>
 			</StateGroups>
 		</SoundBank>
-		<SoundBank Id="3996957973" Type="User" Language="SFX" Hash="{1A2F09F7-E017-7245-B92B-58E15532BD46}">
+		<SoundBank Id="3996957973" Type="User" Language="SFX" Hash="{5BD6E2D3-9C16-45AE-3F8F-CCD28EADD232}">
 			<ShortName>SFX_MC</ShortName>
 			<Path>SFX_MC.bnk</Path>
 			<Media>
@@ -2244,5 +2239,5 @@
 			</StateGroups>
 		</SoundBank>
 	</SoundBanks>
-	<FileHash>{E7813035-74A5-882B-1B25-6F54DCE6BA78}</FileHash>
+	<FileHash>{8E56F3B7-BF03-F0E9-3911-76EBB602EB7C}</FileHash>
 </SoundBanksInfo>

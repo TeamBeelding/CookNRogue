@@ -85,18 +85,18 @@ namespace Enemy.Minimoyz
                     break;
                 case State.Chase:
                     Chase();
-                    _Play_SFX_Pea_Movement.Post(gameObject);
+                    //_Play_SFX_Pea_Movement.Post(gameObject);
                     break;
                 case State.Cast:
                     Cast();
                     break;
                 case State.Attack:
                     Attack(Attack, data.GetAttackSpeed());
-                    _Stop_SFX_Pea_Movement.Post(gameObject);
+                    //_Stop_SFX_Pea_Movement.Post(gameObject);
                     break;
                 case State.ChaseAndAttack:
                     ChaseAndAttack();
-                    _Stop_SFX_Pea_Movement.Post(gameObject);
+                    //_Stop_SFX_Pea_Movement.Post(gameObject);
                     break;
                 case State.Dying:
                     _Stop_SFX_Pea_Movement.Post(gameObject);

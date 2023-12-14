@@ -25,6 +25,7 @@
 						<Bus Name="Music" ID="{7BB7EC33-157E-4888-BD94-A74363B1A383}">
 							<PropertyList>
 								<Property Name="Color" Type="int16" Value="26"/>
+								<Property Name="MaxDuckVolume" Type="Real64" Value="0"/>
 								<Property Name="OverrideColor" Type="bool" Value="True"/>
 							</PropertyList>
 							<StateInfo>
@@ -96,12 +97,23 @@
 								<Property Name="OverrideColor" Type="bool" Value="True"/>
 							</PropertyList>
 							<StateInfo>
+								<StatePropertyList>
+									<Property Name="BusVolume"/>
+									<Property Name="Highpass"/>
+									<Property Name="Lowpass"/>
+									<Property Name="MakeUpGain"/>
+									<Property Name="Pitch"/>
+									<Property Name="Volume"/>
+								</StatePropertyList>
 								<StateGroupList>
 									<StateGroupInfo>
 										<StateGroupRef Name="Cooking_Menu" ID="{480DC1F1-C4C9-4C3D-BC13-612628739BAC}"/>
 									</StateGroupInfo>
 									<StateGroupInfo>
 										<StateGroupRef Name="Pause_Menu" ID="{DCC4536A-E318-48C6-AA1F-DF8580335888}"/>
+									</StateGroupInfo>
+									<StateGroupInfo>
+										<StateGroupRef Name="InFight" ID="{FE1DCA5E-8784-48FF-8945-E0036FCA005B}"/>
 									</StateGroupInfo>
 								</StateGroupList>
 								<CustomStateList>
@@ -110,10 +122,30 @@
 										<CustomState Name="" ID="{BBB722EB-AE1B-41D6-871F-2487F27C3726}" ShortID="489715716"/>
 									</CustomState>
 									<CustomState>
+										<StateRef Name="Exploration" ID="{99F50B97-DF6B-4507-AEA0-78A4EF50F02C}"/>
+										<CustomState Name="" ID="{1B038C51-5C62-44B3-B51B-691DA1FD74A3}" ShortID="246842836"/>
+									</CustomState>
+									<CustomState>
+										<StateRef Name="InFight" ID="{520D31D5-B746-4935-AFA5-95AFFA570329}"/>
+										<CustomState Name="" ID="{FF2922E7-0720-498C-AD42-97D37AA2B154}" ShortID="243071527">
+											<PropertyList>
+												<Property Name="Volume" Type="Real64" Value="-10"/>
+											</PropertyList>
+										</CustomState>
+									</CustomState>
+									<CustomState>
 										<StateRef Name="InCookingMenu" ID="{BD061B15-9DAF-4A28-A041-2AF277545DA4}"/>
 										<CustomState Name="" ID="{0B8B1393-15AF-43AF-896E-23B380920D0D}" ShortID="610996961">
 											<PropertyList>
 												<Property Name="BusVolume" Type="Real64" Value="3"/>
+											</PropertyList>
+										</CustomState>
+									</CustomState>
+									<CustomState>
+										<StateRef Name="InBoss" ID="{26685954-25EA-4A92-B70B-481AAF24762A}"/>
+										<CustomState Name="" ID="{F5F4FB42-D100-49AB-9827-3A66C5075A48}" ShortID="470618356">
+											<PropertyList>
+												<Property Name="Volume" Type="Real64" Value="-10"/>
 											</PropertyList>
 										</CustomState>
 									</CustomState>
@@ -128,6 +160,10 @@
 									<CustomState>
 										<StateRef Name="OutPauseMenu" ID="{2987396D-222D-4B27-A23D-F2A7ECE32AD1}"/>
 										<CustomState Name="" ID="{2CB9D5AC-D3E7-467E-B313-BC8234DA7C82}" ShortID="607122253"/>
+									</CustomState>
+									<CustomState>
+										<StateRef Name="NoMusic" ID="{E6B63851-F8F6-4E8A-8A12-C6F2B068316D}"/>
+										<CustomState Name="" ID="{AC39C234-316A-45AB-962F-BDA4C662CB43}" ShortID="326556667"/>
 									</CustomState>
 								</CustomStateList>
 							</StateInfo>
@@ -432,12 +468,12 @@
 																		</PropertyList>
 																		<PointList>
 																			<Point>
-																				<XPos>-48</XPos>
+																				<XPos>-28</XPos>
 																				<YPos>0</YPos>
 																				<Flags>5</Flags>
 																			</Point>
 																			<Point>
-																				<XPos>-30</XPos>
+																				<XPos>-17.5</XPos>
 																				<YPos>-1</YPos>
 																				<Flags>0</Flags>
 																				<SegmentShape>Log1</SegmentShape>
