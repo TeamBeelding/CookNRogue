@@ -48,8 +48,8 @@ public class PlayerBulletBehaviour : MonoBehaviour
     {
         //rb.drag = 0;
         //HeavyDamage = 1;
-        _speed = _initialSpeed;
-        _damage = _initialDamage;
+        _initialSpeed = _speed;
+        _initialDamage = _damage;
         _HasHit = false;
         destroyOnHit = true;
         bouncingNbr = 0;
@@ -233,7 +233,7 @@ public class PlayerBulletBehaviour : MonoBehaviour
 
     private void SetUpDecal(Vector3 pos)
     {
-        if (!DecalManager.instance)
+        if (!DecalManager.instance || PlayerRuntimeData.GetInstance().data.AttackData.AttackColor == null)
             return;
 
         BulletDecal decal = DecalManager.instance.GetAvailableDecal();

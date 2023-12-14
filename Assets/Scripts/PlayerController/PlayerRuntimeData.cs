@@ -68,7 +68,7 @@ public class PlayerRuntimeData
         [NonSerialized]
         public float Ammunition = 0;
         [NonSerialized]
-        public int ProjectileNumber = 0;
+        public int ProjectileNumber = 1;
 
         [NonSerialized]
         public List<IIngredientEffects> AttackEffects = new ();
