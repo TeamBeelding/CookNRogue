@@ -163,7 +163,7 @@ public class PlayerRuntimeData
         System.IO.File.WriteAllText(_dataFilePath, json);
     }
 
-    private void LoadData()
+    public void LoadData()
     {
         data = JsonUtility.FromJson<Data>(Resources.Load("PlayerData").ToString());
     }

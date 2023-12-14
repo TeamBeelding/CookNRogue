@@ -87,6 +87,8 @@ public class MarmitePlayerSettings
 
     public MarmitePlayerSettings()
     {
+        PlayerRuntimeData.GetInstance().LoadData();
+
         MaxHealth = PlayerRuntimeData.GetInstance().data.BaseData.MaxHealth;
         RotationSpeed = PlayerRuntimeData.GetInstance().data.BaseData.RotationSpeed;
         MoveSpeed = PlayerRuntimeData.GetInstance().data.BaseData.MoveSpeed;
