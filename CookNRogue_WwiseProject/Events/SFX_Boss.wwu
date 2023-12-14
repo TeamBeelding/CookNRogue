@@ -40,6 +40,115 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="Play_SFX_Boss_Leaves" ID="{A922A7F7-B74B-46E6-B864-B62ED7D1BB5D}">
+					<ChildrenList>
+						<Action Name="" ID="{4B8B22C8-778E-4C18-B911-C70628654E07}" ShortID="889179840">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="RC_Boss_Leaves" ID="{1C661F97-1ACD-460E-A24D-A32096D23B55}" WorkUnitID="{1080E4B2-2AA2-4421-B467-CEF209F946BA}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_SFX_Boss_Charge_Impact" ID="{5BC0FC0E-91D7-4308-B8CC-27053B2F1517}">
+					<ChildrenList>
+						<Action Name="" ID="{59BEA31E-012A-4AC7-86AE-A7CF941AF268}" ShortID="895219117">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+								<Property Name="Delay" Type="Real64" Value="0.2"/>
+								<Property Name="FadeOutCurve" Type="int16" Value="1"/>
+								<Property Name="FadeTime" Type="Real64" Value="0.1"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="BLD_Boss_Charge_LP" ID="{DFCE762E-C21F-40E3-9AF0-5DEE02976D84}" WorkUnitID="{1080E4B2-2AA2-4421-B467-CEF209F946BA}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+						<Action Name="" ID="{C513F018-3BFD-4BF0-BA03-1F8D342FA6B0}" ShortID="223100793">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="RC_Boss_Charge_Impact" ID="{7811DEBD-616A-417E-A6D9-DDAED50B67EB}" WorkUnitID="{1080E4B2-2AA2-4421-B467-CEF209F946BA}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_SFX_Boss_Charge_LP" ID="{06850172-2A0D-4E56-B69C-C9FF510B71B7}">
+					<ChildrenList>
+						<Action Name="" ID="{9FAFCBFD-BAB0-4D78-964F-63CA2E38DC71}" ShortID="809733859">
+							<PropertyList>
+								<Property Name="FadeInCurve" Type="int16" Value="7"/>
+								<Property Name="FadeTime" Type="Real64" Value="0.2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="BLD_Boss_Charge_LP" ID="{DFCE762E-C21F-40E3-9AF0-5DEE02976D84}" WorkUnitID="{1080E4B2-2AA2-4421-B467-CEF209F946BA}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Stop_SFX_Boss_Charge_LP" ID="{156EE14F-BA5E-4E26-B614-B43EC783F2CF}">
+					<ChildrenList>
+						<Action Name="" ID="{20626F32-0FE0-4F69-AA5F-DAB7E051CB84}" ShortID="791927770">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+								<Property Name="FadeTime" Type="Real64" Value="0.3"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="BLD_Boss_Charge_LP" ID="{DFCE762E-C21F-40E3-9AF0-5DEE02976D84}" WorkUnitID="{1080E4B2-2AA2-4421-B467-CEF209F946BA}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_RC_Missile_Launch" ID="{8AE19E8E-D4E3-4334-A57D-A801A873DA47}">
+					<ChildrenList>
+						<Action Name="" ID="{CF803A27-7073-4430-8215-5C93ADB8502F}" ShortID="317065517">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="RC_Missile_Launch" ID="{6061F0DF-4AFD-4BF5-AAC4-94C562B8D014}" WorkUnitID="{1080E4B2-2AA2-4421-B467-CEF209F946BA}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_RC_Missile_Explode" ID="{3360600B-3EA4-46D9-A236-948B7D6E6A36}">
+					<ChildrenList>
+						<Action Name="" ID="{5D48821F-D111-43B7-BBC7-FB1602B30CBF}" ShortID="562993864">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+								<Property Name="FadeTime" Type="Real64" Value="0.2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="RC_Missile_Launch" ID="{6061F0DF-4AFD-4BF5-AAC4-94C562B8D014}" WorkUnitID="{1080E4B2-2AA2-4421-B467-CEF209F946BA}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+						<Action Name="" ID="{0A3F17AA-D0A6-4AFE-9A80-E5F3AD37AD14}" ShortID="278229872">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="RC_Missile_Explode" ID="{62F8DDC9-757F-49BF-9545-974128495331}" WorkUnitID="{1080E4B2-2AA2-4421-B467-CEF209F946BA}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_SFX_Boss_Shockwave" ID="{4EC43AC9-AEAD-45F5-A799-8B1AC1B2FDF0}">
+					<ChildrenList>
+						<Action Name="" ID="{59ECDA9B-59AE-411C-83DE-5766830BCD90}" ShortID="534591325">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="RC_Boss_Shockwave" ID="{EFA6D8AC-9F41-4EBE-B790-3AB317F4C0A6}" WorkUnitID="{1080E4B2-2AA2-4421-B467-CEF209F946BA}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>
