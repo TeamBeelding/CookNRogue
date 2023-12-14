@@ -127,11 +127,6 @@ public abstract class EnemyController : MonoBehaviour
             Dying();
         }
     }
-
-    protected void KillLastAI()
-    {
-        EnemyManager.Instance.LastAIDying();
-    }
     
     protected virtual void TakeDamageEffect()
     {
@@ -149,6 +144,7 @@ public abstract class EnemyController : MonoBehaviour
     private void AddToEnemyManager()
     {
         EnemyManager.Instance.AddEnemyToLevel(this);
+        print("Add AI");
     }
     
     protected virtual void OnDisable()

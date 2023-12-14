@@ -12,7 +12,8 @@ namespace Enemy
         [SerializeField]
         private List<EnemyController> _enemiesInLevel = new List<EnemyController>();
     
-        [SerializeField] private int numOfEnemies;
+        [SerializeField] private int numOfEnemies = 0;
+
         public event Action OnAllEnnemiesKilled;
 
         public static EnemyManager Instance
@@ -33,7 +34,12 @@ namespace Enemy
             }
 
             _instance = this;
-            DontDestroyOnLoad(this);
+            DontDestroyOnLoad(gameObject);
+        }
+
+        private void Update()
+        {
+            numOfEnemies = GameObject.FindGameObjectsWithTag("Enemy").Length;
         }
 
         public void AddEnemyToLevel(EnemyController enemy)

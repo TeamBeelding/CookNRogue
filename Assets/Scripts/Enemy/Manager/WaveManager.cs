@@ -146,8 +146,13 @@ public class WaveManager : MonoBehaviour
         {
             if (waveList[0].IsLastWave())
             {
-                if (GameObject.FindGameObjectsWithTag("Enemy").Length == 1)
+                print(EnemyManager.Instance.GetNumOfEnemies());
+
+                if (EnemyManager.Instance.GetNumOfEnemies() == 1)
+                {
                     EnemyManager.Instance.LastAIDying();
+                }
+                    
             }
         }
     }
