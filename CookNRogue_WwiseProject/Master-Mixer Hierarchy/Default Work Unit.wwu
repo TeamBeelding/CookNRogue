@@ -622,7 +622,53 @@
 								</DuckItem>
 							</DuckingList>
 						</Bus>
-						<Bus Name="Boss" ID="{A8C5526F-8C36-486C-A2EB-1FD8BD215251}"/>
+						<Bus Name="Boss" ID="{A8C5526F-8C36-486C-A2EB-1FD8BD215251}">
+							<ObjectLists>
+								<ObjectList Name="RTPC">
+									<Reference>
+										<Local>
+											<RTPC Name="" ID="{C8BF7F0E-881A-494C-8170-4D09E266EA40}" ShortID="390818878">
+												<PropertyList>
+													<Property Name="PropertyName" Type="string" Value="Volume"/>
+												</PropertyList>
+												<ReferenceList>
+													<Reference Name="ControlInput">
+														<ObjectRef Name="Player_Hit" ID="{081BC6B0-C5CA-4C67-9CF4-623E03AD1ED8}" WorkUnitID="{045A0393-8F25-4CEC-9CFD-E2BF13F7B399}"/>
+													</Reference>
+													<Reference Name="Curve">
+														<Custom>
+															<Curve Name="" ID="{4159B400-7DAF-49EB-8E3C-2AB884B35CB4}">
+																<PropertyList>
+																	<Property Name="Flags" Type="int32" Value="3"/>
+																</PropertyList>
+																<PointList>
+																	<Point>
+																		<XPos>-48</XPos>
+																		<YPos>0</YPos>
+																		<Flags>5</Flags>
+																	</Point>
+																	<Point>
+																		<XPos>-20</XPos>
+																		<YPos>-6</YPos>
+																		<Flags>0</Flags>
+																		<SegmentShape>Log1</SegmentShape>
+																	</Point>
+																	<Point>
+																		<XPos>0</XPos>
+																		<YPos>-25</YPos>
+																		<Flags>37</Flags>
+																	</Point>
+																</PointList>
+															</Curve>
+														</Custom>
+													</Reference>
+												</ReferenceList>
+											</RTPC>
+										</Local>
+									</Reference>
+								</ObjectList>
+							</ObjectLists>
+						</Bus>
 					</ChildrenList>
 					<StateInfo>
 						<StateGroupList>
