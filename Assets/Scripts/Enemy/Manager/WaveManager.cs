@@ -146,13 +146,12 @@ public class WaveManager : MonoBehaviour
         {
             if (waveList[0].IsLastWave())
             {
-                print(EnemyManager.Instance.GetNumOfEnemies());
-
                 if (EnemyManager.Instance.GetNumOfEnemies() == 1)
                 {
                     EnemyManager.Instance.LastAIDying();
+                    print("Last AI Dying -- Function called");
+                    Debug.Break();
                 }
-                    
             }
         }
     }
