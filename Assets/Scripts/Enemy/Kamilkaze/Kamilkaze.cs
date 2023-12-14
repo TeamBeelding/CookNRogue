@@ -156,17 +156,19 @@ public class Kamilkaze : EnemyController
     {
         //_animator?.SetBool("isDead", true);
 
+        _agent.speed = 0;
+
         visual?.SetActive(false);
         physics?.SetActive(false);
 
         effect?.SetActive(true);
 
+        waveManager?.SlowMotion();
         stateCoroutine = StartCoroutine(IDeathAnim());
 
         IEnumerator IDeathAnim()
         {
-            yield return new WaitForSeconds(1f);
-
+            yield return new WaitForSeconds(_data.DelayAfterExplosion);
             base.Dying();
         }
     }

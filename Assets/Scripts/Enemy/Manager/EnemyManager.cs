@@ -33,6 +33,7 @@ namespace Enemy
             }
 
             _instance = this;
+            DontDestroyOnLoad(this);
         }
 
         public void AddEnemyToLevel(EnemyController enemy)
@@ -62,7 +63,7 @@ namespace Enemy
             //}
         }
 
-        public void EndWave()
+        public void LastAIDying()
         {
             OnAllEnnemiesKilled?.Invoke();
         }

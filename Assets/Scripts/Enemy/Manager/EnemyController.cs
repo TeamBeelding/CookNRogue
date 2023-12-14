@@ -21,7 +21,7 @@ public abstract class EnemyController : MonoBehaviour
     protected bool FocusPlayer = false;
     private bool _canAttack = true;
     protected bool _canAttackAnim = true;
-    
+
     protected float Healthpoint;
 
     [SerializeField]
@@ -32,6 +32,8 @@ public abstract class EnemyController : MonoBehaviour
 
     [SerializeField] 
     private TutorialManager tutorial;
+
+    protected WaveManager waveManager;
 
     private bool isDead;
 
@@ -53,6 +55,8 @@ public abstract class EnemyController : MonoBehaviour
     protected virtual void OnEnable()
     {
         Player = PlayerController.Instance.gameObject;
+        waveManager = GameObject.FindGameObjectWithTag("WaveManager").GetComponent<WaveManager>();
+
         AddToEnemyManager();
     }
 
@@ -122,6 +126,11 @@ public abstract class EnemyController : MonoBehaviour
             isDead = true;
             Dying();
         }
+    }
+
+    protected void KillLastAI()
+    {
+        EnemyManager.Instance.LastAIDying();
     }
     
     protected virtual void TakeDamageEffect()

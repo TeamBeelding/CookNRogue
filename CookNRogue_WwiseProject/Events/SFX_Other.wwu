@@ -12,7 +12,7 @@
 						<Action Name="" ID="{26DA7352-1E49-43CC-951B-91CEA4C45271}" ShortID="649299509">
 							<ReferenceList>
 								<Reference Name="Target">
-									<ObjectRef Name="RC_Ingredient_Collect" ID="{08B67F05-D573-4D28-B908-9908DF91C035}" WorkUnitID="{3CE9A9BC-F960-482A-AEE6-287A4C6E7543}"/>
+									<ObjectRef Name="SFX_Ingredient_Collect" ID="{08B67F05-D573-4D28-B908-9908DF91C035}" WorkUnitID="{3CE9A9BC-F960-482A-AEE6-287A4C6E7543}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>
@@ -26,7 +26,7 @@
 							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Target">
-									<ObjectRef Name="SFX_Cook" ID="{71008A78-E35A-4E4B-A3FB-1839BC0C3014}" WorkUnitID="{3CE9A9BC-F960-482A-AEE6-287A4C6E7543}"/>
+									<ObjectRef Name="SFX_Cook_LP" ID="{71008A78-E35A-4E4B-A3FB-1839BC0C3014}" WorkUnitID="{3CE9A9BC-F960-482A-AEE6-287A4C6E7543}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>
@@ -41,7 +41,7 @@
 							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Target">
-									<ObjectRef Name="SFX_Cook" ID="{71008A78-E35A-4E4B-A3FB-1839BC0C3014}" WorkUnitID="{3CE9A9BC-F960-482A-AEE6-287A4C6E7543}"/>
+									<ObjectRef Name="SFX_Cook_LP" ID="{71008A78-E35A-4E4B-A3FB-1839BC0C3014}" WorkUnitID="{3CE9A9BC-F960-482A-AEE6-287A4C6E7543}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>
@@ -63,7 +63,106 @@
 						<Action Name="" ID="{9D9DBC19-DFE1-4233-AFB5-99B929C33A79}" ShortID="532621526">
 							<ReferenceList>
 								<Reference Name="Target">
-									<ObjectRef Name="RC_Health_Collect" ID="{ACE5999F-B421-45DD-A4ED-2E963F39BA12}" WorkUnitID="{3CE9A9BC-F960-482A-AEE6-287A4C6E7543}"/>
+									<ObjectRef Name="SFX_Health_Collect" ID="{ACE5999F-B421-45DD-A4ED-2E963F39BA12}" WorkUnitID="{3CE9A9BC-F960-482A-AEE6-287A4C6E7543}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_SFX_Cook_End" ID="{69F67EE1-62E4-452C-AE7E-B4A05BCEB726}">
+					<ChildrenList>
+						<Action Name="" ID="{C666FE1A-BD51-4DD8-AE04-CC0E6FB58D28}" ShortID="541081391">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="SFX_Cook_End" ID="{730F976F-E239-4766-B740-44C538DEFECC}" WorkUnitID="{3CE9A9BC-F960-482A-AEE6-287A4C6E7543}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_SFX_QTE_Appear" ID="{1A9D6972-FC36-4EA3-8F96-B871680350E2}">
+					<ChildrenList>
+						<Action Name="" ID="{152EB644-07C8-46C5-8E8E-699FF89C873E}" ShortID="24410654">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="SFX_QTE_Appear" ID="{929CEBE2-B8DC-464A-BD01-2E4985F5C1FF}" WorkUnitID="{3CE9A9BC-F960-482A-AEE6-287A4C6E7543}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_SFX_QTE_Disappear" ID="{A3301227-D87A-4EC5-A66A-882A5EC32D61}">
+					<ChildrenList>
+						<Action Name="" ID="{9EFBDFCD-E922-4CE1-9FB4-620EA2BFDC62}" ShortID="95104153">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="SFX_QTE_Disappear" ID="{B5BE3926-5CDF-4972-86D3-D6F30DB388D3}" WorkUnitID="{3CE9A9BC-F960-482A-AEE6-287A4C6E7543}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_SFX_QTE_Success" ID="{20CB369C-5697-47F1-AE72-46487FA2F8B3}">
+					<ChildrenList>
+						<Action Name="" ID="{2A24435E-4733-4EC3-8872-34CCC14EE39A}" ShortID="394758995">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="SFX_QTE_Success" ID="{9BFC3614-99DB-452E-8D04-B860129EEEC1}" WorkUnitID="{3CE9A9BC-F960-482A-AEE6-287A4C6E7543}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_SFX_Ingredient_Collect_V2" ID="{A30CE17E-8A1F-4431-9F98-834033E9308B}">
+					<ChildrenList>
+						<Action Name="" ID="{28F3CD4D-26DD-4325-8AE6-6AC3BEC04A05}" ShortID="107327472">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="SFX_Ingredient_Collect_V2" ID="{FB059453-B870-4B6A-9FC3-003CA2C74926}" WorkUnitID="{3CE9A9BC-F960-482A-AEE6-287A4C6E7543}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_SFX_Object_Collect" ID="{03EE163B-38DF-4D09-95CA-25E30A3752E3}">
+					<ChildrenList>
+						<Action Name="" ID="{9C87A781-E167-4D93-BD59-46F90C40BD13}" ShortID="73876980">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="SFX_Object_Collect" ID="{080C61F5-5F63-4E51-A982-18B1EBFA813A}" WorkUnitID="{3CE9A9BC-F960-482A-AEE6-287A4C6E7543}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_SFX_End_Room_A" ID="{7FFC6A38-7C03-488F-A74E-5140AD13A64C}">
+					<ChildrenList>
+						<Action Name="" ID="{56EA1240-DBD4-4E90-B313-C843F8856C98}" ShortID="1038762452">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="SFX_End_Room_A" ID="{DDDAE924-1DED-454D-9B2B-D7E2834215E7}" WorkUnitID="{3CE9A9BC-F960-482A-AEE6-287A4C6E7543}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_SFX_End_Room_B" ID="{E22AAC25-9B61-4ED7-A074-5FAEE296CF12}">
+					<ChildrenList>
+						<Action Name="" ID="{38B27F10-00B5-4814-8835-E788EAD6614E}" ShortID="414816256">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="SFX_End_Room_B" ID="{C7BBFA07-D5EB-4765-9871-210F64B2B37E}" WorkUnitID="{3CE9A9BC-F960-482A-AEE6-287A4C6E7543}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_SFX_Object_Appear" ID="{63B9AA34-A747-45B2-82C5-1E4725C46FB5}">
+					<ChildrenList>
+						<Action Name="" ID="{FB14E237-4176-468C-8546-31AA4DCFDB6C}" ShortID="1057636418">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="SFX_Object_Appear" ID="{56519633-2E5A-4A36-A3BE-6309E67C0195}" WorkUnitID="{3CE9A9BC-F960-482A-AEE6-287A4C6E7543}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>

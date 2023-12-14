@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent (typeof(MissilesController), typeof(ShockwaveController))]
 public class BossController : EnemyController
@@ -29,8 +30,21 @@ public class BossController : EnemyController
     private Coroutine stateCoroutine;
     private Coroutine rotationCoroutine;
     private Vector3 targetPosition;
+    [SerializeField] private Image bossHealthBar;
 
-    [SerializeField] ParticleSystem _teleportParticles;
+    [SerializeField] Transform _teleportParticlesContainer;
+    ParticleSystem[] _teleportParticles;
+    [SerializeField] Transform _dirtParticlesContainer;
+    ParticleSystem[] _dirtParticles;
+
+    [SerializeField] Transform _dashParticlesContainer;
+    ParticleSystem[] _dashParticles;
+
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        Reset();
+    }
 
     #region Debug
 
@@ -45,12 +59,12 @@ public class BossController : EnemyController
 
         missilesController = GetComponentInChildren<MissilesController>();
         shockwaveController = GetComponentInChildren<ShockwaveController>();
-
+        _teleportParticles = _teleportParticlesContainer.GetComponentsInChildren<ParticleSystem>();
+        _dirtParticles = _dirtParticlesContainer.GetComponentsInChildren<ParticleSystem>();
+        _dashParticles = _dashParticlesContainer.GetComponentsInChildren<ParticleSystem>();
         Healthpoint = data.GetHealth;
-
         SetState(State.EnterRoom);
     }
-
 
     private void Reset()
     {
@@ -137,42 +151,48 @@ public class BossController : EnemyController
 
         IEnumerator ITeleport()
         {
-            if (_teleportParticles)
-                _teleportParticles.transform.parent = null;
+            if (_teleportParticlesContainer)
+                _teleportParticlesContainer.transform.parent = null;
+
+            teleportTarget = GetTargetPosition();
+
+            foreach (var particle in _teleportParticles)
+            {
+                particle.Play();
+                var VOLT = particle.velocityOverLifetime;
+                VOLT.x = new ParticleSystem.MinMaxCurve(0, 0);
+                VOLT.y = new ParticleSystem.MinMaxCurve(0, 0);
+                VOLT.z = new ParticleSystem.MinMaxCurve(0, 0);
+            }
+
+            _teleportParticlesContainer.transform.position = teleportTarget;
 
             while (state == State.Teleport)
             {
-
-#if UNITY_EDITOR
-                radiusTeleportDebug = 2;
-#endif
-
-                if (_teleportParticles)
-                    _teleportParticles.Play();
-
-                var VOLT = _teleportParticles.velocityOverLifetime;
-                VOLT.y = new ParticleSystem.MinMaxCurve(1, 0);
-
-                _teleportParticles.transform.position = Player.transform.position;
-                Vector3 tpPos = Player.transform.position;
-
-                teleportTarget = GetTargetPosition();
-                targetTeleportDebug = teleportTarget;
-
+              
                 yield return new WaitForSeconds(data.GetDelayBeforeTeleport);
-                transform.position = tpPos;
 
-                if (_teleportParticles)
-                {
-                    VOLT.y = new ParticleSystem.MinMaxCurve(1, 20);
-                    _teleportParticles.Stop();
-                }
+                shockwaveController.ResetRadiusPos();
 
                 yield return new WaitForSeconds(data.DelayBeforeTakingLastPlayerPosition);
 
                 transform.position = teleportTarget;
 
                 SetState(State.CastMissiles);
+            }
+
+            foreach (var particle in _teleportParticles)
+            {
+                var VOLT = particle.velocityOverLifetime;
+                VOLT.x = new ParticleSystem.MinMaxCurve(-10, 10);
+                VOLT.y = new ParticleSystem.MinMaxCurve(1, 10);
+                VOLT.z = new ParticleSystem.MinMaxCurve(-10, 10);
+                particle.Stop();
+            }
+
+            foreach (var particle in _dirtParticles)
+            {
+                particle.Play();
             }
         }
     }
@@ -189,6 +209,7 @@ public class BossController : EnemyController
     private void CastMissiles()
     {
         stateCoroutine = StartCoroutine(ICastMissiles());
+        rotationCoroutine = StartCoroutine(IRotateToPlayer());
 
         IEnumerator ICastMissiles()
         {
@@ -233,10 +254,20 @@ public class BossController : EnemyController
         {
             Vector3 direction = (GetTargetPosition() - transform.position).normalized;
 
+            foreach(var particle in _dashParticles)
+            {
+                particle.Play();
+            }
+
             while (state == State.Dash)
             {
                 transform.position += direction * (data.GetDashSpeed * Time.deltaTime);
                 yield return null;
+            }
+
+            foreach (var particle in _dashParticles)
+            {
+                particle.Stop();
             }
         }
     }
@@ -265,10 +296,44 @@ public class BossController : EnemyController
             {
                 shockwaveController.StartShockwave();
 
-                SetState(State.Teleport);
+                yield return new WaitForSeconds(2);
+                EndShockwave();
+
                 yield return null;
             }
         }
+    }
+
+    public void EndShockwave()
+    {
+        SetState(State.Teleport);
+    }
+
+    private IEnumerator IRotateToPlayer()
+    {
+        while (state == State.CastMissiles)
+        {
+            visual.transform.LookAt(new Vector3(Player.transform.position.x, visual.transform.position.y, Player.transform.position.z));
+            yield return null;
+        }
+    }
+
+    public override void TakeDamage(float damage = 1, bool isCritical = false)
+    {
+        base.TakeDamage(damage, isCritical);
+
+        UpdateBossHealthBar();
+
+        if (Healthpoint <= 0)
+            SetState(State.Dying);
+    }
+
+    private void UpdateBossHealthBar()
+    {
+        if (!bossHealthBar)
+            return;
+
+        bossHealthBar.fillAmount = Mathf.Clamp(Healthpoint, 0, data.GetHealth) / data.GetHealth;
     }
 
     public void CollideWithPlayer()
@@ -295,6 +360,8 @@ public class BossController : EnemyController
     {
         visual?.SetActive(false);
         physics?.SetActive(false);
+
+        Destroy(gameObject);
     }
 
     public override bool IsMoving()

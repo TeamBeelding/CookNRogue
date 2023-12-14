@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{982AD7C1-BCA0-4442-9099-90637FE76E23}" SchemaVersion="110" RootDocumentID="{899603F8-092E-4FB8-93A5-00C3DC23A21E}" ParentDocumentID="{899603F8-092E-4FB8-93A5-00C3DC23A21E}">
+	<Events>
+		<WorkUnit Name="SFX_Enemy_Kamikaze" ID="{982AD7C1-BCA0-4442-9099-90637FE76E23}" OwnerID="{899603F8-092E-4FB8-93A5-00C3DC23A21E}" PersistMode="Nested">
+			<PropertyList>
+				<Property Name="Color" Type="int16" Value="10"/>
+				<Property Name="OverrideColor" Type="bool" Value="True"/>
+			</PropertyList>
+			<ChildrenList>
+				<Event Name="Play_Kamikaze_Idle" ID="{1E6A0A3C-ECCB-4006-B920-A81E364B1BE7}">
+					<ChildrenList>
+						<Action Name="" ID="{C539AC4B-ED58-431D-90DC-7ABA8B4C6343}" ShortID="734815223">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Kamikaze_Idle" ID="{423263B6-7532-4EC6-ABAF-20DD072112E6}" WorkUnitID="{23B15D27-5212-492F-AB18-D64924507D5D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Stop_Kamikaze_Idle" ID="{8C1CA7A5-450B-483D-B213-E0D70A175EDD}">
+					<ChildrenList>
+						<Action Name="" ID="{F0E2FEC1-6DDF-436E-91DD-EB67ACDD2FA1}" ShortID="423125222">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+								<Property Name="FadeTime" Type="Real64" Value="0.2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Kamikaze_Idle" ID="{423263B6-7532-4EC6-ABAF-20DD072112E6}" WorkUnitID="{23B15D27-5212-492F-AB18-D64924507D5D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+			</ChildrenList>
+		</WorkUnit>
+	</Events>
+</WwiseDocument>

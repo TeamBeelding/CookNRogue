@@ -181,9 +181,12 @@ namespace Enemy.LDE
 
         protected override void Dying()
         {
+            _Play_SFX_Corn_Death.Post(gameObject);
             physics.SetActive(false);
 
             animator.SetBool("isDead", true);
+
+            waveManager?.SlowMotion();
 
             StartCoroutine(IDeathAnim());
 
@@ -207,15 +210,18 @@ namespace Enemy.LDE
             if (state == State.Neutral) 
             {
                 SetState(State.Chase);
-                _Play_SFX_Corn_Hit.Post(gameObject);
-                _Play_Weapon_Hit.Post(gameObject);
             }
 
             if (Healthpoint <= 0)
             {
-                _Play_SFX_Corn_Death.Post(gameObject);
                 SetState(State.Dying);
             }
+            else
+            {
+                _Play_SFX_Corn_Hit.Post(gameObject);
+                _Play_Weapon_Hit.Post(gameObject);
+            }
+
         }
 
 #if UNITY_EDITOR

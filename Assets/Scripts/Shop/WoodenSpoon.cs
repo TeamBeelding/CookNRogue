@@ -21,6 +21,7 @@ public class WoodenSpoon : Item,ISubItem
     public void ApplyItem()
     {
         WoodenSpoonData data = (WoodenSpoonData)_data;
+        ItemsBar.Instance.AddItem(data);
         PlayerRuntimeData.GetInstance().data.InventoryData.ButteredShoes = true;
         PlayerRuntimeData.GetInstance().data.InventoryData.ButteredShoesValue += data.damageBonus;
     }

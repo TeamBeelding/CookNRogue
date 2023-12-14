@@ -7,11 +7,13 @@ public class ChangeSizeOverDistance : MonoBehaviour
     [SerializeField] float _speed;
     [SerializeField] AnimationCurve _sizeOverDistanceFactor;
     Transform sphere;
+    float _initialScale;
     public float timePassed;
 
     private void Start()
     {
         sphere = transform.GetChild(0);
+        _initialScale = sphere.localScale.x;
     }
     public AnimationCurve GetCurve()
     {
@@ -25,6 +27,7 @@ public class ChangeSizeOverDistance : MonoBehaviour
 
         if(timePassed * _speed <= 1)
             sphere.localScale = new Vector3(1,1,1) * _sizeOverDistanceFactor.Evaluate(timePassed);
+
         
     }
 
@@ -32,5 +35,10 @@ public class ChangeSizeOverDistance : MonoBehaviour
     {
         _speed = speed;
         _sizeOverDistanceFactor = sizeOverDistanceFactor;
+    }
+
+    private void OnDisable()
+    {
+        sphere.localScale = new Vector3(1, 1, 1) * _initialScale;
     }
 }

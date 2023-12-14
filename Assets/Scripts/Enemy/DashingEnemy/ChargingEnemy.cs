@@ -121,9 +121,11 @@ namespace Enemy.DashingEnemy
                     Dashing();
                     break;
                 case State.Dying:
+                    _Play_SFX_Cabbage_Death.Post(gameObject);
                     Dying();
                     break;
                 default:
+                    _Play_SFX_Cabbage_Death.Post(gameObject);
                     Dying();
                     break;
             }
@@ -270,6 +272,7 @@ namespace Enemy.DashingEnemy
             _Play_SFX_Cabbage_Death.Post(gameObject);
 
             animator.SetBool("isDead", true);
+            waveManager?.SlowMotion();
 
             StartCoroutine(IDeathAnim());
 

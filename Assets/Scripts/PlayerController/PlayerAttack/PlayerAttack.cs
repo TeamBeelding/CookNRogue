@@ -127,13 +127,7 @@ public class PlayerAttack : MonoBehaviour
 
         _inventory.EquippedRecipe.Clear();
         _inventory.UpdateEquipedRecipeUI();
-
-
-        //Reset Audio
-        foreach (ProjectileData data in _inventory.EquippedRecipe)
-        {
-            data.audioState.SetValue();
-        }
+        _Play_Weapon_Empty.Post(gameObject);
     }
 
     public void ResetAmunition()
@@ -146,7 +140,6 @@ public class PlayerAttack : MonoBehaviour
         ResetParameters();
         _hasEmptiedAmmo = true;
         _ammunitionBar.UpdateAmmoBar();
-        _Play_Weapon_Empty.Post(gameObject);
     }
 
     public void OnDeathReset()

@@ -28,9 +28,6 @@ public class EnemyDashingData : ScriptableObject
     public float GetSpeed() => speed;
     public float GetDamage() => damage;
     
-    /// <summary>
-    /// Test
-    /// </summary>
     public float GetRemainingForDash() => timeRemainingForDash;
     public float GetTimeWaitingDash() => timeWaitingDash;
     public float GetTimeBeforeShowingRedLine() => timeBeforeShowingRedLine;
