@@ -54,7 +54,6 @@ public class WaveManager : MonoBehaviour
                 break;
             case State.EndWave:
                 DestroyAllAI();
-                EnemyManager.Instance.EndWave();
                 StopAllCoroutines();
                 gameObject.SetActive(false);
                 break;
@@ -110,7 +109,6 @@ public class WaveManager : MonoBehaviour
                     {
                         if (!ws.IsWaveIsEnd())
                             continue;
-
                         else
                         {
                             ws.gameObject.SetActive(false);
@@ -132,5 +130,25 @@ public class WaveManager : MonoBehaviour
     {
         foreach (WaveSpawner ws in GetComponentsInChildren<WaveSpawner>())
             ws.DespawnAI();
+    }
+
+    public void SlowMotion()
+    {
+        List<WaveSpawner> waveList = new List<WaveSpawner>();
+
+        foreach (WaveSpawner ws in GetComponentsInChildren<WaveSpawner>())
+        {
+            if (ws.gameObject.activeSelf)
+                waveList.Add(ws);
+        }
+
+        if (waveList.Count == 1)
+        {
+            if (waveList[0].IsLastWave())
+            {
+                if (GameObject.FindGameObjectsWithTag("Enemy").Length == 1)
+                    EnemyManager.Instance.LastAIDying();
+            }
+        }
     }
 }

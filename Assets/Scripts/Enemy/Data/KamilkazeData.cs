@@ -9,9 +9,9 @@ public class KamilkazeData : ScriptableObject
     [SerializeField] private float speed;
     [SerializeField] private float distanceToPlayerForExplosion;
     [SerializeField] private float explosionRange;
-    [SerializeField] private float explosionVelocity;
-    [SerializeField] private float delaiForExplose;
+    [SerializeField] private float delayForExplose;
     [SerializeField] private float damage;
+    [SerializeField] private float delayAfterExplosion;
 
     private void Reset()
     {
@@ -21,9 +21,9 @@ public class KamilkazeData : ScriptableObject
         speed = 0;
         distanceToPlayerForExplosion = 0;
         explosionRange = 0;
-        explosionVelocity = 0;
-        delaiForExplose = 0;
+        delayForExplose = 0;
         damage = 0;
+        delayAfterExplosion = 0.2f;
     }
 
     public bool FocusPlayerOnCD => focusPlayerOnCD;
@@ -32,7 +32,7 @@ public class KamilkazeData : ScriptableObject
     public float Speed => speed;
     public float DistanceToPlayerForExplosion => distanceToPlayerForExplosion;
     public float ExplosionRange => explosionRange;
-    public float ExplosionVelocity => explosionVelocity;
-    public float DelaiForExplose => delaiForExplose;
+    public float DelaiForExplose => delayForExplose;
     public float Damage => damage;
+    public float DelayAfterExplosion => delayAfterExplosion;
 }

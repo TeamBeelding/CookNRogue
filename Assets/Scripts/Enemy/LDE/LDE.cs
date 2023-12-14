@@ -186,6 +186,8 @@ namespace Enemy.LDE
 
             animator.SetBool("isDead", true);
 
+            waveManager?.SlowMotion();
+
             StartCoroutine(IDeathAnim());
 
             IEnumerator IDeathAnim()
@@ -214,7 +216,6 @@ namespace Enemy.LDE
             {
                 SetState(State.Dying);
             }
-
             else
             {
                 _Play_SFX_Corn_Hit.Post(gameObject);
