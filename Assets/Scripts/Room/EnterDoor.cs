@@ -20,6 +20,8 @@ public class EnterDoor : MonoBehaviour
     private AK.Wwise.State _InFightOff;
     [SerializeField]
     private AK.Wwise.State _InFightOn;
+    [SerializeField]
+    private AK.Wwise.State _NoMusic;
 
     [Header("Room linker")]
 
@@ -161,7 +163,7 @@ public class EnterDoor : MonoBehaviour
         if (m_door != null)
         {
             _Play_SFX_Door_Open.Post(gameObject);
-            _InFightOff.SetValue();
+            _NoMusic.SetValue();
             StartCoroutine(IOpenDoor());
         }
     }

@@ -298,6 +298,10 @@ public class PlayerController : MonoBehaviour
                 {
                     aimTargets[i] = enemiesInLevel[i].gameObject;
                 }
+
+                Debug.Log("Aim assist preset : " + m_aimAssistPresset);
+                Debug.Log("Aim target : " + aimTargets);
+
                 _correctedAimDirection = AimAssist2D.CorrectAimDirection(_aimDirection, transform.position, aimTargets, m_aimAssistPresset);
             }
         }

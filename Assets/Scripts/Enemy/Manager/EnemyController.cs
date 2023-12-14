@@ -14,7 +14,7 @@ public abstract class EnemyController : MonoBehaviour
     public List<StatusEffectHandler> _effectHandlers;
     private Renderer _rend;
     private MeshRenderer _meshRenderer;
-    private CapsuleCollider _collider;
+    [SerializeField] protected CapsuleCollider _collider;
     
     private IEnumerator _colorCoroutine;
     
