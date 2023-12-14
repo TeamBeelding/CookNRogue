@@ -116,16 +116,10 @@ public abstract class EnemyController : MonoBehaviour
             Destroy(UIDAMAGE, 1);
         }
 
-
         if (Healthpoint > 0)
         {
             TakeDamageEffect();
         }
-        //else if (!isDead) 
-        //{
-        //    isDead = true;
-        //    Dying();
-        //}
     }
     
     protected virtual void TakeDamageEffect()

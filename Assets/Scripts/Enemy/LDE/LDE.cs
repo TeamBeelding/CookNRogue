@@ -212,7 +212,7 @@ namespace Enemy.LDE
 
             if (Healthpoint <= 0)
             {
-                waveManager?.SlowMotion();
+                waveManager.SlowMotion();
 
                 SetState(State.Dying);
             }
