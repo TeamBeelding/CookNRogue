@@ -178,7 +178,7 @@ public class BossController : EnemyController
             }
 
             _teleportParticlesContainer.transform.position = teleportTarget;
-            _Play_SFX_Boss_Leaves.Post(gameObject);
+            _Play_SFX_Boss_Leaves.Post(_teleportParticlesContainer.gameObject);
             while (state == State.Teleport)
             {
               

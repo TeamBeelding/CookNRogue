@@ -24,16 +24,6 @@
 						</Reference>
 					</ReferenceList>
 					<ChildrenList>
-						<ActorMixer Name="AM_AMB_Tutorial" ID="{25316883-CCAA-4C62-81E6-AB14FA08DC57}" ShortID="74728885">
-							<ReferenceList>
-								<Reference Name="Conversion">
-									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DEC634C6-86E3-4DF9-96EE-F869BA355507}"/>
-								</Reference>
-								<Reference Name="OutputBus">
-									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{85B5C199-8628-4DDB-B756-DA8917395816}"/>
-								</Reference>
-							</ReferenceList>
-						</ActorMixer>
 						<ActorMixer Name="AM_AMB_Level" ID="{1BB06EAD-89CB-4433-BB19-B1E6879BEE4A}" ShortID="675099334">
 							<ReferenceList>
 								<Reference Name="Conversion">
@@ -45,6 +35,13 @@
 							</ReferenceList>
 							<ChildrenList>
 								<BlendContainer Name="BLD_AMB_Level" ID="{1F552C68-0038-401A-94A3-AD7D16AA0CA1}" ShortID="101037911">
+									<PropertyList>
+										<Property Name="Volume" Type="Real64">
+											<ValueList>
+												<Value>-10</Value>
+											</ValueList>
+										</Property>
+									</PropertyList>
 									<ReferenceList>
 										<Reference Name="Conversion">
 											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DEC634C6-86E3-4DF9-96EE-F869BA355507}"/>
@@ -123,6 +120,11 @@
 														<Value>True</Value>
 													</ValueList>
 												</Property>
+												<Property Name="Volume" Type="Real64">
+													<ValueList>
+														<Value>-8</Value>
+													</ValueList>
+												</Property>
 											</PropertyList>
 											<ReferenceList>
 												<Reference Name="Conversion">
@@ -150,27 +152,6 @@
 							</ChildrenList>
 						</ActorMixer>
 					</ChildrenList>
-					<StateInfo>
-						<StateGroupList>
-							<StateGroupInfo>
-								<StateGroupRef Name="InFight" ID="{FE1DCA5E-8784-48FF-8945-E0036FCA005B}"/>
-							</StateGroupInfo>
-						</StateGroupList>
-						<CustomStateList>
-							<CustomState>
-								<StateRef Name="NotInFight" ID="{99F50B97-DF6B-4507-AEA0-78A4EF50F02C}"/>
-								<CustomState Name="" ID="{1DB914F8-0C74-474F-8442-2ADB05EF9EB3}" ShortID="556153676"/>
-							</CustomState>
-							<CustomState>
-								<StateRef Name="InFight" ID="{520D31D5-B746-4935-AFA5-95AFFA570329}"/>
-								<CustomState Name="" ID="{48EA145E-1815-4CF9-87AF-EC3D07BE5B66}" ShortID="252746519">
-									<PropertyList>
-										<Property Name="Volume" Type="Real64" Value="-10"/>
-									</PropertyList>
-								</CustomState>
-							</CustomState>
-						</CustomStateList>
-					</StateInfo>
 				</ActorMixer>
 			</ChildrenList>
 		</WorkUnit>

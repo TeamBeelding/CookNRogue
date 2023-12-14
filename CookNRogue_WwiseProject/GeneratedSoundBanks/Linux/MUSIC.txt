@@ -11,8 +11,10 @@ State	ID	Name	State Group			Notes
 	748895195	None	Cooking_Menu			
 	3732417588	OutCookingMenu	Cooking_Menu			
 	748895195	None	InFight			
+	1862135557	NoMusic	InFight			
 	2181612614	InFight	InFight			
-	2218077717	NotInFight	InFight			
+	2387025391	InBoss	InFight			
+	2582085496	Exploration	InFight			
 	748895195	None	Pause_Menu			
 	2876317275	InPauseMenu	Pause_Menu			
 	3956870258	OutPauseMenu	Pause_Menu			
@@ -20,6 +22,7 @@ State	ID	Name	State Group			Notes
 Custom State	ID	Name	State Group	Owner		Notes
 	18986058	InCookingMenu	Cooking_Menu	\Interactive Music Hierarchy\Default Work Unit\Master_Music\Master_Fight\Fight_01\WoodBlock		
 	31001773	InCookingMenu	Cooking_Menu	\Interactive Music Hierarchy\Default Work Unit\Master_Music\Master_Fight\Fight_02\Xylophone		
+	84970554	InPauseMenu	Pause_Menu	\Interactive Music Hierarchy\Default Work Unit\Master_Music\Master_Boss		
 	96618007	InCookingMenu	Cooking_Menu	\Interactive Music Hierarchy\Default Work Unit\Master_Music\Master_Fight\Fight_02\WoodStick		
 	102525433	InPauseMenu	Pause_Menu	\Interactive Music Hierarchy\Default Work Unit\Master_Music\Master_Fight\Fight_Intro\Xylophone		
 	119813259	InPauseMenu	Pause_Menu	\Interactive Music Hierarchy\Default Work Unit\Master_Music\Master_Fight\Fight_Intro\WaterDrum		
@@ -52,6 +55,7 @@ Custom State	ID	Name	State Group	Owner		Notes
 	943575088	InPauseMenu	Pause_Menu	\Interactive Music Hierarchy\Default Work Unit\Master_Music\Master_Fight\Fight_02\WaterDrum		
 	949000293	InPauseMenu	Pause_Menu	\Interactive Music Hierarchy\Default Work Unit\Master_Music\Master_Fight\Fight_02\WoodStick		
 	950347869	InCookingMenu	Cooking_Menu	\Interactive Music Hierarchy\Default Work Unit\Master_Music\Master_Fight\Fight_01\Piano_Bass		
+	968297066	InCookingMenu	Cooking_Menu	\Interactive Music Hierarchy\Default Work Unit\Master_Music\Master_Boss		
 	978079392	InCookingMenu	Cooking_Menu	\Interactive Music Hierarchy\Default Work Unit\Master_Music\Master_Explo		
 	1013406820	InCookingMenu	Cooking_Menu	\Interactive Music Hierarchy\Default Work Unit\Master_Music\Master_Fight\Fight_02\WaterDrum		
 	1025863798	InCookingMenu	Cooking_Menu	\Interactive Music Hierarchy\Default Work Unit\Master_Music\Master_Fight\Fight_02\Piano_Melo		
@@ -61,6 +65,7 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	5823022	Xylophone	D:\GitHub\CookNRogue\CookNRogue_WwiseProject\.cache\Linux\SFX\Xylopone_Intro_01_02_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\Master_Music\Master_Fight\Fight_02\Xylophone		1986304
 	38019068	LogDrum	D:\GitHub\CookNRogue\CookNRogue_WwiseProject\.cache\Linux\SFX\LogDrum_Intro_01_02_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\Master_Music\Master_Fight\Fight_02\LogDrum		3575272
 	98237533	Piano_Bass	D:\GitHub\CookNRogue\CookNRogue_WwiseProject\.cache\Linux\SFX\Piano_Bass_02_C_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\Master_Music\Master_Fight\Fight_02\Piano_Bass		1986304
+	110973873	Transi_03	D:\GitHub\CookNRogue\CookNRogue_WwiseProject\.cache\Linux\SFX\Transi_03_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\Master_Music\Master_Boss\Boss_02\Transi_03		1382496
 	204852398	Base_Instrumentale	D:\GitHub\CookNRogue\CookNRogue_WwiseProject\.cache\Linux\SFX\Instrumental_Section_01_02_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\Master_Music\Master_Fight\Fight_02\Base_Instrumentale		3575272
 	205583249	Piano_Bass	D:\GitHub\CookNRogue\CookNRogue_WwiseProject\.cache\Linux\SFX\Piano_Bass_02_E_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\Master_Music\Master_Fight\Fight_02\Piano_Bass		1986304
 	217044229	Balafon	D:\GitHub\CookNRogue\CookNRogue_WwiseProject\.cache\Linux\SFX\Balafon_Intro_01_02_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\Master_Music\Master_Fight\Fight_02\Balafon		3575272
@@ -69,8 +74,11 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	280390225	Transition_To_Fight	D:\GitHub\CookNRogue\CookNRogue_WwiseProject\.cache\Linux\SFX\Transition_to_Fight_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\Master_Music\Master_Fight\Fight_Intro\Transition_To_Fight		794580
 	283349972	Base_Instrumentale	D:\GitHub\CookNRogue\CookNRogue_WwiseProject\.cache\Linux\SFX\Instrumental_Section_Intro_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\Master_Music\Master_Fight\Fight_Intro\Base_Instrumentale		3575272
 	295760673	Piano_Bass	D:\GitHub\CookNRogue\CookNRogue_WwiseProject\.cache\Linux\SFX\Piano_Bass_02_B_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\Master_Music\Master_Fight\Fight_02\Piano_Bass		1986304
+	295837266	Transi_02	D:\GitHub\CookNRogue\CookNRogue_WwiseProject\.cache\Linux\SFX\Transi_02_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\Master_Music\Master_Boss\Boss_01\Transi_02		1382496
 	423374554	Piano_Bass	D:\GitHub\CookNRogue\CookNRogue_WwiseProject\.cache\Linux\SFX\Piano_Bass_Intro_01_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\Master_Music\Master_Fight\Fight_01\Piano_Bass		3575272
 	436582919	Music_Exploration_V2	D:\GitHub\CookNRogue\CookNRogue_WwiseProject\.cache\Linux\SFX\Music_Exploration_V2_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\Master_Music\Master_Explo\Explo Music Test\Music_Exploration_V2		7975484
+	503602989	Part_02_All_Without_No_Transi	D:\GitHub\CookNRogue\CookNRogue_WwiseProject\.cache\Linux\SFX\Part_02_All_Without_No_Transi_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\Master_Music\Master_Boss\Boss_02\Part_02_All_Without_No_Transi		4147296
+	545518497	Transi_01	D:\GitHub\CookNRogue\CookNRogue_WwiseProject\.cache\Linux\SFX\Transi_01_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\Master_Music\Master_Boss\Boss_Intro\Transi_01		1382496
 	611635544	WoodBlock	D:\GitHub\CookNRogue\CookNRogue_WwiseProject\.cache\Linux\SFX\WoodBlock_01_02_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\Master_Music\Master_Fight\Fight_02\WoodBlock		3575272
 	613207208	Piano_Bass	D:\GitHub\CookNRogue\CookNRogue_WwiseProject\.cache\Linux\SFX\Piano_Bass_02_F_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\Master_Music\Master_Fight\Fight_02\Piano_Bass		1986304
 	620080086	WoodStick	D:\GitHub\CookNRogue\CookNRogue_WwiseProject\.cache\Linux\SFX\WoodStick_01_02_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\Master_Music\Master_Fight\Fight_02\WoodStick		3575272
@@ -78,6 +86,7 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	831205939	Piano_Bass	D:\GitHub\CookNRogue\CookNRogue_WwiseProject\.cache\Linux\SFX\Piano_Bass_02_D_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\Master_Music\Master_Fight\Fight_02\Piano_Bass		1986304
 	909604397	Piano_Melo	D:\GitHub\CookNRogue\CookNRogue_WwiseProject\.cache\Linux\SFX\Piano_Melo_02_A_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\Master_Music\Master_Fight\Fight_02\Piano_Melo		1986304
 	1003454703	WoodPerc	D:\GitHub\CookNRogue\CookNRogue_WwiseProject\.cache\Linux\SFX\WoodPerc_Intro_01_02_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\Master_Music\Master_Fight\Fight_02\WoodPerc		3575272
+	1025528603	Part_01_All_Without_No_Transi	D:\GitHub\CookNRogue\CookNRogue_WwiseProject\.cache\Linux\SFX\Part_01_All_Without_No_Transi_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\Master_Music\Master_Boss\Boss_01\Part_01_All_Without_No_Transi		4147296
 	1042873704	Castagnette	D:\GitHub\CookNRogue\CookNRogue_WwiseProject\.cache\Linux\SFX\Castagnette_Intro_01_02_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\Master_Music\Master_Fight\Fight_02\Castagnette		3575272
 	1067837035	Piano_Bass	D:\GitHub\CookNRogue\CookNRogue_WwiseProject\.cache\Linux\SFX\Piano_Bass_02_A_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\Master_Music\Master_Fight\Fight_02\Piano_Bass		1986304
 
