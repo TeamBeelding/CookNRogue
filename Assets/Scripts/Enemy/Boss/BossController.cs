@@ -32,6 +32,7 @@ public class BossController : EnemyController
     private Vector3 targetPosition;
     [SerializeField] private Image bossHealthBar;
 
+    [Header("BOSS VFX")]
     [SerializeField] Transform _teleportParticlesContainer;
     ParticleSystem[] _teleportParticles;
     [SerializeField] Transform _dirtParticlesContainer;
@@ -42,6 +43,9 @@ public class BossController : EnemyController
 
     [SerializeField] Transform _dyingParticlesContainer;
     ParticleSystem[] _dyingParticles;
+
+    [SerializeField] Transform _stunnedParticlesContainer;
+    ParticleSystem[] _stunnedParticles;
 
     [Header("Sound")]
     [SerializeField]
@@ -63,10 +67,13 @@ public class BossController : EnemyController
 
         missilesController = GetComponentInChildren<MissilesController>();
         shockwaveController = GetComponentInChildren<ShockwaveController>();
+
+        //GET ALL PARTICLE SYSTEMS
         _teleportParticles = _teleportParticlesContainer.GetComponentsInChildren<ParticleSystem>();
         _dirtParticles = _dirtParticlesContainer.GetComponentsInChildren<ParticleSystem>();
         _dashParticles = _dashParticlesContainer.GetComponentsInChildren<ParticleSystem>();
         _dyingParticles = _dyingParticlesContainer.GetComponentsInChildren<ParticleSystem>();
+        _stunnedParticles = _stunnedParticlesContainer.GetComponentsInChildren<ParticleSystem>();
 
         Healthpoint = data.GetHealth;
         SetState(State.EnterRoom);
@@ -343,6 +350,9 @@ public class BossController : EnemyController
     public void CollideWithObstruction()
     {
         _Play_SFX_Boss_Charge_Impact.Post(gameObject);
+
+        PlayStunParticles();
+
         SetState(State.Shockwave);
     }
 
@@ -392,5 +402,11 @@ public class BossController : EnemyController
     public override bool IsMoving()
     {
         throw new System.NotImplementedException();
+    }
+
+    public void PlayStunParticles()
+    {
+        foreach(var particles in _stunnedParticles)
+            particles.Play();
     }
 }

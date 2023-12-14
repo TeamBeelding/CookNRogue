@@ -55,7 +55,7 @@ public class WaveManager : MonoBehaviour
             case State.EndWave:
                 DestroyAllAI();
                 StopAllCoroutines();
-                gameObject.SetActive(false);
+                //gameObject.SetActive(false);
                 break;
         }
     }
@@ -120,7 +120,6 @@ public class WaveManager : MonoBehaviour
                         SetState(State.NextWave);
                     else
                         SetState(State.EndWave);
-
                 }
             }
         }
@@ -138,20 +137,16 @@ public class WaveManager : MonoBehaviour
 
         foreach (WaveSpawner ws in GetComponentsInChildren<WaveSpawner>())
         {
-            if (ws.gameObject.activeSelf)
+            if (ws.IsLastWave())
                 waveList.Add(ws);
         }
 
-        if (waveList.Count == 1)
+        if (waveList[0].IsLastWave())
         {
-            if (waveList[0].IsLastWave())
+            if (EnemyManager.Instance.GetNumOfEnemies() == 1)
             {
-                if (EnemyManager.Instance.GetNumOfEnemies() == 1)
-                {
-                    EnemyManager.Instance.LastAIDying();
-                    print("Last AI Dying -- Function called");
-                    Debug.Break();
-                }
+                EnemyManager.Instance.LastAIDying();
+                print("Last AI Dying -- Function called");
             }
         }
     }

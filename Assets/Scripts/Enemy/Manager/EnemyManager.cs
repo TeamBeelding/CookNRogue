@@ -11,9 +11,6 @@ namespace Enemy
 
         [SerializeField]
         private List<EnemyController> _enemiesInLevel = new List<EnemyController>();
-    
-        //[SerializeField] private int numOfEnemies = 0;
-        [SerializeField] private int enemiesCount = 0;
 
         public event Action OnAllEnnemiesKilled;
 
@@ -29,9 +26,9 @@ namespace Enemy
 
         private void Awake()
         {
-            if (_instance != null && _instance != this)
+            if (_instance != null)
             {
-                Destroy(this);
+                Destroy(gameObject);
             }
 
             _instance = this;
@@ -41,7 +38,6 @@ namespace Enemy
         public void AddEnemyToLevel(EnemyController enemy)
         {
             _enemiesInLevel.Add(enemy);
-            enemiesCount++;
         }
 
         public void RemoveEnemyFromLevel(EnemyController enemy)
@@ -54,7 +50,6 @@ namespace Enemy
                 if (_enemiesInLevel[i].GetInstanceID() == enemy.GetInstanceID())
                 {
                     _enemiesInLevel.RemoveAt(i);
-                    enemiesCount--;
                     break;
                 }
             }
@@ -71,7 +66,7 @@ namespace Enemy
             OnAllEnnemiesKilled?.Invoke();
         }
 
-        public int GetNumOfEnemies() => enemiesCount;
+        public int GetNumOfEnemies() => _enemiesInLevel.Count;
 
         public void DestroyAll()
         {
