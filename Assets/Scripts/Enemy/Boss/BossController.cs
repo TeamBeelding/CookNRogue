@@ -40,6 +40,9 @@ public class BossController : EnemyController
     [SerializeField] Transform _dashParticlesContainer;
     ParticleSystem[] _dashParticles;
 
+    [SerializeField] Transform _dyingParticlesContainer;
+    ParticleSystem[] _dyingParticles;
+
     [Header("Sound")]
     [SerializeField]
     private AK.Wwise.Event _Play_SFX_Boss_Leaves;
@@ -63,6 +66,8 @@ public class BossController : EnemyController
         _teleportParticles = _teleportParticlesContainer.GetComponentsInChildren<ParticleSystem>();
         _dirtParticles = _dirtParticlesContainer.GetComponentsInChildren<ParticleSystem>();
         _dashParticles = _dashParticlesContainer.GetComponentsInChildren<ParticleSystem>();
+        _dyingParticles = _dyingParticlesContainer.GetComponentsInChildren<ParticleSystem>();
+
         Healthpoint = data.GetHealth;
         SetState(State.EnterRoom);
     }
@@ -343,10 +348,45 @@ public class BossController : EnemyController
 
     protected override void Dying()
     {
-        visual?.SetActive(false);
+        StopAllCoroutines();
+        StartCoroutine(DyingRoutine());
+    }
+
+    private IEnumerator DyingRoutine()
+    {
         physics?.SetActive(false);
 
+        
+        foreach(var particle in _dyingParticles)
+            particle.Play();
+
+        yield return new WaitForSeconds(4);
+
+        foreach (var particle in _dyingParticles)
+        {
+            ParticleSystemForceField field = particle.GetComponentInChildren<ParticleSystemForceField>();
+            float initialGravityStrength = field.gravity.constant;
+            field.gravity = new ParticleSystem.MinMaxCurve(1, 10);
+            field.rotationAttraction = 0;
+
+            var VOL = particle.velocityOverLifetime;
+            VOL.orbitalY = new ParticleSystem.MinMaxCurve(1, 2);
+            VOL.y = new ParticleSystem.MinMaxCurve(1, 2);
+
+            var Noise = particle.noise;
+            Noise.strength = 2;
+        }
+            
+        
+        
+
+        visual?.SetActive(false);
+
+        //GIVE ENOUGH TIME TO THE PARTICLES TO FADE AWAY
+        yield return new WaitForSeconds(7);
+
         Destroy(gameObject);
+        
     }
 
     public override bool IsMoving()
