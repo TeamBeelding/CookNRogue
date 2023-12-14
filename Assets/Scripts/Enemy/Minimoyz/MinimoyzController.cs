@@ -71,7 +71,7 @@ namespace Enemy.Minimoyz
                 return;
         
             AreaDetection();
-        
+
             base.Update();
         }
 
@@ -224,8 +224,6 @@ namespace Enemy.Minimoyz
 
             if (Healthpoint <= 0)
             {
-                waveManager?.SlowMotion();
-
                 _Play_SFX_Pea_Death.Post(gameObject);
                 _Play_Weapon_Hit.Post(gameObject);
                 SetState(State.Dying);
@@ -234,6 +232,8 @@ namespace Enemy.Minimoyz
 
         protected override void Dying()
         {
+            waveManager?.SlowMotion();
+
             base.Dying();
         }
     }

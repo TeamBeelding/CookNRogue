@@ -62,7 +62,6 @@ namespace Enemy
 
         public void LastAIDying()
         {
-            Debug.Log("ça marche sa merde");
             OnAllEnnemiesKilled?.Invoke();
         }
 
@@ -89,7 +88,6 @@ namespace Enemy
     {
         public override void OnInspectorGUI()
         {
-
             DrawDefaultInspector();
             //EnemyManager enemies = (EnemyManager)target;
 
