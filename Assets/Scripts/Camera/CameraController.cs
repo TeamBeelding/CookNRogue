@@ -23,6 +23,8 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     private Quaternion m_offsetRotation;
 
+    private Vector3 _oldPosition = Vector3.zero;
+
     //Obstructions
     [Header("Obstructions")]
     [Header("==========================================================================================================================================================================================================================")]
@@ -111,6 +113,9 @@ public class CameraController : MonoBehaviour
         m_mainCamera.rotation *= m_offsetRotation;
         m_mainCamera.position += m_offsetCoord;
 
+        //set old position for boundaries
+        _oldPosition = m_mainCamera.position;
+
         // To get the child transform of the camera for the _shake
         _shakeGimble = m_mainCamera.GetChild(0).GetComponent<Transform>();
         // Making sure the obstruction is initied and not null at the start for erros.
@@ -127,6 +132,7 @@ public class CameraController : MonoBehaviour
 
     private void LateUpdate()
     {
+        Vector3 futurePos = Vector3.zero;
         if (!_mooveIsUnscaled)
         {
             // In the update the camera will follow the player, unless the the target object has been added.
@@ -134,11 +140,12 @@ public class CameraController : MonoBehaviour
             if (m_target == null)
             {
                 _currentMagnitude = m_cameraPlayerTarget.gameObject.GetComponent<PlayerController>().PlayerAimMagnitude;
-                m_mainCamera.position = Vector3.Lerp(m_mainCamera.position, m_cameraPlayerTarget.position + (m_cameraAimDistance * m_cameraPlayerTarget.gameObject.GetComponent<PlayerController>().PlayerAimDirection) * _currentMagnitude + m_offsetCoord, m_smoothSpeed * Time.deltaTime);
+                futurePos = Vector3.Lerp(m_mainCamera.position, m_cameraPlayerTarget.position + (m_cameraAimDistance * m_cameraPlayerTarget.gameObject.GetComponent<PlayerController>().PlayerAimDirection) * _currentMagnitude + m_offsetCoord, m_smoothSpeed * Time.deltaTime);
+
             }
             else
             {
-                m_mainCamera.position = Vector3.Lerp(m_mainCamera.position, m_target.position + m_offsetCoord, m_smoothSpeed * Time.deltaTime);
+                futurePos = Vector3.Lerp(m_mainCamera.position, m_target.position + m_offsetCoord, m_smoothSpeed * Time.deltaTime);
             }
         }
         else
@@ -147,13 +154,33 @@ public class CameraController : MonoBehaviour
             if (m_target == null)
             {
                 _currentMagnitude = m_cameraPlayerTarget.gameObject.GetComponent<PlayerController>().PlayerAimMagnitude;
-                m_mainCamera.position = Vector3.Lerp(m_mainCamera.position, m_cameraPlayerTarget.position + (m_cameraAimDistance * m_cameraPlayerTarget.gameObject.GetComponent<PlayerController>().PlayerAimDirection) * _currentMagnitude + m_offsetCoord, m_smoothSpeed * Time.unscaledDeltaTime);
+                futurePos = Vector3.Lerp(m_mainCamera.position, m_cameraPlayerTarget.position + (m_cameraAimDistance * m_cameraPlayerTarget.gameObject.GetComponent<PlayerController>().PlayerAimDirection) * _currentMagnitude + m_offsetCoord, m_smoothSpeed * Time.unscaledDeltaTime);
+                
             }
             else
             {
-                m_mainCamera.position = Vector3.Lerp(m_mainCamera.position, m_target.position + m_offsetCoord, m_smoothSpeed * Time.unscaledDeltaTime);
+                futurePos = Vector3.Lerp(m_mainCamera.position, m_target.position + m_offsetCoord, m_smoothSpeed * Time.unscaledDeltaTime);
             }
-        }    
+        }
+
+        if(CameraBoudaries.instance != null)
+        {
+            if (!CameraBoudaries.instance.CheckCameraBoundaries(futurePos))
+            {
+                Vector3 temp = futurePos;
+                futurePos = _oldPosition;
+
+                if (CameraBoudaries.instance.CheckCameraBoundaries(_oldPosition + new Vector3(temp.x - _oldPosition.x, 0, 0)))
+                    futurePos += new Vector3(temp.x - _oldPosition.x, 0, 0);
+
+
+                if (CameraBoudaries.instance.CheckCameraBoundaries(_oldPosition + new Vector3(0, 0, temp.z - _oldPosition.z)))
+                    futurePos += new Vector3(0, 0, temp.z - _oldPosition.z);
+            } 
+        }
+        
+        m_mainCamera.position = futurePos;
+        _oldPosition = futurePos;
     }
 
 

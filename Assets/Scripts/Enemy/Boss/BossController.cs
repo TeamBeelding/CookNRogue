@@ -32,6 +32,7 @@ public class BossController : EnemyController
     private Vector3 targetPosition;
     [SerializeField] private Image bossHealthBar;
 
+    [Header("BOSS VFX")]
     [SerializeField] Transform _teleportParticlesContainer;
     ParticleSystem[] _teleportParticles;
     [SerializeField] Transform _dirtParticlesContainer;
@@ -39,6 +40,12 @@ public class BossController : EnemyController
 
     [SerializeField] Transform _dashParticlesContainer;
     ParticleSystem[] _dashParticles;
+
+    [SerializeField] Transform _dyingParticlesContainer;
+    ParticleSystem[] _dyingParticles;
+
+    [SerializeField] Transform _stunnedParticlesContainer;
+    ParticleSystem[] _stunnedParticles;
 
     [Header("Sound")]
     [SerializeField]
@@ -60,9 +67,14 @@ public class BossController : EnemyController
 
         missilesController = GetComponentInChildren<MissilesController>();
         shockwaveController = GetComponentInChildren<ShockwaveController>();
+
+        //GET ALL PARTICLE SYSTEMS
         _teleportParticles = _teleportParticlesContainer.GetComponentsInChildren<ParticleSystem>();
         _dirtParticles = _dirtParticlesContainer.GetComponentsInChildren<ParticleSystem>();
         _dashParticles = _dashParticlesContainer.GetComponentsInChildren<ParticleSystem>();
+        _dyingParticles = _dyingParticlesContainer.GetComponentsInChildren<ParticleSystem>();
+        _stunnedParticles = _stunnedParticlesContainer.GetComponentsInChildren<ParticleSystem>();
+
         Healthpoint = data.GetHealth;
         SetState(State.EnterRoom);
     }
@@ -338,19 +350,63 @@ public class BossController : EnemyController
     public void CollideWithObstruction()
     {
         _Play_SFX_Boss_Charge_Impact.Post(gameObject);
+
+        PlayStunParticles();
+
         SetState(State.Shockwave);
     }
 
     protected override void Dying()
     {
-        visual?.SetActive(false);
+        StopAllCoroutines();
+        StartCoroutine(DyingRoutine());
+    }
+
+    private IEnumerator DyingRoutine()
+    {
         physics?.SetActive(false);
 
+        
+        foreach(var particle in _dyingParticles)
+            particle.Play();
+
+        yield return new WaitForSeconds(4);
+
+        foreach (var particle in _dyingParticles)
+        {
+            ParticleSystemForceField field = particle.GetComponentInChildren<ParticleSystemForceField>();
+            float initialGravityStrength = field.gravity.constant;
+            field.gravity = new ParticleSystem.MinMaxCurve(1, 10);
+            field.rotationAttraction = 0;
+
+            var VOL = particle.velocityOverLifetime;
+            VOL.orbitalY = new ParticleSystem.MinMaxCurve(1, 2);
+            VOL.y = new ParticleSystem.MinMaxCurve(1, 2);
+
+            var Noise = particle.noise;
+            Noise.strength = 2;
+        }
+            
+        
+        
+
+        visual?.SetActive(false);
+
+        //GIVE ENOUGH TIME TO THE PARTICLES TO FADE AWAY
+        yield return new WaitForSeconds(7);
+
         Destroy(gameObject);
+        
     }
 
     public override bool IsMoving()
     {
         throw new System.NotImplementedException();
+    }
+
+    public void PlayStunParticles()
+    {
+        foreach(var particles in _stunnedParticles)
+            particles.Play();
     }
 }

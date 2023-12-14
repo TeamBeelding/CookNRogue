@@ -71,7 +71,7 @@ namespace Enemy.Minimoyz
                 return;
         
             AreaDetection();
-        
+
             base.Update();
         }
 

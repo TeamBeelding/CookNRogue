@@ -186,8 +186,6 @@ namespace Enemy.LDE
 
             animator.SetBool("isDead", true);
 
-            waveManager?.SlowMotion();
-
             StartCoroutine(IDeathAnim());
 
             IEnumerator IDeathAnim()
@@ -214,6 +212,8 @@ namespace Enemy.LDE
 
             if (Healthpoint <= 0)
             {
+                waveManager.SlowMotion();
+
                 SetState(State.Dying);
             }
             else

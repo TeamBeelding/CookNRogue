@@ -49,6 +49,8 @@ public class PlayerAttack : MonoBehaviour
     PlayerCookingInventory _inventory;
     [SerializeField] ParticleSystem _shootingParticles;
 
+    private BaseData _baseData = new();
+
     private void Start()
     {
         PlayerRuntimeData.GetInstance().data.AttackData.AttackDefaultCooldown = PlayerRuntimeData.GetInstance().data.AttackData.AttackCooldown;
@@ -63,6 +65,7 @@ public class PlayerAttack : MonoBehaviour
             _ammunitionBar.InitAmmoBar();
         }
 
+        _baseData.Set();
         ResetParameters();
     }
 
@@ -243,19 +246,14 @@ public class PlayerAttack : MonoBehaviour
                 _projectileBehaviour.CancelInvoke("DisableBullet");
                 _projectileBehaviour.Invoke("DisableBullet", 1);
 
-                _projectileBehaviour.ResetStats();
                 _projectileBehaviour._playerAttack = this;
-                _projectileBehaviour._speed += PlayerRuntimeData.GetInstance().data.AttackData.AttackSpeed;
-                _projectileBehaviour._drag -= PlayerRuntimeData.GetInstance().data.AttackData.AttackDrag;
+                _projectileBehaviour._damage = PlayerRuntimeData.GetInstance().data.AttackData.AttackDamage;
+                _projectileBehaviour._speed = PlayerRuntimeData.GetInstance().data.AttackData.AttackSpeed;
+                _projectileBehaviour._drag = PlayerRuntimeData.GetInstance().data.AttackData.AttackDrag;
+                _projectileBehaviour.ResetStats();
                 _Play_Weapon_Shot.Post(Bullet);
                 #endregion
 
-                if (PlayerRuntimeData.GetInstance().data.AttackData.AttackEffects.Count > 0)
-                {
-                    _projectileBehaviour._damage = 0;
-                }
-
-                _projectileBehaviour._damage += PlayerRuntimeData.GetInstance().data.AttackData.AttackDamage;
                 Vector3 direction = Quaternion.Euler(0, totalAngle, 0) * _playerController.PlayerAimDirection;
 
                 var color = PlayerRuntimeData.GetInstance().data.AttackData.AttackColor;
@@ -351,16 +349,16 @@ public class PlayerAttack : MonoBehaviour
 
     public void ResetParameters()
     {
-        PlayerRuntimeData.GetInstance().data.AttackData.AttackColor = PlayerRuntimeData.GetInstance().data.AttackData.DefaultColor;
-        PlayerRuntimeData.GetInstance().data.AttackData.AttackEffects.Clear();
-        PlayerRuntimeData.GetInstance().data.AttackData.AttackSize = 0;
-        PlayerRuntimeData.GetInstance().data.AttackData.AttackSpeed = 0;
-        PlayerRuntimeData.GetInstance().data.AttackData.AttackDrag = 0;
-        PlayerRuntimeData.GetInstance().data.AttackData.ProjectileNumber = 1;
-        PlayerRuntimeData.GetInstance().data.AttackData.TimeBtwShotRafale = 0;
-        PlayerRuntimeData.GetInstance().data.AttackData.AttackDamage = 0;
-        PlayerRuntimeData.GetInstance().data.AttackData.Ammunition = 0;
-        PlayerRuntimeData.GetInstance().data.AttackData.AttackCooldown = PlayerRuntimeData.GetInstance().data.AttackData.AttackDefaultCooldown;
+        PlayerRuntimeData.GetInstance().data.AttackData.AttackColor = _baseData.AttackColor;
+        PlayerRuntimeData.GetInstance().data.AttackData.AttackEffects = new();
+        PlayerRuntimeData.GetInstance().data.AttackData.AttackSize = _baseData.AttackSize;
+        PlayerRuntimeData.GetInstance().data.AttackData.AttackSpeed = _baseData.AttackSpeed;
+        PlayerRuntimeData.GetInstance().data.AttackData.AttackDrag = _baseData.AttackDrag;
+        PlayerRuntimeData.GetInstance().data.AttackData.ProjectileNumber = _baseData.ProjectileNumber;
+        PlayerRuntimeData.GetInstance().data.AttackData.TimeBtwShotRafale = _baseData.TimeBtwShotRafale;
+        PlayerRuntimeData.GetInstance().data.AttackData.AttackDamage = _baseData.AttackDamage;
+        PlayerRuntimeData.GetInstance().data.AttackData.Ammunition = _baseData.Ammunition;
+        PlayerRuntimeData.GetInstance().data.AttackData.AttackCooldown = _baseData.AttackCooldown;
         _hasEmptiedAmmo = true;
     }
 
@@ -371,17 +369,41 @@ public class PlayerAttack : MonoBehaviour
             Shoot();
         }
     }
-    public void Reset()
+
+
+    public class BaseData
     {
-        PlayerRuntimeData.GetInstance().data.AttackData.ProjectileNumber = 1;
-        PlayerRuntimeData.GetInstance().data.AttackData.AttackSize = 1;
-        PlayerRuntimeData.GetInstance().data.AttackData.AttackSpeed = 1;
-        PlayerRuntimeData.GetInstance().data.AttackData.AttackDrag = 0;
-        PlayerRuntimeData.GetInstance().data.AttackData.AttackCooldown = 0.1f;
-        PlayerRuntimeData.GetInstance().data.AttackData.AttackDamage = 1;
-        //m_knockbackScript = GameObject.Find("CharacterModel").GetComponent<PlayerKnockback>();
-    }
+        public float Ammunition = 0;
+        public int ProjectileNumber = 1;
 
+        public List<IIngredientEffects> AttackEffects = new();
 
+        public float AttackSize = 1;
+        public float AttackSpeed = 3.5f;
+        public float AttackDrag = 0;
+        public float AttackDefaultCooldown = .1f;
+        public float AttackCooldown = .1f;
+        public float AttackDamage = 0;
 
+        public Color DefaultColor;
+
+        [ColorUsage(true, true)]
+        public Color? AttackColor;
+
+         public float TimeBtwShotRafale = 0;
+
+        public void Set()
+        {
+            AttackColor = PlayerRuntimeData.GetInstance().data.AttackData.DefaultColor;
+            AttackEffects = new();
+            AttackSize = PlayerRuntimeData.GetInstance().data.AttackData.AttackSize;
+            AttackSpeed = PlayerRuntimeData.GetInstance().data.AttackData.AttackSpeed;
+            AttackDrag = PlayerRuntimeData.GetInstance().data.AttackData.AttackDrag;
+            ProjectileNumber = PlayerRuntimeData.GetInstance().data.AttackData.ProjectileNumber;
+            TimeBtwShotRafale = PlayerRuntimeData.GetInstance().data.AttackData.TimeBtwShotRafale;
+            AttackDamage =  PlayerRuntimeData.GetInstance().data.AttackData.AttackDamage;
+            Ammunition = PlayerRuntimeData.GetInstance().data.AttackData.Ammunition;
+            AttackCooldown = PlayerRuntimeData.GetInstance().data.AttackData.AttackCooldown;
+        }
+     }
 }

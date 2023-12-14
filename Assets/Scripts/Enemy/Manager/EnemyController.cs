@@ -35,8 +35,6 @@ public abstract class EnemyController : MonoBehaviour
 
     protected WaveManager waveManager;
 
-    private bool isDead;
-
     protected virtual void Awake()
     {
         _rend = GetComponentInChildren<Renderer>();
@@ -116,21 +114,10 @@ public abstract class EnemyController : MonoBehaviour
             Destroy(UIDAMAGE, 1);
         }
 
-
         if (Healthpoint > 0)
         {
             TakeDamageEffect();
         }
-        else if (!isDead) 
-        {
-            isDead = true;
-            Dying();
-        }
-    }
-
-    protected void KillLastAI()
-    {
-        EnemyManager.Instance.LastAIDying();
     }
     
     protected virtual void TakeDamageEffect()
