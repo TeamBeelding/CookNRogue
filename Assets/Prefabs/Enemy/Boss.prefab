@@ -320,7 +320,7 @@ RectTransform:
   - {fileID: 242267420}
   - {fileID: 1325692280}
   m_Father: {fileID: 8417764788771567537}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -480,6 +480,7 @@ Transform:
   - {fileID: 6090862242163332380}
   - {fileID: 8861672258194289866}
   - {fileID: 2635839345358933584}
+  - {fileID: 1695388147786315684}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -524,6 +525,7 @@ MonoBehaviour:
   _teleportParticlesContainer: {fileID: 8861672258194289866}
   _dirtParticlesContainer: {fileID: 2635839345358933584}
   _dashParticlesContainer: {fileID: 3501013884207865384}
+  _dyingParticles: {fileID: 1695388147442242283}
   _Play_SFX_Boss_Leaves:
     idInternal: 0
     valueGuidInternal: 
@@ -553,6 +555,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _randomDisplacement: 1
   _displacementAmount: 1.5
+  _Play_SFX_Missile_Launch:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
 --- !u!114 &226126117295486596
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -596,6 +602,10 @@ MonoBehaviour:
   _decalProjector: {fileID: 2313598797922782749}
   _fadeSpeed: 5
   _targetAlpha: 0.8
+  _Play_SFX_Boss_Erupt:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
 --- !u!114 &1549057056
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20513,6 +20523,87 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 32759
+--- !u!1001 &1289628351353306238
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 226126117295486594}
+    m_Modifications:
+    - target: {fileID: 460093589936557018, guid: 553161f242784614ba2055e899c1aebf,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 460093589936557018, guid: 553161f242784614ba2055e899c1aebf,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 460093589936557018, guid: 553161f242784614ba2055e899c1aebf,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 460093589936557018, guid: 553161f242784614ba2055e899c1aebf,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 460093589936557018, guid: 553161f242784614ba2055e899c1aebf,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 460093589936557018, guid: 553161f242784614ba2055e899c1aebf,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 460093589936557018, guid: 553161f242784614ba2055e899c1aebf,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 460093589936557018, guid: 553161f242784614ba2055e899c1aebf,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 460093589936557018, guid: 553161f242784614ba2055e899c1aebf,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 460093589936557018, guid: 553161f242784614ba2055e899c1aebf,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 460093589936557018, guid: 553161f242784614ba2055e899c1aebf,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 460093589936557019, guid: 553161f242784614ba2055e899c1aebf,
+        type: 3}
+      propertyPath: m_Name
+      value: Boss_Die
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 553161f242784614ba2055e899c1aebf, type: 3}
+--- !u!198 &1695388147442242283 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 460093589173333653, guid: 553161f242784614ba2055e899c1aebf,
+    type: 3}
+  m_PrefabInstance: {fileID: 1289628351353306238}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1695388147786315684 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 460093589936557018, guid: 553161f242784614ba2055e899c1aebf,
+    type: 3}
+  m_PrefabInstance: {fileID: 1289628351353306238}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1966422735660180140
 PrefabInstance:
   m_ObjectHideFlags: 0
