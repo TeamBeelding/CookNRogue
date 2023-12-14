@@ -356,6 +356,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6557962892287113321}
+  - component: {fileID: 3598834744863565856}
   m_Layer: 5
   m_Name: HealthBarContainer
   m_TagString: Untagged
@@ -384,6 +385,26 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!95 &3598834744863565856
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 135422344314000205}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1da0ebbf4f3aa21499bf683fc7c1f73d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!1 &226126116324877067
 GameObject:
   m_ObjectHideFlags: 0
@@ -552,6 +573,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _effectHandlers: []
+  _collider: {fileID: 0}
   _damageUI: {fileID: 4752919081619040609, guid: 5abc18997e19393429b154f8231589f9,
     type: 3}
   explosion: {fileID: 0}
@@ -690,6 +712,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _barAnimator: {fileID: 1331367731}
+  _healthbarAnimator: {fileID: 3598834744863565856}
   _introDelay: 2
   _introDuration: 2.5
 --- !u!114 &8745167396644091271
@@ -5975,7 +5998,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 66.1, y: -20}
+  m_AnchoredPosition: {x: 75.8, y: -20}
   m_SizeDelta: {x: 999, y: 21}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2827481369014475675
@@ -6078,8 +6101,8 @@ RectTransform:
   m_GameObject: {fileID: 5616089019569229629}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7829330770437577665}
   m_Father: {fileID: 6557962892287113321}

@@ -31,6 +31,8 @@ public class BossController : EnemyController
     private Coroutine stateCoroutine;
     private Coroutine rotationCoroutine;
     private Vector3 targetPosition;
+
+    [Header("HEALTHBAR")]
     [SerializeField] private Image bossHealthBar;
     [SerializeField] Gradient _healthBarGradient;
 
