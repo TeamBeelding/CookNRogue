@@ -24,7 +24,7 @@ namespace Enemy.Minimoyz
         [SerializeField] private MinimoyzData data;
         [SerializeField] private SlimeData slimeData;
         [SerializeField] private NavMeshAgent agent;
-        [SerializeField] private GameObject physicsMinimoyz;
+        //[SerializeField] private GameObject physicsMinimoyz;
 
         private Coroutine coroutineState;
         private NavMeshPath navMeshPath;
@@ -57,6 +57,8 @@ namespace Enemy.Minimoyz
             agent.stoppingDistance = data.GetAttackRange();
             FocusPlayer = data.GetFocusPlayer();
             Healthpoint = data.GetHealth();
+
+            _collider.enabled = true;
 
             SetState(State.Chase);
         }
@@ -166,8 +168,8 @@ namespace Enemy.Minimoyz
             if (!gameObject.activeSelf)
                 return;
 
-            if (!physicsMinimoyz.activeSelf)
-                physicsMinimoyz.SetActive(true);
+            //if (!physicsMinimoyz.activeSelf)
+            //    physicsMinimoyz.SetActive(true);
  
             coroutineState = StartCoroutine(IChase());
 
