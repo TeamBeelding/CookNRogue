@@ -40,4 +40,6 @@ public class WaveSpawner : MonoBehaviour
     }
 
     public bool IsWaveIsEnd() => currentWaveIndex >= waveCount;
+
+    public bool IsLastWave() => currentWaveIndex == waveCount;
 }

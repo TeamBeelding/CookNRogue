@@ -23,9 +23,15 @@ namespace AK
         static const AkUniqueID PLAY_MC_RUN_FOLEY = 3682234456U;
         static const AkUniqueID PLAY_MC_RUN_FOOTSTEP = 104751245U;
         static const AkUniqueID PLAY_MUSIC = 2932040671U;
+        static const AkUniqueID PLAY_RC_MISSILE_EXPLODE = 2808147880U;
+        static const AkUniqueID PLAY_RC_MISSILE_LAUNCH = 3658758792U;
         static const AkUniqueID PLAY_RESET_INGREDIENT = 3223052211U;
+        static const AkUniqueID PLAY_SFX_BOSS_CHARGE_IMPACT = 1015345869U;
+        static const AkUniqueID PLAY_SFX_BOSS_CHARGE_LP = 1366164187U;
         static const AkUniqueID PLAY_SFX_BOSS_DIVE = 1599937242U;
         static const AkUniqueID PLAY_SFX_BOSS_ERUPT = 4035373962U;
+        static const AkUniqueID PLAY_SFX_BOSS_LEAVES = 395712816U;
+        static const AkUniqueID PLAY_SFX_BOSS_SHOCKWAVE = 1854063749U;
         static const AkUniqueID PLAY_SFX_CABBAGE_CHARGE_IMPACT = 1246023875U;
         static const AkUniqueID PLAY_SFX_CABBAGE_CHARGE_LP = 2535875021U;
         static const AkUniqueID PLAY_SFX_CABBAGE_DEATH = 1817239028U;
@@ -36,6 +42,7 @@ namespace AK
         static const AkUniqueID PLAY_SFX_CARROT_DIVE = 2282737784U;
         static const AkUniqueID PLAY_SFX_CARROT_ERUPT = 1413782892U;
         static const AkUniqueID PLAY_SFX_CARROT_HIT = 1869131017U;
+        static const AkUniqueID PLAY_SFX_CAULDRON_EXPLODE = 4292650966U;
         static const AkUniqueID PLAY_SFX_COOK = 3800044410U;
         static const AkUniqueID PLAY_SFX_COOK_END = 2610641744U;
         static const AkUniqueID PLAY_SFX_CORN_ATTACK_CHARGE = 3879041558U;
@@ -77,6 +84,7 @@ namespace AK
         static const AkUniqueID PLAY_WEAPON_SHOT = 3889646233U;
         static const AkUniqueID STOP_AMB_LEVEL = 3214656583U;
         static const AkUniqueID STOP_KAMIKAZE_IDLE = 847261186U;
+        static const AkUniqueID STOP_SFX_BOSS_CHARGE_LP = 1829071329U;
         static const AkUniqueID STOP_SFX_CABBAGE_CHARGE_LP = 3742019055U;
         static const AkUniqueID STOP_SFX_COOK = 4293892292U;
         static const AkUniqueID STOP_SFX_PEA_MOVEMENT = 2301333962U;
