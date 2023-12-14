@@ -350,7 +350,7 @@ public class PlayerAttack : MonoBehaviour
     public void ResetParameters()
     {
         PlayerRuntimeData.GetInstance().data.AttackData.AttackColor = _baseData.AttackColor;
-        PlayerRuntimeData.GetInstance().data.AttackData.AttackEffects = _baseData.AttackEffects;
+        PlayerRuntimeData.GetInstance().data.AttackData.AttackEffects = new();
         PlayerRuntimeData.GetInstance().data.AttackData.AttackSize = _baseData.AttackSize;
         PlayerRuntimeData.GetInstance().data.AttackData.AttackSpeed = _baseData.AttackSpeed;
         PlayerRuntimeData.GetInstance().data.AttackData.AttackDrag = _baseData.AttackDrag;
@@ -374,7 +374,7 @@ public class PlayerAttack : MonoBehaviour
     public class BaseData
     {
         public float Ammunition = 0;
-        public int ProjectileNumber = 0;
+        public int ProjectileNumber = 1;
 
         public List<IIngredientEffects> AttackEffects = new();
 
