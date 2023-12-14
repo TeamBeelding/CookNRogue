@@ -35,8 +35,6 @@ public abstract class EnemyController : MonoBehaviour
 
     protected WaveManager waveManager;
 
-    private bool isDead;
-
     protected virtual void Awake()
     {
         _rend = GetComponentInChildren<Renderer>();

@@ -74,9 +74,6 @@ namespace Enemy.Slime
             Healthpoint = data.GetHealth;
             agent.speed = data.GetSpeed;
             agent.stoppingDistance = data.GetAttackRange;
-
-            //if (!animator)
-            //    animator = GetComponent<Animator>();
         }
 
         protected override void OnDisable()

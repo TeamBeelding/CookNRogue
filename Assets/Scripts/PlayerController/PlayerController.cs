@@ -67,7 +67,6 @@ public class PlayerController : MonoBehaviour
         get => _aimInputValue;
     }
 
-
     private bool _isDashing = false;
     public bool IsDashing
     {
@@ -162,10 +161,10 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        if (_instance != null)
-        {
-            Destroy(gameObject);
-        }
+        if (_instance == null)
+            _instance = this;
+        else
+            Destroy(_instance);
 
         _instance = this;
     }
