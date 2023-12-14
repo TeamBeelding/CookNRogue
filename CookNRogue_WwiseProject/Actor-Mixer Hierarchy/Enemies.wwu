@@ -3467,6 +3467,28 @@
 									</ChildrenList>
 								</BlendContainer>
 								<RandomSequenceContainer Name="Kamikaze_Explosion" ID="{27D1A67B-5EBB-4185-B3BD-0C3B81B562ED}" ShortID="896667713">
+									<PropertyList>
+										<Property Name="Highpass" Type="int16">
+											<ValueList>
+												<Value>19</Value>
+											</ValueList>
+										</Property>
+										<Property Name="Lowpass" Type="int16">
+											<ValueList>
+												<Value>21</Value>
+											</ValueList>
+										</Property>
+										<Property Name="Pitch" Type="int32">
+											<ValueList>
+												<Value>1000</Value>
+											</ValueList>
+										</Property>
+										<Property Name="Volume" Type="Real64">
+											<ValueList>
+												<Value>-5</Value>
+											</ValueList>
+										</Property>
+									</PropertyList>
 									<ReferenceList>
 										<Reference Name="Conversion">
 											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DEC634C6-86E3-4DF9-96EE-F869BA355507}"/>
@@ -3475,6 +3497,96 @@
 											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{85B5C199-8628-4DDB-B756-DA8917395816}"/>
 										</Reference>
 									</ReferenceList>
+									<ChildrenList>
+										<Sound Name="SFX_Cauldron_Explode_01" ID="{5778F927-DE31-4FB6-AC1C-ED0C2FA19847}" ShortID="614251393">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Vorbis Quality High" ID="{53A9DE0F-3F4F-4B59-8614-3F9E3C7358FC}" WorkUnitID="{F6B2880C-85E5-47FA-A126-645B5DFD9ACC}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Other" ID="{BC101499-8C91-42B8-BA04-AA71ADF036EF}" WorkUnitID="{85B5C199-8628-4DDB-B756-DA8917395816}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="SFX_Cauldron_Explode_01" ID="{AE7C2E06-445C-450B-A91A-D0D098295E79}">
+													<Language>SFX</Language>
+													<AudioFile>SFX_Cauldron_Explode_01.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="845554459"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="SFX_Cauldron_Explode_01" ID="{AE7C2E06-445C-450B-A91A-D0D098295E79}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="SFX_Cauldron_Explode_02" ID="{92D5C82C-6C3F-42DC-858B-9BFF4BDE378E}" ShortID="418021818">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Vorbis Quality High" ID="{53A9DE0F-3F4F-4B59-8614-3F9E3C7358FC}" WorkUnitID="{F6B2880C-85E5-47FA-A126-645B5DFD9ACC}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Other" ID="{BC101499-8C91-42B8-BA04-AA71ADF036EF}" WorkUnitID="{85B5C199-8628-4DDB-B756-DA8917395816}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="SFX_Cauldron_Explode_02" ID="{73B42878-4E41-4127-BD4B-12CE3ECE8C89}">
+													<Language>SFX</Language>
+													<AudioFile>SFX_Cauldron_Explode_02.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="877216723"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="SFX_Cauldron_Explode_02" ID="{73B42878-4E41-4127-BD4B-12CE3ECE8C89}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="SFX_Cauldron_Explode_03" ID="{06E93CB7-DB65-4668-A1CB-C0ECBC1F9655}" ShortID="78371653">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Vorbis Quality High" ID="{53A9DE0F-3F4F-4B59-8614-3F9E3C7358FC}" WorkUnitID="{F6B2880C-85E5-47FA-A126-645B5DFD9ACC}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Other" ID="{BC101499-8C91-42B8-BA04-AA71ADF036EF}" WorkUnitID="{85B5C199-8628-4DDB-B756-DA8917395816}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="SFX_Cauldron_Explode_03" ID="{29ED58B2-1FDB-4E62-BA99-F43529C7AE8F}">
+													<Language>SFX</Language>
+													<AudioFile>SFX_Cauldron_Explode_03.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="291360466"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="SFX_Cauldron_Explode_03" ID="{29ED58B2-1FDB-4E62-BA99-F43529C7AE8F}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+										<Sound Name="SFX_Cauldron_Explode_04" ID="{C05F409F-8C6A-47FC-98C6-DCAE7B4B4CF1}" ShortID="1006051739">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Vorbis Quality High" ID="{53A9DE0F-3F4F-4B59-8614-3F9E3C7358FC}" WorkUnitID="{F6B2880C-85E5-47FA-A126-645B5DFD9ACC}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Other" ID="{BC101499-8C91-42B8-BA04-AA71ADF036EF}" WorkUnitID="{85B5C199-8628-4DDB-B756-DA8917395816}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="SFX_Cauldron_Explode_04" ID="{52B4C6B0-A869-4382-8604-13B4E4037253}">
+													<Language>SFX</Language>
+													<AudioFile>SFX_Cauldron_Explode_04.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="186779642"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="SFX_Cauldron_Explode_04" ID="{52B4C6B0-A869-4382-8604-13B4E4037253}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+									</ChildrenList>
 								</RandomSequenceContainer>
 							</ChildrenList>
 						</ActorMixer>

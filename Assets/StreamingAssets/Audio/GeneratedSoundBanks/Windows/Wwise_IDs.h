@@ -14,6 +14,7 @@ namespace AK
     namespace EVENTS
     {
         static const AkUniqueID PLAY_AMB_LEVEL = 1968870321U;
+        static const AkUniqueID PLAY_KAMIKAZE_EXPLOSION = 1362170235U;
         static const AkUniqueID PLAY_KAMIKAZE_IDLE = 1454684904U;
         static const AkUniqueID PLAY_MC_CAULDRON_IDLE = 2012076284U;
         static const AkUniqueID PLAY_MC_DASH = 2996328093U;

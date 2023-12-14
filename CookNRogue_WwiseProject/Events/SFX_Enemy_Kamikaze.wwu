@@ -33,6 +33,28 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="Play_Kamikaze_Explosion" ID="{0FDEAC53-5608-47A3-91A6-921848F39E8B}">
+					<ChildrenList>
+						<Action Name="" ID="{6DC2F2FC-1131-4933-A60A-E3DB434F0A4A}" ShortID="569129597">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+								<Property Name="FadeTime" Type="Real64" Value="0.2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Kamikaze_Idle" ID="{423263B6-7532-4EC6-ABAF-20DD072112E6}" WorkUnitID="{23B15D27-5212-492F-AB18-D64924507D5D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+						<Action Name="" ID="{163E62AF-2F26-46B2-B0FA-D685A2232BA6}" ShortID="737724642">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Kamikaze_Explosion" ID="{27D1A67B-5EBB-4185-B3BD-0C3B81B562ED}" WorkUnitID="{23B15D27-5212-492F-AB18-D64924507D5D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>
