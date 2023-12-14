@@ -21,6 +21,11 @@ public class PlayerRuntimeData
         return GetInstance().data;
     }
 
+    public static void ResetInstance()
+    {
+        _instance = new PlayerRuntimeData();
+    }
+
     private PlayerRuntimeData()
     {
         LoadData();
