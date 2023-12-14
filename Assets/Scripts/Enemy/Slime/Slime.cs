@@ -218,8 +218,10 @@ namespace Enemy.Slime
 
             if (Healthpoint <= 0)
             {
-                state = State.Dying;
+                //waveManager?.SlowMotion();
+
                 _Play_SFX_Pea_Pod_Death.Post(gameObject);
+                SetState(State.Dying);
             }
         }
 

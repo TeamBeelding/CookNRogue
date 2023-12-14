@@ -489,6 +489,7 @@ GameObject:
   - component: {fileID: 226126117295486599}
   - component: {fileID: 226126117295486596}
   - component: {fileID: 1549057056}
+  - component: {fileID: 8745167396644091271}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Untagged
@@ -559,7 +560,7 @@ MonoBehaviour:
   _teleportParticlesContainer: {fileID: 8861672258194289866}
   _dirtParticlesContainer: {fileID: 2635839345358933584}
   _dashParticlesContainer: {fileID: 3501013884207865384}
-  _dyingParticlesContainer: {fileID: 0}
+  _dyingParticlesContainer: {fileID: 1695388147786315684}
   _Play_SFX_Boss_Leaves:
     idInternal: 0
     valueGuidInternal: 
@@ -592,7 +593,8 @@ MonoBehaviour:
   _Play_SFX_Missile_Launch:
     idInternal: 0
     valueGuidInternal: 
-    WwiseObjectReference: {fileID: 0}
+    WwiseObjectReference: {fileID: 11400000, guid: 06ca7d2c9fb11af478a3871a0e53dc1a,
+      type: 2}
 --- !u!114 &226126117295486596
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -639,7 +641,8 @@ MonoBehaviour:
   _Play_SFX_Boss_Erupt:
     idInternal: 0
     valueGuidInternal: 
-    WwiseObjectReference: {fileID: 0}
+    WwiseObjectReference: {fileID: 11400000, guid: a80bf94ca2e334f4789736b98b1c8d1f,
+      type: 2}
 --- !u!114 &1549057056
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -655,6 +658,31 @@ MonoBehaviour:
   _barAnimator: {fileID: 1331367731}
   _introDelay: 2
   _introDuration: 2.5
+--- !u!114 &8745167396644091271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 226126117295486622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2698c394a636bc479a5e90f55e626a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerList: f7e1664c
+  useOtherObject: 0
+  data:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 8009e34ac5961e24f859d0da6ec32cde,
+      type: 2}
+  decodeBank: 0
+  loadAsynchronous: 0
+  saveDecodedBank: 0
+  unloadTriggerList: 958ca0ea
+  bankNameInternal: 
+  valueGuidInternal: 
 --- !u!1 &1181254943218104790
 GameObject:
   m_ObjectHideFlags: 0
@@ -911,7 +939,7 @@ GameObject:
   - component: {fileID: 1887875836052902441}
   - component: {fileID: 4056409449578276532}
   m_Layer: 0
-  m_Name: Particle System (1)
+  m_Name: Circles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5817,7 +5845,7 @@ GameObject:
   - component: {fileID: 3307079804221800792}
   - component: {fileID: 915883232991479731}
   m_Layer: 0
-  m_Name: Particle System
+  m_Name: Stars
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
