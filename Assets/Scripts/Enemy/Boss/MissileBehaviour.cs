@@ -34,6 +34,10 @@ public sealed class MissileBehaviour : MonoBehaviour
     MissileBoss _missileBoss;
     Vector3 _target = Vector3.zero;
 
+    [Header("Sound")]
+    [SerializeField]
+    private AK.Wwise.Event _Play_SFX_Missile_Explode;
+
     private void OnEnable()
     {
         _particles = _vfxContainer.GetComponentsInChildren<ParticleSystem>();
@@ -91,6 +95,7 @@ public sealed class MissileBehaviour : MonoBehaviour
 
             yield return new WaitForFixedUpdate();
         }
+        _Play_SFX_Missile_Explode.Post(gameObject);
         _smokeParticles.Stop();
         TriggerParticles();
         yield return new WaitForSeconds(0.5f);

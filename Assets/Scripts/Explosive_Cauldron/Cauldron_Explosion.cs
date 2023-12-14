@@ -38,7 +38,11 @@ public class Cauldron_Explosion : MonoBehaviour
 
     [SerializeField, ColorUsage(true, true)] Color _explosionMarkColor;
 
-    
+    [Header("Sound")]
+    [SerializeField]
+    private AK.Wwise.Event _Play_SFX_Cauldron;
+
+
 
     private void Start()
     {
@@ -101,7 +105,7 @@ public class Cauldron_Explosion : MonoBehaviour
     {
         _canExplode = false;
         yield return new WaitForSecondsRealtime(timer);
-
+        _Play_SFX_Cauldron.Post(gameObject);
         TriggerParticles();
 
         if (_explosiveCauldronAnimator)

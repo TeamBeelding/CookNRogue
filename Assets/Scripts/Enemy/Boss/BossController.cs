@@ -40,6 +40,14 @@ public class BossController : EnemyController
     [SerializeField] Transform _dashParticlesContainer;
     ParticleSystem[] _dashParticles;
 
+    [Header("Sound")]
+    [SerializeField]
+    private AK.Wwise.Event _Play_SFX_Boss_Leaves;
+    [SerializeField]
+    private AK.Wwise.Event _Play_SFX_Boss_Charge_LP;
+    [SerializeField]
+    private AK.Wwise.Event _Play_SFX_Boss_Charge_Impact;
+
     protected override void OnEnable()
     {
         base.OnEnable();
@@ -105,6 +113,7 @@ public class BossController : EnemyController
                 CastDash();
                 break;
             case State.Dash:
+                _Play_SFX_Boss_Charge_LP.Post(gameObject);
                 Dashing();
                 break;
             case State.Shockwave:
@@ -146,7 +155,7 @@ public class BossController : EnemyController
                 _teleportParticlesContainer.transform.parent = null;
 
             teleportTarget = GetTargetPosition();
-
+            
             foreach (var particle in _teleportParticles)
             {
                 particle.Play();
@@ -157,7 +166,7 @@ public class BossController : EnemyController
             }
 
             _teleportParticlesContainer.transform.position = teleportTarget;
-
+            _Play_SFX_Boss_Leaves.Post(gameObject);
             while (state == State.Teleport)
             {
               
@@ -320,6 +329,7 @@ public class BossController : EnemyController
 
     public void CollideWithPlayer()
     {
+        _Play_SFX_Boss_Charge_Impact.Post(gameObject);
         PlayerController.Instance.TakeDamage(data.GetDamageOnHitDash);
 
         SetState(State.Teleport);
@@ -327,6 +337,7 @@ public class BossController : EnemyController
 
     public void CollideWithObstruction()
     {
+        _Play_SFX_Boss_Charge_Impact.Post(gameObject);
         SetState(State.Shockwave);
     }
 

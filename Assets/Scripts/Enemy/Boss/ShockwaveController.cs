@@ -17,6 +17,11 @@ public class ShockwaveController : MonoBehaviour
     [SerializeField] float _fadeSpeed = 1;
     [SerializeField,Range(0,1)] float _targetAlpha = 1;
 
+
+    [Header("Sound")]
+    [SerializeField]
+    private AK.Wwise.Event _Play_SFX_Boss_Erupt;
+
     private void Start()
     {
         _shockwaveParts = VFXContainer.GetComponentsInChildren<ParticleSystem>();
@@ -39,7 +44,7 @@ public class ShockwaveController : MonoBehaviour
     public void StartShockwave()
     {
         StartCoroutine(DecalFadeIn());
-
+        _Play_SFX_Boss_Erupt.Post(gameObject);
         foreach (ParticleSystem particle in _shockwaveParts)
             particle.Play();
 
