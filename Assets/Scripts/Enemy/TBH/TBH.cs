@@ -202,11 +202,12 @@ public class TBH : EnemyController
 
     protected override void Dying()
     {
+        waveManager?.SlowMotion();
+
         physics.SetActive(false);
         StopAllCoroutines();
 
         _animator.SetBool("isDead", true);
-        waveManager?.SlowMotion();
 
         StartCoroutine(IDeathAnim());
 
