@@ -141,7 +141,9 @@ public class WaveManager : MonoBehaviour
                 waveList.Add(ws);
         }
 
-        if (waveList[0].IsLastWave())
+        if (waveList.Count == 0)
+            return;
+        else if (waveList[0].IsLastWave())
         {
             if (EnemyManager.Instance.GetNumOfEnemies() == 1)
             {

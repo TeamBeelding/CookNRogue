@@ -109,7 +109,8 @@ public class PlayerBulletBehaviour : MonoBehaviour
             SetUpDecal(other.transform.position);
 
             _damage = (int)_damage;
-             other.GetComponentInParent<EnemyController>().TakeDamage(_damage, _isCritical);
+
+            other.GetComponentInParent<EnemyController>().TakeDamage(_damage, _isCritical);
 
             if (_ricochetNbr > 0)
             {

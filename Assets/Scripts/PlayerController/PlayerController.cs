@@ -993,6 +993,8 @@ public class PlayerController : MonoBehaviour
 
     public void RestartLevel()
     {
+        PoolManager.Instance.DestroyAI();
+
         Time.timeScale = 1f;
         pauseMenu.SetActive(false);
         deathMenu.SetActive(false);

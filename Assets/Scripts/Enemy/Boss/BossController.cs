@@ -31,6 +31,8 @@ public class BossController : EnemyController
     private Coroutine stateCoroutine;
     private Coroutine rotationCoroutine;
     private Vector3 targetPosition;
+
+    [Header("HEALTHBAR")]
     [SerializeField] private Image bossHealthBar;
     [SerializeField] Gradient _healthBarGradient;
 
@@ -370,7 +372,10 @@ public class BossController : EnemyController
     {
         physics?.SetActive(false);
 
-        
+        Animator animator;
+
+        GetComponent<BossIntro>().healthbarAnimator.Play("Boss_HealthBar_Exit");
+
         foreach(var particle in _dyingParticles)
             particle.Play();
 
