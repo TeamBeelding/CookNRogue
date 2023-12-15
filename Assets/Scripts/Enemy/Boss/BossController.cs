@@ -372,8 +372,9 @@ public class BossController : EnemyController
     {
         physics?.SetActive(false);
 
-        Animator animator;
+        ShutDownAllAbilitiesVFX();
 
+        Animator animator;
         GetComponent<BossIntro>().healthbarAnimator.Play("Boss_HealthBar_Exit");
 
         foreach(var particle in _dyingParticles)
@@ -417,5 +418,24 @@ public class BossController : EnemyController
     {
         foreach(var particles in _stunnedParticles)
             particles.Play();
+    }
+
+    public void ShutDownAllAbilitiesVFX()
+    {
+        foreach (var particle in _dashParticles)
+        {
+            particle.Stop();
+        }
+
+        foreach (var particle in _teleportParticles)
+        {
+            particle.Stop();
+        }
+
+        foreach (var particle in _dirtParticles)
+        {
+            particle.Stop();
+        }
+
     }
 }
