@@ -965,6 +965,7 @@ public class PlayerController : MonoBehaviour
 
     public void QuitGame()
     {
+        PlayerRuntimeData.ResetInstance();
         Time.timeScale = 1;
         AkSoundEngine.StopAll();
         SceneManager.LoadScene(0);
@@ -973,6 +974,7 @@ public class PlayerController : MonoBehaviour
     
     public void RestartGame()
     {
+        PlayerRuntimeData.ResetInstance();
         Time.timeScale = 1;
         AkSoundEngine.StopAll();
         RestartLevelFix.Instance.RestartLevel();
