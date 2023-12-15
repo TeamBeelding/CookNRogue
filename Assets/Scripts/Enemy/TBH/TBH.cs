@@ -92,11 +92,9 @@ public class TBH : EnemyController
                 }
                 break;
             case State.Teleporting:
-                //_animator.SetBool("isShoot", false);
                 Teleport();
                 break;
             case State.Casting:
-                //_animator.SetBool("isShoot", false);
                 Casting();
                 break;
             case State.Dying:
@@ -180,7 +178,6 @@ public class TBH : EnemyController
 
         IEnumerator Waiting()
         {
-            //_Play_SFX_Carrot_Dive.Post(gameObject);
             yield return new WaitForSeconds(_data.DelayBetweenTeleport);
             SetState(State.Teleporting);
         }
@@ -202,8 +199,6 @@ public class TBH : EnemyController
 
     protected override void Dying()
     {
-        waveManager?.SlowMotion();
-
         physics.SetActive(false);
         StopAllCoroutines();
 
@@ -225,7 +220,10 @@ public class TBH : EnemyController
         _Play_Weapon_Hit.Post(gameObject);
 
         if (Healthpoint <= 0)
+        {
+            waveManager?.SlowMotion();
             SetState(State.Dying);
+        }
     }
 
 #if UNITY_EDITOR
