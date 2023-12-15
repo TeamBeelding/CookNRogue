@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -30,7 +31,10 @@ public class BossController : EnemyController
     private Coroutine stateCoroutine;
     private Coroutine rotationCoroutine;
     private Vector3 targetPosition;
+
+    [Header("HEALTHBAR")]
     [SerializeField] private Image bossHealthBar;
+    [SerializeField] Gradient _healthBarGradient;
 
     [Header("BOSS VFX")]
     [SerializeField] Transform _teleportParticlesContainer;
@@ -178,7 +182,7 @@ public class BossController : EnemyController
             }
 
             _teleportParticlesContainer.transform.position = teleportTarget;
-            _Play_SFX_Boss_Leaves.Post(gameObject);
+            _Play_SFX_Boss_Leaves.Post(_teleportParticlesContainer.gameObject);
             while (state == State.Teleport)
             {
               
@@ -336,7 +340,9 @@ public class BossController : EnemyController
         if (!bossHealthBar)
             return;
 
-        bossHealthBar.fillAmount = Mathf.Clamp(Healthpoint, 0, data.GetHealth) / data.GetHealth;
+        float ratio = Mathf.Clamp(Healthpoint, 0, data.GetHealth) / data.GetHealth;
+        bossHealthBar.fillAmount = ratio;
+        bossHealthBar.color = _healthBarGradient.Evaluate(ratio);
     }
 
     public void CollideWithPlayer()
@@ -366,7 +372,11 @@ public class BossController : EnemyController
     {
         physics?.SetActive(false);
 
-        
+        ShutDownAllAbilitiesVFX();
+
+        Animator animator;
+        GetComponent<BossIntro>().healthbarAnimator.Play("Boss_HealthBar_Exit");
+
         foreach(var particle in _dyingParticles)
             particle.Play();
 
@@ -408,5 +418,24 @@ public class BossController : EnemyController
     {
         foreach(var particles in _stunnedParticles)
             particles.Play();
+    }
+
+    public void ShutDownAllAbilitiesVFX()
+    {
+        foreach (var particle in _dashParticles)
+        {
+            particle.Stop();
+        }
+
+        foreach (var particle in _teleportParticles)
+        {
+            particle.Stop();
+        }
+
+        foreach (var particle in _dirtParticles)
+        {
+            particle.Stop();
+        }
+
     }
 }

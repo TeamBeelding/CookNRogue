@@ -45,6 +45,9 @@
 									</ValueList>
 								</Property>
 								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>2</Value>
+									</ValueList>
 									<ModifierList>
 										<ModifierInfo>
 											<Modifier Name="" ID="{C91B37D2-5D09-4D0D-AD6B-2B5DFE9794F8}">
@@ -1446,7 +1449,7 @@
 										<Value>5</Value>
 									</ValueList>
 								</Property>
-								<Property Name="OverridePositioning" Type="bool" Value="True"/>
+								<Property Name="SpeakerPanning3DSpatializationMix" Type="int32" Value="50"/>
 								<Property Name="UseMaxSoundPerInstance" Type="bool">
 									<ValueList>
 										<Value>True</Value>
@@ -1454,7 +1457,7 @@
 								</Property>
 								<Property Name="Volume" Type="Real64">
 									<ValueList>
-										<Value>2</Value>
+										<Value>-5</Value>
 									</ValueList>
 								</Property>
 							</PropertyList>
@@ -2547,6 +2550,39 @@
 									</StateInfo>
 								</RandomSequenceContainer>
 							</ChildrenList>
+							<StateInfo>
+								<StateGroupList>
+									<StateGroupInfo>
+										<StateGroupRef Name="InFight" ID="{FE1DCA5E-8784-48FF-8945-E0036FCA005B}"/>
+									</StateGroupInfo>
+								</StateGroupList>
+								<CustomStateList>
+									<CustomState>
+										<StateRef Name="Exploration" ID="{99F50B97-DF6B-4507-AEA0-78A4EF50F02C}"/>
+										<CustomState Name="" ID="{80376130-CC88-4D3C-9618-802A0C7A0C68}" ShortID="596101">
+											<PropertyList>
+												<Property Name="Volume" Type="Real64" Value="-3"/>
+											</PropertyList>
+										</CustomState>
+									</CustomState>
+									<CustomState>
+										<StateRef Name="InFight" ID="{520D31D5-B746-4935-AFA5-95AFFA570329}"/>
+										<CustomState Name="" ID="{6A939752-B9CA-44E0-95C6-D355D04594D8}" ShortID="64129187"/>
+									</CustomState>
+									<CustomState>
+										<StateRef Name="InBoss" ID="{26685954-25EA-4A92-B70B-481AAF24762A}"/>
+										<CustomState Name="" ID="{C983AD23-2747-47D6-99A7-0249EA86737D}" ShortID="359863805"/>
+									</CustomState>
+									<CustomState>
+										<StateRef Name="NoMusic" ID="{E6B63851-F8F6-4E8A-8A12-C6F2B068316D}"/>
+										<CustomState Name="" ID="{A452F208-BE34-420E-B2CF-0C89DB5BA80E}" ShortID="203375534">
+											<PropertyList>
+												<Property Name="Volume" Type="Real64" Value="-3"/>
+											</PropertyList>
+										</CustomState>
+									</CustomState>
+								</CustomStateList>
+							</StateInfo>
 							<BlendTrackList>
 								<BlendTrack Name="New Blend Track" ID="{681F8B90-F687-4629-AE96-0F413C6CF047}" ShortID="49090525"/>
 							</BlendTrackList>
@@ -2585,7 +2621,7 @@
 										<Property Name="RandomAvoidRepeatingCount" Type="int32" Value="2"/>
 										<Property Name="Volume" Type="Real64">
 											<ValueList>
-												<Value>-3</Value>
+												<Value>-5</Value>
 											</ValueList>
 											<ModifierList>
 												<ModifierInfo>
@@ -2797,7 +2833,7 @@
 									<PropertyList>
 										<Property Name="Lowpass" Type="int16">
 											<ValueList>
-												<Value>32</Value>
+												<Value>25</Value>
 											</ValueList>
 										</Property>
 										<Property Name="MaxReachedBehavior" Type="int16" Value="1"/>
@@ -2808,7 +2844,7 @@
 										</Property>
 										<Property Name="Volume" Type="Real64">
 											<ValueList>
-												<Value>-15</Value>
+												<Value>-18</Value>
 											</ValueList>
 										</Property>
 									</PropertyList>
@@ -3282,48 +3318,43 @@
 											</ChildrenList>
 										</RandomSequenceContainer>
 									</ChildrenList>
+									<StateInfo>
+										<StateGroupList>
+											<StateGroupInfo>
+												<StateGroupRef Name="InFight" ID="{FE1DCA5E-8784-48FF-8945-E0036FCA005B}"/>
+											</StateGroupInfo>
+										</StateGroupList>
+										<CustomStateList>
+											<CustomState>
+												<StateRef Name="Exploration" ID="{99F50B97-DF6B-4507-AEA0-78A4EF50F02C}"/>
+												<CustomState Name="" ID="{225A104F-C16E-448D-B049-9CE49D54AC22}" ShortID="674772911"/>
+											</CustomState>
+											<CustomState>
+												<StateRef Name="InFight" ID="{520D31D5-B746-4935-AFA5-95AFFA570329}"/>
+												<CustomState Name="" ID="{BE609F95-958F-49F1-86B3-AEA46C80F151}" ShortID="678227216">
+													<PropertyList>
+														<Property Name="Volume" Type="Real64" Value="-5"/>
+													</PropertyList>
+												</CustomState>
+											</CustomState>
+											<CustomState>
+												<StateRef Name="InBoss" ID="{26685954-25EA-4A92-B70B-481AAF24762A}"/>
+												<CustomState Name="" ID="{2155DC00-0978-4D0A-9024-A9F1E961F708}" ShortID="886848141">
+													<PropertyList>
+														<Property Name="Volume" Type="Real64" Value="-5"/>
+													</PropertyList>
+												</CustomState>
+											</CustomState>
+											<CustomState>
+												<StateRef Name="NoMusic" ID="{E6B63851-F8F6-4E8A-8A12-C6F2B068316D}"/>
+												<CustomState Name="" ID="{B7A9C6A0-5DFD-44D3-ADCB-1206102CC5BF}" ShortID="431921090"/>
+											</CustomState>
+										</CustomStateList>
+									</StateInfo>
 								</BlendContainer>
 							</ChildrenList>
-							<StateInfo>
-								<StateGroupList>
-									<StateGroupInfo>
-										<StateGroupRef Name="InFight" ID="{FE1DCA5E-8784-48FF-8945-E0036FCA005B}"/>
-									</StateGroupInfo>
-								</StateGroupList>
-								<CustomStateList>
-									<CustomState>
-										<StateRef Name="NotInFight" ID="{99F50B97-DF6B-4507-AEA0-78A4EF50F02C}"/>
-										<CustomState Name="" ID="{CA9A23ED-45E5-4DBD-84EE-DF381D12CED9}" ShortID="259425380"/>
-									</CustomState>
-									<CustomState>
-										<StateRef Name="InFight" ID="{520D31D5-B746-4935-AFA5-95AFFA570329}"/>
-										<CustomState Name="" ID="{CDFA7803-C36B-440D-B992-F22724181B1A}" ShortID="1068106406">
-											<PropertyList>
-												<Property Name="Volume" Type="Real64" Value="-3"/>
-											</PropertyList>
-										</CustomState>
-									</CustomState>
-								</CustomStateList>
-							</StateInfo>
 						</ActorMixer>
 					</ChildrenList>
-					<StateInfo>
-						<StateGroupList>
-							<StateGroupInfo>
-								<StateGroupRef Name="InFight" ID="{FE1DCA5E-8784-48FF-8945-E0036FCA005B}"/>
-							</StateGroupInfo>
-						</StateGroupList>
-						<CustomStateList>
-							<CustomState>
-								<StateRef Name="NotInFight" ID="{99F50B97-DF6B-4507-AEA0-78A4EF50F02C}"/>
-								<CustomState Name="" ID="{CBCAC623-9271-44F3-A832-EBAF04914417}" ShortID="598957829"/>
-							</CustomState>
-							<CustomState>
-								<StateRef Name="InFight" ID="{520D31D5-B746-4935-AFA5-95AFFA570329}"/>
-								<CustomState Name="" ID="{25C4B5B1-68FA-4C22-A482-361277C81B72}" ShortID="1062893416"/>
-							</CustomState>
-						</CustomStateList>
-					</StateInfo>
 				</ActorMixer>
 			</ChildrenList>
 		</WorkUnit>

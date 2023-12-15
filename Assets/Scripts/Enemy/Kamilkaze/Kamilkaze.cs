@@ -7,6 +7,18 @@ public class Kamilkaze : EnemyController
     [SerializeField] private KamilkazeData _data;
     [SerializeField] private NavMeshAgent _agent;
 
+    [Header("Sound")]
+    [SerializeField]
+    private AK.Wwise.Event _Play_Kamikaze_Explosion;
+    [SerializeField]
+    private AK.Wwise.Event _Play_Kamikaze_Idle;
+    [SerializeField]
+    private AK.Wwise.Event _Stop_Kamikaze_Idle;
+    [SerializeField]
+    private AK.Wwise.Event _Play_Kamikaze_Hit;
+    [SerializeField]
+    private AK.Wwise.Event _Play_Weapon_Hit;
+
     public enum State
     {
         Neutral,
@@ -42,6 +54,8 @@ public class Kamilkaze : EnemyController
         effect?.SetActive(false);
 
         SetState(_data.FocusPlayerOnCD ? State.Chase : State.Neutral);
+
+        _Play_Kamikaze_Idle.Post(gameObject);
     }
 
     private void SetState(State newState)
@@ -62,6 +76,7 @@ public class Kamilkaze : EnemyController
                 Neutral();
                 break;
             case State.Chase:
+                //_Play_Kamikaze_Idle.Post(gameObject);
                 Chase();
                 break;
             case State.Casting:
@@ -69,9 +84,12 @@ public class Kamilkaze : EnemyController
                 break;
             case State.Explose:
                 Explode();
+                _Play_Kamikaze_Explosion.Post(gameObject);
                 break;
             case State.Dying:
                 Dying();
+                _Play_Kamikaze_Explosion.Post(gameObject);
+                //_Stop_Kamikaze_Idle.Post(gameObject);
                 break;
             default:
                 Dying();
@@ -147,6 +165,8 @@ public class Kamilkaze : EnemyController
     public override void TakeDamage(float damage = 1, bool isCritical = false)
     {
         base.TakeDamage(damage, isCritical);
+        _Play_Kamikaze_Hit.Post(gameObject);
+        _Play_Weapon_Hit.Post(gameObject);
 
         if (Healthpoint <= 0)
             SetState(State.Dying);

@@ -9,6 +9,9 @@ public class BossIntro : MonoBehaviour
     PlayerController _playerController;
 
     [SerializeField] Animator _barAnimator;
+    
+    [SerializeField] Animator _healthbarAnimator;
+    public Animator healthbarAnimator { get { return _healthbarAnimator; } }
 
     [SerializeField] float _introDelay = 1f;
     [SerializeField] float _introDuration = 2f;
@@ -35,5 +38,7 @@ public class BossIntro : MonoBehaviour
         _playerController.enabled = true;
         _bossController.enabled = true;
         _barAnimator.Play("Bar_Exit");
+
+        _healthbarAnimator.Play("Boss_HealthBar_Intro");
     }
 }

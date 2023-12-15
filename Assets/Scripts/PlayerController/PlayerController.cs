@@ -298,6 +298,10 @@ public class PlayerController : MonoBehaviour
                 {
                     aimTargets[i] = enemiesInLevel[i].gameObject;
                 }
+
+                Debug.Log("Aim assist preset : " + m_aimAssistPresset);
+                Debug.Log("Aim target : " + aimTargets);
+
                 _correctedAimDirection = AimAssist2D.CorrectAimDirection(_aimDirection, transform.position, aimTargets, m_aimAssistPresset);
             }
         }
@@ -961,6 +965,7 @@ public class PlayerController : MonoBehaviour
 
     public void QuitGame()
     {
+        PlayerRuntimeData.ResetInstance();
         Time.timeScale = 1;
         AkSoundEngine.StopAll();
         SceneManager.LoadScene(0);
@@ -969,6 +974,7 @@ public class PlayerController : MonoBehaviour
     
     public void RestartGame()
     {
+        PlayerRuntimeData.ResetInstance();
         Time.timeScale = 1;
         AkSoundEngine.StopAll();
         RestartLevelFix.Instance.RestartLevel();
@@ -989,6 +995,8 @@ public class PlayerController : MonoBehaviour
 
     public void RestartLevel()
     {
+        PoolManager.Instance.DestroyAI();
+
         Time.timeScale = 1f;
         pauseMenu.SetActive(false);
         deathMenu.SetActive(false);

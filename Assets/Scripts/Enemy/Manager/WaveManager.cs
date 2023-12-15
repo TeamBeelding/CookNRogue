@@ -101,7 +101,7 @@ public class WaveManager : MonoBehaviour
         {
             while (state == State.WaitAllEnemiesDie)
             {
-                if (GameObject.FindGameObjectsWithTag("Enemy").Length > 0)
+                if (EnemyManager.Instance.GetNumOfEnemies() > 0)
                     yield return new WaitForSeconds(1);
                 else
                 {
@@ -141,7 +141,9 @@ public class WaveManager : MonoBehaviour
                 waveList.Add(ws);
         }
 
-        if (waveList[0].IsLastWave())
+        if (waveList.Count == 0)
+            return;
+        else if (waveList[0].IsLastWave())
         {
             if (EnemyManager.Instance.GetNumOfEnemies() == 1)
             {

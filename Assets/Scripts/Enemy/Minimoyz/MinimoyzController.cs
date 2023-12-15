@@ -24,7 +24,7 @@ namespace Enemy.Minimoyz
         [SerializeField] private MinimoyzData data;
         [SerializeField] private SlimeData slimeData;
         [SerializeField] private NavMeshAgent agent;
-        [SerializeField] private GameObject physicsMinimoyz;
+        //[SerializeField] private GameObject physicsMinimoyz;
 
         private Coroutine coroutineState;
         private NavMeshPath navMeshPath;
@@ -58,6 +58,8 @@ namespace Enemy.Minimoyz
             FocusPlayer = data.GetFocusPlayer();
             Healthpoint = data.GetHealth();
 
+            _collider.enabled = true;
+
             SetState(State.Chase);
         }
 
@@ -71,7 +73,7 @@ namespace Enemy.Minimoyz
                 return;
         
             AreaDetection();
-        
+
             base.Update();
         }
 
@@ -85,18 +87,18 @@ namespace Enemy.Minimoyz
                     break;
                 case State.Chase:
                     Chase();
-                    _Play_SFX_Pea_Movement.Post(gameObject);
+                    //_Play_SFX_Pea_Movement.Post(gameObject);
                     break;
                 case State.Cast:
                     Cast();
                     break;
                 case State.Attack:
                     Attack(Attack, data.GetAttackSpeed());
-                    _Stop_SFX_Pea_Movement.Post(gameObject);
+                    //_Stop_SFX_Pea_Movement.Post(gameObject);
                     break;
                 case State.ChaseAndAttack:
                     ChaseAndAttack();
-                    _Stop_SFX_Pea_Movement.Post(gameObject);
+                    //_Stop_SFX_Pea_Movement.Post(gameObject);
                     break;
                 case State.Dying:
                     _Stop_SFX_Pea_Movement.Post(gameObject);
@@ -166,8 +168,8 @@ namespace Enemy.Minimoyz
             if (!gameObject.activeSelf)
                 return;
 
-            if (!physicsMinimoyz.activeSelf)
-                physicsMinimoyz.SetActive(true);
+            //if (!physicsMinimoyz.activeSelf)
+            //    physicsMinimoyz.SetActive(true);
  
             coroutineState = StartCoroutine(IChase());
 
@@ -224,8 +226,6 @@ namespace Enemy.Minimoyz
 
             if (Healthpoint <= 0)
             {
-                waveManager?.SlowMotion();
-
                 _Play_SFX_Pea_Death.Post(gameObject);
                 _Play_Weapon_Hit.Post(gameObject);
                 SetState(State.Dying);
@@ -234,6 +234,8 @@ namespace Enemy.Minimoyz
 
         protected override void Dying()
         {
+            waveManager?.SlowMotion();
+
             base.Dying();
         }
     }
