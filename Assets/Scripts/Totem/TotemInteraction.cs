@@ -4,16 +4,10 @@ using UnityEngine;
 
 public sealed class TotemInteraction : MonoBehaviour,IInteractable
 {
-
+    [SerializeField] int _healPerIngredient = 1;
     public void Interact(string tag)
     {
-        if (PlayerRuntimeData.GetInstance().data.CookData.Recipe.Count > 0)
-        {
-            PlayerCookingInventory.Instance.ResetRecipeUI();
-            PlayerCookingInventory.Instance.CancelCraft();
-        }
-
-        TotemMenuManager._instance.SwitchUI(); 
+        Regen();
     }
 
     public void Interactable(bool isInteractable)
@@ -21,4 +15,14 @@ public sealed class TotemInteraction : MonoBehaviour,IInteractable
 
     }
 
+    public void Regen()
+    {
+        if (PlayerRuntimeData.GetInstance().data.BaseData.CurrentHealth >= PlayerRuntimeData.GetInstance().data.BaseData.MaxHealth)
+            return;
+
+        if (PlayerCookingInventory.Instance.RemoveRandomIngredient())
+            PlayerHealth.instance.Heal(_healPerIngredient);
+        else
+            return;
+    }
 }

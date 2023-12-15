@@ -641,6 +641,30 @@ public class PlayerCookingInventory : MonoBehaviour
         m_selectKey.SetActive(false);
         m_craftKey.SetActive(false);
     }
+
+    public bool RemoveRandomIngredient()
+    {
+        //WE GET ALL OF THE SLOTS THAT HAVE AT LEAST ONE INGREDIENT
+        List<PlayerCookingInventorySlot> availableSlots = new List<PlayerCookingInventorySlot>();
+
+        foreach (PlayerCookingInventoryWheel wheel in m_inventoryWheels)
+        {
+            for (int i = 0; i < 8; i++)
+            {
+                PlayerCookingInventorySlot slot = wheel.GetSlot(i);
+                if (slot._ingredientCount > 0)
+                    availableSlots.Add(slot);
+            }
+        }
+
+        if (availableSlots.Count == 0)
+            return false;
+
+        int randomSlot = Random.Range(0, availableSlots.Count);
+        availableSlots[randomSlot].DecreaseCount();
+        return true;
+
+    }
     #endregion
 
     [System.Serializable]
