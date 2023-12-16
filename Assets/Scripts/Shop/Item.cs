@@ -81,11 +81,13 @@ public class Item : MonoBehaviour
 
         float progress = 0;
         float scale = transform.localScale.x;
-        while (distanceToPlayer > 0.3f)
-        {
-            transform.position = Vector3.Lerp(transform.position, playerTransform.position, 0.05f);
+        float Yoffset = 1;
 
-            distanceToPlayer = Vector3.Distance(playerTransform.position, transform.position);
+        while (distanceToPlayer > 0.5f)
+        {
+            transform.position = Vector3.Lerp(transform.position, playerTransform.position + (Vector3.up * Yoffset), 0.05f);
+
+            distanceToPlayer = Vector3.Distance(playerTransform.position + (Vector3.up * Yoffset), transform.position);
             transform.localScale = Vector3.one * (scale - _scaleCurve.Evaluate(progress));
             progress += Time.deltaTime;
             Mathf.Clamp01(progress);
