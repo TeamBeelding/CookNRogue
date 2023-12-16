@@ -27,20 +27,7 @@ public class Item : MonoBehaviour
         _name = _data.name;
         _description = _data.description;
     }
-    public void ShowItemGFX()
-    {
-        _gfx.SetActive(true);
-    }
 
-    protected virtual void Update()
-    {
-        //transform.LookAt(Camera.main.transform.position);
-    }
-
-    public void HideItemGFX()
-    {
-        _gfx.SetActive(false);
-    }
     protected bool CanTrigger()
     {
         if (!_hasTriggered)
@@ -101,10 +88,14 @@ public class Item : MonoBehaviour
         if (_obtainPS)
             _obtainPS.Play();
 
+        if(_gfx)
+            _gfx.SetActive(false);
+
         _triggerEffect.Invoke();
 
         _Play_SFX_Object_Collect.Post(gameObject);
 
+        yield return new WaitForSeconds(_obtainPS.main.duration);
         //TEMPORARY
         Destroy(gameObject);
     }
