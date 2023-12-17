@@ -55,7 +55,7 @@ public class PoolManager : MonoBehaviour
             case PoolType.LDS:
                 return LDSPool.GetComponent<IPooling>().Instantiating(position, quaternion);
             case PoolType.CE:
-                return CEPool.GetComponent<IPooling>().Instantiating(new Vector3(position.x, position.y, position.z), quaternion);
+                return CEPool.GetComponent<IPooling>().Instantiating(new Vector3(position.x, position.y + 0.25f, position.z), quaternion);
             case PoolType.Kamilkaze:
                 return KamilkazePool.GetComponent<IPooling>().Instantiating(position, quaternion);
             case PoolType.Bullet:
@@ -68,10 +68,14 @@ public class PoolManager : MonoBehaviour
 
     public void DestroyAI()
     {
-        WaveManager wm = GameObject.FindObjectOfType<WaveManager>();
-
-        if (wm != null)
-            wm.DestroyAllAI();
+        foreach (Transform root in transform)
+        {
+            foreach (Transform t in root)
+            {
+                if (t.gameObject.activeSelf)
+                    DesinstantiateFromPool(t.gameObject);
+            }
+        }
     }
 
     public void DesinstantiateFromPool(GameObject obj)

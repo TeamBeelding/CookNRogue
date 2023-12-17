@@ -27,20 +27,7 @@ public class Item : MonoBehaviour
         _name = _data.name;
         _description = _data.description;
     }
-    public void ShowItemGFX()
-    {
-        _gfx.SetActive(true);
-    }
 
-    protected virtual void Update()
-    {
-        //transform.LookAt(Camera.main.transform.position);
-    }
-
-    public void HideItemGFX()
-    {
-        _gfx.SetActive(false);
-    }
     protected bool CanTrigger()
     {
         if (!_hasTriggered)
@@ -81,11 +68,13 @@ public class Item : MonoBehaviour
 
         float progress = 0;
         float scale = transform.localScale.x;
-        while (distanceToPlayer > 0.3f)
-        {
-            transform.position = Vector3.Lerp(transform.position, playerTransform.position, 0.05f);
+        float Yoffset = 1;
 
-            distanceToPlayer = Vector3.Distance(playerTransform.position, transform.position);
+        while (distanceToPlayer > 0.5f)
+        {
+            transform.position = Vector3.Lerp(transform.position, playerTransform.position + (Vector3.up * Yoffset), 0.05f);
+
+            distanceToPlayer = Vector3.Distance(playerTransform.position + (Vector3.up * Yoffset), transform.position);
             transform.localScale = Vector3.one * (scale - _scaleCurve.Evaluate(progress));
             progress += Time.deltaTime;
             Mathf.Clamp01(progress);
@@ -99,10 +88,14 @@ public class Item : MonoBehaviour
         if (_obtainPS)
             _obtainPS.Play();
 
+        if(_gfx)
+            _gfx.SetActive(false);
+
         _triggerEffect.Invoke();
 
         _Play_SFX_Object_Collect.Post(gameObject);
 
+        yield return new WaitForSeconds(_obtainPS.main.duration);
         //TEMPORARY
         Destroy(gameObject);
     }

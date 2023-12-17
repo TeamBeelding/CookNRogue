@@ -7,10 +7,7 @@ public class MealOfTheDay : Item, ISubItem
 {
     bool hasTriggered = false;
 
-    protected override void Update()
-    {
-        base.Update();
-    }
+    
     public override void Interact(string tag)
     {
         base.Interact(tag);
