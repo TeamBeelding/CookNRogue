@@ -78,7 +78,9 @@ public class PlayerHealth : MonoBehaviour
 
     public void UpgradeMaxHealth(int additionalHealth)
     {
-        _heartBar.AddHeart();
+        for(int i = 0; i < additionalHealth /2; i++)
+            _heartBar.AddHeart();
+
         PlayerRuntimeData.GetInstance().data.BaseData.MaxHealth += additionalHealth;
         Heal(additionalHealth);
     }
