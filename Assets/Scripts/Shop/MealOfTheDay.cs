@@ -29,10 +29,8 @@ public class MealOfTheDay : Item, ISubItem
         MealOfTheDayData data = (MealOfTheDayData)_data;
         ItemsBar.Instance.AddItem(data);
 
-        for (int i = 0; i < data.playerUpgradeHealth; i++)
-        {
-            PlayerHealth.instance.UpgradeMaxHealth(data.playerUpgradeHealth);
-        }
+        PlayerHealth.instance.UpgradeMaxHealth(data.playerUpgradeHeart);
+        
     }
 
 }

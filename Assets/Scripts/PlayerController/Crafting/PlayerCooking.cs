@@ -63,7 +63,6 @@ public class PlayerCooking : MonoBehaviour
         PlayerRuntimeData.GetInstance().data.CookData.OneIngredientCookTime = PlayerRuntimeData.GetInstance().data.CookData.DefaultOneIngredientCookTime;
         PlayerRuntimeData.GetInstance().data.CookData.TwoIngredientCookTime = PlayerRuntimeData.GetInstance().data.CookData.DefaultTwoIngredientCookTime;
         PlayerRuntimeData.GetInstance().data.CookData.ThreeIngredientCookTime = PlayerRuntimeData.GetInstance().data.CookData.DefaultThreeIngredientCookTime;
-        PlayerRuntimeData.GetInstance().data.CookData.ThreeIngredientCookTime = PlayerRuntimeData.GetInstance().data.CookData.DefaultThreeIngredientCookTime;
         PlayerRuntimeData.GetInstance().data.CookData.QteSpawnDelay = PlayerRuntimeData.GetInstance().data.CookData.DefaultQteSpawnDelay;
     }
 

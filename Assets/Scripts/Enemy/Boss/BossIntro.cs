@@ -26,6 +26,8 @@ public class BossIntro : MonoBehaviour
 
     IEnumerator Intro()
     {
+        PlayerAttack pattack = PlayerController.Instance.transform.GetComponent<PlayerAttack>();
+        pattack.PauseAmmoTimer = true;
         _playerController.enabled = false;
         _bossController.enabled = false;
         yield return new WaitForSecondsRealtime(_introDelay);
@@ -40,5 +42,6 @@ public class BossIntro : MonoBehaviour
         _barAnimator.Play("Bar_Exit");
 
         _healthbarAnimator.Play("Boss_HealthBar_Intro");
+        pattack.PauseAmmoTimer = false;
     }
 }

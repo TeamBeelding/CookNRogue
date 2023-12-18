@@ -30,6 +30,8 @@ public abstract class EnemyController : MonoBehaviour
     [SerializeField]
     protected GameObject explosion;
 
+    [SerializeField] ParticleSystem _spawnFX;
+
     [SerializeField] 
     private TutorialManager tutorial;
 
@@ -48,6 +50,9 @@ public abstract class EnemyController : MonoBehaviour
     protected virtual void Start()
     {
         //_rend.material.color = Color.white;
+
+        if (_spawnFX)
+            _spawnFX.Play();
     }
 
     protected virtual void OnEnable()
