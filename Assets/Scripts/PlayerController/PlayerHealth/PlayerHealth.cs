@@ -13,12 +13,14 @@ public class PlayerHealth : MonoBehaviour
 
     HeartBar _heartBar;
 
-    [Header("Time Scale")]
+    [Header("Hit Time Scale")]
     [SerializeField] float _targetTimeScale;
     [SerializeField] float _scalingDuration;
     [SerializeField] float _ScalingSpeed;
     [SerializeField] AnimationCurve _scaleCurve;
 
+    [SerializeField] Color _hitColor = Color.red;
+    [SerializeField] SkinnedMeshRenderer _playerMesh;
 
     private void Awake()
     {
@@ -105,17 +107,31 @@ public class PlayerHealth : MonoBehaviour
 
     IEnumerator DamageSlowTime(float duration)
     {
+        Material playerMaterial = _playerMesh.sharedMaterial;
+        Color baseColor = Color.white;
+
+        if (playerMaterial)
+            baseColor = playerMaterial.GetColor("_BaseColor");
+        
+
         //SCALE
         float scaleProgress = 0;
         while (scaleProgress < 1)
         {
             float newScale = (1 - _targetTimeScale) * _scaleCurve.Evaluate(scaleProgress);
             scaleProgress += Time.fixedDeltaTime * _ScalingSpeed;
+
+            if(playerMaterial)
+                playerMaterial.SetColor("_BaseColor", _hitColor * scaleProgress);
+
             Time.timeScale = 1 - newScale;
             yield return new WaitForFixedUpdate();
         }
-        Time.timeScale = _targetTimeScale;
 
+        if (playerMaterial)
+            playerMaterial.SetColor("_BaseColor", baseColor);
+
+        Time.timeScale = _targetTimeScale;
         yield return new WaitForSecondsRealtime(duration);
 
         scaleProgress = 1;
@@ -126,6 +142,8 @@ public class PlayerHealth : MonoBehaviour
             Time.timeScale = 1 - newScale;
             yield return new WaitForFixedUpdate();
         }
+
+        
         Time.timeScale = 1;
     }
 

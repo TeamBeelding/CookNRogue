@@ -19,11 +19,11 @@ public class KamilkazeData : ScriptableObject
         health = 100;
         focusRange = 0;
         speed = 0;
-        distanceToPlayerForExplosion = 0;
+        distanceToPlayerForExplosion = 0.5f;
         explosionRange = 0;
         delayForExplose = 0;
         damage = 0;
-        delayAfterExplosion = 0.2f;
+        delayAfterExplosion = 0.25f;
     }
 
     public bool FocusPlayerOnCD => focusPlayerOnCD;

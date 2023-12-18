@@ -18,6 +18,7 @@ public class WaveManager : MonoBehaviour
     [SerializeField] private List<WaveSpawner> waveSpawner;
 
     [SerializeField] private float delayBeforeStartingWave = 1;
+    [SerializeField] private float delayBetweenEachWave = 2;
     [SerializeField] private bool allAIDieBeforeNextWave = false;
 
     private int waveSpawnerCount = 0;
@@ -55,7 +56,6 @@ public class WaveManager : MonoBehaviour
             case State.EndWave:
                 DestroyAllAI();
                 StopAllCoroutines();
-                //gameObject.SetActive(false);
                 break;
         }
     }
@@ -71,11 +71,6 @@ public class WaveManager : MonoBehaviour
         if (waveSpawner.Count == 0)
             SetState(State.EndWave);
 
-        SetState(State.NextWave);
-    }
-
-    private void NextWave()
-    {
         if (gameObject.activeInHierarchy)
             stateCoroutine = StartCoroutine(IDelayBeforeStartingWave());
 
@@ -83,13 +78,27 @@ public class WaveManager : MonoBehaviour
         {
             yield return new WaitForSeconds(delayBeforeStartingWave);
 
+            SetState(State.NextWave);
+        }
+    }
+
+    private void NextWave()
+    {
+        if (gameObject.activeInHierarchy)
+            stateCoroutine = StartCoroutine(IDelayBeteweenEachWave());
+
+        IEnumerator IDelayBeteweenEachWave()
+        {
             foreach (WaveSpawner ws in waveSpawner)
                 ws.SpawnAIFromWave();
 
             if (allAIDieBeforeNextWave)
                 SetState(State.WaitAllEnemiesDie);
             else
+            {
+                yield return new WaitForSeconds(delayBeforeStartingWave);
                 SetState(State.NextWave);
+            }
         }
     }
 
@@ -117,7 +126,10 @@ public class WaveManager : MonoBehaviour
                     }
 
                     if (waveSpawnerCount > 0)
+                    {
+                        yield return new WaitForSeconds(delayBetweenEachWave);
                         SetState(State.NextWave);
+                    }
                     else
                         SetState(State.EndWave);
                 }
