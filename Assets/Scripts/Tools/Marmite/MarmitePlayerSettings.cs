@@ -108,9 +108,9 @@ public class MarmitePlayerSettings
 
 
         ShowAnimDuration = PlayerRuntimeData.GetInstance().data.CookData.ShowAnimDuration;
-        OneIngredientCookTime = PlayerRuntimeData.GetInstance().data.CookData.OneIngredientCookTime;
-        TwoIngredientCookTime = PlayerRuntimeData.GetInstance().data.CookData.TwoIngredientCookTime;
-        ThreeIngredientCookTime = PlayerRuntimeData.GetInstance().data.CookData.ThreeIngredientCookTime;
+        OneIngredientCookTime = PlayerRuntimeData.GetInstance().data.CookData.DefaultOneIngredientCookTime;
+        TwoIngredientCookTime = PlayerRuntimeData.GetInstance().data.CookData.DefaultTwoIngredientCookTime;
+        ThreeIngredientCookTime = PlayerRuntimeData.GetInstance().data.CookData.DefaultThreeIngredientCookTime;
         QteSpawnDelay = PlayerRuntimeData.GetInstance().data.CookData.QteSpawnDelay;
         QteDuration = PlayerRuntimeData.GetInstance().data.CookData.QteDuration;
     }
