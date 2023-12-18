@@ -16,7 +16,6 @@ public class PlayerHealth : MonoBehaviour
     [Header("Hit Time Scale")]
     [SerializeField] float _targetTimeScale;
     [SerializeField] float _scalingDuration;
-    [SerializeField] float _ScalingSpeed;
     [SerializeField] AnimationCurve _scaleCurve;
 
     [SerializeField] Color _hitColor = Color.red;
@@ -74,7 +73,7 @@ public class PlayerHealth : MonoBehaviour
             return false;
         }
 
-        StartCoroutine(DamageSlowTime(_scalingDuration));
+        StartCoroutine(DamageSlowTime());
         return true;
     }
 
@@ -105,46 +104,38 @@ public class PlayerHealth : MonoBehaviour
         PlayerRuntimeData.GetInstance().data.BaseData.MaxHealth = PlayerRuntimeData.GetInstance().data.BaseData.DefaultMaxHealth;
     }
 
-    IEnumerator DamageSlowTime(float duration)
+    IEnumerator DamageSlowTime()
     {
         Material playerMaterial = _playerMesh.sharedMaterial;
         Color baseColor = Color.white;
 
-        if (playerMaterial)
-            baseColor = playerMaterial.GetColor("_BaseColor");
+        
+        /*if (playerMaterial)
+            baseColor = playerMaterial.GetColor("_BaseColor");*/
         
 
         //SCALE
         float scaleProgress = 0;
+        float timer = 0f;
         while (scaleProgress < 1)
         {
-            float newScale = (1 - _targetTimeScale) * _scaleCurve.Evaluate(scaleProgress);
-            scaleProgress += Time.fixedDeltaTime * _ScalingSpeed;
-
-            if(playerMaterial)
-                playerMaterial.SetColor("_BaseColor", _hitColor * scaleProgress);
-
-            Time.timeScale = 1 - newScale;
-            yield return new WaitForFixedUpdate();
+            if (playerMaterial)
+            {
+                Color curColor = Color.Lerp(Color.white, _hitColor, 1 - scaleProgress);
+                playerMaterial.SetColor("_BaseColor", curColor);
+            }
+          
+            float newScale = Mathf.Lerp(1, _targetTimeScale, _scaleCurve.Evaluate(scaleProgress));
+            Time.timeScale = newScale;
+            timer += Time.fixedUnscaledDeltaTime;
+            scaleProgress = timer / _scalingDuration;
+            //Debug.Log(scaleProgress);
+            yield return new WaitForSecondsRealtime(Time.fixedUnscaledDeltaTime);
         }
+
 
         if (playerMaterial)
-            playerMaterial.SetColor("_BaseColor", baseColor);
-
-        Time.timeScale = _targetTimeScale;
-        yield return new WaitForSecondsRealtime(duration);
-
-        scaleProgress = 1;
-        while (scaleProgress > 0)
-        {
-            float newScale = (1 - _targetTimeScale) * _scaleCurve.Evaluate(scaleProgress);
-            scaleProgress -= Time.fixedDeltaTime * _ScalingSpeed;
-            Time.timeScale = 1 - newScale;
-            yield return new WaitForFixedUpdate();
-        }
-
-        
-        Time.timeScale = 1;
+            playerMaterial.SetColor("_BaseColor", baseColor);   
+        Time.timeScale = 1f;
     }
-
 }

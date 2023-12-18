@@ -357,7 +357,7 @@ public class PlayerCookingInventory : MonoBehaviour
             }
         }
         averageDmg /= PlayerRuntimeData.GetInstance().data.CookData.Recipe.Count;
-
+        
         switch (PlayerRuntimeData.GetInstance().data.CookData.Recipe.Count)
         {
             case 1:
@@ -372,7 +372,6 @@ public class PlayerCookingInventory : MonoBehaviour
                 averageDmg *= _damageFactor[2];
                 PlayerRuntimeData.GetInstance().data.AttackData.Ammunition = 30f;
                 break;
-
         }
 
         //LARGE CAULDRON CHECK
