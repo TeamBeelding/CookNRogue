@@ -48,7 +48,7 @@ public class PlayerRuntimeData
         public int CurrentHealth = 6;
 
         [NonSerialized]
-        public float InvicibilityDuration = .4f;
+        public float InvicibilityDuration = 1f;
 
         public float RotationSpeed = 40f;
         public float MoveSpeed = 70f;
