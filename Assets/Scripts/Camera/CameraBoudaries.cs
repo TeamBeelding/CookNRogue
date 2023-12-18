@@ -17,10 +17,7 @@ public sealed class CameraBoudaries : MonoBehaviour
         }
 
         instance = this;
-    }
 
-    private void Start()
-    {
         bounds.center = transform.position;
         bounds.min = -Vector3.one;
         bounds.max = Vector3.one;
