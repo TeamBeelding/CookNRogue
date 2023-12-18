@@ -5,5 +5,5 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "MealOfTheDayData", menuName = "ItemData/Meal Of The Day Data")]
 public class MealOfTheDayData : ItemData
 {
-    public int playerUpgradeHealth;
+    public int playerUpgradeHeart;
 }

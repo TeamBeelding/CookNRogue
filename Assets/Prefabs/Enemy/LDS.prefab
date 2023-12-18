@@ -35,6 +35,7 @@ Transform:
   - {fileID: 7072049218703820318}
   - {fileID: 7179254788230612205}
   - {fileID: 201768330876976703}
+  - {fileID: 7190829703665453132}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -73,10 +74,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _effectHandlers: []
+  _collider: {fileID: 0}
   _damageUI: {fileID: 4752919081619040609, guid: 5abc18997e19393429b154f8231589f9,
     type: 3}
   explosion: {fileID: 466446929295881914, guid: 1768f1adcc585bb42ac938af9d0b00e8,
     type: 3}
+  _spawnFX: {fileID: 4701501606933208989}
   tutorial: {fileID: 0}
   _Play_Weapon_Hit:
     idInternal: 0
@@ -1037,3 +1040,84 @@ MonoBehaviour:
   m_jumpFrequency: 0.25
   m_jumpHeight: 0.25
   GuiDebug: 0
+--- !u!1001 &7768825218751077787
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 490897484666988986}
+    m_Modifications:
+    - target: {fileID: 583951606149518807, guid: 51b0f6f007e6e5e49b9d26be89ead7ac,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 583951606149518807, guid: 51b0f6f007e6e5e49b9d26be89ead7ac,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 583951606149518807, guid: 51b0f6f007e6e5e49b9d26be89ead7ac,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 583951606149518807, guid: 51b0f6f007e6e5e49b9d26be89ead7ac,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 583951606149518807, guid: 51b0f6f007e6e5e49b9d26be89ead7ac,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 583951606149518807, guid: 51b0f6f007e6e5e49b9d26be89ead7ac,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 583951606149518807, guid: 51b0f6f007e6e5e49b9d26be89ead7ac,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 583951606149518807, guid: 51b0f6f007e6e5e49b9d26be89ead7ac,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 583951606149518807, guid: 51b0f6f007e6e5e49b9d26be89ead7ac,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 583951606149518807, guid: 51b0f6f007e6e5e49b9d26be89ead7ac,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 583951606149518807, guid: 51b0f6f007e6e5e49b9d26be89ead7ac,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7784284939191166292, guid: 51b0f6f007e6e5e49b9d26be89ead7ac,
+        type: 3}
+      propertyPath: m_Name
+      value: PileOfEarth_base
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 51b0f6f007e6e5e49b9d26be89ead7ac, type: 3}
+--- !u!198 &4701501606933208989 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 3093831851474649606, guid: 51b0f6f007e6e5e49b9d26be89ead7ac,
+    type: 3}
+  m_PrefabInstance: {fileID: 7768825218751077787}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &7190829703665453132 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 583951606149518807, guid: 51b0f6f007e6e5e49b9d26be89ead7ac,
+    type: 3}
+  m_PrefabInstance: {fileID: 7768825218751077787}
+  m_PrefabAsset: {fileID: 0}
