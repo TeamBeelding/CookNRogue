@@ -26,6 +26,7 @@ public class BossController : EnemyController
     [SerializeField] private GameObject physics;
 
     private MissilesController missilesController;
+    [SerializeField,Range(0,1)] float _missileTriggerPercentage = 1f;
     private ShockwaveController shockwaveController;
 
     private Coroutine stateCoroutine;
@@ -231,7 +232,8 @@ public class BossController : EnemyController
 
     private void ThrowMissiles()
     {
-        missilesController?.LaunchMissiles();
+        if((Mathf.Clamp(Healthpoint, 0, data.GetHealth) / data.GetHealth) <= _missileTriggerPercentage)
+            missilesController?.LaunchMissiles();
 
         SetState(State.Dash);
     }
