@@ -121,7 +121,7 @@ public class Cauldron_Explosion : MonoBehaviour
             if (hit.transform.GetComponent<PlayerHealth>())
             {
                 int damage = (int)CalculatePlayerDamage(hit.transform.position);
-                hit.transform.GetComponent<PlayerHealth>().TakeDamage(damage);
+                hit.transform.GetComponent<PlayerController>().TakeDamage(damage);
                 continue;
             }
 
