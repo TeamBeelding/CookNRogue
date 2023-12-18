@@ -164,9 +164,9 @@ public class PlayerController : MonoBehaviour
         if (_instance == null)
             _instance = this;
         else
-            Destroy(_instance);
+            Destroy(gameObject);
 
-        _instance = this;
+      
     }
 
     void Start()
