@@ -155,16 +155,24 @@ public class RewardsManager : MonoBehaviour
         for (int i = 0; i < amountToSpawn; i++)
         {
             var inst = Instantiate(randomIngredient.ingredientPrefab, GetRandomSpawnPoint());
+            inst.transform.localPosition = Vector3.zero;
             inst.transform.SetParent(null);
+            inst.transform.localRotation = Quaternion.identity;
+            inst.transform.localScale = Vector3.one;
         }
 
-        Debug.Log("Spawned reward item " + randomIngredient.ingredientPrefab.name);
+        Debug.Log("Spawned reward ingredient " + randomIngredient.ingredientPrefab.name);
 
         return true;
     }
 
     private bool SpawnRandomItem()
     {
+        if (_itemsToDrop.IsNullOrEmpty())
+        {
+            Debug.Log("Tried to spawn an item but is empty");
+            return false;
+        }
         Debug.Log("Spawning a reward item");
 
         float random = Random.Range(0f, 1f);
@@ -201,7 +209,7 @@ public class RewardsManager : MonoBehaviour
         inst.transform.localScale = Vector3.one;
 
         _Play_SFX_Object_Appear.Post(gameObject);
-        Debug.Log("Spawned item " + randomItem.gameObject.name);
+        Debug.Log("Spawned reward item " + randomItem.gameObject.name);
 
         return true;
     }
