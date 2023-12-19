@@ -69,6 +69,9 @@ namespace Enemy.DashingEnemy
             Healthpoint = _data.GetHealth();
 
             Player = PlayerController.Instance.gameObject;
+
+            physics.SetActive(true);
+            _collider.enabled = true;
         }
 
         // Start is called before the first frame update

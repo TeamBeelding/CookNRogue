@@ -74,6 +74,9 @@ namespace Enemy.Slime
             Healthpoint = data.GetHealth;
             agent.speed = data.GetSpeed;
             agent.stoppingDistance = data.GetAttackRange;
+
+            physics.SetActive(true);
+            _collider.enabled = true;
         }
 
         protected override void OnDisable()

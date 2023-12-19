@@ -56,6 +56,8 @@ public class Kamilkaze : EnemyController
         SetState(_data.FocusPlayerOnCD ? State.Chase : State.Neutral);
 
         _Play_Kamikaze_Idle.Post(gameObject);
+
+        _collider.enabled = true;
     }
 
     private void SetState(State newState)
