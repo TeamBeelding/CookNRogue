@@ -49,6 +49,9 @@ public class TBH : EnemyController
 
         _animator = GetComponentInChildren<Animator>();
         Healthpoint = _data.Health;
+
+        physics.SetActive(true);
+        _collider.enabled = true;
     }
 
     private void Reset()
