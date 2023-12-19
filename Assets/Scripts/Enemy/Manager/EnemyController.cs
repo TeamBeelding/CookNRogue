@@ -4,6 +4,7 @@ using Enemy;
 using TMPro;
 using Tutoriel;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Events;
 
 public abstract class EnemyController : MonoBehaviour
@@ -51,8 +52,27 @@ public abstract class EnemyController : MonoBehaviour
     {
         //_rend.material.color = Color.white;
 
+        StartCoroutine(Spawn(1f));
+    }
+
+    public IEnumerator Spawn(float delay)
+    {
+        NavMeshAgent agent = GetComponent<NavMeshAgent>();
+
+        if (agent == null)
+            yield break;
+
+        float initialSpeed = agent.speed;
+        agent.speed = 0;
+        _meshRenderer.enabled = false;
+
         if (_spawnFX)
             _spawnFX.Play();
+
+        yield return new WaitForSeconds(delay);
+
+        agent.speed = initialSpeed;
+        _meshRenderer.enabled = true;
     }
 
     protected virtual void OnEnable()
