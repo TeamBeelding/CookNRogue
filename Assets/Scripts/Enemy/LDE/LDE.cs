@@ -217,6 +217,7 @@ namespace Enemy.LDE
             {
                 waveManager.SlowMotion();
 
+                agent.speed = 0;
                 SetState(State.Dying);
             }
             else
