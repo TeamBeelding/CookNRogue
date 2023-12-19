@@ -21,8 +21,6 @@ public class WaveManager : MonoBehaviour
     [SerializeField] private float delayBetweenEachWave = 2;
     [SerializeField] private bool allAIDieBeforeNextWave = false;
 
-    private int waveSpawnerCount = 0;
-
     private Coroutine stateCoroutine;
 
     private void Start()
@@ -63,10 +61,7 @@ public class WaveManager : MonoBehaviour
     private void VerifyWaveManager()
     {
         foreach (WaveSpawner ws in GetComponentsInChildren<WaveSpawner>())
-        {
             waveSpawner.Add(ws);
-            waveSpawnerCount++;
-        }
 
         if (waveSpawner.Count == 0)
             SetState(State.EndWave);
@@ -91,6 +86,8 @@ public class WaveManager : MonoBehaviour
         {
             foreach (WaveSpawner ws in waveSpawner)
                 ws.SpawnAIFromWave();
+
+            yield return new WaitForSeconds(1f);
 
             if (allAIDieBeforeNextWave)
                 SetState(State.WaitAllEnemiesDie);
