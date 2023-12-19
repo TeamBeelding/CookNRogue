@@ -54,7 +54,7 @@ public class WaveManager : MonoBehaviour
                 WaitingAllEnemieDie();
                 break;
             case State.EndWave:
-                DestroyAllAI();
+                PoolManager.Instance.DestroyAI();
                 StopAllCoroutines();
                 break;
         }
@@ -104,6 +104,7 @@ public class WaveManager : MonoBehaviour
 
     private void WaitingAllEnemieDie()
     {
+        int count = 0;
         stateCoroutine = StartCoroutine(IWaitingAllAIDie());
 
         IEnumerator IWaitingAllAIDie()
@@ -114,18 +115,24 @@ public class WaveManager : MonoBehaviour
                     yield return new WaitForSeconds(1);
                 else
                 {
-                    foreach (WaveSpawner ws in waveSpawner)
+                    //foreach (WaveSpawner ws in waveSpawner)
+                    //{
+                    //    if (!ws.IsWaveIsEnd())
+                    //        continue;
+                    //    else
+                    //    {
+                    //        ws.gameObject.SetActive(false);
+                    //        //waveSpawnerCount--;
+                    //    }
+                    //}
+
+                    foreach (WaveSpawner ws in GetComponentsInChildren<WaveSpawner>())
                     {
                         if (!ws.IsWaveIsEnd())
-                            continue;
-                        else
-                        {
-                            ws.gameObject.SetActive(false);
-                            waveSpawnerCount--;
-                        }
+                            count++;
                     }
 
-                    if (waveSpawnerCount > 0)
+                    if (count > 0)
                     {
                         yield return new WaitForSeconds(delayBetweenEachWave);
                         SetState(State.NextWave);
