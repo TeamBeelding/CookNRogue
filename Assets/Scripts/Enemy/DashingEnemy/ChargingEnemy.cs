@@ -352,6 +352,9 @@ namespace Enemy.DashingEnemy
         {
             _Play_SFX_Cabbage_Hit.Post(gameObject);
             base.TakeDamage(damage, isCritical);
+
+            if (Healthpoint <= 0)
+                SetState(State.Dying);
         }
     }
 }
