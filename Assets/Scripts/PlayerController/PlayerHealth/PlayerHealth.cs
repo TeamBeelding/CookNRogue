@@ -1,3 +1,4 @@
+using FullscreenEditor;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,6 +21,7 @@ public class PlayerHealth : MonoBehaviour
 
     [SerializeField] Color _hitColor = Color.red;
     [SerializeField] SkinnedMeshRenderer _playerMesh;
+    Material playerMaterial;
 
     private void Awake()
     {
@@ -32,6 +34,9 @@ public class PlayerHealth : MonoBehaviour
     {
         _heartBar = HeartBar.instance;
         HealthInit();
+
+        playerMaterial = _playerMesh.sharedMaterial;
+        playerMaterial.SetColor("_BaseColor", Color.white);
     }
     public void HealthInit()
     {
@@ -109,7 +114,6 @@ public class PlayerHealth : MonoBehaviour
 
     IEnumerator DamageSlowTime()
     {
-        Material playerMaterial = _playerMesh.sharedMaterial;
         Color baseColor = Color.white;
 
         
