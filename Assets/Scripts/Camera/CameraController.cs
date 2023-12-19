@@ -175,6 +175,8 @@ public class CameraController : MonoBehaviour
                 if (CameraBoudaries.instance.CheckCameraBoundaries(futurePos + new Vector3(temp.x - _oldPosition.x, 0, 0)))
                     futurePos += new Vector3(temp.x - _oldPosition.x, 0, 0);
 
+                if (CameraBoudaries.instance.CheckCameraBoundaries(futurePos + new Vector3(0,  temp.y - _oldPosition.y,0)))
+                    futurePos += new Vector3(0, temp.y - _oldPosition.y,0);
 
                 if (CameraBoudaries.instance.CheckCameraBoundaries(futurePos + new Vector3(0, 0, temp.z - _oldPosition.z)))
                     futurePos += new Vector3(0, 0, temp.z - _oldPosition.z);
