@@ -104,7 +104,11 @@ public class CameraController : MonoBehaviour
 
         instance = this;
 
+
         
+
+        
+
     }
 
     void Start()
@@ -205,6 +209,12 @@ public class CameraController : MonoBehaviour
         {
             _zoom = false;
             StartCoroutine(IZoom());
+        }
+
+        if (CameraBoudaries.instance && Input.GetKey(KeyCode.E))
+        {
+            m_mainCamera.position = new Vector3(CameraBoudaries.instance.transform.position.x, m_mainCamera.position.y, CameraBoudaries.instance.transform.position.z);
+            _oldPosition = m_mainCamera.position;
         }
     }
 
