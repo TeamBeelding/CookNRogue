@@ -104,7 +104,7 @@ public class CameraController : MonoBehaviour
 
         instance = this;
 
-        _oldPosition = m_mainCamera.position;
+        
     }
 
     void Start()
@@ -112,7 +112,8 @@ public class CameraController : MonoBehaviour
         //m_mainCamera.position += m_offsetCoord;
         m_mainCamera.rotation *= m_offsetRotation;
         m_mainCamera.position += m_offsetCoord;
-        
+
+        _oldPosition = m_mainCamera.position;
 
         // To get the child transform of the camera for the _shake
         _shakeGimble = m_mainCamera.GetChild(0).GetComponent<Transform>();
@@ -175,6 +176,8 @@ public class CameraController : MonoBehaviour
                 if (CameraBoudaries.instance.CheckCameraBoundaries(futurePos + new Vector3(temp.x - _oldPosition.x, 0, 0)))
                     futurePos += new Vector3(temp.x - _oldPosition.x, 0, 0);
 
+                if (CameraBoudaries.instance.CheckCameraBoundaries(futurePos + new Vector3(0,  temp.y - _oldPosition.y,0)))
+                    futurePos += new Vector3(0, temp.y - _oldPosition.y,0);
 
                 if (CameraBoudaries.instance.CheckCameraBoundaries(futurePos + new Vector3(0, 0, temp.z - _oldPosition.z)))
                     futurePos += new Vector3(0, 0, temp.z - _oldPosition.z);
