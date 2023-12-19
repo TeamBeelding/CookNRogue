@@ -72,8 +72,11 @@ public class PlayerHealth : MonoBehaviour
             // RoomManager.instance.RestartLevel();
             return false;
         }
+        else
+        {
+            StartCoroutine(DamageSlowTime());
+        }
 
-        StartCoroutine(DamageSlowTime());
         return true;
     }
 

@@ -968,6 +968,8 @@ public class PlayerController : MonoBehaviour
         PlayerRuntimeData.ResetInstance();
         Time.timeScale = 1;
         AkSoundEngine.StopAll();
+        deathMenu.SetActive(false);
+        victoryMenu.SetActive(false);
         SceneManager.LoadScene(0);
     }
     
@@ -977,6 +979,8 @@ public class PlayerController : MonoBehaviour
         PlayerRuntimeData.ResetInstance();
         Time.timeScale = 1;
         AkSoundEngine.StopAll();
+        deathMenu.SetActive(false);
+        victoryMenu.SetActive(false);
         RestartLevelFix.Instance.RestartLevel();
         SceneManager.LoadScene(0);
     }
