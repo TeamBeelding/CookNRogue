@@ -52,7 +52,12 @@ public abstract class EnemyController : MonoBehaviour
     {
         //_rend.material.color = Color.white;
 
-        StartCoroutine(Spawn(1f));
+        //NEW
+        //StartCoroutine(Spawn(1f));
+
+        //OLD
+        if (_spawnFX)
+            _spawnFX.Play();
     }
 
     public IEnumerator Spawn(float delay)
@@ -63,7 +68,7 @@ public abstract class EnemyController : MonoBehaviour
             yield break;
 
         float initialSpeed = agent.speed;
-        agent.speed = 0;
+        //agent.speed = 0;
         _meshRenderer.enabled = false;
 
         if (_spawnFX)
@@ -71,7 +76,7 @@ public abstract class EnemyController : MonoBehaviour
 
         yield return new WaitForSeconds(delay);
 
-        agent.speed = initialSpeed;
+        //agent.speed = initialSpeed;
         _meshRenderer.enabled = true;
     }
 
