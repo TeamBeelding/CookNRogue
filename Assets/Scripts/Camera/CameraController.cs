@@ -23,7 +23,7 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     private Quaternion m_offsetRotation;
 
-    private Vector3 _oldPosition = Vector3.zero;
+    private Vector3 _oldPosition;
 
     //Obstructions
     [Header("Obstructions")]
@@ -104,17 +104,15 @@ public class CameraController : MonoBehaviour
 
         instance = this;
 
-        //set old position for boundaries
         _oldPosition = m_mainCamera.position;
     }
 
     void Start()
     {
-        
-
         //m_mainCamera.position += m_offsetCoord;
         m_mainCamera.rotation *= m_offsetRotation;
         m_mainCamera.position += m_offsetCoord;
+        
 
         // To get the child transform of the camera for the _shake
         _shakeGimble = m_mainCamera.GetChild(0).GetComponent<Transform>();
@@ -134,6 +132,7 @@ public class CameraController : MonoBehaviour
 
     private void LateUpdate()
     {
+
         Vector3 futurePos = Vector3.zero;
         if (!_mooveIsUnscaled)
         {
@@ -165,24 +164,25 @@ public class CameraController : MonoBehaviour
             }
         }
 
-        if(CameraBoudaries.instance != null)
+        
+        if (CameraBoudaries.instance != null)
         {
             if (!CameraBoudaries.instance.CheckCameraBoundaries(futurePos))
             {
                 Vector3 temp = futurePos;
                 futurePos = _oldPosition;
 
-                if (CameraBoudaries.instance.CheckCameraBoundaries(_oldPosition + new Vector3(temp.x - _oldPosition.x, 0, 0)))
+                if (CameraBoudaries.instance.CheckCameraBoundaries(futurePos + new Vector3(temp.x - _oldPosition.x, 0, 0)))
                     futurePos += new Vector3(temp.x - _oldPosition.x, 0, 0);
 
 
-                if (CameraBoudaries.instance.CheckCameraBoundaries(_oldPosition + new Vector3(0, 0, temp.z - _oldPosition.z)))
+                if (CameraBoudaries.instance.CheckCameraBoundaries(futurePos + new Vector3(0, 0, temp.z - _oldPosition.z)))
                     futurePos += new Vector3(0, 0, temp.z - _oldPosition.z);
             } 
         }
-        
+
         m_mainCamera.position = futurePos;
-        _oldPosition = futurePos;
+        _oldPosition = m_mainCamera.position;
     }
 
 

@@ -11,18 +11,14 @@ public sealed class CameraBoudaries : MonoBehaviour
 
     private void Awake()
     {
-        if(instance != null && instance != this)
+        if (instance != null && instance != this)
         {
             Destroy(this);
         }
 
         instance = this;
-
-        bounds.center = transform.position;
-        bounds.min = -Vector3.one;
-        bounds.max = Vector3.one;
-        bounds.extents = _extent;
     }
+
 
     private void OnDrawGizmos()
     {
