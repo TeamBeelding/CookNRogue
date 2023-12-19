@@ -5,9 +5,24 @@ using UnityEngine.UI;
 using TMPro;
 public class AmmunitionBar : MonoBehaviour
 {
-    private Slider _ammoBar;
-    public TextMeshProUGUI _ammoText;
+    [SerializeField]
+    private Image _ammoBar;
+    [SerializeField]
+    private GameObject _gageObject;
+
+    [Header("Lid")]
+    [SerializeField]
+    private Transform _cauldronLidTrans;
+    [SerializeField]
+    private Transform _lidOpenedPos;
+    [SerializeField]
+    private Transform _lidClosedPos;
+
     public static AmmunitionBar instance;
+
+    private Material _barMaterial;
+    private float _maxMunitions = 0f;
+
     public void Awake()
     {
         if (instance != null && instance != this)
@@ -19,32 +34,27 @@ public class AmmunitionBar : MonoBehaviour
     }
     private void Start()
     {
-        _ammoBar = GetComponentInChildren<Slider>();
+        Material mat = Instantiate(_ammoBar.material);
+        _ammoBar.material = mat;
+        _barMaterial = _ammoBar.material;
     }
+
     public void InitAmmoBar()
     {
-        _ammoBar.maxValue = PlayerRuntimeData.GetInstance().data.AttackData.Ammunition;
-        _ammoBar.value = PlayerRuntimeData.GetInstance().data.AttackData.Ammunition;
+        _maxMunitions = PlayerRuntimeData.GetInstance().data.AttackData.Ammunition;
+        _barMaterial.SetFloat("_FillAmount", 1f);
+        _gageObject.SetActive(true);
+        _cauldronLidTrans.position = _lidOpenedPos.position;
     }
-    public void ResetAmmoBar()
+    public void ResetAmmoBar(bool playAnim)
     {
-        _ammoBar.maxValue = 0;
-        _ammoBar.value = 0;
+        _maxMunitions = 0f;
+        _barMaterial.SetFloat("_FillAmount", 0f);
+        _gageObject.SetActive(false);
+        _cauldronLidTrans.position = _lidClosedPos.position;
     }
     public void UpdateAmmoBar()
     {
-        _ammoBar.value = PlayerRuntimeData.GetInstance().data.AttackData.Ammunition;
-        UpdateAmmoText();
-    }
-    public void AddIngredientAmmo(int nbr)
-    {
-        _ammoBar.maxValue += nbr;
-        _ammoBar.value += nbr;
-        UpdateAmmoText();
-    }
-    public void UpdateAmmoText()
-    {
-        if (_ammoText)
-            _ammoText.text = _ammoBar.value.ToString();
+        _barMaterial.SetFloat("_FillAmount", PlayerRuntimeData.GetInstance().data.AttackData.Ammunition / _maxMunitions);
     }
 }

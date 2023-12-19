@@ -62,7 +62,7 @@ public class PlayerAttack : MonoBehaviour
 
         if (_ammunitionBar)
         {
-            _ammunitionBar.InitAmmoBar();
+            _ammunitionBar.ResetAmmoBar(false);
         }
 
         _baseData.Set();
@@ -131,6 +131,9 @@ public class PlayerAttack : MonoBehaviour
         _inventory.EquippedRecipe.Clear();
         _inventory.UpdateEquipedRecipeUI();
         _Play_Weapon_Empty.Post(gameObject);
+
+        if (_ammunitionBar)
+            _ammunitionBar.ResetAmmoBar(true);
     }
 
     public void ResetAmunition()
@@ -142,7 +145,7 @@ public class PlayerAttack : MonoBehaviour
         PlayerRuntimeData.GetInstance().data.AttackData.Ammunition = 0;
         ResetParameters();
         _hasEmptiedAmmo = true;
-        _ammunitionBar.UpdateAmmoBar();
+        _ammunitionBar.ResetAmmoBar(true);
     }
 
     public void OnDeathReset()
@@ -165,7 +168,7 @@ public class PlayerAttack : MonoBehaviour
             ResetParameters();
 
             if (_ammunitionBar)
-                _ammunitionBar.UpdateAmmoBar();
+                _ammunitionBar.ResetAmmoBar(false);
         }
     }
 

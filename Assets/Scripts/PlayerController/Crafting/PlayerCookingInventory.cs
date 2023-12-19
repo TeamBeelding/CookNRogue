@@ -114,8 +114,8 @@ public class PlayerCookingInventory : MonoBehaviour
 
         //Set Recipe Slots
         PlayerRuntimeData.GetInstance().data.CookData.RecipeMaxIngredientNb = 1;
-        m_recipeSlots[1].gameObject.SetActive(false);
-        m_recipeSlots[2].gameObject.SetActive(false);
+        /*m_recipeSlots[1].gameObject.SetActive(false);
+        m_recipeSlots[2].gameObject.SetActive(false);*/
         m_defaultRecipeSlots[1].gameObject.SetActive(false);
         m_defaultRecipeSlots[2].gameObject.SetActive(false);
 
@@ -330,7 +330,7 @@ public class PlayerCookingInventory : MonoBehaviour
 
 
         PlayerRuntimeData.GetInstance().data.AttackData.AttackColor = PlayerRuntimeData.GetInstance().data.CookData.Recipe[0].color;
-        AmmunitionBar.instance.ResetAmmoBar();
+        AmmunitionBar.instance.ResetAmmoBar(true);
         _equippedRecipe.Clear();
         //Fuse ingredients's effects and stats
         float averageDmg = 0;
@@ -341,7 +341,6 @@ public class PlayerCookingInventory : MonoBehaviour
             PlayerRuntimeData.GetInstance().data.AttackData.AttackDrag += ingredient._drag;
             PlayerRuntimeData.GetInstance().data.AttackData.AttackCooldown += ingredient._attackDelay;
             averageDmg += ingredient._damage;
-            AmmunitionBar.instance.AddIngredientAmmo(ingredient._ammunition);
 
             //Audio
             ingredient.audioState.SetValue();
@@ -438,13 +437,13 @@ public class PlayerCookingInventory : MonoBehaviour
             }
             
             //Item Description
-            if (PlayerRuntimeData.GetInstance().data.CookData.Recipe.Count < PlayerRuntimeData.GetInstance().data.CookData.RecipeMaxIngredientNb)
+            /*if (PlayerRuntimeData.GetInstance().data.CookData.Recipe.Count < PlayerRuntimeData.GetInstance().data.CookData.RecipeMaxIngredientNb)
             {
                 ProjectileData slotData = slot.GetData();
                 m_recipeSlots[PlayerRuntimeData.GetInstance().data.CookData.Recipe.Count].Sprite = slotData.inventorySprite;
                 m_recipeSlots[PlayerRuntimeData.GetInstance().data.CookData.Recipe.Count].Color = Color.white;
                 m_recipeSlots[PlayerRuntimeData.GetInstance().data.CookData.Recipe.Count].Description = slotData.description;
-            }
+            }*/
 
             slot.Highlight(true);
             _currentSlot = slot;
@@ -460,12 +459,12 @@ public class PlayerCookingInventory : MonoBehaviour
         }
 
         //Item Description
-        if (PlayerRuntimeData.GetInstance().data.CookData.Recipe.Count < PlayerRuntimeData.GetInstance().data.CookData.RecipeMaxIngredientNb)
+        /*if (PlayerRuntimeData.GetInstance().data.CookData.Recipe.Count < PlayerRuntimeData.GetInstance().data.CookData.RecipeMaxIngredientNb)
         {
             m_recipeSlots[PlayerRuntimeData.GetInstance().data.CookData.Recipe.Count].Sprite = null;
             m_recipeSlots[PlayerRuntimeData.GetInstance().data.CookData.Recipe.Count].Color = Color.clear;
             m_recipeSlots[PlayerRuntimeData.GetInstance().data.CookData.Recipe.Count].Description = null;
-        }
+        }*/
 
         if(_currentSlot != null)
         {
@@ -554,28 +553,32 @@ public class PlayerCookingInventory : MonoBehaviour
 
     private void AddToRecipe(PlayerCookingInventorySlot selectedSlot)
     {
-        if (PlayerRuntimeData.GetInstance().data.CookData.Recipe.Count >= PlayerRuntimeData.GetInstance().data.CookData.RecipeMaxIngredientNb || !selectedSlot.CanSelect())
-        {
-            Debug.Log("Can't select item");
-            return;
-        }
-
         ProjectileData data = selectedSlot.GetData();
 
         foreach (ProjectileData curData in PlayerRuntimeData.GetInstance().data.CookData.Recipe)
         {
             if (curData == data)
             {
-                Debug.Log("Can't select item");
+                selectedSlot.Selected(false);
+                selectedSlot.IncreaseCount();
+                PlayerRuntimeData.GetInstance().data.CookData.Recipe.Remove(data);
+
                 return;
             }
         }
 
+        if (PlayerRuntimeData.GetInstance().data.CookData.Recipe.Count >= PlayerRuntimeData.GetInstance().data.CookData.RecipeMaxIngredientNb || !selectedSlot.CanSelect())
+        {
+            Debug.Log("Can't select item");
+            return;
+        }
+
+        selectedSlot.Selected(true);
         selectedSlot.DecreaseCount();
 
         PlayerRuntimeData.GetInstance().data.CookData.Recipe.Add(data);
-        m_recipeSlots[PlayerRuntimeData.GetInstance().data.CookData.Recipe.Count - 1].Sprite = data.inventorySprite;
-        m_recipeSlots[PlayerRuntimeData.GetInstance().data.CookData.Recipe.Count - 1].Description = data.description;
+        /*m_recipeSlots[PlayerRuntimeData.GetInstance().data.CookData.Recipe.Count - 1].Sprite = data.inventorySprite;
+        m_recipeSlots[PlayerRuntimeData.GetInstance().data.CookData.Recipe.Count - 1].Description = data.description;*/
 
         if(PlayerRuntimeData.GetInstance().data.CookData.Recipe.Count == PlayerRuntimeData.GetInstance().data.CookData.RecipeMaxIngredientNb)
         {
@@ -599,7 +602,7 @@ public class PlayerCookingInventory : MonoBehaviour
 
         int index = PlayerRuntimeData.GetInstance().data.CookData.RecipeMaxIngredientNb;
 
-        m_recipeSlots[index].gameObject.SetActive(true);
+        //m_recipeSlots[index].gameObject.SetActive(true);
         m_defaultRecipeSlots[index].gameObject.SetActive(true);
 
         PlayerRuntimeData.GetInstance().data.CookData.RecipeMaxIngredientNb += 1;
@@ -627,14 +630,22 @@ public class PlayerCookingInventory : MonoBehaviour
         return gameObject.activeSelf;
     }
 
+    public void ResetSlotsVisuals()
+    {
+        for (int i = 0; i < m_inventoryWheels[_currentWheelIndex].SlotsNumber(); i++)
+        {
+            m_inventoryWheels[_currentWheelIndex].GetSlot(i).ResetVisuals();
+        }
+    }
+
     public void ResetRecipeUI()
     {
-        foreach (PlayerCookingRecipeSlot slot in m_recipeSlots)
+        /*foreach (PlayerCookingRecipeSlot slot in m_recipeSlots)
         {
             slot.Sprite = null;
             slot.Color = new(1, 1, 1, 0); 
             slot.Description = null;
-        }
+        }*/
 
         m_navigateKey.SetActive(true);
         m_selectKey.SetActive(false);

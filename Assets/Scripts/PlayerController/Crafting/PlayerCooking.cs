@@ -153,6 +153,7 @@ public class PlayerCooking : MonoBehaviour
             m_attackScript.ResetParameters();
 
             _inventoryScript.Show(false);
+            _inventoryScript.ResetSlotsVisuals();
 
             //Set cook time
             switch (bulletIngredientsNb)
