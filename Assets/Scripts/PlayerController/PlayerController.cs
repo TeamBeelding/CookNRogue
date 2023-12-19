@@ -814,23 +814,28 @@ public class PlayerController : MonoBehaviour
             
         if (!_playerHealth.TakeDamage(1))
         {
-            //Cooking cancel
-            StopCookingState();
-
-            Time.timeScale = 0f;
-            _playerActions.Default.Disable();
-            _playerActions.Cooking.Disable();
-            _playerActions.UI.Enable();
-            m_playerAttackScript.OnDeathReset();
-            _cookingScript.Clear();
-            pauseMenu.SetActive(false);
-            victoryMenu.SetActive(false);
-            deathMenu.SetActive(true);
+            Die();
         }
         else
         {
             StartCoroutine(InvicibleTimer());
         }
+    }
+
+    public void Die()
+    {
+        //Cooking cancel
+        StopCookingState();
+
+        Time.timeScale = 0f;
+        _playerActions.Default.Disable();
+        _playerActions.Cooking.Disable();
+        _playerActions.UI.Enable();
+        m_playerAttackScript.OnDeathReset();
+        _cookingScript.Clear();
+        pauseMenu.SetActive(false);
+        victoryMenu.SetActive(false);
+        deathMenu.SetActive(true);
     }
 
     private IEnumerator InvicibleTimer()

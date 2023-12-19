@@ -65,7 +65,7 @@ public class PlayerHealth : MonoBehaviour
 
         if (PlayerRuntimeData.GetInstance().data.BaseData.CurrentHealth <= 0)
         {
-            PlayerRuntimeData.GetInstance().data.BaseData.CurrentHealth = PlayerRuntimeData.GetInstance().data.BaseData.MaxHealth;
+            PlayerRuntimeData.GetInstance().data.BaseData.CurrentHealth = 0;
             _heartBar.UpdateHealthVisual(PlayerRuntimeData.GetInstance().data.BaseData.CurrentHealth);
             _Play_MC_Death.Post(gameObject);
 
