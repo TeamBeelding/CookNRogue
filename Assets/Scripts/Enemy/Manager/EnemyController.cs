@@ -52,32 +52,8 @@ public abstract class EnemyController : MonoBehaviour
     {
         //_rend.material.color = Color.white;
 
-        //NEW
-        //StartCoroutine(Spawn(1f));
-
-        //OLD
         if (_spawnFX)
             _spawnFX.Play();
-    }
-
-    public IEnumerator Spawn(float delay)
-    {
-        NavMeshAgent agent = GetComponent<NavMeshAgent>();
-
-        if (agent == null)
-            yield break;
-
-        float initialSpeed = agent.speed;
-        //agent.speed = 0;
-        _meshRenderer.enabled = false;
-
-        if (_spawnFX)
-            _spawnFX.Play();
-
-        yield return new WaitForSeconds(delay);
-
-        //agent.speed = initialSpeed;
-        _meshRenderer.enabled = true;
     }
 
     protected virtual void OnEnable()
