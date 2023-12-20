@@ -409,6 +409,8 @@ public class BossController : EnemyController
         //GIVE ENOUGH TIME TO THE PARTICLES TO FADE AWAY
         yield return new WaitForSeconds(7);
 
+        PlayerController.Instance.EndGame();
+
         Destroy(gameObject);
         
     }

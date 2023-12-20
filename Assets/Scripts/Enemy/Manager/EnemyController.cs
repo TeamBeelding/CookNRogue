@@ -63,6 +63,8 @@ public abstract class EnemyController : MonoBehaviour
         Player = PlayerController.Instance.gameObject;
         waveManager = GameObject.FindGameObjectWithTag("WaveManager").GetComponent<WaveManager>();
 
+        hasAskForSlow = false;
+
         AddToEnemyManager();
     }
 

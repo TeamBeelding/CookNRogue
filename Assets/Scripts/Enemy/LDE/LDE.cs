@@ -194,8 +194,8 @@ namespace Enemy.LDE
             IEnumerator IDeathAnim()
             {
                 yield return new WaitForSeconds(2f);
-                base.Dying();
                 m_stateSystem.gameObject.SetActive(false);
+                base.Dying();
             }
         }
 
