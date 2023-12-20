@@ -33,7 +33,7 @@ public class PlayerCookingInventory : MonoBehaviour
     }
 
     [SerializeField]
-    List<PlayerCookingRecipeSlot> m_recipeSlots;
+    List<GameObject> m_recipeCounterSlots;
 
     [SerializeField]
     RectTransform m_UIHolder;
@@ -114,8 +114,8 @@ public class PlayerCookingInventory : MonoBehaviour
 
         //Set Recipe Slots
         PlayerRuntimeData.GetInstance().data.CookData.RecipeMaxIngredientNb = 1;
-        /*m_recipeSlots[1].gameObject.SetActive(false);
-        m_recipeSlots[2].gameObject.SetActive(false);*/
+        m_recipeCounterSlots[1].SetActive(false);
+        m_recipeCounterSlots[2].SetActive(false);
         m_defaultRecipeSlots[1].gameObject.SetActive(false);
         m_defaultRecipeSlots[2].gameObject.SetActive(false);
 
@@ -213,6 +213,8 @@ public class PlayerCookingInventory : MonoBehaviour
         _curShowRoutine = null;
         gameObject.SetActive(false);
         m_defaultUI.SetActive(true);
+
+        ResetSlotsVisuals();
     }
 
     public void SwitchWheel()
@@ -494,6 +496,7 @@ public class PlayerCookingInventory : MonoBehaviour
             m_craftKey.SetActive(true);
         }
 
+
         AddToRecipe(_currentSlot);
         _Play_UI_Cook_Select.Post(gameObject);
     }
@@ -561,6 +564,7 @@ public class PlayerCookingInventory : MonoBehaviour
             {
                 selectedSlot.Selected(false);
                 selectedSlot.IncreaseCount();
+                m_recipeCounterSlots[PlayerRuntimeData.GetInstance().data.CookData.Recipe.Count - 1].SetActive(true);
                 PlayerRuntimeData.GetInstance().data.CookData.Recipe.Remove(data);
 
                 return;
@@ -577,10 +581,11 @@ public class PlayerCookingInventory : MonoBehaviour
         selectedSlot.DecreaseCount();
 
         PlayerRuntimeData.GetInstance().data.CookData.Recipe.Add(data);
+        m_recipeCounterSlots[PlayerRuntimeData.GetInstance().data.CookData.Recipe.Count - 1].SetActive(false);
         /*m_recipeSlots[PlayerRuntimeData.GetInstance().data.CookData.Recipe.Count - 1].Sprite = data.inventorySprite;
         m_recipeSlots[PlayerRuntimeData.GetInstance().data.CookData.Recipe.Count - 1].Description = data.description;*/
 
-        if(PlayerRuntimeData.GetInstance().data.CookData.Recipe.Count == PlayerRuntimeData.GetInstance().data.CookData.RecipeMaxIngredientNb)
+        if (PlayerRuntimeData.GetInstance().data.CookData.Recipe.Count == PlayerRuntimeData.GetInstance().data.CookData.RecipeMaxIngredientNb)
         {
             _cookingScript.StartCrafting();
         }
@@ -602,7 +607,7 @@ public class PlayerCookingInventory : MonoBehaviour
 
         int index = PlayerRuntimeData.GetInstance().data.CookData.RecipeMaxIngredientNb;
 
-        //m_recipeSlots[index].gameObject.SetActive(true);
+        m_recipeCounterSlots[index].SetActive(true);
         m_defaultRecipeSlots[index].gameObject.SetActive(true);
 
         PlayerRuntimeData.GetInstance().data.CookData.RecipeMaxIngredientNb += 1;
@@ -635,6 +640,11 @@ public class PlayerCookingInventory : MonoBehaviour
         for (int i = 0; i < m_inventoryWheels[_currentWheelIndex].SlotsNumber(); i++)
         {
             m_inventoryWheels[_currentWheelIndex].GetSlot(i).ResetVisuals();
+        }
+
+        for(int i = 0; i < PlayerRuntimeData.GetInstance().data.CookData.RecipeMaxIngredientNb; i++)
+        {
+            m_recipeCounterSlots[i].SetActive(true);
         }
     }
 

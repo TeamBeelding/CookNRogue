@@ -43,6 +43,7 @@ public class AmmunitionBar : MonoBehaviour
     {
         _maxMunitions = PlayerRuntimeData.GetInstance().data.AttackData.Ammunition;
         _barMaterial.SetFloat("_FillAmount", 1f);
+        _barMaterial.SetFloat("_GradientValue", 0f);
         _gageObject.SetActive(true);
         _cauldronLidTrans.position = _lidOpenedPos.position;
     }
@@ -50,11 +51,13 @@ public class AmmunitionBar : MonoBehaviour
     {
         _maxMunitions = 0f;
         _barMaterial.SetFloat("_FillAmount", 0f);
+        _barMaterial.SetFloat("_GradientValue", 1f);
         _gageObject.SetActive(false);
         _cauldronLidTrans.position = _lidClosedPos.position;
     }
     public void UpdateAmmoBar()
     {
         _barMaterial.SetFloat("_FillAmount", PlayerRuntimeData.GetInstance().data.AttackData.Ammunition / _maxMunitions);
+        _barMaterial.SetFloat("_GradientValue", 1 - PlayerRuntimeData.GetInstance().data.AttackData.Ammunition / _maxMunitions);
     }
 }

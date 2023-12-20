@@ -74,8 +74,8 @@ public class PlayerCookingInventorySlot : MonoBehaviour
             {
                 m_backgroundImage.sprite = m_backgroundHighlight;
                 m_backgroundCounterImage.sprite = m_counterHighlight;
+                _transform.localScale = new Vector3(1.25f, 1.25f, 1);
             }
-            _transform.localScale = new Vector3(1.25f, 1.25f, 1);
             m_counterArrow.SetActive(true);
         }
         else
@@ -84,8 +84,8 @@ public class PlayerCookingInventorySlot : MonoBehaviour
             {
                 m_backgroundImage.sprite = m_backgroundDefault;
                 m_backgroundCounterImage.sprite = m_counterDefault;
+                _transform.localScale = new Vector3(1f, 1f, 1);
             }
-            _transform.localScale = new Vector3(1f, 1f, 1);
             m_counterArrow.SetActive(false);
         }
     }
@@ -122,7 +122,7 @@ public class PlayerCookingInventorySlot : MonoBehaviour
     #region Count management
     public void IncreaseCount()
     {
-        if (_ingredientCount <= 0)
+        if (_ingredientCount <= 0 && !_isSelected)
         {
             m_ingredientImage.color = Color.white;
         }
@@ -142,7 +142,7 @@ public class PlayerCookingInventorySlot : MonoBehaviour
         m_ingredientCounter.text = _ingredientCount.ToString();
 
 
-        if (_ingredientCount <= 0)
+        if (_ingredientCount <= 0 && !_isSelected)
         {
             m_ingredientImage.color = _greyedColor;
         }
