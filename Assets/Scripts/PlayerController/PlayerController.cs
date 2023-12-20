@@ -54,7 +54,7 @@ public class PlayerController : MonoBehaviour
 
     Rigidbody _rb;
     Transform _relativeTransform;
-
+    readonly float _deadZone = 0.2f;
     Vector2 _moveInputValue;
     public Vector2 MoveInputValue
     {
@@ -251,10 +251,10 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        if (_curState == playerStates.Cooking)
+        /*if (_curState == playerStates.Cooking)
         {
             playerAnimStatesScript.Marmite(false, true);
-        }
+        }*/
 
         //Inputs relative to camera
         Vector3 relativeForward = _relativeTransform.forward + _relativeTransform.up;
@@ -277,7 +277,7 @@ public class PlayerController : MonoBehaviour
             }
 
             //Deadzone
-            if (_aimMagnitude > 0.2f)
+            if (_aimMagnitude > _deadZone)
             {
                 //Rotate Player Model
                 Vector3 aimInputDir = relativeForward * _aimInputValue.y + relativeRight * _aimInputValue.x;
@@ -308,21 +308,8 @@ public class PlayerController : MonoBehaviour
         //Dash check
         if (!_isDashing)
         {
-            //Null Input Check
-            if (_moveInputValue.magnitude <= 0)
-            {
-                //Stop if input is null
-                _rb.velocity = Vector3.zero;
-
-                playerAnimStatesScript.animStates = PlayerAnimStates.playerAnimStates.IDLE;
-
-                if (_isAiming)
-                {
-                    playerAnimStatesScript.animStates = PlayerAnimStates.playerAnimStates.IDLEATTACK;
-                }
-            }
-            //Deadzone
-            else if(_moveInputValue.magnitude > 0.2f)
+            //OutsideDeadZone
+            if (_moveInputValue.magnitude > _deadZone)
             {
                 //Move Player
                 Vector3 moveInputDir = relativeForward * _moveInputValue.y + relativeRight * _moveInputValue.x;
@@ -346,6 +333,33 @@ public class PlayerController : MonoBehaviour
                 {
                     playerAnimStatesScript.animStates = PlayerAnimStates.playerAnimStates.RUNNINGATTACK;
                 }
+
+                //Cooking Anim
+                if (_curState == playerStates.Cooking)
+                {
+                    playerAnimStatesScript._animator.SetBool("cooking", false);
+                    playerAnimStatesScript.isCooking = false;
+                }
+            }
+            //Deadzone
+            else
+            {
+                //Stop
+                _rb.velocity = Vector3.zero;
+
+                playerAnimStatesScript.animStates = PlayerAnimStates.playerAnimStates.IDLE;
+
+                if (_isAiming)
+                {
+                    playerAnimStatesScript.animStates = PlayerAnimStates.playerAnimStates.IDLEATTACK;
+                }
+
+                if (_curState == playerStates.Cooking)
+                {
+                    playerAnimStatesScript._animator.SetBool("cooking", true);
+                    playerAnimStatesScript.isCooking = true;
+                    playerAnimStatesScript.Marmite(false);
+                }
             }
         }
         else
@@ -359,7 +373,7 @@ public class PlayerController : MonoBehaviour
                     m_dashDirection = m_model.transform.forward;
                 }
                 //Deadzone
-                else if(_moveInputValue.magnitude > 0.2f)
+                else if(_moveInputValue.magnitude > _deadZone)
                 {
                     Vector3 moveInputDir = relativeForward * _moveInputValue.y + relativeRight * _moveInputValue.x;
                     moveInputDir = moveInputDir.normalized;
@@ -452,6 +466,22 @@ public class PlayerController : MonoBehaviour
     void Move_Canceled(InputAction.CallbackContext context)
     {
         _moveInputValue = Vector2.zero;
+        //Stop
+        _rb.velocity = Vector3.zero;
+
+        playerAnimStatesScript.animStates = PlayerAnimStates.playerAnimStates.IDLE;
+
+        if (_isAiming)
+        {
+            playerAnimStatesScript.animStates = PlayerAnimStates.playerAnimStates.IDLEATTACK;
+        }
+
+        if (_curState == playerStates.Cooking)
+        {
+            playerAnimStatesScript._animator.SetBool("cooking", true);
+            playerAnimStatesScript.isCooking = true;
+            playerAnimStatesScript.Marmite(false);
+        }
     }
 
     void Move(Vector3 direction, float speed)
@@ -663,14 +693,19 @@ public class PlayerController : MonoBehaviour
         if (_curState != playerStates.Default)
             return;
 
-        playerAnimStatesScript._animator.SetBool("cooking", true);
-        // playerAnimStatesScript.Marmite(false, true);
-
         //Set input state
         _playerActions.Default.Disable();
         _playerActions.Cooking.Enable();
 
         _curState = playerStates.Cooking;
+
+        //Anim
+        if (_moveInputValue.magnitude < _deadZone)
+        {
+            playerAnimStatesScript._animator.SetBool("cooking", true);
+            playerAnimStatesScript.isCooking = true;
+            playerAnimStatesScript.Marmite(false);
+        }
     }
 
     public void StopCookingState()
@@ -679,9 +714,6 @@ public class PlayerController : MonoBehaviour
         if (_curState != playerStates.Cooking)
             return;
 
-        playerAnimStatesScript._animator.SetBool("cooking", false);
-        // playerAnimStatesScript.Marmite(false, false);
-        
         _Stop_SFX_Cook.Post(gameObject);
 
         //Set input state
@@ -689,6 +721,14 @@ public class PlayerController : MonoBehaviour
         _playerActions.Default.Enable();
 
         _curState = playerStates.Default;
+
+        //Anim
+        if (_moveInputValue.magnitude < _deadZone)
+        {
+            playerAnimStatesScript._animator.SetBool("cooking", false);
+            playerAnimStatesScript.isCooking = false;
+            playerAnimStatesScript.Marmite(false);
+        }
     }
 
     void SelectIngredient_Performed(InputAction.CallbackContext context)
