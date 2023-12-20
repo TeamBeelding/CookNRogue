@@ -1,4 +1,5 @@
 using Enemy;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,6 +21,9 @@ public class WaveManager : MonoBehaviour
     [SerializeField] private float delayBeforeStartingWave = 1;
     [SerializeField] private float delayBetweenEachWave = 2;
     [SerializeField] private bool allAIDieBeforeNextWave = false;
+
+    int count = 0;
+    List<WaveSpawner> waveList = new List<WaveSpawner>();
 
     private Coroutine stateCoroutine;
 
@@ -156,8 +160,10 @@ public class WaveManager : MonoBehaviour
 
     public void SlowMotion()
     {
-        int count = 0;
-        List<WaveSpawner> waveList = new List<WaveSpawner>();
+        Debug.Log("call this");
+
+        count = 0;
+        waveList = new List<WaveSpawner>();
 
         foreach (WaveSpawner ws in GetComponentsInChildren<WaveSpawner>())
         {
