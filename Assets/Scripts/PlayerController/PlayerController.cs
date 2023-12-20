@@ -1026,10 +1026,10 @@ public class PlayerController : MonoBehaviour
         PlayerRuntimeData.ResetInstance();
         Time.timeScale = 1;
         AkSoundEngine.StopAll();
+        pauseMenu.SetActive(false);
         deathMenu.SetActive(false);
         victoryMenu.SetActive(false);
         RestartLevelFix.Instance.RestartLevel();
-        SceneManager.LoadScene(0);
     }
 
     public void EndGame()
