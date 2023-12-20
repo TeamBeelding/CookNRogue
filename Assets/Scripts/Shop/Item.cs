@@ -24,6 +24,9 @@ public class Item : MonoBehaviour
     protected void Awake()
     {
         //_cost = _data.cost;
+        if (!_data)
+            return;
+
         _name = _data.name;
         _description = _data.description;
     }
