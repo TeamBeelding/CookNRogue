@@ -105,7 +105,7 @@ public class PlayerCooking : MonoBehaviour
         }
         else
         {
-            RestartCrafting();
+            //RestartCrafting();
         }
     }
     
@@ -128,7 +128,7 @@ public class PlayerCooking : MonoBehaviour
         }
         else
         {
-            PauseCrafting();
+            //PauseCrafting();
         }
     }
     #endregion
