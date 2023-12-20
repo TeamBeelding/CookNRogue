@@ -25,11 +25,6 @@ public class WaveSpawner : MonoBehaviour
         waveCount = waveContainer.Count;
     }
 
-    public void StartSpawning()
-    {
-
-    }
-
     public void SpawnAIFromWave()
     {
         if (currentWaveIndex >= waveCount)
