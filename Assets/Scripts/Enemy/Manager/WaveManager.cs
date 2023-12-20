@@ -22,6 +22,12 @@ public class WaveManager : MonoBehaviour
     [SerializeField] private float delayBetweenEachWave = 2;
     [SerializeField] private bool allAIDieBeforeNextWave = false;
 
+    [Header("Sound")]
+    [SerializeField]
+    private AK.Wwise.State _InFightOn;
+    [SerializeField]
+    private AK.Wwise.State _NoMusic;
+
     int count = 0;
     List<WaveSpawner> waveList = new List<WaveSpawner>();
 
@@ -66,6 +72,8 @@ public class WaveManager : MonoBehaviour
 
                 //Ammo Pause
                 PlayerController.Instance.AttackScript.PauseAmmoTimer = true;
+                //Audio
+                _NoMusic.SetValue();
 
                 StopAllCoroutines();
                 break;
@@ -89,6 +97,8 @@ public class WaveManager : MonoBehaviour
 
             //Ammo pause
             PlayerController.Instance.AttackScript.PauseAmmoTimer = false;
+            //Audio
+            _InFightOn.SetValue();
 
             SetState(State.NextWave);
         }
