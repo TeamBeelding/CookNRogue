@@ -274,7 +274,6 @@ public class PlayerCooking : MonoBehaviour
         {
             StopCoroutine(_craftingRoutine);
             CompleteCrafting();
-            _inventoryScript.IncreaseMaxRecipeSlots();
             
             _playerController.CheckingIfCookingIsDone();
         }
