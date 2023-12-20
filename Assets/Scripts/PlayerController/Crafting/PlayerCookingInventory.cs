@@ -364,12 +364,15 @@ public class PlayerCookingInventory : MonoBehaviour
         {
             case 1:
                 averageDmg *= _damageFactor[0];
+                PlayerRuntimeData.GetInstance().data.AttackData.Ammunition *= 1f;
                 break;
             case 2:
                 averageDmg *= _damageFactor[1];
+                PlayerRuntimeData.GetInstance().data.AttackData.Ammunition *= 0.8f;
                 break;
             case 3:
                 averageDmg *= _damageFactor[2];
+                PlayerRuntimeData.GetInstance().data.AttackData.Ammunition *= 0.7f;
                 break;
         }
 
