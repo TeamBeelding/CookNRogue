@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-
+using Enemy;
 using UnityEngine.InputSystem;
 
 
@@ -36,7 +36,7 @@ public class PlayerAttack : MonoBehaviour
 
     bool _shootOnCooldown = false;
     Coroutine _ammoTimer;
-    bool _pauseAmmoTimer;
+    bool _pauseAmmoTimer = true;
 
     public bool ShootOnCooldown
     {
@@ -66,10 +66,8 @@ public class PlayerAttack : MonoBehaviour
         }
 
         _baseData.Set();
-        ResetParameters();
+        ResetDefaultParameters();
     }
-
-
 
     public void SetIsShooting(bool isShooting)
     {
@@ -126,7 +124,7 @@ public class PlayerAttack : MonoBehaviour
 
         _hasEmptiedAmmo = true;
 
-        ResetParameters();
+        ResetDefaultParameters();
 
         _inventory.EquippedRecipe.Clear();
         _inventory.UpdateEquipedRecipeUI();
@@ -140,7 +138,7 @@ public class PlayerAttack : MonoBehaviour
             StopCoroutine(_ammoTimer);
         }
         PlayerRuntimeData.GetInstance().data.AttackData.Ammunition = 0;
-        ResetParameters();
+        ResetDefaultParameters();
         _hasEmptiedAmmo = true;
         _ammunitionBar.UpdateAmmoBar();
     }
@@ -162,7 +160,7 @@ public class PlayerAttack : MonoBehaviour
             _inventory.EquippedRecipe.Clear();
             _inventory.UpdateEquipedRecipeUI();
 
-            ResetParameters();
+            ResetDefaultParameters();
 
             if (_ammunitionBar)
                 _ammunitionBar.UpdateAmmoBar();
@@ -347,7 +345,7 @@ public class PlayerAttack : MonoBehaviour
         _ammoTimer = StartCoroutine(IRecipeAmmoTimer());
     }
 
-    public void ResetParameters()
+    public void ResetDefaultParameters()
     {
         PlayerRuntimeData.GetInstance().data.AttackData.AttackColor = _baseData.AttackColor;
         PlayerRuntimeData.GetInstance().data.AttackData.AttackEffects = new();

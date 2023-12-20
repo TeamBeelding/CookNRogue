@@ -46,6 +46,10 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField]
     PlayerAttack m_playerAttackScript;
+    public PlayerAttack AttackScript
+    {
+        get => m_playerAttackScript;
+    }
 
     static PlayerController _instance;
 
