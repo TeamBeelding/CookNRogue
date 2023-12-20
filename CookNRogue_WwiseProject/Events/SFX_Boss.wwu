@@ -149,6 +149,27 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="Play_SFX_Boss_Death" ID="{8502D2BF-4F3B-4461-A253-840DDC8B8B24}">
+					<ChildrenList>
+						<Action Name="" ID="{2681F30A-20F4-44DD-B83F-656CE6176A5F}" ShortID="182571803">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="BLD_Boss_Charge_LP" ID="{DFCE762E-C21F-40E3-9AF0-5DEE02976D84}" WorkUnitID="{1080E4B2-2AA2-4421-B467-CEF209F946BA}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+						<Action Name="" ID="{974CC7AA-041A-4C45-A233-EBEA3D5826A3}" ShortID="143545338">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="SFX_Boss_Death_01" ID="{7A8A6F1E-E4FB-4C65-B8C9-972A3EB82062}" WorkUnitID="{1080E4B2-2AA2-4421-B467-CEF209F946BA}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

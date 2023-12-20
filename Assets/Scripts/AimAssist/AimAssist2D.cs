@@ -67,8 +67,10 @@ public class AimAssist2D
         float curAngle = Vector3.SignedAngle(targetDir, baseDirection, Vector3.up);
         //Get current progression to the target direction
         float curStep = 1 - Mathf.Abs(curAngle) / preset.GetMaxAngle;
+        Debug.Log("curStep : " + curStep);
         //Correct progression based on the animationCurve
         float correctedStep = preset.GetAssistOffsetCurve.Evaluate(curStep);
+        Debug.Log("correctedStep : " + correctedStep);
         //Get angle extremity to progress from
         Vector3 angleExtremity = Quaternion.AngleAxis(Mathf.Sign(curAngle) * preset.GetMaxAngle, Vector3.up) * targetDir;
 

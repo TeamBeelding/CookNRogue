@@ -22,12 +22,19 @@ public class WaveManager : MonoBehaviour
     [SerializeField] private float delayBetweenEachWave = 2;
     [SerializeField] private bool allAIDieBeforeNextWave = false;
 
+    [Header("Sound")]
+    [SerializeField]
+    private AK.Wwise.State _InFightOn;
+    [SerializeField]
+    private AK.Wwise.State _NoMusic;
+
     int count = 0;
     List<WaveSpawner> waveList = new List<WaveSpawner>();
 
     private Coroutine stateCoroutine;
 
-    static int test = 0;
+    //private bool isAllWaveDone = false;
+    private bool isSlowWasCalled = false;
 
     private void Start()
     {
@@ -60,8 +67,13 @@ public class WaveManager : MonoBehaviour
             case State.EndWave:
                 PoolManager.Instance.DestroyAI();
 
+                if (!isSlowWasCalled)
+                    EnemyManager.Instance.LastAIDying();
+
                 //Ammo Pause
                 PlayerController.Instance.AttackScript.PauseAmmoTimer = true;
+                //Audio
+                _NoMusic.SetValue();
 
                 StopAllCoroutines();
                 break;
@@ -85,6 +97,8 @@ public class WaveManager : MonoBehaviour
 
             //Ammo pause
             PlayerController.Instance.AttackScript.PauseAmmoTimer = false;
+            //Audio
+            _InFightOn.SetValue();
 
             SetState(State.NextWave);
         }
@@ -125,17 +139,6 @@ public class WaveManager : MonoBehaviour
                     yield return new WaitForSeconds(1);
                 else
                 {
-                    //foreach (WaveSpawner ws in waveSpawner)
-                    //{
-                    //    if (!ws.IsWaveIsEnd())
-                    //        continue;
-                    //    else
-                    //    {
-                    //        ws.gameObject.SetActive(false);
-                    //        //waveSpawnerCount--;
-                    //    }
-                    //}
-
                     foreach (WaveSpawner ws in GetComponentsInChildren<WaveSpawner>())
                     {
                         if (!ws.IsWaveIsEnd())
@@ -177,17 +180,13 @@ public class WaveManager : MonoBehaviour
         {
             if (EnemyManager.Instance.GetNumOfEnemies() == 1)
             {
+                isSlowWasCalled = true;
+
                 EnemyManager.Instance.LastAIDying();
-                print("Last AI Dying -- Function called");
+                print("<color=green>Last AI Dying -- Function called</color>");
+
+                SetState(State.EndWave);
             }
-            else
-            {
-                Debug.Log($"<color=red>AI remaining : {EnemyManager.Instance.GetNumOfEnemies() -1}</color>");
-            }
-        }
-        else
-        {
-            Debug.Log($"<color=blue>Wave count != count {waveList.Count} - {count}</color>");
         }
     }
 }
