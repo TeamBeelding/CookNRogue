@@ -10142,7 +10142,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: -20
+  near clip plane: -30
   far clip plane: 1000
   field of view: 60
   orthographic: 1
@@ -18334,7 +18334,7 @@ Canvas:
   serializedVersion: 3
   m_RenderMode: 1
   m_Camera: {fileID: 1177456190}
-  m_PlaneDistance: 0
+  m_PlaneDistance: -30
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
@@ -20923,8 +20923,6 @@ MonoBehaviour:
   m_mainCamera: {fileID: 1177456190}
   m_model: {fileID: 8435914715738197458}
   m_aimArrow: {fileID: 6814934821133361753}
-  aimArrowGrowth: 0.01
-  aimArrowDuration: 1
   m_interactionMask:
     serializedVersion: 2
     m_Bits: 64
@@ -23627,7 +23625,7 @@ PrefabInstance:
     - target: {fileID: 3452839196401527286, guid: d14aa46437cd3214590405f751717a38,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5735395827177429810, guid: d14aa46437cd3214590405f751717a38,
         type: 3}
