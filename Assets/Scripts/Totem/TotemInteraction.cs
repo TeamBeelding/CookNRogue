@@ -35,13 +35,13 @@ public sealed class TotemInteraction : MonoBehaviour,IInteractable
 
     public void Regen()
     {
-        _Play_SFX_Totem_Heal_Activation.Post(gameObject);
 
         if (PlayerRuntimeData.GetInstance().data.BaseData.CurrentHealth >= PlayerRuntimeData.GetInstance().data.BaseData.MaxHealth)
             return;
 
         if (PlayerCookingInventory.Instance.RemoveRandomIngredient())
         {
+            _Play_SFX_Totem_Heal_Activation.Post(gameObject);
             PlayerHealth.instance.Heal(_healPerIngredient);
 
             if (_playParticlesWhenHeal)

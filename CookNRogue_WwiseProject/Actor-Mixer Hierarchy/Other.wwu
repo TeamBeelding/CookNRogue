@@ -1343,6 +1343,23 @@
 										</Sound>
 									</ChildrenList>
 								</RandomSequenceContainer>
+								<BlendContainer Name="Cauldron_Idle" ID="{52828CF1-DF09-4227-B2DC-7BCA6746A897}" ShortID="969542767">
+									<PropertyList>
+										<Property Name="Volume" Type="Real64">
+											<ValueList>
+												<Value>10</Value>
+											</ValueList>
+										</Property>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DEC634C6-86E3-4DF9-96EE-F869BA355507}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{85B5C199-8628-4DDB-B756-DA8917395816}"/>
+										</Reference>
+									</ReferenceList>
+								</BlendContainer>
 							</ChildrenList>
 						</ActorMixer>
 						<ActorMixer Name="AM_Totem_Heal" ID="{DC902166-773C-4BA7-A838-B62BEC99910C}" ShortID="984356708">

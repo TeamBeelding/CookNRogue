@@ -3750,12 +3750,35 @@
 								<RandomSequenceContainer Name="Ennemy_Spawn" ID="{6CB741CC-E322-44CB-9EC5-69F5613323A2}" ShortID="412013916">
 									<PropertyList>
 										<Property Name="3DSpatialization" Type="int16" Value="1"/>
+										<Property Name="IgnoreParentMaxSoundInstance" Type="bool" Value="True"/>
+										<Property Name="IsGlobalLimit" Type="int16" Value="1"/>
+										<Property Name="Lowpass" Type="int16">
+											<ValueList>
+												<Value>30</Value>
+											</ValueList>
+										</Property>
+										<Property Name="MaxReachedBehavior" Type="int16" Value="1"/>
+										<Property Name="MaxSoundPerInstance" Type="int16">
+											<ValueList>
+												<Value>4</Value>
+											</ValueList>
+										</Property>
 										<Property Name="OverridePositioning" Type="bool" Value="True"/>
+										<Property Name="Pitch" Type="int32">
+											<ValueList>
+												<Value>-500</Value>
+											</ValueList>
+										</Property>
 										<Property Name="SpeakerPanning3DSpatializationMix" Type="int32" Value="70"/>
+										<Property Name="UseMaxSoundPerInstance" Type="bool">
+											<ValueList>
+												<Value>True</Value>
+											</ValueList>
+										</Property>
 									</PropertyList>
 									<ReferenceList>
 										<Reference Name="Attenuation">
-											<ObjectRef Name="ATN_40M" ID="{3ABC1B5A-6934-45A5-9CE0-C7633D3E1A57}" WorkUnitID="{A99C7566-826F-4E9D-A733-5652D69BE57C}"/>
+											<ObjectRef Name="ATN_Totem_Heal" ID="{D681DA66-14C2-4569-B9BE-AC7E1D923D2A}" WorkUnitID="{A99C7566-826F-4E9D-A733-5652D69BE57C}"/>
 										</Reference>
 										<Reference Name="Conversion">
 											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DEC634C6-86E3-4DF9-96EE-F869BA355507}"/>
@@ -3776,6 +3799,9 @@
 											</ReferenceList>
 											<ChildrenList>
 												<AudioFileSource Name="SFX_Object_Appear_01" ID="{2B13C7C6-E567-4681-91D1-0329553A6AE5}">
+													<PropertyList>
+														<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+													</PropertyList>
 													<Language>SFX</Language>
 													<AudioFile>SFX_Object_Appear_01.wav</AudioFile>
 													<MediaIDList>
@@ -3798,6 +3824,9 @@
 											</ReferenceList>
 											<ChildrenList>
 												<AudioFileSource Name="SFX_Object_Appear_02" ID="{ACC8898A-2476-45A6-8388-00203C92CD18}">
+													<PropertyList>
+														<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+													</PropertyList>
 													<Language>SFX</Language>
 													<AudioFile>SFX_Object_Appear_02.wav</AudioFile>
 													<MediaIDList>
