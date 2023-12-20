@@ -35,6 +35,9 @@ public class PlayerRuntimeData
     {
         [NonSerialized]
         public int NextDoorIndex = 0;
+
+        [NonSerialized]
+        public List<Cauldron_Explosion> TargetCauldrons;
     }
 
     [Serializable]

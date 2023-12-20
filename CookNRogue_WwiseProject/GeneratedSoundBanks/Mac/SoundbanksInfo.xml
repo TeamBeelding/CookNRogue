@@ -151,7 +151,7 @@
 				</StateGroup>
 			</StateGroups>
 		</SoundBank>
-		<SoundBank Id="1421616930" Type="User" Language="SFX" Hash="{C198C29C-2321-2528-A6DF-7AC11D369AF2}">
+		<SoundBank Id="1421616930" Type="User" Language="SFX" Hash="{FF07DEC8-2178-088C-FB5D-3F1A2CBC1634}">
 			<ShortName>SFX_Boss</ShortName>
 			<Path>SFX_Boss.bnk</Path>
 			<Media>
@@ -247,6 +247,10 @@
 					<ShortName>SFX_Boss_Leaves_04.wav</ShortName>
 					<CachePath>SFX/SFX_Boss_Leaves_04_10C4C929.wem</CachePath>
 				</File>
+				<File Id="816776061" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Boss_Intro_01.wav</ShortName>
+					<CachePath>SFX/SFX_Boss_Intro_01_10C4C929.wem</CachePath>
+				</File>
 				<File Id="832771434" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>SFX_Cabbage_Charge_Layer_A_LP.wav</ShortName>
 					<CachePath>SFX/SFX_Cabbage_Charge_Layer_A_LP_D79FB2B7.wem</CachePath>
@@ -331,6 +335,11 @@
 						<MediaRef Id="226225148"/>
 						<MediaRef Id="381920552"/>
 						<MediaRef Id="1007512096"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="1101416602" Name="Play_SFX_Boss_Intro" DurationType="OneShot" DurationMin="5" DurationMax="5">
+					<MediaRefs>
+						<MediaRef Id="816776061"/>
 					</MediaRefs>
 				</Event>
 				<Event Id="395712816" Name="Play_SFX_Boss_Leaves" MaxAttenuation="100" DurationType="OneShot" DurationMin="5.2" DurationMax="5.2">
@@ -717,7 +726,7 @@
 				<Event Id="2301333962" Name="Stop_SFX_Pea_Movement" MaxAttenuation="0" DurationType="OneShot" DurationMin="0" DurationMax="0"/>
 			</Events>
 		</SoundBank>
-		<SoundBank Id="2374353081" Type="User" Language="SFX" Hash="{8F95A35F-8972-4F92-E1F4-013E41BA444B}">
+		<SoundBank Id="2374353081" Type="User" Language="SFX" Hash="{C00B82E0-123F-AD76-F02E-F33CFC318B69}">
 			<ShortName>SFX_Other</ShortName>
 			<Path>SFX_Other.bnk</Path>
 			<Media>
@@ -982,7 +991,7 @@
 						<MediaRef Id="576438879"/>
 					</MediaRefs>
 				</Event>
-				<Event Id="1814140917" Name="Play_SFX_Explosive_Cauldron_Idle" MaxAttenuation="40" DurationType="Infinite">
+				<Event Id="1814140917" Name="Play_SFX_Explosive_Cauldron_Idle" MaxAttenuation="20" DurationType="Infinite">
 					<MediaRefs>
 						<MediaRef Id="368088011"/>
 						<MediaRef Id="436217594"/>
@@ -2379,5 +2388,5 @@
 			</StateGroups>
 		</SoundBank>
 	</SoundBanks>
-	<FileHash>{85D92921-E464-FE8D-5A82-FB93B6FC65E9}</FileHash>
+	<FileHash>{F1815630-7715-C384-B46E-FC88D1C95ACC}</FileHash>
 </SoundBanksInfo>
