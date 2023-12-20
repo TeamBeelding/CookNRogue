@@ -69,11 +69,11 @@ public class RewardsManager : MonoBehaviour
     {
         if (_ingredientsToDrop.Length > 0)
         {
-            EnemyManager.Instance.OnAllEnnemiesKilled += DropIngredients;
+            //EnemyManager.Instance.OnAllEnnemiesKilled += DropIngredients;
         }
         if (_itemsToDrop.Length > 0)
         {
-            EnemyManager.Instance.OnAllEnnemiesKilled += DropItem;
+            //EnemyManager.Instance.OnAllEnnemiesKilled += DropItem;
         }
     }
 

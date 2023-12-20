@@ -27,6 +27,8 @@ public class WaveManager : MonoBehaviour
 
     private Coroutine stateCoroutine;
 
+    static int test = 0;
+
     private void Start()
     {
         SetState(State.VerifyContent);
@@ -160,8 +162,6 @@ public class WaveManager : MonoBehaviour
 
     public void SlowMotion()
     {
-        Debug.Log("call this");
-
         count = 0;
         waveList = new List<WaveSpawner>();
 
@@ -180,6 +180,14 @@ public class WaveManager : MonoBehaviour
                 EnemyManager.Instance.LastAIDying();
                 print("Last AI Dying -- Function called");
             }
+            else
+            {
+                Debug.Log($"<color=red>AI remaining : {EnemyManager.Instance.GetNumOfEnemies()}</color>");
+            }
+        }
+        else
+        {
+            Debug.Log($"<color=blue>Wave count != count {waveList.Count} - {count}</color>");
         }
     }
 }
