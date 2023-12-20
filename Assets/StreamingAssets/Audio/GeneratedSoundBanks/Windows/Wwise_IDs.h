@@ -57,6 +57,7 @@ namespace AK
         static const AkUniqueID PLAY_SFX_END_ROOM_A = 1384608277U;
         static const AkUniqueID PLAY_SFX_END_ROOM_B = 1384608278U;
         static const AkUniqueID PLAY_SFX_ENNEMY_SPAWN = 2734652486U;
+        static const AkUniqueID PLAY_SFX_EXPLOSIVE_CAULDRON_IDLE = 1814140917U;
         static const AkUniqueID PLAY_SFX_HEALTH_COLLECT = 1136621035U;
         static const AkUniqueID PLAY_SFX_INGREDIENT_COLLECT = 3954090412U;
         static const AkUniqueID PLAY_SFX_INGREDIENT_COLLECT_V2 = 1868021863U;
@@ -93,6 +94,7 @@ namespace AK
         static const AkUniqueID STOP_SFX_BOSS_CHARGE_LP = 1829071329U;
         static const AkUniqueID STOP_SFX_CABBAGE_CHARGE_LP = 3742019055U;
         static const AkUniqueID STOP_SFX_COOK = 4293892292U;
+        static const AkUniqueID STOP_SFX_EXPLOSIVE_CAULDRON_IDLE = 54277783U;
         static const AkUniqueID STOP_SFX_PEA_MOVEMENT = 2301333962U;
         static const AkUniqueID STOP_SFX_PEA_POD_FOOTSTEPS = 749319194U;
         static const AkUniqueID STOP_SFX_TOTEM_HEAL_IDLE = 2440565485U;

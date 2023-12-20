@@ -589,7 +589,7 @@
 				</Event>
 			</Events>
 		</SoundBank>
-		<SoundBank Id="1828121741" Type="User" Language="SFX">
+		<SoundBank Id="1828121741" Type="User" Language="SFX" Hash="{B841E44A-06A5-854D-5ABA-6400CC5FA6FE}">
 			<ShortName>SFX_Enemy_Common</ShortName>
 			<Path>SFX_Enemy_Common.bnk</Path>
 			<Media>
@@ -717,7 +717,7 @@
 				<Event Id="2301333962" Name="Stop_SFX_Pea_Movement" MaxAttenuation="0" DurationType="OneShot" DurationMin="0" DurationMax="0"/>
 			</Events>
 		</SoundBank>
-		<SoundBank Id="2374353081" Type="User" Language="SFX" Hash="{7837087F-2931-977C-FD1E-885FF00F01C8}">
+		<SoundBank Id="2374353081" Type="User" Language="SFX" Hash="{8F95A35F-8972-4F92-E1F4-013E41BA444B}">
 			<ShortName>SFX_Other</ShortName>
 			<Path>SFX_Other.bnk</Path>
 			<Media>
@@ -805,6 +805,10 @@
 					<ShortName>SFX_Totem_Heal_Activation_D_03.wav</ShortName>
 					<CachePath>SFX/SFX_Totem_Heal_Activation_D_03_3F75BDB9.wem</CachePath>
 				</File>
+				<File Id="368088011" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Explosive_Cauldron_Idle_02.wav</ShortName>
+					<CachePath>SFX/SFX_Explosive_Cauldron_Idle_02_9EDFC787.wem</CachePath>
+				</File>
 				<File Id="371009275" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>SFX_Totem_Heal_Idle_B.wav</ShortName>
 					<CachePath>SFX/SFX_Totem_Heal_Idle_B_9EDFC787.wem</CachePath>
@@ -820,6 +824,10 @@
 				<File Id="424531594" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>SFX_Totem_Heal_Activation_C_02.wav</ShortName>
 					<CachePath>SFX/SFX_Totem_Heal_Activation_C_02_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="436217594" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Explosive_Cauldron_Idle_04.wav</ShortName>
+					<CachePath>SFX/SFX_Explosive_Cauldron_Idle_04_9EDFC787.wem</CachePath>
 				</File>
 				<File Id="448923052" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>SFX_Totem_Heal_Activation_A_02.wav</ShortName>
@@ -868,6 +876,10 @@
 				<File Id="644821394" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>SFX_QTE_Success_02.wav</ShortName>
 					<CachePath>SFX/SFX_QTE_Success_02_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="671687200" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Explosive_Cauldron_Idle_01.wav</ShortName>
+					<CachePath>SFX/SFX_Explosive_Cauldron_Idle_01_9EDFC787.wem</CachePath>
 				</File>
 				<File Id="681124314" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>SFX_Cook_End_03.wav</ShortName>
@@ -929,6 +941,10 @@
 					<ShortName>SFX_QTE_Disappear_02.wav</ShortName>
 					<CachePath>SFX/SFX_QTE_Disappear_02_3F75BDB9.wem</CachePath>
 				</File>
+				<File Id="1069557439" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Explosive_Cauldron_Idle_03.wav</ShortName>
+					<CachePath>SFX/SFX_Explosive_Cauldron_Idle_03_9EDFC787.wem</CachePath>
+				</File>
 			</Media>
 			<Events>
 				<Event Id="4292650966" Name="Play_SFX_Cauldron_Explode" MaxAttenuation="40" DurationType="OneShot" DurationMin="1.4855837" DurationMax="1.6698118">
@@ -964,6 +980,14 @@
 				<Event Id="1384608278" Name="Play_SFX_End_Room_B" DurationType="OneShot" DurationMin="7.65" DurationMax="7.65">
 					<MediaRefs>
 						<MediaRef Id="576438879"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="1814140917" Name="Play_SFX_Explosive_Cauldron_Idle" MaxAttenuation="40" DurationType="Infinite">
+					<MediaRefs>
+						<MediaRef Id="368088011"/>
+						<MediaRef Id="436217594"/>
+						<MediaRef Id="671687200"/>
+						<MediaRef Id="1069557439"/>
 					</MediaRefs>
 				</Event>
 				<Event Id="1136621035" Name="Play_SFX_Health_Collect" DurationType="OneShot" DurationMin="0.32785895" DurationMax="0.5137555">
@@ -1050,6 +1074,7 @@
 					</MediaRefs>
 				</Event>
 				<Event Id="4293892292" Name="Stop_SFX_Cook" MaxAttenuation="0" DurationType="OneShot" DurationMin="0" DurationMax="0"/>
+				<Event Id="54277783" Name="Stop_SFX_Explosive_Cauldron_Idle" MaxAttenuation="0" DurationType="OneShot" DurationMin="0" DurationMax="0"/>
 				<Event Id="2440565485" Name="Stop_SFX_Totem_Heal_Idle" MaxAttenuation="40" DurationType="Infinite">
 					<MediaRefs>
 						<MediaRef Id="371009275"/>
@@ -2354,5 +2379,5 @@
 			</StateGroups>
 		</SoundBank>
 	</SoundBanks>
-	<FileHash>{87115292-17B2-37A6-293E-F5224D734EA8}</FileHash>
+	<FileHash>{96C846D4-436E-F0F0-A0D2-5902537AA37E}</FileHash>
 </SoundBanksInfo>
