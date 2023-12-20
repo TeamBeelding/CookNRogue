@@ -180,14 +180,6 @@ public class WaveManager : MonoBehaviour
                 EnemyManager.Instance.LastAIDying();
                 print("Last AI Dying -- Function called");
             }
-            else
-            {
-                Debug.Log($"<color=red>AI remaining : {EnemyManager.Instance.GetNumOfEnemies() -1}</color>");
-            }
-        }
-        else
-        {
-            Debug.Log($"<color=blue>Wave count != count {waveList.Count} - {count}</color>");
         }
     }
 }
