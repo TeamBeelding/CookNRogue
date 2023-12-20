@@ -182,7 +182,7 @@ public class WaveManager : MonoBehaviour
             }
             else
             {
-                Debug.Log($"<color=red>AI remaining : {EnemyManager.Instance.GetNumOfEnemies()}</color>");
+                Debug.Log($"<color=red>AI remaining : {EnemyManager.Instance.GetNumOfEnemies() -1}</color>");
             }
         }
         else

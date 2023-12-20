@@ -69,11 +69,11 @@ public class RewardsManager : MonoBehaviour
     {
         if (_ingredientsToDrop.Length > 0)
         {
-            //EnemyManager.Instance.OnAllEnnemiesKilled += DropIngredients;
+            EnemyManager.Instance.OnAllEnnemiesKilled += DropIngredients;
         }
         if (_itemsToDrop.Length > 0)
         {
-            //EnemyManager.Instance.OnAllEnnemiesKilled += DropItem;
+            EnemyManager.Instance.OnAllEnnemiesKilled += DropItem;
         }
     }
 
@@ -208,7 +208,7 @@ public class RewardsManager : MonoBehaviour
         inst.transform.localRotation = Quaternion.identity;
         inst.transform.localScale = Vector3.one;
 
-        _Play_SFX_Object_Appear.Post(gameObject);
+        //_Play_SFX_Object_Appear.Post(gameObject);
         Debug.Log("Spawned reward item " + randomItem.gameObject.name);
 
         return true;
@@ -223,5 +223,11 @@ public class RewardsManager : MonoBehaviour
         }
         int random = Random.Range(0, _dropPositions.Length);
         return _dropPositions[random];
+    }
+
+    private void OnDestroy()
+    {
+        Debug.Log(gameObject.name);
+        Debug.Break();
     }
 }
