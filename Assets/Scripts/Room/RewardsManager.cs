@@ -10,9 +10,9 @@ using Random = UnityEngine.Random;
 
 public class RewardsManager : MonoBehaviour
 {
-    [Header("Sound")]
-    [SerializeField]
-    private AK.Wwise.Event _Play_SFX_Object_Appear;
+    //[Header("Sound")]
+    //[SerializeField]
+    //private AK.Wwise.Event _Play_SFX_Object_Appear;
 
     [Serializable]
     public class IngredientDrop
@@ -223,11 +223,5 @@ public class RewardsManager : MonoBehaviour
         }
         int random = Random.Range(0, _dropPositions.Length);
         return _dropPositions[random];
-    }
-
-    private void OnDestroy()
-    {
-        Debug.Log(gameObject.name);
-        Debug.Break();
     }
 }
