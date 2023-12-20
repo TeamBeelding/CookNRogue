@@ -38,6 +38,8 @@ public abstract class EnemyController : MonoBehaviour
 
     protected WaveManager waveManager;
 
+    protected bool hasAskForSlow = false;
+
     protected virtual void Awake()
     {
         _rend = GetComponentInChildren<Renderer>();
@@ -133,6 +135,9 @@ public abstract class EnemyController : MonoBehaviour
 
     protected virtual void Dying()
     {
+        if (!hasAskForSlow)
+            waveManager.SlowMotion();
+
         DestroyEffect();
         PoolManager.Instance.DesinstantiateFromPool(gameObject);
     }

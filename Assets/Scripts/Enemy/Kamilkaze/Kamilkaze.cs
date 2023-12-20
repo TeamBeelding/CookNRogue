@@ -178,7 +178,8 @@ public class Kamilkaze : EnemyController
     {
         //_animator?.SetBool("isDead", true);
 
-        waveManager?.SlowMotion();
+        waveManager.SlowMotion();
+        hasAskForSlow = true;
 
         _agent.speed = 0;
         _agent.isStopped = true;

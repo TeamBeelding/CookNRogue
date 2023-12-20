@@ -70,6 +70,8 @@ namespace Enemy.DashingEnemy
 
             Player = PlayerController.Instance.gameObject;
 
+            SetState(State.Casting);
+
             physics.SetActive(true);
             _collider.enabled = true;
         }
@@ -275,7 +277,9 @@ namespace Enemy.DashingEnemy
             _Play_SFX_Cabbage_Death.Post(gameObject);
 
             animator.SetBool("isDead", true);
-            waveManager?.SlowMotion();
+
+            waveManager.SlowMotion();
+            hasAskForSlow = true;
 
             StartCoroutine(IDeathAnim());
 
