@@ -18,10 +18,6 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField]
     GameObject m_aimArrow;
-    [SerializeField]
-    float aimArrowGrowth = 0.01f;
-    [SerializeField]
-    float aimArrowDuration = 1;
 
     [SerializeField]
     LayerMask m_interactionMask;
