@@ -216,6 +216,7 @@ namespace Enemy.LDE
             if (Healthpoint <= 0)
             {
                 waveManager.SlowMotion();
+                hasAskForSlow = true;
 
                 agent.speed = 0;
                 SetState(State.Dying);

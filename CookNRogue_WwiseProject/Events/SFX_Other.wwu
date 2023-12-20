@@ -170,6 +170,17 @@
 				</Event>
 				<Event Name="Play_SFX_Cauldron_Explode" ID="{3EDBA97E-2A5F-4CF5-B19A-269C368DD2DE}">
 					<ChildrenList>
+						<Action Name="" ID="{51E7BB4A-22BD-47B0-B4C2-80161F69ABD3}" ShortID="923408079">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+								<Property Name="FadeTime" Type="Real64" Value="0.2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Cauldron_Idle" ID="{B343AB94-255C-4537-B428-01DECB4DB75E}" WorkUnitID="{3CE9A9BC-F960-482A-AEE6-287A4C6E7543}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
 						<Action Name="" ID="{BA86C944-B877-459D-B1EF-501CB24C0A57}" ShortID="188660664">
 							<ReferenceList>
 								<Reference Name="Target">
@@ -207,6 +218,32 @@
 							<ReferenceList>
 								<Reference Name="Target">
 									<ObjectRef Name="Totem_Heal_Activation" ID="{307D1244-8241-4830-8AF7-6FA1A93BF060}" WorkUnitID="{3CE9A9BC-F960-482A-AEE6-287A4C6E7543}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_SFX_Explosive_Cauldron_Idle" ID="{233F494C-EA68-4E25-B2AF-2B77AB97738A}">
+					<ChildrenList>
+						<Action Name="" ID="{EE069DBE-D808-49D8-B3E4-A5DF5909210F}" ShortID="138788101">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Cauldron_Idle" ID="{B343AB94-255C-4537-B428-01DECB4DB75E}" WorkUnitID="{3CE9A9BC-F960-482A-AEE6-287A4C6E7543}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Stop_SFX_Explosive_Cauldron_Idle" ID="{648EF117-1C3C-4297-AA3F-6454AF024CE1}">
+					<ChildrenList>
+						<Action Name="" ID="{75956A37-2314-4BE6-BDA3-D01746ACD866}" ShortID="855153582">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+								<Property Name="FadeTime" Type="Real64" Value="0.5"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Cauldron_Idle" ID="{B343AB94-255C-4537-B428-01DECB4DB75E}" WorkUnitID="{3CE9A9BC-F960-482A-AEE6-287A4C6E7543}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>
