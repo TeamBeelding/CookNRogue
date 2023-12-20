@@ -84,9 +84,6 @@ public class PlayerInventoryScript : MonoBehaviour
             PlayerRuntimeData.GetInstance().data.AttackData.Ammunition += ingredient._ammunition;
             //m_attack._shootCooldown += ingredient._attackDelay;
 
-            if (AmmunitionBar.instance!= null)
-                AmmunitionBar.instance.AddIngredientAmmo(ingredient._ammunition);
-
             //AJOUT DES EFFETS DANS LE SCRIPT D'ATTAQUE
             foreach (IIngredientEffects effect in ingredient.Effects)
             {

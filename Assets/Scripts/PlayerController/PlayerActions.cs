@@ -308,7 +308,7 @@ public partial class @PlayerActions : IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""a800c54f-9926-4929-92bd-a02f7ddabb66"",
                     ""path"": ""<Gamepad>/rightShoulder"",
-                    ""interactions"": ""Hold(duration=0.2)"",
+                    ""interactions"": ""Hold(duration=1)"",
                     ""processors"": """",
                     ""groups"": ""GamePad"",
                     ""action"": ""StartCrafting"",

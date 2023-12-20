@@ -85,6 +85,8 @@ public class PlayerCooking : MonoBehaviour
         _inventoryScript = PlayerCookingInventory.Instance;
         _playerController = PlayerController.Instance;
         //animator = GetComponentInChildren<Animator>();
+        Material mat = Instantiate(m_cookingProgressBarFill.material);
+        m_cookingProgressBarFill.material = mat;
         _fillMaterial = m_cookingProgressBarFill.material;
         m_cookingProgressVisuals.SetActive(false);
 
