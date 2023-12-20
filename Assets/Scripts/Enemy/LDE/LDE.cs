@@ -60,6 +60,9 @@ namespace Enemy.LDE
             Healthpoint = data.GetHealth;
 
             animator = GetComponentInChildren<Animator>();
+            physics.SetActive(true);
+
+            _collider.enabled = true;
 
             SetState(FocusPlayer ? State.Chase : State.Neutral);
         }
@@ -214,6 +217,7 @@ namespace Enemy.LDE
             {
                 waveManager.SlowMotion();
 
+                agent.speed = 0;
                 SetState(State.Dying);
             }
             else

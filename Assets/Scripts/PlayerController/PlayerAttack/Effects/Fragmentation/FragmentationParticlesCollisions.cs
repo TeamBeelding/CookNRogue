@@ -23,6 +23,7 @@ public class FragmentationParticlesCollisions : MonoBehaviour
     void OnParticleCollision(GameObject other)
     {
 
+
         int numCollisionEvents = _part.GetCollisionEvents(other, _collisionEvents);
 
         int i = 0;
@@ -43,7 +44,24 @@ public class FragmentationParticlesCollisions : MonoBehaviour
             //kaboom(other.transform.position);
             i++;
         }
+
+        foreach(ParticleCollisionEvent PartEvent in _collisionEvents)
+        {
+            Vector3 pos = PartEvent.intersection;
+            SetUpDecal(pos);
+        }
         
+    }
+
+    private void SetUpDecal(Vector3 pos)
+    {
+        if (!DecalManager.instance || PlayerRuntimeData.GetInstance().data.AttackData.AttackColor == null)
+            return;
+
+        BulletDecal decal = DecalManager.instance.GetAvailableDecal();
+        decal.Init(Color.yellow);
+        decal.transform.position = pos;
+        decal.transform.rotation = Quaternion.Euler(90, 0, 0);
     }
 
     Vector3 GetCameraDirection()

@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,6 +12,8 @@ public class WaveSpawner : MonoBehaviour
     }
 
     [SerializeField] private List<WaveContainer> waveContainer;
+    [SerializeField] GameObject fx;
+    [SerializeField] private float delay = 0.25f;
 
     private GameObject ai;
 
@@ -22,6 +25,11 @@ public class WaveSpawner : MonoBehaviour
         waveCount = waveContainer.Count;
     }
 
+    public void StartSpawning()
+    {
+
+    }
+
     public void SpawnAIFromWave()
     {
         if (currentWaveIndex >= waveCount)
@@ -29,12 +37,29 @@ public class WaveSpawner : MonoBehaviour
 
         currentWaveIndex++;
 
-        if (waveContainer[currentWaveIndex - 1].IAType != PoolType.None)
-            ai = PoolManager.Instance.InstantiateFromPool(waveContainer[currentWaveIndex - 1].IAType, transform.position, Quaternion.identity);
+        StartCoroutine(IDelay());
+
+        IEnumerator IDelay()
+        {
+            if (waveContainer[currentWaveIndex - 1].IAType != PoolType.None)
+            {
+                GameObject dirtFX = Instantiate(fx, transform.position, Quaternion.identity);
+
+                dirtFX.transform.parent = transform;
+                dirtFX.SetActive(true);
+                dirtFX.GetComponentInChildren<ParticleSystem>().Play();
+
+                yield return new WaitForSeconds(delay);
+
+                ai = PoolManager.Instance.InstantiateFromPool(waveContainer[currentWaveIndex - 1].IAType, transform.position, Quaternion.identity);
+            }
+        }
     }
 
     public void DespawnAI()
     {
+        fx?.SetActive(false);
+
         if (ai != null)
             PoolManager.Instance.DesinstantiateFromPool(ai);
     }

@@ -22,6 +22,8 @@ public class PlayerAnimStates : MonoBehaviour
     //    get { return _animator; }
     //}
 
+    public bool isCooking = false;
+
     [SerializeField]
     private Transform m_marmite;
     [SerializeField]
@@ -66,7 +68,7 @@ public class PlayerAnimStates : MonoBehaviour
                     _animator.SetBool("idleAttackBool", true);
                     _animator.SetBool("runningBool", false);
                     _animator.SetBool("runningAttackBool", false);
-                    Marmite(true, false);
+                    Marmite(true);
                     break;
                 }
             case playerAnimStates.RUNNING:
@@ -74,7 +76,7 @@ public class PlayerAnimStates : MonoBehaviour
                     _animator.SetBool("idleAttackBool", false);
                     _animator.SetBool("runningBool", true);
                     _animator.SetBool("runningAttackBool", false);
-                    Marmite(false, false);
+                    Marmite(false);
                     break;
                 }
             case playerAnimStates.RUNNINGATTACK:
@@ -82,7 +84,7 @@ public class PlayerAnimStates : MonoBehaviour
                     _animator.SetBool("idleAttackBool", false);
                     _animator.SetBool("runningBool", true);
                     _animator.SetBool("runningAttackBool", true);
-                    Marmite(true, false);
+                    Marmite(true);
                     break;
                 }
             default: 
@@ -90,7 +92,7 @@ public class PlayerAnimStates : MonoBehaviour
                     _animator.SetBool("idleAttackBool", false);
                     _animator.SetBool("runningBool", false);
                     _animator.SetBool("runningAttackBool", false);
-                    Marmite(false, false);
+                    Marmite(false);
                     break;
                 }
         }
@@ -114,7 +116,7 @@ public class PlayerAnimStates : MonoBehaviour
         }
     }
 
-    public void Marmite(bool isAimed, bool isCooking) 
+    public void Marmite(bool isAimed) 
     {
         if (isAimed)
         {

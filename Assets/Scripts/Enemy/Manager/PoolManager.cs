@@ -84,15 +84,4 @@ public class PoolManager : MonoBehaviour
         parent.GetComponent<IPooling>().Desinstantiating(obj);
     }
 
-#if UNITY_EDITOR
-
-    private void OnGUI()
-    {
-        if (GUI.Button(new Rect(10, 10, 200, 200), "Desinstantiate"))
-        {
-            DestroyAI();
-        }
-    }
-
-#endif
 }

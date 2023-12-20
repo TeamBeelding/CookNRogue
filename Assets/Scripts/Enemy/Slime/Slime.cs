@@ -74,6 +74,9 @@ namespace Enemy.Slime
             Healthpoint = data.GetHealth;
             agent.speed = data.GetSpeed;
             agent.stoppingDistance = data.GetAttackRange;
+
+            physics.SetActive(true);
+            _collider.enabled = true;
         }
 
         protected override void OnDisable()
@@ -215,8 +218,6 @@ namespace Enemy.Slime
 
             if (Healthpoint <= 0)
             {
-                waveManager?.SlowMotion();
-
                 _Play_SFX_Pea_Pod_Death.Post(gameObject);
                 SetState(State.Dying);
             }

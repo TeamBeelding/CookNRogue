@@ -23,7 +23,7 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     private Quaternion m_offsetRotation;
 
-    private Vector3 _oldPosition = Vector3.zero;
+    private Vector3 _oldPosition;
 
     //Obstructions
     [Header("Obstructions")]
@@ -76,6 +76,7 @@ public class CameraController : MonoBehaviour
     // How fast dose the camera follow the player
     [SerializeField]
     private float m_smoothSpeed = 2.5f;
+    private float m_SmoothSpeedAcceleration = 1;
     float _initialZoom;
     // If needed an addtional target can be added, in that case the camera make its way to that the target transform in a smooth way.
     // This can be usfull for bosses, special items in the room ect..
@@ -103,17 +104,19 @@ public class CameraController : MonoBehaviour
         }
 
         instance = this;
+
     }
 
     void Start()
     {
-        
-
         //m_mainCamera.position += m_offsetCoord;
         m_mainCamera.rotation *= m_offsetRotation;
         m_mainCamera.position += m_offsetCoord;
 
-        //set old position for boundaries
+        //SECURITY AT START
+        if(CameraBoudaries.instance != null)
+            m_mainCamera.position = new Vector3(CameraBoudaries.instance.transform.position.x, m_mainCamera.position.y, CameraBoudaries.instance.transform.position.z);
+
         _oldPosition = m_mainCamera.position;
 
         // To get the child transform of the camera for the _shake
@@ -128,10 +131,13 @@ public class CameraController : MonoBehaviour
 
         //Set events
         Enemy.EnemyManager.Instance.OnAllEnnemiesKilled += FreezeOnRoomClear;
+
+
     }
 
     private void LateUpdate()
     {
+
         Vector3 futurePos = Vector3.zero;
         if (!_mooveIsUnscaled)
         {
@@ -140,12 +146,12 @@ public class CameraController : MonoBehaviour
             if (m_target == null)
             {
                 _currentMagnitude = m_cameraPlayerTarget.gameObject.GetComponent<PlayerController>().PlayerAimMagnitude;
-                futurePos = Vector3.Lerp(m_mainCamera.position, m_cameraPlayerTarget.position + (m_cameraAimDistance * m_cameraPlayerTarget.gameObject.GetComponent<PlayerController>().PlayerAimDirection) * _currentMagnitude + m_offsetCoord, m_smoothSpeed * Time.deltaTime);
+                futurePos = Vector3.Lerp(m_mainCamera.position, m_cameraPlayerTarget.position + (m_cameraAimDistance * m_cameraPlayerTarget.gameObject.GetComponent<PlayerController>().PlayerAimDirection) * _currentMagnitude + m_offsetCoord, m_smoothSpeed * Time.deltaTime * m_SmoothSpeedAcceleration);
 
             }
             else
             {
-                futurePos = Vector3.Lerp(m_mainCamera.position, m_target.position + m_offsetCoord, m_smoothSpeed * Time.deltaTime);
+                futurePos = Vector3.Lerp(m_mainCamera.position, m_target.position + m_offsetCoord, m_smoothSpeed * Time.deltaTime * m_SmoothSpeedAcceleration);
             }
         }
         else
@@ -163,24 +169,29 @@ public class CameraController : MonoBehaviour
             }
         }
 
-        if(CameraBoudaries.instance != null)
+        
+        if (CameraBoudaries.instance != null)
         {
+            m_SmoothSpeedAcceleration = 1f;
             if (!CameraBoudaries.instance.CheckCameraBoundaries(futurePos))
             {
+                m_SmoothSpeedAcceleration = 3f;
                 Vector3 temp = futurePos;
                 futurePos = _oldPosition;
 
-                if (CameraBoudaries.instance.CheckCameraBoundaries(_oldPosition + new Vector3(temp.x - _oldPosition.x, 0, 0)))
+                if (CameraBoudaries.instance.CheckCameraBoundaries(futurePos + new Vector3(temp.x - _oldPosition.x, 0, 0)))
                     futurePos += new Vector3(temp.x - _oldPosition.x, 0, 0);
 
+                if (CameraBoudaries.instance.CheckCameraBoundaries(futurePos + new Vector3(0,  temp.y - _oldPosition.y,0)))
+                    futurePos += new Vector3(0, temp.y - _oldPosition.y,0);
 
-                if (CameraBoudaries.instance.CheckCameraBoundaries(_oldPosition + new Vector3(0, 0, temp.z - _oldPosition.z)))
+                if (CameraBoudaries.instance.CheckCameraBoundaries(futurePos + new Vector3(0, 0, temp.z - _oldPosition.z)))
                     futurePos += new Vector3(0, 0, temp.z - _oldPosition.z);
             } 
         }
-        
+
         m_mainCamera.position = futurePos;
-        _oldPosition = futurePos;
+        _oldPosition = m_mainCamera.position;
     }
 
 
@@ -200,6 +211,12 @@ public class CameraController : MonoBehaviour
         {
             _zoom = false;
             StartCoroutine(IZoom());
+        }
+
+        if (CameraBoudaries.instance && Input.GetKey(KeyCode.E))
+        {
+            m_mainCamera.position = new Vector3(CameraBoudaries.instance.transform.position.x, m_mainCamera.position.y, CameraBoudaries.instance.transform.position.z);
+            _oldPosition = m_mainCamera.position;
         }
     }
 

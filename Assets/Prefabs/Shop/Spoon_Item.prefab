@@ -81,7 +81,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5564332025766445174}
   m_LocalRotation: {x: 0.35355338, y: 0.35355338, z: -0.1464466, w: 0.8535535}
-  m_LocalPosition: {x: 0, y: 0, z: -1.51}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.0035040395, y: 0.0035040395, z: 0.0035040395}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -92,7 +92,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 45, y: 45, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1.51, y: 2.14}
+  m_AnchoredPosition: {x: 0, y: 2.14}
   m_SizeDelta: {x: 2864.572, y: 3972}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1612423355066775797
@@ -4957,6 +4957,7 @@ GameObject:
   - component: {fileID: 6045410634245528705}
   - component: {fileID: 6045410634245528704}
   - component: {fileID: 6045410634245528707}
+  - component: {fileID: 6834737288351762426}
   m_Layer: 14
   m_Name: Spoon_Item
   m_TagString: Untagged
@@ -5011,7 +5012,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1.5
+  m_Radius: 3
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &6045410634245528707
 MonoBehaviour:
@@ -5058,6 +5059,26 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!95 &6834737288351762426
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6045410634245528706}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 43270a55968cf094f9ce3daa30558787, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!1 &6045410634600095258
 GameObject:
   m_ObjectHideFlags: 0

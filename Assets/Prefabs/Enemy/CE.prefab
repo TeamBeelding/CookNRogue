@@ -67,7 +67,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _effectHandlers: []
-  _collider: {fileID: 0}
+  _collider: {fileID: 1006809418298412630}
   _damageUI: {fileID: 4752919081619040609, guid: 5abc18997e19393429b154f8231589f9,
     type: 3}
   explosion: {fileID: 466446929295881914, guid: 1768f1adcc585bb42ac938af9d0b00e8,
@@ -681,6 +681,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PileOfEarth_base
       objectReference: {fileID: 0}
+    - target: {fileID: 7784284939191166292, guid: 51b0f6f007e6e5e49b9d26be89ead7ac,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 51b0f6f007e6e5e49b9d26be89ead7ac, type: 3}
 --- !u!198 &1663811957222495082 stripped
@@ -769,6 +774,30 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 574f3680836b73e429c8a6b14cec464b, type: 3}
+--- !u!1 &5999428840002437946 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 574f3680836b73e429c8a6b14cec464b,
+    type: 3}
+  m_PrefabInstance: {fileID: 6882390215417757291}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5170400134411140665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5999428840002437946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 0, b: 0, a: 1}
+  outlineWidth: 4
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!4 &6343759960419342720 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 574f3680836b73e429c8a6b14cec464b,
