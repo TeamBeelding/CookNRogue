@@ -328,18 +328,20 @@ public class PlayerCookingInventory : MonoBehaviour
             return;
         }
 
-
         PlayerRuntimeData.GetInstance().data.AttackData.AttackColor = PlayerRuntimeData.GetInstance().data.CookData.Recipe[0].color;
         AmmunitionBar.instance.ResetAmmoBar();
         _equippedRecipe.Clear();
         //Fuse ingredients's effects and stats
         float averageDmg = 0;
+        PlayerRuntimeData.GetInstance().data.AttackData.AttackCooldown = 0f;
+        PlayerRuntimeData.GetInstance().data.AttackData.Ammunition = 0;
         foreach (ProjectileData ingredient in PlayerRuntimeData.GetInstance().data.CookData.Recipe)
         {
             PlayerRuntimeData.GetInstance().data.AttackData.AttackSize += ingredient._size;
             PlayerRuntimeData.GetInstance().data.AttackData.AttackSpeed += ingredient._speed;
             PlayerRuntimeData.GetInstance().data.AttackData.AttackDrag += ingredient._drag;
             PlayerRuntimeData.GetInstance().data.AttackData.AttackCooldown += ingredient._attackDelay;
+            PlayerRuntimeData.GetInstance().data.AttackData.Ammunition += ingredient._ammunition;
             averageDmg += ingredient._damage;
             AmmunitionBar.instance.AddIngredientAmmo(ingredient._ammunition);
 
@@ -362,15 +364,12 @@ public class PlayerCookingInventory : MonoBehaviour
         {
             case 1:
                 averageDmg *= _damageFactor[0];
-                PlayerRuntimeData.GetInstance().data.AttackData.Ammunition = 15f;
                 break;
             case 2:
                 averageDmg *= _damageFactor[1];
-                PlayerRuntimeData.GetInstance().data.AttackData.Ammunition = 20f;
                 break;
             case 3:
                 averageDmg *= _damageFactor[2];
-                PlayerRuntimeData.GetInstance().data.AttackData.Ammunition = 30f;
                 break;
         }
 
@@ -388,8 +387,10 @@ public class PlayerCookingInventory : MonoBehaviour
         if (PlayerRuntimeData.GetInstance().data.InventoryData.WoodenSpoon)
             PlayerRuntimeData.GetInstance().data.AttackData.AttackDamage += PlayerRuntimeData.GetInstance().data.InventoryData.WoodenSpoonValue;
 
+        Debug.Log(PlayerRuntimeData.GetInstance().data.AttackData.AttackCooldown);
         //Average rate of fire
         PlayerRuntimeData.GetInstance().data.AttackData.AttackCooldown /= PlayerRuntimeData.GetInstance().data.CookData.Recipe.Count;
+        Debug.Log(PlayerRuntimeData.GetInstance().data.AttackData.AttackCooldown);
 
         foreach (IIngredientEffects effect in PlayerRuntimeData.GetInstance().data.AttackData.AttackEffects)
         {

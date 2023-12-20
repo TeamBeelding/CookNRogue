@@ -150,7 +150,7 @@ public class PlayerCooking : MonoBehaviour
             _Play_SFX_Cook.Post(gameObject);
 
             //Reset last bullet parametters
-            m_attackScript.ResetParameters();
+            m_attackScript.ResetDefaultParameters();
 
             _inventoryScript.Show(false);
 
