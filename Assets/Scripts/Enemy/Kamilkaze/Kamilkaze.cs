@@ -57,7 +57,8 @@ public class Kamilkaze : EnemyController
 
         _Play_Kamikaze_Idle.Post(gameObject);
 
-        _collider.enabled = true;
+        //if (_collider)
+        //    _collider.enabled = true;
     }
 
     private void SetState(State newState)

@@ -72,7 +72,7 @@ public class WaveManager : MonoBehaviour
 
                 //Ammo Pause
                 PlayerController.Instance.AttackScript.PauseAmmoTimer = true;
-                //Audio
+                //Audioos
                 _NoMusic.SetValue();
 
                 StopAllCoroutines();
