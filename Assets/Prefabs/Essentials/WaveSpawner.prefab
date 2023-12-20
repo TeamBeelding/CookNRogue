@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1586584862540676254}
   - component: {fileID: 1586584862540676249}
+  - component: {fileID: 2924354381412726129}
   m_Layer: 0
   m_Name: WaveSpawner
   m_TagString: Untagged
@@ -45,8 +46,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9884c304efec6f7438c04f9f39b825e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _Play_SFX_Ennemy_Spawn:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 4c3d9d5e0443d9f4fad9e364636a8c74,
+      type: 2}
   waveContainer: []
   fx: {fileID: 3231450466562838173}
+  delay: 0.25
+--- !u!114 &2924354381412726129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1586584862540676255}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2698c394a636bc479a5e90f55e626a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerList: f7e1664c
+  useOtherObject: 0
+  data:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 88bc5886cbe63ba4eade3f4c9f1df019,
+      type: 2}
+  decodeBank: 0
+  loadAsynchronous: 0
+  saveDecodedBank: 0
+  unloadTriggerList: 
+  bankNameInternal: 
+  valueGuidInternal: 
 --- !u!1001 &4674524193882516425
 PrefabInstance:
   m_ObjectHideFlags: 0

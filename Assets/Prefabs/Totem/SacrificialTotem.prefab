@@ -20124,6 +20124,7 @@ GameObject:
   - component: {fileID: 5001394443714997536}
   - component: {fileID: 5001394443714997542}
   - component: {fileID: 6173616635244324538}
+  - component: {fileID: 6386252271681009532}
   m_Layer: 6
   m_Name: SacrificialTotem
   m_TagString: Untagged
@@ -20159,6 +20160,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a739ed79d52057488aec364a2798142, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _Play_SFX_Totem_Heal_Idle:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: ce681e3ea9c0b5d4aa68c504ab7062ce,
+      type: 2}
+  _Play_SFX_Totem_Heal_Activation:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 5edc879d64384bb4ea7b71643259db70,
+      type: 2}
   _healPerIngredient: 1
   _playParticlesWhenHeal: 1
   _healPart: {fileID: 959411586882907443}
@@ -20192,6 +20203,31 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6386252271681009532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5001394443714997537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2698c394a636bc479a5e90f55e626a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerList: f7e1664c
+  useOtherObject: 0
+  data:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: b61b3cc46e7b35d498286433a442c5ed,
+      type: 2}
+  decodeBank: 0
+  loadAsynchronous: 0
+  saveDecodedBank: 0
+  unloadTriggerList: 958ca0ea
+  bankNameInternal: 
+  valueGuidInternal: 
 --- !u!1 &5355593950048657286
 GameObject:
   m_ObjectHideFlags: 0

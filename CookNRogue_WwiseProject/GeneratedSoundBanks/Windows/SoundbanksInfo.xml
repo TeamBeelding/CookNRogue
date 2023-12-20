@@ -9,7 +9,7 @@
 	</RootPaths>
 	<DialogueEvents/>
 	<SoundBanks>
-		<SoundBank Id="1355168291" Type="User" Language="SFX" Hash="{D31149CD-6BC0-28FF-9AF3-0DF309E25E59}">
+		<SoundBank Id="1355168291" Type="User" Language="SFX" Hash="{F4331B4B-78E1-7C03-5262-C0A3E4A24C38}">
 			<ShortName>Init</ShortName>
 			<Path>Init.bnk</Path>
 			<Plugins>
@@ -580,6 +580,28 @@
 				</Event>
 			</Events>
 		</SoundBank>
+		<SoundBank Id="1828121741" Type="User" Language="SFX" Hash="{B841E44A-06A5-854D-5ABA-6400CC5FA6FE}">
+			<ShortName>SFX_Enemy_Common</ShortName>
+			<Path>SFX_Enemy_Common.bnk</Path>
+			<Media>
+				<File Id="61142172" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Object_Appear_02.wav</ShortName>
+					<CachePath>SFX/SFX_Object_Appear_02_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="172022968" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Object_Appear_01.wav</ShortName>
+					<CachePath>SFX/SFX_Object_Appear_01_3F75BDB9.wem</CachePath>
+				</File>
+			</Media>
+			<Events>
+				<Event Id="2734652486" Name="Play_SFX_Ennemy_Spawn" MaxAttenuation="40" DurationType="OneShot" DurationMin="2.2525423" DurationMax="2.2525423">
+					<MediaRefs>
+						<MediaRef Id="61142172"/>
+						<MediaRef Id="172022968"/>
+					</MediaRefs>
+				</Event>
+			</Events>
+		</SoundBank>
 		<SoundBank Id="1923254948" Type="User" Language="SFX" Hash="{1FF2C075-E661-D0C6-DFD0-11CB5624C402}">
 			<ShortName>SFX_Enemy_Pea</ShortName>
 			<Path>SFX_Enemy_Pea.bnk</Path>
@@ -686,7 +708,7 @@
 				<Event Id="2301333962" Name="Stop_SFX_Pea_Movement" MaxAttenuation="0" DurationType="OneShot" DurationMin="0" DurationMax="0"/>
 			</Events>
 		</SoundBank>
-		<SoundBank Id="2374353081" Type="User" Language="SFX" Hash="{E98F573C-D8FC-D81F-D99E-4EE39EE7F324}">
+		<SoundBank Id="2374353081" Type="User" Language="SFX" Hash="{7837087F-2931-977C-FD1E-885FF00F01C8}">
 			<ShortName>SFX_Other</ShortName>
 			<Path>SFX_Other.bnk</Path>
 			<Media>
@@ -1760,7 +1782,7 @@
 				</StateGroup>
 			</StateGroups>
 		</SoundBank>
-		<SoundBank Id="3996957973" Type="User" Language="SFX" Hash="{62D4DDF5-FED0-FA3B-44F3-338FBD136723}">
+		<SoundBank Id="3996957973" Type="User" Language="SFX" Hash="{432B20E6-B633-3511-CB03-CC357FC2E2D9}">
 			<ShortName>SFX_MC</ShortName>
 			<Path>SFX_MC.bnk</Path>
 			<Media>
@@ -1776,10 +1798,6 @@
 					<ShortName>SFX_Shot_Beef_03.wav</ShortName>
 					<CachePath>SFX/SFX_Shot_Beef_03_3F75BDB9.wem</CachePath>
 				</File>
-				<File Id="61142172" Language="SFX" Streaming="false" Location="Memory">
-					<ShortName>SFX_Object_Appear_02.wav</ShortName>
-					<CachePath>SFX/SFX_Object_Appear_02_3F75BDB9.wem</CachePath>
-				</File>
 				<File Id="112679822" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>SFX_Impact_Tomato_01.wav</ShortName>
 					<CachePath>SFX/SFX_Impact_Tomato_01_3F75BDB9.wem</CachePath>
@@ -1791,10 +1809,6 @@
 				<File Id="155910010" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>SFX_Impact_Corn_04.wav</ShortName>
 					<CachePath>SFX/SFX_Impact_Corn_04_3F75BDB9.wem</CachePath>
-				</File>
-				<File Id="172022968" Language="SFX" Streaming="false" Location="Memory">
-					<ShortName>SFX_Object_Appear_01.wav</ShortName>
-					<CachePath>SFX/SFX_Object_Appear_01_3F75BDB9.wem</CachePath>
 				</File>
 				<File Id="176688115" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>MC_Death.wav</ShortName>
@@ -2118,12 +2132,6 @@
 				</File>
 			</Media>
 			<Events>
-				<Event Id="1872178638" Name="Play_Enemy_Spawn" MaxAttenuation="40" DurationType="OneShot" DurationMin="1.6875" DurationMax="1.6875">
-					<MediaRefs>
-						<MediaRef Id="61142172"/>
-						<MediaRef Id="172022968"/>
-					</MediaRefs>
-				</Event>
 				<Event Id="2012076284" Name="Play_MC_Cauldron_Idle" DurationType="Infinite">
 					<MediaRefs>
 						<MediaRef Id="568604304"/>
@@ -2198,7 +2206,7 @@
 						<ActionSetStateEntry GroupId="3933301714" Id="1668749452" Name="No"/>
 					</ActionSetState>
 				</Event>
-				<Event Id="530264000" Name="Play_Weapon_Bounce_Wall" DurationType="OneShot" DurationMin="0.6697181" DurationMax="0.81708884">
+				<Event Id="530264000" Name="Play_Weapon_Bounce_Wall" MaxAttenuation="40" DurationType="OneShot" DurationMin="0.6697181" DurationMax="0.81708884">
 					<MediaRefs>
 						<MediaRef Id="112679822"/>
 						<MediaRef Id="190267688"/>
@@ -2337,5 +2345,5 @@
 			</StateGroups>
 		</SoundBank>
 	</SoundBanks>
-	<FileHash>{A490A564-52A4-0393-4404-845424E7700F}</FileHash>
+	<FileHash>{094CBE7C-F9A4-BBB6-8498-BA72EF1977BD}</FileHash>
 </SoundBanksInfo>
