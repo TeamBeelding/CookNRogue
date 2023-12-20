@@ -151,7 +151,7 @@
 				</StateGroup>
 			</StateGroups>
 		</SoundBank>
-		<SoundBank Id="1421616930" Type="User" Language="SFX" Hash="{DA5D3FEC-84B7-44D1-A037-903A26E1CE9A}">
+		<SoundBank Id="1421616930" Type="User" Language="SFX" Hash="{C198C29C-2321-2528-A6DF-7AC11D369AF2}">
 			<ShortName>SFX_Boss</ShortName>
 			<Path>SFX_Boss.bnk</Path>
 			<Media>
@@ -226,6 +226,10 @@
 				<File Id="603199292" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>SFX_Boss_Shockwave_01.wav</ShortName>
 					<CachePath>SFX/SFX_Boss_Shockwave_01_10C4C929.wem</CachePath>
+				</File>
+				<File Id="729866593" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Boss_Death_01.wav</ShortName>
+					<CachePath>SFX/SFX_Boss_Death_01_10C4C929.wem</CachePath>
 				</File>
 				<File Id="775652707" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>SFX_Boss_Shockwave_02.wav</ShortName>
@@ -310,6 +314,11 @@
 						<MediaRef Id="1041049691"/>
 					</MediaRefs>
 				</Event>
+				<Event Id="4095728714" Name="Play_SFX_Boss_Death" MaxAttenuation="100" DurationType="OneShot" DurationMin="7.5" DurationMax="7.5">
+					<MediaRefs>
+						<MediaRef Id="729866593"/>
+					</MediaRefs>
+				</Event>
 				<Event Id="1599937242" Name="Play_SFX_Boss_Dive" MaxAttenuation="100" DurationType="OneShot" DurationMin="1.1261041" DurationMax="1.1261041">
 					<MediaRefs>
 						<MediaRef Id="469492695"/>
@@ -324,7 +333,7 @@
 						<MediaRef Id="1007512096"/>
 					</MediaRefs>
 				</Event>
-				<Event Id="395712816" Name="Play_SFX_Boss_Leaves" MaxAttenuation="100" DurationType="OneShot" DurationMin="4.3333335" DurationMax="4.3333335">
+				<Event Id="395712816" Name="Play_SFX_Boss_Leaves" MaxAttenuation="100" DurationType="OneShot" DurationMin="5.2" DurationMax="5.2">
 					<MediaRefs>
 						<MediaRef Id="148488311"/>
 						<MediaRef Id="210312109"/>
@@ -580,7 +589,7 @@
 				</Event>
 			</Events>
 		</SoundBank>
-		<SoundBank Id="1828121741" Type="User" Language="SFX" Hash="{B841E44A-06A5-854D-5ABA-6400CC5FA6FE}">
+		<SoundBank Id="1828121741" Type="User" Language="SFX">
 			<ShortName>SFX_Enemy_Common</ShortName>
 			<Path>SFX_Enemy_Common.bnk</Path>
 			<Media>
@@ -2345,5 +2354,5 @@
 			</StateGroups>
 		</SoundBank>
 	</SoundBanks>
-	<FileHash>{094CBE7C-F9A4-BBB6-8498-BA72EF1977BD}</FileHash>
+	<FileHash>{87115292-17B2-37A6-293E-F5224D734EA8}</FileHash>
 </SoundBanksInfo>
