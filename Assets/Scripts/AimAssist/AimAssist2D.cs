@@ -30,7 +30,7 @@ public class AimAssist2D
             {
                 continue;
             }
-            else if (hit.collider.CompareTag("Enemy") && hit.collider.transform.parent.gameObject != target)
+            else if (hit.collider.CompareTag("Enemy") && (hit.collider.transform.gameObject != target || hit.collider.transform.parent.gameObject != target))
             {
                 continue;
             }

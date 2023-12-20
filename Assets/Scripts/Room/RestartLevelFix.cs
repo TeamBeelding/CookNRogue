@@ -32,7 +32,7 @@ public class RestartLevelFix : MonoBehaviour
         IEnumerator ILoadNextScene()
         {
             yield return new WaitForSeconds(0.1f);
-            SceneManager.LoadScene(2);
+            SceneManager.LoadScene(1);
         }
     }
 

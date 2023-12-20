@@ -291,10 +291,16 @@ public class PlayerController : MonoBehaviour
 
                 //Correct Aim
                 EnemyController[] enemiesInLevel = _enemyManager.EnemiesInLevel;
-                GameObject[] aimTargets = new GameObject[enemiesInLevel.Length];
+                Cauldron_Explosion[] cauldronsInLevel = PlayerRuntimeData.GetInstance().data.RoomData.TargetCauldrons.ToArray();
+                GameObject[] aimTargets = new GameObject[enemiesInLevel.Length + cauldronsInLevel.Length];
                 for (int i = 0; i < enemiesInLevel.Length; i++)
                 {
                     aimTargets[i] = enemiesInLevel[i].gameObject;
+                }
+
+                for (int i = 0; i < cauldronsInLevel.Length; i++)
+                {
+                    aimTargets[i + enemiesInLevel.Length] = cauldronsInLevel[i].gameObject;
                 }
 
                 _correctedAimDirection = AimAssist2D.CorrectAimDirection(_aimDirection, transform.position, aimTargets, m_aimAssistPresset);
@@ -1008,6 +1014,7 @@ public class PlayerController : MonoBehaviour
         PlayerRuntimeData.ResetInstance();
         Time.timeScale = 1;
         AkSoundEngine.StopAll();
+        pauseMenu.SetActive(false);
         deathMenu.SetActive(false);
         victoryMenu.SetActive(false);
         SceneManager.LoadScene(0);
@@ -1019,10 +1026,10 @@ public class PlayerController : MonoBehaviour
         PlayerRuntimeData.ResetInstance();
         Time.timeScale = 1;
         AkSoundEngine.StopAll();
+        pauseMenu.SetActive(false);
         deathMenu.SetActive(false);
         victoryMenu.SetActive(false);
         RestartLevelFix.Instance.RestartLevel();
-        SceneManager.LoadScene(0);
     }
 
     public void EndGame()
@@ -1048,6 +1055,7 @@ public class PlayerController : MonoBehaviour
         _playerActions.UI.Disable();
         _playerActions.Cooking.Disable();
         _playerActions.Default.Enable();
+        PlayerRuntimeData.GetInstance().data.BaseData.CurrentHealth = PlayerRuntimeData.GetInstance().data.BaseData.MaxHealth;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
