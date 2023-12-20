@@ -70,6 +70,10 @@ namespace Enemy.DashingEnemy
 
             Player = PlayerController.Instance.gameObject;
 
+            SetState(State.Casting);
+
+            animator = GetComponent<Animator>();
+
             physics.SetActive(true);
             _collider.enabled = true;
         }
@@ -111,15 +115,15 @@ namespace Enemy.DashingEnemy
             switch (state)
             {
                 case State.Casting:
-                    animator.SetBool("isAttack", false);
+                    animator?.SetBool("isAttack", false);
                     Casting();
                     break;
                 case State.Waiting:
-                    animator.SetBool("isAttack", false);
+                    animator?.SetBool("isAttack", false);
                     WaitingAnotherDash();
                     break;
                 case State.Dashing:
-                    animator.SetBool("isAttack", true);
+                    animator?.SetBool("isAttack", true);
                     _Play_SFX_Cabbage_Charge_LP.Post(gameObject);
                     Dashing();
                     break;
@@ -274,8 +278,10 @@ namespace Enemy.DashingEnemy
             
             _Play_SFX_Cabbage_Death.Post(gameObject);
 
-            animator.SetBool("isDead", true);
-            waveManager?.SlowMotion();
+            animator?.SetBool("isDead", true);
+
+            waveManager.SlowMotion();
+            hasAskForSlow = true;
 
             StartCoroutine(IDeathAnim());
 

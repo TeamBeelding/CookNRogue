@@ -59,6 +59,8 @@ public class BossController : EnemyController
     private AK.Wwise.Event _Play_SFX_Boss_Charge_LP;
     [SerializeField]
     private AK.Wwise.Event _Play_SFX_Boss_Charge_Impact;
+    [SerializeField]
+    private AK.Wwise.Event _Play_SFX_Boss_Death;
 
     protected override void OnEnable()
     {
@@ -378,8 +380,8 @@ public class BossController : EnemyController
 
         Animator animator;
         GetComponent<BossIntro>().healthbarAnimator.Play("Boss_HealthBar_Exit");
-
-        foreach(var particle in _dyingParticles)
+        _Play_SFX_Boss_Death.Post(gameObject);
+        foreach (var particle in _dyingParticles)
             particle.Play();
 
         yield return new WaitForSeconds(4);
