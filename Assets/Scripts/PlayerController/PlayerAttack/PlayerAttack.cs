@@ -36,7 +36,7 @@ public class PlayerAttack : MonoBehaviour
 
     bool _shootOnCooldown = false;
     Coroutine _ammoTimer;
-    bool _pauseAmmoTimer;
+    bool _pauseAmmoTimer = true;
 
     public bool ShootOnCooldown
     {

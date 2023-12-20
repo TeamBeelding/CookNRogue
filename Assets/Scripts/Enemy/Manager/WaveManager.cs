@@ -53,6 +53,10 @@ public class WaveManager : MonoBehaviour
                 break;
             case State.EndWave:
                 PoolManager.Instance.DestroyAI();
+
+                //Ammo Pause
+                PlayerController.Instance.AttackScript.PauseAmmoTimer = true;
+
                 StopAllCoroutines();
                 break;
         }
@@ -72,6 +76,9 @@ public class WaveManager : MonoBehaviour
         IEnumerator IDelayBeforeStartingWave()
         {
             yield return new WaitForSeconds(delayBeforeStartingWave);
+
+            //Ammo pause
+            PlayerController.Instance.AttackScript.PauseAmmoTimer = false;
 
             SetState(State.NextWave);
         }
