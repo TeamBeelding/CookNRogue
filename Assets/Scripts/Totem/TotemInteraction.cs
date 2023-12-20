@@ -5,6 +5,12 @@ using UnityEngine;
 
 public sealed class TotemInteraction : MonoBehaviour,IInteractable
 {
+    [Header("Sound")]
+    [SerializeField]
+    private AK.Wwise.Event _Play_SFX_Totem_Heal_Idle;
+    [SerializeField]
+    private AK.Wwise.Event _Play_SFX_Totem_Heal_Activation;
+
     [SerializeField] int _healPerIngredient = 1;
 
     [SerializeField] bool _playParticlesWhenHeal = true;
@@ -15,6 +21,7 @@ public sealed class TotemInteraction : MonoBehaviour,IInteractable
     private void Start()
     {
         _player = PlayerController.Instance.transform;
+        _Play_SFX_Totem_Heal_Idle.Post(gameObject);
     }
     public void Interact(string tag)
     {
@@ -28,6 +35,8 @@ public sealed class TotemInteraction : MonoBehaviour,IInteractable
 
     public void Regen()
     {
+        _Play_SFX_Totem_Heal_Activation.Post(gameObject);
+
         if (PlayerRuntimeData.GetInstance().data.BaseData.CurrentHealth >= PlayerRuntimeData.GetInstance().data.BaseData.MaxHealth)
             return;
 
