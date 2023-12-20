@@ -224,7 +224,8 @@ public class TBH : EnemyController
 
         if (Healthpoint <= 0)
         {
-            waveManager?.SlowMotion();
+            waveManager.SlowMotion();
+            hasAskForSlow = true;
             SetState(State.Dying);
         }
     }
