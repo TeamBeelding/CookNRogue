@@ -57,6 +57,7 @@ public class PlayerAttack : MonoBehaviour
 
         _playerController = GetComponent<PlayerController>();
         _inventory = PlayerCookingInventory.Instance;
+        _pauseAmmoTimer = true;
 
         _ammunitionBar = AmmunitionBar.instance;
 
@@ -109,17 +110,21 @@ public class PlayerAttack : MonoBehaviour
         while (PlayerRuntimeData.GetInstance().data.AttackData.Ammunition > 0)
         {
             if (_pauseAmmoTimer)
+            {
                 yield return new WaitForSeconds(Time.deltaTime);
+            }
+            else
+            {
+                float ammo = PlayerRuntimeData.GetInstance().data.AttackData.Ammunition;
+                ammo -= Time.deltaTime;
+                ammo = ammo < 0 ? 0 : ammo;
+                PlayerRuntimeData.GetInstance().data.AttackData.Ammunition = ammo;
 
-            float ammo = PlayerRuntimeData.GetInstance().data.AttackData.Ammunition;
-            ammo -= Time.deltaTime;
-            ammo = ammo < 0 ? 0 : ammo;
-            PlayerRuntimeData.GetInstance().data.AttackData.Ammunition = ammo;
+                if (_ammunitionBar)
+                    _ammunitionBar.UpdateAmmoBar();
 
-            if (_ammunitionBar)
-                _ammunitionBar.UpdateAmmoBar();
-
-            yield return new WaitForSeconds(Time.deltaTime);
+                yield return new WaitForSeconds(Time.deltaTime);
+            }
         }
 
         _hasEmptiedAmmo = true;
