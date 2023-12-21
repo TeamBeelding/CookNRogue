@@ -6,10 +6,6 @@ using Random = UnityEngine.Random;
 public class TBH : EnemyController
 {
     [Header("Sound")]
-    /*[SerializeField]
-    private AK.Wwise.Event _Play_SFX_Carrot_Dive;
-    [SerializeField]
-    private AK.Wwise.Event _Play_SFX_Carrot_Erupt;*/
     [SerializeField]
     private AK.Wwise.Event _Play_SFX_Carrot_Attack;
     [SerializeField]
@@ -26,7 +22,9 @@ public class TBH : EnemyController
 
     [SerializeField] private Animator _animator;
     [SerializeField] private GameObject physics;
-    
+
+    private Vector3 _position;
+
     public enum State
     {
         Neutral,
@@ -142,18 +140,25 @@ public class TBH : EnemyController
 
     private void Teleport()
     {
-        Vector3 randomPosition = Random.insideUnitSphere.normalized * _data.AttackRange + Player.transform.position;
-        
-        if (Vector3.Distance(transform.position, randomPosition) <= _data.MinimumRadius)
-            randomPosition = Random.insideUnitSphere * _data.AttackRange + Player.transform.position;
+        bool validPositionFound = false;
 
-        Vector3 position = new Vector3(randomPosition.x, transform.position.y, randomPosition.z);
+        while (!validPositionFound)
+        {
+            Vector3 randomPosition = Random.insideUnitSphere.normalized * _data.AttackRange + Player.transform.position;
 
-        if (CanTeleportHere(position))
-            transform.position = new Vector3(randomPosition.x, transform.position.y, randomPosition.z);
+            if (Vector3.Distance(transform.position, randomPosition) <= _data.MinimumRadius)
+                randomPosition = Random.insideUnitSphere * _data.AttackRange + Player.transform.position;
 
-        else
-            Teleport();
+            Vector3 position = new Vector3(randomPosition.x, transform.position.y, randomPosition.z);
+
+            _position = position;
+
+            if (CanTeleportHere(position))
+            {
+                transform.position = new Vector3(randomPosition.x, transform.position.y, randomPosition.z);
+                validPositionFound = true;
+            }
+        }
 
         SetState(State.Attacking);
     }
@@ -237,6 +242,9 @@ public class TBH : EnemyController
         Gizmos.DrawWireSphere(transform.position, _data.AttackRange);
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, _data.TeleportRange);
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(_position, 2);
     }
 #endif
 }
