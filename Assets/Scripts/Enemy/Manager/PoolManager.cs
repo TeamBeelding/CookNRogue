@@ -84,4 +84,8 @@ public class PoolManager : MonoBehaviour
         parent.GetComponent<IPooling>().Desinstantiating(obj);
     }
 
+    private void OnDestroy()
+    {
+        instance = null;
+    }
 }

@@ -161,7 +161,10 @@ public abstract class EnemyController : MonoBehaviour
     protected virtual void OnDisable()
     {
         StopAllCoroutines();
-        EnemyManager.Instance.RemoveEnemyFromLevel(this);
+        if (EnemyManager.Instance != null)
+        {
+            EnemyManager.Instance.RemoveEnemyFromLevel(this);
+        }
     }
 
     #region StatusEffect

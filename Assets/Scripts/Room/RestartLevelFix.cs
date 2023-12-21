@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Enemy;
 
 public class RestartLevelFix : MonoBehaviour
 {
@@ -23,17 +24,25 @@ public class RestartLevelFix : MonoBehaviour
         }
     }
 
-    public void RestartLevel() 
+    public void LoadScene(int index) 
     {
-        m_transition.LoadTransition();
+        //m_transition.LoadTransition();
 
         StartCoroutine(ILoadNextScene());
 
         IEnumerator ILoadNextScene()
         {
+            DestroyInstances();
             yield return new WaitForSeconds(0.1f);
-            SceneManager.LoadScene(1);
+            SceneManager.LoadScene(index);
         }
     }
 
+    void DestroyInstances()
+    {
+        Destroy(PlayerController.Instance.gameObject);
+        Destroy(EnemyManager.Instance.gameObject);
+        Destroy(PoolManager.Instance.gameObject);
+        Destroy(MissileManager.instance.gameObject);
+    }
 }

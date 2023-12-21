@@ -1017,7 +1017,7 @@ public class PlayerController : MonoBehaviour
         pauseMenu.SetActive(false);
         deathMenu.SetActive(false);
         victoryMenu.SetActive(false);
-        SceneManager.LoadScene(0);
+        RestartLevelFix.Instance.LoadScene(0);
     }
     
     
@@ -1029,7 +1029,7 @@ public class PlayerController : MonoBehaviour
         pauseMenu.SetActive(false);
         deathMenu.SetActive(false);
         victoryMenu.SetActive(false);
-        RestartLevelFix.Instance.RestartLevel();
+        RestartLevelFix.Instance.LoadScene(1);
     }
 
     public void EndGame()
@@ -1070,6 +1070,12 @@ public class PlayerController : MonoBehaviour
         {
             Debug.LogWarning("Not in tutorial !");
         }
+    }
+
+    private void OnDestroy()
+    {
+        if (_instance == this)
+            _instance = null;
     }
 
     #endregion
