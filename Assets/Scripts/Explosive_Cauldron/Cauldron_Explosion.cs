@@ -52,6 +52,8 @@ public class Cauldron_Explosion : MonoBehaviour
 
         _explosionColor = GetDesiredColor();
         _explosionColor.a = 1;
+
+        PlayerRuntimeData.GetInstance().data.RoomData.TargetCauldrons.Add(this);
     }
 
     private void OnTriggerEnter(Collider collision)
@@ -170,6 +172,11 @@ public class Cauldron_Explosion : MonoBehaviour
         {
             particle.Play();
         }
+    }
+
+    private void OnDestroy()
+    {
+        PlayerRuntimeData.GetInstance().data.RoomData.TargetCauldrons.Remove(this);
     }
 
     private void OnDrawGizmos()

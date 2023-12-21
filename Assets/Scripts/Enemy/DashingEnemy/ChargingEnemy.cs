@@ -38,7 +38,7 @@ namespace Enemy.DashingEnemy
         [SerializeField]
         private GameObject visual;
 
-        private Animator animator;
+        [SerializeField] private Animator animator;
         [SerializeField] private GameObject physics;
 
         [SerializeField] ParticleSystem _collisionParticles;
@@ -64,18 +64,19 @@ namespace Enemy.DashingEnemy
 
         protected override void OnEnable()
         {
-            base.OnEnable();
-
             Healthpoint = _data.GetHealth();
 
             Player = PlayerController.Instance.gameObject;
 
-            SetState(State.Casting);
-
-            animator = GetComponent<Animator>();
+            if (animator != null )
+                animator = GetComponentInChildren<Animator>();
 
             physics.SetActive(true);
             _collider.enabled = true;
+
+            base.OnEnable();
+
+            SetState(State.Casting);
         }
 
         // Start is called before the first frame update
