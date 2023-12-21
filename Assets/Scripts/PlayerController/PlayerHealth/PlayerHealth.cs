@@ -102,6 +102,7 @@ public class PlayerHealth : MonoBehaviour
             PlayerRuntimeData.GetInstance().data.BaseData.CurrentHealth = PlayerRuntimeData.GetInstance().data.BaseData.MaxHealth;
 
         _heartBar.UpdateHealthVisual(PlayerRuntimeData.GetInstance().data.BaseData.CurrentHealth);
+        _heartBar.PlayHeartBarAnimation();
     }
 
     private void Reset()
