@@ -61,7 +61,8 @@ public abstract class EnemyController : MonoBehaviour
         if (_spawnFX)
             _spawnFX.Play();
 
-        _Play_SFX_Ennemy_Spawn.Post(gameObject);
+        if (_Play_SFX_Ennemy_Spawn!=null)
+            _Play_SFX_Ennemy_Spawn.Post(gameObject);
     }
 
     protected virtual void OnEnable()
