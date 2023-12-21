@@ -7,6 +7,11 @@ public class AimAssist2D
     public static Vector3 CorrectAimDirection(Vector3 baseDirection, Vector3 origin, GameObject[] targets, AimAssistPreset preset)
     {
         #region Get Valid Target
+        if(targets.Length <= 0)
+        {
+            return baseDirection;
+        }
+
         //Get all potential valid targets
         List<GameObject> tempValidTargets = new();
         foreach (GameObject target in targets)
@@ -30,7 +35,11 @@ public class AimAssist2D
             {
                 continue;
             }
-            else if (hit.collider.CompareTag("Enemy") && (hit.collider.transform.gameObject != target || hit.collider.transform.parent.gameObject != target))
+            else if (hit.collider.CompareTag("Enemy") && hit.collider.transform.parent.gameObject != target)
+            {
+                continue;
+            }
+            else if (hit.collider.CompareTag("Cauldron") && hit.collider.transform.gameObject != target)
             {
                 continue;
             }
@@ -67,10 +76,8 @@ public class AimAssist2D
         float curAngle = Vector3.SignedAngle(targetDir, baseDirection, Vector3.up);
         //Get current progression to the target direction
         float curStep = 1 - Mathf.Abs(curAngle) / preset.GetMaxAngle;
-        Debug.Log("curStep : " + curStep);
         //Correct progression based on the animationCurve
         float correctedStep = preset.GetAssistOffsetCurve.Evaluate(curStep);
-        Debug.Log("correctedStep : " + correctedStep);
         //Get angle extremity to progress from
         Vector3 angleExtremity = Quaternion.AngleAxis(Mathf.Sign(curAngle) * preset.GetMaxAngle, Vector3.up) * targetDir;
 
