@@ -55,4 +55,9 @@ public sealed class PlayerBulletManager : MonoBehaviour
         _bulletList.Add(playerBullet);
         return playerBullet;
     }
+
+    private void OnDestroy()
+    {
+        instance = null;
+    }
 }
