@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class WaveSpawner : MonoBehaviour
 {
-    [Header("Sound")]
-    [SerializeField]
-    private AK.Wwise.Event _Play_SFX_Ennemy_Spawn;
 
     [System.Serializable]
     public struct WaveContainer
@@ -46,8 +43,6 @@ public class WaveSpawner : MonoBehaviour
 
                 dirtFX.transform.parent = transform;
                 dirtFX.SetActive(true);
-
-                _Play_SFX_Ennemy_Spawn.Post(gameObject);
 
                 dirtFX.GetComponentInChildren<ParticleSystem>().Play();
 

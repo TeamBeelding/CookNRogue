@@ -40,6 +40,10 @@ public abstract class EnemyController : MonoBehaviour
 
     protected bool hasAskForSlow = false;
 
+    [Header("Sound")]
+    [SerializeField]
+    private AK.Wwise.Event _Play_SFX_Ennemy_Spawn;
+
     protected virtual void Awake()
     {
         _rend = GetComponentInChildren<Renderer>();
@@ -56,6 +60,8 @@ public abstract class EnemyController : MonoBehaviour
 
         if (_spawnFX)
             _spawnFX.Play();
+
+        _Play_SFX_Ennemy_Spawn.Post(gameObject);
     }
 
     protected virtual void OnEnable()
