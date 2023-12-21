@@ -6,10 +6,6 @@ using Random = UnityEngine.Random;
 public class TBH : EnemyController
 {
     [Header("Sound")]
-    /*[SerializeField]
-    private AK.Wwise.Event _Play_SFX_Carrot_Dive;
-    [SerializeField]
-    private AK.Wwise.Event _Play_SFX_Carrot_Erupt;*/
     [SerializeField]
     private AK.Wwise.Event _Play_SFX_Carrot_Attack;
     [SerializeField]
