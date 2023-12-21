@@ -52,4 +52,9 @@ public sealed class MissileManager : MonoBehaviour
         MissileList.Add(missile);
         return missile;
     }
+
+    private void OnDestroy()
+    {
+        instance = null;
+    }
 }

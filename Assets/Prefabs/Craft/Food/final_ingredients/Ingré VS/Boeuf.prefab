@@ -121,6 +121,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _projectileData: {fileID: 11400000, guid: 8883ec5033ec73546969892fce674344, type: 2}
+  _particles: {fileID: 0}
+  _simulationSpeed: 4
+  _yVelocity: 1.5
+  _noiseValue: 4
 --- !u!54 &7909781965647274448
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -373,13 +377,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 85b678d8859febc438b5fc52f6ead80d,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 85b678d8859febc438b5fc52f6ead80d,
+        type: 3}
       propertyPath: m_LocalScale.y
-      value: 49.46851
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 85b678d8859febc438b5fc52f6ead80d,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 49.46851
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 85b678d8859febc438b5fc52f6ead80d,
         type: 3}
