@@ -21,6 +21,7 @@ namespace Enemy.DashingEnemy
 
         private Coroutine _coroutineState;
         private Coroutine _rotateCoroutine;
+        private Coroutine _deathCoroutine;
         private RaycastHit _hit;
 
         private bool _isCharging = false;
@@ -284,7 +285,7 @@ namespace Enemy.DashingEnemy
             waveManager.SlowMotion();
             hasAskForSlow = true;
 
-            StartCoroutine(IDeathAnim());
+             _deathCoroutine = StartCoroutine(IDeathAnim());
 
             IEnumerator IDeathAnim()
             {

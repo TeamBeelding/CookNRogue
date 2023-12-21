@@ -53,4 +53,9 @@ public class DecalManager : MonoBehaviour
         DecalList.Add(bulletDecal);
         return bulletDecal;
     }
+
+    private void OnDestroy()
+    {
+        instance = null;
+    }
 }
