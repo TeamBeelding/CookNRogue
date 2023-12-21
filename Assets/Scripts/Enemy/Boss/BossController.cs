@@ -25,6 +25,8 @@ public class BossController : EnemyController
     [SerializeField] private GameObject visual;
     [SerializeField] private GameObject physics;
 
+    private float dashSpeed;
+
     private MissilesController missilesController;
     [SerializeField,Range(0,1)] float _missileTriggerPercentage = 1f;
     private ShockwaveController shockwaveController;
@@ -83,6 +85,8 @@ public class BossController : EnemyController
         _stunnedParticles = _stunnedParticlesContainer.GetComponentsInChildren<ParticleSystem>();
 
         Healthpoint = data.GetHealth;
+        dashSpeed = data.GetDashSpeed;
+
         SetState(State.EnterRoom);
     }
 
@@ -272,7 +276,7 @@ public class BossController : EnemyController
 
             while (state == State.Dash)
             {
-                transform.position += direction * (data.GetDashSpeed * Time.deltaTime);
+                transform.position += direction * (dashSpeed * Time.deltaTime);
                 yield return null;
             }
 
@@ -374,6 +378,7 @@ public class BossController : EnemyController
 
     private IEnumerator DyingRoutine()
     {
+        dashSpeed = 0;
         physics?.SetActive(false);
 
         ShutDownAllAbilitiesVFX();
@@ -400,18 +405,15 @@ public class BossController : EnemyController
             var Noise = particle.noise;
             Noise.strength = 2;
         }
-            
-        
-        
 
         visual?.SetActive(false);
 
         //GIVE ENOUGH TIME TO THE PARTICLES TO FADE AWAY
         yield return new WaitForSeconds(7);
+        
+        Destroy(gameObject);
 
         PlayerController.Instance.EndGame();
-
-        Destroy(gameObject);
         
     }
 
