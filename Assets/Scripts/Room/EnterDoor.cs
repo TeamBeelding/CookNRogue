@@ -145,8 +145,16 @@ public class EnterDoor : MonoBehaviour
 
             PoolManager.Instance.DestroyAI();
 
-            SceneManager.LoadScene(sceneToLoad.BuildIndex);
+            //SceneManager.LoadScene(sceneToLoad.BuildIndex);
+            StartCoroutine(TransitionToNextScene(sceneToLoad.BuildIndex));
         }
+    }
+
+    private IEnumerator TransitionToNextScene(int sceneIndex)
+    {
+        RoomTransition.instance.TriggerTransitionAnimation();
+        yield return new WaitForSeconds(RoomTransition.instance.GetAnimationDuration());
+        SceneManager.LoadScene(sceneIndex);
     }
     private void StartOpenDoor()
     {
