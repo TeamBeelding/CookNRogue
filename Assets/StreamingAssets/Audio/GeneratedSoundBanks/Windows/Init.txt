@@ -1,0 +1,101 @@
+State Group	ID	Name			Wwise Object Path	Notes
+	215992295	Player_Health			\Default Work Unit\Player_Health	
+	941442537	Bread			\Default Work Unit\Food\Bread	
+	1123068863	Beef			\Default Work Unit\Food\Beef	
+	1672785595	Cooking_Menu			\Default Work Unit\Cooking_Menu	
+	1793259384	NoSound_TEST			\Default Work Unit\NoSound_TEST	
+	2181612614	InFight			\Default Work Unit\InFight	
+	2682233438	Rice			\Default Work Unit\Food\Rice	
+	2695658327	Fish			\Default Work Unit\Food\Fish	
+	3220806263	Tomato			\Default Work Unit\Food\Tomato	
+	3422541661	Pause_Menu			\Default Work Unit\Pause_Menu	
+	3787826983	Corn			\Default Work Unit\Food\Corn	
+	3933301714	Banana			\Default Work Unit\Food\Banana	
+	4083202225	Letuce			\Default Work Unit\Food\Letuce	
+
+State	ID	Name	State Group			Notes
+	748895195	None	Player_Health			
+	1017222595	LowHealth	Player_Health			
+	3710911768	NotLowHealth	Player_Health			
+	748895195	None	Bread			
+	979470758	Yes	Bread			
+	1668749452	No	Bread			
+	748895195	None	Beef			
+	979470758	Yes	Beef			
+	1668749452	No	Beef			
+	571224461	InCookingMenu	Cooking_Menu			
+	748895195	None	Cooking_Menu			
+	3732417588	OutCookingMenu	Cooking_Menu			
+	748895195	None	NoSound_TEST			
+	930712164	Off	NoSound_TEST			
+	1651971902	On	NoSound_TEST			
+	748895195	None	InFight			
+	1862135557	NoMusic	InFight			
+	2181612614	InFight	InFight			
+	2387025391	InBoss	InFight			
+	2582085496	Exploration	InFight			
+	748895195	None	Rice			
+	979470758	Yes	Rice			
+	1668749452	No	Rice			
+	748895195	None	Fish			
+	979470758	Yes	Fish			
+	1668749452	No	Fish			
+	748895195	None	Tomato			
+	979470758	Yes	Tomato			
+	1668749452	No	Tomato			
+	748895195	None	Pause_Menu			
+	2876317275	InPauseMenu	Pause_Menu			
+	3956870258	OutPauseMenu	Pause_Menu			
+	748895195	None	Corn			
+	979470758	Yes	Corn			
+	1668749452	No	Corn			
+	748895195	None	Banana			
+	979470758	Yes	Banana			
+	1668749452	No	Banana			
+	748895195	None	Letuce			
+	979470758	Yes	Letuce			
+	1668749452	No	Letuce			
+
+Custom State	ID	Name	State Group	Owner		Notes
+	243071527	InFight	InFight	\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\AMB		
+	314931965	On	NoSound_TEST	\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus		
+	316598102	InPauseMenu	Pause_Menu	\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\Enemies		
+	412907675	InPauseMenu	Pause_Menu	\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\MC		
+	470618356	InBoss	InFight	\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\AMB		
+	522441179	InPauseMenu	Pause_Menu	\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\TakeHit		
+	610996961	InCookingMenu	Cooking_Menu	\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\AMB		
+	734948707	InCookingMenu	Cooking_Menu	\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\Enemies		
+	790567975	InPauseMenu	Pause_Menu	\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\Other		
+	821636371	InCookingMenu	Cooking_Menu	\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\Other		
+	830418761	InCookingMenu	Cooking_Menu	\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\MC		
+	914431999	InPauseMenu	Pause_Menu	\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\AMB		
+
+Game Parameter	ID	Name			Wwise Object Path	Notes
+	871813740	Player_Hit			\Default Work Unit\Player_Hit	
+	2550010857	Cabbage_Charge			\Default Work Unit\Cabbage_Charge	
+
+Audio Bus	ID	Name			Wwise Object Path	Notes
+	142728178	Cabbage			\Default Work Unit\Master Audio Bus\Enemies\Cabbage	
+	1117531639	AMB			\Default Work Unit\Master Audio Bus\AMB	
+	1551306167	UI			\Default Work Unit\Master Audio Bus\UI	
+	1560169506	Boss			\Default Work Unit\Master Audio Bus\Boss	
+	1685527061	MC			\Default Work Unit\Master Audio Bus\MC	
+	2242381963	Enemies			\Default Work Unit\Master Audio Bus\Enemies	
+	2376466361	Other			\Default Work Unit\Master Audio Bus\Other	
+	2550010857	Cabbage_Charge			\Default Work Unit\Master Audio Bus\Enemies\Cabbage_Charge	
+	2696797660	Other_Enemies			\Default Work Unit\Master Audio Bus\Enemies\Other_Enemies	
+	2866165515	TakeHit			\Default Work Unit\Master Audio Bus\TakeHit	
+	3803692087	Master Audio Bus			\Default Work Unit\Master Audio Bus	
+	3977179618	Pea_Movements			\Default Work Unit\Master Audio Bus\Enemies\Other_Enemies\Pea_Movements	
+	3991942870	Music			\Default Work Unit\Master Audio Bus\Music	
+
+Auxiliary Bus	ID	Name			Wwise Object Path	Notes
+	3545700988	Reverbs			\Default Work Unit\Master Audio Bus\Reverbs	
+
+Effect plug-ins	ID	Name	Type				Notes
+	1992114213	Sidechain_Meter	Wwise Meter			
+
+Audio Devices	ID	Name	Type				Notes
+	2317455096	No_Output	No Output			
+	3859886410	System	System			
+
