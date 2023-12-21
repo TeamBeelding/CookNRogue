@@ -53,4 +53,9 @@ public class SplashManager : MonoBehaviour
         _splashList.Add(playerBullet);
         return playerBullet;
     }
+
+    private void OnDestroy()
+    {
+        instance = null;
+    }
 }
