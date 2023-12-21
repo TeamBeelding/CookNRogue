@@ -61,6 +61,8 @@ public class BossController : EnemyController
     private AK.Wwise.Event _Play_SFX_Boss_Charge_Impact;
     [SerializeField]
     private AK.Wwise.Event _Play_SFX_Boss_Death;
+    [SerializeField]
+    private AK.Wwise.Event _Play_SFX_Boss_Hit;
 
     protected override void OnEnable()
     {
@@ -334,7 +336,7 @@ public class BossController : EnemyController
         base.TakeDamage(damage, isCritical);
 
         UpdateBossHealthBar();
-
+        _Play_SFX_Boss_Hit.Post(gameObject);
         if (Healthpoint <= 0)
             SetState(State.Dying);
     }
