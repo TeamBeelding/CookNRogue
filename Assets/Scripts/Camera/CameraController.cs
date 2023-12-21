@@ -4,6 +4,7 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     public static CameraController instance;
+
     //Controler
     [Header("Camera Controller")]
     [Header("==========================================================================================================================================================================================================================")]
@@ -128,11 +129,6 @@ public class CameraController : MonoBehaviour
         _obstructionMesh = _placeHolderMesh;
 
         _playerController = PlayerController.Instance;
-
-        //Set events
-        Enemy.EnemyManager.Instance.OnAllEnnemiesKilled += FreezeOnRoomClear;
-
-
     }
 
     private void LateUpdate()
@@ -321,42 +317,6 @@ public class CameraController : MonoBehaviour
             _shakeGimble.GetChild(0).GetComponent<Camera>().orthographicSize = _initialZoom * zoomspeed;
             yield return null;
         }
-    }
-
-    private void FreezeOnRoomClear()
-    {
-        StartCoroutine(IFreezeOnRoomClear());
-    }
-
-    IEnumerator IFreezeOnRoomClear()
-    {
-        _playerController.Lock(true);
-
-        float elapsedTime = 0f;
-        float progress = 0f;
-        while(progress < 1)
-        {
-            Time.timeScale = Mathf.Lerp(1f, 0.25f, progress);
-            elapsedTime += Time.unscaledDeltaTime;
-            progress = elapsedTime / 0.25f;
-            yield return new WaitForSecondsRealtime(Time.unscaledDeltaTime);
-        }
-        Time.timeScale = 0.25f;
-
-        yield return new WaitForSecondsRealtime(0.5f);
-
-        elapsedTime = 0f;
-        progress = 0f;
-        while (progress < 1)
-        {
-            Time.timeScale = Mathf.Lerp(0.25f, 1f, progress);
-            elapsedTime += Time.unscaledDeltaTime;
-            progress = elapsedTime / 0.25f;
-            yield return new WaitForSecondsRealtime(Time.unscaledDeltaTime);
-        }
-        Time.timeScale = 1f;
-
-        _playerController.Lock(false);
     }
 
     private void ShowLevelDoor()
