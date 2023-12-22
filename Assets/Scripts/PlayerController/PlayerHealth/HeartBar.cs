@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -32,12 +33,14 @@ public class HeartBar : MonoBehaviour
         }
 
         UpdateHealthVisual(initialHealth);
+        PlayHeartBarAnimation();
     }
 
     public void AddHeart()
     {
         RectTransform newHeart = Instantiate(_heart, transform);
         _heartsRenderer.Add(newHeart.GetComponent<Image>());
+        PlayHeartBarAnimation();
     }
 
     public void UpdateHealthVisual(int health)
@@ -62,4 +65,18 @@ public class HeartBar : MonoBehaviour
             }
         }
     }
+    public void PlayHeartBarAnimation()
+    {
+        StartCoroutine(PlayBarAnimation(0.1f));
+
+        IEnumerator PlayBarAnimation(float delay)
+        {
+            for (int i = 0; i < _heartsRenderer.Count; i++)
+            {
+                _heartsRenderer[i].gameObject.GetComponent<Animator>().Play("Heart_Gained_event");
+                yield return new WaitForSeconds(delay);
+            }
+        }
+    }
+    
 }
