@@ -38,6 +38,9 @@ public class PlayerRuntimeData
 
         [NonSerialized]
         public List<Cauldron_Explosion> TargetCauldrons = new();
+
+        [NonSerialized]
+        public GameObject BossObject = null;
     }
 
     [Serializable]

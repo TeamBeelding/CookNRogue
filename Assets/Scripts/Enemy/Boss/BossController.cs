@@ -87,6 +87,9 @@ public class BossController : EnemyController
         Healthpoint = data.GetHealth;
         dashSpeed = data.GetDashSpeed;
 
+        //Aim Assist
+        PlayerRuntimeData.GetInstance().data.RoomData.BossObject = gameObject;
+
         SetState(State.EnterRoom);
     }
 
@@ -372,6 +375,9 @@ public class BossController : EnemyController
 
     protected override void Dying()
     {
+        //Aim Assist
+        PlayerRuntimeData.GetInstance().data.RoomData.BossObject = null;
+
         StopAllCoroutines();
         StartCoroutine(DyingRoutine());
     }

@@ -292,7 +292,12 @@ public class PlayerController : MonoBehaviour
                 //Correct Aim
                 EnemyController[] enemiesInLevel = _enemyManager.EnemiesInLevel;
                 Cauldron_Explosion[] cauldronsInLevel = PlayerRuntimeData.GetInstance().data.RoomData.TargetCauldrons.ToArray();
-                GameObject[] aimTargets = new GameObject[enemiesInLevel.Length + cauldronsInLevel.Length];
+                int targetsNb = enemiesInLevel.Length + cauldronsInLevel.Length;
+                if(PlayerRuntimeData.GetInstance().data.RoomData.BossObject != null)
+                {
+                    targetsNb += 1;
+                }
+                GameObject[] aimTargets = new GameObject[targetsNb];
                 for (int i = 0; i < enemiesInLevel.Length; i++)
                 {
                     aimTargets[i] = enemiesInLevel[i].gameObject;
@@ -301,6 +306,11 @@ public class PlayerController : MonoBehaviour
                 for (int i = 0; i < cauldronsInLevel.Length; i++)
                 {
                     aimTargets[i + enemiesInLevel.Length] = cauldronsInLevel[i].gameObject;
+                }
+
+                if (PlayerRuntimeData.GetInstance().data.RoomData.BossObject != null)
+                {
+                    aimTargets[targetsNb - 1] = PlayerRuntimeData.GetInstance().data.RoomData.BossObject;
                 }
 
                 _correctedAimDirection = AimAssist2D.CorrectAimDirection(_aimDirection, transform.position, aimTargets, m_aimAssistPresset);
