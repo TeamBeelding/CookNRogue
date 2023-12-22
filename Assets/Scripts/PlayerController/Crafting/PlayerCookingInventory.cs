@@ -566,8 +566,8 @@ public class PlayerCookingInventory : MonoBehaviour
         {
             if (curData == data)
             {
-                selectedSlot.Selected(false);
                 selectedSlot.IncreaseCount();
+                selectedSlot.Selected(false);
                 m_recipeCounterSlots[PlayerRuntimeData.GetInstance().data.CookData.Recipe.Count - 1].SetActive(true);
                 PlayerRuntimeData.GetInstance().data.CookData.Recipe.Remove(data);
 
@@ -581,8 +581,8 @@ public class PlayerCookingInventory : MonoBehaviour
             return;
         }
 
-        selectedSlot.Selected(true);
         selectedSlot.DecreaseCount();
+        selectedSlot.Selected(true);
 
         PlayerRuntimeData.GetInstance().data.CookData.Recipe.Add(data);
         m_recipeCounterSlots[PlayerRuntimeData.GetInstance().data.CookData.Recipe.Count - 1].SetActive(false);
