@@ -195,7 +195,7 @@ public class CameraController : MonoBehaviour
     void Update()
     {
         // Main Function for the Transparency of the obstructions / walls.
-        CameraTransparent();
+        //CameraTransparent();
         // initiate _shake corountine if _shake is true
         if (_shake)
         {
