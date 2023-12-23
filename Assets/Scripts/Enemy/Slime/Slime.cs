@@ -35,6 +35,8 @@ namespace Enemy.Slime
         private Coroutine stateCoroutine;
         [SerializeField] private GameObject physics;
 
+        int walkableMask = 1;
+
         public enum State
         {
             Neutral,
@@ -56,6 +58,7 @@ namespace Enemy.Slime
 
         protected override void Awake()
         {
+            walkableMask = 1 << NavMesh.GetAreaFromName("Walkable");
             agent = GetComponent<NavMeshAgent>();
 
             base.Awake();
@@ -177,12 +180,18 @@ namespace Enemy.Slime
 
         private void ThrowMinimoyz()
         {
-            Vector3 point = RandomPoint();
-            
-            spawnChecker.SetTransformPosition(point);
-            
-            if (!spawnChecker.CanThrowHere())
-                return;
+            Vector3 point = new Vector3();
+
+            bool isPosOnNavMesh = false;
+
+            while (!isPosOnNavMesh)
+            {
+                point = RandomPoint();
+                NavMeshHit hit;
+
+                if (NavMesh.SamplePosition(point, out hit, 1.0f, walkableMask))
+                    isPosOnNavMesh = true;
+            }
 
             GameObject minimoyz = PoolManager.Instance.InstantiateFromPool(PoolType.MinimoyzVisual, gun.transform.position, Quaternion.identity);
             minimoyz.GetComponent<ThrowingEffect>().ThrowMinimoyz(point, data.GetThrowingMaxHeight, data.GetThrowingSpeed);
@@ -197,16 +206,16 @@ namespace Enemy.Slime
             float distanceBetweenRadius = data.GetOuterRadius - data.GetInnerRadius;
             float randomRadius = Random.value;
             float distanceFromCenter = data.GetInnerRadius + (randomRadius * distanceBetweenRadius);
-            
+
             float randomAngle = Random.Range(0, 360);
             float angleInRadians = randomAngle * Mathf.Deg2Rad;
-            
+
             float x = center.x + (distanceFromCenter * Mathf.Cos(angleInRadians));
             float y = center.y;
             float z = center.z + (distanceFromCenter * Mathf.Sin(angleInRadians));
-            
+
             Vector3 position = new Vector3(x, y, z);
-            
+
             return position;
         }
 

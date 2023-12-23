@@ -24,6 +24,8 @@ public class TBH : EnemyController
     [SerializeField] private Animator _animator;
     [SerializeField] private GameObject physics;
 
+    int walkableMask = 1;
+
     public enum State
     {
         Neutral,
@@ -37,6 +39,7 @@ public class TBH : EnemyController
 
     protected override void Awake()
     {
+        walkableMask = 1 << NavMesh.GetAreaFromName("Walkable");
         base.Awake();
     }
 
@@ -141,8 +144,6 @@ public class TBH : EnemyController
     {
         NavMeshHit hit;
         bool validPositionFound = false;
-
-        int walkableMask = 1 << NavMesh.GetAreaFromName("Walkable");
 
         while (!validPositionFound)
         {
