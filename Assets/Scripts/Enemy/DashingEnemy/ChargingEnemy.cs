@@ -285,7 +285,8 @@ namespace Enemy.DashingEnemy
             waveManager.SlowMotion();
             hasAskForSlow = true;
 
-             _deathCoroutine = StartCoroutine(IDeathAnim());
+            if (gameObject.activeSelf)
+                _deathCoroutine = StartCoroutine(IDeathAnim());
 
             IEnumerator IDeathAnim()
             {
@@ -358,6 +359,9 @@ namespace Enemy.DashingEnemy
 
         public override void TakeDamage(float damage = 1, bool isCritical = false)
         {
+            if (state == State.Dying)
+                return;
+
             _Play_SFX_Cabbage_Hit.Post(gameObject);
             base.TakeDamage(damage, isCritical);
 

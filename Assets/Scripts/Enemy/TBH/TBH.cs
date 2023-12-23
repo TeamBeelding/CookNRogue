@@ -1,6 +1,7 @@
 using System.Collections;
 using Enemy.Data;
 using UnityEngine;
+using UnityEngine.AI;
 using Random = UnityEngine.Random;
 
 public class TBH : EnemyController
@@ -22,8 +23,6 @@ public class TBH : EnemyController
 
     [SerializeField] private Animator _animator;
     [SerializeField] private GameObject physics;
-
-    private Vector3 _position;
 
     public enum State
     {
@@ -140,23 +139,27 @@ public class TBH : EnemyController
 
     private void Teleport()
     {
+        NavMeshHit hit;
         bool validPositionFound = false;
+
+        int walkableMask = 1 << NavMesh.GetAreaFromName("Walkable");
 
         while (!validPositionFound)
         {
-            Vector3 randomPosition = Random.insideUnitSphere.normalized * _data.AttackRange + Player.transform.position;
+            Vector3 randomPoint = transform.position + Random.insideUnitSphere.normalized * _data.AttackRange;
 
-            if (Vector3.Distance(transform.position, randomPosition) <= _data.MinimumRadius)
-                randomPosition = Random.insideUnitSphere * _data.AttackRange + Player.transform.position;
-
-            Vector3 position = new Vector3(randomPosition.x, transform.position.y, randomPosition.z);
-
-            _position = position;
-
-            if (CanTeleportHere(position))
+            if (NavMesh.SamplePosition(randomPoint, out hit, _data.AttackRange, walkableMask))
             {
-                transform.position = new Vector3(randomPosition.x, transform.position.y, randomPosition.z);
-                validPositionFound = true;
+                Vector3 position = hit.position;
+
+                if (Vector3.Distance(transform.position, position) <= _data.MinimumRadius)
+                    continue;
+
+                if (CanTeleportHere(position))
+                {
+                    transform.position = new Vector3(position.x, transform.position.y, position.z);
+                    validPositionFound = true;
+                }
             }
         }
 
@@ -212,7 +215,8 @@ public class TBH : EnemyController
 
         _animator.SetBool("isDead", true);
 
-        StartCoroutine(IDeathAnim());
+        if (gameObject.activeSelf)
+            StartCoroutine(IDeathAnim());
 
         IEnumerator IDeathAnim()
         {
@@ -223,6 +227,9 @@ public class TBH : EnemyController
 
     public override void TakeDamage(float damage = 1, bool isCritical = false)
     {
+        if (GetState() == State.Dying)
+            return;
+
         base.TakeDamage(damage, isCritical);
         _Play_SFX_Carrot_Hit.Post(gameObject);
         _Play_Weapon_Hit.Post(gameObject);
@@ -242,9 +249,6 @@ public class TBH : EnemyController
         Gizmos.DrawWireSphere(transform.position, _data.AttackRange);
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, _data.TeleportRange);
-
-        Gizmos.color = Color.red;
-        Gizmos.DrawSphere(_position, 2);
     }
 #endif
 }

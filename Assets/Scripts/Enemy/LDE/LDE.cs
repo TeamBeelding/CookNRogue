@@ -189,7 +189,8 @@ namespace Enemy.LDE
 
             animator.SetBool("isDead", true);
 
-            StartCoroutine(IDeathAnim());
+            if (gameObject.activeSelf)
+                StartCoroutine(IDeathAnim());
 
             IEnumerator IDeathAnim()
             {
@@ -206,6 +207,9 @@ namespace Enemy.LDE
 
         public override void TakeDamage(float damage = 1, bool isCritical = false)
         {
+            if (state == State.Dying)
+                return;
+
             base.TakeDamage(damage, isCritical);
 
             if (state == State.Neutral) 
