@@ -1,7 +1,9 @@
 using System.Collections;
+using System.Collections.Generic;
 using Enemy.Data;
 using UnityEngine;
 using UnityEngine.AI;
+using static RewardsManager;
 
 namespace Enemy.Minimoyz
 {
@@ -28,7 +30,7 @@ namespace Enemy.Minimoyz
 
         private Coroutine coroutineState;
         private NavMeshPath navMeshPath;
-    
+        
         public enum State
         {
             Neutral,
@@ -41,10 +43,23 @@ namespace Enemy.Minimoyz
     
         public State state;
 
+        [Space(20)]
+        [Header("Ingredient Drop chances and VFXs")]
+        private bool _ingredientDrop = false;
+        [SerializeField, Range(0f, 100f)] float _dropPercentage = 10f;
+        private Color DefaultOutlineColor = Color.red;
+        [SerializeField] private Color RewardEffectOutlineColor = Color.yellow;
+        [SerializeField] private Outline outline;
+        [SerializeField] Transform VFXContainer;
+        private ParticleSystem[] VFXList;
+
         protected override void Awake()
         {
             base.Awake();
             navMeshPath = new NavMeshPath();
+
+            DefaultOutlineColor = outline.OutlineColor;
+            VFXList = VFXContainer.GetComponentsInChildren<ParticleSystem>();
         }
 
         protected override void OnEnable()
@@ -61,7 +76,11 @@ namespace Enemy.Minimoyz
             _collider.enabled = true;
 
             SetState(State.Chase);
+
+            ResetDropsParameters();
         }
+
+        
 
         // Update is called once per frame
         protected override void Update()
@@ -237,7 +256,57 @@ namespace Enemy.Minimoyz
             waveManager.SlowMotion();
             hasAskForSlow = true;
 
+            if (_ingredientDrop)
+                DropIngredient();
+            
+                
             base.Dying();
         }
+
+        public void InitEntityReward(bool rewardBool)
+        {
+            if (!rewardBool)
+            {
+                ResetDropsParameters();
+                return;
+            }
+
+            float random0100 = Random.Range(0f, 100f);
+            if (random0100 <= _dropPercentage)
+                SetDropsParameters();
+        }
+
+        #region DROPS
+        public void DropIngredient()
+        {
+            //CALL TO SPAWN INGREDIENT
+        }
+
+        public void ResetDropsParameters()
+        {
+            _ingredientDrop = false;
+            outline.OutlineColor = DefaultOutlineColor;
+            PlayDropVFXs(false);
+        }
+
+        public void SetDropsParameters()
+        {
+            Debug.Log("set drop parameters");
+            outline.OutlineColor = RewardEffectOutlineColor;
+            _ingredientDrop = true;
+            PlayDropVFXs(true);
+        }
+
+        private void PlayDropVFXs(bool play)
+        {
+            foreach(var vfx in VFXList)
+            {
+                if(play)
+                    vfx.Play();
+                else
+                    vfx.Stop();
+            }
+        }
+        #endregion
     }
 }
