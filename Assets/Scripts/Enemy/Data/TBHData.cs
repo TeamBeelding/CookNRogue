@@ -16,6 +16,17 @@ namespace Enemy.Data
         [SerializeField] private float _minimumRadius;
         [SerializeField] private float _delayBetweenTeleport;
 
+        [Space()]
+        [Header("Bullet")]
+
+        [SerializeField] private float minSpread = -2f;
+        [SerializeField] private float maxSpread = 2f;
+
+        [Space()]
+        [Header("Between each bullet")]
+        [SerializeField] private float minSpeed = 0.1f;
+        [SerializeField] private float maxSpeed = 0.5f;
+
         private void Reset()
         {
             _attackRange = 8f;
@@ -27,6 +38,10 @@ namespace Enemy.Data
             _teleportRange = 8f;
             _minimumRadius = 6f;
             _delayBetweenTeleport = 2f;
+            minSpread = -2f;
+            maxSpread = 2f;
+            minSpeed = 0.1f;
+            maxSpeed = 0.5f;
         }
 
         public float AttackRange => _attackRange;
@@ -38,5 +53,9 @@ namespace Enemy.Data
         public float TeleportRange => _teleportRange; 
         public float MinimumRadius => _minimumRadius;
         public float DelayBetweenTeleport => _delayBetweenTeleport;
+        public float GetMinSpread => minSpread;
+        public float GetMaxSpread => maxSpread;
+        public float GetMaxSpeed => maxSpeed;
+        public float GetMinSpeed => minSpeed;
     }
 }

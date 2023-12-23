@@ -124,8 +124,8 @@ public class TBH : EnemyController
 
         IEnumerator IShotRandomly()
         {
-            float spread = Random.Range(-2f, 2f);
-            float randomDelay = Random.Range(0.1f, 0.5f);
+            float spread = Random.Range(_data.GetMinSpread, _data.GetMaxSpread);
+            float randomDelay = Random.Range(_data.GetMinSpeed, _data.GetMaxSpeed);
 
             yield return new WaitForSeconds(randomDelay);
             
