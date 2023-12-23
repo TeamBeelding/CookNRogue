@@ -1,6 +1,7 @@
 using UnityEngine.InputSystem;
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using Enemy;
 using Tutoriel;
 using UnityEngine.SceneManagement;
@@ -82,7 +83,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] ParticleSystem DashingParticles;
     [SerializeField] ParticleSystem _caramelParticles;
-
+    [SerializeField] GameObject _caramelCollider;
     private Vector3 m_dashDirection = Vector2.zero;
 
     [HideInInspector]
@@ -241,6 +242,8 @@ public class PlayerController : MonoBehaviour
         #endregion
 
         m_aimArrow.SetActive(false);
+
+        _caramelCollider.SetActive(false);
     }
 
     private void Update()
@@ -547,6 +550,7 @@ public class PlayerController : MonoBehaviour
         }
 
         _isDashing = true;
+        gameObject.layer = LayerMask.NameToLayer("IgnoreEnemies");
         _Play_MC_Dash.Post(gameObject);
 
         StartCoroutine(IDashCooldown());
@@ -564,15 +568,24 @@ public class PlayerController : MonoBehaviour
         _isInvicible = true;
         DashingParticles.Play();
 
-        if(PlayerRuntimeData.GetInstance().data.InventoryData.Caramel)
+        if (PlayerRuntimeData.GetInstance().data.InventoryData.Caramel)
+        {
             _caramelParticles.Play();
+            _caramelCollider.SetActive(true);
+        }
 
         yield return new WaitForSeconds(PlayerRuntimeData.GetInstance().data.BaseData.DashDuration);
+        if (PlayerRuntimeData.GetInstance().data.InventoryData.Caramel)
+        {
+            _caramelCollider.SetActive(false);
+        }
+
         _isDashing = false;
         m_dashDirection = Vector2.zero;
         DashingParticles.Stop();
         _caramelParticles.Stop();
         _isInvicible = false;
+        gameObject.layer = LayerMask.NameToLayer("Player");
 
         //Aim Check;
         if (_isAiming)
@@ -586,25 +599,6 @@ public class PlayerController : MonoBehaviour
         _dashOnCooldown = true;
         yield return new WaitForSeconds(PlayerRuntimeData.GetInstance().data.BaseData.DashCooldown);
         _dashOnCooldown = false;
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (!_isDashing)
-            return;
-
-        if (!PlayerRuntimeData.GetInstance().data.InventoryData.Caramel)
-            return;
-
-        if (!collision.transform.parent)
-            return;
-
-        Debug.Log("caramel damage");
-        EnemyController controler;
-        if (collision.transform.parent.TryGetComponent(out controler))
-            controler.TakeDamage(PlayerRuntimeData.GetInstance().data.InventoryData.CaramelDamage);
-
-
     }
     #endregion
 
@@ -1091,7 +1085,6 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region CB
-
     void OpenCB(InputAction.CallbackContext context)
     {
         //Input state check
