@@ -251,7 +251,8 @@ namespace Enemy.Minimoyz
             if (_ingredientDrop)
                 DropIngredient();
 
-            StartCoroutine(IDelayBeforeDying());
+            if (gameObject.activeSelf)
+                StartCoroutine(IDelayBeforeDying());
 
             IEnumerator IDelayBeforeDying()
             {
