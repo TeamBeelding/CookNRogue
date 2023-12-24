@@ -1,9 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
-using Enemy.Data;
 using UnityEngine;
 using UnityEngine.AI;
-using static RewardsManager;
 
 namespace Enemy.Minimoyz
 {
@@ -24,7 +21,6 @@ namespace Enemy.Minimoyz
         private AK.Wwise.Event _Stop_SFX_Pea_Movement;
 
         [SerializeField] private MinimoyzData data;
-        [SerializeField] private SlimeData slimeData;
         [SerializeField] private NavMeshAgent agent;
         //[SerializeField] private GameObject physicsMinimoyz;
 

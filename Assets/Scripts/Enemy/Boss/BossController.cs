@@ -64,9 +64,13 @@ public class BossController : EnemyController
     [SerializeField]
     private AK.Wwise.Event _Play_SFX_Boss_Death;
 
-    protected override void OnEnable()
+    //protected override void OnEnable()
+    //{
+    //    base.OnEnable();
+    //}
+
+    protected override void Awake()
     {
-        base.OnEnable();
         Reset();
     }
 
@@ -84,9 +88,6 @@ public class BossController : EnemyController
         _dyingParticles = _dyingParticlesContainer.GetComponentsInChildren<ParticleSystem>();
         _stunnedParticles = _stunnedParticlesContainer.GetComponentsInChildren<ParticleSystem>();
 
-        Healthpoint = data.GetHealth;
-        dashSpeed = data.GetDashSpeed;
-
         //Aim Assist
         PlayerRuntimeData.GetInstance().data.RoomData.BossObject = gameObject;
 
@@ -95,11 +96,13 @@ public class BossController : EnemyController
 
     private void Reset()
     {
+        Player = PlayerController.Instance.gameObject;
+
         visual?.SetActive(true);
         physics?.SetActive(true);
 
-        missilesController = GetComponent<MissilesController>();
-        shockwaveController = GetComponent<ShockwaveController>();
+        Healthpoint = data.GetHealth;
+        dashSpeed = data.GetDashSpeed;
     }
 
     public BossData GetBossDataRef() => data;
