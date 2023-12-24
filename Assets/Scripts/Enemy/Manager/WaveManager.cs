@@ -72,7 +72,9 @@ public class WaveManager : MonoBehaviour
 
                 //Ammo Pause
                 PlayerController.Instance.AttackScript.PauseAmmoTimer = true;
-                //Audioos
+                //Camera
+                CameraController.instance.ScreenZoom(true);
+                //Audios
                 _NoMusic.SetValue();
 
                 StopAllCoroutines();
@@ -97,6 +99,8 @@ public class WaveManager : MonoBehaviour
 
             //Ammo pause
             PlayerController.Instance.AttackScript.PauseAmmoTimer = false;
+            //Camera
+            CameraController.instance.ScreenZoom(false);
             //Audio
             _InFightOn.SetValue();
 
