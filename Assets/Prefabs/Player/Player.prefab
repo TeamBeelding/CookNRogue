@@ -10064,7 +10064,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 10
+  orthographic size: 12
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -10448,7 +10448,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   _shake: 0
   m_zoomDuration: 1
-  m_zoomedInTarget: 10
+  m_zoomedInTarget: 12
   m_zoomedOutTarget: 16
   m_zoomCurve:
     serializedVersion: 2
@@ -22781,12 +22781,36 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 238028526911254494}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 5272148373987330510}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 46927bd11e281bf419d516ec42832089, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &5272148373987330510 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5361476723544122896, guid: 935abec9df5cd3147811b979982f645a,
+    type: 3}
+  m_PrefabInstance: {fileID: 238028526911254494}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8953613730747326941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5272148373987330510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 3
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 4
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!114 &5661605051567498819 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5611391004613052829, guid: 935abec9df5cd3147811b979982f645a,
