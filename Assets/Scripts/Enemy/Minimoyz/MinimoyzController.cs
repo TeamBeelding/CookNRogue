@@ -80,8 +80,6 @@ namespace Enemy.Minimoyz
             ResetDropsParameters();
         }
 
-        
-
         // Update is called once per frame
         protected override void Update()
         {
@@ -95,8 +93,6 @@ namespace Enemy.Minimoyz
 
             base.Update();
         }
-
-        public void SetFocus(bool value = true) => FocusPlayer = value;
 
         private void StateManagement()
         {
@@ -199,18 +195,14 @@ namespace Enemy.Minimoyz
                     agent.SetDestination(Player.transform.position);
 
                     if (!agent.CalculatePath(Player.transform.position, navMeshPath))
-                    {
                         SetState(State.Dying);
-                    }
-                    else
+
+                    switch (navMeshPath.status)
                     {
-                        switch (navMeshPath.status)
-                        {
-                            case NavMeshPathStatus.PathPartial:
-                            case NavMeshPathStatus.PathInvalid:
-                                SetState(State.Dying);
-                                break;
-                        }
+                        case NavMeshPathStatus.PathPartial:
+                        case NavMeshPathStatus.PathInvalid:
+                            SetState(State.Dying);
+                            break;
                     }
 
                     yield return null;
@@ -258,9 +250,14 @@ namespace Enemy.Minimoyz
 
             if (_ingredientDrop)
                 DropIngredient();
-            
-                
-            base.Dying();
+
+            StartCoroutine(IDelayBeforeDying());
+
+            IEnumerator IDelayBeforeDying()
+            {
+                yield return new WaitForSeconds(0.05f);
+                base.Dying();
+            }
         }
 
         public void InitEntityReward(bool rewardBool)
