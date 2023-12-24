@@ -68,6 +68,7 @@ public class EnterDoor : MonoBehaviour
     private Material _raysMaterial;
 
     [SerializeField] GameObject _godRays;
+    [SerializeField] UI_Indicator _indicator;
 
     bool _doorIsOpened = false;
     bool _raysAreActive = false;
@@ -172,6 +173,10 @@ public class EnterDoor : MonoBehaviour
         if (m_door != null)
         {
             _Play_SFX_Door_Open.Post(gameObject);
+
+            if(_indicator)
+                _indicator.ActivateIndicator();
+
             StartCoroutine(IOpenDoor());
         }
     }
