@@ -677,6 +677,7 @@ public class PlayerController : MonoBehaviour
         {
             _aimInputValue = Vector2.zero;
             _aimMagnitude = 0f;
+            _isAiming = false;
 
             m_aimArrow.SetActive(false);
 
