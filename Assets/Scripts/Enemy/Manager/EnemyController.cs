@@ -14,7 +14,7 @@ public abstract class EnemyController : MonoBehaviour
     public List<StatusEffectHandler> _effectHandlers;
     private Renderer _rend;
     private MeshRenderer _meshRenderer;
-    [SerializeField] protected CapsuleCollider _collider;
+    [SerializeField] protected Collider _collider;
     
     private IEnumerator _colorCoroutine;
     
@@ -47,7 +47,7 @@ public abstract class EnemyController : MonoBehaviour
     {
         _rend = GetComponentInChildren<Renderer>();
         _meshRenderer = GetComponentInChildren<MeshRenderer>();
-        _collider = GetComponent<CapsuleCollider>();
+        //_collider = GetComponent<CapsuleCollider>();
         
         if (_collider == null)
             _collider = GetComponentInChildren<CapsuleCollider>();
