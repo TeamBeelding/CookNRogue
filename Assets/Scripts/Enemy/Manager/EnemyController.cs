@@ -71,6 +71,7 @@ public abstract class EnemyController : MonoBehaviour
 
         hasAskForSlow = false;
         _canAttack = true;
+        _collider.enabled = true;
 
         AddToEnemyManager();
     }

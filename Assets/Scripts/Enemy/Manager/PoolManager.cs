@@ -80,8 +80,11 @@ public class PoolManager : MonoBehaviour
 
     public void DesinstantiateFromPool(GameObject obj)
     {
+        if (obj == null)
+            return;
+
         GameObject parent = obj.transform.parent.gameObject;
-        parent.GetComponent<IPooling>().Desinstantiating(obj);
+        parent.GetComponent<Pooler>().Desinstantiating(obj);
     }
 
     private void OnDestroy()
