@@ -64,10 +64,10 @@ public class BossController : EnemyController
     [SerializeField]
     private AK.Wwise.Event _Play_SFX_Boss_Death;
 
-    //protected override void OnEnable()
-    //{
-    //    base.OnEnable();
-    //}
+    protected override void OnEnable()
+    {
+
+    }
 
     protected override void Awake()
     {
@@ -98,11 +98,15 @@ public class BossController : EnemyController
     {
         Player = PlayerController.Instance.gameObject;
 
+        //CameraController.instance.ScreenZoom(false);
+
         visual?.SetActive(true);
         physics?.SetActive(true);
 
         Healthpoint = data.GetHealth;
         dashSpeed = data.GetDashSpeed;
+
+        AddToEnemyManager();
     }
 
     public BossData GetBossDataRef() => data;
@@ -418,12 +422,13 @@ public class BossController : EnemyController
         visual?.SetActive(false);
 
         //GIVE ENOUGH TIME TO THE PARTICLES TO FADE AWAY
-        yield return new WaitForSeconds(7);
-        
+        yield return new WaitForSeconds(5);
+
+        //CameraController.instance.ScreenZoom(true);
+
         Destroy(gameObject);
 
         PlayerController.Instance.EndGame();
-        
     }
 
     public override bool IsMoving()

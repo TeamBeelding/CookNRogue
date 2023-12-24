@@ -138,28 +138,4 @@ public class ShockwaveController : MonoBehaviour
         mat.SetFloat("_Alpha", 0);
     }
 
-#if UNITY_EDITOR
-
-    private void OnGUI()
-    {
-        if (GUI.Button(new Rect(10, 10, 150, 100), "Shockwave button"))
-        {
-            Debug.Log("Button clicked");
-            StartShockwave();
-        }
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.black;
-        Gizmos.DrawWireSphere(transform.position, radius);
-
-        if (data)
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position, data.GetMaxRadius);
-        }
-    }
-
-#endif
 }

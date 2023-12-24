@@ -154,7 +154,7 @@ public abstract class EnemyController : MonoBehaviour
 
     #endregion
 
-    private void AddToEnemyManager()
+    protected void AddToEnemyManager()
     {
         EnemyManager.Instance.AddEnemyToLevel(this);
     }
