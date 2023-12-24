@@ -30,6 +30,8 @@ namespace Enemy.LDE
         [SerializeField] private GameObject physics;
 
         private Coroutine _stateCoroutine;
+        private Coroutine _firstBulletCoroutine;
+        private bool isFirstBulletShoot = true;
 
         [SerializeField]
         private Animator animator;
@@ -46,6 +48,8 @@ namespace Enemy.LDE
         protected override void Awake()
         {
             base.Awake();
+
+            isFirstBulletShoot = true;
         }
 
         protected override void OnEnable()
@@ -175,11 +179,31 @@ namespace Enemy.LDE
 
         private void Shot()
         {
-            GameObject shot = PoolManager.Instance.InstantiateFromPool(PoolType.Bullet, m_gun.transform.position, Quaternion.identity);
-            shot.GetComponent<EnemyBulletController>().SetDirection(Player.transform);
+            if (isFirstBulletShoot)
+                _firstBulletCoroutine = StartCoroutine(IDelayForFirstBullet());
+            else
+            {
+                GameObject shot = PoolManager.Instance.InstantiateFromPool(PoolType.Bullet, m_gun.transform.position, Quaternion.identity);
+                shot.GetComponent<EnemyBulletController>().SetDirection(Player.transform);
 
-            animator.SetBool("isAttack", true);
-            _Play_SFX_Corn_Attack_Shot.Post(gameObject);
+                animator.SetBool("isAttack", true);
+                _Play_SFX_Corn_Attack_Shot.Post(gameObject);
+            }
+
+            _firstBulletCoroutine = null;
+
+            IEnumerator IDelayForFirstBullet()
+            {
+                yield return new WaitForSeconds(data.GetDelayForFirstBullet);
+
+                GameObject shot = PoolManager.Instance.InstantiateFromPool(PoolType.Bullet, m_gun.transform.position, Quaternion.identity);
+                shot.GetComponent<EnemyBulletController>().SetDirection(Player.transform);
+
+                animator.SetBool("isAttack", true);
+                _Play_SFX_Corn_Attack_Shot.Post(gameObject);
+
+                isFirstBulletShoot = false;
+            }
         }
 
         protected override void Dying()

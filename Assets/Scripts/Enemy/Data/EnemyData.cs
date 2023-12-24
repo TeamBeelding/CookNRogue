@@ -20,7 +20,9 @@ namespace Enemy.Data
         private float attackSpeed = 0.5f;
         [SerializeField]
         private float damage = 1;
-    
+        [SerializeField]
+        private float delayForFirstBullet = 0.5f;
+
         [Header("Physics")]
         [SerializeField] 
         private float forceRecoil = 2;
@@ -37,5 +39,6 @@ namespace Enemy.Data
         public float GetDamage => damage;
         public float GetRecoilForce => forceRecoil;
         public bool GetFocusPlayer => focusInstantlyPlayer;
+        public float GetDelayForFirstBullet => delayForFirstBullet;
     }
 }
