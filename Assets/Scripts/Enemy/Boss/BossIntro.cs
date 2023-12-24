@@ -30,6 +30,7 @@ public class BossIntro : MonoBehaviour
         pattack.PauseAmmoTimer = true;
         _playerController.enabled = false;
         _bossController.enabled = false;
+        _cameraController.ScreenZoom(false);
         yield return new WaitForSecondsRealtime(_introDelay);
 
         _barAnimator.Play("Bar_Intro");
