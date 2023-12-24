@@ -34,6 +34,8 @@ public class EnterDoor : MonoBehaviour
     private MeshRenderer m_mesh;
     [SerializeField]
     private bool m_isOpenOnStart = false;
+    [SerializeField]
+    private bool m_isEntrance = false;
 
     [Space]
 
@@ -105,6 +107,15 @@ public class EnterDoor : MonoBehaviour
             {
                 SetDoor(m_doorOpeningDuration);
                 SetPortal(m_portalAnimDuration);
+            }
+            else if (m_isEntrance)
+            {
+                if (m_door != null)
+                {
+                    m_door.SetActive(true);
+                    m_door.GetComponent<Collider>().enabled = true;
+                    StartCoroutine(ICloseDoor());
+                }
             }
             else
             {
@@ -182,9 +193,26 @@ public class EnterDoor : MonoBehaviour
         }
     }
 
+    IEnumerator ICloseDoor()
+    {
+        if (SkinnedMaterials.Length > 0)
+        {
+            float duration = m_portalAnimDuration + m_portalAnimOffset < m_doorOpeningDuration ? m_doorOpeningDuration : m_portalAnimDuration + m_portalAnimOffset;
+
+            for (float f = duration; f > 0; f -= m_refreshRate)
+            {
+                SetDoor(f < m_doorOpeningDuration ? f : m_doorOpeningDuration);
+                SetPortal(f <= m_portalAnimOffset ? 0f : f - m_portalAnimOffset);
+                yield return new WaitForSeconds(m_refreshRate);
+            }
+            SetDoor(0);
+            SetPortal(0);
+        }
+    }
+
     void SetPortal(float value)
     {
-        if(value > 0)
+        if(!m_isEntrance && value > 0)
         {
             m_door.GetComponent<Collider>().enabled = false;
         }
@@ -207,7 +235,7 @@ public class EnterDoor : MonoBehaviour
 
     void SetDoor (float value)
     {
-        if (_doorIsOpened)
+        if (!m_isEntrance && _doorIsOpened)
             return;
 
         float progress = m_doorOpeningCurve.Evaluate(value / m_doorOpeningDuration);
@@ -215,7 +243,7 @@ public class EnterDoor : MonoBehaviour
         SkinnedMaterials[0].SetFloat("_GrowValue", animProgress);
 
         //Open Door
-        if(value >= m_doorOpeningDuration)
+        if(!m_isEntrance && value >= m_doorOpeningDuration)
         {
             m_door.SetActive(false);
             _doorIsOpened = true;
