@@ -48,8 +48,6 @@ namespace Enemy.LDE
         protected override void Awake()
         {
             base.Awake();
-
-            isFirstBulletShoot = true;
         }
 
         protected override void OnEnable()
@@ -67,6 +65,16 @@ namespace Enemy.LDE
             physics.SetActive(true);
 
             _collider.enabled = true;
+
+            isFirstBulletShoot = true;
+
+            _firstBulletCoroutine = StartCoroutine(IDelayForFirstBullet());
+
+            IEnumerator IDelayForFirstBullet()
+            {
+                yield return new WaitForSeconds(5);
+                isFirstBulletShoot = false;
+            }
 
             SetState(FocusPlayer ? State.Chase : State.Neutral);
         }
@@ -179,30 +187,18 @@ namespace Enemy.LDE
 
         private void Shot()
         {
-            if (isFirstBulletShoot)
-                _firstBulletCoroutine = StartCoroutine(IDelayForFirstBullet());
+            if (!isFirstBulletShoot)
+                Shooting();
             else
+                return;
+
+            void Shooting()
             {
                 GameObject shot = PoolManager.Instance.InstantiateFromPool(PoolType.Bullet, m_gun.transform.position, Quaternion.identity);
                 shot.GetComponent<EnemyBulletController>().SetDirection(Player.transform);
 
                 animator.SetBool("isAttack", true);
                 _Play_SFX_Corn_Attack_Shot.Post(gameObject);
-            }
-
-            _firstBulletCoroutine = null;
-
-            IEnumerator IDelayForFirstBullet()
-            {
-                yield return new WaitForSeconds(data.GetDelayForFirstBullet);
-
-                GameObject shot = PoolManager.Instance.InstantiateFromPool(PoolType.Bullet, m_gun.transform.position, Quaternion.identity);
-                shot.GetComponent<EnemyBulletController>().SetDirection(Player.transform);
-
-                animator.SetBool("isAttack", true);
-                _Play_SFX_Corn_Attack_Shot.Post(gameObject);
-
-                isFirstBulletShoot = false;
             }
         }
 
