@@ -40,6 +40,7 @@ public class TBH : EnemyController
     protected override void Awake()
     {
         walkableMask = 1 << NavMesh.GetAreaFromName("Walkable");
+
         base.Awake();
     }
 
