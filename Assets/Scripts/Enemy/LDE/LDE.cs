@@ -72,7 +72,7 @@ namespace Enemy.LDE
 
             IEnumerator IDelayForFirstBullet()
             {
-                yield return new WaitForSeconds(5);
+                yield return new WaitForSeconds(data.GetDelayForFirstBullet);
                 isFirstBulletShoot = false;
             }
 
