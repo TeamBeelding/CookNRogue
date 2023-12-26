@@ -56,6 +56,17 @@
 								</Reference>
 							</ReferenceList>
 						</Action>
+						<Action Name="" ID="{82C33048-CDEF-4BF5-B2F7-1E65E63440AE}" ShortID="62493864">
+							<PropertyList>
+								<Property Name="Delay" Type="Real64" Value="2"/>
+								<Property Name="FadeTime" Type="Real64" Value="1.5"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="SFX_Door_Idle" ID="{0BC59EBC-9035-4330-9B33-4C2118FA21BB}" WorkUnitID="{3CE9A9BC-F960-482A-AEE6-287A4C6E7543}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
 					</ChildrenList>
 				</Event>
 				<Event Name="Play_SFX_Health_Collect" ID="{8D98E6B4-E8E1-4C0A-B86B-4814A2EE7AED}">
@@ -244,6 +255,60 @@
 							<ReferenceList>
 								<Reference Name="Target">
 									<ObjectRef Name="Cauldron_Idle" ID="{B343AB94-255C-4537-B428-01DECB4DB75E}" WorkUnitID="{3CE9A9BC-F960-482A-AEE6-287A4C6E7543}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Stop_SFX_Door" ID="{E486474F-D537-4CB7-9D88-786E750F8334}">
+					<ChildrenList>
+						<Action Name="" ID="{33FAB585-0E93-4D17-BD24-9F56703A73E9}" ShortID="11729117">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="SFX_Door_Idle" ID="{0BC59EBC-9035-4330-9B33-4C2118FA21BB}" WorkUnitID="{3CE9A9BC-F960-482A-AEE6-287A4C6E7543}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Stop_SFX_All_Idle" ID="{C6D332A0-AEB3-4069-B2E6-27298EFFC4F1}">
+					<ChildrenList>
+						<Action Name="" ID="{45C69453-32B7-4B6E-9364-2E32AE971658}" ShortID="75623435">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+								<Property Name="FadeOutCurve" Type="int16" Value="6"/>
+								<Property Name="FadeTime" Type="Real64" Value="1.5"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="SFX_Door_Idle" ID="{0BC59EBC-9035-4330-9B33-4C2118FA21BB}" WorkUnitID="{3CE9A9BC-F960-482A-AEE6-287A4C6E7543}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+						<Action Name="" ID="{C87D45DB-3E1C-4EF0-93F3-46191EA44986}" ShortID="900683761">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+								<Property Name="FadeOutCurve" Type="int16" Value="6"/>
+								<Property Name="FadeTime" Type="Real64" Value="1.5"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Cauldron_Idle" ID="{B343AB94-255C-4537-B428-01DECB4DB75E}" WorkUnitID="{3CE9A9BC-F960-482A-AEE6-287A4C6E7543}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+						<Action Name="" ID="{ED3468B0-6F0B-4279-8F28-7E4C5A34B00D}" ShortID="369869831">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+								<Property Name="FadeOutCurve" Type="int16" Value="6"/>
+								<Property Name="FadeTime" Type="Real64" Value="1.5"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Totem_Heal_Idle" ID="{83282ABC-5D15-4D37-AB95-EF590F27E5EA}" WorkUnitID="{3CE9A9BC-F960-482A-AEE6-287A4C6E7543}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>

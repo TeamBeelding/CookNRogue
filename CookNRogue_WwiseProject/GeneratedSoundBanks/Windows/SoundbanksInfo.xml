@@ -151,7 +151,7 @@
 				</StateGroup>
 			</StateGroups>
 		</SoundBank>
-		<SoundBank Id="1421616930" Type="User" Language="SFX" Hash="{D29F89A0-6B97-6D95-781B-CF696752D986}">
+		<SoundBank Id="1421616930" Type="User" Language="SFX" Hash="{E8C32410-F21C-BD1C-010B-677ED9493E8C}">
 			<ShortName>SFX_Boss</ShortName>
 			<Path>SFX_Boss.bnk</Path>
 			<Media>
@@ -473,7 +473,7 @@
 			<ShortName>AMB_Main_Menu</ShortName>
 			<Path>AMB_Main_Menu.bnk</Path>
 		</SoundBank>
-		<SoundBank Id="1806359924" Type="User" Language="SFX" Hash="{4DAF32FD-92A8-424C-9C58-E7520F0071B8}">
+		<SoundBank Id="1806359924" Type="User" Language="SFX" Hash="{5AFE03DC-1C7F-EEEE-5A38-DB8F18758BD2}">
 			<ShortName>AMB_Level</ShortName>
 			<Path>AMB_Level.bnk</Path>
 			<Media>
@@ -617,17 +617,37 @@
 				</Event>
 			</Events>
 		</SoundBank>
-		<SoundBank Id="1828121741" Type="User" Language="SFX" Hash="{3036E91C-01DE-4183-A8D5-29AC0489CA26}">
+		<SoundBank Id="1828121741" Type="User" Language="SFX" Hash="{A86B44D2-804B-12ED-4647-4A1B6B2B7877}">
 			<ShortName>SFX_Enemy_Common</ShortName>
 			<Path>SFX_Enemy_Common.bnk</Path>
 			<Media>
+				<File Id="2067460" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Enemy_Spawn_Magic_B_02.wav</ShortName>
+					<CachePath>SFX/SFX_Enemy_Spawn_Magic_B_02_3F75BDB9.wem</CachePath>
+				</File>
 				<File Id="36044305" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>SFX_Enemy_Spawn_B_04.wav</ShortName>
 					<CachePath>SFX/SFX_Enemy_Spawn_B_04_3F75BDB9.wem</CachePath>
 				</File>
+				<File Id="76043806" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Enemy_Spawn_Magic_A_01.wav</ShortName>
+					<CachePath>SFX/SFX_Enemy_Spawn_Magic_A_01_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="108850167" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Enemy_Spawn_Magic_B_04.wav</ShortName>
+					<CachePath>SFX/SFX_Enemy_Spawn_Magic_B_04_3F75BDB9.wem</CachePath>
+				</File>
 				<File Id="130547566" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>SFX_Enemy_Spawn_B_02.wav</ShortName>
 					<CachePath>SFX/SFX_Enemy_Spawn_B_02_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="259078402" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Enemy_Spawn_Magic_B_03.wav</ShortName>
+					<CachePath>SFX/SFX_Enemy_Spawn_Magic_B_03_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="312833855" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Enemy_Spawn_Magic_A_03.wav</ShortName>
+					<CachePath>SFX/SFX_Enemy_Spawn_Magic_A_03_3F75BDB9.wem</CachePath>
 				</File>
 				<File Id="397555606" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>SFX_Enemy_Spawn_A_03.wav</ShortName>
@@ -636,6 +656,10 @@
 				<File Id="411382096" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>SFX_Enemy_Spawn_A_01.wav</ShortName>
 					<CachePath>SFX/SFX_Enemy_Spawn_A_01_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="442971534" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Enemy_Spawn_Magic_A_02.wav</ShortName>
+					<CachePath>SFX/SFX_Enemy_Spawn_Magic_A_02_3F75BDB9.wem</CachePath>
 				</File>
 				<File Id="644715336" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>SFX_Enemy_Spawn_B_01.wav</ShortName>
@@ -649,12 +673,32 @@
 					<ShortName>SFX_Enemy_Spawn_B_03.wav</ShortName>
 					<CachePath>SFX/SFX_Enemy_Spawn_B_03_3F75BDB9.wem</CachePath>
 				</File>
+				<File Id="820268544" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Enemy_Spawn_Magic_A_04.wav</ShortName>
+					<CachePath>SFX/SFX_Enemy_Spawn_Magic_A_04_3F75BDB9.wem</CachePath>
+				</File>
+				<File Id="827179754" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Enemy_Spawn_Magic_B_01.wav</ShortName>
+					<CachePath>SFX/SFX_Enemy_Spawn_Magic_B_01_3F75BDB9.wem</CachePath>
+				</File>
 				<File Id="855590670" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>SFX_Enemy_Spawn_A_02.wav</ShortName>
 					<CachePath>SFX/SFX_Enemy_Spawn_A_02_3F75BDB9.wem</CachePath>
 				</File>
 			</Media>
 			<Events>
+				<Event Id="1084840250" Name="Play_SFX_Enemy_Spawn_Magic" MaxAttenuation="40" DurationType="OneShot" DurationMin="2.5666666" DurationMax="2.5666666">
+					<MediaRefs>
+						<MediaRef Id="2067460"/>
+						<MediaRef Id="76043806"/>
+						<MediaRef Id="108850167"/>
+						<MediaRef Id="259078402"/>
+						<MediaRef Id="312833855"/>
+						<MediaRef Id="442971534"/>
+						<MediaRef Id="820268544"/>
+						<MediaRef Id="827179754"/>
+					</MediaRefs>
+				</Event>
 				<Event Id="2734652486" Name="Play_SFX_Ennemy_Spawn" MaxAttenuation="40" DurationType="OneShot" DurationMin="1.0067992" DurationMax="2.2577822">
 					<MediaRefs>
 						<MediaRef Id="36044305"/>
@@ -775,7 +819,7 @@
 				<Event Id="2301333962" Name="Stop_SFX_Pea_Movement" MaxAttenuation="0" DurationType="OneShot" DurationMin="0" DurationMax="0"/>
 			</Events>
 		</SoundBank>
-		<SoundBank Id="2374353081" Type="User" Language="SFX" Hash="{C77F6749-15FA-3488-77DA-C137B48D81B0}">
+		<SoundBank Id="2374353081" Type="User" Language="SFX" Hash="{A6392ABB-3049-2B59-A7F4-87F7FE417744}">
 			<ShortName>SFX_Other</ShortName>
 			<Path>SFX_Other.bnk</Path>
 			<Media>
@@ -951,6 +995,10 @@
 					<ShortName>SFX_QTE_Disappear_04.wav</ShortName>
 					<CachePath>SFX/SFX_QTE_Disappear_04_3F75BDB9.wem</CachePath>
 				</File>
+				<File Id="780667457" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>SFX_Door_Idle.wav</ShortName>
+					<CachePath>SFX/SFX_Door_Idle_9EDFC787.wem</CachePath>
+				</File>
 				<File Id="794061414" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>SFX_Totem_Heal_Activation_C_01.wav</ShortName>
 					<CachePath>SFX/SFX_Totem_Heal_Activation_C_01_3F75BDB9.wem</CachePath>
@@ -1025,8 +1073,9 @@
 						<MediaRef Id="681124314"/>
 					</MediaRefs>
 				</Event>
-				<Event Id="1312371701" Name="Play_SFX_Door_Open" MaxAttenuation="40" DurationType="OneShot" DurationMin="3.6283069" DurationMax="3.6283069">
+				<Event Id="1312371701" Name="Play_SFX_Door_Open" MaxAttenuation="40" DurationType="Infinite">
 					<MediaRefs>
+						<MediaRef Id="780667457"/>
 						<MediaRef Id="876536733"/>
 					</MediaRefs>
 				</Event>
@@ -1131,7 +1180,9 @@
 						<MediaRef Id="715109410"/>
 					</MediaRefs>
 				</Event>
+				<Event Id="3417846274" Name="Stop_SFX_All_Idle" MaxAttenuation="0" DurationType="OneShot" DurationMin="0" DurationMax="0"/>
 				<Event Id="4293892292" Name="Stop_SFX_Cook" MaxAttenuation="0" DurationType="OneShot" DurationMin="0" DurationMax="0"/>
+				<Event Id="1814570600" Name="Stop_SFX_Door" MaxAttenuation="0" DurationType="OneShot" DurationMin="0" DurationMax="0"/>
 				<Event Id="54277783" Name="Stop_SFX_Explosive_Cauldron_Idle" MaxAttenuation="0" DurationType="OneShot" DurationMin="0" DurationMax="0"/>
 				<Event Id="2440565485" Name="Stop_SFX_Totem_Heal_Idle" MaxAttenuation="40" DurationType="Infinite">
 					<MediaRefs>
@@ -2437,5 +2488,5 @@
 			</StateGroups>
 		</SoundBank>
 	</SoundBanks>
-	<FileHash>{594DCD9A-A358-A774-278E-C6E74AE9FB5F}</FileHash>
+	<FileHash>{E026675C-8518-C3B3-B93E-2715100CB9FC}</FileHash>
 </SoundBanksInfo>

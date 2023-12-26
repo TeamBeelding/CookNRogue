@@ -3809,7 +3809,7 @@
 								</Reference>
 							</ReferenceList>
 							<ChildrenList>
-								<BlendContainer Name="Enemy_Spawn" ID="{05A53728-A7FB-48E9-992E-EA0FD25864F0}" ShortID="190384722">
+								<BlendContainer Name="Enemy_Spawn_Ground" ID="{05A53728-A7FB-48E9-992E-EA0FD25864F0}" ShortID="190384722">
 									<PropertyList>
 										<Property Name="3DSpatialization" Type="int16" Value="1"/>
 										<Property Name="OverridePositioning" Type="bool" Value="True"/>
@@ -4043,6 +4043,234 @@
 													</ChildrenList>
 													<ActiveSourceList>
 														<ActiveSource Name="SFX_Enemy_Spawn_A_04" ID="{177E30A0-DF79-4B4F-9856-CB9CCD4D2991}" Platform="Linked"/>
+													</ActiveSourceList>
+												</Sound>
+											</ChildrenList>
+										</RandomSequenceContainer>
+									</ChildrenList>
+								</BlendContainer>
+								<BlendContainer Name="Enemy_Spawn_Magic" ID="{E3793D1A-5D0C-4051-BC36-2296DE26CB50}" ShortID="186963686">
+									<PropertyList>
+										<Property Name="3DSpatialization" Type="int16" Value="1"/>
+										<Property Name="OverridePositioning" Type="bool" Value="True"/>
+										<Property Name="SpeakerPanning3DSpatializationMix" Type="int32" Value="70"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Attenuation">
+											<ObjectRef Name="ATN_40M" ID="{3ABC1B5A-6934-45A5-9CE0-C7633D3E1A57}" WorkUnitID="{A99C7566-826F-4E9D-A733-5652D69BE57C}"/>
+										</Reference>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DEC634C6-86E3-4DF9-96EE-F869BA355507}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{85B5C199-8628-4DDB-B756-DA8917395816}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<RandomSequenceContainer Name="Enemy_Spawn_Magic_A" ID="{42302915-8025-4D20-AE2E-0EC1B3E84549}" ShortID="132731751">
+											<PropertyList>
+												<Property Name="NormalOrShuffle" Type="int16" Value="0"/>
+												<Property Name="RandomAvoidRepeatingCount" Type="int32" Value="2"/>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DEC634C6-86E3-4DF9-96EE-F869BA355507}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{85B5C199-8628-4DDB-B756-DA8917395816}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<Sound Name="SFX_Enemy_Spawn_Magic_A_01" ID="{85FA23DF-D1D9-4A83-B3F7-C33C0CBC1E32}" ShortID="940054533">
+													<ReferenceList>
+														<Reference Name="Conversion">
+															<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DEC634C6-86E3-4DF9-96EE-F869BA355507}"/>
+														</Reference>
+														<Reference Name="OutputBus">
+															<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{85B5C199-8628-4DDB-B756-DA8917395816}"/>
+														</Reference>
+													</ReferenceList>
+													<ChildrenList>
+														<AudioFileSource Name="SFX_Enemy_Spawn_Magic_A_01" ID="{12518B28-7004-4CA4-B05A-E194665A04EC}">
+															<Language>SFX</Language>
+															<AudioFile>SFX_Enemy_Spawn_Magic_A_01.wav</AudioFile>
+															<MediaIDList>
+																<MediaID ID="76043806"/>
+															</MediaIDList>
+														</AudioFileSource>
+													</ChildrenList>
+													<ActiveSourceList>
+														<ActiveSource Name="SFX_Enemy_Spawn_Magic_A_01" ID="{12518B28-7004-4CA4-B05A-E194665A04EC}" Platform="Linked"/>
+													</ActiveSourceList>
+												</Sound>
+												<Sound Name="SFX_Enemy_Spawn_Magic_A_02" ID="{47336902-EE29-48E2-A5D8-7341C55B4FDA}" ShortID="444680356">
+													<ReferenceList>
+														<Reference Name="Conversion">
+															<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DEC634C6-86E3-4DF9-96EE-F869BA355507}"/>
+														</Reference>
+														<Reference Name="OutputBus">
+															<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{85B5C199-8628-4DDB-B756-DA8917395816}"/>
+														</Reference>
+													</ReferenceList>
+													<ChildrenList>
+														<AudioFileSource Name="SFX_Enemy_Spawn_Magic_A_02" ID="{F1C671DD-EE33-4B02-AEB8-76331A9D50AE}">
+															<Language>SFX</Language>
+															<AudioFile>SFX_Enemy_Spawn_Magic_A_02.wav</AudioFile>
+															<MediaIDList>
+																<MediaID ID="442971534"/>
+															</MediaIDList>
+														</AudioFileSource>
+													</ChildrenList>
+													<ActiveSourceList>
+														<ActiveSource Name="SFX_Enemy_Spawn_Magic_A_02" ID="{F1C671DD-EE33-4B02-AEB8-76331A9D50AE}" Platform="Linked"/>
+													</ActiveSourceList>
+												</Sound>
+												<Sound Name="SFX_Enemy_Spawn_Magic_A_03" ID="{077B0838-1265-4ACF-9655-E43D8E5757E8}" ShortID="694864652">
+													<ReferenceList>
+														<Reference Name="Conversion">
+															<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DEC634C6-86E3-4DF9-96EE-F869BA355507}"/>
+														</Reference>
+														<Reference Name="OutputBus">
+															<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{85B5C199-8628-4DDB-B756-DA8917395816}"/>
+														</Reference>
+													</ReferenceList>
+													<ChildrenList>
+														<AudioFileSource Name="SFX_Enemy_Spawn_Magic_A_03" ID="{F2CE1ADC-F0EC-4A79-95CE-AEF77AEE027C}">
+															<Language>SFX</Language>
+															<AudioFile>SFX_Enemy_Spawn_Magic_A_03.wav</AudioFile>
+															<MediaIDList>
+																<MediaID ID="312833855"/>
+															</MediaIDList>
+														</AudioFileSource>
+													</ChildrenList>
+													<ActiveSourceList>
+														<ActiveSource Name="SFX_Enemy_Spawn_Magic_A_03" ID="{F2CE1ADC-F0EC-4A79-95CE-AEF77AEE027C}" Platform="Linked"/>
+													</ActiveSourceList>
+												</Sound>
+												<Sound Name="SFX_Enemy_Spawn_Magic_A_04" ID="{14FCC4D6-D13C-4AD9-B915-593E0F1C4133}" ShortID="995436157">
+													<ReferenceList>
+														<Reference Name="Conversion">
+															<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DEC634C6-86E3-4DF9-96EE-F869BA355507}"/>
+														</Reference>
+														<Reference Name="OutputBus">
+															<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{85B5C199-8628-4DDB-B756-DA8917395816}"/>
+														</Reference>
+													</ReferenceList>
+													<ChildrenList>
+														<AudioFileSource Name="SFX_Enemy_Spawn_Magic_A_04" ID="{10412D31-2BDA-48BB-8C72-168FADFB50AE}">
+															<Language>SFX</Language>
+															<AudioFile>SFX_Enemy_Spawn_Magic_A_04.wav</AudioFile>
+															<MediaIDList>
+																<MediaID ID="820268544"/>
+															</MediaIDList>
+														</AudioFileSource>
+													</ChildrenList>
+													<ActiveSourceList>
+														<ActiveSource Name="SFX_Enemy_Spawn_Magic_A_04" ID="{10412D31-2BDA-48BB-8C72-168FADFB50AE}" Platform="Linked"/>
+													</ActiveSourceList>
+												</Sound>
+											</ChildrenList>
+										</RandomSequenceContainer>
+										<RandomSequenceContainer Name="Enemy_Spawn_Magic_B" ID="{640F1973-3E50-47DB-811C-4465C2829FD3}" ShortID="828514898">
+											<PropertyList>
+												<Property Name="NormalOrShuffle" Type="int16" Value="0"/>
+												<Property Name="RandomAvoidRepeatingCount" Type="int32" Value="23"/>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DEC634C6-86E3-4DF9-96EE-F869BA355507}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{85B5C199-8628-4DDB-B756-DA8917395816}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<Sound Name="SFX_Enemy_Spawn_Magic_B_01" ID="{130AA636-FFAF-400B-99E9-C57F351386D7}" ShortID="789931167">
+													<ReferenceList>
+														<Reference Name="Conversion">
+															<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DEC634C6-86E3-4DF9-96EE-F869BA355507}"/>
+														</Reference>
+														<Reference Name="OutputBus">
+															<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{85B5C199-8628-4DDB-B756-DA8917395816}"/>
+														</Reference>
+													</ReferenceList>
+													<ChildrenList>
+														<AudioFileSource Name="SFX_Enemy_Spawn_Magic_B_01" ID="{51546169-7FFE-43E3-BE6B-670906F7A466}">
+															<Language>SFX</Language>
+															<AudioFile>SFX_Enemy_Spawn_Magic_B_01.wav</AudioFile>
+															<MediaIDList>
+																<MediaID ID="827179754"/>
+															</MediaIDList>
+														</AudioFileSource>
+													</ChildrenList>
+													<ActiveSourceList>
+														<ActiveSource Name="SFX_Enemy_Spawn_Magic_B_01" ID="{51546169-7FFE-43E3-BE6B-670906F7A466}" Platform="Linked"/>
+													</ActiveSourceList>
+												</Sound>
+												<Sound Name="SFX_Enemy_Spawn_Magic_B_02" ID="{9CD5AB5C-A70F-4281-AF05-629033920E30}" ShortID="285952650">
+													<ReferenceList>
+														<Reference Name="Conversion">
+															<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DEC634C6-86E3-4DF9-96EE-F869BA355507}"/>
+														</Reference>
+														<Reference Name="OutputBus">
+															<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{85B5C199-8628-4DDB-B756-DA8917395816}"/>
+														</Reference>
+													</ReferenceList>
+													<ChildrenList>
+														<AudioFileSource Name="SFX_Enemy_Spawn_Magic_B_02" ID="{42ACBFD9-3889-4246-8CB9-2B870A0A1144}">
+															<Language>SFX</Language>
+															<AudioFile>SFX_Enemy_Spawn_Magic_B_02.wav</AudioFile>
+															<MediaIDList>
+																<MediaID ID="2067460"/>
+															</MediaIDList>
+														</AudioFileSource>
+													</ChildrenList>
+													<ActiveSourceList>
+														<ActiveSource Name="SFX_Enemy_Spawn_Magic_B_02" ID="{42ACBFD9-3889-4246-8CB9-2B870A0A1144}" Platform="Linked"/>
+													</ActiveSourceList>
+												</Sound>
+												<Sound Name="SFX_Enemy_Spawn_Magic_B_03" ID="{D519E579-6EB3-4E10-976F-5EB0549709E6}" ShortID="858894940">
+													<ReferenceList>
+														<Reference Name="Conversion">
+															<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DEC634C6-86E3-4DF9-96EE-F869BA355507}"/>
+														</Reference>
+														<Reference Name="OutputBus">
+															<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{85B5C199-8628-4DDB-B756-DA8917395816}"/>
+														</Reference>
+													</ReferenceList>
+													<ChildrenList>
+														<AudioFileSource Name="SFX_Enemy_Spawn_Magic_B_03" ID="{46CB5D36-C0DB-497D-B5B7-BBCD442EFCC8}">
+															<Language>SFX</Language>
+															<AudioFile>SFX_Enemy_Spawn_Magic_B_03.wav</AudioFile>
+															<MediaIDList>
+																<MediaID ID="259078402"/>
+															</MediaIDList>
+														</AudioFileSource>
+													</ChildrenList>
+													<ActiveSourceList>
+														<ActiveSource Name="SFX_Enemy_Spawn_Magic_B_03" ID="{46CB5D36-C0DB-497D-B5B7-BBCD442EFCC8}" Platform="Linked"/>
+													</ActiveSourceList>
+												</Sound>
+												<Sound Name="SFX_Enemy_Spawn_Magic_B_04" ID="{5C421F9C-9CEF-4F47-8933-52EF34EA0665}" ShortID="360000880">
+													<ReferenceList>
+														<Reference Name="Conversion">
+															<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DEC634C6-86E3-4DF9-96EE-F869BA355507}"/>
+														</Reference>
+														<Reference Name="OutputBus">
+															<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{85B5C199-8628-4DDB-B756-DA8917395816}"/>
+														</Reference>
+													</ReferenceList>
+													<ChildrenList>
+														<AudioFileSource Name="SFX_Enemy_Spawn_Magic_B_04" ID="{2D455744-7E6E-4C8C-B765-3711BD523AEB}">
+															<Language>SFX</Language>
+															<AudioFile>SFX_Enemy_Spawn_Magic_B_04.wav</AudioFile>
+															<MediaIDList>
+																<MediaID ID="108850167"/>
+															</MediaIDList>
+														</AudioFileSource>
+													</ChildrenList>
+													<ActiveSourceList>
+														<ActiveSource Name="SFX_Enemy_Spawn_Magic_B_04" ID="{2D455744-7E6E-4C8C-B765-3711BD523AEB}" Platform="Linked"/>
 													</ActiveSourceList>
 												</Sound>
 											</ChildrenList>

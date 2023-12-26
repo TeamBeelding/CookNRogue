@@ -12,7 +12,18 @@
 						<Action Name="" ID="{F8BBD953-7207-4BEA-ADDD-4C83FD3F3E8B}" ShortID="805724652">
 							<ReferenceList>
 								<Reference Name="Target">
-									<ObjectRef Name="Enemy_Spawn" ID="{05A53728-A7FB-48E9-992E-EA0FD25864F0}" WorkUnitID="{23B15D27-5212-492F-AB18-D64924507D5D}"/>
+									<ObjectRef Name="Enemy_Spawn_Ground" ID="{05A53728-A7FB-48E9-992E-EA0FD25864F0}" WorkUnitID="{23B15D27-5212-492F-AB18-D64924507D5D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_SFX_Enemy_Spawn_Magic" ID="{805930B3-B761-4355-9E83-9A01022A8D21}">
+					<ChildrenList>
+						<Action Name="" ID="{DB4C4AC8-9076-4957-AE5B-432D5A43E568}" ShortID="450838474">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Enemy_Spawn_Magic" ID="{E3793D1A-5D0C-4051-BC36-2296DE26CB50}" WorkUnitID="{23B15D27-5212-492F-AB18-D64924507D5D}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>
