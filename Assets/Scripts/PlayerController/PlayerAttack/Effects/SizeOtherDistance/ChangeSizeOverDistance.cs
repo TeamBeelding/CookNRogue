@@ -22,7 +22,9 @@ public class ChangeSizeOverDistance : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        
+        if (timePassed >= 1)
+            return;
+
         timePassed += Time.deltaTime * _speed;
 
         if(timePassed * _speed <= 1)

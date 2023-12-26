@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7005260554763475983}
   - component: {fileID: 5254068983060015216}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Physics
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -59,7 +59,7 @@ GameObject:
   - component: {fileID: 3425148894245102907}
   - component: {fileID: 8190109612547638108}
   - component: {fileID: 5047312052865488204}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Kamilkaze
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -120,7 +120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _effectHandlers: []
-  _collider: {fileID: 0}
+  _collider: {fileID: 5254068983060015216}
   _damageUI: {fileID: 4752919081619040609, guid: 5abc18997e19393429b154f8231589f9,
     type: 3}
   explosion: {fileID: 466446929295881914, guid: 1768f1adcc585bb42ac938af9d0b00e8,
@@ -330,7 +330,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 585e766713df702459aa63bbce63b344,
         type: 3}
       propertyPath: m_Layer
-      value: 13
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 585e766713df702459aa63bbce63b344,
         type: 3}
@@ -357,7 +357,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outlineMode: 0
+  outlineMode: 3
   outlineColor: {r: 1, g: 0, b: 0, a: 1}
   outlineWidth: 4
   precomputeOutline: 0
@@ -456,6 +456,21 @@ PrefabInstance:
       propertyPath: moveWithTransform
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5031799603615477431, guid: 4ce985e9f30755848a9505f5c623b154,
+        type: 3}
+      propertyPath: m_Layer
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 5999642755221058208, guid: 4ce985e9f30755848a9505f5c623b154,
+        type: 3}
+      propertyPath: m_Layer
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 6285207135506847913, guid: 4ce985e9f30755848a9505f5c623b154,
+        type: 3}
+      propertyPath: m_Layer
+      value: 17
+      objectReference: {fileID: 0}
     - target: {fileID: 8177109874088533586, guid: 4ce985e9f30755848a9505f5c623b154,
         type: 3}
       propertyPath: m_Name
@@ -463,8 +478,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8177109874088533586, guid: 4ce985e9f30755848a9505f5c623b154,
         type: 3}
+      propertyPath: m_Layer
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 8177109874088533586, guid: 4ce985e9f30755848a9505f5c623b154,
+        type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8869942792471789848, guid: 4ce985e9f30755848a9505f5c623b154,
+        type: 3}
+      propertyPath: m_Layer
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 8898393270110287169, guid: 4ce985e9f30755848a9505f5c623b154,
+        type: 3}
+      propertyPath: m_Layer
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 9010324437385728339, guid: 4ce985e9f30755848a9505f5c623b154,
         type: 3}
@@ -547,10 +577,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1341178474114047924, guid: 51b0f6f007e6e5e49b9d26be89ead7ac,
+        type: 3}
+      propertyPath: m_Layer
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 2474744348134689516, guid: 51b0f6f007e6e5e49b9d26be89ead7ac,
+        type: 3}
+      propertyPath: m_Layer
+      value: 17
+      objectReference: {fileID: 0}
     - target: {fileID: 7784284939191166292, guid: 51b0f6f007e6e5e49b9d26be89ead7ac,
         type: 3}
       propertyPath: m_Name
       value: PileOfEarth_base
+      objectReference: {fileID: 0}
+    - target: {fileID: 7784284939191166292, guid: 51b0f6f007e6e5e49b9d26be89ead7ac,
+        type: 3}
+      propertyPath: m_Layer
+      value: 17
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 51b0f6f007e6e5e49b9d26be89ead7ac, type: 3}

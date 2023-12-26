@@ -18,10 +18,14 @@ public sealed class TotemInteraction : MonoBehaviour,IInteractable
     [SerializeField] ParticleSystemForceField _field;
     Transform _player;
 
+    [SerializeField]
+    GameObject m_buttonPrompt;
+
     private void Start()
     {
         _player = PlayerController.Instance.transform;
         _Play_SFX_Totem_Heal_Idle.Post(gameObject);
+        m_buttonPrompt.SetActive(false);
     }
     public void Interact(string tag)
     {
@@ -30,7 +34,7 @@ public sealed class TotemInteraction : MonoBehaviour,IInteractable
 
     public void Interactable(bool isInteractable)
     {
-
+        m_buttonPrompt.SetActive(isInteractable);
     }
 
     public void Regen()

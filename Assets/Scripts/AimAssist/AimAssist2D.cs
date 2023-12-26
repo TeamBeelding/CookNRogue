@@ -43,6 +43,10 @@ public class AimAssist2D
             {
                 continue;
             }
+            else if (hit.collider.CompareTag("Boss") && hit.collider.transform.parent.gameObject != target)
+            {
+                continue;
+            }
 
             tempValidTargets.Add(target);
         }

@@ -36,7 +36,7 @@ public class SceneLoader : MonoBehaviour
         _actions = new();
         _actions.UI.Enable();
 
-        _actions.UI.Return.started += Return;
+        //_actions.UI.Return.started += Return;
     }
 
     public void LoadGame()

@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class MarmiteCameraSystem
 {
+    bool _zoom = false;
+
     [InfoBox("Can't use camera settings when not in game.", InfoMessageType.Warning, "IsInEditor")]
     [DisableInEditorMode]
     [Button(ButtonSizes.Large)]
@@ -25,6 +27,7 @@ public class MarmiteCameraSystem
     [Button(ButtonSizes.Large)]
     private void ZoomCamera()
     {
+        _zoom = !_zoom;
         var cameraControllers = GameObject.FindObjectsOfType<CameraController>();
         if (cameraControllers == null)
         {
@@ -33,7 +36,7 @@ public class MarmiteCameraSystem
         }
         foreach (var cameraController in cameraControllers)
         {
-            cameraController.ScreenZoom();
+            cameraController.ScreenZoom(_zoom);
         }
     }
 

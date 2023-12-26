@@ -55,21 +55,22 @@ public class CameraController : MonoBehaviour
     [HideInInspector]
     public bool _shake = false;
 
-    //Shake
+    //Zoom
     [Header("Camera Zoom")]
     [Header("==========================================================================================================================================================================================================================")]
-    // How long will the _shake last
+    // Targets
     [SerializeField]
     private float m_zoomDuration = 1f;
     [SerializeField]
-    [Range(1f,10f)]
-    private float m_zoomFactor = 2f;
+    private float m_zoomedInTarget = 2f;
+    [SerializeField]
+    private float m_zoomedOutTarget = 2f;
     // This decides the amount of _shake over time
     [SerializeField]
     private AnimationCurve m_zoomCurve;
-    // Whether it is currently shaking or not
-    [HideInInspector]
-    public bool _zoom = false;
+    // Whether it is currently zooming
+    float _curZoomProgress;
+    Coroutine _curZoomCoroutine;
 
     //Smooth
     [Header("Camera Smooth")]
@@ -195,18 +196,12 @@ public class CameraController : MonoBehaviour
     void Update()
     {
         // Main Function for the Transparency of the obstructions / walls.
-        CameraTransparent();
+        //CameraTransparent();
         // initiate _shake corountine if _shake is true
         if (_shake)
         {
             _shake = false;
             StartCoroutine(IShake());
-        }
-
-        if (_zoom)
-        {
-            _zoom = false;
-            StartCoroutine(IZoom());
         }
 
         if (CameraBoudaries.instance && Input.GetKey(KeyCode.E))
@@ -287,36 +282,61 @@ public class CameraController : MonoBehaviour
     }
 
 
-    public void ScreenZoom()
+    public void ScreenZoom(bool value)
     {
-        StartCoroutine(IZoom());
+        if (_curZoomCoroutine != null)
+        {
+            StopCoroutine(_curZoomCoroutine);
+        }
+
+        if (value)
+        {
+            _curZoomCoroutine = StartCoroutine(IZoomIn());
+        }
+        else
+        {
+           _curZoomCoroutine = StartCoroutine(IZoomOut());
+        }
     }
 
-    IEnumerator IZoom()
+    IEnumerator IZoomIn()
     {
-        // set a variable for the elapse
-        float elapsedTime = 0f;
-        // Getting start position of _shake gimble in local space
-        while (elapsedTime < m_zoomDuration)
-        {
-            if (_zoomIsUnscaled)
-            {
-                // adding time to counter
-                elapsedTime += Time.unscaledDeltaTime;
-            }
-            else
-            {
-                // adding time to counter
-                elapsedTime += Time.deltaTime;
-            }
+        Camera cam = _shakeGimble.GetChild(0).GetComponent<Camera>();
+        float time = m_zoomDuration;
+        float targetZoom = m_zoomedInTarget;
+        float initZoom = cam.orthographicSize;
 
-            // strength of the curve at specific time. So strength over time (The y axis being strength, and x being time)
-            float zoomspeed = m_zoomCurve.Evaluate(elapsedTime / m_zoomDuration);
-            Debug.Log(zoomspeed);
-            // changing the local postion of _shake gimble inside the unit circle, so random position in a circle and adding the start position.
-            _shakeGimble.GetChild(0).GetComponent<Camera>().orthographicSize = _initialZoom * zoomspeed;
+
+        for (float f = _curZoomProgress > 0 ? (1 - _curZoomProgress) * time : 0; f < time; f += Time.unscaledDeltaTime)
+        {
+            _curZoomProgress = f / time;
+            cam.orthographicSize = Mathf.Lerp(initZoom, targetZoom, m_zoomCurve.Evaluate(_curZoomProgress));
             yield return null;
         }
+
+        cam.orthographicSize = targetZoom;
+        _curZoomProgress = 0;
+        _curZoomCoroutine = null;
+    }
+
+    IEnumerator IZoomOut()
+    {
+        Camera cam = _shakeGimble.GetChild(0).GetComponent<Camera>();
+        float time = m_zoomDuration;
+        float targetZoom = m_zoomedOutTarget;
+        float initZoom = cam.orthographicSize;
+
+
+        for (float f = _curZoomProgress > 0 ? (1 - _curZoomProgress) * time : 0; f < time; f += Time.unscaledDeltaTime)
+        {
+            _curZoomProgress = f / time;
+            cam.orthographicSize = Mathf.Lerp(targetZoom, initZoom,1 - m_zoomCurve.Evaluate(_curZoomProgress));
+            yield return null;
+        }
+
+        cam.orthographicSize = targetZoom;
+        _curZoomProgress = 0;
+        _curZoomCoroutine = null;
     }
 
     private void ShowLevelDoor()

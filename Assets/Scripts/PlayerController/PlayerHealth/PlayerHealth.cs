@@ -1,8 +1,5 @@
-using FullscreenEditor;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -105,6 +102,7 @@ public class PlayerHealth : MonoBehaviour
             PlayerRuntimeData.GetInstance().data.BaseData.CurrentHealth = PlayerRuntimeData.GetInstance().data.BaseData.MaxHealth;
 
         _heartBar.UpdateHealthVisual(PlayerRuntimeData.GetInstance().data.BaseData.CurrentHealth);
+        _heartBar.PlayHeartBarAnimation();
     }
 
     private void Reset()
