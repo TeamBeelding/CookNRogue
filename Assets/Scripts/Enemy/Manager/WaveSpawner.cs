@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class WaveSpawner : MonoBehaviour
 {
+
     [System.Serializable]
     public struct WaveContainer
     {
@@ -42,6 +43,7 @@ public class WaveSpawner : MonoBehaviour
 
                 dirtFX.transform.parent = transform;
                 dirtFX.SetActive(true);
+
                 dirtFX.GetComponentInChildren<ParticleSystem>().Play();
 
                 yield return new WaitForSeconds(delay);

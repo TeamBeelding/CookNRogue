@@ -79,6 +79,11 @@ namespace Enemy
                 }
             }
         }
+
+        private void OnDestroy()
+        {
+            _instance = null;
+        }
     }
 
 

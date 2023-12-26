@@ -25,6 +25,8 @@ public class BossController : EnemyController
     [SerializeField] private GameObject visual;
     [SerializeField] private GameObject physics;
 
+    private float dashSpeed;
+
     private MissilesController missilesController;
     [SerializeField,Range(0,1)] float _missileTriggerPercentage = 1f;
     private ShockwaveController shockwaveController;
@@ -59,10 +61,16 @@ public class BossController : EnemyController
     private AK.Wwise.Event _Play_SFX_Boss_Charge_LP;
     [SerializeField]
     private AK.Wwise.Event _Play_SFX_Boss_Charge_Impact;
+    [SerializeField]
+    private AK.Wwise.Event _Play_SFX_Boss_Death;
 
     protected override void OnEnable()
     {
-        base.OnEnable();
+
+    }
+
+    protected override void Awake()
+    {
         Reset();
     }
 
@@ -80,17 +88,25 @@ public class BossController : EnemyController
         _dyingParticles = _dyingParticlesContainer.GetComponentsInChildren<ParticleSystem>();
         _stunnedParticles = _stunnedParticlesContainer.GetComponentsInChildren<ParticleSystem>();
 
-        Healthpoint = data.GetHealth;
+        //Aim Assist
+        PlayerRuntimeData.GetInstance().data.RoomData.BossObject = gameObject;
+
         SetState(State.EnterRoom);
     }
 
     private void Reset()
     {
+        Player = PlayerController.Instance.gameObject;
+
+        //CameraController.instance.ScreenZoom(false);
+
         visual?.SetActive(true);
         physics?.SetActive(true);
 
-        missilesController = GetComponent<MissilesController>();
-        shockwaveController = GetComponent<ShockwaveController>();
+        Healthpoint = data.GetHealth;
+        dashSpeed = data.GetDashSpeed;
+
+        AddToEnemyManager();
     }
 
     public BossData GetBossDataRef() => data;
@@ -270,7 +286,7 @@ public class BossController : EnemyController
 
             while (state == State.Dash)
             {
-                transform.position += direction * (data.GetDashSpeed * Time.deltaTime);
+                transform.position += direction * (dashSpeed * Time.deltaTime);
                 yield return null;
             }
 
@@ -366,20 +382,24 @@ public class BossController : EnemyController
 
     protected override void Dying()
     {
+        //Aim Assist
+        PlayerRuntimeData.GetInstance().data.RoomData.BossObject = null;
+
         StopAllCoroutines();
         StartCoroutine(DyingRoutine());
     }
 
     private IEnumerator DyingRoutine()
     {
+        dashSpeed = 0;
         physics?.SetActive(false);
 
         ShutDownAllAbilitiesVFX();
 
         Animator animator;
         GetComponent<BossIntro>().healthbarAnimator.Play("Boss_HealthBar_Exit");
-
-        foreach(var particle in _dyingParticles)
+        _Play_SFX_Boss_Death.Post(gameObject);
+        foreach (var particle in _dyingParticles)
             particle.Play();
 
         yield return new WaitForSeconds(4);
@@ -398,17 +418,17 @@ public class BossController : EnemyController
             var Noise = particle.noise;
             Noise.strength = 2;
         }
-            
-        
-        
 
         visual?.SetActive(false);
 
         //GIVE ENOUGH TIME TO THE PARTICLES TO FADE AWAY
-        yield return new WaitForSeconds(7);
+        yield return new WaitForSeconds(5);
+
+        //CameraController.instance.ScreenZoom(true);
 
         Destroy(gameObject);
-        
+
+        PlayerController.Instance.EndGame();
     }
 
     public override bool IsMoving()

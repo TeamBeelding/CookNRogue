@@ -7,6 +7,11 @@ public class AimAssist2D
     public static Vector3 CorrectAimDirection(Vector3 baseDirection, Vector3 origin, GameObject[] targets, AimAssistPreset preset)
     {
         #region Get Valid Target
+        if(targets.Length <= 0)
+        {
+            return baseDirection;
+        }
+
         //Get all potential valid targets
         List<GameObject> tempValidTargets = new();
         foreach (GameObject target in targets)
@@ -31,6 +36,14 @@ public class AimAssist2D
                 continue;
             }
             else if (hit.collider.CompareTag("Enemy") && hit.collider.transform.parent.gameObject != target)
+            {
+                continue;
+            }
+            else if (hit.collider.CompareTag("Cauldron") && hit.collider.transform.gameObject != target)
+            {
+                continue;
+            }
+            else if (hit.collider.CompareTag("Boss") && hit.collider.transform.parent.gameObject != target)
             {
                 continue;
             }

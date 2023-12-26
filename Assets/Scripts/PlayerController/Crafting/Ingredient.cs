@@ -6,7 +6,7 @@ public class Ingredient : MonoBehaviour, IInteractable
     ProjectileData _projectileData;
     [SerializeField]
     ParticleSystem _particles;
-
+    [SerializeField] float _ingredientHeight = 1.5f;
     [Header("Particle behaviour")]
     [SerializeField] float _simulationSpeed = 4;
     [SerializeField] float _yVelocity = 1.5f;
@@ -20,6 +20,7 @@ public class Ingredient : MonoBehaviour, IInteractable
     void Start()
     {
         _particles = transform.GetChild(2).GetComponentInChildren<ParticleSystem>();
+        transform.position = new Vector3(transform.position.x, _ingredientHeight,transform.position.z);
         _particles.transform.parent = null;
     }
 

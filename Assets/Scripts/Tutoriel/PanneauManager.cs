@@ -11,7 +11,7 @@ public class PanneauManager : MonoBehaviour
 
     private void Update()
     {
-        if (Vector3.Distance(transform.position, PlayerController.Instance.transform.position) <= range)
+        if (PlayerController.Instance != null && Vector3.Distance(transform.position, PlayerController.Instance.transform.position) <= range)
             DisplayImage(true);
         else
             DisplayImage(false);

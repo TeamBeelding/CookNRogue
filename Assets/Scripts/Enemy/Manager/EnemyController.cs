@@ -4,7 +4,6 @@ using Enemy;
 using TMPro;
 using Tutoriel;
 using UnityEngine;
-using UnityEngine.AI;
 using UnityEngine.Events;
 
 public abstract class EnemyController : MonoBehaviour
@@ -15,7 +14,7 @@ public abstract class EnemyController : MonoBehaviour
     public List<StatusEffectHandler> _effectHandlers;
     private Renderer _rend;
     private MeshRenderer _meshRenderer;
-    [SerializeField] protected CapsuleCollider _collider;
+    [SerializeField] protected Collider _collider;
     
     private IEnumerator _colorCoroutine;
     
@@ -38,11 +37,17 @@ public abstract class EnemyController : MonoBehaviour
 
     protected WaveManager waveManager;
 
+    protected bool hasAskForSlow = false;
+
+    [Header("Sound")]
+    [SerializeField]
+    private AK.Wwise.Event _Play_SFX_Ennemy_Spawn;
+
     protected virtual void Awake()
     {
         _rend = GetComponentInChildren<Renderer>();
         _meshRenderer = GetComponentInChildren<MeshRenderer>();
-        _collider = GetComponent<CapsuleCollider>();
+        //_collider = GetComponent<CapsuleCollider>();
         
         if (_collider == null)
             _collider = GetComponentInChildren<CapsuleCollider>();
@@ -52,38 +57,21 @@ public abstract class EnemyController : MonoBehaviour
     {
         //_rend.material.color = Color.white;
 
-        //NEW
-        //StartCoroutine(Spawn(1f));
-
-        //OLD
-        if (_spawnFX)
-            _spawnFX.Play();
-    }
-
-    public IEnumerator Spawn(float delay)
-    {
-        NavMeshAgent agent = GetComponent<NavMeshAgent>();
-
-        if (agent == null)
-            yield break;
-
-        float initialSpeed = agent.speed;
-        //agent.speed = 0;
-        _meshRenderer.enabled = false;
-
         if (_spawnFX)
             _spawnFX.Play();
 
-        yield return new WaitForSeconds(delay);
-
-        //agent.speed = initialSpeed;
-        _meshRenderer.enabled = true;
+        if (_Play_SFX_Ennemy_Spawn!=null)
+            _Play_SFX_Ennemy_Spawn.Post(gameObject);
     }
 
     protected virtual void OnEnable()
     {
         Player = PlayerController.Instance.gameObject;
         waveManager = GameObject.FindGameObjectWithTag("WaveManager").GetComponent<WaveManager>();
+
+        hasAskForSlow = false;
+        _canAttack = true;
+        _collider.enabled = true;
 
         AddToEnemyManager();
     }
@@ -157,13 +145,16 @@ public abstract class EnemyController : MonoBehaviour
 
     protected virtual void Dying()
     {
+        if (!hasAskForSlow)
+            waveManager.SlowMotion();
+
         DestroyEffect();
         PoolManager.Instance.DesinstantiateFromPool(gameObject);
     }
 
     #endregion
 
-    private void AddToEnemyManager()
+    protected void AddToEnemyManager()
     {
         EnemyManager.Instance.AddEnemyToLevel(this);
     }
@@ -171,7 +162,10 @@ public abstract class EnemyController : MonoBehaviour
     protected virtual void OnDisable()
     {
         StopAllCoroutines();
-        EnemyManager.Instance.RemoveEnemyFromLevel(this);
+        if (EnemyManager.Instance != null)
+        {
+            EnemyManager.Instance.RemoveEnemyFromLevel(this);
+        }
     }
 
     #region StatusEffect

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{C40F43AF-1554-41B1-BE23-CCD7D26990A6}" SchemaVersion="110" RootDocumentID="{899603F8-092E-4FB8-93A5-00C3DC23A21E}" ParentDocumentID="{899603F8-092E-4FB8-93A5-00C3DC23A21E}">
+	<Events>
+		<WorkUnit Name="SFX_Enemy_Common" ID="{C40F43AF-1554-41B1-BE23-CCD7D26990A6}" OwnerID="{899603F8-092E-4FB8-93A5-00C3DC23A21E}" PersistMode="Nested">
+			<PropertyList>
+				<Property Name="Color" Type="int16" Value="10"/>
+				<Property Name="OverrideColor" Type="bool" Value="True"/>
+			</PropertyList>
+			<ChildrenList>
+				<Event Name="Play_SFX_Ennemy_Spawn" ID="{4C8E4DE3-9CB1-4A79-9CE0-155CA0EBE884}">
+					<ChildrenList>
+						<Action Name="" ID="{F8BBD953-7207-4BEA-ADDD-4C83FD3F3E8B}" ShortID="805724652">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Enemy_Spawn" ID="{05A53728-A7FB-48E9-992E-EA0FD25864F0}" WorkUnitID="{23B15D27-5212-492F-AB18-D64924507D5D}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+			</ChildrenList>
+		</WorkUnit>
+	</Events>
+</WwiseDocument>

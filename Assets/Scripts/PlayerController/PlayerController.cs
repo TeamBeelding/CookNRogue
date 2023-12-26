@@ -1,6 +1,7 @@
 using UnityEngine.InputSystem;
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using Enemy;
 using Tutoriel;
 using UnityEngine.SceneManagement;
@@ -82,7 +83,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] ParticleSystem DashingParticles;
     [SerializeField] ParticleSystem _caramelParticles;
-
+    [SerializeField] GameObject _caramelCollider;
     private Vector3 m_dashDirection = Vector2.zero;
 
     [HideInInspector]
@@ -241,6 +242,8 @@ public class PlayerController : MonoBehaviour
         #endregion
 
         m_aimArrow.SetActive(false);
+
+        _caramelCollider.SetActive(false);
     }
 
     private void Update()
@@ -291,10 +294,26 @@ public class PlayerController : MonoBehaviour
 
                 //Correct Aim
                 EnemyController[] enemiesInLevel = _enemyManager.EnemiesInLevel;
-                GameObject[] aimTargets = new GameObject[enemiesInLevel.Length];
+                Cauldron_Explosion[] cauldronsInLevel = PlayerRuntimeData.GetInstance().data.RoomData.TargetCauldrons.ToArray();
+                int targetsNb = enemiesInLevel.Length + cauldronsInLevel.Length;
+                if(PlayerRuntimeData.GetInstance().data.RoomData.BossObject != null)
+                {
+                    targetsNb += 1;
+                }
+                GameObject[] aimTargets = new GameObject[targetsNb];
                 for (int i = 0; i < enemiesInLevel.Length; i++)
                 {
                     aimTargets[i] = enemiesInLevel[i].gameObject;
+                }
+
+                for (int i = 0; i < cauldronsInLevel.Length; i++)
+                {
+                    aimTargets[i + enemiesInLevel.Length] = cauldronsInLevel[i].gameObject;
+                }
+
+                if (PlayerRuntimeData.GetInstance().data.RoomData.BossObject != null)
+                {
+                    aimTargets[targetsNb - 1] = PlayerRuntimeData.GetInstance().data.RoomData.BossObject;
                 }
 
                 _correctedAimDirection = AimAssist2D.CorrectAimDirection(_aimDirection, transform.position, aimTargets, m_aimAssistPresset);
@@ -531,6 +550,7 @@ public class PlayerController : MonoBehaviour
         }
 
         _isDashing = true;
+        gameObject.layer = LayerMask.NameToLayer("IgnoreEnemies");
         _Play_MC_Dash.Post(gameObject);
 
         StartCoroutine(IDashCooldown());
@@ -548,15 +568,24 @@ public class PlayerController : MonoBehaviour
         _isInvicible = true;
         DashingParticles.Play();
 
-        if(PlayerRuntimeData.GetInstance().data.InventoryData.Caramel)
+        if (PlayerRuntimeData.GetInstance().data.InventoryData.Caramel)
+        {
             _caramelParticles.Play();
+            _caramelCollider.SetActive(true);
+        }
 
         yield return new WaitForSeconds(PlayerRuntimeData.GetInstance().data.BaseData.DashDuration);
+        if (PlayerRuntimeData.GetInstance().data.InventoryData.Caramel)
+        {
+            _caramelCollider.SetActive(false);
+        }
+
         _isDashing = false;
         m_dashDirection = Vector2.zero;
         DashingParticles.Stop();
         _caramelParticles.Stop();
         _isInvicible = false;
+        gameObject.layer = LayerMask.NameToLayer("Player");
 
         //Aim Check;
         if (_isAiming)
@@ -570,25 +599,6 @@ public class PlayerController : MonoBehaviour
         _dashOnCooldown = true;
         yield return new WaitForSeconds(PlayerRuntimeData.GetInstance().data.BaseData.DashCooldown);
         _dashOnCooldown = false;
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (!_isDashing)
-            return;
-
-        if (!PlayerRuntimeData.GetInstance().data.InventoryData.Caramel)
-            return;
-
-        if (!collision.transform.parent)
-            return;
-
-        Debug.Log("caramel damage");
-        EnemyController controler;
-        if (collision.transform.parent.TryGetComponent(out controler))
-            controler.TakeDamage(PlayerRuntimeData.GetInstance().data.InventoryData.CaramelDamage);
-
-
     }
     #endregion
 
@@ -667,6 +677,7 @@ public class PlayerController : MonoBehaviour
         {
             _aimInputValue = Vector2.zero;
             _aimMagnitude = 0f;
+            _isAiming = false;
 
             m_aimArrow.SetActive(false);
 
@@ -1008,9 +1019,10 @@ public class PlayerController : MonoBehaviour
         PlayerRuntimeData.ResetInstance();
         Time.timeScale = 1;
         AkSoundEngine.StopAll();
+        pauseMenu.SetActive(false);
         deathMenu.SetActive(false);
         victoryMenu.SetActive(false);
-        SceneManager.LoadScene(0);
+        RestartLevelFix.Instance.LoadScene(0);
     }
     
     
@@ -1019,10 +1031,10 @@ public class PlayerController : MonoBehaviour
         PlayerRuntimeData.ResetInstance();
         Time.timeScale = 1;
         AkSoundEngine.StopAll();
+        pauseMenu.SetActive(false);
         deathMenu.SetActive(false);
         victoryMenu.SetActive(false);
-        RestartLevelFix.Instance.RestartLevel();
-        SceneManager.LoadScene(0);
+        RestartLevelFix.Instance.LoadScene(1);
     }
 
     public void EndGame()
@@ -1048,6 +1060,7 @@ public class PlayerController : MonoBehaviour
         _playerActions.UI.Disable();
         _playerActions.Cooking.Disable();
         _playerActions.Default.Enable();
+        PlayerRuntimeData.GetInstance().data.BaseData.CurrentHealth = PlayerRuntimeData.GetInstance().data.BaseData.MaxHealth;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
@@ -1064,10 +1077,15 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        if (_instance == this)
+            _instance = null;
+    }
+
     #endregion
 
     #region CB
-
     void OpenCB(InputAction.CallbackContext context)
     {
         //Input state check

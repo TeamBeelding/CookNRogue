@@ -21,6 +21,7 @@ namespace Enemy.DashingEnemy
 
         private Coroutine _coroutineState;
         private Coroutine _rotateCoroutine;
+        private Coroutine _deathCoroutine;
         private RaycastHit _hit;
 
         private bool _isCharging = false;
@@ -38,7 +39,7 @@ namespace Enemy.DashingEnemy
         [SerializeField]
         private GameObject visual;
 
-        private Animator animator;
+        [SerializeField] private Animator animator;
         [SerializeField] private GameObject physics;
 
         [SerializeField] ParticleSystem _collisionParticles;
@@ -64,14 +65,19 @@ namespace Enemy.DashingEnemy
 
         protected override void OnEnable()
         {
-            base.OnEnable();
-
             Healthpoint = _data.GetHealth();
 
             Player = PlayerController.Instance.gameObject;
 
+            if (animator != null )
+                animator = GetComponentInChildren<Animator>();
+
             physics.SetActive(true);
             _collider.enabled = true;
+
+            base.OnEnable();
+
+            SetState(State.Casting);
         }
 
         // Start is called before the first frame update
@@ -111,15 +117,15 @@ namespace Enemy.DashingEnemy
             switch (state)
             {
                 case State.Casting:
-                    animator.SetBool("isAttack", false);
+                    animator?.SetBool("isAttack", false);
                     Casting();
                     break;
                 case State.Waiting:
-                    animator.SetBool("isAttack", false);
+                    animator?.SetBool("isAttack", false);
                     WaitingAnotherDash();
                     break;
                 case State.Dashing:
-                    animator.SetBool("isAttack", true);
+                    animator?.SetBool("isAttack", true);
                     _Play_SFX_Cabbage_Charge_LP.Post(gameObject);
                     Dashing();
                     break;
@@ -274,10 +280,13 @@ namespace Enemy.DashingEnemy
             
             _Play_SFX_Cabbage_Death.Post(gameObject);
 
-            animator.SetBool("isDead", true);
-            waveManager?.SlowMotion();
+            animator?.SetBool("isDead", true);
 
-            StartCoroutine(IDeathAnim());
+            waveManager.SlowMotion();
+            hasAskForSlow = true;
+
+            if (gameObject.activeSelf)
+                _deathCoroutine = StartCoroutine(IDeathAnim());
 
             IEnumerator IDeathAnim()
             {
@@ -350,6 +359,9 @@ namespace Enemy.DashingEnemy
 
         public override void TakeDamage(float damage = 1, bool isCritical = false)
         {
+            if (state == State.Dying)
+                return;
+
             _Play_SFX_Cabbage_Hit.Post(gameObject);
             base.TakeDamage(damage, isCritical);
 

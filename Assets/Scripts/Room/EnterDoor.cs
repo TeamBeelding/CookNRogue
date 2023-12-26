@@ -15,14 +15,6 @@ public class EnterDoor : MonoBehaviour
     /* Instancié au chargement d'une nouvelle scène */
     private static DoorManager _doorManager;
 
-    [Header("Sound")]
-    [SerializeField]
-    private AK.Wwise.State _InFightOff;
-    [SerializeField]
-    private AK.Wwise.State _InFightOn;
-    [SerializeField]
-    private AK.Wwise.State _NoMusic;
-
     [Header("Room linker")]
 
     [SerializeField]
@@ -42,6 +34,8 @@ public class EnterDoor : MonoBehaviour
     private MeshRenderer m_mesh;
     [SerializeField]
     private bool m_isOpenOnStart = false;
+    [SerializeField]
+    private bool m_isEntrance = false;
 
     [Space]
 
@@ -74,6 +68,7 @@ public class EnterDoor : MonoBehaviour
     private Material _raysMaterial;
 
     [SerializeField] GameObject _godRays;
+    [SerializeField] UI_Indicator _indicator;
 
     bool _doorIsOpened = false;
     bool _raysAreActive = false;
@@ -113,12 +108,19 @@ public class EnterDoor : MonoBehaviour
             {
                 SetDoor(m_doorOpeningDuration);
                 SetPortal(m_portalAnimDuration);
-                _InFightOff.SetValue();
+            }
+            else if (m_isEntrance)
+            {
+                if (m_door != null)
+                {
+                    m_door.SetActive(true);
+                    m_door.GetComponent<Collider>().enabled = true;
+                    StartCoroutine(ICloseDoor());
+                }
             }
             else
             {
                 EnemyManager.Instance.OnAllEnnemiesKilled += StartOpenDoor;
-                _InFightOn.SetValue();
             }
         }
     }
@@ -155,15 +157,26 @@ public class EnterDoor : MonoBehaviour
 
             PoolManager.Instance.DestroyAI();
 
-            SceneManager.LoadScene(sceneToLoad.BuildIndex);
+            //SceneManager.LoadScene(sceneToLoad.BuildIndex);
+            StartCoroutine(TransitionToNextScene(sceneToLoad.BuildIndex));
         }
+    }
+
+    private IEnumerator TransitionToNextScene(int sceneIndex)
+    {
+        RoomTransition.instance.TriggerTransitionAnimation();
+        yield return new WaitForSeconds(RoomTransition.instance.GetAnimationDuration());
+        SceneManager.LoadScene(sceneIndex);
     }
     private void StartOpenDoor()
     {
         if (m_door != null)
         {
             _Play_SFX_Door_Open.Post(gameObject);
-            _NoMusic.SetValue();
+
+            if(_indicator)
+                _indicator.ActivateIndicator();
+
             StartCoroutine(IOpenDoor());
         }
     }
@@ -185,9 +198,26 @@ public class EnterDoor : MonoBehaviour
         }
     }
 
+    IEnumerator ICloseDoor()
+    {
+        if (SkinnedMaterials.Length > 0)
+        {
+            float duration = m_portalAnimDuration + m_portalAnimOffset < m_doorOpeningDuration ? m_doorOpeningDuration : m_portalAnimDuration + m_portalAnimOffset;
+
+            for (float f = duration; f > 0; f -= m_refreshRate)
+            {
+                SetDoor(f < m_doorOpeningDuration ? f : m_doorOpeningDuration);
+                SetPortal(f <= m_portalAnimOffset ? 0f : f - m_portalAnimOffset);
+                yield return new WaitForSeconds(m_refreshRate);
+            }
+            SetDoor(0);
+            SetPortal(0);
+        }
+    }
+
     void SetPortal(float value)
     {
-        if(value > 0)
+        if(!m_isEntrance && value > 0)
         {
             m_door.GetComponent<Collider>().enabled = false;
         }
@@ -210,7 +240,7 @@ public class EnterDoor : MonoBehaviour
 
     void SetDoor (float value)
     {
-        if (_doorIsOpened)
+        if (!m_isEntrance && _doorIsOpened)
             return;
 
         float progress = m_doorOpeningCurve.Evaluate(value / m_doorOpeningDuration);
@@ -218,7 +248,7 @@ public class EnterDoor : MonoBehaviour
         SkinnedMaterials[0].SetFloat("_GrowValue", animProgress);
 
         //Open Door
-        if(value >= m_doorOpeningDuration)
+        if(!m_isEntrance && value >= m_doorOpeningDuration)
         {
             m_door.SetActive(false);
             _doorIsOpened = true;

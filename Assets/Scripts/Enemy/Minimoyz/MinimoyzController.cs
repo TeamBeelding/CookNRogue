@@ -1,5 +1,4 @@
 using System.Collections;
-using Enemy.Data;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -22,13 +21,12 @@ namespace Enemy.Minimoyz
         private AK.Wwise.Event _Stop_SFX_Pea_Movement;
 
         [SerializeField] private MinimoyzData data;
-        [SerializeField] private SlimeData slimeData;
         [SerializeField] private NavMeshAgent agent;
         //[SerializeField] private GameObject physicsMinimoyz;
 
         private Coroutine coroutineState;
         private NavMeshPath navMeshPath;
-    
+        
         public enum State
         {
             Neutral,
@@ -41,10 +39,23 @@ namespace Enemy.Minimoyz
     
         public State state;
 
+        [Space(20)]
+        [Header("Ingredient Drop chances and VFXs")]
+        private bool _ingredientDrop = false;
+        [SerializeField, Range(0f, 100f)] float _dropPercentage = 10f;
+        private Color DefaultOutlineColor = Color.red;
+        [SerializeField] private Color RewardEffectOutlineColor = Color.yellow;
+        [SerializeField] private Outline outline;
+        [SerializeField] Transform VFXContainer;
+        private ParticleSystem[] VFXList;
+
         protected override void Awake()
         {
             base.Awake();
             navMeshPath = new NavMeshPath();
+
+            DefaultOutlineColor = outline.OutlineColor;
+            VFXList = VFXContainer.GetComponentsInChildren<ParticleSystem>();
         }
 
         protected override void OnEnable()
@@ -61,6 +72,8 @@ namespace Enemy.Minimoyz
             _collider.enabled = true;
 
             SetState(State.Chase);
+
+            ResetDropsParameters();
         }
 
         // Update is called once per frame
@@ -76,8 +89,6 @@ namespace Enemy.Minimoyz
 
             base.Update();
         }
-
-        public void SetFocus(bool value = true) => FocusPlayer = value;
 
         private void StateManagement()
         {
@@ -180,18 +191,14 @@ namespace Enemy.Minimoyz
                     agent.SetDestination(Player.transform.position);
 
                     if (!agent.CalculatePath(Player.transform.position, navMeshPath))
-                    {
                         SetState(State.Dying);
-                    }
-                    else
+
+                    switch (navMeshPath.status)
                     {
-                        switch (navMeshPath.status)
-                        {
-                            case NavMeshPathStatus.PathPartial:
-                            case NavMeshPathStatus.PathInvalid:
-                                SetState(State.Dying);
-                                break;
-                        }
+                        case NavMeshPathStatus.PathPartial:
+                        case NavMeshPathStatus.PathInvalid:
+                            SetState(State.Dying);
+                            break;
                     }
 
                     yield return null;
@@ -234,9 +241,66 @@ namespace Enemy.Minimoyz
 
         protected override void Dying()
         {
-            waveManager?.SlowMotion();
+            waveManager.SlowMotion();
+            hasAskForSlow = true;
 
-            base.Dying();
+            if (_ingredientDrop)
+                DropIngredient();
+
+            if (gameObject.activeSelf)
+                StartCoroutine(IDelayBeforeDying());
+
+            IEnumerator IDelayBeforeDying()
+            {
+                yield return new WaitForSeconds(0.05f);
+                base.Dying();
+            }
         }
+
+        public void InitEntityReward(bool rewardBool)
+        {
+            if (!rewardBool)
+            {
+                ResetDropsParameters();
+                return;
+            }
+
+            float random0100 = Random.Range(0f, 100f);
+            if (random0100 <= _dropPercentage)
+                SetDropsParameters();
+        }
+
+        #region DROPS
+        public void DropIngredient()
+        {
+            //CALL TO SPAWN INGREDIENT
+        }
+
+        public void ResetDropsParameters()
+        {
+            _ingredientDrop = false;
+            outline.OutlineColor = DefaultOutlineColor;
+            PlayDropVFXs(false);
+        }
+
+        public void SetDropsParameters()
+        {
+            Debug.Log("set drop parameters");
+            outline.OutlineColor = RewardEffectOutlineColor;
+            _ingredientDrop = true;
+            PlayDropVFXs(true);
+        }
+
+        private void PlayDropVFXs(bool play)
+        {
+            foreach(var vfx in VFXList)
+            {
+                if(play)
+                    vfx.Play();
+                else
+                    vfx.Stop();
+            }
+        }
+        #endregion
     }
 }

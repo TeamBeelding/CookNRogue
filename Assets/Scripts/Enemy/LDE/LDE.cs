@@ -30,6 +30,8 @@ namespace Enemy.LDE
         [SerializeField] private GameObject physics;
 
         private Coroutine _stateCoroutine;
+        private Coroutine _firstBulletCoroutine;
+        private bool isFirstBulletShoot = true;
 
         [SerializeField]
         private Animator animator;
@@ -63,6 +65,16 @@ namespace Enemy.LDE
             physics.SetActive(true);
 
             _collider.enabled = true;
+
+            isFirstBulletShoot = true;
+
+            _firstBulletCoroutine = StartCoroutine(IDelayForFirstBullet());
+
+            IEnumerator IDelayForFirstBullet()
+            {
+                yield return new WaitForSeconds(data.GetDelayForFirstBullet);
+                isFirstBulletShoot = false;
+            }
 
             SetState(FocusPlayer ? State.Chase : State.Neutral);
         }
@@ -175,11 +187,19 @@ namespace Enemy.LDE
 
         private void Shot()
         {
-            GameObject shot = PoolManager.Instance.InstantiateFromPool(PoolType.Bullet, m_gun.transform.position, Quaternion.identity);
-            shot.GetComponent<EnemyBulletController>().SetDirection(Player.transform);
+            if (!isFirstBulletShoot)
+                Shooting();
+            else
+                return;
 
-            animator.SetBool("isAttack", true);
-            _Play_SFX_Corn_Attack_Shot.Post(gameObject);
+            void Shooting()
+            {
+                GameObject shot = PoolManager.Instance.InstantiateFromPool(PoolType.Bullet, m_gun.transform.position, Quaternion.identity);
+                shot.GetComponent<EnemyBulletController>().SetDirection(Player.transform);
+
+                animator.SetBool("isAttack", true);
+                _Play_SFX_Corn_Attack_Shot.Post(gameObject);
+            }
         }
 
         protected override void Dying()
@@ -189,13 +209,14 @@ namespace Enemy.LDE
 
             animator.SetBool("isDead", true);
 
-            StartCoroutine(IDeathAnim());
+            if (gameObject.activeSelf)
+                StartCoroutine(IDeathAnim());
 
             IEnumerator IDeathAnim()
             {
                 yield return new WaitForSeconds(2f);
-                base.Dying();
                 m_stateSystem.gameObject.SetActive(false);
+                base.Dying();
             }
         }
 
@@ -206,6 +227,9 @@ namespace Enemy.LDE
 
         public override void TakeDamage(float damage = 1, bool isCritical = false)
         {
+            if (state == State.Dying)
+                return;
+
             base.TakeDamage(damage, isCritical);
 
             if (state == State.Neutral) 
@@ -216,6 +240,7 @@ namespace Enemy.LDE
             if (Healthpoint <= 0)
             {
                 waveManager.SlowMotion();
+                hasAskForSlow = true;
 
                 agent.speed = 0;
                 SetState(State.Dying);
