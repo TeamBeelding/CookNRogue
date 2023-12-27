@@ -59,7 +59,6 @@ public class UI_Indicator : MonoBehaviour
     {
         activated = true;
         _image.enabled = true;
-        Debug.Log("activated!!!!");
     }
 
     public void DeActivateIndicator()
