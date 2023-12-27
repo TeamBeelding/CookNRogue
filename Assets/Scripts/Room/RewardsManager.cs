@@ -104,7 +104,7 @@ public class RewardsManager : MonoBehaviour
             }
         }
 
-        Debug.Log("Spawning " + amountOfIngredientsToDrop + " reward items");
+        Debug.Log("Spawning " + amountOfIngredientsToDrop + " reward ingredients");
         for (int i = 0; i < amountOfIngredientsToDrop; i++)
         {
             if (!SpawnRandomIngredient())
@@ -117,7 +117,7 @@ public class RewardsManager : MonoBehaviour
      */
     private bool SpawnRandomIngredient()
     {
-        Debug.Log("Spawning a reward item");
+        Debug.Log("Spawning an ingredient item");
         if (_pickedIngredients.Count >= _ingredientsToDrop.Length)
         {
             Debug.LogError("No more reward left to pick from");
@@ -146,20 +146,18 @@ public class RewardsManager : MonoBehaviour
             return false;
         }
 
-        if(_pickedIngredients.Contains(randomIngredient.ingredientPrefab.name))
-            return false;
+        if (_pickedIngredients.Contains(randomIngredient.ingredientPrefab.name))
+        {
+            Debug.LogError("error");
+        }
 
         _pickedIngredients.Add(randomIngredient.ingredientPrefab.name);
 
-        var amountToSpawn = Random.Range(randomIngredient.minAmount, randomIngredient.maxAmount + 1);
-        for (int i = 0; i < amountToSpawn; i++)
-        {
-            var inst = Instantiate(randomIngredient.ingredientPrefab, GetRandomSpawnPoint());
-            inst.transform.localPosition = Vector3.zero;
-            inst.transform.SetParent(null);
-            inst.transform.localRotation = Quaternion.identity;
-            inst.transform.localScale = Vector3.one;
-        }
+        var inst = Instantiate(randomIngredient.ingredientPrefab, GetRandomSpawnPoint());
+        inst.transform.localPosition = Vector3.zero;
+        inst.transform.SetParent(null);
+        inst.transform.localRotation = Quaternion.identity;
+        inst.transform.localScale = Vector3.one;
 
         Debug.Log("Spawned reward ingredient " + randomIngredient.ingredientPrefab.name);
 
@@ -223,5 +221,17 @@ public class RewardsManager : MonoBehaviour
         }
         int random = Random.Range(0, _dropPositions.Length);
         return _dropPositions[random];
+    }
+
+    private void OnDestroy()
+    {
+        if (_ingredientsToDrop.Length > 0)
+        {
+            EnemyManager.Instance.OnAllEnnemiesKilled -= DropIngredients;
+        }
+        if (_itemsToDrop.Length > 0)
+        {
+            EnemyManager.Instance.OnAllEnnemiesKilled -= DropItem;
+        }
     }
 }
