@@ -11,6 +11,5 @@ public class BossIntroSound : MonoBehaviour
     public void PlayBossIntroSound()
     {
         _Play_SFX_Boss_Intro.Post(gameObject);
-        Debug.Log("hello");
     }
 }

@@ -34,7 +34,6 @@ public class FragmentationParticlesCollisions : MonoBehaviour
             
             if (enemyController != null)
             {
-                Debug.Log((_damage_percentage / 100));
                 float totalDamage = PlayerRuntimeData.GetInstance().data.AttackData.AttackDamage * (_damage_percentage / 100);
                 totalDamage = (int)totalDamage;
                 enemyController.TakeDamage(totalDamage);

@@ -139,7 +139,6 @@ public class PlayerBulletBehaviour : MonoBehaviour
                 RaycastHit hit;
                 if (Physics.Raycast(transform.position - _direction, _direction, out hit,3,9))
                 {
-                    Debug.Log(hit.transform.name);
                     _direction = Vector3.Reflect(_direction, hit.normal);
                 }
                 
@@ -183,7 +182,6 @@ public class PlayerBulletBehaviour : MonoBehaviour
                     
                     closest = distance;
                     closestEnemy = hitCollider.gameObject;
-                    Debug.Log(closestEnemy);
                 }
             }
             
@@ -205,7 +203,6 @@ public class PlayerBulletBehaviour : MonoBehaviour
                     GameObject ricochetPart = Instantiate(ricochet.RicochetParticles, Position, Quaternion.identity);
 
                     Destroy(ricochetPart, 0.5f);
-                    Debug.Log("ricochet");
                 }
             }
         }
