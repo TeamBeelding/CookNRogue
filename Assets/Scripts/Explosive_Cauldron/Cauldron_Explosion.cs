@@ -65,6 +65,11 @@ public class Cauldron_Explosion : MonoBehaviour
         {
             TriggerExplosion();
         }
+
+        if (collision.transform.GetComponentInParent<BossController>())
+        {
+            TriggerExplosion();
+        }
     }
 
 
@@ -132,13 +137,17 @@ public class Cauldron_Explosion : MonoBehaviour
                 hit.transform.GetComponent<Cauldron_Explosion>().TriggerExplosion();
             }
 
-            if (!hit.transform.parent)
+            if (hit.transform.GetComponentInParent<BossController>())
+            {
+                int damage = (int)CalculateEnemyDamage(hit.transform.position) * 15;
+                hit.transform.GetComponentInParent<BossController>().TakeDamage(damage);
                 continue;
+            }
 
-            if (hit.transform.parent.GetComponent<EnemyController>())
+            if (hit.transform.GetComponentInParent<EnemyController>())
             {
                 int damage = (int)CalculateEnemyDamage(hit.transform.position);
-                hit.transform.parent.GetComponent<EnemyController>().TakeDamage(damage);
+                hit.transform.GetComponentInParent<EnemyController>().TakeDamage(damage);
                 continue;
             }
         }
