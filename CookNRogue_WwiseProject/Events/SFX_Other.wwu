@@ -56,17 +56,6 @@
 								</Reference>
 							</ReferenceList>
 						</Action>
-						<Action Name="" ID="{82C33048-CDEF-4BF5-B2F7-1E65E63440AE}" ShortID="62493864">
-							<PropertyList>
-								<Property Name="Delay" Type="Real64" Value="2"/>
-								<Property Name="FadeTime" Type="Real64" Value="1.5"/>
-							</PropertyList>
-							<ReferenceList>
-								<Reference Name="Target">
-									<ObjectRef Name="SFX_Door_Idle" ID="{0BC59EBC-9035-4330-9B33-4C2118FA21BB}" WorkUnitID="{3CE9A9BC-F960-482A-AEE6-287A4C6E7543}"/>
-								</Reference>
-							</ReferenceList>
-						</Action>
 					</ChildrenList>
 				</Event>
 				<Event Name="Play_SFX_Health_Collect" ID="{8D98E6B4-E8E1-4C0A-B86B-4814A2EE7AED}">
@@ -280,7 +269,8 @@
 							<PropertyList>
 								<Property Name="ActionType" Type="int16" Value="2"/>
 								<Property Name="FadeOutCurve" Type="int16" Value="6"/>
-								<Property Name="FadeTime" Type="Real64" Value="1.5"/>
+								<Property Name="FadeTime" Type="Real64" Value="2.5"/>
+								<Property Name="Scope" Type="int16" Value="1"/>
 							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Target">
@@ -293,6 +283,7 @@
 								<Property Name="ActionType" Type="int16" Value="2"/>
 								<Property Name="FadeOutCurve" Type="int16" Value="6"/>
 								<Property Name="FadeTime" Type="Real64" Value="1.5"/>
+								<Property Name="Scope" Type="int16" Value="1"/>
 							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Target">
@@ -304,11 +295,27 @@
 							<PropertyList>
 								<Property Name="ActionType" Type="int16" Value="2"/>
 								<Property Name="FadeOutCurve" Type="int16" Value="6"/>
-								<Property Name="FadeTime" Type="Real64" Value="1.5"/>
+								<Property Name="FadeTime" Type="Real64" Value="2.5"/>
+								<Property Name="Scope" Type="int16" Value="1"/>
 							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Target">
 									<ObjectRef Name="Totem_Heal_Idle" ID="{83282ABC-5D15-4D37-AB95-EF590F27E5EA}" WorkUnitID="{3CE9A9BC-F960-482A-AEE6-287A4C6E7543}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_SFX_Door_Idle" ID="{1C877824-F94F-4325-BD56-797DF097FB75}">
+					<ChildrenList>
+						<Action Name="" ID="{6F2AA373-D056-493E-8076-B4AE2E96D45D}" ShortID="884998348">
+							<PropertyList>
+								<Property Name="FadeInCurve" Type="int16" Value="6"/>
+								<Property Name="FadeTime" Type="Real64" Value="1.5"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="SFX_Door_Idle" ID="{0BC59EBC-9035-4330-9B33-4C2118FA21BB}" WorkUnitID="{3CE9A9BC-F960-482A-AEE6-287A4C6E7543}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>

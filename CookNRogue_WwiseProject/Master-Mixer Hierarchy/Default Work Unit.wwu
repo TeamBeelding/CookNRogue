@@ -418,13 +418,6 @@
 								</Property>
 							</PropertyList>
 							<ChildrenList>
-								<Bus Name="Cabbage_Charge" ID="{EFD0EC48-C6BC-4982-BAED-4FB6BEF68DA5}">
-									<ReferenceList>
-										<Reference Name="Effect0" PluginName="Wwise Meter" CompanyID="0" PluginID="129" PluginType="3">
-											<ObjectRef Name="Sidechain_Meter" ID="{8CAEDFEA-D478-4794-A098-C6F688A3E7A5}" WorkUnitID="{5063C897-C4E2-4F24-B819-F22106701854}"/>
-										</Reference>
-									</ReferenceList>
-								</Bus>
 								<Bus Name="Other_Enemies" ID="{CD4AC0A5-4F83-4620-B424-FD73509F9D65}">
 									<ChildrenList>
 										<Bus Name="Pea_Movements" ID="{6A0D6CD1-C13E-4518-B7BE-677C2C0DA145}">
@@ -664,6 +657,14 @@
 								</ObjectList>
 							</ObjectLists>
 						</Bus>
+						<Bus Name="Cabbage_Charge" ID="{EFD0EC48-C6BC-4982-BAED-4FB6BEF68DA5}">
+							<ReferenceList>
+								<Reference Name="Effect0" PluginName="Wwise Meter" CompanyID="0" PluginID="129" PluginType="3">
+									<ObjectRef Name="Sidechain_Meter" ID="{8CAEDFEA-D478-4794-A098-C6F688A3E7A5}" WorkUnitID="{5063C897-C4E2-4F24-B819-F22106701854}"/>
+								</Reference>
+							</ReferenceList>
+						</Bus>
+						<Bus Name="Charge_Hit" ID="{284780C6-F7CA-4B74-AD9A-097135E98543}"/>
 					</ChildrenList>
 					<StateInfo>
 						<StateGroupList>

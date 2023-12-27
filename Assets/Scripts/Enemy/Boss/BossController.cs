@@ -65,6 +65,8 @@ public class BossController : EnemyController
     private AK.Wwise.Event _Play_SFX_Boss_Death;
     [SerializeField]
     private AK.Wwise.Event _Play_SFX_Boss_Hit;
+    [SerializeField]
+    private AK.Wwise.State _NoMusic;
 
     protected override void OnEnable()
     {
@@ -389,6 +391,7 @@ public class BossController : EnemyController
 
         StopAllCoroutines();
         StartCoroutine(DyingRoutine());
+        _NoMusic.SetValue();
     }
 
     private IEnumerator DyingRoutine()

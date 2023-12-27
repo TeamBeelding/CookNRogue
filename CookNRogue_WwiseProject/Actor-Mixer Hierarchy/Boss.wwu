@@ -343,6 +343,7 @@
 								<RandomSequenceContainer Name="RC_Boss_Charge_Impact" ID="{7811DEBD-616A-417E-A6D9-DDAED50B67EB}" ShortID="36799130">
 									<PropertyList>
 										<Property Name="NormalOrShuffle" Type="int16" Value="0"/>
+										<Property Name="OverrideOutput" Type="bool" Value="True"/>
 										<Property Name="Pitch" Type="int32">
 											<ModifierList>
 												<ModifierInfo>
@@ -375,7 +376,7 @@
 											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DEC634C6-86E3-4DF9-96EE-F869BA355507}"/>
 										</Reference>
 										<Reference Name="OutputBus">
-											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{85B5C199-8628-4DDB-B756-DA8917395816}"/>
+											<ObjectRef Name="Charge_Hit" ID="{284780C6-F7CA-4B74-AD9A-097135E98543}" WorkUnitID="{85B5C199-8628-4DDB-B756-DA8917395816}"/>
 										</Reference>
 									</ReferenceList>
 									<ChildrenList>
@@ -450,10 +451,11 @@
 								<BlendContainer Name="BLD_Boss_Charge_LP" ID="{DFCE762E-C21F-40E3-9AF0-5DEE02976D84}" ShortID="601536892">
 									<PropertyList>
 										<Property Name="3DSpatialization" Type="int16" Value="1"/>
+										<Property Name="OverrideOutput" Type="bool" Value="True"/>
 										<Property Name="OverridePositioning" Type="bool" Value="True"/>
 										<Property Name="Volume" Type="Real64">
 											<ValueList>
-												<Value>5</Value>
+												<Value>-2</Value>
 											</ValueList>
 										</Property>
 									</PropertyList>
@@ -465,7 +467,7 @@
 											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DEC634C6-86E3-4DF9-96EE-F869BA355507}"/>
 										</Reference>
 										<Reference Name="OutputBus">
-											<ObjectRef Name="Cabbage_Charge" ID="{EFD0EC48-C6BC-4982-BAED-4FB6BEF68DA5}" WorkUnitID="{85B5C199-8628-4DDB-B756-DA8917395816}"/>
+											<ObjectRef Name="Boss" ID="{A8C5526F-8C36-486C-A2EB-1FD8BD215251}" WorkUnitID="{85B5C199-8628-4DDB-B756-DA8917395816}"/>
 										</Reference>
 									</ReferenceList>
 									<ChildrenList>

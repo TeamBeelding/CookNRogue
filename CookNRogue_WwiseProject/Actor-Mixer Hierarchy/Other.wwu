@@ -1187,13 +1187,29 @@
 								<Sound Name="SFX_Door_Idle" ID="{0BC59EBC-9035-4330-9B33-4C2118FA21BB}" ShortID="123980840">
 									<PropertyList>
 										<Property Name="3DSpatialization" Type="int16" Value="1"/>
+										<Property Name="IgnoreParentMaxSoundInstance" Type="bool" Value="True"/>
 										<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+										<Property Name="MaxSoundPerInstance" Type="int16">
+											<ValueList>
+												<Value>1</Value>
+											</ValueList>
+										</Property>
 										<Property Name="OverridePositioning" Type="bool" Value="True"/>
-										<Property Name="SpeakerPanning3DSpatializationMix" Type="int32" Value="70"/>
+										<Property Name="SpeakerPanning3DSpatializationMix" Type="int32" Value="50"/>
+										<Property Name="UseMaxSoundPerInstance" Type="bool">
+											<ValueList>
+												<Value>True</Value>
+											</ValueList>
+										</Property>
+										<Property Name="Volume" Type="Real64">
+											<ValueList>
+												<Value>-2</Value>
+											</ValueList>
+										</Property>
 									</PropertyList>
 									<ReferenceList>
 										<Reference Name="Attenuation">
-											<ObjectRef Name="ATN_15M" ID="{504FDD1E-DA79-4BD8-85EA-A2A9AE971E23}" WorkUnitID="{A99C7566-826F-4E9D-A733-5652D69BE57C}"/>
+											<ObjectRef Name="ATN_25M" ID="{C1A30AD3-7F4B-4AFC-BBEE-21428EAD722D}" WorkUnitID="{A99C7566-826F-4E9D-A733-5652D69BE57C}"/>
 										</Reference>
 										<Reference Name="Conversion">
 											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DEC634C6-86E3-4DF9-96EE-F869BA355507}"/>
@@ -1211,6 +1227,9 @@
 											</MediaIDList>
 										</AudioFileSource>
 									</ChildrenList>
+									<PositioningInfo>
+										<Position Name="" ID="{D3FB3027-5483-4E95-B982-53929BFF8810}"/>
+									</PositioningInfo>
 									<ActiveSourceList>
 										<ActiveSource Name="SFX_Door_Idle" ID="{94BDDC5A-2F22-4698-9355-1045664829FA}" Platform="Linked"/>
 									</ActiveSourceList>

@@ -819,7 +819,7 @@
 				<Event Id="2301333962" Name="Stop_SFX_Pea_Movement" MaxAttenuation="0" DurationType="OneShot" DurationMin="0" DurationMax="0"/>
 			</Events>
 		</SoundBank>
-		<SoundBank Id="2374353081" Type="User" Language="SFX" Hash="{A6392ABB-3049-2B59-A7F4-87F7FE417744}">
+		<SoundBank Id="2374353081" Type="User" Language="SFX" Hash="{338CE6E3-B7B1-BFC3-74E5-86E8D3B8F04A}">
 			<ShortName>SFX_Other</ShortName>
 			<Path>SFX_Other.bnk</Path>
 			<Media>
@@ -1073,9 +1073,13 @@
 						<MediaRef Id="681124314"/>
 					</MediaRefs>
 				</Event>
-				<Event Id="1312371701" Name="Play_SFX_Door_Open" MaxAttenuation="40" DurationType="Infinite">
+				<Event Id="1308373187" Name="Play_SFX_Door_Idle" MaxAttenuation="25" DurationType="Infinite">
 					<MediaRefs>
 						<MediaRef Id="780667457"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="1312371701" Name="Play_SFX_Door_Open" MaxAttenuation="40" DurationType="OneShot" DurationMin="3.6283069" DurationMax="3.6283069">
+					<MediaRefs>
 						<MediaRef Id="876536733"/>
 					</MediaRefs>
 				</Event>
@@ -2488,5 +2492,5 @@
 			</StateGroups>
 		</SoundBank>
 	</SoundBanks>
-	<FileHash>{BB7F0A08-9AF0-8694-FB86-5CF434280E3E}</FileHash>
+	<FileHash>{ABC23A69-53E4-63BD-2EA3-9F7C63A23AF1}</FileHash>
 </SoundBanksInfo>
