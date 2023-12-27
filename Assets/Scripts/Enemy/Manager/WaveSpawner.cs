@@ -15,6 +15,7 @@ public class WaveSpawner : MonoBehaviour
     [SerializeField] private List<WaveContainer> waveContainer;
     [SerializeField] GameObject fx;
     [SerializeField] private float delay = 0.25f;
+    [SerializeField] private AK.Wwise.Event _Play_SFX_Enemy_Spawn_Magic;
 
     private GameObject ai;
 
@@ -40,6 +41,7 @@ public class WaveSpawner : MonoBehaviour
             if (waveContainer[currentWaveIndex - 1].IAType != PoolType.None)
             {
                 GameObject dirtFX = Instantiate(fx, transform.position, Quaternion.identity);
+                _Play_SFX_Enemy_Spawn_Magic.Post(dirtFX);
 
                 dirtFX.transform.parent = transform;
                 dirtFX.SetActive(true);

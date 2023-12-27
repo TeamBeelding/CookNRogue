@@ -15,6 +15,12 @@ public class EnterDoor : MonoBehaviour
     /* Instancié au chargement d'une nouvelle scène */
     private static DoorManager _doorManager;
 
+    [Header("Sound")]
+    [SerializeField]
+    private AK.Wwise.Event _Stop_SFX_All_Idle;
+    [SerializeField]
+    private AK.Wwise.Event _Play_SFX_Door_Idle;
+
     [Header("Room linker")]
 
     [SerializeField]
@@ -108,6 +114,7 @@ public class EnterDoor : MonoBehaviour
             {
                 SetDoor(m_doorOpeningDuration);
                 SetPortal(m_portalAnimDuration);
+                _Play_SFX_Door_Idle.Post(gameObject);
             }
             else if (m_isEntrance)
             {
@@ -158,6 +165,7 @@ public class EnterDoor : MonoBehaviour
             PoolManager.Instance.DestroyAI();
 
             //SceneManager.LoadScene(sceneToLoad.BuildIndex);
+            _Stop_SFX_All_Idle.Post(gameObject);
             StartCoroutine(TransitionToNextScene(sceneToLoad.BuildIndex));
         }
     }
@@ -173,8 +181,9 @@ public class EnterDoor : MonoBehaviour
         if (m_door != null)
         {
             _Play_SFX_Door_Open.Post(gameObject);
+            _Play_SFX_Door_Idle.Post(gameObject);
 
-            if(_indicator)
+            if (_indicator)
                 _indicator.ActivateIndicator();
 
             StartCoroutine(IOpenDoor());
@@ -195,6 +204,7 @@ public class EnterDoor : MonoBehaviour
             }
             SetDoor(m_doorOpeningDuration);
             SetPortal(m_portalAnimDuration);
+            //_Play_SFX_Door_Idle.Post(gameObject);
         }
     }
 

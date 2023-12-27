@@ -226,6 +226,7 @@ GameObject:
   - component: {fileID: 8085539784299037437}
   - component: {fileID: 7964973513032317043}
   - component: {fileID: 359838909}
+  - component: {fileID: 1291030449137871399}
   m_Layer: 0
   m_Name: Next level
   m_TagString: Untagged
@@ -273,6 +274,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 797fd38f4d352504387c8b8718718745, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _Stop_SFX_All_Idle:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: eddc65ca1af4415469ce3cd4727b1bb6,
+      type: 2}
+  _Play_SFX_Door_Idle:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 9da0fe863e238fd47b74f9d94941c3f3,
+      type: 2}
   _sceneProbas: []
   _scenesToLoad: []
   spawnPoint: {fileID: 2298718774804524450}
@@ -413,6 +424,31 @@ MonoBehaviour:
   _image: {fileID: 2054491533}
   borderThickness: 100
   activated: 0
+--- !u!114 &1291030449137871399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4047615702978082153}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2698c394a636bc479a5e90f55e626a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerList: f7e1664c
+  useOtherObject: 0
+  data:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: b61b3cc46e7b35d498286433a442c5ed,
+      type: 2}
+  decodeBank: 0
+  loadAsynchronous: 0
+  saveDecodedBank: 0
+  unloadTriggerList: 
+  bankNameInternal: 
+  valueGuidInternal: 
 --- !u!1 &4613727841823276425
 GameObject:
   m_ObjectHideFlags: 0
