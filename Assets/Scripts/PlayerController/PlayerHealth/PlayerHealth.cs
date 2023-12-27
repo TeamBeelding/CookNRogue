@@ -19,6 +19,7 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] Color _hitColor = Color.red;
     [SerializeField] SkinnedMeshRenderer _playerMesh;
     Material playerMaterial;
+    Color _baseColor;
 
     private void Awake()
     {
@@ -32,8 +33,9 @@ public class PlayerHealth : MonoBehaviour
         _heartBar = HeartBar.instance;
         HealthInit();
 
-        playerMaterial = _playerMesh.sharedMaterial;
-        playerMaterial.SetColor("_BaseColor", Color.white);
+        playerMaterial = _playerMesh.material;
+        _baseColor = playerMaterial.GetColor("_BaseColor");
+        playerMaterial.SetColor("_BaseColor", _baseColor);
     }
     public void HealthInit()
     {
@@ -111,10 +113,7 @@ public class PlayerHealth : MonoBehaviour
     }
 
     IEnumerator DamageSlowTime()
-    {
-        Color baseColor = Color.white;
-
-        
+    {       
         /*if (playerMaterial)
             baseColor = playerMaterial.GetColor("_BaseColor");*/
         
@@ -140,7 +139,7 @@ public class PlayerHealth : MonoBehaviour
 
 
         if (playerMaterial)
-            playerMaterial.SetColor("_BaseColor", baseColor);   
+            playerMaterial.SetColor("_BaseColor", _baseColor);   
         Time.timeScale = 1f;
     }
 }
