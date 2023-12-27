@@ -30,7 +30,7 @@ public class PoolManager : MonoBehaviour
         if (instance == null)
             instance = this;
         else
-            Destroy(instance);
+            Destroy(gameObject);
 
         DontDestroyOnLoad(gameObject);
     }
