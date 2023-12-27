@@ -9,7 +9,7 @@ public class Ingredient : MonoBehaviour, IInteractable
     [SerializeField] float _ingredientHeight = 1.5f;
     [Header("Particle behaviour")]
     [SerializeField] float _simulationSpeed = 4;
-    [SerializeField] float _yVelocity = 1.5f;
+    [SerializeField] float _radialValue = 0.1f;
     [SerializeField] float _noiseValue = 4;
 
     public ProjectileData GetData
@@ -53,7 +53,7 @@ public class Ingredient : MonoBehaviour, IInteractable
         emission.enabled = false;
 
         var vol = _particles.velocityOverLifetime; ;
-        vol.y = _yVelocity;
+        vol.radial = _radialValue;
 
         var noise = _particles.noise;
         noise.strengthX = _noiseValue;
