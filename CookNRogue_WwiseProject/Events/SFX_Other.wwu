@@ -310,12 +310,24 @@
 					<ChildrenList>
 						<Action Name="" ID="{6F2AA373-D056-493E-8076-B4AE2E96D45D}" ShortID="884998348">
 							<PropertyList>
+								<Property Name="Delay" Type="Real64" Value="1"/>
 								<Property Name="FadeInCurve" Type="int16" Value="6"/>
-								<Property Name="FadeTime" Type="Real64" Value="1.5"/>
+								<Property Name="FadeTime" Type="Real64" Value="1"/>
 							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Target">
 									<ObjectRef Name="SFX_Door_Idle" ID="{0BC59EBC-9035-4330-9B33-4C2118FA21BB}" WorkUnitID="{3CE9A9BC-F960-482A-AEE6-287A4C6E7543}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_SFX_Door_Enter" ID="{F1864399-7E7E-438D-9E0D-C5236CFDF263}">
+					<ChildrenList>
+						<Action Name="" ID="{6E7E6D61-BB36-49A0-A0AE-4E14D0A85F31}" ShortID="205069279">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="SFX_Door_Enter" ID="{4CBA6E4C-A0C3-49E7-9A07-FD29AC970D29}" WorkUnitID="{3CE9A9BC-F960-482A-AEE6-287A4C6E7543}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>
