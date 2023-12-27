@@ -372,7 +372,7 @@ public class BossController : EnemyController
         _Play_SFX_Boss_Charge_Impact.Post(gameObject);
         PlayerController.Instance.TakeDamage(data.GetDamageOnHitDash);
 
-        SetState(State.Teleport);
+        //SetState(State.Teleport);
     }
 
     public void CollideWithObstruction()
