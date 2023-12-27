@@ -42,10 +42,22 @@ public class RestartLevelFix : MonoBehaviour
 
     void DestroyInstances()
     {
-        PoolManager.Instance.DestroyAI();
-        Destroy(PlayerController.Instance.gameObject);
-        Destroy(EnemyManager.Instance.gameObject);
-        Destroy(PoolManager.Instance.gameObject);
-        Destroy(MissileManager.instance.gameObject);
+        if (PoolManager.Instance != null)
+        {
+            PoolManager.Instance.DestroyAI();
+            Destroy(PoolManager.Instance.gameObject);
+        }
+        if (PlayerController.Instance != null)
+        {
+            Destroy(PlayerController.Instance.gameObject);
+        }
+        if(EnemyManager.Instance != null)
+        {
+            Destroy(EnemyManager.Instance.gameObject);
+        }
+        if (MissileManager.instance != null)
+        {
+            Destroy(MissileManager.instance.gameObject);
+        }
     }
 }

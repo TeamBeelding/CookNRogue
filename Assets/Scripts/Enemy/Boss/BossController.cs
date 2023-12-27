@@ -465,4 +465,9 @@ public class BossController : EnemyController
         }
 
     }
+
+    private void OnDestroy()
+    {
+        StopAllCoroutines();
+    }
 }

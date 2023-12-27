@@ -20,6 +20,8 @@ public class EnterDoor : MonoBehaviour
     private AK.Wwise.Event _Stop_SFX_All_Idle;
     [SerializeField]
     private AK.Wwise.Event _Play_SFX_Door_Idle;
+    [SerializeField]
+    private AK.Wwise.Event _Play_SFX_Door_Enter;
 
     [Header("Room linker")]
 
@@ -166,6 +168,7 @@ public class EnterDoor : MonoBehaviour
 
             //SceneManager.LoadScene(sceneToLoad.BuildIndex);
             _Stop_SFX_All_Idle.Post(gameObject);
+            _Play_SFX_Door_Enter.Post(gameObject);
             StartCoroutine(TransitionToNextScene(sceneToLoad.BuildIndex));
         }
     }

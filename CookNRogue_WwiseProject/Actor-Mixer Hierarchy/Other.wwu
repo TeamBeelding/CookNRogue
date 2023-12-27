@@ -1234,6 +1234,35 @@
 										<ActiveSource Name="SFX_Door_Idle" ID="{94BDDC5A-2F22-4698-9355-1045664829FA}" Platform="Linked"/>
 									</ActiveSourceList>
 								</Sound>
+								<Sound Name="SFX_Door_Enter" ID="{4CBA6E4C-A0C3-49E7-9A07-FD29AC970D29}" ShortID="490811299">
+									<PropertyList>
+										<Property Name="Volume" Type="Real64">
+											<ValueList>
+												<Value>-9</Value>
+											</ValueList>
+										</Property>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DEC634C6-86E3-4DF9-96EE-F869BA355507}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{85B5C199-8628-4DDB-B756-DA8917395816}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="SFX_Door_Enter" ID="{D354B811-D879-4F77-9CBD-9E5E30659E80}">
+											<Language>SFX</Language>
+											<AudioFile>SFX_Door_Enter.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="576850944"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="SFX_Door_Enter" ID="{D354B811-D879-4F77-9CBD-9E5E30659E80}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
 							</ChildrenList>
 						</ActorMixer>
 						<ActorMixer Name="AM_Cauldron" ID="{EB82F340-B83E-4125-BF63-B37E12C139AF}" ShortID="168590596">

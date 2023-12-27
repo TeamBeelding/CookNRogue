@@ -148,8 +148,18 @@
 							<PropertyList>
 								<Property Name="ActionType" Type="int16" Value="3"/>
 								<Property Name="FadeTime" Type="Real64" Value="2"/>
+								<Property Name="Scope" Type="int16" Value="1"/>
 							</PropertyList>
 							<ReferenceList/>
+							<ChildrenList>
+								<EventActionException Name="" ID="{CA47A13E-520D-4CDF-8903-4A1DB9E372A2}">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="AMB" ID="{7CEB9B3E-04AC-4927-B4BE-C298C5A1F406}" WorkUnitID="{85B5C199-8628-4DDB-B756-DA8917395816}"/>
+										</Reference>
+									</ReferenceList>
+								</EventActionException>
+							</ChildrenList>
 						</Action>
 						<Action Name="" ID="{8D617386-19C1-43DF-8136-30C78585D03B}" ShortID="168086363">
 							<ReferenceList>

@@ -154,6 +154,7 @@ public class PlayerCookingInventorySlot : MonoBehaviour
         m_backgroundCounterImage.sprite = m_counterDefault;
         _transform.localScale = new Vector3(1f, 1f, 1);
         m_counterArrow.SetActive(false);
+        _isSelected = false;
 
         if (_ingredientCount <= 0)
         {
